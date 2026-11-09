@@ -1,0 +1,89 @@
+name: Build Factorio mod ZIP
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "mods/*.zip"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Validate metadata and build archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          mod_dir = Path("ElectrifiedMainline")
+          info_path = mod_dir / "info.json"
+          if not info_path.is_file():
+              raise SystemExit("ERROR: ElectrifiedMainline/info.json is missing")
+
+          info = json.loads(info_path.read_text(encoding="utf-8"))
+          required = ("name", "version", "title", "author", "factorio_version")
+          missing = [key for key in required if not isinstance(info.get(key), str) or not info[key].strip()]
+          if missing:
+              raise SystemExit("ERROR: invalid or missing info.json fields: " + ", ".join(missing))
+          if info["factorio_version"] != "2.1":
+              raise SystemExit("ERROR: expected factorio_version 2.1 for this release")
+          if not (mod_dir / "control.lua").is_file() or not (mod_dir / "data.lua").is_file():
+              raise SystemExit("ERROR: required Lua source files are missing")
+
+          archive = Path("mods") / f'{info["name"]}_{info["version"]}.zip'
+          archive.parent.mkdir(parents=True, exist_ok=True)
+          import zipfile
+          with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+              for path in sorted(mod_dir.rglob("*")):
+                  if path.is_file():
+                      zf.write(path, path.as_posix())
+
+          with zipfile.ZipFile(archive) as zf:
+              names = zf.namelist()
+              expected_root = mod_dir.name + "/"
+              if not any(name.startswith(expected_root) for name in names):
+                  raise SystemExit("ERROR: mod directory is missing from ZIP")
+              if expected_root + "info.json" not in names:
+                  raise SystemExit("ERROR: info.json is not at the mod-folder root inside ZIP")
+              if any(name.startswith(expected_root + mod_dir.name + "/") for name in names):
+                  raise SystemExit("ERROR: ZIP contains a duplicated nested mod directory")
+              packaged_info = json.loads(zf.read(expected_root + "info.json"))
+              if packaged_info != info:
+                  raise SystemExit("ERROR: packaged info.json differs from source")
+
+          print(f"Built and validated {archive}")
+          print(f"Entries: {len(names)}")
+          print(f"info.json: {info['name']} {info['version']} / Factorio {info['factorio_version']}")
+          PY
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ElectrifiedMainline-mod
+          path: mods/ElectrifiedMainline_*.zip
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Commit refreshed ZIP to repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add mods/ElectrifiedMainline_*.zip
+          if git diff --cached --quiet; then
+            echo "The packaged ZIP is already up to date."
+          else
+            git commit -m "build: refresh Factorio mod ZIP"
+            git push
+          fi
