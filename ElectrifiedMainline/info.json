@@ -1,0 +1,13 @@
+{
+  "name": "ElectrifiedMainline",
+  "version": "0.1.0",
+  "title": "Electrified Mainline",
+  "author": "Bionic Assistant",
+  "contact": "",
+  "homepage": "",
+  "description": "Adds high-speed electrified railway infrastructure to Factorio. Overhead line poles, electric locomotives with battery backup, regenerative braking, and high-speed rolling stock.",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0"
+  ]
+}
