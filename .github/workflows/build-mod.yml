@@ -1,6 +1,11 @@
 name: Build Factorio mod ZIP
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "ElectrifiedMainline/**"
+      - ".github/workflows/build-mod.yml"
   pull_request:
     branches: [main]
     paths:
