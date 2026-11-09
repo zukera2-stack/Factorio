@@ -409,14 +409,14 @@ data:extend({
 -- Cloning preserves version-specific mandatory fields and graphics.
 -- ---------------------------------------------------------------------------
 
-local function clone_placeable_entity(source_type, source_name, target_name, item_name)
+local function clone_placeable_entity(source_type, source_name, target_name, item_name, place_count, mined_count)
     local source = data.raw[source_type] and data.raw[source_type][source_name]
     assert(source, "ElectrifiedMainline: missing base prototype " .. source_type .. "/" .. source_name)
 
     local prototype = table.deepcopy(source)
     prototype.name = target_name
-    prototype.minable = { mining_time = 0.2, result = item_name }
-    prototype.placeable_by = { item = item_name, count = 1 }
+    prototype.minable = { mining_time = 0.2, result = item_name, count = mined_count or 1 }
+    prototype.placeable_by = { item = item_name, count = place_count or 1 }
     prototype.next_upgrade = nil
     data.raw[source_type][target_name] = prototype
 
@@ -428,11 +428,11 @@ end
 -- Replace the hand-built rail prototypes with complete copies of the matching
 -- vanilla prototypes. This avoids silently omitting required fields as the API evolves.
 clone_placeable_entity("straight-rail", "straight-rail",
-    "em-high-speed-straight-rail", "em-high-speed-rail")
+    "em-high-speed-straight-rail", "em-high-speed-rail", 1, 1)
 clone_placeable_entity("curved-rail-a", "curved-rail-a",
-    "em-curved-high-speed-rail", "em-curved-high-speed-rail")
+    "em-curved-high-speed-rail", "em-curved-high-speed-rail", 4, 4)
 clone_placeable_entity("half-diagonal-rail", "half-diagonal-rail",
-    "em-half-diagonal-high-speed-rail", "em-half-diagonal-high-speed-rail")
+    "em-half-diagonal-high-speed-rail", "em-half-diagonal-high-speed-rail", 2, 2)
 
 -- A real small electric pole, not an item-only visual marker.
 clone_placeable_entity("electric-pole", "small-electric-pole",
