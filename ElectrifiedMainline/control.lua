@@ -109,6 +109,64 @@ local function get_custom_locomotives(train)
     return result
 end
 
+-- Diagnostic pass: identify the rail closest to each custom locomotive.
+-- This deliberately reports rail identity only; it does not infer that the rail
+-- is powered and does not alter train movement or energy.
+local function find_rail_under_locomotive(locomotive)
+    local train = locomotive.train
+    if not (train and train.valid) then return nil end
+
+    local closest_rail = nil
+    local best_distance_squared = math.huge
+
+    for _, rail in pairs(train.get_rails()) do
+        if rail.valid then
+            local dx = rail.position.x - locomotive.position.x
+            local dy = rail.position.y - locomotive.position.y
+            local distance_squared = dx * dx + dy * dy
+
+            if distance_squared < best_distance_squared then
+                closest_rail = rail
+                best_distance_squared = distance_squared
+            end
+        end
+    end
+
+    return closest_rail
+end
+
+local function update_rail_diagnostics(train, state)
+    state.rail_diagnostics = state.rail_diagnostics or {}
+
+    for _, locomotive in pairs(get_custom_locomotives(train)) do
+        local locomotive_id = locomotive.unit_number or locomotive.name
+        local rail = find_rail_under_locomotive(locomotive)
+        local rail_name = rail and rail.name or "<no-rail>"
+        local rail_id = rail and rail.unit_number or "nil"
+
+        local previous = state.rail_diagnostics[locomotive_id]
+        if not previous or previous.rail_name ~= rail_name or previous.rail_id ~= rail_id then
+            local rail_position = rail
+                and string.format("(%.2f, %.2f)", rail.position.x, rail.position.y)
+                or "n/a"
+
+            log(string.format(
+                "[ElectrifiedMainline][rail-debug] train=%s locomotive=%s rail=%s rail_unit=%s rail_position=%s",
+                tostring(train.id),
+                tostring(locomotive_id),
+                tostring(rail_name),
+                tostring(rail_id),
+                rail_position
+            ))
+
+            state.rail_diagnostics[locomotive_id] = {
+                rail_name = rail_name,
+                rail_id = rail_id
+            }
+        end
+    end
+end
+
 local function initialize_train_state(train, previous_state)
     if not (train and train.valid) then return end
     if #get_custom_locomotives(train) == 0 then
@@ -158,6 +216,9 @@ local function on_tick(event)
             end
 
             if state then
+                -- Diagnostic only: determine the rail under each custom locomotive.
+                update_rail_diagnostics(train, state)
+
                 -- Used by the later battery/regen implementation. No energy is
                 -- added or consumed in this foundational pass.
                 state.previous_speed = train.speed
