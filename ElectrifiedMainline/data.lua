@@ -56,7 +56,6 @@ data:extend({
         name = "em-electrified-railways",
         icon = "__base__/graphics/icons/steel-plate.png",
         icon_size = 64,
-        subgroup = "research",
         order = "a[electric-rails]",
         effects = {
             { type = "unlock-recipe", recipe = "em-concrete-beam" },
@@ -75,7 +74,6 @@ data:extend({
         name = "em-high-speed-locomotive",
         icon = "__base__/graphics/icons/diesel-locomotive.png",
         icon_size = 64,
-        subgroup = "research",
         order = "b[high-speed-locomotive]",
         effects = {
             { type = "unlock-recipe", recipe = "em-traction-motor" },
@@ -93,7 +91,6 @@ data:extend({
         name = "em-regenerative-braking",
         icon = "__base__/graphics/icons/battery.png",
         icon_size = 64,
-        subgroup = "research",
         order = "c[regenerative-braking]",
         effects = {
             { type = "unlock-recipe", recipe = "em-regenerative-brake-unit" },
@@ -107,7 +104,6 @@ data:extend({
         name = "em-high-speed-rails",
         icon = "__base__/graphics/icons/rail.png",
         icon_size = 64,
-        subgroup = "research",
         order = "d[high-speed-rails]",
         effects = {
             { type = "unlock-recipe", recipe = "em-high-speed-straight-rail" },
