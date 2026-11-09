@@ -138,7 +138,7 @@ data:extend({
         ingredients = { { "em-concrete-beam", 2 }, { "em-heavy-copper-cable", 3 }, { "steel-plate", 5 } },
         results = {{ type = "item", name = "em-electric-pole", amount = 1 }},
         energy_required = 10,
-        category = "crafting",
+        categories = { "crafting" },
     },
 })
 
@@ -275,7 +275,7 @@ data:extend({
         ingredients = { { "steel-plate", 50 }, { "em-traction-motor", 5 }, { "em-battery-bank", 3 } },
         results = {{ type = "item", name = "em-electric-locomotive", amount = 1 }},
         energy_required = 100,
-        category = "crafting",
+        categories = { "crafting" },
     },
 
     {
@@ -307,7 +307,7 @@ data:extend({
         ingredients = { { "steel-plate", 30 }, { "copper-cable", 50 }, { "em-heavy-copper-cable", 10 } },
         results = {{ type = "item", name = "em-high-speed-cargo-wagon", amount = 1 }},
         energy_required = 10,
-        category = "crafting",
+        categories = { "crafting" },
     },
 
     {
@@ -317,7 +317,7 @@ data:extend({
         ingredients = { { "steel-plate", 30 }, { "copper-cable", 50 }, { "em-heavy-copper-cable", 10 } },
         results = {{ type = "item", name = "em-high-speed-fluid-wagon", amount = 1 }},
         energy_required = 10,
-        category = "crafting",
+        categories = { "crafting" },
     },
 })
 
@@ -329,7 +329,7 @@ data:extend({
         ingredients = { { "stone-brick", 2 }, { "steel-plate", 4 }, { "iron-pipe", 1 } },
         results = {{ type = "item", name = "em-concrete-beam", amount = 1 }},
         energy_required = 5,
-        category = "crafting",
+        categories = { "crafting" },
     },
 
     {
@@ -339,7 +339,7 @@ data:extend({
         ingredients = { { "copper-cable", 3 }, { "plastic-bar", 1 } },
         results = {{ type = "item", name = "em-heavy-copper-cable", amount = 1 }},
         energy_required = 2,
-        category = "crafting",
+        categories = { "crafting" },
     },
 
     {
@@ -349,7 +349,7 @@ data:extend({
         ingredients = { { "copper-cable", 10 }, { "steel-gear-wheel", 5 }, { "advanced-circuit", 2 } },
         results = {{ type = "item", name = "em-traction-motor", amount = 1 }},
         energy_required = 10,
-        category = "crafting",
+        categories = { "crafting" },
     },
 
     {
@@ -359,7 +359,7 @@ data:extend({
         ingredients = { { "battery", 10 }, { "steel-plate", 5 } },
         results = {{ type = "item", name = "em-battery-bank", amount = 1 }},
         energy_required = 8,
-        category = "crafting",
+        categories = { "crafting" },
     },
 
     {
@@ -369,7 +369,7 @@ data:extend({
         ingredients = { { "copper-plate", 5 }, { "advanced-circuit", 2 } },
         results = {{ type = "item", name = "em-regenerative-brake-unit", amount = 1 }},
         energy_required = 3,
-        category = "crafting",
+        categories = { "crafting" },
     },
 
     -- High-speed rail recipes
@@ -380,7 +380,7 @@ data:extend({
         ingredients = { { "steel-plate", 2 }, { "copper-cable", 2 } },
         results = {{ type = "item", name = "em-high-speed-rail", amount = 4 }},
         energy_required = 0.5,
-        category = "crafting",
+        categories = { "crafting" },
     },
 
     {
@@ -390,7 +390,7 @@ data:extend({
         ingredients = { { "steel-plate", 4 }, { "copper-cable", 4 } },
         results = {{ type = "item", name = "em-curved-high-speed-rail", amount = 1 }},
         energy_required = 1,
-        category = "crafting",
+        categories = { "crafting" },
     },
 
     {
@@ -400,7 +400,7 @@ data:extend({
         ingredients = { { "steel-plate", 3 }, { "copper-cable", 3 } },
         results = {{ type = "item", name = "em-half-diagonal-high-speed-rail", amount = 1 }},
         energy_required = 0.75,
-        category = "crafting",
+        categories = { "crafting" },
     },
 })
 
