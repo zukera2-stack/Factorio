@@ -96,7 +96,10 @@ data:extend({
             { type = "unlock-recipe", recipe = "em-regenerative-brake-unit" },
         },
         prerequisites = { "em-high-speed-locomotive", "automation-3" },
-        unit = { count = 3000, time = 90, ingredients = { { "battery", 5 }, { "automation-science-pack", 3 } } },
+        -- TechnologyUnitDefinition.ingredients must contain science-pack items.
+        -- Batteries are ordinary ingredients, not research packs, and cannot be
+        -- supplied by labs. Use valid science packs for this research.
+        unit = { count = 3000, time = 90, ingredients = { { "automation-science-pack", 3 }, { "logistic-science-pack", 2 } } },
     },
 
     {
