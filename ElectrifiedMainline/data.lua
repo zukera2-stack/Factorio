@@ -72,7 +72,7 @@ data:extend({
     {
         type = "technology",
         name = "em-high-speed-locomotive",
-        icon = "__base__/graphics/icons/diesel-locomotive.png",
+        icon = "__base__/graphics/icons/locomotive.png",
         icon_size = 64,
         order = "b[high-speed-locomotive]",
         effects = {
@@ -233,7 +233,7 @@ data:extend({
     {
         type = "locomotive",
         name = "em-electric-locomotive",
-        icon = "__base__/graphics/icons/diesel-locomotive.png",
+        icon = "__base__/graphics/icons/locomotive.png",
         icon_size = 64,
         subgroup = "train-transport",
         order = "c[locomotive]-e[electric-mainline]",
@@ -259,7 +259,7 @@ data:extend({
     {
         type = "item",
         name = "em-electric-locomotive",
-        icon = "__base__/graphics/icons/diesel-locomotive.png",
+        icon = "__base__/graphics/icons/locomotive.png",
         icon_size = 64,
         subgroup = "train-transport",
         order = "c[locomotive]-e[electric-mainline]",
