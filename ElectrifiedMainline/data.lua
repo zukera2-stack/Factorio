@@ -67,7 +67,7 @@ data:extend({
             { type = "unlock-recipe", recipe = "em-high-speed-half-diagonal-rail" },
         },
         prerequisites = { "electric-engine", "logistics-2", "steel-processing" },
-        unit = { count = 500, time = 60, ingredients = { { "automation-module", 1 }, { "logistic-science-pack", 1 }, { "chemical-science-pack", 1 } } },
+        unit = { count = 500, time = 60, ingredients = { { "automation-science-pack", 1 }, { "logistic-science-pack", 1 }, { "chemical-science-pack", 1 } } },
     },
 
     {
@@ -84,8 +84,8 @@ data:extend({
             { type = "unlock-recipe", recipe = "em-high-speed-cargo-wagon" },
             { type = "unlock-recipe", recipe = "em-high-speed-fluid-wagon" },
         },
-        prerequisites = { "em-electrified-railways", "production-2" },
-        unit = { count = 2000, time = 60, ingredients = { { "automation-module", 2 }, { "production-science-pack", 1 }, { "chemical-science-pack", 1 } } },
+        prerequisites = { "em-electrified-railways", "production-science-pack" },
+        unit = { count = 2000, time = 60, ingredients = { { "automation-science-pack", 2 }, { "production-science-pack", 1 }, { "chemical-science-pack", 1 } } },
     },
 
     {
@@ -99,7 +99,7 @@ data:extend({
             { type = "unlock-recipe", recipe = "em-regenerative-brake-unit" },
         },
         prerequisites = { "em-high-speed-locomotive", "automation-3" },
-        unit = { count = 3000, time = 90, ingredients = { { "battery", 5 }, { "automation-module", 3 } } },
+        unit = { count = 3000, time = 90, ingredients = { { "battery", 5 }, { "automation-science-pack", 3 } } },
     },
 
     {
@@ -114,8 +114,8 @@ data:extend({
             { type = "unlock-recipe", recipe = "em-high-speed-curved-rail" },
             { type = "unlock-recipe", recipe = "em-high-speed-half-diagonal-rail" },
         },
-        prerequisites = { "em-electrified-railways", "logistics-4" },
-        unit = { count = 3500, time = 120, ingredients = { { "automation-module", 4 }, { "production-science-pack", 2 } } },
+        prerequisites = { "em-electrified-railways", "logistics-3" },
+        unit = { count = 3500, time = 120, ingredients = { { "automation-science-pack", 4 }, { "production-science-pack", 2 } } },
     },
 })
 
@@ -138,7 +138,7 @@ data:extend({
         ingredients = { { "em-concrete-beam", 2 }, { "em-heavy-copper-cable", 3 }, { "steel-plate", 5 } },
         results = {{ type = "item", name = "em-electric-pole", amount = 1 }},
         energy_required = 10,
-        categories = { "crafting" },
+        category = "crafting",
     },
 })
 
@@ -275,7 +275,7 @@ data:extend({
         ingredients = { { "steel-plate", 50 }, { "em-traction-motor", 5 }, { "em-battery-bank", 3 } },
         results = {{ type = "item", name = "em-electric-locomotive", amount = 1 }},
         energy_required = 100,
-        categories = { "crafting" },
+        category = "crafting",
     },
 
     {
@@ -307,7 +307,7 @@ data:extend({
         ingredients = { { "steel-plate", 30 }, { "copper-cable", 50 }, { "em-heavy-copper-cable", 10 } },
         results = {{ type = "item", name = "em-high-speed-cargo-wagon", amount = 1 }},
         energy_required = 10,
-        categories = { "crafting" },
+        category = "crafting",
     },
 
     {
@@ -317,7 +317,7 @@ data:extend({
         ingredients = { { "steel-plate", 30 }, { "copper-cable", 50 }, { "em-heavy-copper-cable", 10 } },
         results = {{ type = "item", name = "em-high-speed-fluid-wagon", amount = 1 }},
         energy_required = 10,
-        categories = { "crafting" },
+        category = "crafting",
     },
 })
 
@@ -329,7 +329,7 @@ data:extend({
         ingredients = { { "stone-brick", 2 }, { "steel-plate", 4 }, { "iron-pipe", 1 } },
         results = {{ type = "item", name = "em-concrete-beam", amount = 1 }},
         energy_required = 5,
-        categories = { "crafting" },
+        category = "crafting",
     },
 
     {
@@ -339,7 +339,7 @@ data:extend({
         ingredients = { { "copper-cable", 3 }, { "plastic-bar", 1 } },
         results = {{ type = "item", name = "em-heavy-copper-cable", amount = 1 }},
         energy_required = 2,
-        categories = { "crafting" },
+        category = "crafting",
     },
 
     {
@@ -349,7 +349,7 @@ data:extend({
         ingredients = { { "copper-cable", 10 }, { "steel-gear-wheel", 5 }, { "advanced-circuit", 2 } },
         results = {{ type = "item", name = "em-traction-motor", amount = 1 }},
         energy_required = 10,
-        categories = { "crafting" },
+        category = "crafting",
     },
 
     {
@@ -359,7 +359,7 @@ data:extend({
         ingredients = { { "battery", 10 }, { "steel-plate", 5 } },
         results = {{ type = "item", name = "em-battery-bank", amount = 1 }},
         energy_required = 8,
-        categories = { "crafting" },
+        category = "crafting",
     },
 
     {
@@ -369,7 +369,7 @@ data:extend({
         ingredients = { { "copper-plate", 5 }, { "advanced-circuit", 2 } },
         results = {{ type = "item", name = "em-regenerative-brake-unit", amount = 1 }},
         energy_required = 3,
-        categories = { "crafting" },
+        category = "crafting",
     },
 
     -- High-speed rail recipes
@@ -380,7 +380,7 @@ data:extend({
         ingredients = { { "steel-plate", 2 }, { "copper-cable", 2 } },
         results = {{ type = "item", name = "em-high-speed-rail", amount = 4 }},
         energy_required = 0.5,
-        categories = { "crafting" },
+        category = "crafting",
     },
 
     {
@@ -390,7 +390,7 @@ data:extend({
         ingredients = { { "steel-plate", 4 }, { "copper-cable", 4 } },
         results = {{ type = "item", name = "em-curved-high-speed-rail", amount = 1 }},
         energy_required = 1,
-        categories = { "crafting" },
+        category = "crafting",
     },
 
     {
@@ -400,6 +400,79 @@ data:extend({
         ingredients = { { "steel-plate", 3 }, { "copper-cable", 3 } },
         results = {{ type = "item", name = "em-half-diagonal-high-speed-rail", amount = 1 }},
         energy_required = 0.75,
-        categories = { "crafting" },
+        category = "crafting",
+    },
+})
+
+-- ---------------------------------------------------------------------------
+-- Complete the placeable entities using the matching vanilla prototypes.
+-- Cloning preserves version-specific mandatory fields and graphics.
+-- ---------------------------------------------------------------------------
+
+local function clone_placeable_entity(source_type, source_name, target_name, item_name, place_count, mined_count)
+    local source = data.raw[source_type] and data.raw[source_type][source_name]
+    assert(source, "ElectrifiedMainline: missing base prototype " .. source_type .. "/" .. source_name)
+
+    local prototype = table.deepcopy(source)
+    prototype.name = target_name
+    prototype.minable = { mining_time = 0.2, result = item_name, count = mined_count or 1 }
+    prototype.placeable_by = { item = item_name, count = place_count or 1 }
+    prototype.next_upgrade = nil
+    data.raw[source_type][target_name] = prototype
+
+    local item = data.raw.item[item_name]
+    assert(item, "ElectrifiedMainline: missing item prototype " .. item_name)
+    item.place_result = target_name
+end
+
+-- Replace the hand-built rail prototypes with complete copies of the matching
+-- vanilla prototypes. This avoids silently omitting required fields as the API evolves.
+clone_placeable_entity("straight-rail", "straight-rail",
+    "em-high-speed-straight-rail", "em-high-speed-rail", 1, 1)
+clone_placeable_entity("curved-rail-a", "curved-rail-a",
+    "em-curved-high-speed-rail", "em-curved-high-speed-rail", 4, 4)
+clone_placeable_entity("half-diagonal-rail", "half-diagonal-rail",
+    "em-half-diagonal-high-speed-rail", "em-half-diagonal-high-speed-rail", 2, 2)
+
+-- A real small electric pole, not an item-only visual marker.
+clone_placeable_entity("electric-pole", "small-electric-pole",
+    "em-electric-pole", "em-electric-pole")
+data.raw.item["em-electric-pole"].icon = "__base__/graphics/icons/small-electric-pole.png"
+
+-- Keep the custom locomotive's intended performance and energy-source concept,
+-- but inherit the complete rolling-stock prototype from the base locomotive.
+local electric_locomotive = table.deepcopy(data.raw.locomotive.locomotive)
+electric_locomotive.name = "em-electric-locomotive"
+electric_locomotive.weight = 2000
+electric_locomotive.energy_source = { type = "void" }
+electric_locomotive.max_power = "600kW"
+electric_locomotive.max_speed = 1.5
+electric_locomotive.reversing_power_modifier = 0.6
+electric_locomotive.braking_force = 10
+electric_locomotive.friction_force = 0.50
+electric_locomotive.minable = { mining_time = 0.5, result = "em-electric-locomotive" }
+electric_locomotive.placeable_by = { item = "em-electric-locomotive", count = 1 }
+electric_locomotive.next_upgrade = nil
+data.raw.locomotive["em-electric-locomotive"] = electric_locomotive
+data.raw.item["em-electric-locomotive"].place_result = "em-electric-locomotive"
+
+-- The custom wagons now have actual rolling-stock entities. Their capacities
+-- intentionally remain at vanilla values until the balancing pass.
+clone_placeable_entity("cargo-wagon", "cargo-wagon",
+    "em-high-speed-cargo-wagon", "em-high-speed-cargo-wagon")
+clone_placeable_entity("fluid-wagon", "fluid-wagon",
+    "em-high-speed-fluid-wagon", "em-high-speed-fluid-wagon")
+
+-- This recipe already existed, but its result item prototype was missing.
+data:extend({
+    {
+        type = "item",
+        name = "em-regenerative-brake-unit",
+        icon = "__base__/graphics/icons/battery.png",
+        icon_size = 64,
+        subgroup = "intermediate-products",
+        order = "a[energy]-z[regenerative-brake-unit]",
+        stack_size = 50,
+        weight = 10,
     },
 })
