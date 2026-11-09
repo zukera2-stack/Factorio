@@ -40,7 +40,7 @@ implementation:
   custom_locomotive_prototype: present_in_source
   custom_wagon_prototypes: present_in_source
   custom_electric_pole: present_in_source
-  rail_identity_diagnostics: present_in_source_and_game_tested_partially
+  rail_identity_diagnostics: present_in_source_and_game_tested_for_vanilla_and_custom_straight_curved_half_diagonal
   train_tracking: present_in_source
   real_traction_energy: not_implemented
   real_battery_model: not_implemented
@@ -58,7 +58,7 @@ last_game_test:
   game_version: "2.1.20b"
   mod_loaded: true
   inspected_log_runtime_errors_from_mod: none_found
-  diagnostic_log_lines: 1052
+  diagnostic_log_lines: 404
   train_id: 6
   custom_locomotive_unit_numbers: [720, 722]
   detected_rail_names:
@@ -67,20 +67,34 @@ last_game_test:
     - curved-rail-b
     - half-diagonal-rail
     - em-high-speed-straight-rail
-  custom_curved_rail_detection: not_confirmed
-  custom_half_diagonal_detection: not_confirmed
+  custom_curved_rail_detection: confirmed
+  custom_half_diagonal_detection: confirmed
+  custom_rail_names_detected:
+    - em-high-speed-straight-rail
+    - em-curved-high-speed-rail
+    - em-half-diagonal-high-speed-rail
+  reorganized_root_loaders: game_tested_successfully
+  existing_save_loaded: true
+  session_exit: normal
   power_delivery_tested: false
   battery_tested: false
   regenerative_braking_tested: false
-  bob_library_warnings:
+  bob_library_warnings_before_fix:
     present: true
-    meaning: ingredient_format_compatibility_issue_to_investigate_not_proof_of_game_abort
+    cause_identified: legacy_two_element_recipe_ingredient_tuples
+  recipe_ingredient_format:
+    source_updated_to_explicit_factorio_2x_objects: true
+    bob_library_retest_required: true
+  gear_wheel_ingredient:
+    previous: steel-gear-wheel
+    current: iron-gear-wheel
+    reason: core_mod_must_use_base_game_item_not_optional_bobs_item
 
 next_actions:
-  - validate_new_module_loaders_and_build_workflow
-  - audit_recipe_ingredient_syntax_separately_from_research_ingredients
-  - verify_all_prototype_item_and_technology_references
-  - test_custom_curved_and_half_diagonal_rails
+  - new_module_loaders_game_tested_successfully
+  - retest_explicit_recipe_ingredient_format_with_bobs_library_enabled
+  - verify_all_prototype_item_and_technology_references_and_iron_gear_wheel_in_game
+  - test_direction_changes_and_rail_transitions_at_speed
   - test_direction_changes
   - optimize_rail_diagnostic_polling
   - add_powered_rail_state_after_identity_validation

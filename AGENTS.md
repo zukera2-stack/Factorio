@@ -23,7 +23,7 @@
 - After moving files, verify all Factorio entry points remain at the mod root.
 - After changing Lua, validate syntax and run the GitHub Actions packaging workflow; a successful ZIP build is not an in-game test.
 - Never claim an in-game result unless the user has tested it or a reproducible test result is available.
-- Update `docs/PROJECT_STATE.yaml` and `docs/AI_CONTEXT.md` whenever decisions, code structure, test status or next actions change.
+- **Atomic project memory rule:** after every material code change, update both `docs/AI_CONTEXT.md` and `docs/PROJECT_STATE.yaml` in the same commit as the code. Do not leave code and project memory out of sync. This also applies to meaningful test-result changes, architecture decisions, dependency/compatibility changes and next-step changes. If a change genuinely does not affect project state, explain why no documentation update is needed in the final report.
 - Do not overwrite user changes. Fetch current file content and SHA before updating an existing file.
 
 ## Factorio constraints

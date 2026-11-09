@@ -1,7 +1,7 @@
 # Electrified Mainline — AI handoff
 
 > Read this file first when continuing the project in a new chat. It is a compact working handoff, not a replacement for source inspection.
-> Last updated: 2026-11-09 — repository structure reorganized; runtime behavior not intentionally changed.
+> Last updated: 2026-11-09 — root entry-point reorganization game-tested; recipe ingredient format corrected; vanilla gear-wheel dependency fixed.
 
 ## 1. Repository
 
@@ -97,23 +97,22 @@ The locomotive's current `energy_source = { type = "void" }` is a placeholder. I
 On 2026-11-09 the user confirmed the mod launches in Factorio 2.1.20b. A supplied `factorio-current.log` was analyzed:
 
 - Mod loaded and the game session continued; no runtime error attributable to the mod was found in the inspected log.
-- Rail diagnostics produced 1052 log lines.
-- One train (ID 6) with two custom locomotives (IDs 720 and 722) was tracked.
-- Detected rail names included vanilla straight, curved A/B, half-diagonal and custom straight high-speed rail.
-- The two locomotives detected a transition from custom to vanilla straight rail at different times, as expected for their different positions.
-- The log did not prove custom curved or custom half-diagonal rail detection.
+- The reorganized root loaders and `require` paths were exercised successfully: the mod loaded, the existing save opened, runtime script loaded from `scripts/control.lua`, and the session ended normally.
+- The latest supplied log contained 404 rail-diagnostic entries for train ID 6 and custom locomotives 720 and 722.
+- Detected rail names included vanilla `straight-rail`, `curved-rail-a`, `curved-rail-b`, `half-diagonal-rail`, plus custom `em-high-speed-straight-rail`, `em-curved-high-speed-rail` and `em-half-diagonal-high-speed-rail`.
+- Custom curved and custom half-diagonal rail identity detection is now confirmed in the supplied log; this is still identity detection only, not proof of electrical power.
 - The log did not prove power delivery, battery behavior, traction energy or regeneration.
-- Bob's Library emitted ingredient validation warnings such as invalid ingredient name/amount/type. Treat these as a real compatibility signal to investigate, not as proof that Factorio itself aborted recipe loading.
+- Bob's Library emitted ingredient validation warnings because recipe ingredients used legacy two-element tuples. The source has now been converted to explicit Factorio 2.x ingredient objects (`type`, `name`, `amount`). This correction still requires a fresh game test with Bob's Library enabled.
 
 Do not ask the user to resend that log unless a new test requires it.
 
 ## 6. Immediate next tasks
 
 1. Validate the new module entry points and packaging workflow after this structural move.
-2. Audit recipe ingredient syntax for Factorio 2.1 separately from research ingredient syntax. Do not blindly convert research ingredients to recipe format.
-3. Verify all item/prototype/technology references, including the current `steel-gear-wheel` recipe ingredient.
-4. Test custom curved and half-diagonal rails, then direction changes.
-5. Reduce diagnostic polling frequency after the rail-transition test.
+2. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
+3. Verify all item/prototype/technology references and confirm the base-game `iron-gear-wheel` recipe ingredient in-game.
+4. Test direction changes and rail transitions at speed.
+5. Reduce diagnostic polling frequency now that the five rail shapes/types in the test route have been identified.
 6. Add an explicit powered/unpowered rail state only after rail identity detection is validated.
 7. Continue compatibility audit: data-stage prototype inheritance, technology graph, unknown third-party rolling stock, save migrations and optional adapters.
 8. Only then implement real power transfer and battery behavior.
