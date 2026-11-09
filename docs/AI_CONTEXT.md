@@ -1,7 +1,7 @@
 # Electrified Mainline — AI handoff
 
 > Read this file first when continuing the project in a new chat. It is a compact working handoff, not a replacement for source inspection.
-> Last updated: 2026-11-09 — root entry-point reorganization game-tested; recipe ingredient format corrected; vanilla gear-wheel dependency fixed.
+> Last updated: 2026-11-09 — prototype/localization audit started; recipe ingredient format corrected; vanilla gear-wheel dependency fixed.
 
 ## 1. Repository
 
@@ -69,9 +69,9 @@ Factorio root entry points must remain at the mod root. Do not move `info.json`,
 ### Present in source
 - Custom straight, curved and half-diagonal rail prototypes.
 - Custom items, recipes and technologies.
-- Custom electric pole cloned from the vanilla small electric pole.
+- Custom electric pole cloned from the vanilla small electric pole; it currently belongs to the ordinary electric network, not a separate ВСМ grid.
 - Custom locomotive cloned from vanilla locomotive.
-- Custom cargo and fluid wagons cloned from vanilla rolling stock.
+- Custom cargo and fluid wagons cloned from vanilla rolling stock without capacity or performance changes.
 - Runtime tracking of custom rail segments near custom poles.
 - Runtime tracking of trains containing the custom locomotive.
 - Rail-under-locomotive diagnostic based on `train.get_rails()`, choosing the nearest rail to each locomotive position.
@@ -108,14 +108,14 @@ Do not ask the user to resend that log unless a new test requires it.
 
 ## 6. Immediate next tasks
 
-1. Validate the new module entry points and packaging workflow after this structural move.
+1. Complete the prototype audit, including curved-rail shape coverage, rail planner/blueprint behavior and all prototype references.
 2. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
-3. Verify all item/prototype/technology references and confirm the base-game `iron-gear-wheel` recipe ingredient in-game.
-4. Test direction changes and rail transitions at speed.
-5. Reduce diagnostic polling frequency now that the five rail shapes/types in the test route have been identified.
-6. Add an explicit powered/unpowered rail state only after rail identity detection is validated.
-7. Continue compatibility audit: data-stage prototype inheritance, technology graph, unknown third-party rolling stock, save migrations and optional adapters.
-8. Only then implement real power transfer and battery behavior.
+3. Verify the corrected technology unlock progression in-game.
+4. Test custom rail placement, mining, blueprinting and construction-robot behavior against vanilla rail workflows.
+5. Test direction changes and rail transitions at speed.
+6. Reduce diagnostic polling frequency after rail-shape coverage is understood.
+7. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
+8. Only then implement real power transfer, battery behavior and regeneration.
 
 ## 7. Compatibility rules
 

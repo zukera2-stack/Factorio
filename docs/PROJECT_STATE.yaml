@@ -38,15 +38,19 @@ interoperability:
 implementation:
   custom_rail_prototypes: present_in_source
   custom_locomotive_prototype: present_in_source
-  custom_wagon_prototypes: present_in_source
-  custom_electric_pole: present_in_source
+  custom_wagon_prototypes: cloned_from_vanilla_without_capacity_or_performance_changes
+  custom_electric_pole: cloned_from_vanilla_small_electric_pole_uses_ordinary_electric_network
   rail_identity_diagnostics: present_in_source_and_game_tested_for_vanilla_and_custom_straight_curved_half_diagonal
   train_tracking: present_in_source
   real_traction_energy: not_implemented
   real_battery_model: not_implemented
   real_substation_transfer: not_implemented
   real_regeneration: not_implemented
+  regenerative_braking_technology_effect: recipe_unlock_only_no_battery_capacity_bonus
   complete_rail_replacement: not_implemented
+  separate_high_speed_power_grid: not_implemented
+  rail_planner_blueprint_and_construction_robot_compatibility: unverified
+  curved_rail_shape_coverage: incomplete_or_unverified_single_curved_rail_a_prototype
   compatibility_adapters: none
   rail_diagnostic_interval_ticks: 1
   rail_diagnostic_interval_temporary: true
@@ -93,6 +97,9 @@ last_game_test:
 next_actions:
   - new_module_loaders_game_tested_successfully
   - retest_explicit_recipe_ingredient_format_with_bobs_library_enabled
+  - complete_prototype_audit_including_curved_rail_shape_coverage
+  - test_custom_rail_planner_blueprint_and_construction_robot_compatibility
+  - verify_corrected_technology_unlock_progression_in_game
   - verify_all_prototype_item_and_technology_references_and_iron_gear_wheel_in_game
   - test_direction_changes_and_rail_transitions_at_speed
   - test_direction_changes
