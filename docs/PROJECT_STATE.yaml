@@ -1,0 +1,113 @@
+schema_version: 1
+project:
+  name: Electrified Mainline
+  repository: https://github.com/zukera2-stack/Factorio
+  default_branch: main
+  mod_directory: ElectrifiedMainline
+  mod_version: 0.1.0
+  factorio_target: "2.1"
+  user_tested_game: "2.1.20b"
+  last_state_update: "2026-11-09"
+  handoff_document: docs/AI_CONTEXT.md
+  contributor_instructions: AGENTS.md
+
+user_decisions:
+  rail_modernization: replace_vanilla_rails_with_high_speed_rails
+  power_model: hybrid_overhead_supply_and_onboard_storage
+  rolling_stock: vanilla_and_custom_wagons_supported
+  regenerative_braking_priority:
+    - shared_grid
+    - onboard_storage_surplus
+  high_speed_energy_corridor: true
+  substations:
+    connect_ordinary_grid_and_high_speed_grid: bidirectional
+    transfer_power_limit: required
+  remote_outpost_power_via_high_speed_corridor: required
+  physical_voltage_simulation: not_available_use_MW_limits_buffers_losses
+  reference_mod_policy:
+    Electrified_Railways: ideas_only_no_code_copying
+
+interoperability:
+  vanilla_locomotive_on_vanilla_rails: supported
+  vanilla_locomotive_on_custom_rails: supported_as_vanilla
+  custom_locomotive_on_custom_rails: planned_grid_plus_storage
+  custom_locomotive_on_vanilla_rails: planned_storage_only
+  vanilla_and_custom_wagons_mixed: required
+  unknown_third_party_rolling_stock: must_not_crash_or_be_controlled
+
+implementation:
+  custom_rail_prototypes: present_in_source
+  custom_locomotive_prototype: present_in_source
+  custom_wagon_prototypes: present_in_source
+  custom_electric_pole: present_in_source
+  rail_identity_diagnostics: present_in_source_and_game_tested_partially
+  train_tracking: present_in_source
+  real_traction_energy: not_implemented
+  real_battery_model: not_implemented
+  real_substation_transfer: not_implemented
+  real_regeneration: not_implemented
+  complete_rail_replacement: not_implemented
+  compatibility_adapters: none
+  rail_diagnostic_interval_ticks: 1
+  rail_diagnostic_interval_temporary: true
+  train_speed_sampling_interval_ticks: 30
+  locomotive_energy_source: void_placeholder
+
+last_game_test:
+  date: "2026-11-09"
+  game_version: "2.1.20b"
+  mod_loaded: true
+  inspected_log_runtime_errors_from_mod: none_found
+  diagnostic_log_lines: 1052
+  train_id: 6
+  custom_locomotive_unit_numbers: [720, 722]
+  detected_rail_names:
+    - straight-rail
+    - curved-rail-a
+    - curved-rail-b
+    - half-diagonal-rail
+    - em-high-speed-straight-rail
+  custom_curved_rail_detection: not_confirmed
+  custom_half_diagonal_detection: not_confirmed
+  power_delivery_tested: false
+  battery_tested: false
+  regenerative_braking_tested: false
+  bob_library_warnings:
+    present: true
+    meaning: ingredient_format_compatibility_issue_to_investigate_not_proof_of_game_abort
+
+next_actions:
+  - validate_new_module_loaders_and_build_workflow
+  - audit_recipe_ingredient_syntax_separately_from_research_ingredients
+  - verify_all_prototype_item_and_technology_references
+  - test_custom_curved_and_half_diagonal_rails
+  - test_direction_changes
+  - optimize_rail_diagnostic_polling
+  - add_powered_rail_state_after_identity_validation
+  - continue_modpack_compatibility_audit
+  - implement_real_power_transfer_and_storage_after_foundation
+
+compatibility_policy:
+  core_requires_only_base: true
+  optional_mods_are_hard_dependencies: false
+  avoid_mutating_foreign_prototypes: true
+  guard_optional_prototypes: true
+  unknown_entities_must_be_tolerated: true
+  versioned_storage_migrations_required_before_storage_schema_changes: true
+
+evidence_policy:
+  labels: [implemented, game_tested, api_confirmed, planned, unverified]
+  successful_zip_build_means_game_test: false
+
+repository_structure:
+  mod_entrypoints_must_stay_at_root:
+    - info.json
+    - data.lua
+    - data-updates.lua
+    - data-final-fixes.lua
+    - control.lua
+  prototype_implementation: prototypes/bootstrap.lua
+  runtime_implementation: scripts/control.lua
+  optional_integrations_directory: compatibility/
+  ai_handoff: docs/AI_CONTEXT.md
+  machine_readable_state: docs/PROJECT_STATE.yaml

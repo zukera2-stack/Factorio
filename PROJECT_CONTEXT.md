@@ -1,3 +1,9 @@
+# CONTINUATION INDEX (2026-11-09)
+
+For work in a new chat, start with `AGENTS.md`, then read `docs/AI_CONTEXT.md` and `docs/PROJECT_STATE.yaml`. These are the compact, maintained handoff documents. This file is retained as the detailed historical project notebook; inspect it when historical rationale is needed, but verify all current facts against source and the handoff files.
+
+---
+
 # PROJECT_CONTEXT — Electrified Mainline
 
 > Рабочий паспорт проекта для переноса контекста между чатами. Обновлять после существенных решений, изменений кода и игровых проверок.
