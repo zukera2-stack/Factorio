@@ -5,6 +5,7 @@
 -- and tracks which custom rail segments are adjacent to custom electric poles.
 
 local TRAIN_UPDATE_INTERVAL = 30
+local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
 local RAIL_RADIUS = 3
 
 local RAIL_NAMES = {
@@ -200,9 +201,13 @@ local function on_train_created(event)
 end
 
 local function on_tick(event)
-    if event.tick % TRAIN_UPDATE_INTERVAL ~= 0 then return end
+    local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
+    local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
+    if not update_speed and not update_rails then return end
 
     -- Filter at the engine level; do not scan players or every train in the game.
+    -- Rail diagnostics are temporary and run every tick to avoid skipping short
+    -- rail segments at high train speed.
     local trains = game.train_manager.get_trains({
         stock = "em-electric-locomotive"
     })
@@ -216,12 +221,16 @@ local function on_tick(event)
             end
 
             if state then
-                -- Diagnostic only: determine the rail under each custom locomotive.
-                update_rail_diagnostics(train, state)
+                if update_rails then
+                    -- Diagnostic only: determine the rail under each custom locomotive.
+                    update_rail_diagnostics(train, state)
+                end
 
                 -- Used by the later battery/regen implementation. No energy is
                 -- added or consumed in this foundational pass.
-                state.previous_speed = train.speed
+                if update_speed then
+                    state.previous_speed = train.speed
+                end
             end
         end
     end
