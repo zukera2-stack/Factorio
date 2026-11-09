@@ -106,9 +106,7 @@ data:extend({
         icon_size = 64,
         order = "d[high-speed-rails]",
         effects = {
-            { type = "unlock-recipe", recipe = "em-high-speed-straight-rail" },
-            { type = "unlock-recipe", recipe = "em-high-speed-curved-rail" },
-            { type = "unlock-recipe", recipe = "em-high-speed-half-diagonal-rail" },
+            { type = "unlock-recipe", recipe = "em-high-speed-rail" },
         },
         prerequisites = { "em-electrified-railways", "logistics-3" },
         unit = { count = 3500, time = 120, ingredients = { { "automation-science-pack", 4 }, { "production-science-pack", 2 } } },
@@ -138,93 +136,24 @@ data:extend({
     },
 })
 
-data:extend({
-    {
-        type = "item",
-        name = "em-high-speed-rail",
-        icon = "__base__/graphics/icons/rail.png",
-        icon_size = 64,
-        subgroup = "raw-material",
-        order = "a[ground-rail]-f[high-speed-straight]",
-        stack_size = 50,
-        weight = 18,
-    },
-    {
-        type = "item",
-        name = "em-curved-high-speed-rail",
-        icon = "__base__/graphics/icons/curved-rail.png",
-        icon_size = 64,
-        subgroup = "raw-material",
-        order = "a[ground-rail]-f[high-speed-curved]",
-        stack_size = 10,
-        weight = 35,
-    },
-    {
-        type = "item",
-        name = "em-half-diagonal-high-speed-rail",
-        icon = "__base__/graphics/icons/half-diagonal-rail.png",
-        icon_size = 64,
-        subgroup = "raw-material",
-        order = "a[ground-rail]-f[high-speed-half-diagonal]",
-        stack_size = 20,
-        weight = 31,
-    },
+-- A dedicated planner keeps the whole ВСМ geometry set in one inventory item.
+-- Start from the vanilla planner to retain its version-specific item fields.
+local em_high_speed_rail_planner = table.deepcopy(data.raw["rail-planner"]["rail"])
+em_high_speed_rail_planner.name = "em-high-speed-rail"
+em_high_speed_rail_planner.icon = "__base__/graphics/icons/rail.png"
+em_high_speed_rail_planner.localised_name = {"item-name.em-high-speed-rail"}
+em_high_speed_rail_planner.subgroup = "train-transport"
+em_high_speed_rail_planner.order = "a[rail]-b[high-speed-rail]"
+em_high_speed_rail_planner.place_result = "em-high-speed-straight-rail"
+em_high_speed_rail_planner.stack_size = 100
+em_high_speed_rail_planner.rails = {
+    "em-high-speed-straight-rail",
+    "em-curved-high-speed-rail",
+    "em-curved-high-speed-rail-b",
+    "em-half-diagonal-high-speed-rail",
+}
+data:extend({em_high_speed_rail_planner})
 
-    {
-        type = "straight-rail",
-        name = "em-high-speed-straight-rail",
-        icon = "__base__/graphics/icons/rail.png",
-        icon_size = 64,
-        flags = { "placeable-neutral", "player-creation", "building-direction-8-way" },
-        minable = { mining_time = 0.2, result = "em-high-speed-rail" },
-        max_health = 250,
-        corpse = "straight-rail-remnants",
-        dying_explosion = "rail-explosion",
-        resistances = {{ type = "fire", percent = 100 }, { type = "acid", percent = 80 }},
-        selection_box = {{ -1.7, -0.8 }, { 1.7, 0.8 }},
-        damaged_trigger_effect = nil,
-        pictures = data.raw["straight-rail"]["straight-rail"].pictures,
-        placeable_by = { item = "em-high-speed-rail", count = 1 },
-        walking_sound = data.raw["straight-rail"]["straight-rail"].walking_sound,
-    },
-
-    {
-        type = "curved-rail-a",
-        name = "em-curved-high-speed-rail",
-        icon = "__base__/graphics/icons/curved-rail.png",
-        icon_size = 64,
-        flags = { "placeable-neutral", "player-creation", "building-direction-8-way" },
-        minable = { mining_time = 0.2, result = "em-curved-high-speed-rail", count = 4 },
-        max_health = 250,
-        corpse = "curved-rail-a-remnants",
-        dying_explosion = {{ name = "rail-explosion" }},
-        resistances = {{ type = "fire", percent = 100 }, { type = "acid", percent = 80 }},
-        selection_box = {{ -1.7, -0.8 }, { 1.7, 0.8 }},
-        damaged_trigger_effect = nil,
-        pictures = data.raw["curved-rail-a"]["curved-rail-a"].pictures,
-        ending_shifts = data.raw["curved-rail-a"]["curved-rail-a"].ending_shifts,
-        placeable_by = { item = "em-curved-high-speed-rail", count = 4 },
-        walking_sound = data.raw["curved-rail-a"]["curved-rail-a"].walking_sound,
-    },
-
-    {
-        type = "half-diagonal-rail",
-        name = "em-half-diagonal-high-speed-rail",
-        icon = "__base__/graphics/icons/half-diagonal-rail.png",
-        icon_size = 64,
-        flags = { "placeable-neutral", "player-creation", "building-direction-8-way" },
-        minable = { mining_time = 0.2, result = "em-half-diagonal-high-speed-rail", count = 2 },
-        max_health = 250,
-        corpse = "half-diagonal-rail-remnants",
-        dying_explosion = {{ name = "rail-explosion", offset = { 0.9, 2.2 } }},
-        resistances = {{ type = "fire", percent = 100 }, { type = "acid", percent = 80 }},
-        selection_box = {{ -1.7, -0.8 }, { 1.7, 0.8 }},
-        damaged_trigger_effect = nil,
-        pictures = data.raw["half-diagonal-rail"]["half-diagonal-rail"].pictures,
-        placeable_by = { item = "em-half-diagonal-high-speed-rail", count = 2 },
-        walking_sound = data.raw["half-diagonal-rail"]["half-diagonal-rail"].walking_sound,
-    },
-})
 
 data:extend({
     {
@@ -368,34 +297,17 @@ data:extend({
         categories = { "crafting" },
     },
 
-    -- High-speed rail recipes
+    -- One recipe creates planner stock used by every ВСМ rail geometry.
     {
         type = "recipe",
-        name = "em-high-speed-straight-rail",
+        name = "em-high-speed-rail",
         enabled = false,
-        ingredients = { { type = "item", name = "steel-plate", amount = 2 }, { type = "item", name = "copper-cable", amount = 2 } },
+        ingredients = {
+            { type = "item", name = "steel-plate", amount = 4 },
+            { type = "item", name = "copper-cable", amount = 4 },
+        },
         results = {{ type = "item", name = "em-high-speed-rail", amount = 4 }},
-        energy_required = 0.5,
-        categories = { "crafting" },
-    },
-
-    {
-        type = "recipe",
-        name = "em-high-speed-curved-rail",
-        enabled = false,
-        ingredients = { { type = "item", name = "steel-plate", amount = 4 }, { type = "item", name = "copper-cable", amount = 4 } },
-        results = {{ type = "item", name = "em-curved-high-speed-rail", amount = 1 }},
         energy_required = 1,
-        categories = { "crafting" },
-    },
-
-    {
-        type = "recipe",
-        name = "em-high-speed-half-diagonal-rail",
-        enabled = false,
-        ingredients = { { type = "item", name = "steel-plate", amount = 3 }, { type = "item", name = "copper-cable", amount = 3 } },
-        results = {{ type = "item", name = "em-half-diagonal-high-speed-rail", amount = 1 }},
-        energy_required = 0.75,
         categories = { "crafting" },
     },
 })
@@ -416,8 +328,9 @@ local function clone_placeable_entity(source_type, source_name, target_name, ite
     prototype.next_upgrade = nil
     data.raw[source_type][target_name] = prototype
 
-    local item = data.raw.item[item_name]
-    assert(item, "ElectrifiedMainline: missing item prototype " .. item_name)
+    local item = (data.raw.item and data.raw.item[item_name])
+        or (data.raw["rail-planner"] and data.raw["rail-planner"][item_name])
+    assert(item, "ElectrifiedMainline: missing placeable item prototype " .. item_name)
     item.place_result = target_name
 end
 
@@ -426,9 +339,15 @@ end
 clone_placeable_entity("straight-rail", "straight-rail",
     "em-high-speed-straight-rail", "em-high-speed-rail", 1, 1)
 clone_placeable_entity("curved-rail-a", "curved-rail-a",
-    "em-curved-high-speed-rail", "em-curved-high-speed-rail", 4, 4)
+    "em-curved-high-speed-rail", "em-high-speed-rail", 3, 3)
+clone_placeable_entity("curved-rail-b", "curved-rail-b",
+    "em-curved-high-speed-rail-b", "em-high-speed-rail", 3, 3)
 clone_placeable_entity("half-diagonal-rail", "half-diagonal-rail",
-    "em-half-diagonal-high-speed-rail", "em-half-diagonal-high-speed-rail", 2, 2)
+    "em-half-diagonal-high-speed-rail", "em-high-speed-rail", 2, 2)
+
+-- The helper assigns place_result for each geometry; keep the planner's
+-- default placement result on the straight rail.
+data.raw["rail-planner"]["em-high-speed-rail"].place_result = "em-high-speed-straight-rail"
 
 -- A real small electric pole, not an item-only visual marker.
 clone_placeable_entity("electric-pole", "small-electric-pole",

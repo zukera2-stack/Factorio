@@ -24,6 +24,16 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v4
 
+      - name: Validate Lua syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y lua5.2
+          while IFS= read -r -d '' file; do
+            luac5.2 -p "$file"
+          done < <(find ElectrifiedMainline -type f -name '*.lua' -print0)
+
       - name: Validate metadata and build archive
         shell: bash
         run: |

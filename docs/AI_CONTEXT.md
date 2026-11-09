@@ -67,7 +67,9 @@ Factorio root entry points must remain at the mod root. Do not move `info.json`,
 ## 4. Implementation status — do not overclaim
 
 ### Present in source
-- Custom straight, curved and half-diagonal rail prototypes.
+- Four custom ground-rail prototypes cloned from the matching vanilla Factorio 2.1.20 prototypes: straight, curved-A, curved-B and half-diagonal.
+- One unified custom `rail-planner` item (`em-high-speed-rail`) lists all four custom rail entities; shape-specific rail inventory items were removed.
+- Every custom rail entity uses the unified planner item through `placeable_by`; straight/curved-A/curved-B/half-diagonal placement costs are 1/3/3/2 planner items, matching vanilla geometry costs.
 - Custom items, recipes and technologies.
 - Custom electric pole cloned from the vanilla small electric pole; it currently belongs to the ordinary electric network, not a separate ВСМ grid.
 - Custom locomotive cloned from vanilla locomotive.
@@ -87,6 +89,7 @@ Factorio root entry points must remain at the mod root. Do not move `info.json`,
 - Regenerative energy transfer to grid or battery.
 - Train mass model and cargo/fluid payload mass.
 - Full rail replacement/upgrade workflow.
+- In-game rail-planner placement, blueprint and construction-robot behavior for the unified planner (source implementation exists; gameplay remains unverified).
 - Full interoperability testing with large modpacks.
 - Optional compatibility adapters.
 
@@ -108,10 +111,10 @@ Do not ask the user to resend that log unless a new test requires it.
 
 ## 6. Immediate next tasks
 
-1. Complete the prototype audit, including curved-rail shape coverage, rail planner/blueprint behavior and all prototype references.
+1. Game-test the unified custom rail planner: manual placement, all four geometries, mining/refund counts, blueprint ghosts and construction robots.
 2. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
 3. Verify the corrected technology unlock progression in-game.
-4. Test custom rail placement, mining, blueprinting and construction-robot behavior against vanilla rail workflows.
+4. Compare custom rail placement, mining, blueprinting and construction-robot behavior against vanilla rail workflows; verify no vanilla planner behavior changed.
 5. Test direction changes and rail transitions at speed.
 6. Reduce diagnostic polling frequency after rail-shape coverage is understood.
 7. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
