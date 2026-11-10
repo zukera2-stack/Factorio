@@ -1,196 +1,156 @@
 # Electrified Mainline — AI handoff
 
-> Read this file first when continuing the project in a new chat. It is a compact working handoff, not a replacement for source inspection.
-> Last updated: 2026-11-10 — documented Factorio 2.1.20 API findings for fast replace, forced blueprint ghosts, runtime events and undo/redo; diagnostic build 0.1.5 is isolated on `diagnostic/blueprint-rail-undo`.
+> Read this file first when continuing work in a new chat. This is a compact handoff; current source remains authoritative for implementation.
+> Last updated: 2026-11-10 — recorded the latest user-reported rail planner/blueprint tests and simplified project workflow for a solo, small mod.
 
-## 1. Repository
+## 1. Repository and working rules
 
-- GitHub: https://github.com/zukera2-stack/Factorio
-- Main branch: `main`
+- Repository: https://github.com/zukera2-stack/Factorio
+- Default branch: `main`
 - Mod directory: `ElectrifiedMainline/`
-- Target game: Factorio 2.1.20b (user-confirmed); metadata targets Factorio 2.1.
-- Current main-branch mod version: 0.1.4. A temporary diagnostic 0.1.5 build exists only on `diagnostic/blueprint-rail-undo`; do not treat it as the production/main version.
-- User explicitly authorized direct repository changes.
-- User wants work to be resumable from any chat. Read this file, then `docs/PROJECT_STATE.yaml`, then inspect current source.
+- Production version on `main`: **0.1.4**. Do not confuse it with diagnostic version 0.1.5 on the isolated branch below.
+- Target: Factorio 2.1.20b; `info.json` targets `factorio_version = "2.1"`.
+- Before work, read `AGENTS.md`, this file, and `docs/PROJECT_STATE.yaml`; then inspect the relevant current source and latest branch/CI state.
+- Source code is authoritative for implementation; `PROJECT_STATE.yaml` is authoritative for current status and accepted decisions.
+- Do not infer game behavior from a successful package build. Label evidence as implemented, API-confirmed, user-observed/game-tested, planned, or unverified.
+- User has authorized direct repository edits when explicitly requested. Do not make code or GitHub changes without a clear request.
+- After material code, behavior, test, or decision changes, update both machine-readable/handoff documents in the same change set.
+- Do not overwrite files without fetching their current contents and blob SHAs.
+- Keep Factorio entrypoints and `info.json` in the mod root.
 
-## 2. Accepted product decisions
+## 2. Project-management approach
 
-These are user-approved requirements, not suggestions:
+This is currently a small mod maintained by one developer. Do not create or maintain a GitHub Projects board just for process overhead. Use:
+- `docs/AI_CONTEXT.md`: concise handoff for the next assistant/chat — what matters, current technical situation, traps, and next action.
+- `docs/PROJECT_STATE.yaml`: structured facts, decisions, implementation/test status, and next actions.
+- Git history, PRs, and CI: actual change history and validation.
 
-| Topic | Decision |
-|---|---|
-| Rail modernization | Replace vanilla rails with high-speed rail (ВСМ), preserving network topology |
-| Power | Hybrid: overhead/contact supply plus onboard storage |
-| Rolling stock | Both vanilla and custom wagons must be supported |
-| Regeneration priority | Return energy to the shared grid first; store only the surplus onboard |
-| Grid concept | ВСМ is also an independent high-voltage-style energy corridor |
-| Substations | Connect ordinary Factorio electric network and ВСМ network bidirectionally, with a power limit |
-| Remote outposts | ВСМ power corridor should be able to feed a remote outpost through a substation |
-| Voltage | Factorio does not simulate physical kV levels; use MW, buffers, transfer limits and gameplay losses |
-| Reference mod | Electrified Railways is ideas-only. Do not copy its code, fragments, scripts or prototypes. |
+Keep these notes concise and current. Do not duplicate a full changelog or every historical experiment here; retain detailed API research in dedicated technical notes.
 
-### Rolling-stock interoperability matrix
+## 3. Accepted product decisions
 
-- Vanilla locomotive on vanilla rails: yes.
-- Vanilla locomotive on ВСМ rails: yes, behaves as an ordinary vanilla locomotive.
-- Electrified Mainline locomotive on ВСМ rails: overhead supply plus onboard storage, once implemented.
-- Electrified Mainline locomotive on vanilla rails: onboard storage only, once implemented.
-- Vanilla wagons and custom wagons may be mixed in consists.
-- Third-party rolling stock must not crash our logic; unknown entities are not ours to control.
+- Replace vanilla ground rails with custom high-speed rails (ВСМ), preserving rail geometry/topology and normal train behavior.
+- Hybrid traction concept: overhead/contact supply plus onboard storage.
+- Regeneration priority: shared grid first, onboard storage for surplus.
+- Substations should eventually connect ordinary Factorio power and the ВСМ power corridor bidirectionally with a transfer limit.
+- Vanilla and custom wagons must be mixable. Unknown third-party rolling stock must not crash or be controlled by our logic.
+- Vanilla locomotive on custom rails remains a vanilla locomotive.
+- Electrified Mainline locomotive on custom rails is intended to use overhead supply plus storage; on vanilla rails, storage only.
+- Factorio does not simulate physical kV levels; model power with MW, buffers, transfer limits, and losses.
+- `Electrified Railways` is ideas-only; do not copy its code, fragments, scripts, or prototypes.
+- Core dependency should remain base-only. Optional integrations belong in `compatibility/` and must not become hard dependencies.
 
-## 3. Current source layout
+## 4. Source layout
 
 ```text
 ElectrifiedMainline/
 ├── info.json
-├── data.lua                    # Factorio entry point -> require("prototypes.bootstrap")
-├── data-updates.lua            # Factorio entry point
-├── data-final-fixes.lua        # Factorio entry point
-├── control.lua                 # Factorio entry point -> require("scripts.control")
-├── prototypes/
-│   ├── bootstrap.lua           # Current complete prototype implementation
-│   └── README.md               # Safe future extraction plan
-├── scripts/
-│   ├── control.lua             # Current complete runtime implementation
-│   └── README.md               # Future runtime module boundaries
+├── data.lua
+├── data-updates.lua
+├── data-final-fixes.lua
+├── control.lua
+├── prototypes/bootstrap.lua
+├── scripts/control.lua
 ├── compatibility/
-│   └── README.md               # Adapter rules; no adapters implemented yet
-└── locale/
-    ├── en/en.cfg
-    └── ru/ru.cfg
+└── locale/en, locale/ru
 ```
 
-The current monolithic prototype/runtime files were moved, not functionally decomposed. This is deliberate: first establish a stable, navigable structure without changing gameplay semantics. Split them incrementally only when each module boundary is understood.
+The root files are Factorio entrypoints/loaders. Main prototype implementation is in `prototypes/bootstrap.lua`; runtime implementation is in `scripts/control.lua`. These files are not yet functionally decomposed into smaller modules.
 
-Factorio root entry points must remain at the mod root. Do not move `info.json`, `data.lua`, `data-updates.lua`, `data-final-fixes.lua` or `control.lua` out of it.
-
-## 4. Implementation status — do not overclaim
+## 5. Implemented vs not implemented
 
 ### Present in source
-- Four custom ground-rail prototypes cloned from the matching vanilla Factorio 2.1.20 prototypes: straight, curved-A, curved-B and half-diagonal.
-- One unified custom `rail-planner` item (`em-high-speed-rail`) lists all four custom rail entities; shape-specific rail inventory items were removed.
-- Every custom rail entity uses the unified planner item through `placeable_by`; straight/curved-A/curved-B/half-diagonal placement costs are 1/3/3/2 planner items, matching vanilla geometry costs.
-- Custom items, recipes and technologies.
-- Custom electric pole cloned from the vanilla small electric pole; it currently belongs to the ordinary electric network, not a separate ВСМ grid.
-- Custom locomotive cloned from vanilla locomotive.
-- Custom cargo and fluid wagons cloned from vanilla rolling stock without capacity or performance changes.
-- Runtime tracking of custom rail segments near custom poles.
-- Runtime tracking of trains containing the custom locomotive.
-- Rail-under-locomotive diagnostic based on `train.get_rails()`, choosing the nearest rail to each locomotive position.
-- Diagnostic log only reports when detected rail identity changes.
-- Rail diagnostic polling currently runs every tick; this is temporary and must be optimized after testing.
-- Previous train speed is stored every 30 ticks as scaffolding.
-- Two-stage vanilla-to-ВСМ replacement is implemented in runtime source: queue deconstruction, then create a matching ВСМ rail ghost after the old rail is mined. The legacy `on_marked_for_upgrade` adapter remains, but the user's 0.1.3 test confirmed that vanilla/custom pairs still do not appear in the green Upgrade Planner.
-- A dedicated `em-rail-replacement-planner` selection-tool prototype is now added. Its normal selection is whitelisted to the four vanilla rail geometries. The runtime `on_player_selected_area` handler queues only those vanilla rails for deconstruction; the existing mined-rail pipeline then creates the matching custom ghost. The planner recipe is unlocked with the high-speed rail technology. This implementation is source-only until the user tests it in Factorio.
-- Persistent runtime state is initialized defensively at the start of every event handler that reads it; `on_tick` also validates the pending replacement queue before iterating it. This protects saves where a runtime-code-only update did not trigger `on_configuration_changed`.
-- The replacement workflow is API-backed but not yet game-tested. `data-final-fixes.lua` assigns `fast_replaceable_group = "em-rail-upgrade"` to all four vanilla and all four custom rails, removes `not-upgradable` from either side if present, and logs source eligibility (`minable`, `hidden`, hidden mining products), target visibility/build item, and collision-box/mask compatibility for every geometry pair. These diagnostics do not prove that the green planner will display the pairs or that robots can replace rails. Configure four geometry mappings in the green upgrade planner: straight → straight, curved-A → curved-A, curved-B → curved-B, half-diagonal → half-diagonal.
+- Four custom ground rail geometries: straight, curved-A, curved-B, half-diagonal.
+- Unified custom rail planner item `em-high-speed-rail`; placement costs 1/3/3/2 for straight/curved-A/curved-B/half-diagonal.
+- Custom recipes, technologies, pole, locomotive, cargo wagon, and fluid wagon prototypes.
+- Custom pole currently uses the ordinary electric network.
+- Runtime tracking of custom rails near custom poles and trains containing the custom locomotive.
+- Rail-under-locomotive identity diagnostic; polling every tick is temporary and should be optimized.
+- Two-stage vanilla→custom replacement adapter in runtime source: queue vanilla rail demolition, then create matching custom rail ghost after mining.
+- Dedicated `em-rail-replacement-planner` selection tool in source; its game behavior remains unverified.
+- Persistent state uses `storage.em`; pending replacement queue is defensively initialized. Storage schema version is 1.
+- Prototype compatibility checks/logging for the four vanilla/custom geometry pairs.
+- Recipe ingredients were changed to explicit Factorio 2.x ingredient objects; the concrete-beam recipe uses vanilla `pipe`, not nonexistent base item `iron-pipe`.
 
-### Not implemented / not verified
-- Actual electric traction energy consumption.
-- Real onboard battery charging/discharging.
-- Real two-network substation or bidirectional power transfer.
-- Actual overhead line power delivery.
-- Regenerative energy transfer to grid or battery.
-- Train mass model and cargo/fluid payload mass.
-- Unified rail planner operation is game-tested; user confirmed construction robots place its custom rails. Full blueprint behavior and all geometry-specific cases remain unverified.
-- Custom rail replacement selection tool and robot replacement workflow are not yet game-tested.
-- Full interoperability testing with large modpacks.
-- Optional compatibility adapters.
+### Not implemented
+- Real traction energy use, onboard battery charge/discharge, overhead power delivery, independent ВСМ grid, substation transfer, and regenerative energy transfer.
+- Train mass/payload model.
+- Full third-party modpack compatibility.
+- Reverse custom→vanilla replacement/undo logic.
+- Proven end-to-end blueprint overlap replacement and undo/redo.
 
-The locomotive's current `energy_source = { type = "void" }` is a placeholder. It does not consume grid energy or battery energy.
+The locomotive currently has `energy_source = { type = "void" }`; it does not consume electrical or battery energy.
 
-## 5. Last confirmed in-game test
+## 6. Latest user-reported in-game rail tests
 
-On 2026-11-09 the user confirmed the mod launches in Factorio 2.1.20b. A supplied `factorio-current.log` was analyzed:
+Factorio 2.1.20b. The exact mod build for this latest sequence was not stated; do not assign a version without confirmation.
 
-- Mod loaded and the game session continued; no runtime error attributable to the mod was found in the inspected log.
-- The reorganized root loaders and `require` paths were exercised successfully: the mod loaded, the existing save opened, runtime script loaded from `scripts/control.lua`, and the session ended normally.
-- The latest supplied log contained 404 rail-diagnostic entries for train ID 6 and custom locomotives 720 and 722.
-- Detected rail names included vanilla `straight-rail`, `curved-rail-a`, `curved-rail-b`, `half-diagonal-rail`, plus custom `em-high-speed-straight-rail`, `em-curved-high-speed-rail` and `em-half-diagonal-high-speed-rail`.
-- Custom curved and custom half-diagonal rail identity detection is now confirmed in the supplied log; this is still identity detection only, not proof of electrical power.
-- The log did not prove power delivery, battery behavior, traction energy or regeneration.
-- Bob's Library emitted ingredient validation warnings because recipe ingredients used legacy two-element tuples. The source has now been converted to explicit Factorio 2.x ingredient objects (`type`, `name`, `amount`). This correction still requires a fresh game test with Bob's Library enabled.
-- On 2026-11-10, the user reported a fresh mod-load failure at `em-concrete-beam.ingredients[2]`: `iron-pipe` does not exist in base Factorio. The source recipe was corrected to use the vanilla `pipe` item; the corrected build passed CI and the user subsequently confirmed the mod loads and the rail planner works.
-- On 2026-11-10, the user reported that vanilla rails are not replaced by placing the custom rail planner over them and that the green upgrade planner did not work. API research found that Factorio's built-in robot upgrade operation is not supported for rails. Runtime code now intercepts compatible green-planner upgrade marks, cancels the native upgrade, queues rail deconstruction, and creates a custom rail ghost one tick after mining. This is a two-stage replacement adapter, not native in-place rail upgrading, and has not yet been tested in-game.
-- On 2026-11-10, the user tested the 0.1.3 build in Factorio 2.1.20b. All four `[upgrade-check]` lines passed: source minable/visible/hidden-mining-product checks, target visibility/build item, shared group, collision box and collision mask. Despite this, the user confirmed that vanilla/custom pairs remain absent from the green Upgrade Planner. This is direct in-game evidence that the tested eligibility conditions do not make the rails available in that planner UI. Decision: stop iterating on planner flags/groups and provide a dedicated selection-tool workflow.
-- On 2026-11-10, the user tested the replacement build and reported a runtime crash at `control.lua:352`: `next(storage.em.pending_rail_replacements)` received nil on tick 70465. This shows the persistent queue was absent in the loaded save; relying only on `on_init`/`on_configuration_changed` was insufficient for a runtime-code-only update with unchanged mod version. The fix initializes persistent state defensively in every event handler that accesses it, validates the queue before iteration, and bumps the mod version from 0.1.0 to 0.1.1 so Factorio also sees a configuration version change. The fix is not yet game-tested.
-- Geometry mapping: `straight-rail` → `em-high-speed-straight-rail`; `curved-rail-a` → `em-curved-high-speed-rail`; `curved-rail-b` → `em-curved-high-speed-rail-b`; `half-diagonal-rail` → `em-half-diagonal-high-speed-rail`.
-- The adapter stores only primitive replacement metadata in `storage.em.pending_rail_replacements`; storage schema version 1 adds this field through an additive migration. Curved-B was also added to the runtime rail tracking whitelist.
-- API references used for the adapter: [LuaEntity](https://lua-api.factorio.com/2.1.20/classes/LuaEntity.html) (`cancel_upgrade`, `order_deconstruction`) and [runtime events](https://lua-api.factorio.com/2.1.20/events.html) (`on_marked_for_upgrade`, `on_robot_mined_entity`).
+| Scenario | Observed result |
+|---|---|
+| Place custom rail planner directly over existing vanilla rails | Works: custom rails replace vanilla rails; old rails are returned to inventory |
+| Cancel/remove that direct replacement order | Works: drones remove custom rails, vanilla rail ghosts appear, drones restore vanilla rails |
+| Place a custom rail ghost/blueprint ghost over existing vanilla rails | Does not replace: ghost reports that existing rails obstruct placement |
+| Place custom rail blueprint on empty ground | Works: ghosts appear and construction robots build the rails |
+| Cancel custom rail ghost construction on empty ground | Works |
+| Ctrl+Shift blueprint over vanilla rails | Works as a two-stage operation: vanilla rails are marked for deconstruction; after robots remove them, custom rail ghosts appear and robots build them |
+| Cancel/undo after Ctrl+Shift blueprint has produced custom rails | User reported that cancellation “does not work”; exact operation is ambiguous (Ctrl+Z vs cancelling/removing a demolition/build order). Do not assume which one failed |
 
+Important: Ctrl+Shift over vanilla rails has already been tested. Do not ask the user to repeat it as a generic troubleshooting step. The unresolved question is the exact undo/cancellation action and its event sequence.
 
-Do not ask the user to resend that log unless a new test requires it.
+Earlier confirmed tests:
+- Mod loads in Factorio 2.1.20b; reorganized root loaders and `require` paths worked.
+- Unified custom rail planner builds rails with construction robots.
+- Rail identity diagnostics detected vanilla and custom rail types, including custom curved and half-diagonal rails.
+- A 0.1.3 test showed all four prototype eligibility checks passing, but vanilla/custom pairs still did not appear in the green Upgrade Planner. Stop iterating on flags/groups as a way to make that planner display the pairs.
+- User reported and resolved the missing `iron-pipe` prototype load error by switching to vanilla `pipe`.
+- A prior save/runtime crash occurred because `storage.em.pending_rail_replacements` was nil; defensive initialization/guards were added. Do not reintroduce assumptions that storage is initialized.
 
-## 6. Factorio 2.1.20 API findings — rail replacement and undo
+## 7. Blueprint/undo technical findings
 
-Detailed notes and exact-version API links: [FACTORIO_2_1_RAIL_API_NOTES.md](FACTORIO_2_1_RAIL_API_NOTES.md).
+Detailed exact-version notes: [FACTORIO_2_1_RAIL_API_NOTES.md](FACTORIO_2_1_RAIL_API_NOTES.md).
 
-Key conclusions:
-- `fast_replaceable_group` declares fast-replace compatibility; it does not make forced blueprint ghost placement perform a fast replace.
-- `can_place_entity(... forced=true)` ignores entities eligible for deconstruction for the documented ghost build-check types; this is distinct from `create_entity(... fast_replace=true)`.
-- `LuaSurface.create_entity{fast_replace=true, player=..., undo_index=...}` can simulate a player-associated fast replacement and associate it with undo. Promising, but not yet tested for rail planner/robot semantics.
-- `on_marked_for_deconstruction`, `on_pre_ghost_deconstructed`, `on_cancelled_deconstruction`, robot mined/built events, and `on_undo_applied`/`on_redo_applied` expose the lifecycle needed for diagnosis.
-- `on_blueprint_settings_pasted` is not a blueprint placement event. Do not use it as one.
-- `additional_pastable_entities` concerns settings copy/paste, not replacement.
-- Do not manipulate undo-stack actions until the real Ctrl+Z/Ctrl+Y action arrays have been logged.
-- Current runtime replacement remains one-way vanilla→custom; reverse custom→vanilla undo handling is not implemented.
+- `fast_replaceable_group` does not make a forced blueprint ghost perform fast replacement.
+- `can_place_entity(... forced=true)` and `create_entity(... fast_replace=true)` are different engine paths.
+- Factorio 2.1.20 documents `LuaSurface.create_entity{fast_replace=true, player=..., undo_index=...}` for player-associated fast replacement/undo. This is promising but untested for this rail/robot workflow.
+- Useful events include `on_pre_build`, `on_marked_for_deconstruction`, `on_pre_ghost_deconstructed`, `on_cancelled_deconstruction`, robot mined/built events, `on_undo_applied`, and `on_redo_applied`.
+- `on_blueprint_settings_pasted` is not a blueprint-placement event.
+- Do not edit/remove undo-stack actions before observing the actual action arrays and grouping.
+- Current replacement implementation is one-way vanilla→custom and creates the replacement ghost without associating it with the initiating player/undo item.
 
-### Temporary diagnostic build 0.1.5
-- Branch: `diagnostic/blueprint-rail-undo`; PR: https://github.com/zukera2-stack/Factorio/pull/4.
-- CI package and Lua syntax validation passed; ZIP artifact was produced.
-- Observation-only handlers log build, deconstruction, ghost, robot and undo/redo events under `[ElectrifiedMainline][em-rail-diag]`.
-- Required user test: Ctrl+Shift blueprint over vanilla rails, then Ctrl+Z once, then Ctrl+Y once; inspect `factorio-current.log`.
-- This branch is isolated; do not merge into main. No in-game validation has yet been reported.
+### Isolated diagnostic branch
+- Branch: `diagnostic/blueprint-rail-undo`
+- PR: https://github.com/zukera2-stack/Factorio/pull/4
+- Temporary mod version: 0.1.5; main remains 0.1.4.
+- Observation-only handlers log build, deconstruction, ghost, robot, and undo/redo lifecycle under `[ElectrifiedMainline][em-rail-diag]`.
+- Lua syntax and packaging CI passed; ZIP artifact was produced.
+- No in-game validation of this diagnostic build has been reported.
+- Keep the branch/PR isolated; do not merge it into main until diagnostic findings are reviewed.
 
-## 7. Immediate next tasks
+## 8. Next action
 
-1. Run the 0.1.5 diagnostic sequence on branch `diagnostic/blueprint-rail-undo`: Ctrl+Shift blueprint over vanilla rails, Ctrl+Z once, Ctrl+Y once; return `factorio-current.log`.
-2. Analyze the logged event order and undo/redo action arrays before designing reversible replacement logic.
-3. Do not merge the diagnostic branch into main; keep it isolated until findings are reviewed.
-4. After the undo/redo investigation, resume testing the custom selection tool on a short straight segment and all remaining geometries.
-6. Verify signals, stations, train routes, blueprints and mining/refund counts after replacement.
-7. Re-test explicit recipe ingredient format with Bob's Library enabled.
-8. Continue the remaining rail planner, technology and modpack compatibility checks.
-6. Check replacement with trains present and absent; verify signals, stations and train routes after replacement.
-7. Verify blueprints, all four geometries and mining/refund counts for the unified planner.
-8. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
-9. Verify the corrected technology unlock progression in-game.
-10. Compare custom rail placement, mining and blueprint behavior against vanilla rail workflows; verify no vanilla planner behavior changed.
-11. Test direction changes and rail transitions at speed.
-12. Reduce diagnostic polling frequency after rail-shape coverage is understood.
-13. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
-14. Only then implement real power transfer, battery behavior and regeneration.
+1. Establish whether the user's failed “cancel” on the Ctrl+Shift path means Ctrl+Z, cancelling a deconstruction order, or deleting/cancelling a custom rail ghost. Ask only if needed; do not conflate these operations.
+2. Use the 0.1.5 diagnostic build and obtain `factorio-current.log` for the exact sequence: Ctrl+Shift blueprint over vanilla rails → wait until custom rails are built → Ctrl+Z once → Ctrl+Y once. If the user already ran this exact diagnostic build, analyze their log rather than asking for a repeat.
+3. Inspect actual `on_undo_applied`/`on_redo_applied` action arrays and event ordering before designing reversible behavior.
+4. Only after the undo issue is understood, test the selection tool and replacement workflow across all four rail geometries, quality/direction, mixed areas, robots/no robots, signals, stations, trains, and refund counts.
+5. Re-test recipe loading with Bob's Library enabled.
+6. Optimize diagnostic polling.
+7. Only after rail replacement/blueprint foundation is stable, implement real traction power, storage, overhead supply, substations, and regeneration.
 
-## 8. Compatibility rules
+## 9. Compatibility and engineering constraints
 
-- Core mod must not require Bob's, Angel's, Krastorio 2, Space Age or another third-party mod unless an explicit product decision changes this.
+- Keep core dependency base-only.
+- Guard optional prototypes and references.
 - Do not mutate third-party prototypes unnecessarily.
-- Guard every optional prototype/reference.
-- Unknown rail/locomotive/wagon types must be tolerated, not treated as errors.
-- Keep all custom prototype names namespaced with `em-`.
-- Use optional adapters in `compatibility/`; an adapter directory does not mean compatibility has been tested.
-- Preserve vanilla train, signal, station, blueprint and logistics behavior where the engine allows it.
-- Avoid scanning every train/entity each tick; filter to our rolling stock.
-- Introduce versioned `storage.em` migrations before changing persistent data shape.
+- Unknown rail/locomotive/wagon types must be tolerated.
+- Keep custom prototype names namespaced with `em-`.
+- Avoid scanning every train/entity every tick; filter to our rolling stock.
+- Introduce explicit versioned `storage.em` migrations before changing persistent data shape.
+- After Lua changes, validate syntax and run packaging CI. A successful ZIP build is not an in-game test.
 
-## 9. Evidence labels
+## 10. New-chat protocol
 
-Use these labels in notes and answers:
-
-- **Implemented** — visible in current source.
-- **Game-tested** — reproduced in Factorio 2.1.20b.
-- **API-confirmed** — verified against the exact 2.1 API.
-- **Planned** — agreed or proposed, not implemented.
-- **Unverified** — present but not tested or not enough evidence.
-
-A successful GitHub Actions ZIP build proves packaging only, not in-game functionality.
-
-## 10. Working protocol for every new chat
-
-1. Read `AGENTS.md`.
-2. Read this `docs/AI_CONTEXT.md`.
-3. Read `docs/PROJECT_STATE.yaml`.
-4. Inspect current `git` source files relevant to the task.
-5. Check the latest commit and workflow status; never assume this handoff is newer than the repository.
-6. After material changes, update the state and handoff documents in the same change set.
-7. Report exact commit, files changed, workflow result, and what still needs an in-game test.
+1. Read `AGENTS.md`, this file, and `docs/PROJECT_STATE.yaml`.
+2. Check current main/branch/PR state and inspect relevant source; this handoff can become stale.
+3. Continue from the latest confirmed test, not from old planned tasks.
+4. After material changes, update both handoff and YAML state in the same change set.
+5. Report exact commit, files changed, CI result, and remaining in-game tests.

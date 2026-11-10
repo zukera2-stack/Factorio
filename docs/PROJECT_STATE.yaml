@@ -4,8 +4,8 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   mod_directory: ElectrifiedMainline
-  mod_version: 0.1.4
-  diagnostic_test_version: 0.1.5
+  mod_version: "0.1.4"
+  diagnostic_test_version: "0.1.5"
   diagnostic_test_branch: diagnostic/blueprint-rail-undo
   diagnostic_test_branch_isolated: true
   factorio_target: "2.1"
@@ -13,14 +13,14 @@ project:
   last_state_update: "2026-11-10"
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
+  project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
+  github_projects_board_required: false
 
 user_decisions:
   rail_modernization: replace_vanilla_rails_with_high_speed_rails
   power_model: hybrid_overhead_supply_and_onboard_storage
   rolling_stock: vanilla_and_custom_wagons_supported
-  regenerative_braking_priority:
-    - shared_grid
-    - onboard_storage_surplus
+  regenerative_braking_priority: [shared_grid, onboard_storage_surplus]
   high_speed_energy_corridor: true
   substations:
     connect_ordinary_grid_and_high_speed_grid: bidirectional
@@ -42,7 +42,7 @@ implementation:
   custom_rail_prototypes: four_ground_geometries_present_in_source
   custom_rail_planner: unified_rail_planner_present_in_source
   custom_rail_planner_gameplay: game_tested_operational
-  custom_rail_inventory_item: single_em_high_speed_rail_planner
+  custom_rail_inventory_item: em-high-speed-rail
   custom_rail_geometry_item_costs:
     straight: 1
     curved_a: 3
@@ -51,150 +51,108 @@ implementation:
   custom_locomotive_prototype: present_in_source
   custom_wagon_prototypes: cloned_from_vanilla_without_capacity_or_performance_changes
   custom_electric_pole: cloned_from_vanilla_small_electric_pole_uses_ordinary_electric_network
-  rail_identity_diagnostics: present_in_source_and_game_tested_for_vanilla_and_custom_straight_curved_half_diagonal
-  train_tracking: present_in_source
   real_traction_energy: not_implemented
   real_battery_model: not_implemented
   real_substation_transfer: not_implemented
+  real_overhead_power_delivery: not_implemented
   real_regeneration: not_implemented
-  regenerative_braking_technology_effect: recipe_unlock_only_no_battery_capacity_bonus
-  complete_rail_replacement: two_stage_upgrade_event_deconstruction_then_custom_rail_ghost_implemented_not_game_tested
-  vanilla_to_custom_rail_upgrade_runtime: api_confirmed_source_implemented_game_test_required
+  locomotive_energy_source: void_placeholder
+  complete_rail_replacement: partial_two_stage_vanilla_to_custom
+  vanilla_to_custom_rail_runtime: source_implemented_user_tested_for_direct_planner_path
   vanilla_to_custom_rail_geometry_mappings:
     straight-rail: em-high-speed-straight-rail
     curved-rail-a: em-curved-high-speed-rail
     curved-rail-b: em-curved-high-speed-rail-b
     half-diagonal-rail: em-half-diagonal-high-speed-rail
   native_factorio_rail_upgrade_by_construction_robot: unsupported_engine_behavior
-  factorio_2_1_20_api_findings_documented: true
-  forced_blueprint_ghost_is_fast_replace: false
-  forced_ghost_placement_ignores_deconstructible_entities: api_confirmed_for_ghost_build_check_types
-  surface_create_entity_fast_replace_player_undo_support: api_confirmed_game_test_required
-  rail_replacement_undo_redo_reverse_mapping: not_implemented
-  undo_redo_action_payload_inspection: pending_user_diagnostic_log
-  diagnostic_0_1_5_branch: diagnostic/blueprint-rail-undo
-  diagnostic_0_1_5_ci_package: passed
-  diagnostic_0_1_5_game_tested: false
-  rail_replacement_storage_schema_version: 1
-  separate_high_speed_power_grid: not_implemented
-  rail_planner_construction_robot_placement: game_tested_confirmed
-  green_upgrade_planner_rail_replacement_adapter: user_tested_vanilla_custom_pairs_absent_despite_all_eligibility_checks_passing
+  green_upgrade_planner_pairs_visible: false
+  green_upgrade_planner_eligibility_checks: all_four_passed_but_pairs_not_visible_in_user_test
   custom_rail_replacement_selection_tool: source_implemented_game_test_required
-  custom_rail_replacement_selection_scope: whitelist_four_vanilla_ground_rail_geometries
   custom_rail_replacement_runtime_event: on_player_selected_area
   custom_rail_replacement_quality_source: selected_rail_entity_quality
   custom_rail_replacement_robot_workflow: deconstruction_then_matching_custom_rail_ghost
-  rail_upgrade_fast_replaceable_group: explicit_shared_group_for_vanilla_and_custom_rails
-  rail_upgrade_collision_box_mask_validation: data_final_fixes_assertions_added_game_load_required
-  rail_upgrade_planner_eligibility_diagnostics: source_minable_hidden_mining_products_target_visible_build_item_and_geometry_logged
-  rail_upgrade_not_upgradable_flag: removed_from_vanilla_and_custom_rail_pairs_if_present
-  persistent_storage_lazy_initialization: implemented_not_game_tested
-  legacy_save_pending_queue_nil_crash: reproduced_user_reported_fixed_in_0_1_1
-  rail_planner_blueprint_behavior: unverified
-  custom_rail_planner_manual_placement: operational_user_confirmed
-  curved_rail_shape_coverage: both_curved_a_and_b_present_in_source_game_test_not_confirmed
-  compatibility_adapters: none
+  fast_replaceable_group: shared_group_assigned_to_vanilla_and_custom_rails
+  rail_collision_box_mask_validation: assertions_in_data_final_fixes
+  persistent_storage_schema_version: 1
+  persistent_storage_lazy_initialization: implemented_after_user_reported_nil_queue_crash
+  rail_identity_diagnostics: game_tested_for_vanilla_and_custom_rail_types
   rail_diagnostic_interval_ticks: 1
   rail_diagnostic_interval_temporary: true
   train_speed_sampling_interval_ticks: 30
-  locomotive_energy_source: void_placeholder
+  compatibility_adapters: none
+  rail_planner_blueprint_empty_ground: game_tested_operational
+  rail_planner_blueprint_over_vanilla_rails: fails_to_replace_existing_rails
+  rail_planner_direct_manual_placement_over_vanilla_rails: game_tested_operational
+  direct_placement_cancel_restore_vanilla_rails: game_tested_operational
+  ctrl_shift_blueprint_over_vanilla_rails: game_tested_two_stage_deconstruction_then_custom_ghost_build
+  ctrl_shift_blueprint_undo_or_cancel_after_custom_build: reported_not_working_exact_operation_unclear
+  reverse_custom_to_vanilla_undo: not_implemented
+  blueprint_undo_redo_diagnostics: observation_only_handlers_on_isolated_test_branch
+  blueprint_undo_redo_action_payloads: awaiting_diagnostic_log
+  forced_blueprint_ghost_is_fast_replace: false
+  forced_ghost_placement_ignores_deconstructible_entities: api_confirmed_for_supported_ghost_build_check_types
+  surface_create_entity_fast_replace_player_undo_support: api_confirmed_game_test_required
+  factorio_2_1_20_api_findings_documented: true
 
-last_game_test:
+latest_game_test:
   date: "2026-11-10"
   game_version: "2.1.20b"
-  tested_mod_version: "0.1.3"
-  mod_load_success: true
-  upgrade_eligibility_diagnostics_all_four_pairs_passed: true
-  green_upgrade_planner_pairs_visible: false
-  user_confirmed_pairs_absent: true
-  custom_selection_tool_tested: false
-  mod_loaded: true
-  inspected_log_runtime_errors_from_mod: none_found
-  diagnostic_log_lines: 404
-  train_id: 6
-  custom_locomotive_unit_numbers: [720, 722]
-  detected_rail_names:
-    - straight-rail
-    - curved-rail-a
-    - curved-rail-b
-    - half-diagonal-rail
-    - em-high-speed-straight-rail
-  custom_curved_rail_detection: confirmed
-  custom_half_diagonal_detection: confirmed
-  custom_rail_names_detected:
-    - em-high-speed-straight-rail
-    - em-curved-high-speed-rail
-    - em-half-diagonal-high-speed-rail
-  reorganized_root_loaders: game_tested_successfully
-  existing_save_loaded: true
-  session_exit: normal
-  unified_rail_planner_operational: true
-  construction_robots_place_custom_rails: true
-  vanilla_to_custom_rail_upgrade_tested: false
-  green_upgrade_planner_adapter_tested: false
-  green_upgrade_planner_pairs_visible: false
-  upgrade_eligibility_diagnostics_all_four_pairs_passed: true
-  custom_selection_tool_tested: false
-  custom_selection_tool_robot_replacement_tested: false
-  rail_replacement_ghost_creation_tested: false
-  rail_replacement_curved_geometry_tested: false
-  planner_blueprint_behavior_tested: false
-  power_delivery_tested: false
-  battery_tested: false
-  regenerative_braking_tested: false
-  bob_library_warnings_before_fix:
-    present: true
-    cause_identified: legacy_two_element_recipe_ingredient_tuples
-  recipe_ingredient_format:
-    source_updated_to_explicit_factorio_2x_objects: true
-    bob_library_retest_required: true
-  gear_wheel_ingredient:
-    previous: steel-gear-wheel
-    current: iron-gear-wheel
-    reason: core_mod_must_use_base_game_item_not_optional_bobs_item
-  concrete_beam_pipe_ingredient:
-    previous: iron-pipe
-    current: pipe
-    reason: iron-pipe_is_not_a_base_game_item; use_vanilla_pipe
+  tested_mod_version: unknown
+  scenarios:
+    direct_custom_planner_over_vanilla_rails:
+      result: pass
+      notes: vanilla_rails_replaced_and_returned_to_inventory
+    cancel_direct_replacement:
+      result: pass
+      notes: custom_rails_removed_then_vanilla_rail_ghosts_restored_by_robots
+    custom_rail_ghost_over_vanilla_rails:
+      result: fail
+      notes: ghost_reports_existing_rails_as_obstruction
+    custom_blueprint_on_empty_ground:
+      result: pass
+      notes: robots_build_custom_rail_ghosts
+    cancel_custom_ghosts_on_empty_ground:
+      result: pass
+    ctrl_shift_blueprint_over_vanilla_rails:
+      result: partial_pass
+      notes: vanilla_rails_deconstructed_then_custom_rail_ghosts_built_by_robots
+    undo_or_cancel_after_ctrl_shift_replacement:
+      result: unresolved
+      notes: user_says_cancellation_does_not_work_but_did_not_specify_ctrl_z_vs_cancelling_deconstruction_or_removing_ghost
+  diagnostic_branch:
+    branch: diagnostic/blueprint-rail-undo
+    pull_request: https://github.com/zukera2-stack/Factorio/pull/4
+    mod_version: "0.1.5"
+    ci_lua_syntax_and_package: passed
+    in_game_test: not_reported
+    merge_to_main: prohibited_until_diagnostic_review
 
-latest_load_attempt:
-  date: "2026-11-10"
-  game_version: "2.1.20b"
-  tested_mod_version: "0.1.3"
-  mod_load_success: true
-  inspected_log_runtime_errors_from_mod: none_found
-  upgrade_eligibility_diagnostics_all_four_pairs_passed: true
-  green_upgrade_planner_pairs_visible: false
-  user_confirmed_pairs_absent: true
-  session_exit: normal
-  previous_runtime_failure_resolved:
-    error: "on_tick line 352: next(storage.em.pending_rail_replacements) received nil at tick 70465"
-    resolution: "0.1.1 initializes storage defensively in every event handler that accesses it, guards the pending queue before iteration, and bumps the mod version to trigger configuration migration"
-  previous_load_error_resolved: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]; replaced with vanilla pipe and user confirmed mod loads"
+historical_confirmed:
+  mod_load_factorio_2_1_20b: passed
+  reorganized_root_loaders_and_require_paths: game_tested
+  construction_robots_build_custom_rails: game_tested
+  custom_curved_and_half_diagonal_rail_identity_detection: game_tested
+  bob_library_ingredient_format: explicit_factorio_2x_objects_added_retest_required
+  concrete_beam_pipe_ingredient: vanilla_pipe_used_instead_of_nonexistent_iron_pipe
+  runtime_pending_queue_nil_crash: user_reported_and_defensive_initialization_fix_added
+  green_upgrade_planner_pairs: absent_despite_prototype_eligibility_checks
 
 next_actions:
-  - install_diagnostic_0_1_5_build_from_diagnostic_blueprint_rail_undo_branch
-  - test_ctrl_shift_blueprint_over_vanilla_rails_then_ctrl_z_then_ctrl_y_once_each
-  - provide_factorio_current_log_with_em_rail_diag_entries
-  - inspect_undo_redo_action_payloads_before_designing_reversible_rail_replacement
-  - install_0_1_4_and_verify_custom_rail_replacement_planner_unlock_and_crafting
-  - game_test_custom_selection_tool_on_short_straight_vanilla_rail_segment
-  - verify_construction_robots_replace_straight_rail_with_matching_custom_ghost
-  - game_test_curved_a_curved_b_and_half_diagonal_replacement_geometry_direction_and_quality
-  - verify_custom_rails_are_not_selected_by_replacement_tool
-  - test_replacement_with_and_without_construction_robots_in_range
-  - test_cancelling_deconstruction_clears_pending_replacement
-  - verify_signals_stations_and_train_routes_after_rail_replacement
-  - retest_explicit_recipe_ingredient_format_with_bobs_library_enabled
-  - game_test_all_four_custom_rail_geometries_and_mining_refund_counts
-  - game_test_blueprint_behavior_for_unified_planner
-  - verify_corrected_technology_unlock_progression_in_game
-  - verify_all_prototype_item_and_technology_references_and_iron_gear_wheel_in_game
+  - establish_exact_meaning_of_failed_ctrl_shift_cancellation_or_undo
+  - obtain_or_analyze_diagnostic_0_1_5_factorio_log_for_ctrl_z_ctrl_y_sequence
+  - inspect_undo_redo_action_arrays_before_implementing_reversible_replacement
+  - game_test_custom_selection_tool_and_robot_replacement
+  - test_all_four_rail_geometries_directions_and_qualities
+  - test_mixed_selection_area_does_not_replace_existing_custom_rails
+  - test_replacement_with_and_without_construction_robots
+  - test_deconstruction_cancellation_and_ghost_removal
+  - verify_signals_stations_train_routes_and_refund_counts_after_replacement
+  - retest_explicit_recipe_ingredient_format_with_bobs_library
+  - game_test_blueprints_for_all_four_custom_rail_geometries
+  - verify_technology_unlock_progression
   - test_direction_changes_and_rail_transitions_at_speed
   - optimize_rail_diagnostic_polling
-  - add_powered_rail_state_after_identity_validation
-  - continue_modpack_compatibility_audit
-  - implement_real_power_transfer_and_storage_after_foundation
+  - implement_real_power_transfer_storage_and_regeneration_after_rail_foundation
 
 compatibility_policy:
   core_requires_only_base: true
@@ -205,7 +163,7 @@ compatibility_policy:
   versioned_storage_migrations_required_before_storage_schema_changes: true
 
 evidence_policy:
-  labels: [implemented, game_tested, api_confirmed, planned, unverified]
+  labels: [implemented, game_tested, api_confirmed, user_observed, planned, unverified]
   successful_zip_build_means_game_test: false
 
 repository_structure:
