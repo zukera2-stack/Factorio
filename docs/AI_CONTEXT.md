@@ -120,19 +120,20 @@ Do not ask the user to resend that log unless a new test requires it.
 
 ## 6. Immediate next tasks
 
-1. Install mod version 0.1.1 and load the existing save that previously crashed at tick 70465; verify the nil-queue runtime error is gone.
-2. Game-test the green-upgrade-planner adapter: configure the four vanilla → custom geometry mappings, apply it to a short straight segment, and verify bots deconstruct the vanilla rail then build the matching ВСМ ghost.
+1. Install mod version 0.1.2 and load the existing save; verify it loads and the data-stage log reports all four validated collision-box/mask pairs.
+2. Test whether the shared fast-replaceable group makes vanilla rails selectable/configurable in the green upgrade planner.
+3. If pair configuration succeeds, apply it to a short straight segment and verify bots deconstruct the vanilla rail then build the matching ВСМ ghost.
 4. Repeat for curved-A, curved-B and half-diagonal rails; verify direction/orientation and automatic rail reconnection.
-4. Test whether the shared fast-replaceable group makes vanilla rails selectable/configurable in the green upgrade planner. Confirm data-stage collision checks pass at load. If pair configuration succeeds, verify the planner raises the expected upgrade event for all four mappings on Factorio 2.1.20b. If rails remain unselectable, use a dedicated custom selection tool as the fallback.
-5. Check replacement with trains present and absent; verify signals, stations and train routes after replacement.
-6. Verify blueprints, all four geometries and mining/refund counts for the unified planner.
-7. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
-8. Verify the corrected technology unlock progression in-game.
-9. Compare custom rail placement, mining and blueprint behavior against vanilla rail workflows; verify no vanilla planner behavior changed.
-10. Test direction changes and rail transitions at speed.
-11. Reduce diagnostic polling frequency after rail-shape coverage is understood.
-12. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
-13. Only then implement real power transfer, battery behavior and regeneration.
+5. If rails remain unselectable or the adapter does not fire, use a dedicated custom selection tool as the fallback.
+6. Check replacement with trains present and absent; verify signals, stations and train routes after replacement.
+7. Verify blueprints, all four geometries and mining/refund counts for the unified planner.
+8. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
+9. Verify the corrected technology unlock progression in-game.
+10. Compare custom rail placement, mining and blueprint behavior against vanilla rail workflows; verify no vanilla planner behavior changed.
+11. Test direction changes and rail transitions at speed.
+12. Reduce diagnostic polling frequency after rail-shape coverage is understood.
+13. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
+14. Only then implement real power transfer, battery behavior and regeneration.
 
 ## 7. Compatibility rules
 
