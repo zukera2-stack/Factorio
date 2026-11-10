@@ -4,7 +4,7 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   mod_directory: ElectrifiedMainline
-  mod_version: 0.1.1
+  mod_version: 0.1.2
   factorio_target: "2.1"
   user_tested_game: "2.1.20b"
   last_state_update: "2026-11-10"
@@ -66,7 +66,7 @@ implementation:
   rail_replacement_storage_schema_version: 1
   separate_high_speed_power_grid: not_implemented
   rail_planner_construction_robot_placement: game_tested_confirmed
-  green_upgrade_planner_rail_replacement_adapter: source_implemented_api_confirmed_game_test_required
+  green_upgrade_planner_rail_replacement_adapter: source_implemented_api_confirmed_game_test_required\n  rail_upgrade_fast_replaceable_group: explicit_shared_group_for_vanilla_and_custom_rails\n  rail_upgrade_collision_box_mask_validation: data_final_fixes_assertions_added_game_load_required
   persistent_storage_lazy_initialization: implemented_not_game_tested
   legacy_save_pending_queue_nil_crash: reproduced_user_reported_fixed_in_0_1_1
   rail_planner_blueprint_behavior: unverified
