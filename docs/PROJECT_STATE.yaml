@@ -148,10 +148,16 @@ last_game_test:
 latest_load_attempt:
   date: "2026-11-10"
   game_version: "2.1.20b"
-  mod_load_success: false
-  previous_error: "on_tick line 352: next(storage.em.pending_rail_replacements) received nil at tick 70465"
-  cause: "persistent replacement queue was absent in a loaded save; initialization relied on on_init/on_configuration_changed, which is not guaranteed for runtime-code-only changes with unchanged mod version"
-  resolution: "0.1.1 initializes storage defensively in every event handler that accesses it, guards the pending queue before iteration, and bumps the mod version to trigger configuration migration; requires in-game retest"
+  tested_mod_version: "0.1.3"
+  mod_load_success: true
+  inspected_log_runtime_errors_from_mod: none_found
+  upgrade_eligibility_diagnostics_all_four_pairs_passed: true
+  green_upgrade_planner_pairs_visible: false
+  user_confirmed_pairs_absent: true
+  session_exit: normal
+  previous_runtime_failure_resolved:
+    error: "on_tick line 352: next(storage.em.pending_rail_replacements) received nil at tick 70465"
+    resolution: "0.1.1 initializes storage defensively in every event handler that accesses it, guards the pending queue before iteration, and bumps the mod version to trigger configuration migration"
   previous_load_error_resolved: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]; replaced with vanilla pipe and user confirmed mod loads"
 
 next_actions:
