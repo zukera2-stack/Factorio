@@ -1,7 +1,7 @@
 # Electrified Mainline — AI handoff
 
 > Read this file first when continuing the project in a new chat. It is a compact working handoff, not a replacement for source inspection.
-> Last updated: 2026-11-10 — fixed invalid vanilla recipe ingredient reference (`iron-pipe` → `pipe`) after in-game load failure.
+> Last updated: 2026-11-10 — fixed invalid vanilla recipe ingredient reference (`iron-pipe` → `pipe`); user confirmed unified rail planner works and construction robots place its rails.
 
 ## 1. Repository
 
@@ -89,7 +89,7 @@ Factorio root entry points must remain at the mod root. Do not move `info.json`,
 - Regenerative energy transfer to grid or battery.
 - Train mass model and cargo/fluid payload mass.
 - Full rail replacement/upgrade workflow.
-- In-game rail-planner placement, blueprint and construction-robot behavior for the unified planner (source implementation exists; gameplay remains unverified).
+- Unified rail planner operation is game-tested; user confirmed construction robots place its custom rails. Full blueprint behavior and all geometry-specific cases remain unverified.
 - Full interoperability testing with large modpacks.
 - Optional compatibility adapters.
 
@@ -106,20 +106,22 @@ On 2026-11-09 the user confirmed the mod launches in Factorio 2.1.20b. A supplie
 - Custom curved and custom half-diagonal rail identity detection is now confirmed in the supplied log; this is still identity detection only, not proof of electrical power.
 - The log did not prove power delivery, battery behavior, traction energy or regeneration.
 - Bob's Library emitted ingredient validation warnings because recipe ingredients used legacy two-element tuples. The source has now been converted to explicit Factorio 2.x ingredient objects (`type`, `name`, `amount`). This correction still requires a fresh game test with Bob's Library enabled.
-- On 2026-11-10, the user reported a fresh mod-load failure at `em-concrete-beam.ingredients[2]`: `iron-pipe` does not exist in base Factorio. The source recipe was corrected to use the vanilla `pipe` item. The corrected build still requires an in-game load test.
+- On 2026-11-10, the user reported a fresh mod-load failure at `em-concrete-beam.ingredients[2]`: `iron-pipe` does not exist in base Factorio. The source recipe was corrected to use the vanilla `pipe` item; the corrected build passed CI and the user subsequently confirmed the mod loads and the rail planner works.
+- On 2026-11-10, the user confirmed that construction robots successfully place custom rails using the unified planner. The vanilla-to-custom rail upgrade workflow has not yet been tested.
 
 Do not ask the user to resend that log unless a new test requires it.
 
 ## 6. Immediate next tasks
 
-1. Game-test the unified custom rail planner: manual placement, all four geometries, mining/refund counts, blueprint ghosts and construction robots.
-2. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
-3. Verify the corrected technology unlock progression in-game.
-4. Compare custom rail placement, mining, blueprinting and construction-robot behavior against vanilla rail workflows; verify no vanilla planner behavior changed.
-5. Test direction changes and rail transitions at speed.
-6. Reduce diagnostic polling frequency after rail-shape coverage is understood.
-7. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
-8. Only then implement real power transfer, battery behavior and regeneration.
+1. Test upgrading an existing vanilla rail line to custom ВСМ rails using the upgrade planner; check straight, curved and diagonal sections, including robot execution.
+2. Verify blueprints, all four geometries and mining/refund counts for the unified planner.
+3. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
+4. Verify the corrected technology unlock progression in-game.
+5. Compare custom rail placement, mining and blueprint behavior against vanilla rail workflows; verify no vanilla planner behavior changed.
+6. Test direction changes and rail transitions at speed.
+7. Reduce diagnostic polling frequency after rail-shape coverage is understood.
+8. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
+9. Only then implement real power transfer, battery behavior and regeneration.
 
 ## 7. Compatibility rules
 

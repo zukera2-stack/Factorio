@@ -38,7 +38,7 @@ interoperability:
 implementation:
   custom_rail_prototypes: four_ground_geometries_present_in_source
   custom_rail_planner: unified_rail_planner_present_in_source
-  custom_rail_planner_gameplay: unverified
+  custom_rail_planner_gameplay: game_tested_operational
   custom_rail_inventory_item: single_em_high_speed_rail_planner
   custom_rail_geometry_item_costs:
     straight: 1
@@ -57,9 +57,10 @@ implementation:
   regenerative_braking_technology_effect: recipe_unlock_only_no_battery_capacity_bonus
   complete_rail_replacement: not_implemented
   separate_high_speed_power_grid: not_implemented
-  rail_planner_blueprint_and_construction_robot_compatibility: unverified
-  custom_rail_planner_manual_placement: unverified
-  curved_rail_shape_coverage: both_curved_a_and_b_present_in_source_unverified
+  rail_planner_construction_robot_placement: game_tested_confirmed
+  rail_planner_blueprint_behavior: unverified
+  custom_rail_planner_manual_placement: operational_user_confirmed
+  curved_rail_shape_coverage: both_curved_a_and_b_present_in_source_game_test_not_confirmed
   compatibility_adapters: none
   rail_diagnostic_interval_ticks: 1
   rail_diagnostic_interval_temporary: true
@@ -67,7 +68,7 @@ implementation:
   locomotive_energy_source: void_placeholder
 
 last_game_test:
-  date: "2026-11-09"
+  date: "2026-11-10"
   game_version: "2.1.20b"
   mod_loaded: true
   inspected_log_runtime_errors_from_mod: none_found
@@ -89,6 +90,10 @@ last_game_test:
   reorganized_root_loaders: game_tested_successfully
   existing_save_loaded: true
   session_exit: normal
+  unified_rail_planner_operational: true
+  construction_robots_place_custom_rails: true
+  vanilla_to_custom_rail_upgrade_tested: false
+  planner_blueprint_behavior_tested: false
   power_delivery_tested: false
   battery_tested: false
   regenerative_braking_tested: false
@@ -110,16 +115,16 @@ last_game_test:
 latest_load_attempt:
   date: "2026-11-10"
   game_version: "2.1.20b"
-  mod_load_success: false
-  error: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]"
-  cause: "invalid base-game item name in recipe"
-  source_fix: "replaced iron-pipe with pipe; in-game retest pending"
+  mod_load_success: true
+  previous_error: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]"
+  resolution: "replaced iron-pipe with vanilla pipe; corrected build passed CI; user confirmed mod loads"
 
 next_actions:
   - new_module_loaders_game_tested_successfully
   - retest_explicit_recipe_ingredient_format_with_bobs_library_enabled
-  - game_test_unified_custom_rail_planner_manual_placement_and_all_four_geometries
-  - game_test_custom_rail_mining_refund_counts_blueprints_and_construction_robots
+  - game_test_upgrade_planner_vanilla_rail_line_to_custom_high_speed_rails
+  - game_test_all_four_custom_rail_geometries_and_mining_refund_counts
+  - game_test_blueprint_behavior_for_unified_planner
   - verify_corrected_technology_unlock_progression_in_game
   - verify_all_prototype_item_and_technology_references_and_iron_gear_wheel_in_game
   - test_direction_changes_and_rail_transitions_at_speed
