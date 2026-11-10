@@ -6,10 +6,10 @@
 local UPGRADE_GROUP = "em-rail-upgrade"
 
 local rail_pairs = {
-    { vanilla = "straight-rail", custom = "em-high-speed-straight-rail" },
-    { vanilla = "curved-rail-a", custom = "em-curved-high-speed-rail" },
-    { vanilla = "curved-rail-b", custom = "em-curved-high-speed-rail-b" },
-    { vanilla = "half-diagonal-rail", custom = "em-half-diagonal-high-speed-rail" },
+    { type = "straight-rail", vanilla = "straight-rail", custom = "em-high-speed-straight-rail" },
+    { type = "curved-rail-a", vanilla = "curved-rail-a", custom = "em-curved-high-speed-rail" },
+    { type = "curved-rail-b", vanilla = "curved-rail-b", custom = "em-curved-high-speed-rail-b" },
+    { type = "half-diagonal-rail", vanilla = "half-diagonal-rail", custom = "em-half-diagonal-high-speed-rail" },
 }
 
 local function tables_equal(a, b)
@@ -26,14 +26,9 @@ local function tables_equal(a, b)
 end
 
 for _, pair in pairs(rail_pairs) do
-    local vanilla = data.raw["straight-rail"][pair.vanilla]
-        or data.raw["curved-rail-a"][pair.vanilla]
-        or data.raw["curved-rail-b"][pair.vanilla]
-        or data.raw["half-diagonal-rail"][pair.vanilla]
-    local custom = data.raw["straight-rail"][pair.custom]
-        or data.raw["curved-rail-a"][pair.custom]
-        or data.raw["curved-rail-b"][pair.custom]
-        or data.raw["half-diagonal-rail"][pair.custom]
+    local prototypes = data.raw[pair.type]
+    local vanilla = prototypes and prototypes[pair.vanilla]
+    local custom = prototypes and prototypes[pair.custom]
 
     assert(vanilla, "ElectrifiedMainline: missing vanilla rail " .. pair.vanilla)
     assert(custom, "ElectrifiedMainline: missing custom rail " .. pair.custom)
