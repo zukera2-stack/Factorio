@@ -1,7 +1,7 @@
 # Electrified Mainline — AI handoff
 
 > Read this file first when continuing the project in a new chat. It is a compact working handoff, not a replacement for source inspection.
-> Last updated: 2026-11-10 — added explicit shared fast-replaceable group and data-stage validation for vanilla/custom rail upgrade pairs; bumped mod version to 0.1.2.
+> Last updated: 2026-11-10 — added Upgrade Planner eligibility diagnostics, removes not-upgradable from the four vanilla/custom rail pairs when present, and bumped mod version to 0.1.3.
 
 ## 1. Repository
 
@@ -9,7 +9,7 @@
 - Main branch: `main`
 - Mod directory: `ElectrifiedMainline/`
 - Target game: Factorio 2.1.20b (user-confirmed); metadata targets Factorio 2.1.
-- Current mod version: 0.1.2.
+- Current mod version: 0.1.3.
 - User explicitly authorized direct repository changes.
 - User wants work to be resumable from any chat. Read this file, then `docs/PROJECT_STATE.yaml`, then inspect current source.
 
@@ -82,7 +82,7 @@ Factorio root entry points must remain at the mod root. Do not move `info.json`,
 - Previous train speed is stored every 30 ticks as scaffolding.
 - Two-stage vanilla-to-ВСМ replacement is implemented in runtime source: intercept `on_marked_for_upgrade`, cancel the engine upgrade, order deconstruction, then create a matching ВСМ rail ghost after the old rail is mined. This uses the standard green upgrade planner as the selection/mapping UI; it does not rely on Factorio's unsupported in-place rail robot upgrade.
 - Persistent runtime state is initialized defensively at the start of every event handler that reads it; `on_tick` also validates the pending replacement queue before iterating it. This protects saves where a runtime-code-only update did not trigger `on_configuration_changed`.
-- The replacement workflow is API-backed but not yet game-tested. `data-final-fixes.lua` assigns `fast_replaceable_group = "em-rail-upgrade"` to all four vanilla and all four custom rails, then asserts matching `collision_box` and `collision_mask` for each geometry pair. This is a compatibility experiment; it does not prove that the green planner will select rails or that robots can replace them. Configure four geometry mappings in the green upgrade planner: straight → straight, curved-A → curved-A, curved-B → curved-B, half-diagonal → half-diagonal.
+- The replacement workflow is API-backed but not yet game-tested. `data-final-fixes.lua` assigns `fast_replaceable_group = "em-rail-upgrade"` to all four vanilla and all four custom rails, removes `not-upgradable` from either side if present, and logs source eligibility (`minable`, `hidden`, hidden mining products), target visibility/build item, and collision-box/mask compatibility for every geometry pair. These diagnostics do not prove that the green planner will display the pairs or that robots can replace rails. Configure four geometry mappings in the green upgrade planner: straight → straight, curved-A → curved-A, curved-B → curved-B, half-diagonal → half-diagonal.
 
 ### Not implemented / not verified
 - Actual electric traction energy consumption.
@@ -120,8 +120,8 @@ Do not ask the user to resend that log unless a new test requires it.
 
 ## 6. Immediate next tasks
 
-1. Install mod version 0.1.2 and load the existing save; verify it loads and the data-stage log reports all four validated collision-box/mask pairs.
-2. Test whether the shared fast-replaceable group makes vanilla rails selectable/configurable in the green upgrade planner.
+1. Install mod version 0.1.3 and load the existing save; verify it loads and inspect all four `[upgrade-check]` log lines for source/target eligibility, visible build items, and geometry compatibility.
+2. Test whether the diagnosed and corrected prototype properties make vanilla rails selectable/configurable in the green upgrade planner.
 3. If pair configuration succeeds, apply it to a short straight segment and verify bots deconstruct the vanilla rail then build the matching ВСМ ghost.
 4. Repeat for curved-A, curved-B and half-diagonal rails; verify direction/orientation and automatic rail reconnection.
 5. If rails remain unselectable or the adapter does not fire, use a dedicated custom selection tool as the fallback.
