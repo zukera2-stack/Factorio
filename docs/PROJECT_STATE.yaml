@@ -4,7 +4,7 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   mod_directory: ElectrifiedMainline
-  mod_version: 0.1.0
+  mod_version: 0.1.1
   factorio_target: "2.1"
   user_tested_game: "2.1.20b"
   last_state_update: "2026-11-10"
@@ -67,6 +67,8 @@ implementation:
   separate_high_speed_power_grid: not_implemented
   rail_planner_construction_robot_placement: game_tested_confirmed
   green_upgrade_planner_rail_replacement_adapter: source_implemented_api_confirmed_game_test_required
+  persistent_storage_lazy_initialization: implemented_not_game_tested
+  legacy_save_pending_queue_nil_crash: reproduced_user_reported_fixed_in_0_1_1
   rail_planner_blueprint_behavior: unverified
   custom_rail_planner_manual_placement: operational_user_confirmed
   curved_rail_shape_coverage: both_curved_a_and_b_present_in_source_game_test_not_confirmed
@@ -127,11 +129,14 @@ last_game_test:
 latest_load_attempt:
   date: "2026-11-10"
   game_version: "2.1.20b"
-  mod_load_success: true
-  previous_error: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]"
-  resolution: "replaced iron-pipe with vanilla pipe; corrected build passed CI; user confirmed mod loads"
+  mod_load_success: false
+  previous_error: "on_tick line 352: next(storage.em.pending_rail_replacements) received nil at tick 70465"
+  cause: "persistent replacement queue was absent in a loaded save; initialization relied on on_init/on_configuration_changed, which is not guaranteed for runtime-code-only changes with unchanged mod version"
+  resolution: "0.1.1 initializes storage defensively in every event handler that accesses it, guards the pending queue before iteration, and bumps the mod version to trigger configuration migration; requires in-game retest"
+  previous_load_error_resolved: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]; replaced with vanilla pipe and user confirmed mod loads"
 
 next_actions:
+  - install_0_1_1_and_reload_existing_save_to_verify_pending_queue_nil_crash_is_fixed
   - game_test_green_upgrade_planner_two_stage_vanilla_to_custom_rail_replacement
   - configure_and_test_all_four_vanilla_to_custom_rail_geometry_mappings
   - test_replacement_with_trains_present_and_absent

@@ -1,7 +1,7 @@
 # Electrified Mainline — AI handoff
 
 > Read this file first when continuing the project in a new chat. It is a compact working handoff, not a replacement for source inspection.
-> Last updated: 2026-11-10 — added API-backed two-stage vanilla-to-ВСМ rail replacement through the green upgrade planner; in-game verification is still required.
+> Last updated: 2026-11-10 — fixed legacy-save runtime initialization for the rail-replacement queue; bumped mod version to 0.1.1 to trigger configuration migration.
 
 ## 1. Repository
 
@@ -81,6 +81,7 @@ Factorio root entry points must remain at the mod root. Do not move `info.json`,
 - Rail diagnostic polling currently runs every tick; this is temporary and must be optimized after testing.
 - Previous train speed is stored every 30 ticks as scaffolding.
 - Two-stage vanilla-to-ВСМ replacement is implemented in runtime source: intercept `on_marked_for_upgrade`, cancel the engine upgrade, order deconstruction, then create a matching ВСМ rail ghost after the old rail is mined. This uses the standard green upgrade planner as the selection/mapping UI; it does not rely on Factorio's unsupported in-place rail robot upgrade.
+- Persistent runtime state is initialized defensively at the start of every event handler that reads it; `on_tick` also validates the pending replacement queue before iterating it. This protects saves where a runtime-code-only update did not trigger `on_configuration_changed`.
 - The replacement workflow is API-backed but not yet game-tested. Configure four geometry mappings in the green upgrade planner: straight → straight, curved-A → curved-A, curved-B → curved-B, half-diagonal → half-diagonal.
 
 ### Not implemented / not verified
@@ -109,6 +110,7 @@ On 2026-11-09 the user confirmed the mod launches in Factorio 2.1.20b. A supplie
 - Bob's Library emitted ingredient validation warnings because recipe ingredients used legacy two-element tuples. The source has now been converted to explicit Factorio 2.x ingredient objects (`type`, `name`, `amount`). This correction still requires a fresh game test with Bob's Library enabled.
 - On 2026-11-10, the user reported a fresh mod-load failure at `em-concrete-beam.ingredients[2]`: `iron-pipe` does not exist in base Factorio. The source recipe was corrected to use the vanilla `pipe` item; the corrected build passed CI and the user subsequently confirmed the mod loads and the rail planner works.
 - On 2026-11-10, the user reported that vanilla rails are not replaced by placing the custom rail planner over them and that the green upgrade planner did not work. API research found that Factorio's built-in robot upgrade operation is not supported for rails. Runtime code now intercepts compatible green-planner upgrade marks, cancels the native upgrade, queues rail deconstruction, and creates a custom rail ghost one tick after mining. This is a two-stage replacement adapter, not native in-place rail upgrading, and has not yet been tested in-game.
+- On 2026-11-10, the user tested the replacement build and reported a runtime crash at `control.lua:352`: `next(storage.em.pending_rail_replacements)` received nil on tick 70465. This shows the persistent queue was absent in the loaded save; relying only on `on_init`/`on_configuration_changed` was insufficient for a runtime-code-only update with unchanged mod version. The fix initializes persistent state defensively in every event handler that accesses it, validates the queue before iteration, and bumps the mod version from 0.1.0 to 0.1.1 so Factorio also sees a configuration version change. The fix is not yet game-tested.
 - Geometry mapping: `straight-rail` → `em-high-speed-straight-rail`; `curved-rail-a` → `em-curved-high-speed-rail`; `curved-rail-b` → `em-curved-high-speed-rail-b`; `half-diagonal-rail` → `em-half-diagonal-high-speed-rail`.
 - The adapter stores only primitive replacement metadata in `storage.em.pending_rail_replacements`; storage schema version 1 adds this field through an additive migration. Curved-B was also added to the runtime rail tracking whitelist.
 - API references used for the adapter: [LuaEntity](https://lua-api.factorio.com/2.1.20/classes/LuaEntity.html) (`cancel_upgrade`, `order_deconstruction`) and [runtime events](https://lua-api.factorio.com/2.1.20/events.html) (`on_marked_for_upgrade`, `on_robot_mined_entity`).
@@ -118,18 +120,19 @@ Do not ask the user to resend that log unless a new test requires it.
 
 ## 6. Immediate next tasks
 
-1. Game-test the new green-upgrade-planner adapter: configure the four vanilla → custom geometry mappings, apply it to a short straight segment, and verify bots deconstruct the vanilla rail then build the matching ВСМ ghost.
-2. Repeat for curved-A, curved-B and half-diagonal rails; verify direction/orientation and automatic rail reconnection.
-3. Verify the green planner raises the expected upgrade event for all four configured rail mappings on Factorio 2.1.20b. If the planner UI refuses a rail mapping, use a dedicated custom selection tool as the fallback instead of mutating vanilla prototypes.
-4. Check replacement with trains present and absent; verify signals, stations and train routes after replacement.
-5. Verify blueprints, all four geometries and mining/refund counts for the unified planner.
-6. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
-7. Verify the corrected technology unlock progression in-game.
-8. Compare custom rail placement, mining and blueprint behavior against vanilla rail workflows; verify no vanilla planner behavior changed.
-9. Test direction changes and rail transitions at speed.
-10. Reduce diagnostic polling frequency after rail-shape coverage is understood.
-11. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
-12. Only then implement real power transfer, battery behavior and regeneration.
+1. Install mod version 0.1.1 and load the existing save that previously crashed at tick 70465; verify the nil-queue runtime error is gone.
+2. Game-test the green-upgrade-planner adapter: configure the four vanilla → custom geometry mappings, apply it to a short straight segment, and verify bots deconstruct the vanilla rail then build the matching ВСМ ghost.
+3. Repeat for curved-A, curved-B and half-diagonal rails; verify direction/orientation and automatic rail reconnection.
+4. Verify the green planner raises the expected upgrade event for all four configured rail mappings on Factorio 2.1.20b. If the planner UI refuses a rail mapping, use a dedicated custom selection tool as the fallback instead of mutating vanilla prototypes.
+5. Check replacement with trains present and absent; verify signals, stations and train routes after replacement.
+6. Verify blueprints, all four geometries and mining/refund counts for the unified planner.
+7. Re-test recipe loading with Bob's Library after the explicit ingredient-format correction.
+8. Verify the corrected technology unlock progression in-game.
+9. Compare custom rail placement, mining and blueprint behavior against vanilla rail workflows; verify no vanilla planner behavior changed.
+10. Test direction changes and rail transitions at speed.
+11. Reduce diagnostic polling frequency after rail-shape coverage is understood.
+12. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
+13. Only then implement real power transfer, battery behavior and regeneration.
 
 ## 7. Compatibility rules
 

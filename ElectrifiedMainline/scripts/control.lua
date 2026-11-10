@@ -61,6 +61,7 @@ local function replacement_key(entity)
 end
 
 local function on_marked_for_upgrade(event)
+    ensure_storage()
     local entity = event.entity
     local target = event.target
     if not (entity and entity.valid and target) then return end
@@ -158,6 +159,7 @@ local function process_pending_rail_ghosts(tick)
 end
 
 local function on_cancelled_deconstruction(event)
+    ensure_storage()
     local entity = event.entity
     if not (entity and entity.valid) then return end
     storage.em.pending_rail_replacements[replacement_key(entity)] = nil
@@ -199,6 +201,7 @@ local function mark_rails_near_pole(pole)
 end
 
 local function on_built(event)
+    ensure_storage()
     local entity = event.entity
     if not (entity and entity.valid) then return end
 
@@ -210,6 +213,7 @@ local function on_built(event)
 end
 
 local function cleanup_train_for_entity(event)
+    ensure_storage()
     local entity = event.entity
     if not (entity and entity.valid) then return end
 
@@ -325,6 +329,7 @@ local function initialize_train_state(train, previous_state)
 end
 
 local function on_train_created(event)
+    ensure_storage()
     local train = event.train
     if not (train and train.valid) then return end
 
@@ -345,11 +350,16 @@ local function on_train_created(event)
 end
 
 local function on_tick(event)
+    -- Saves made before the replacement queue existed may not run
+    -- on_configuration_changed when only runtime code changed. Initialize
+    -- persistent state lazily before any tick handler reads it.
+    ensure_storage()
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
 
-    if next(storage.em.pending_rail_replacements) then
+    local pending_replacements = storage.em.pending_rail_replacements
+    if pending_replacements and next(pending_replacements) then
         process_pending_rail_ghosts(event.tick)
     end
 
