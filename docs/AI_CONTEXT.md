@@ -1,7 +1,7 @@
 # Electrified Mainline — AI handoff
 
 > Read this file first when continuing the project in a new chat. It is a compact working handoff, not a replacement for source inspection.
-> Last updated: 2026-11-09 — prototype/localization audit started; recipe ingredient format corrected; vanilla gear-wheel dependency fixed.
+> Last updated: 2026-11-10 — fixed invalid vanilla recipe ingredient reference (`iron-pipe` → `pipe`) after in-game load failure.
 
 ## 1. Repository
 
@@ -106,6 +106,7 @@ On 2026-11-09 the user confirmed the mod launches in Factorio 2.1.20b. A supplie
 - Custom curved and custom half-diagonal rail identity detection is now confirmed in the supplied log; this is still identity detection only, not proof of electrical power.
 - The log did not prove power delivery, battery behavior, traction energy or regeneration.
 - Bob's Library emitted ingredient validation warnings because recipe ingredients used legacy two-element tuples. The source has now been converted to explicit Factorio 2.x ingredient objects (`type`, `name`, `amount`). This correction still requires a fresh game test with Bob's Library enabled.
+- On 2026-11-10, the user reported a fresh mod-load failure at `em-concrete-beam.ingredients[2]`: `iron-pipe` does not exist in base Factorio. The source recipe was corrected to use the vanilla `pipe` item. The corrected build still requires an in-game load test.
 
 Do not ask the user to resend that log unless a new test requires it.
 

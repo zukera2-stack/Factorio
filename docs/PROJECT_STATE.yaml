@@ -7,7 +7,7 @@ project:
   mod_version: 0.1.0
   factorio_target: "2.1"
   user_tested_game: "2.1.20b"
-  last_state_update: "2026-11-09"
+  last_state_update: "2026-11-10"
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
 
@@ -102,6 +102,18 @@ last_game_test:
     previous: steel-gear-wheel
     current: iron-gear-wheel
     reason: core_mod_must_use_base_game_item_not_optional_bobs_item
+  concrete_beam_pipe_ingredient:
+    previous: iron-pipe
+    current: pipe
+    reason: iron-pipe_is_not_a_base_game_item; use_vanilla_pipe
+
+latest_load_attempt:
+  date: "2026-11-10"
+  game_version: "2.1.20b"
+  mod_load_success: false
+  error: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]"
+  cause: "invalid base-game item name in recipe"
+  source_fix: "replaced iron-pipe with pipe; in-game retest pending"
 
 next_actions:
   - new_module_loaders_game_tested_successfully

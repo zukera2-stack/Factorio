@@ -251,7 +251,7 @@ data:extend({
         type = "recipe",
         name = "em-concrete-beam",
         enabled = false,
-        ingredients = { { type = "item", name = "stone-brick", amount = 2 }, { type = "item", name = "steel-plate", amount = 4 }, { type = "item", name = "iron-pipe", amount = 1 } },
+        ingredients = { { type = "item", name = "stone-brick", amount = 2 }, { type = "item", name = "steel-plate", amount = 4 }, { type = "item", name = "pipe", amount = 1 } },
         results = {{ type = "item", name = "em-concrete-beam", amount = 1 }},
         energy_required = 5,
         categories = { "crafting" },
