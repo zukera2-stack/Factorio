@@ -11,13 +11,36 @@ local RAIL_RADIUS = 3
 local RAIL_NAMES = {
     ["em-high-speed-straight-rail"] = true,
     ["em-curved-high-speed-rail"] = true,
+    ["em-curved-high-speed-rail-b"] = true,
     ["em-half-diagonal-high-speed-rail"] = true,
 }
 
+-- Intercept only the four explicit vanilla -> ВСМ geometry mappings. Factorio's
+-- native robot upgrade operation does not safely replace rail entities.
+local VANILLA_TO_CUSTOM_RAILS = {
+    ["straight-rail"] = "em-high-speed-straight-rail",
+    ["curved-rail-a"] = "em-curved-high-speed-rail",
+    ["curved-rail-b"] = "em-curved-high-speed-rail-b",
+    ["half-diagonal-rail"] = "em-half-diagonal-high-speed-rail",
+}
+
+local STORAGE_VERSION = 1
+
 local function ensure_storage()
     storage.em = storage.em or {}
+
+    -- Additive migration for saves created before rail replacement support.
+    local version = storage.em.schema_version or 0
+    if version < STORAGE_VERSION then
+        storage.em.pending_rail_replacements =
+            storage.em.pending_rail_replacements or {}
+        storage.em.schema_version = STORAGE_VERSION
+    end
+
     storage.em.electrified_rails = storage.em.electrified_rails or {}
     storage.em.trains = storage.em.trains or {}
+    storage.em.pending_rail_replacements =
+        storage.em.pending_rail_replacements or {}
 end
 
 script.on_init(ensure_storage)
@@ -26,6 +49,118 @@ script.on_configuration_changed(ensure_storage)
 local function rail_key(surface_index, position)
     return string.format("%d:%.1f:%.1f",
         surface_index, position.x, position.y)
+end
+
+local function replacement_key(entity)
+    return string.format("%d:%s:%.3f:%.3f:%d",
+        entity.surface.index,
+        entity.name,
+        entity.position.x,
+        entity.position.y,
+        entity.direction)
+end
+
+local function on_marked_for_upgrade(event)
+    local entity = event.entity
+    local target = event.target
+    if not (entity and entity.valid and target) then return end
+
+    local expected_target = VANILLA_TO_CUSTOM_RAILS[entity.name]
+    if not expected_target or target.name ~= expected_target then return end
+
+    local force = entity.force
+    local player = event.player_index and game.get_player(event.player_index) or nil
+    local key = replacement_key(entity)
+
+    -- Persist primitive values only; LuaObjects must not be stored.
+    storage.em.pending_rail_replacements[key] = {
+        target_name = expected_target,
+        surface_index = entity.surface.index,
+        position = { x = entity.position.x, y = entity.position.y },
+        direction = entity.direction,
+        force_name = force.name,
+        quality_name = (event.quality and event.quality.name)
+            or (entity.quality and entity.quality.name) or nil,
+        mined = false,
+        retry_tick = 0,
+    }
+
+    -- Cancel the unsupported in-place upgrade and queue a normal deconstruction.
+    if not entity.cancel_upgrade(force, player) then
+        storage.em.pending_rail_replacements[key] = nil
+        return
+    end
+
+    if not entity.order_deconstruction(force, player) then
+        storage.em.pending_rail_replacements[key] = nil
+        log("[ElectrifiedMainline] Could not order rail deconstruction for " .. entity.name)
+        if player and player.valid then
+            player.print("Electrified Mainline: could not schedule this rail for replacement.")
+        end
+    end
+end
+
+local function try_create_replacement_ghost(key, pending)
+    local surface = game.surfaces[pending.surface_index]
+    local force = game.forces[pending.force_name]
+    if not (surface and force) then
+        log("[ElectrifiedMainline] Rail replacement lost its surface or force: " .. key)
+        return false
+    end
+
+    local ghost_spec = {
+        name = "entity-ghost",
+        inner_name = pending.target_name,
+        position = pending.position,
+        direction = pending.direction,
+        force = force,
+        expires = false,
+    }
+    if pending.quality_name then
+        ghost_spec.quality = pending.quality_name
+    end
+
+    local ghost = surface.create_entity(ghost_spec)
+    if not (ghost and ghost.valid) then
+        return false
+    end
+
+    storage.em.pending_rail_replacements[key] = nil
+    return true
+end
+
+local function process_mined_rail_replacement(event, entity)
+    if event.name ~= defines.events.on_robot_mined_entity
+        and event.name ~= defines.events.on_player_mined_entity then
+        return
+    end
+
+    local expected_target = VANILLA_TO_CUSTOM_RAILS[entity.name]
+    if not expected_target then return end
+
+    local key = replacement_key(entity)
+    local pending = storage.em.pending_rail_replacements[key]
+    if not pending or pending.target_name ~= expected_target then return end
+
+    -- The mined-entity event fires just before the old entity is destroyed.
+    -- Defer ghost creation until the following tick to avoid overlap.
+    pending.mined = true
+    pending.retry_tick = game.tick + 1
+end
+
+local function process_pending_rail_ghosts(tick)
+    for key, pending in pairs(storage.em.pending_rail_replacements) do
+        if pending.mined and tick >= (pending.retry_tick or 0) then
+            pending.retry_tick = tick + 60
+            try_create_replacement_ghost(key, pending)
+        end
+    end
+end
+
+local function on_cancelled_deconstruction(event)
+    local entity = event.entity
+    if not (entity and entity.valid) then return end
+    storage.em.pending_rail_replacements[replacement_key(entity)] = nil
 end
 
 local function mark_rail(rail)
@@ -53,6 +188,7 @@ local function mark_rails_near_pole(pole)
         name = {
             "em-high-speed-straight-rail",
             "em-curved-high-speed-rail",
+            "em-curved-high-speed-rail-b",
             "em-half-diagonal-high-speed-rail"
         }
     })
@@ -76,6 +212,14 @@ end
 local function cleanup_train_for_entity(event)
     local entity = event.entity
     if not (entity and entity.valid) then return end
+
+    if event.name == defines.events.on_robot_mined_entity
+        or event.name == defines.events.on_player_mined_entity then
+        process_mined_rail_replacement(event, entity)
+    elseif event.name == defines.events.on_entity_died
+        or event.name == defines.events.script_raised_destroy then
+        storage.em.pending_rail_replacements[replacement_key(entity)] = nil
+    end
 
     if entity.type == "locomotive" or entity.type == "cargo-wagon"
         or entity.type == "fluid-wagon" then
@@ -205,6 +349,10 @@ local function on_tick(event)
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
 
+    if next(storage.em.pending_rail_replacements) then
+        process_pending_rail_ghosts(event.tick)
+    end
+
     -- Filter at the engine level; do not scan players or every train in the game.
     -- Rail diagnostics are temporary and run every tick to avoid skipping short
     -- rail segments at high train speed.
@@ -258,5 +406,7 @@ for _, event_id in pairs(cleanup_events) do
     script.on_event(event_id, cleanup_train_for_entity)
 end
 
+script.on_event(defines.events.on_marked_for_upgrade, on_marked_for_upgrade)
+script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconstruction)
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_tick, on_tick)

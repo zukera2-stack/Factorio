@@ -55,9 +55,18 @@ implementation:
   real_substation_transfer: not_implemented
   real_regeneration: not_implemented
   regenerative_braking_technology_effect: recipe_unlock_only_no_battery_capacity_bonus
-  complete_rail_replacement: not_implemented
+  complete_rail_replacement: two_stage_upgrade_event_deconstruction_then_custom_rail_ghost_implemented_not_game_tested
+  vanilla_to_custom_rail_upgrade_runtime: api_confirmed_source_implemented_game_test_required
+  vanilla_to_custom_rail_geometry_mappings:
+    straight-rail: em-high-speed-straight-rail
+    curved-rail-a: em-curved-high-speed-rail
+    curved-rail-b: em-curved-high-speed-rail-b
+    half-diagonal-rail: em-half-diagonal-high-speed-rail
+  native_factorio_rail_upgrade_by_construction_robot: unsupported_engine_behavior
+  rail_replacement_storage_schema_version: 1
   separate_high_speed_power_grid: not_implemented
   rail_planner_construction_robot_placement: game_tested_confirmed
+  green_upgrade_planner_rail_replacement_adapter: source_implemented_api_confirmed_game_test_required
   rail_planner_blueprint_behavior: unverified
   custom_rail_planner_manual_placement: operational_user_confirmed
   curved_rail_shape_coverage: both_curved_a_and_b_present_in_source_game_test_not_confirmed
@@ -93,6 +102,9 @@ last_game_test:
   unified_rail_planner_operational: true
   construction_robots_place_custom_rails: true
   vanilla_to_custom_rail_upgrade_tested: false
+  green_upgrade_planner_adapter_tested: false
+  rail_replacement_ghost_creation_tested: false
+  rail_replacement_curved_geometry_tested: false
   planner_blueprint_behavior_tested: false
   power_delivery_tested: false
   battery_tested: false
@@ -120,15 +132,16 @@ latest_load_attempt:
   resolution: "replaced iron-pipe with vanilla pipe; corrected build passed CI; user confirmed mod loads"
 
 next_actions:
-  - new_module_loaders_game_tested_successfully
+  - game_test_green_upgrade_planner_two_stage_vanilla_to_custom_rail_replacement
+  - configure_and_test_all_four_vanilla_to_custom_rail_geometry_mappings
+  - test_replacement_with_trains_present_and_absent
+  - verify_signals_stations_and_train_routes_after_rail_replacement
   - retest_explicit_recipe_ingredient_format_with_bobs_library_enabled
-  - game_test_upgrade_planner_vanilla_rail_line_to_custom_high_speed_rails
   - game_test_all_four_custom_rail_geometries_and_mining_refund_counts
   - game_test_blueprint_behavior_for_unified_planner
   - verify_corrected_technology_unlock_progression_in_game
   - verify_all_prototype_item_and_technology_references_and_iron_gear_wheel_in_game
   - test_direction_changes_and_rail_transitions_at_speed
-  - test_direction_changes
   - optimize_rail_diagnostic_polling
   - add_powered_rail_state_after_identity_validation
   - continue_modpack_compatibility_audit
