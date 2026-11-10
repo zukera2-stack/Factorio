@@ -5,6 +5,9 @@ project:
   default_branch: main
   mod_directory: ElectrifiedMainline
   mod_version: 0.1.4
+  diagnostic_test_version: 0.1.5
+  diagnostic_test_branch: diagnostic/blueprint-rail-undo
+  diagnostic_test_branch_isolated: true
   factorio_target: "2.1"
   user_tested_game: "2.1.20b"
   last_state_update: "2026-11-10"
@@ -63,6 +66,15 @@ implementation:
     curved-rail-b: em-curved-high-speed-rail-b
     half-diagonal-rail: em-half-diagonal-high-speed-rail
   native_factorio_rail_upgrade_by_construction_robot: unsupported_engine_behavior
+  factorio_2_1_20_api_findings_documented: true
+  forced_blueprint_ghost_is_fast_replace: false
+  forced_ghost_placement_ignores_deconstructible_entities: api_confirmed_for_ghost_build_check_types
+  surface_create_entity_fast_replace_player_undo_support: api_confirmed_game_test_required
+  rail_replacement_undo_redo_reverse_mapping: not_implemented
+  undo_redo_action_payload_inspection: pending_user_diagnostic_log
+  diagnostic_0_1_5_branch: diagnostic/blueprint-rail-undo
+  diagnostic_0_1_5_ci_package: passed
+  diagnostic_0_1_5_game_tested: false
   rail_replacement_storage_schema_version: 1
   separate_high_speed_power_grid: not_implemented
   rail_planner_construction_robot_placement: game_tested_confirmed
@@ -161,6 +173,10 @@ latest_load_attempt:
   previous_load_error_resolved: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]; replaced with vanilla pipe and user confirmed mod loads"
 
 next_actions:
+  - install_diagnostic_0_1_5_build_from_diagnostic_blueprint_rail_undo_branch
+  - test_ctrl_shift_blueprint_over_vanilla_rails_then_ctrl_z_then_ctrl_y_once_each
+  - provide_factorio_current_log_with_em_rail_diag_entries
+  - inspect_undo_redo_action_payloads_before_designing_reversible_rail_replacement
   - install_0_1_4_and_verify_custom_rail_replacement_planner_unlock_and_crafting
   - game_test_custom_selection_tool_on_short_straight_vanilla_rail_segment
   - verify_construction_robots_replace_straight_rail_with_matching_custom_ghost

@@ -1,7 +1,7 @@
 # Electrified Mainline — AI handoff
 
 > Read this file first when continuing the project in a new chat. It is a compact working handoff, not a replacement for source inspection.
-> Last updated: 2026-11-10 — green Upgrade Planner pairs remain absent in the user's 0.1.3 test despite all four eligibility checks passing; added a dedicated filtered rail-replacement selection tool in 0.1.4.
+> Last updated: 2026-11-10 — documented Factorio 2.1.20 API findings for fast replace, forced blueprint ghosts, runtime events and undo/redo; diagnostic build 0.1.5 is isolated on `diagnostic/blueprint-rail-undo`.
 
 ## 1. Repository
 
@@ -9,7 +9,7 @@
 - Main branch: `main`
 - Mod directory: `ElectrifiedMainline/`
 - Target game: Factorio 2.1.20b (user-confirmed); metadata targets Factorio 2.1.
-- Current mod version: 0.1.4.
+- Current main-branch mod version: 0.1.4. A temporary diagnostic 0.1.5 build exists only on `diagnostic/blueprint-rail-undo`; do not treat it as the production/main version.
 - User explicitly authorized direct repository changes.
 - User wants work to be resumable from any chat. Read this file, then `docs/PROJECT_STATE.yaml`, then inspect current source.
 
@@ -121,13 +121,33 @@ On 2026-11-09 the user confirmed the mod launches in Factorio 2.1.20b. A supplie
 
 Do not ask the user to resend that log unless a new test requires it.
 
-## 6. Immediate next tasks
+## 6. Factorio 2.1.20 API findings — rail replacement and undo
 
-1. Install mod version 0.1.4 and confirm the new replacement planner is available after researching high-speed rails.
-2. Test the custom selection tool on a short straight segment; confirm the vanilla rail is marked for deconstruction and construction robots place the matching ВСМ ghost.
-3. Test curved-A, curved-B and half-diagonal rails; verify direction, quality, geometry and automatic reconnection.
-4. Test a selected area containing mixed vanilla/custom rails; custom rails must remain untouched.
-5. Test with and without construction robots in range, and cancel a queued deconstruction to confirm the pending replacement is cleared.
+Detailed notes and exact-version API links: [FACTORIO_2_1_RAIL_API_NOTES.md](FACTORIO_2_1_RAIL_API_NOTES.md).
+
+Key conclusions:
+- `fast_replaceable_group` declares fast-replace compatibility; it does not make forced blueprint ghost placement perform a fast replace.
+- `can_place_entity(... forced=true)` ignores entities eligible for deconstruction for the documented ghost build-check types; this is distinct from `create_entity(... fast_replace=true)`.
+- `LuaSurface.create_entity{fast_replace=true, player=..., undo_index=...}` can simulate a player-associated fast replacement and associate it with undo. Promising, but not yet tested for rail planner/robot semantics.
+- `on_marked_for_deconstruction`, `on_pre_ghost_deconstructed`, `on_cancelled_deconstruction`, robot mined/built events, and `on_undo_applied`/`on_redo_applied` expose the lifecycle needed for diagnosis.
+- `on_blueprint_settings_pasted` is not a blueprint placement event. Do not use it as one.
+- `additional_pastable_entities` concerns settings copy/paste, not replacement.
+- Do not manipulate undo-stack actions until the real Ctrl+Z/Ctrl+Y action arrays have been logged.
+- Current runtime replacement remains one-way vanilla→custom; reverse custom→vanilla undo handling is not implemented.
+
+### Temporary diagnostic build 0.1.5
+- Branch: `diagnostic/blueprint-rail-undo`; PR: https://github.com/zukera2-stack/Factorio/pull/4.
+- CI package and Lua syntax validation passed; ZIP artifact was produced.
+- Observation-only handlers log build, deconstruction, ghost, robot and undo/redo events under `[ElectrifiedMainline][em-rail-diag]`.
+- Required user test: Ctrl+Shift blueprint over vanilla rails, then Ctrl+Z once, then Ctrl+Y once; inspect `factorio-current.log`.
+- This branch is isolated; do not merge into main. No in-game validation has yet been reported.
+
+## 7. Immediate next tasks
+
+1. Run the 0.1.5 diagnostic sequence on branch `diagnostic/blueprint-rail-undo`: Ctrl+Shift blueprint over vanilla rails, Ctrl+Z once, Ctrl+Y once; return `factorio-current.log`.
+2. Analyze the logged event order and undo/redo action arrays before designing reversible replacement logic.
+3. Do not merge the diagnostic branch into main; keep it isolated until findings are reviewed.
+4. After the undo/redo investigation, resume testing the custom selection tool on a short straight segment and all remaining geometries.
 6. Verify signals, stations, train routes, blueprints and mining/refund counts after replacement.
 7. Re-test explicit recipe ingredient format with Bob's Library enabled.
 8. Continue the remaining rail planner, technology and modpack compatibility checks.
@@ -141,7 +161,7 @@ Do not ask the user to resend that log unless a new test requires it.
 13. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
 14. Only then implement real power transfer, battery behavior and regeneration.
 
-## 7. Compatibility rules
+## 8. Compatibility rules
 
 - Core mod must not require Bob's, Angel's, Krastorio 2, Space Age or another third-party mod unless an explicit product decision changes this.
 - Do not mutate third-party prototypes unnecessarily.
@@ -153,7 +173,7 @@ Do not ask the user to resend that log unless a new test requires it.
 - Avoid scanning every train/entity each tick; filter to our rolling stock.
 - Introduce versioned `storage.em` migrations before changing persistent data shape.
 
-## 8. Evidence labels
+## 9. Evidence labels
 
 Use these labels in notes and answers:
 
@@ -165,7 +185,7 @@ Use these labels in notes and answers:
 
 A successful GitHub Actions ZIP build proves packaging only, not in-game functionality.
 
-## 9. Working protocol for every new chat
+## 10. Working protocol for every new chat
 
 1. Read `AGENTS.md`.
 2. Read this `docs/AI_CONTEXT.md`.
