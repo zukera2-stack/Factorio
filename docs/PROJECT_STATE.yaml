@@ -4,7 +4,7 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   mod_directory: ElectrifiedMainline
-  mod_version: 0.1.4
+  mod_version: 0.1.5
   factorio_target: "2.1"
   user_tested_game: "2.1.20b"
   last_state_update: "2026-11-10"
@@ -72,6 +72,9 @@ implementation:
   custom_rail_replacement_runtime_event: on_player_selected_area
   custom_rail_replacement_quality_source: selected_rail_entity_quality
   custom_rail_replacement_robot_workflow: deconstruction_then_matching_custom_rail_ghost
+  blueprint_rail_undo_diagnostics: observation_only_handlers_added_on_test_branch
+  blueprint_rail_undo_diagnostics_game_tested: false
+  blueprint_rail_undo_test_branch: diagnostic/blueprint-rail-undo
   rail_upgrade_fast_replaceable_group: explicit_shared_group_for_vanilla_and_custom_rails
   rail_upgrade_collision_box_mask_validation: data_final_fixes_assertions_added_game_load_required
   rail_upgrade_planner_eligibility_diagnostics: source_minable_hidden_mining_products_target_visible_build_item_and_geometry_logged
@@ -161,6 +164,9 @@ latest_load_attempt:
   previous_load_error_resolved: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]; replaced with vanilla pipe and user confirmed mod loads"
 
 next_actions:
+  - install_diagnostic_0_1_5_build_from_diagnostic_blueprint_rail_undo_branch
+  - test_blueprint_over_vanilla_rails_with_ctrl_shift_then_ctrl_z_then_ctrl_y
+  - provide_factorio_current_log_with_em_rail_diag_entries
   - install_0_1_4_and_verify_custom_rail_replacement_planner_unlock_and_crafting
   - game_test_custom_selection_tool_on_short_straight_vanilla_rail_segment
   - verify_construction_robots_replace_straight_rail_with_matching_custom_ghost

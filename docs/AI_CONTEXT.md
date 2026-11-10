@@ -9,7 +9,7 @@
 - Main branch: `main`
 - Mod directory: `ElectrifiedMainline/`
 - Target game: Factorio 2.1.20b (user-confirmed); metadata targets Factorio 2.1.
-- Current mod version: 0.1.4.
+- Current mod version: 0.1.5 (temporary diagnostic build on branch `diagnostic/blueprint-rail-undo`).
 - User explicitly authorized direct repository changes.
 - User wants work to be resumable from any chat. Read this file, then `docs/PROJECT_STATE.yaml`, then inspect current source.
 
@@ -121,7 +121,17 @@ On 2026-11-09 the user confirmed the mod launches in Factorio 2.1.20b. A supplie
 
 Do not ask the user to resend that log unless a new test requires it.
 
-## 6. Immediate next tasks
+## 6. Temporary diagnostic build — blueprint rail undo
+
+- Branch: `diagnostic/blueprint-rail-undo`, based on main commit `5d733127887d368d1366c586e4509a16517b3062`.
+- Temporary mod version: 0.1.5. This is an isolated test branch; `main` is unchanged.
+- Added observation-only log handlers for `on_pre_build`, `on_marked_for_deconstruction`, `on_built_entity`, `on_robot_built_entity`, `script_raised_built`, `script_raised_revive`, `on_robot_mined_entity`, `on_player_mined_entity`, `on_pre_ghost_deconstructed`, `on_cancelled_deconstruction`, `on_undo_applied`, and `on_redo_applied`.
+- Log prefix: `[ElectrifiedMainline][em-rail-diag]`. Undo/redo action records include action type, target name/position/direction/quality, surface index, and original entity identity where exposed by the API.
+- The diagnostics are observational only: no blueprint, replacement, ghost, or undo behavior is changed by these handlers.
+- Test sequence requested: (1) place a ВСМ blueprint over vanilla rails using Ctrl+Shift; (2) Ctrl+Z once; (3) Ctrl+Y once. Then provide `factorio-current.log`.
+- Not yet validated in-game. Packaging CI still required; logs must confirm actual event order and action payloads before implementing the fix.
+
+## 7. Immediate next tasks
 
 1. Install mod version 0.1.4 and confirm the new replacement planner is available after researching high-speed rails.
 2. Test the custom selection tool on a short straight segment; confirm the vanilla rail is marked for deconstruction and construction robots place the matching ВСМ ghost.
@@ -141,7 +151,7 @@ Do not ask the user to resend that log unless a new test requires it.
 13. Continue compatibility audit: data-stage prototype inheritance, unknown third-party rolling stock, save migrations and optional adapters.
 14. Only then implement real power transfer, battery behavior and regeneration.
 
-## 7. Compatibility rules
+## 8. Compatibility rules
 
 - Core mod must not require Bob's, Angel's, Krastorio 2, Space Age or another third-party mod unless an explicit product decision changes this.
 - Do not mutate third-party prototypes unnecessarily.
@@ -153,7 +163,7 @@ Do not ask the user to resend that log unless a new test requires it.
 - Avoid scanning every train/entity each tick; filter to our rolling stock.
 - Introduce versioned `storage.em` migrations before changing persistent data shape.
 
-## 8. Evidence labels
+## 9. Evidence labels
 
 Use these labels in notes and answers:
 
@@ -165,7 +175,7 @@ Use these labels in notes and answers:
 
 A successful GitHub Actions ZIP build proves packaging only, not in-game functionality.
 
-## 9. Working protocol for every new chat
+## 10. Working protocol for every new chat
 
 1. Read `AGENTS.md`.
 2. Read this `docs/AI_CONTEXT.md`.
