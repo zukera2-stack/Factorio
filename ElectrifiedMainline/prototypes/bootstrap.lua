@@ -107,6 +107,7 @@ data:extend({
         order = "d[high-speed-rails]",
         effects = {
             { type = "unlock-recipe", recipe = "em-high-speed-rail" },
+            { type = "unlock-recipe", recipe = "em-rail-replacement-planner" },
         },
         prerequisites = { "em-electrified-railways", "logistics-3" },
         unit = { count = 3500, time = 120, ingredients = { { "automation-science-pack", 4 }, { "production-science-pack", 2 } } },
@@ -153,6 +154,37 @@ em_high_speed_rail_planner.rails = {
     "em-half-diagonal-high-speed-rail",
 }
 data:extend({em_high_speed_rail_planner})
+
+-- Dedicated selection tool for replacing vanilla rails. It only selects the
+-- four vanilla rail prototypes; the runtime handler schedules deconstruction
+-- and recreates matching ВСМ ghosts after the old rails have been mined.
+local em_rail_replacement_planner = table.deepcopy(data.raw["selection-tool"]["selection-tool"])
+em_rail_replacement_planner.name = "em-rail-replacement-planner"
+em_rail_replacement_planner.localised_name = {"item-name.em-rail-replacement-planner"}
+em_rail_replacement_planner.localised_description = {"item-description.em-rail-replacement-planner"}
+em_rail_replacement_planner.icon = "__base__/graphics/icons/rail.png"
+em_rail_replacement_planner.icon_size = 64
+em_rail_replacement_planner.subgroup = "train-transport"
+em_rail_replacement_planner.order = "a[rail]-c[rail-replacement-planner]"
+em_rail_replacement_planner.stack_size = 1
+em_rail_replacement_planner.select = {
+    mode = {"any-entity"},
+    entity_filters = {
+        "straight-rail",
+        "curved-rail-a",
+        "curved-rail-b",
+        "half-diagonal-rail",
+    },
+    entity_filter_mode = "whitelist",
+    cursor_box_type = "copy",
+    border_color = {r = 0.15, g = 0.8, b = 1, a = 1},
+}
+em_rail_replacement_planner.alt_select = {
+    mode = {"nothing"},
+    cursor_box_type = "not-allowed",
+    border_color = {r = 1, g = 0.2, b = 0.2, a = 1},
+}
+data:extend({em_rail_replacement_planner})
 
 
 data:extend({
@@ -308,6 +340,19 @@ data:extend({
         },
         results = {{ type = "item", name = "em-high-speed-rail", amount = 4 }},
         energy_required = 1,
+        categories = { "crafting" },
+    },
+    {
+        type = "recipe",
+        name = "em-rail-replacement-planner",
+        enabled = false,
+        ingredients = {
+            { type = "item", name = "em-high-speed-rail", amount = 1 },
+            { type = "item", name = "electronic-circuit", amount = 5 },
+            { type = "item", name = "steel-plate", amount = 5 },
+        },
+        results = {{ type = "item", name = "em-rail-replacement-planner", amount = 1 }},
+        energy_required = 5,
         categories = { "crafting" },
     },
 })

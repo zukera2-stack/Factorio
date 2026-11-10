@@ -4,7 +4,7 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   mod_directory: ElectrifiedMainline
-  mod_version: 0.1.3
+  mod_version: 0.1.4
   factorio_target: "2.1"
   user_tested_game: "2.1.20b"
   last_state_update: "2026-11-10"
@@ -66,7 +66,12 @@ implementation:
   rail_replacement_storage_schema_version: 1
   separate_high_speed_power_grid: not_implemented
   rail_planner_construction_robot_placement: game_tested_confirmed
-  green_upgrade_planner_rail_replacement_adapter: source_implemented_api_confirmed_game_test_required
+  green_upgrade_planner_rail_replacement_adapter: user_tested_vanilla_custom_pairs_absent_despite_all_eligibility_checks_passing
+  custom_rail_replacement_selection_tool: source_implemented_game_test_required
+  custom_rail_replacement_selection_scope: whitelist_four_vanilla_ground_rail_geometries
+  custom_rail_replacement_runtime_event: on_player_selected_area
+  custom_rail_replacement_quality_source: selected_rail_entity_quality
+  custom_rail_replacement_robot_workflow: deconstruction_then_matching_custom_rail_ghost
   rail_upgrade_fast_replaceable_group: explicit_shared_group_for_vanilla_and_custom_rails
   rail_upgrade_collision_box_mask_validation: data_final_fixes_assertions_added_game_load_required
   rail_upgrade_planner_eligibility_diagnostics: source_minable_hidden_mining_products_target_visible_build_item_and_geometry_logged
@@ -85,6 +90,12 @@ implementation:
 last_game_test:
   date: "2026-11-10"
   game_version: "2.1.20b"
+  tested_mod_version: "0.1.3"
+  mod_load_success: true
+  upgrade_eligibility_diagnostics_all_four_pairs_passed: true
+  green_upgrade_planner_pairs_visible: false
+  user_confirmed_pairs_absent: true
+  custom_selection_tool_tested: false
   mod_loaded: true
   inspected_log_runtime_errors_from_mod: none_found
   diagnostic_log_lines: 404
@@ -109,6 +120,10 @@ last_game_test:
   construction_robots_place_custom_rails: true
   vanilla_to_custom_rail_upgrade_tested: false
   green_upgrade_planner_adapter_tested: false
+  green_upgrade_planner_pairs_visible: false
+  upgrade_eligibility_diagnostics_all_four_pairs_passed: true
+  custom_selection_tool_tested: false
+  custom_selection_tool_robot_replacement_tested: false
   rail_replacement_ghost_creation_tested: false
   rail_replacement_curved_geometry_tested: false
   planner_blueprint_behavior_tested: false
@@ -140,10 +155,13 @@ latest_load_attempt:
   previous_load_error_resolved: "item iron-pipe does not exist at em-concrete-beam.ingredients[2]; replaced with vanilla pipe and user confirmed mod loads"
 
 next_actions:
-  - install_0_1_3_and_inspect_upgrade_check_diagnostics_for_all_four_rail_pairs
-  - game_test_green_upgrade_planner_two_stage_vanilla_to_custom_rail_replacement
-  - configure_and_test_all_four_vanilla_to_custom_rail_geometry_mappings
-  - test_replacement_with_trains_present_and_absent
+  - install_0_1_4_and_verify_custom_rail_replacement_planner_unlock_and_crafting
+  - game_test_custom_selection_tool_on_short_straight_vanilla_rail_segment
+  - verify_construction_robots_replace_straight_rail_with_matching_custom_ghost
+  - game_test_curved_a_curved_b_and_half_diagonal_replacement_geometry_direction_and_quality
+  - verify_custom_rails_are_not_selected_by_replacement_tool
+  - test_replacement_with_and_without_construction_robots_in_range
+  - test_cancelling_deconstruction_clears_pending_replacement
   - verify_signals_stations_and_train_routes_after_rail_replacement
   - retest_explicit_recipe_ingredient_format_with_bobs_library_enabled
   - game_test_all_four_custom_rail_geometries_and_mining_refund_counts

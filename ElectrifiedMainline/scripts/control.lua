@@ -60,6 +60,42 @@ local function replacement_key(entity)
         entity.direction)
 end
 
+local function queue_rail_replacement(entity, force, player, cancel_upgrade)
+    local expected_target = VANILLA_TO_CUSTOM_RAILS[entity.name]
+    if not expected_target then return false end
+
+    local key = replacement_key(entity)
+
+    -- Persist primitive values only; LuaObjects must not be stored.
+    -- Quality belongs to the rail entity, not to the planner item used by the player.
+    storage.em.pending_rail_replacements[key] = {
+        target_name = expected_target,
+        surface_index = entity.surface.index,
+        position = { x = entity.position.x, y = entity.position.y },
+        direction = entity.direction,
+        force_name = force.name,
+        quality_name = (entity.quality and entity.quality.name) or nil,
+        mined = false,
+        retry_tick = 0,
+    }
+
+    if cancel_upgrade and not entity.cancel_upgrade(force, player) then
+        storage.em.pending_rail_replacements[key] = nil
+        return false
+    end
+
+    if not entity.order_deconstruction(force, player) then
+        storage.em.pending_rail_replacements[key] = nil
+        log("[ElectrifiedMainline] Could not order rail deconstruction for " .. entity.name)
+        if player and player.valid then
+            player.print("Electrified Mainline: could not schedule this rail for replacement.")
+        end
+        return false
+    end
+
+    return true
+end
+
 local function on_marked_for_upgrade(event)
     ensure_storage()
     local entity = event.entity
@@ -69,35 +105,32 @@ local function on_marked_for_upgrade(event)
     local expected_target = VANILLA_TO_CUSTOM_RAILS[entity.name]
     if not expected_target or target.name ~= expected_target then return end
 
-    local force = entity.force
     local player = event.player_index and game.get_player(event.player_index) or nil
-    local key = replacement_key(entity)
+    queue_rail_replacement(entity, entity.force, player, true)
+end
 
-    -- Persist primitive values only; LuaObjects must not be stored.
-    storage.em.pending_rail_replacements[key] = {
-        target_name = expected_target,
-        surface_index = entity.surface.index,
-        position = { x = entity.position.x, y = entity.position.y },
-        direction = entity.direction,
-        force_name = force.name,
-        quality_name = (event.quality and event.quality.name)
-            or (entity.quality and entity.quality.name) or nil,
-        mined = false,
-        retry_tick = 0,
-    }
+local function on_player_selected_area(event)
+    if event.item ~= "em-rail-replacement-planner" then return end
 
-    -- Cancel the unsupported in-place upgrade and queue a normal deconstruction.
-    if not entity.cancel_upgrade(force, player) then
-        storage.em.pending_rail_replacements[key] = nil
-        return
+    ensure_storage()
+    local player = game.get_player(event.player_index)
+    if not (player and player.valid) then return end
+
+    local queued = 0
+    for _, entity in pairs(event.entities or {}) do
+        if entity and entity.valid and VANILLA_TO_CUSTOM_RAILS[entity.name] then
+            if queue_rail_replacement(entity, entity.force, player, false) then
+                queued = queued + 1
+            end
+        end
     end
 
-    if not entity.order_deconstruction(force, player) then
-        storage.em.pending_rail_replacements[key] = nil
-        log("[ElectrifiedMainline] Could not order rail deconstruction for " .. entity.name)
-        if player and player.valid then
-            player.print("Electrified Mainline: could not schedule this rail for replacement.")
-        end
+    if queued > 0 then
+        player.print({"message.em-rail-replacement-marked", queued})
+        log("[ElectrifiedMainline] Custom rail replacement planner queued "
+            .. tostring(queued) .. " vanilla rail entities.")
+    else
+        player.print({"message.em-rail-replacement-none"})
     end
 end
 
@@ -417,6 +450,7 @@ for _, event_id in pairs(cleanup_events) do
 end
 
 script.on_event(defines.events.on_marked_for_upgrade, on_marked_for_upgrade)
+script.on_event(defines.events.on_player_selected_area, on_player_selected_area)
 script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconstruction)
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_tick, on_tick)
