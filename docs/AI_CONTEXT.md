@@ -9,7 +9,7 @@
 - Main branch: `main`
 - Mod directory: `ElectrifiedMainline/`
 - Target game: Factorio 2.1.20b (user-confirmed); metadata targets Factorio 2.1.
-- Current mod version: 0.1.0.
+- Current mod version: 0.1.2.
 - User explicitly authorized direct repository changes.
 - User wants work to be resumable from any chat. Read this file, then `docs/PROJECT_STATE.yaml`, then inspect current source.
 
