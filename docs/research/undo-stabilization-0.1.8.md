@@ -14,4 +14,15 @@ Hypothesis: removing manual ghost joining eliminates accidental attachment to an
 Acceptance: tests A-D in ElectrifiedMainline/TEST_UNDO_018.txt. B must respect LIFO: first Undo cancels the newer unrelated action, second cancels blueprint; Redo reverses that order. Do not expect Undo to skip the newest action.
 
 ## Results
-Implementation removes join path. Static dependency and unchanged-prototype checks required before commit. All 0.1.8 game tests unverified; no new Factorio run. Historical 0.1.6/0.1.7 results remain historical. Known issues: selection-tool retry cleanup, diagnostics cost, item entity-data types, compatibility and energy placeholders remain out of scope. Build provenance recorded in docs/BUILD_018.yaml after source commit and packaging.
+Implementation removes join path. Static dependency and unchanged-prototype checks required before commit. At the time of implementation, all 0.1.8 game tests were unverified; this historical pre-test statement is superseded by the post-test addendum below. Historical 0.1.6/0.1.7 results remain historical. Known issues: selection-tool retry cleanup, diagnostics cost, item entity-data types, compatibility and energy placeholders remain out of scope. Build provenance recorded in docs/BUILD_018.yaml after source commit and packaging.
+
+
+## Post-test addendum — 2026-11-12
+
+The player supplied two distinct 0.1.8 logs and confirmed the visible results. [Full evidence, SHA-256, event ticks, geometry counts, and limitations](../tests/undo-0.1.8-2026-11-12.md).
+
+- Native Upgrade Planner: 26 straight, 4 curved-A, 4 curved-B upgraded; Ctrl+Z and Ctrl+Y each recorded 34 native `upgraded-entity` actions.
+- Undo history independence: a storage chest and the rail upgrade were undone/redone as separate operations.
+- Ctrl+Shift blueprint overlay: mixed-geometry operation `build_mode=2`, 14 straight + 4 curved-A + 4 curved-B; Undo 22 actions at tick 20721, Redo 22 actions at tick 20971. Robot changes observed.
+- Source audit confirms no `undo_index` assignment and no scripted superforce Undo join; `blueprint_undo_join` is discarded while `pending_rail_replacements` is preserved.
+- Acceptance: A passed; B and C partial; D unverified. Half-diagonal and special selection tool remain unverified. No merge to `main` authorized.

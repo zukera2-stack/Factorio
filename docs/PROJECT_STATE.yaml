@@ -57,8 +57,8 @@ implementation:
   native_ground_rail_upgrade_by_construction_robot: game_tested_straight_ground_in_0_1_7
   native_ground_rail_undo_redo: game_tested_straight_ground_20_segments_in_0_1_7
   native_upgrade_green_planner_straight: game_tested_success
-  native_upgrade_green_planner_curved_a: unverified
-  native_upgrade_green_planner_curved_b: unverified
+  native_upgrade_green_planner_curved_a: game_tested_success_0_1_8
+  native_upgrade_green_planner_curved_b: game_tested_success_0_1_8
   native_upgrade_green_planner_half_diagonal: unverified
   native_upgrade_group: per_geometry_group_em_native_prefix
   vanilla_next_upgrade: matching_custom_ground_rail_each_geometry
@@ -101,34 +101,61 @@ last_game_test:
   game_version: "2.1.20"
   game_build: 87512
   installed_mod_version: "0.1.8"
-  test_path: native_green_upgrade_planner_straight_ground_rails
-  environment_mods:
-    bobassembly: "3.0.2"
-    space_age: "2.1.20"
-  save_loaded_successfully: true
-  native_upgrade_count: 20
-  native_upgrade_order_tick: 14284
-  robot_replaced_vanilla_with_custom: confirmed
-  undo:
-    tick: 14591
-    action_count: 20
-    action_type: upgraded-entity
-    original_entity: straight-rail
-    robots_restored_original_vanilla_rails: confirmed
-  redo:
-    tick: 14940
-    action_count: 20
-    action_type: upgraded-entity
-    original_entity: em-high-speed-straight-rail
-    robots_rebuilt_custom_rails: confirmed
-  errors_attributed_to_mod_in_supplied_log: none_observed
+  source_commit: ac4624ef5873a1d3adf65194c289e09aee5224ae
+  test_branch: test/undo-stabilization-018
+  evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
+  log_sessions:
+    - filename: "factorio-current(20261112-170348).log"
+      sha256: 832808759fea8270384155799f6cd3f64a83b3dd4144ee3c187d04f0ce833171
+      duplicate_upload: "factorio-current(20261112-170208).log"
+    - filename: "factorio-current(20261112-171003).log"
+      sha256: e5ccf8b67c51cbdcbad9e43ba1b2151bf5bc1c3ded041d3dfe30b96df3d1cb22
+  native_green_planner:
+    geometry_counts: { straight: 26, curved_a: 4, curved_b: 4 }
+    undo_tick: 23999
+    redo_tick: 24581
+    result: game_tested_success
+  unrelated_chest_undo_redo:
+    undo_chest_tick: 29766
+    undo_rails_tick: 29988
+    redo_rails_tick: 30251
+    redo_chest_tick: 31701
+    result: game_tested_separate_history_entries
+  blueprint_superforce_straight:
+    build_mode: 2
+    geometry_counts: { straight: 14 }
+    undo_tick: 39434
+    redo_in_this_session: not_observed
+  blueprint_superforce_mixed:
+    build_mode: 2
+    build_tick: 20353
+    geometry_counts: { straight: 14, curved_a: 4, curved_b: 4 }
+    undo_tick: 20721
+    redo_tick: 20971
+    result: game_tested_success
+  unrelated_assembling_machine_actions:
+    undo_tick: 16902
+    action_count: 2
+  errors_attributed_to_mod_in_supplied_logs: none_observed
   game_exit: normal
-  log_evidence: factorio-current_20261112-144236
-  tested_curves: false
-  tested_ctrl_shift_blueprint: false
-  proof_scope: straight_ground_rail_native_upgrade_undo_redo_only
+  not_verified:
+    - half_diagonal_rail_gameplay
+    - dedicated_selection_tool
+    - blueprint_and_unrelated_action_interleaved_during_delayed_robots
+    - partially_completed_robot_jobs
+    - inventory_refunds_and_rail_signal_integrity
 
 historical_game_tests:
+  "0.1.7":
+    date: "2026-11-12"
+    game_version: "2.1.20"
+    game_build: 87512
+    native_green_planner_straight_count: 20
+    native_upgrade_order_tick: 14284
+    undo_tick: 14591
+    redo_tick: 14940
+    log_evidence: "factorio-current(20261112-144236).log"
+    scope: straight_ground_only
   "0.1.3":
     date: "2026-11-10"
     issue: old_green_upgrade_planner_pairs_missing_with_one_shared_fast_replace_group_and_no_next_upgrade
@@ -148,8 +175,8 @@ historical_game_tests:
     pipe_item_correction: implemented
 
 next_actions:
-  - test_native_green_upgrade_planner_and_undo_redo_on_curved_a_curved_b_half_diagonal_rails
-  - test_ctrl_shift_blueprint_superforce_separately_from_green_planner
+  - test_native_green_upgrade_planner_and_undo_redo_on_half_diagonal_ground_rails
+  - test_blueprint_interleaved_with_unrelated_action_during_delayed_robot_jobs
   - evaluate_and_regress_staged_custom_selection_tool_fallback_before_removal
   - verify_rail_network_signals_routes_train_occupancy_and_item_refunds
   - test_with_and_without_bots_and_with_cancelled_partial_upgrade_orders
@@ -245,7 +272,7 @@ engineering_method_policy:
   evidence_labels: [implemented, api_confirmed, game_tested, inferred, unverified, planned]
   case_study:
     feature: native_ground_rail_upgrade_undo_redo
-    mod_version: "0.1.8"
+    mod_version: "0.1.7"
     user_confirmed: true
     tested_geometry: straight_ground_rail
     tested_count: 20
@@ -262,6 +289,16 @@ undo_stabilization_018:
   selection_queue: preserved_independent
   native_upgrade: unchanged_from_0_1_7
   tests_A_B_C_D_static: passed_source_review
-  tests_A_B_C_D_game: unverified
+  tests_A_B_C_D_game:
+    A: passed_native_straight_curved_a_curved_b_undo_redo
+    B: partial_mixed_blueprint_undo_redo_and_separate_chest_history
+    C: partial_repeated_native_cycles_no_interrupted_robot_jobs
+    D: unverified_dedicated_selection_tool
+  source_audit:
+    fixed_undo_index_present: false
+    scripted_blueprint_undo_join_present: false
+    legacy_storage_marks_discarded: true
+    selection_queue_preserved: true
+  evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
   build_manifest: docs/BUILD_018.yaml
   main_merge: requires_player_log_and_approval

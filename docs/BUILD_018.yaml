@@ -5,4 +5,15 @@ sha256: 8218d9ae147f6a017dd1b9c3f6de1dccd6a1c832018328d5d28f1c94e7ae63cf
 lua_parse: passed_luaparser
 zip_integrity_metadata_structure: passed
 prototype_identity_vs_0_1_7: passed
-game_tests_A_B_C_D: unverified
+game_tests_A_B_C_D:
+  A: passed_native_upgrade_undo_redo
+  B: partial_blueprint_and_unrelated_history_tested_separately
+  C: partial_repeated_cycles_no_partial_robot_jobs
+  D: unverified_special_selection_tool
+source_audit:
+  fixed_undo_index_present: false
+  scripted_blueprint_join_removed: true
+  native_upgrade_preserved: true
+  independent_selection_queue_preserved: true
+game_test_evidence: docs/tests/undo-0.1.8-2026-11-12.md
+note: "Documentation-only update; source_commit and archive SHA256 still identify the original tested ZIP."

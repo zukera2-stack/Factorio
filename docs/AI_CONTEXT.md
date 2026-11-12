@@ -1,8 +1,16 @@
-# Current: 0.1.8 test candidate
+# Current AI handoff: ElectrifiedMainline 0.1.8
 
-Branch `test/undo-stabilization-018`, based on `fb3e5ca6307cf09585d67cd83566fa16e07839a8`. Manual blueprint Undo join removed; independent selection queue and native Upgrade Planner preserved. A-D statically reviewed; all 0.1.8 game tests pending. See `ElectrifiedMainline/TEST_UNDO_018.txt` (repository root) and `docs/BUILD_018.yaml` for provenance. No main merge without player log and approval.
+**Active test branch:** `test/undo-stabilization-018`; **tested source commit:** `ac4624ef5873a1d3adf65194c289e09aee5224ae`; **Factorio:** 2.1.20 build 87512. Keep `main` unchanged pending explicit approval.
 
-## Historical 0.1.7 handoff (preserved)
+**Current verified scope:** native green Upgrade Planner + Undo/Redo for 26 straight, 4 curved-A, 4 curved-B rails; unrelated chest and rail history entries remain separate; superforced Ctrl+Shift blueprint overlay + Undo/Redo for 22 mixed-geometry rails (14 straight, 4 curved-A, 4 curved-B). Factory upgrades were tested as unrelated history actions. See [gameplay test record](tests/undo-0.1.8-2026-11-12.md) and [build provenance](BUILD_018.yaml). Two distinct user logs; no observed mod Lua errors.
+
+**Code audit:** `ElectrifiedMainline/scripts/control.lua` no longer uses fixed `undo_index` or scripted blueprint Undo joining. `blueprint_undo_join` storage is discarded, `pending_rail_replacements` is preserved. Native upgrade and Undo/Redo event observers are non-mutating.
+
+**Do not overclaim:** A passed; B and C only partially passed; D unverified. No half-diagonal gameplay, special selection tool, interrupted robot jobs, complete signal/inventory or compatibility regression yet. Electric traction, batteries and regeneration remain unimplemented.
+
+**Read order:** `AGENTS.md` -> this handoff -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> live source. Historical 0.1.7 details follow and must not override this current 0.1.8 status.
+
+## Historical 0.1.7 handoff (preserved for provenance)
 
 # Electrified Mainline — current AI handoff
 
