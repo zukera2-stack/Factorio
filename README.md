@@ -11,6 +11,7 @@ A Factorio 2.1 mod project exploring high-speed railway infrastructure, an elect
 | `ElectrifiedMainline/` | Mod source. This directory is the mod root and contains `info.json`, data-stage scripts, runtime script and locale files. |
 | `mods/` | Previously packaged mod archive(s). |
 | `docs/` | Design notes, implementation status and development guidance. |
+| `CONTRIBUTING.md` | Mandatory research-first contributor workflow and evidence rules. |
 | `README.ru.md` | Russian version of this overview. |
 | `CHANGELOG.md` | Version history. |
 
@@ -52,7 +53,7 @@ The mod source is kept in `ElectrifiedMainline/` as a self-contained Factorio mo
 
 Before preparing a release:
 
-1. Follow the [research-first method](docs/RESEARCH_METHOD.md): inspect working native/third-party analogues and official prototype API before coding; then validate prototypes and recipe/technology references against the target Factorio version.
+1. For every non-trivial mechanic, compatibility change, or workaround, copy the [research worksheet](docs/PROTOTYPE_RESEARCH_TEMPLATE.md) into `docs/research/` and complete it before coding. Follow the [research-first method](docs/RESEARCH_METHOD.md): inspect working native/same-type analogues and the official target-version API, then compare them with our source.
 2. Test loading with only the base game, then with the intended expansion setup.
 3. Exercise placement, mining, train creation, train merging/splitting and save/load behavior.
 4. Build the Factorio mod ZIP with **exactly one mod-version folder**, e.g. `ElectrifiedMainline_0.1.7/info.json` at archive root. The current CI packages a folder named `ElectrifiedMainline/` inside the ZIP (no duplicate nested copy); metadata validation checks it. Do not package the inner contents bare or insert a second redundant folder.
@@ -67,6 +68,9 @@ Contributors and AI coding agents must follow [`AGENTS.md`](AGENTS.md) and the [
 - [Development status and known gaps](docs/STATUS.md)
 - [Architecture and design notes](docs/ARCHITECTURE.md)
 - [Research method: working analogues over guesses](docs/RESEARCH_METHOD.md)
+- [Prototype research worksheet](docs/PROTOTYPE_RESEARCH_TEMPLATE.md)
+- [Completed 0.1.7 rail-upgrade research record](docs/research/rail-native-upgrade-0.1.7.md)
+- [Contributor workflow](CONTRIBUTING.md)
 - [Contributor guide and mandatory validation checklist](CONTRIBUTING.md)
 - [Project state](docs/PROJECT_STATE.yaml)
 - [Russian overview](README.ru.md)
