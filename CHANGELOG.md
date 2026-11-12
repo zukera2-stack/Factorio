@@ -1,3 +1,10 @@
+## 0.1.9 — experimental branch (not released)
+
+- Added strictly copper-disconnected 35 kV contact support prototype and vanilla-side traction substation prototype.
+- Added event-driven logical spans drawn as nonconducting graphics; no real electricity yet.
+- Included basic recipes, localization and inspection command. No rail-signal snap, train energy, or actual MW bridge.
+- Corrected two obsolete technical comments. Native Upgrade Planner remains unchanged; runtime game tests pending.
+
 # Changelog
 
 ## [0.1.8] - 2026-11-12 (test branch, Undo stabilization)

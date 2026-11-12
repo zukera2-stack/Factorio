@@ -1,3 +1,5 @@
+> The isolated feature/35kv-catenary-019 branch now prototypes 35 kV visual line endpoints and a distinct logical graph. NO energy transfer and NO exact signal-like placement yet; gameplay tests pending. main remains the verified 0.1.8 baseline.
+
 # Current: ElectrifiedMainline 0.1.8 — core Undo regression game-tested
 
 **Current baseline:** `main`, ElectrifiedMainline **0.1.8**. **Release:** [PR #6](https://github.com/zukera2-stack/Factorio/pull/6) merged on 2026-11-12; merge commit [`973559aa`](https://github.com/zukera2-stack/Factorio/commit/973559aa4d0643b2a942edce413e9530494bc498). Both Lua/ZIP and YAML/Markdown checks passed. Future features should branch from `main`. **Game-tested source:** `ac4624ef5873a1d3adf65194c289e09aee5224ae`. **Game:** Factorio 2.1.20 build 87512. **Test date:** 2026-11-12.

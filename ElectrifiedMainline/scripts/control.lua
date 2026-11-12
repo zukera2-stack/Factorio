@@ -4,6 +4,8 @@
 -- deferred to the energy-model pass; this file only maintains valid train state
 -- and tracks which custom rail segments are adjacent to custom electric poles.
 
+local power019 = require("scripts.power_019")
+
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
 local RAIL_RADIUS = 3
@@ -15,8 +17,8 @@ local RAIL_NAMES = {
     ["em-half-diagonal-high-speed-rail"] = true,
 }
 
--- Intercept only the four explicit vanilla -> ВСМ geometry mappings. Factorio's
--- native robot upgrade operation does not safely replace rail entities.
+-- The following four mappings are for the separate selection-tool fallback.
+-- Native rail Upgrade Planner and Undo/Redo work for tested straight/curved rails.
 local VANILLA_TO_CUSTOM_RAILS = {
     ["straight-rail"] = "em-high-speed-straight-rail",
     ["curved-rail-a"] = "em-curved-high-speed-rail",
@@ -43,6 +45,7 @@ local function ensure_storage()
         storage.em.pending_rail_replacements or {}
     -- Discard obsolete experimental marks; preserve the independent replacement queue.
     storage.em.blueprint_undo_join = nil
+    power019.ensure_storage()
 end
 
 script.on_init(ensure_storage)
@@ -346,6 +349,7 @@ local function on_built(event)
         or "on_built_entity", event, entity)
     if not (entity and entity.valid) then return end
 
+    power019.on_built(event)
     if RAIL_NAMES[entity.name] then
         mark_rail(entity)
     elseif entity.name == "em-electric-pole" then
@@ -363,6 +367,7 @@ local function cleanup_train_for_entity(event)
     diag_entity(diag_name, event, entity)
     if not (entity and entity.valid) then return end
 
+    power019.on_removed(event)
     if event.name == defines.events.on_robot_mined_entity
         or event.name == defines.events.on_player_mined_entity then
         process_mined_rail_replacement(event, entity)
@@ -572,3 +577,9 @@ script.on_event(defines.events.on_player_selected_area, on_player_selected_area)
 script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconstruction)
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_tick, on_tick)
+
+-- Read-only diagnostic for the unpowered 0.1.9 visual catenary graph.
+commands.add_command("em-35kv-status", "Show 35kV test graph; no MW transfer implemented.", function(event)
+    local player = event.player_index and game.get_player(event.player_index)
+    if player and player.valid then power019.status(player) end
+end)

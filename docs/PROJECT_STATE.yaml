@@ -5,6 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
+  active_feature_branch: feature/35kv-catenary-019
+  feature_version: "0.1.9"
+  feature_status: early_visual_prototype_awaiting_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -315,4 +318,26 @@ undo_stabilization_018:
     selection_queue_preserved: true
   evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
   build_manifest: docs/BUILD_018.yaml
-  main_merge: requires_player_log_and_approval
+  main_merge: merged_0_1_8_PR_6
+
+feature_35kv_019:
+  branch: feature/35kv-catenary-019
+  base_commit: cea1926ca08cabd667219c6e676a09d372a6696c
+  mod_version: "0.1.9"
+  stage: source_implemented_visual_prototype
+  research_doc: docs/research/35kv-catenary-0.1.9.md
+  architecture_doc: docs/POWER_ARCHITECTURE.md
+  api_references: docs/POWER_API_REFERENCES.yaml
+  support_prototype: em-35kv-catenary-pole
+  substation_prototype: em-35kv-traction-substation
+  existing_em_electric_pole: preserved_ordinary_network
+  contact_wire: nonconducting_rendered_pairs
+  wire_span_limit_tiles: 16
+  nearby_rail_detection_radius_tiles: 3
+  rail_signal_style_placement: not_implemented
+  actual_power_transfer: not_implemented
+  real_electrified_rail_graph: not_implemented
+  source_syntax_check: awaiting_ci
+  zip_check: awaiting_ci
+  game_test: not_run
+  merge_to_main: prohibited_until_game_test
