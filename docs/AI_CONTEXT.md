@@ -184,3 +184,10 @@ A successful GitHub Actions ZIP build proves packaging only, not in-game functio
 5. Check the latest commit and workflow status; never assume this handoff is newer than the repository.
 6. After material changes, update the state and handoff documents in the same change set.
 7. Report exact commit, files changed, workflow result, and what still needs an in-game test.
+
+## 2026-11-12 — test build 0.1.6
+- User verified superforced blueprint replacement of 14 vanilla straight rails with construction robots.
+- Native Ctrl+Z registered 29 actions (14 upgraded-entity, 15 built-entity), removed custom rails but did not restore vanilla rails.
+- Ctrl+Y rebuilt custom rails. Bob's assembling-machine upgrade correctly restored the original machine on Undo.
+- Experimental `undo_index=1` ghost attachment works for the tested straight rails; full native restoration remains unimplemented.
+- Diagnostic branch publishes GitHub Actions test ZIPs; packaging is not an in-game test.
