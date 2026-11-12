@@ -1,6 +1,6 @@
 # CONTINUATION INDEX (2026-11-09)
 
-For work in a new chat, start with `AGENTS.md`, then read `docs/AI_CONTEXT.md` and `docs/PROJECT_STATE.yaml`. These are the compact, maintained handoff documents. This file is retained as the detailed historical project notebook; inspect it when historical rationale is needed, but verify all current facts against source and the handoff files.
+For work in a new chat, use the current sequence in `AGENTS.md`: read `docs/AI_CONTEXT.md`, `docs/PROJECT_STATE.yaml`, `docs/RESEARCH_METHOD.md`, and `CONTRIBUTING.md`, then inspect live source. For non-trivial mechanics, complete `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` before coding. This file is a historical notebook only; verify current facts against source and maintained handoff documents. Its old continuation rules and next-task list (sections 8–9) describe the 2026-11-09 state and are superseded.
 
 ---
 
