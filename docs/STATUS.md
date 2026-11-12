@@ -29,6 +29,8 @@ The 0.1.6 scripted superforce-ghost `undo_index=1` experiment allowed Undo to re
 - [Project state — authoritative statuses](PROJECT_STATE.yaml)
 - [Current AI handoff](AI_CONTEXT.md)
 - [Research-first engineering method](RESEARCH_METHOD.md) — **mandatory: inspect working examples and prototype/API contracts before implementing a workaround**
+- [Prototype research worksheet](PROTOTYPE_RESEARCH_TEMPLATE.md) — complete the research sections before non-trivial implementation; append exact test evidence afterward.
+- [Completed 0.1.7 rail-upgrade record](research/rail-native-upgrade-0.1.7.md) — worked example with explicit proof boundaries.
 - [Architecture](ARCHITECTURE.md)
 
 CI packaging and Lua syntax checks do **not** prove in-game behavior. Every claim must have a scoped game test or be labelled unverified.
