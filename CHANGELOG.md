@@ -4,6 +4,12 @@ All notable project changes are recorded here.
 
 The project is currently in an early prototype stage. This file starts the public change history; it does not imply that earlier development work did not happen.
 
+## [Unreleased] - Documentation
+
+- Add a reusable prototype-research worksheet and a completed 0.1.7 rail-upgrade research record.
+- Make source provenance, target-version API comparison, falsifiable hypotheses, and scoped game evidence explicit requirements before and after non-trivial mechanic work.
+- Link the research workflow from contributor instructions, handoff documents, status, architecture, and both README files.
+
 ## [0.1.7] - 2026-11-12 (diagnostic branch, native ground-rail upgrades)
 
 - Assign a geometry-specific fast-replace group to each matching vanilla/high-speed ground-rail pair; connect the vanilla source to the custom target via `next_upgrade`.
