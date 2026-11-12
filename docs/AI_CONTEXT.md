@@ -1,6 +1,6 @@
 # Current AI handoff: ElectrifiedMainline 0.1.8
 
-**Validated source branch:** `test/undo-stabilization-018`; **tested source commit:** `ac4624ef5873a1d3adf65194c289e09aee5224ae`; **Factorio:** 2.1.20 build 87512. **Release target:** `main`, [PR #6](https://github.com/zukera2-stack/Factorio/pull/6); user approved the merge on 2026-11-12.
+**Current baseline branch:** `main`, ElectrifiedMainline **0.1.8**; [PR #6](https://github.com/zukera2-stack/Factorio/pull/6) merged on 2026-11-12 at [`973559aa`](https://github.com/zukera2-stack/Factorio/commit/973559aa4d0643b2a942edce413e9530494bc498). **Game-tested source:** `ac4624ef5873a1d3adf65194c289e09aee5224ae`, validated in `test/undo-stabilization-018`; **Factorio:** 2.1.20 build 87512. Both CI checks passed. Start new feature branches from `main`; the old test branch remains historical evidence.
 
 **Current verified scope:** native green Upgrade Planner + Undo/Redo for 26 straight, 4 curved-A, 4 curved-B rails; unrelated chest and rail history entries remain separate; superforced Ctrl+Shift blueprint overlay + Undo/Redo for 22 mixed-geometry rails (14 straight, 4 curved-A, 4 curved-B). Factory upgrades were tested as unrelated history actions. See [gameplay test record](tests/undo-0.1.8-2026-11-12.md) and [build provenance](BUILD_018.yaml). Two distinct user logs; no observed mod Lua errors.
 

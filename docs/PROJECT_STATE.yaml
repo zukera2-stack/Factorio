@@ -4,10 +4,14 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   active_test_branch: test/undo-stabilization-018
+  current_baseline_branch: main
+  last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
+  release_merge_commit: 973559aa4d0643b2a942edce413e9530494bc498
   release_merge_approved_by_user: true
-  release_status: approved_pending_pr_checks
+  release_status: merged_into_main_2026_11_12
+  next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.4"
   previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
   previous_main_state_archive: docs/history/PROJECT_STATE-main-0.1.4.yaml

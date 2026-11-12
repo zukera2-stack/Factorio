@@ -2,7 +2,7 @@
 
 A Factorio 2.1 mod project exploring high-speed railway infrastructure, an electric locomotive concept, battery support and regenerative braking.
 
-> **Development status: 0.1.8, game-tested release baseline (PR #6 into `main`).** Factorio 2.1.20 build 87512: native Upgrade Planner upgraded **26 straight + 8 curved** rails with working Ctrl+Z/Ctrl+Y; Ctrl+Shift superforced blueprint overlay upgraded **14 straight + 8 curved** rails with working Undo/Redo. Experimental scripted Undo joining was removed. Half-diagonal gameplay, the separate replacement selection tool and interrupted robot jobs remain unverified; electric traction, battery, overhead transfer and regeneration are not yet implemented. See [current status](docs/STATUS.md) and [test evidence](docs/tests/undo-0.1.8-2026-11-12.md).
+> **Development status: 0.1.8, game-tested baseline in `main` (PR #6 merged).** Factorio 2.1.20 build 87512: native Upgrade Planner upgraded **26 straight + 8 curved** rails with working Ctrl+Z/Ctrl+Y; Ctrl+Shift superforced blueprint overlay upgraded **14 straight + 8 curved** rails with working Undo/Redo. Experimental scripted Undo joining was removed. Half-diagonal gameplay, the separate replacement selection tool and interrupted robot jobs remain unverified; electric traction, battery, overhead transfer and regeneration are not yet implemented. See [current status](docs/STATUS.md) and [test evidence](docs/tests/undo-0.1.8-2026-11-12.md).
 
 ## Project contents
 

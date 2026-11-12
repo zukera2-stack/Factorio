@@ -17,3 +17,9 @@ source_audit:
   independent_selection_queue_preserved: true
 game_test_evidence: docs/tests/undo-0.1.8-2026-11-12.md
 note: "Documentation-only update; source_commit and archive SHA256 still identify the original tested ZIP."
+release_branch: main
+release_pull_request: 6
+release_merge_commit: 973559aa4d0643b2a942edce413e9530494bc498
+release_merge_date: "2026-11-12"
+release_ci_lua_zip: passed
+release_ci_docs_yaml_links: passed
