@@ -1,6 +1,6 @@
 # Prototype research record — template
 
-> Copy this file for each non-trivial mechanic, compatibility change, or bug workaround. Save the completed record under `docs/research/<topic>-<version>.md`. Fill sections 1–7 **before implementation**; complete the test and result sections after the experiment. Do not edit this template in place.
+> Copy this file for each non-trivial mechanic, compatibility change, or bug workaround. Save the completed record under `docs/research/<topic>-<version>.md`. Fill sections 1–6 **before implementation**; complete section 7 after coding and sections 8–9 after testing. Do not edit this template in place.
 
 ## 1. Research metadata
 
