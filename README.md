@@ -56,7 +56,7 @@ Before preparing a release:
 1. For every non-trivial mechanic, compatibility change, or workaround, copy the [research worksheet](docs/PROTOTYPE_RESEARCH_TEMPLATE.md) into `docs/research/` and complete it before coding. Follow the [research-first method](docs/RESEARCH_METHOD.md): inspect working native/same-type analogues and the official target-version API, then compare them with our source.
 2. Test loading with only the base game, then with the intended expansion setup.
 3. Exercise placement, mining, train creation, train merging/splitting and save/load behavior.
-4. Build the Factorio mod ZIP with **exactly one mod-version folder**, e.g. `ElectrifiedMainline_0.1.7/info.json` at archive root. The current CI packages a folder named `ElectrifiedMainline/` inside the ZIP (no duplicate nested copy); metadata validation checks it. Do not package the inner contents bare or insert a second redundant folder.
+4. Build the Factorio mod ZIP with **exactly one mod folder**, matching the current CI layout: `ElectrifiedMainline/info.json` at archive root. The current CI packages `ElectrifiedMainline/` inside the ZIP (no duplicate nested copy); metadata validation checks it. Do not package the inner contents bare or insert a second redundant folder.
 5. Update `CHANGELOG.md` and the version in `info.json` together.
 
 ## Development workflow
