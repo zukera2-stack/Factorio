@@ -4,8 +4,9 @@
 
 1. `docs/AI_CONTEXT.md` — concise authoritative handoff for continuing work in any chat.
 2. `docs/PROJECT_STATE.yaml` — machine-readable project state and decisions.
-3. The exact source files relevant to the task.
-4. `PROJECT_CONTEXT.md` only when historical detail or a longer technical rationale is needed.
+3. `docs/RESEARCH_METHOD.md` — mandatory research-first engineering workflow.
+4. The exact source files relevant to the task.
+5. `PROJECT_CONTEXT.md` only when historical detail or a longer technical rationale is needed.
 
 ## Source of truth
 
@@ -14,6 +15,16 @@
 - `docs/AI_CONTEXT.md` is the handoff index and must be updated after material work.
 - Historical notes and old logs are evidence, not proof that current code still behaves the same.
 - If documents disagree, inspect code and record the discrepancy; do not silently choose one.
+
+## Research-first discipline — no blind guesswork
+
+- **Before writing a mechanic or bug workaround, find a working native or third-party analogue.** Prefer one using the same entity/prototype type. Inspect the actual source and prototype properties, not only a forum claim or a screenshot.
+- Record the reference repo, file, ref/commit and version. A public branch may differ from the user's installed mod; label such mismatches.
+- Compare our current prototype/logic to the analogue and official Factorio API: flags, mining and placement, fast-replace groups, next-upgrade chain, geometry, collision, and event ownership.
+- Prefer engine-native behavior to custom scripts where it already supports the feature. Do not copy third-party code; independently implement the documented mechanism.
+- Form a minimal hypothesis, run a focused Factorio test, then record exactly which case passed. **A working straight rail does not prove curved rails or superforced blueprints.**
+- Never claim a feature is engine-unsupported based solely on a failed experiment. Cross-check a same-type working example first.
+- Full protocol and real 0.1.7 case study: [`docs/RESEARCH_METHOD.md`](docs/RESEARCH_METHOD.md).
 
 ## Change discipline
 
