@@ -191,3 +191,12 @@ A successful GitHub Actions ZIP build proves packaging only, not in-game functio
 - Ctrl+Y rebuilt custom rails. Bob's assembling-machine upgrade correctly restored the original machine on Undo.
 - Experimental `undo_index=1` ghost attachment works for the tested straight rails; full native restoration remains unimplemented.
 - Diagnostic branch publishes GitHub Actions test ZIPs; packaging is not an in-game test.
+
+## 2026-11-12 — 0.1.7 native-upgrade test (source only)
+- Inspected Bob's assembling-machine prototypes: assembling machines 4/5/6 use identical collision boxes, a common fast_replaceable_group, and a next_upgrade chain; engine performs native Undo/Redo, not Bob's Lua runtime.
+- Inspected MIT-licensed Minimal Electric Rails as technical reference: each ground rail geometry uses a separate fast_replaceable_group and vanilla next_upgrade points at matching custom ground rail.
+- 0.1.6 source had one shared em-rail-upgrade group across geometries, no next_upgrade, and on_marked_for_upgrade actively canceled and staged upgrades.
+- 0.1.7 applies per-geometry groups + next_upgrade to eligible vanilla/custom pairs. Native on_marked_for_upgrade is observation-only. Custom replacement selection tool remains staged fallback.
+- Test native green Upgrade Planner first, then Ctrl+Z/Ctrl+Y with robots; test superforce blueprints separately. Ground rail runtime result unverified pending user log.
+- Existing experimental 0.1.6 delayed ghost Undo attachment remains for legacy superforce fallback; restoring vanilla rails in that fallback remains incomplete.
+- Do not copy third-party mod code or claim ground native replacement as proven merely from prototype validation or ZIP build.
