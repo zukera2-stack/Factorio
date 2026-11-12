@@ -207,3 +207,40 @@ native_ground_rail_upgrade_017:
   custom_rail_replacement_selection_tool: staged_fallback_unchanged
   delayed_ghost_join: legacy_superforce_fallback_unchanged
   curved_geometry_and_superforced_blueprint_behavior: unverified
+
+
+engineering_method_policy:
+  status: mandatory_project_wide
+  contributor_rules: AGENTS.md
+  practical_checklist: CONTRIBUTING.md
+  detailed_protocol: docs/RESEARCH_METHOD.md
+  sequence:
+    - define_exact_player_visible_acceptance_test
+    - inspect_vanilla_or_native_factorio_precedent
+    - find_working_same_prototype_type_mod_analogue
+    - record_reference_repository_file_ref_commit_and_version
+    - verify_official_api_for_target_factorio_version
+    - compare_relevant_prototype_properties_and_runtime_ownership
+    - state_falsifiable_minimal_hypothesis
+    - implement_independently_without_copying_reference_code
+    - run_source_ci_and_scoped_in_game_tests
+    - record_evidence_scope_and_unverified_cases
+    - synchronize_ai_context_project_state_status_and_changelog
+  forbidden_shortcuts:
+    - guess_prototype_flags_or_event_order_without_research
+    - infer_engine_limitation_from_one_failed_experiment
+    - copy_third_party_source_code
+    - treat_zip_build_as_gameplay_proof
+    - generalize_one_geometry_or_user_path_to_all
+  evidence_labels: [implemented, api_confirmed, game_tested, inferred, unverified, planned]
+  case_study:
+    feature: native_ground_rail_upgrade_undo_redo
+    mod_version: "0.1.7"
+    user_confirmed: true
+    tested_geometry: straight_ground_rail
+    tested_count: 20
+    native_upgrade_planner: true
+    robot_replacement: true
+    ctrl_z_restored_vanilla: true
+    ctrl_y_reapplied_upgrade: true
+    other_geometries_and_blueprint_path: unverified
