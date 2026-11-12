@@ -21,4 +21,13 @@ electric_transfer_mw: not_implemented
 note: "Initial artifact included 0.1.8 and 0.1.9 due to wildcard upload; rebuild after cleanup fix. The wrapper digest is NOT the inner mod ZIP checksum. No Factorio game test claimed."
 initial_artifact_contains_unwanted_0_1_8_zip: true
 packaging_fix: clear_historical_dist_zip_in_ci_runner_only
-corrected_build_run: pending
+corrected_source_commit: 9b5a25ea49355b7c1d2edd95f5617fc3e50fbd26
+corrected_build_run: 43297148331
+corrected_build_url: https://github.com/zukera2-stack/Factorio/actions/runs/43297148331
+corrected_artifact_id: 13979183874
+corrected_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43297148331/artifacts/13979183874
+corrected_artifact_wrapper_sha256: 9db3fcf6106e4e4bfa257d3deeb062da35fcece8c96576afc2e3ae4bfe7fe3c1
+corrected_artifact_file_count: 1
+corrected_build_result: passed
+corrected_documentation_check: passed
+correction_note: "GitHub Actions confirms exactly 1 file uploaded: ElectrifiedMainline_0.1.9.zip. Historical 0.1.8 ZIP retained only in repository; removed from CI checkout before packaging."
