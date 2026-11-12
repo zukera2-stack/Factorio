@@ -2,7 +2,7 @@ name: Build Factorio mod ZIP
 
 on:
   push:
-    branches: [main]
+    branches: [main, diagnostic/blueprint-rail-undo, test/undo-stabilization-018]
     paths:
       - "ElectrifiedMainline/**"
       - ".github/workflows/build-mod.yml"

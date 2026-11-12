@@ -1,9 +1,8 @@
 -- ElectrifiedMainline/data-final-fixes.lua
--- Validate vanilla -> Electrified Mainline rail upgrade eligibility.
--- The shared group enables pair compatibility; it does not make native robot
--- rail replacement work. Runtime code handles the two-stage replacement.
-
-local UPGRADE_GROUP = "em-rail-upgrade"
+-- Experimental 0.1.7: use Factorio's native rail upgrade path.
+-- A distinct fast_replaceable_group is required for each rail geometry.
+-- next_upgrade makes the default green Upgrade Planner recognize each pair.
+-- No custom code is borrowed from other mods.
 
 local rail_pairs = {
     { type = "straight-rail", vanilla = "straight-rail", custom = "em-high-speed-straight-rail" },
@@ -137,13 +136,31 @@ for _, pair in pairs(rail_pairs) do
     -- Remove only the disqualifying flag; preserve all other prototype flags.
     local vanilla_flag_removed = remove_not_upgradable(vanilla)
     local custom_flag_removed = remove_not_upgradable(custom)
-    vanilla.fast_replaceable_group = UPGRADE_GROUP
-    custom.fast_replaceable_group = UPGRADE_GROUP
+    local upgrade_group = "em-native-" .. pair.type
+    local previous_next_upgrade = vanilla.next_upgrade
+    local conflicting_upgrade = previous_next_upgrade ~= nil and previous_next_upgrade ~= pair.custom
 
     local source_check = validate_source(vanilla)
     local target_visible_item = find_visible_build_item(custom)
     local target_visible = custom.hidden ~= true
     local function status(value) return value and "PASS" or "FAIL" end
+    local eligible = source_check.eligible and target_visible and target_visible_item
+        and collision_box_ok and collision_mask_ok
+
+    if conflicting_upgrade then
+        -- Do not break another mod's existing upgrade chain.
+        log("[ElectrifiedMainline][native-upgrade] SKIP existing next_upgrade on "
+            .. pair.vanilla .. ": " .. tostring(previous_next_upgrade))
+    elseif eligible then
+        vanilla.fast_replaceable_group = upgrade_group
+        custom.fast_replaceable_group = upgrade_group
+        vanilla.next_upgrade = pair.custom
+        log("[ElectrifiedMainline][native-upgrade] CONFIGURED "
+            .. pair.vanilla .. " -> " .. pair.custom .. " group=" .. upgrade_group)
+    else
+        log("[ElectrifiedMainline][native-upgrade] INELIGIBLE "
+            .. pair.vanilla .. " -> " .. pair.custom)
+    end
 
     log(string.format(
         "[ElectrifiedMainline][upgrade-check] %s -> %s | source_minable=%s source_visible=%s source_hidden_mining_product=%s source_not_upgradable_removed=%s | target_visible=%s target_visible_build_item=%s | group=%s collision_box=%s collision_mask=%s",
@@ -154,7 +171,7 @@ for _, pair in pairs(rail_pairs) do
         tostring(vanilla_flag_removed),
         status(target_visible and target_visible_item ~= nil),
         target_visible_item or "<none>",
-        UPGRADE_GROUP,
+        vanilla.fast_replaceable_group or "<none>",
         status(collision_box_ok),
         status(collision_mask_ok)
     ))

@@ -3,24 +3,38 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  mod_directory: ElectrifiedMainline
-  mod_version: "0.1.4"
-  diagnostic_test_version: "0.1.5"
-  diagnostic_test_branch: diagnostic/blueprint-rail-undo
-  diagnostic_test_branch_isolated: true
-  factorio_target: "2.1"
-  user_tested_game: "2.1.20b"
-  last_state_update: "2026-11-10"
-  handoff_document: docs/AI_CONTEXT.md
-  contributor_instructions: AGENTS.md
+  active_test_branch: test/undo-stabilization-018
+  release_target_branch: main
+  release_pull_request: 6
+  release_merge_approved_by_user: true
+  release_status: approved_pending_pr_checks
+  previous_main_baseline: "0.1.4"
+  previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
+  previous_main_state_archive: docs/history/PROJECT_STATE-main-0.1.4.yaml
+  exact_version_rail_api_notes: docs/FACTORIO_2_1_RAIL_API_NOTES.md
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
+  mod_directory: ElectrifiedMainline
+  mod_version: "0.1.8"
+  factorio_target: "2.1"
+  user_tested_game: "2.1.20"
+  user_installation_label: "2.1.20b"
+  last_state_update: "2026-11-12"
+  handoff_document: docs/AI_CONTEXT.md
+  contributor_instructions: AGENTS.md
+  contributor_guide: CONTRIBUTING.md
+  engineering_method: docs/RESEARCH_METHOD.md
+  research_record_template: docs/PROTOTYPE_RESEARCH_TEMPLATE.md
+  research_record_directory: docs/research/
+  current_status: docs/STATUS.md
 
 user_decisions:
   rail_modernization: replace_vanilla_rails_with_high_speed_rails
   power_model: hybrid_overhead_supply_and_onboard_storage
   rolling_stock: vanilla_and_custom_wagons_supported
-  regenerative_braking_priority: [shared_grid, onboard_storage_surplus]
+  regenerative_braking_priority:
+    - shared_grid
+    - onboard_storage_surplus
   high_speed_energy_corridor: true
   substations:
     connect_ordinary_grid_and_high_speed_grid: bidirectional
@@ -41,130 +55,170 @@ interoperability:
 implementation:
   custom_rail_prototypes: four_ground_geometries_present_in_source
   custom_rail_planner: unified_rail_planner_present_in_source
-  custom_rail_planner_gameplay: game_tested_operational
   custom_rail_inventory_item: em-high-speed-rail
   custom_rail_geometry_item_costs:
     straight: 1
     curved_a: 3
     curved_b: 3
     half_diagonal: 2
-  custom_locomotive_prototype: present_in_source
-  custom_wagon_prototypes: cloned_from_vanilla_without_capacity_or_performance_changes
-  custom_electric_pole: cloned_from_vanilla_small_electric_pole_uses_ordinary_electric_network
-  real_traction_energy: not_implemented
-  real_battery_model: not_implemented
-  real_substation_transfer: not_implemented
-  real_overhead_power_delivery: not_implemented
-  real_regeneration: not_implemented
-  locomotive_energy_source: void_placeholder
-  complete_rail_replacement: partial_two_stage_vanilla_to_custom
-  vanilla_to_custom_rail_runtime: source_implemented_user_tested_for_direct_planner_path
+  rail_planner_construction_robot_placement: game_tested_confirmed_previous_sessions
+  custom_rail_planner_manual_placement: game_tested_confirmed_previous_sessions
+  custom_rail_shape_identity_detection: game_tested_for_straight_curved_and_half_diagonal_previous_sessions
+  native_ground_rail_upgrade_by_construction_robot: game_tested_straight_ground_in_0_1_7
+  native_ground_rail_undo_redo: game_tested_straight_ground_20_segments_in_0_1_7
+  native_upgrade_green_planner_straight: game_tested_success
+  native_upgrade_green_planner_curved_a: game_tested_success_0_1_8
+  native_upgrade_green_planner_curved_b: game_tested_success_0_1_8
+  native_upgrade_green_planner_half_diagonal: unverified
+  native_upgrade_group: per_geometry_group_em_native_prefix
+  vanilla_next_upgrade: matching_custom_ground_rail_each_geometry
+  on_marked_for_upgrade: observational_only_does_not_cancel_native_order
+  rail_upgrade_collision_box_mask_validation: passed_data_stage_all_four_pairs_0_1_7
+  rail_upgrade_source_target_eligibility: passed_data_stage_all_four_pairs_0_1_7
+  rail_upgrade_next_upgrade_conflict_guard: does_not_overwrite_existing_foreign_chain
   vanilla_to_custom_rail_geometry_mappings:
     straight-rail: em-high-speed-straight-rail
     curved-rail-a: em-curved-high-speed-rail
     curved-rail-b: em-curved-high-speed-rail-b
     half-diagonal-rail: em-half-diagonal-high-speed-rail
-  native_factorio_rail_upgrade_by_construction_robot: unsupported_engine_behavior
-  green_upgrade_planner_pairs_visible: false
-  green_upgrade_planner_eligibility_checks: all_four_passed_but_pairs_not_visible_in_user_test
-  custom_rail_replacement_selection_tool: source_implemented_game_test_required
-  custom_rail_replacement_runtime_event: on_player_selected_area
-  custom_rail_replacement_quality_source: selected_rail_entity_quality
-  custom_rail_replacement_robot_workflow: deconstruction_then_matching_custom_rail_ghost
-  fast_replaceable_group: shared_group_assigned_to_vanilla_and_custom_rails
-  rail_collision_box_mask_validation: assertions_in_data_final_fixes
-  persistent_storage_schema_version: 1
-  persistent_storage_lazy_initialization: implemented_after_user_reported_nil_queue_crash
-  rail_identity_diagnostics: game_tested_for_vanilla_and_custom_rail_types
+  staged_fallback_selection_tool: source_implemented_game_test_required
+  staged_fallback_selection_scope: vanilla_four_ground_rail_geometries_only
+  staged_fallback_operation: order_deconstruction_then_create_matching_custom_rail_ghost
+  scripted_blueprint_superforce_undo: removed_in_0_1_8
+  blueprint_rail_undo_diagnostics: game_tested_logging
+  blueprint_rail_undo_test_branch: diagnostic/blueprint-rail-undo
+  persistent_storage_lazy_initialization: present_in_source
+  legacy_save_pending_queue_nil_crash: previously_reproduced_fix_added_in_0_1_1
+  separate_high_speed_power_grid: not_implemented
+  custom_electric_pole: cloned_from_vanilla_ordinary_electric_network
+  custom_locomotive_prototype: present_in_source
+  custom_wagon_prototypes: cloned_from_vanilla_no_capacity_changes
+  custom_locomotive_energy_source: void_placeholder
+  real_traction_energy: not_implemented
+  real_battery_model: not_implemented
+  real_substation_transfer: not_implemented
+  real_regeneration: not_implemented
+  real_train_mass_accounting: not_implemented
+  overhead_line_power_delivery: not_implemented
   rail_diagnostic_interval_ticks: 1
   rail_diagnostic_interval_temporary: true
   train_speed_sampling_interval_ticks: 30
   compatibility_adapters: none
-  rail_planner_blueprint_empty_ground: game_tested_operational
-  rail_planner_blueprint_over_vanilla_rails: fails_to_replace_existing_rails
-  rail_planner_direct_manual_placement_over_vanilla_rails: game_tested_operational
-  direct_placement_cancel_restore_vanilla_rails: game_tested_operational
-  ctrl_shift_blueprint_over_vanilla_rails: game_tested_two_stage_deconstruction_then_custom_ghost_build
-  ctrl_shift_blueprint_undo_or_cancel_after_custom_build: reported_not_working_exact_operation_unclear
-  reverse_custom_to_vanilla_undo: not_implemented
-  blueprint_undo_redo_diagnostics: observation_only_handlers_on_isolated_test_branch
-  blueprint_undo_redo_action_payloads: awaiting_diagnostic_log
-  forced_blueprint_ghost_is_fast_replace: false
-  forced_ghost_placement_ignores_deconstructible_entities: api_confirmed_for_supported_ghost_build_check_types
-  surface_create_entity_fast_replace_player_undo_support: api_confirmed_game_test_required
-  factorio_2_1_20_api_findings_documented: true
+  large_modpack_interoperability: unverified
 
-latest_game_test:
-  date: "2026-11-10"
-  game_version: "2.1.20b"
-  tested_mod_version: unknown
-  scenarios:
-    direct_custom_planner_over_vanilla_rails:
-      result: pass
-      notes: vanilla_rails_replaced_and_returned_to_inventory
-    cancel_direct_replacement:
-      result: pass
-      notes: custom_rails_removed_then_vanilla_rail_ghosts_restored_by_robots
-    custom_rail_ghost_over_vanilla_rails:
-      result: fail
-      notes: ghost_reports_existing_rails_as_obstruction
-    custom_blueprint_on_empty_ground:
-      result: pass
-      notes: robots_build_custom_rail_ghosts
-    cancel_custom_ghosts_on_empty_ground:
-      result: pass
-    ctrl_shift_blueprint_over_vanilla_rails:
-      result: partial_pass
-      notes: vanilla_rails_deconstructed_then_custom_rail_ghosts_built_by_robots
-    undo_or_cancel_after_ctrl_shift_replacement:
-      result: unresolved
-      notes: user_says_cancellation_does_not_work_but_did_not_specify_ctrl_z_vs_cancelling_deconstruction_or_removing_ghost
-  diagnostic_branch:
-    branch: diagnostic/blueprint-rail-undo
-    pull_request: https://github.com/zukera2-stack/Factorio/pull/4
-    mod_version: "0.1.5"
-    ci_lua_syntax_and_package: passed
-    in_game_test: not_reported
-    merge_to_main: prohibited_until_diagnostic_review
+last_game_test:
+  date: "2026-11-12"
+  game_version: "2.1.20"
+  game_build: 87512
+  installed_mod_version: "0.1.8"
+  source_commit: ac4624ef5873a1d3adf65194c289e09aee5224ae
+  test_branch: test/undo-stabilization-018
+  evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
+  log_sessions:
+    - filename: "factorio-current(20261112-170348).log"
+      sha256: 832808759fea8270384155799f6cd3f64a83b3dd4144ee3c187d04f0ce833171
+      duplicate_upload: "factorio-current(20261112-170208).log"
+    - filename: "factorio-current(20261112-171003).log"
+      sha256: e5ccf8b67c51cbdcbad9e43ba1b2151bf5bc1c3ded041d3dfe30b96df3d1cb22
+  native_green_planner:
+    geometry_counts: { straight: 26, curved_a: 4, curved_b: 4 }
+    undo_tick: 23999
+    redo_tick: 24581
+    result: game_tested_success
+  unrelated_chest_undo_redo:
+    undo_chest_tick: 29766
+    undo_rails_tick: 29988
+    redo_rails_tick: 30251
+    redo_chest_tick: 31701
+    result: game_tested_separate_history_entries
+  blueprint_superforce_straight:
+    build_mode: 2
+    geometry_counts: { straight: 14 }
+    undo_tick: 39434
+    redo_in_this_session: not_observed
+  blueprint_superforce_mixed:
+    build_mode: 2
+    build_tick: 20353
+    geometry_counts: { straight: 14, curved_a: 4, curved_b: 4 }
+    undo_tick: 20721
+    redo_tick: 20971
+    result: game_tested_success
+  unrelated_assembling_machine_actions:
+    undo_tick: 16902
+    action_count: 2
+  errors_attributed_to_mod_in_supplied_logs: none_observed
+  game_exit: normal
+  not_verified:
+    - half_diagonal_rail_gameplay
+    - dedicated_selection_tool
+    - blueprint_and_unrelated_action_interleaved_during_delayed_robots
+    - partially_completed_robot_jobs
+    - inventory_refunds_and_rail_signal_integrity
 
-historical_confirmed:
-  mod_load_factorio_2_1_20b: passed
-  reorganized_root_loaders_and_require_paths: game_tested
-  construction_robots_build_custom_rails: game_tested
-  custom_curved_and_half_diagonal_rail_identity_detection: game_tested
-  bob_library_ingredient_format: explicit_factorio_2x_objects_added_retest_required
-  concrete_beam_pipe_ingredient: vanilla_pipe_used_instead_of_nonexistent_iron_pipe
-  runtime_pending_queue_nil_crash: user_reported_and_defensive_initialization_fix_added
-  green_upgrade_planner_pairs: absent_despite_prototype_eligibility_checks
+historical_game_tests:
+  "0.1.7":
+    date: "2026-11-12"
+    game_version: "2.1.20"
+    game_build: 87512
+    native_green_planner_straight_count: 20
+    native_upgrade_order_tick: 14284
+    undo_tick: 14591
+    redo_tick: 14940
+    log_evidence: "factorio-current(20261112-144236).log"
+    scope: straight_ground_only
+  "0.1.3":
+    date: "2026-11-10"
+    issue: old_green_upgrade_planner_pairs_missing_with_one_shared_fast_replace_group_and_no_next_upgrade
+    old_claim_native_rail_upgrade_unsupported: falsified_for_straight_ground_rails_by_0_1_7
+    note: historical_failure_not_a_current_engine_limitation
+  "0.1.6":
+    date: "2026-11-12"
+    path: ctrl_shift_superforced_blueprint_then_delayed_ghost_undo_join
+    undo_removed_custom_rails: true
+    undo_restored_original_vanilla_rails: false
+    redo_rebuilt_custom_rails: true
+    status: incomplete_workaround
+  previously_confirmed:
+    unified_custom_rail_planner_and_robot_placement: true
+    custom_curved_and_half_diagonal_rail_identity_detection: true
+    ingredient_conversion_to_factorio_2x_objects: implemented
+    pipe_item_correction: implemented
 
 next_actions:
-  - establish_exact_meaning_of_failed_ctrl_shift_cancellation_or_undo
-  - obtain_or_analyze_diagnostic_0_1_5_factorio_log_for_ctrl_z_ctrl_y_sequence
-  - inspect_undo_redo_action_arrays_before_implementing_reversible_replacement
-  - game_test_custom_selection_tool_and_robot_replacement
-  - test_all_four_rail_geometries_directions_and_qualities
-  - test_mixed_selection_area_does_not_replace_existing_custom_rails
-  - test_replacement_with_and_without_construction_robots
-  - test_deconstruction_cancellation_and_ghost_removal
-  - verify_signals_stations_train_routes_and_refund_counts_after_replacement
-  - retest_explicit_recipe_ingredient_format_with_bobs_library
-  - game_test_blueprints_for_all_four_custom_rail_geometries
-  - verify_technology_unlock_progression
-  - test_direction_changes_and_rail_transitions_at_speed
+  - test_native_green_upgrade_planner_and_undo_redo_on_half_diagonal_ground_rails
+  - test_blueprint_interleaved_with_unrelated_action_during_delayed_robot_jobs
+  - evaluate_and_regress_staged_custom_selection_tool_fallback_before_removal
+  - verify_rail_network_signals_routes_train_occupancy_and_item_refunds
+  - test_with_and_without_bots_and_with_cancelled_partial_upgrade_orders
+  - test_multiple_modpacks_and_prototype_upgrade_chain_conflicts
   - optimize_rail_diagnostic_polling
-  - implement_real_power_transfer_storage_and_regeneration_after_rail_foundation
+  - research_existing_native_or_modded_energy_grid_and_traction_mechanics_before_implementation
 
 compatibility_policy:
   core_requires_only_base: true
   optional_mods_are_hard_dependencies: false
   avoid_mutating_foreign_prototypes: true
+  allowed_vanilla_upgrade_mapping: only_when_no_conflicting_existing_upgrade_chain
   guard_optional_prototypes: true
   unknown_entities_must_be_tolerated: true
   versioned_storage_migrations_required_before_storage_schema_changes: true
 
 evidence_policy:
-  labels: [implemented, game_tested, api_confirmed, user_observed, planned, unverified]
+  labels: [implemented, game_tested, api_confirmed, inferred, planned, unverified]
   successful_zip_build_means_game_test: false
+  gameplay_proof_must_name_exact_test_path_and_geometry: true
+  source_proof_does_not_imply_gameplay_success: true
+  native_planner_test_does_not_prove_superforce_blueprint: true
+  third_party_source_version_mismatch_must_be_disclosed: true
+  research_first_method: docs/RESEARCH_METHOD.md
+  research_record_template: docs/PROTOTYPE_RESEARCH_TEMPLATE.md
+  research_record_required_for_nontrivial_mechanics: true
+  working_analogue_required_before_mechanics: true
+  same_type_analogue_preferred: true
+  source_ref_commit_and_version_must_be_recorded: true
+  missing_provenance_must_be_marked_unknown: true
+  analogy_is_hypothesis_not_proof: true
+  forbid_copied_reference_mod_code: true
 
 repository_structure:
   mod_entrypoints_must_stay_at_root:
@@ -178,3 +232,83 @@ repository_structure:
   optional_integrations_directory: compatibility/
   ai_handoff: docs/AI_CONTEXT.md
   machine_readable_state: docs/PROJECT_STATE.yaml
+
+experimental_undo_join_016:
+  scope: straight_rails_superforced_blueprint_only
+  user_game_tested: true
+  undo_removes_high_speed_rails: true
+  undo_restores_original_vanilla_rails: false
+  redo_rebuilds_high_speed_rails: true
+  status: historical_partial_undo_not_complete
+
+native_ground_rail_upgrade_017:
+  status: game_tested_straight_ground_only
+  native_undo_redo_verified: true_for_straight_ground_only
+  native_upgrade_and_reverse_count: 20
+  provenance: official_api_and_independent_working_analogue_research_no_copied_code
+  comparison_reference: bobs_assembling_machine_native_fast_replace_public_main_version_differs_from_installed
+  same_type_reference: minimalist_rails_ground_upgrade
+  fast_replaceable_group: one_group_per_ground_rail_geometry
+  vanilla_next_upgrade: matching_custom_ground_rail
+  on_marked_for_upgrade: diagnostic_only_does_not_cancel
+  custom_rail_replacement_selection_tool: staged_fallback_unchanged
+  delayed_ghost_join: legacy_superforce_fallback_unchanged
+  curved_geometry_and_superforced_blueprint_behavior: unverified
+
+
+engineering_method_policy:
+  status: mandatory_project_wide
+  contributor_rules: AGENTS.md
+  practical_checklist: CONTRIBUTING.md
+  detailed_protocol: docs/RESEARCH_METHOD.md
+  sequence:
+    - define_exact_player_visible_acceptance_test
+    - inspect_vanilla_or_native_factorio_precedent
+    - find_working_same_prototype_type_mod_analogue
+    - record_reference_repository_file_ref_commit_and_version
+    - verify_official_api_for_target_factorio_version
+    - compare_relevant_prototype_properties_and_runtime_ownership
+    - state_falsifiable_minimal_hypothesis
+    - implement_independently_without_copying_reference_code
+    - run_source_ci_and_scoped_in_game_tests
+    - record_evidence_scope_and_unverified_cases
+    - synchronize_ai_context_project_state_status_and_changelog
+  forbidden_shortcuts:
+    - guess_prototype_flags_or_event_order_without_research
+    - infer_engine_limitation_from_one_failed_experiment
+    - copy_third_party_source_code
+    - treat_zip_build_as_gameplay_proof
+    - generalize_one_geometry_or_user_path_to_all
+  evidence_labels: [implemented, api_confirmed, game_tested, inferred, unverified, planned]
+  case_study:
+    feature: native_ground_rail_upgrade_undo_redo
+    mod_version: "0.1.7"
+    user_confirmed: true
+    tested_geometry: straight_ground_rail
+    tested_count: 20
+    native_upgrade_planner: true
+    robot_replacement: true
+    ctrl_z_restored_vanilla: true
+    ctrl_y_reapplied_upgrade: true
+    other_geometries_and_blueprint_path: unverified
+
+undo_stabilization_018:
+  base_commit: fb3e5ca6307cf09585d67cd83566fa16e07839a8
+  manual_undo_join: removed
+  legacy_marks: discarded_without_replay
+  selection_queue: preserved_independent
+  native_upgrade: unchanged_from_0_1_7
+  tests_A_B_C_D_static: passed_source_review
+  tests_A_B_C_D_game:
+    A: passed_native_straight_curved_a_curved_b_undo_redo
+    B: partial_mixed_blueprint_undo_redo_and_separate_chest_history
+    C: partial_repeated_native_cycles_no_interrupted_robot_jobs
+    D: unverified_dedicated_selection_tool
+  source_audit:
+    fixed_undo_index_present: false
+    scripted_blueprint_undo_join_present: false
+    legacy_storage_marks_discarded: true
+    selection_queue_preserved: true
+  evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
+  build_manifest: docs/BUILD_018.yaml
+  main_merge: requires_player_log_and_approval

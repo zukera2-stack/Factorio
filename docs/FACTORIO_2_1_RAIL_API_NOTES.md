@@ -1,3 +1,5 @@
+> **Historical research note (2026-11-10):** this document's implementation status and pending-test statements predate 0.1.8. For current game-tested status, see [AI_CONTEXT.md](AI_CONTEXT.md), [PROJECT_STATE.yaml](PROJECT_STATE.yaml), and [0.1.8 game-test report](tests/undo-0.1.8-2026-11-12.md). The exact-version API links remain useful.
+
 # Factorio 2.1.20 API notes — rail replacement, ghosts and undo
 
 > Scope: API behavior checked against the exact Factorio 2.1.20 documentation, not the moving `latest` docs. Target game for this mod is 2.1.20b.
