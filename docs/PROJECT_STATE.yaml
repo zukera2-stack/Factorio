@@ -4,10 +4,10 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   mod_directory: ElectrifiedMainline
-  mod_version: 0.1.5
+  mod_version: 0.1.6
   factorio_target: "2.1"
   user_tested_game: "2.1.20b"
-  last_state_update: "2026-11-10"
+  last_state_update: "2026-11-12"
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
 
@@ -210,3 +210,15 @@ repository_structure:
   optional_integrations_directory: compatibility/
   ai_handoff: docs/AI_CONTEXT.md
   machine_readable_state: docs/PROJECT_STATE.yaml
+
+experimental_undo_join_016:
+  scope: straight_rails_superforced_blueprint_only
+  user_game_tested: true
+  joined_ghosts: 14
+  undo_action_count: 29
+  redo_action_count: 15
+  undo_removes_high_speed_rails: true
+  undo_restores_original_vanilla_rails: false
+  redo_rebuilds_high_speed_rails: true
+  bob_assembling_machine_native_reversible_reference: confirmed
+  status: partial_undo_not_complete
