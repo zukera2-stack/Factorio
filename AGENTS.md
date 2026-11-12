@@ -7,8 +7,9 @@
 3. `docs/PROJECT_STATE.yaml` — machine-readable project state and decisions.
 4. `docs/RESEARCH_METHOD.md` — mandatory research-first engineering workflow.
 5. `CONTRIBUTING.md` — practical change/review checklist.
-6. The exact source files relevant to the task.
-7. `PROJECT_CONTEXT.md` only when historical detail or longer technical rationale is needed.
+6. `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` — copy and complete it before non-trivial mechanic, compatibility, or workaround work.
+7. The exact source files relevant to the task.
+8. `PROJECT_CONTEXT.md` only when historical detail or longer technical rationale is needed.
 
 ## Source of truth
 
@@ -25,10 +26,11 @@
 - Record the reference repo, file, ref/commit and version. A public branch may differ from the user's installed mod; label such mismatches.
 - Compare our current prototype/logic to the analogue and official Factorio API: prototype type, flags, mining and placement, fast-replace groups, next-upgrade chain, geometry, collision, item mapping, event ownership, and version-specific behavior.
 - Write down what is observed in the reference, what the API guarantees, what differs in our mod, and what remains a hypothesis. A similar-looking entity is not proof of equivalent behavior.
+- For every non-trivial mechanic, compatibility change, or bug workaround, complete `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` as a new record under `docs/research/` **before implementation**. Fill source provenance, API version, comparison, and a falsifiable hypothesis; append test evidence afterward. Trivial spelling or documentation-only edits do not need a separate record.
 - Prefer engine-native behavior to custom scripts where it already supports the feature. Do not copy third-party code; independently implement the documented mechanism.
 - Form a minimal hypothesis, run a focused Factorio test, then record exactly which case passed. **A working straight rail does not prove curved rails or superforced blueprints.**
 - Never claim a feature is engine-unsupported based solely on a failed experiment. Cross-check a same-type working example first.
-- Full protocol and real 0.1.7 case study: [`docs/RESEARCH_METHOD.md`](docs/RESEARCH_METHOD.md).
+- Full protocol: [`docs/RESEARCH_METHOD.md`](docs/RESEARCH_METHOD.md); copyable worksheet: [`docs/PROTOTYPE_RESEARCH_TEMPLATE.md`](docs/PROTOTYPE_RESEARCH_TEMPLATE.md); completed rail case: [`docs/research/rail-native-upgrade-0.1.7.md`](docs/research/rail-native-upgrade-0.1.7.md).
 
 ## Change discipline
 
