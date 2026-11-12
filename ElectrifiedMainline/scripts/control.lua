@@ -215,17 +215,19 @@ local function queue_rail_replacement(entity, force, player, cancel_upgrade)
     return true
 end
 
+-- 0.1.7: do not cancel native rail upgrades. The engine handles construction
+-- robot replacement and its native Undo/Redo record, as for assembling machines.
+-- The dedicated rail replacement selection tool remains a separate fallback.
 local function on_marked_for_upgrade(event)
-    ensure_storage()
     local entity = event.entity
     local target = event.target
     if not (entity and entity.valid and target) then return end
+    if VANILLA_TO_CUSTOM_RAILS[entity.name] ~= target.name then return end
 
-    local expected_target = VANILLA_TO_CUSTOM_RAILS[entity.name]
-    if not expected_target or target.name ~= expected_target then return end
-
-    local player = event.player_index and game.get_player(event.player_index) or nil
-    queue_rail_replacement(entity, entity.force, player, true)
+    log("[ElectrifiedMainline][native-upgrade] ordered source=" .. entity.name
+        .. " target=" .. target.name
+        .. " tick=" .. tostring(game.tick)
+        .. " player=" .. tostring(event.player_index))
 end
 
 local function on_player_selected_area(event)
