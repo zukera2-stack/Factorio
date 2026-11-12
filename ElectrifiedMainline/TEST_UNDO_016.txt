@@ -1,3 +1,16 @@
-Electrified Mainline 0.1.6 experimental Undo join, straight rails only.
-Confirmed in Factorio: Ctrl+Z removes high-speed rails but does not restore original vanilla rails. Ctrl+Y rebuilds high-speed rails.
-Use disposable saves. This is NOT a complete Undo/Redo fix.
+Electrified Mainline 0.1.7 — experimental native rail upgrade (ground rails).
+Source is derived independently from documented Factorio API rules.
+- Per-geometry fast_replaceable_group (straight/curved-a/curved-b/half-diagonal).
+- Each vanilla rail geometry now points via next_upgrade to matching custom rail.
+- on_marked_for_upgrade is observation-only, no scripted cancellation/deconstruction.
+- Dedicated custom rail replacement tool still uses the old staged path.
+- Old 0.1.6 superforced blueprint Undo join remains as fallback; it does not restore original vanilla rails.
+
+TEST IN A DISPOSABLE SAVE FIRST:
+1. Use vanilla green Upgrade Planner over straight ground vanilla rails, with construction robots and custom rail items available. Look for green upgrade arrows; wait for robots.
+2. Ctrl+Z after upgrade, wait for old vanilla rails; Ctrl+Y, wait for new rails.
+3. Test Ctrl+Shift blueprint overlay separately; record if native upgrades or fallback staged replacement occurred.
+4. Retest curves only after straight ground rails pass.
+5. Send factorio-current.log. Zip packaging success != game mechanics success.
+
+KNOWN: Ground rail native upgrade is UNVERIFIED in 0.1.7 until tested.
