@@ -1,7 +1,7 @@
 # Electrified Mainline — current AI handoff
 
-> Updated 2026-11-12 after a **user-confirmed in-game 0.1.7 native Upgrade Planner + Undo/Redo test**. This is the compact current handoff; older failures and 0.1.6 history are below, not current capability statements.
-> Start with `AGENTS.md`, this file, `docs/PROJECT_STATE.yaml`, `docs/RESEARCH_METHOD.md`, then inspect the relevant live source files. Full older notebook: `PROJECT_CONTEXT.md`.
+> Updated 2026-11-12 after the user confirmed the 0.1.7 native rail replacement/Undo/Redo test works. The confirmed scope remains the tested straight-ground-rail path. This is the compact current handoff; older failures and 0.1.6 history are below, not current capability statements.
+> Read in order: `AGENTS.md` -> this file -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> `CONTRIBUTING.md` -> relevant live source files. Full older notebook: `PROJECT_CONTEXT.md`.
 
 ## 1. Current repository and environment
 
@@ -104,7 +104,7 @@ Research sequence:
 
 **0.1.7 outcome**: native green Upgrade Planner made a reversible `upgraded-entity` transaction for 20 straight rails. No custom Undo/Redo implementation needed in that path. We changed several conditions together; the log does not prove which one alone was necessary.
 
-Full process and source references: [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md). Never replace API research with guessed flags or write scripted Undo before checking engine-native ownership.
+Full process and source references: [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md) and repository [`CONTRIBUTING.md`](../CONTRIBUTING.md). This is now a mandatory project-wide method, not merely a lesson from the rail bug. Never replace API research with guessed flags or write scripted Undo before checking engine-native ownership.
 
 ## 6. Immediate next tests and work
 
@@ -127,3 +127,10 @@ Full process and source references: [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md). 
 ## 8. Handoff protocol
 
 Read `AGENTS.md` -> this file -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> live source. Check the branch head and version. Research existing functionality **before proposing new scripts**. Test only changed behavior, report actual observations and open questions, then synchronize docs and changelog.
+
+
+## 9. Mandatory research-first contribution method
+
+Every future mechanic, compatibility change, or bug workaround must follow `AGENTS.md`, `CONTRIBUTING.md`, and `RESEARCH_METHOD.md`: define the exact player-visible test; inspect Base/native behavior; find a working same-type mod precedent; record its source ref and version; compare relevant prototype properties and runtime ownership with the official target-version API and our source; state a falsifiable hypothesis; implement the smallest independent change; test the exact path in Factorio; and synchronize project status/evidence. If no suitable analogue exists, document the search and uncertainty rather than inventing flags. Reference code is for study, not copying.
+
+The user's confirmation that "everything works" applies to the 0.1.7 test path already recorded above (20 straight ground rails via the native green Upgrade Planner, robot replacement, Ctrl+Z restore, Ctrl+Y redo). It does not silently promote untested geometries or other replacement tools to game-tested.
