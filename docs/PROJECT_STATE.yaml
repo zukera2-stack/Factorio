@@ -12,7 +12,10 @@ project:
   last_state_update: "2026-11-12"
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
+  contributor_guide: CONTRIBUTING.md
   engineering_method: docs/RESEARCH_METHOD.md
+  research_record_template: docs/PROTOTYPE_RESEARCH_TEMPLATE.md
+  research_record_directory: docs/research/
   current_status: docs/STATUS.md
 
 user_decisions:
@@ -171,6 +174,13 @@ evidence_policy:
   native_planner_test_does_not_prove_superforce_blueprint: true
   third_party_source_version_mismatch_must_be_disclosed: true
   research_first_method: docs/RESEARCH_METHOD.md
+  research_record_template: docs/PROTOTYPE_RESEARCH_TEMPLATE.md
+  research_record_required_for_nontrivial_mechanics: true
+  working_analogue_required_before_mechanics: true
+  same_type_analogue_preferred: true
+  source_ref_commit_and_version_must_be_recorded: true
+  missing_provenance_must_be_marked_unknown: true
+  analogy_is_hypothesis_not_proof: true
   forbid_copied_reference_mod_code: true
 
 repository_structure:
