@@ -10,6 +10,19 @@ This protocol is mandatory for all contributors and AI coding agents. See the re
 
 Never guess engine flags, event order, or API effects when a comparable implementation can be inspected. Never say "unsupported" solely because an earlier prototype failed. Analogy generates a *testable hypothesis*, not a guarantee.
 
+## Required research record
+
+For every non-trivial mechanic, compatibility change, or bug workaround, copy the [research worksheet](PROTOTYPE_RESEARCH_TEMPLATE.md) into `docs/research/<topic>-<version>.md`.
+
+- Fill the exact behavior, acceptance test, source search, prototype/API comparison, and falsifiable hypothesis **before implementation**.
+- Record source URLs, exact paths, branch/tag/commit, mod/game version, and any mismatch with the user's installed revision. If a SHA or version was not captured, say so; never invent it.
+- If no same-type working analogue exists, document what was searched and why any adjacent analogue is relevant. Treat the result as an unverified hypothesis, not a proven engine rule.
+- After implementation and testing, append changed files, static/data-stage/CI results, exact in-game test scope, logs, limitations, and next experiment.
+- The [0.1.7 rail-upgrade research record](research/rail-native-upgrade-0.1.7.md) is the first worked example.
+
+This record is mandatory for non-trivial work; it is not required for spelling fixes or documentation-only edits that do not change technical behavior.
+
+
 ## Workflow
 
 1. **Define an observable acceptance test.** Name the actual game operation (e.g., green Upgrade Planner, robot construction, Ctrl+Z, Ctrl+Y), target Factorio version, expected result, and regression risks. Keep UI operations separate: Upgrade Planner != Ctrl+Shift superforced blueprint != our custom selection tool.
