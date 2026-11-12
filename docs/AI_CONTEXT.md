@@ -1,3 +1,5 @@
+> **0.1.9 CI evidence:** Lua syntax, ZIP validation and artifact creation PASSED on source commit cf49a518 in [Actions #43279773067](https://github.com/zukera2-stack/Factorio/actions/runs/43279773067). YAML/Markdown validation PASSED on documentation commit 97f35b45 in [Actions #43279908413](https://github.com/zukera2-stack/Factorio/actions/runs/43279908413). Test archive is an artifact named ElectrifiedMainline-test-build containing ElectrifiedMainline_0.1.9.zip. See [build manifest](BUILD_019.yaml). **No game launch performed here**.
+
 > NEW 0.1.9 isolated feature branch: feature/35kv-catenary-019. A source prototype adds zero-copper-wire 35 kV poles, ordinary-grid-side substations and purely VISUAL nonconducting spans. No real MW transfer, no rail-signal snap, no powered rails, no gameplay evidence yet. This branch is based on main 0.1.8, which is untouched. Read docs/research/35kv-catenary-0.1.9.md and docs/POWER_ARCHITECTURE.md. Source-only implementation is not a functional energy system.
 
 # Current AI handoff: ElectrifiedMainline 0.1.8

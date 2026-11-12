@@ -1,3 +1,5 @@
+> **0.1.9 preliminary CI:** Lua syntax and ZIP build passed at cf49a518; documentation YAML/link validation passed at 97f35b45. Download the experimental artifact from [Actions](https://github.com/zukera2-stack/Factorio/actions/runs/43279773067). All game-play claims remain unverified, and 35kV energy transfer is intentionally disabled. See [BUILD_019.yaml](BUILD_019.yaml).
+
 > The isolated feature/35kv-catenary-019 branch now prototypes 35 kV visual line endpoints and a distinct logical graph. NO energy transfer and NO exact signal-like placement yet; gameplay tests pending. main remains the verified 0.1.8 baseline.
 
 # Current: ElectrifiedMainline 0.1.8 — core Undo regression game-tested

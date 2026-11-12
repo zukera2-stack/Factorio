@@ -1,0 +1,21 @@
+version: "0.1.9"
+branch: feature/35kv-catenary-019
+source_commit: cf49a518b1cb73fc89af474bbaf8e8deb9b88542
+archive_filename_inside_artifact: ElectrifiedMainline_0.1.9.zip
+artifact_name: ElectrifiedMainline-test-build
+github_actions_build_run: 43279773067
+github_actions_build_url: https://github.com/zukera2-stack/Factorio/actions/runs/43279773067
+artifact_id: 13970804433
+artifact_expiry: "2026-12-12"
+artifact_wrapper_sha256: e50d18c1fd92262f873ce89ef31900349a447067853e1abc650b3aeb2cbb12d4
+archive_inner_sha256: unknown_not_published_by_ci
+build_lua_syntax: passed
+build_zip_integrity: passed
+docs_validation_run: 43279908413
+docs_validation_result: passed
+game_load: not_tested
+game_catenary_visuals: not_tested
+game_isolation: not_tested
+game_undo_regression: not_tested
+electric_transfer_mw: not_implemented
+note: "Outer artifact digest is NOT the checksum of inner mod ZIP; do not conflate. No Factorio game test claimed."

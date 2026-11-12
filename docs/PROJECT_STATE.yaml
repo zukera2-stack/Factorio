@@ -338,7 +338,12 @@ feature_35kv_019:
   rail_signal_style_placement: not_implemented
   actual_power_transfer: not_implemented
   real_electrified_rail_graph: not_implemented
-  source_syntax_check: awaiting_feature_branch_ci
-  zip_check: awaiting_feature_branch_ci
+  source_syntax_check: passed_github_actions_run_43279773067
+  zip_check: passed_github_actions_run_43279773067
+  docs_yaml_and_links_check: passed_github_actions_run_43279908413
+  tested_source_commit: cf49a518b1cb73fc89af474bbaf8e8deb9b88542
+  built_archive: ElectrifiedMainline_0.1.9.zip
+  build_artifact_id: 13970804433
+  build_manifest: docs/BUILD_019.yaml
   game_test: not_run
   merge_to_main: prohibited_until_game_test
