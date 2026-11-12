@@ -18,4 +18,7 @@ game_catenary_visuals: not_tested
 game_isolation: not_tested
 game_undo_regression: not_tested
 electric_transfer_mw: not_implemented
-note: "Outer artifact digest is NOT the checksum of inner mod ZIP; do not conflate. No Factorio game test claimed."
+note: "Initial artifact included 0.1.8 and 0.1.9 due to wildcard upload; rebuild after cleanup fix. The wrapper digest is NOT the inner mod ZIP checksum. No Factorio game test claimed."
+initial_artifact_contains_unwanted_0_1_8_zip: true
+packaging_fix: clear_historical_dist_zip_in_ci_runner_only
+corrected_build_run: pending

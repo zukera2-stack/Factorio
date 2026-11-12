@@ -63,6 +63,11 @@ jobs:
 
           output_dir = Path("dist")
           output_dir.mkdir(parents=True, exist_ok=True)
+          # Historical ZIPs are tracked in this repository. Do not include
+          # them in the release artifact for the version being built.
+          # This deletion affects only the checkout in the CI runner.
+          for stale_archive in output_dir.glob("ElectrifiedMainline_*.zip"):
+              stale_archive.unlink()
           archive = output_dir / f'{info["name"]}_{info["version"]}.zip'
           with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
               for path in sorted(mod_dir.rglob("*")):
@@ -89,6 +94,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ElectrifiedMainline-test-build
+          # The build step removes obsolete archives; assert the artifact
+          # contains only the ZIP matching info.json.
           path: dist/ElectrifiedMainline_*.zip
           if-no-files-found: error
           retention-days: 30
