@@ -9,6 +9,7 @@ The project is currently in an early prototype stage. This file starts the publi
 - Add a reusable prototype-research worksheet and a completed 0.1.7 rail-upgrade research record.
 - Make source provenance, target-version API comparison, falsifiable hypotheses, and scoped game evidence explicit requirements before and after non-trivial mechanic work.
 - Link the research workflow from contributor instructions, handoff documents, status, architecture, and both README files.
+- Correct the README ZIP-folder example to match the current CI archive layout.
 
 ## [0.1.7] - 2026-11-12 (diagnostic branch, native ground-rail upgrades)
 
