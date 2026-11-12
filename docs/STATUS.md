@@ -25,6 +25,7 @@ The 0.1.6 scripted superforce-ghost `undo_index=1` experiment allowed Undo to re
 
 ## Evidence & development
 
+- [Mandatory contributor workflow](../CONTRIBUTING.md) — find and inspect a working native or same-type mod analogue, verify the target-version API, compare before coding, and test the exact gameplay path. Guessing mechanics is not an accepted workflow.
 - [Project state — authoritative statuses](PROJECT_STATE.yaml)
 - [Current AI handoff](AI_CONTEXT.md)
 - [Research-first engineering method](RESEARCH_METHOD.md) — **mandatory: inspect working examples and prototype/API contracts before implementing a workaround**
