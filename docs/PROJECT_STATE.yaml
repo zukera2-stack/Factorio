@@ -4,7 +4,7 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   mod_directory: ElectrifiedMainline
-  mod_version: 0.1.6
+  mod_version: 0.1.7
   factorio_target: "2.1"
   user_tested_game: "2.1.20b"
   last_state_update: "2026-11-12"
@@ -222,3 +222,16 @@ experimental_undo_join_016:
   redo_rebuilds_high_speed_rails: true
   bob_assembling_machine_native_reversible_reference: confirmed
   status: partial_undo_not_complete
+
+native_ground_rail_upgrade_017:
+  status: prototype_configured_game_test_required
+  provenance: public_api_and_independent_reference_mod_technique_no_copied_code
+  comparison_reference: bobs_assembling_machine_native_fast_replace
+  compatible_reference: minimalist_rails_ground_native_upgrade
+  fast_replaceable_group: one_group_per_rail_geometry
+  vanilla_next_upgrade: matching_custom_rail
+  on_marked_for_upgrade: diagnostic_only_does_not_cancel
+  custom_rail_replacement_selection_tool: staged_fallback_unchanged
+  delayed_ghost_join: legacy_superforce_fallback_unchanged
+  native_undo_redo_verified: false
+  test_priority: green_upgrade_planner_then_ctrl_z_ctrl_y_then_superforce_blueprint
