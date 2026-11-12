@@ -1,0 +1,3 @@
+Electrified Mainline 0.1.6 experimental Undo join, straight rails only.
+Confirmed in Factorio: Ctrl+Z removes high-speed rails but does not restore original vanilla rails. Ctrl+Y rebuilds high-speed rails.
+Use disposable saves. This is NOT a complete Undo/Redo fix.
