@@ -2,7 +2,7 @@
 
 A Factorio 2.1 mod project exploring high-speed railway infrastructure, an electric locomotive concept, battery support and regenerative braking.
 
-> **Development status:** early prototype. On the experimental `diagnostic/blueprint-rail-undo` branch, **0.1.7** was game-tested on 2026-11-12: a native Upgrade Planner job replaced **20 straight ground rails** using robots; Ctrl+Z restored them and Ctrl+Y re-upgraded them. Curved geometry, Ctrl+Shift superforce blueprint Undo, and the future electricity mechanics are not yet verified/implemented. The `main` branch is not the same as this experimental build. See [current status](docs/STATUS.md).
+> **Development status: 0.1.8, game-tested release baseline (PR #6 into `main`).** Factorio 2.1.20 build 87512: native Upgrade Planner upgraded **26 straight + 8 curved** rails with working Ctrl+Z/Ctrl+Y; Ctrl+Shift superforced blueprint overlay upgraded **14 straight + 8 curved** rails with working Undo/Redo. Experimental scripted Undo joining was removed. Half-diagonal gameplay, the separate replacement selection tool and interrupted robot jobs remain unverified; electric traction, battery, overhead transfer and regeneration are not yet implemented. See [current status](docs/STATUS.md) and [test evidence](docs/tests/undo-0.1.8-2026-11-12.md).
 
 ## Project contents
 
@@ -36,7 +36,7 @@ These are project goals, not a claim that every feature is currently complete. T
 
 ## Installation
 
-For the current test branch, download the latest successful **Build Factorio mod ZIP** artifact from [GitHub Actions](https://github.com/zukera2-stack/Factorio/actions/workflows/build-mod.yml) (artifact name `ElectrifiedMainline-test-build`). The old committed `mods/ElectrifiedMainline_0.1.0.zip` is a historical snapshot **not** the latest version.
+For the 0.1.8 release baseline, use the committed [validated 0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) or a successful **Build Factorio mod ZIP** artifact from [GitHub Actions](https://github.com/zukera2-stack/Factorio/actions/workflows/build-mod.yml) (artifact name `ElectrifiedMainline-test-build`). The old `mods/ElectrifiedMainline_0.1.0.zip` is historical, **not** the current version. The game-tested ZIP checksum and source SHA are in [BUILD_018.yaml](docs/BUILD_018.yaml).
 
 For a manual test:
 
