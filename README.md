@@ -58,11 +58,16 @@ Before preparing a release:
 4. Build the Factorio mod ZIP with **exactly one mod-version folder**, e.g. `ElectrifiedMainline_0.1.7/info.json` at archive root. The current CI packages a folder named `ElectrifiedMainline/` inside the ZIP (no duplicate nested copy); metadata validation checks it. Do not package the inner contents bare or insert a second redundant folder.
 5. Update `CHANGELOG.md` and the version in `info.json` together.
 
+## Development workflow
+
+Contributors and AI coding agents must follow [`AGENTS.md`](AGENTS.md) and the [research-first contribution guide](CONTRIBUTING.md): inspect a working native or same-type mod analogue, verify the official target-version API, compare before coding, then test the exact gameplay path. Do not guess mechanics or treat CI packaging as gameplay proof.
+
 ## Documentation
 
 - [Development status and known gaps](docs/STATUS.md)
 - [Architecture and design notes](docs/ARCHITECTURE.md)
 - [Research method: working analogues over guesses](docs/RESEARCH_METHOD.md)
+- [Contributor guide and mandatory validation checklist](CONTRIBUTING.md)
 - [Project state](docs/PROJECT_STATE.yaml)
 - [Russian overview](README.ru.md)
 
