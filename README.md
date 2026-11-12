@@ -71,7 +71,6 @@ Contributors and AI coding agents must follow [`AGENTS.md`](AGENTS.md) and the [
 - [Prototype research worksheet](docs/PROTOTYPE_RESEARCH_TEMPLATE.md)
 - [Completed 0.1.7 rail-upgrade research record](docs/research/rail-native-upgrade-0.1.7.md)
 - [Contributor workflow](CONTRIBUTING.md)
-- [Contributor guide and mandatory validation checklist](CONTRIBUTING.md)
 - [Project state](docs/PROJECT_STATE.yaml)
 - [Russian overview](README.ru.md)
 
