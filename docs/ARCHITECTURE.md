@@ -47,6 +47,14 @@ Do not create empty placeholder modules. Extract a module when it owns real code
 
 The core mod should depend only on Base unless a required feature proves otherwise. Optional integrations belong in `compatibility/<mod-name>/` and must guard every optional prototype/API reference. Unknown third-party entities must be tolerated.
 
+## Native rail replacement and experimental fallback
+
+- `data-final-fixes.lua` assigns **one `fast_replaceable_group` per ground rail geometry** and connects each vanilla rail's `next_upgrade` to its matching custom rail, subject to eligibility and existing-chain checks.
+- The native green Upgrade Planner then owns robot mining/building, and Factorio's native Undo/Redo. `on_marked_for_upgrade` observes native orders and **must not** cancel them.
+- This native mechanism has been game-tested for **straight ground rails** in 0.1.7, not yet every geometry.
+- `scripts/control.lua` still contains the `em-rail-replacement-planner` two-stage deconstruction/ghost fallback and an experimental Ctrl+Shift blueprint Undo join. Those are **not** equivalent to native upgrades and their reversible behavior is unverified/incomplete.
+- Before modifying a mechanic, follow [working-analogue research protocol](RESEARCH_METHOD.md). Compare prototype type, group, upgrade chain, collision, mining/placement, and API with an existing proven implementation.
+
 ## Change and verification policy
 
 - Keep prototype names and runtime behavior stable during structural-only changes.
