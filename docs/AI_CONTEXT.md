@@ -184,3 +184,10 @@ A successful GitHub Actions ZIP build proves packaging only, not in-game functio
 5. Check the latest commit and workflow status; never assume this handoff is newer than the repository.
 6. After material changes, update the state and handoff documents in the same change set.
 7. Report exact commit, files changed, workflow result, and what still needs an in-game test.
+
+## 11. Experimental 0.1.6 (2026-11-12)
+
+- Two standalone user tests in Factorio 2.1.20: delayed script-created ghosts (180 ticks) produced one two-action Undo and Redo; a separate script ghost joined twelve built-in Ctrl+Shift blueprint actions on Undo (13 total), while Redo included only the added ghost.
+- This 0.1.6 experimental build stores initiating player_index in the two-stage replacement queue and passes player=LuaPlayer and undo_index=1 when creating delayed ghosts. Emits [undo-join-0.1.6] logs.
+- SCOPE LIMIT: This alters the custom replacement selection-tool/upgrade adapter only. Vanilla Ctrl+Shift blueprint replacement may be entirely engine-managed and bypass this queue; blueprint Undo/Redo is NOT claimed fixed.
+- Test on a disposable copy of the save and report the visible states after Undo and Redo.

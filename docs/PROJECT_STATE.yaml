@@ -4,7 +4,7 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   mod_directory: ElectrifiedMainline
-  mod_version: 0.1.5
+  mod_version: 0.1.6
   factorio_target: "2.1"
   user_tested_game: "2.1.20b"
   last_state_update: "2026-11-10"
@@ -210,3 +210,14 @@ repository_structure:
   optional_integrations_directory: compatibility/
   ai_handoff: docs/AI_CONTEXT.md
   machine_readable_state: docs/PROJECT_STATE.yaml
+
+undo_join_experiment_0_1_6:
+  status: experimental_source_only
+  scope: two_stage_replacement_adapter_delayed_ghost
+  stores_player_index: true
+  ghost_player_and_undo_index_1: true
+  engine_managed_ctrl_shift_blueprint_replacement_modified: false
+  standalone_180_tick_delay_undo_redo: game_tested
+  native_blueprint_group_join_undo: game_tested_12_plus_1
+  native_blueprint_group_join_redo: only_one_added_ghost
+  full_rail_replacement_undo_redo: unverified

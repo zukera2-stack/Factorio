@@ -174,6 +174,7 @@ local function queue_rail_replacement(entity, force, player, cancel_upgrade)
         quality_name = (entity.quality and entity.quality.name) or nil,
         mined = false,
         retry_tick = 0,
+        player_index = player and player.valid and player.index or nil,
     }
 
     if cancel_upgrade and not entity.cancel_upgrade(force, player) then
@@ -251,7 +252,18 @@ local function try_create_replacement_ghost(key, pending)
         ghost_spec.quality = pending.quality_name
     end
 
+    -- Experimental undo grouping: keep the initiating player when creating
+    -- a replacement ghost after the old rail is mined.
+    local initiating_player = pending.player_index and game.get_player(pending.player_index) or nil
+    if initiating_player and initiating_player.valid and initiating_player.force == force then
+        ghost_spec.player = initiating_player
+        ghost_spec.undo_index = 1
+    end
+
     local ghost = surface.create_entity(ghost_spec)
+    log(string.format("[ElectrifiedMainline][undo-join-0.1.6] created=%s player=%s undo_index=%s target=%s position=%s",
+        tostring(ghost and ghost.valid or false), tostring(pending.player_index),
+        tostring(ghost_spec.undo_index), pending.target_name, diag_position(pending.position)))
     if not (ghost and ghost.valid) then
         return false
     end
