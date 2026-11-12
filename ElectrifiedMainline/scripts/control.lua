@@ -41,6 +41,9 @@ local function ensure_storage()
     storage.em.trains = storage.em.trains or {}
     storage.em.pending_rail_replacements =
         storage.em.pending_rail_replacements or {}
+    storage.em.blueprint_undo_join = storage.em.blueprint_undo_join or {last_build = {}, marks = {}}
+    storage.em.blueprint_undo_join.last_build = storage.em.blueprint_undo_join.last_build or {}
+    storage.em.blueprint_undo_join.marks = storage.em.blueprint_undo_join.marks or {}
 end
 
 script.on_init(ensure_storage)
@@ -118,6 +121,10 @@ local function diag_undo_actions(event_name, event)
 end
 
 local function on_diag_pre_build(event)
+    ensure_storage()
+    if event.player_index then
+        storage.em.blueprint_undo_join.last_build[event.player_index] = {tick = game.tick, blueprint_super_force = event.build_mode == 2}
+    end
     log(string.format(
         "[ElectrifiedMainline][em-rail-diag] event=on_pre_build tick=%s player=%s position=%s direction=%s build_mode=%s flip_horizontal=%s flip_vertical=%s",
         tostring(game.tick), diag_value(event.player_index),
@@ -129,6 +136,21 @@ end
 
 local function on_diag_marked_for_deconstruction(event)
     diag_entity("on_marked_for_deconstruction", event, event.entity)
+    local entity = event.entity
+    if not (entity and entity.valid and entity.name == "straight-rail" and event.player_index) then return end
+    ensure_storage()
+    local state = storage.em.blueprint_undo_join
+    local last = state.last_build[event.player_index]
+    if not (last and last.blueprint_super_force and last.tick == game.tick) then return end
+    local key = string.format("%d:%s:%.3f:%.3f:%d",
+        entity.surface.index, entity.name, entity.position.x, entity.position.y, entity.direction)
+    state.marks[key] = {
+        player_index = event.player_index, surface_index = entity.surface.index,
+        force_name = entity.force.name, position = {x = entity.position.x, y = entity.position.y},
+        direction = entity.direction, target_name = "em-high-speed-straight-rail",
+        marked_tick = game.tick, mined = false, retry_tick = 0
+    }
+    log("[ElectrifiedMainline][em-undo-join] marked key=" .. key .. " player=" .. event.player_index)
 end
 
 local function on_diag_pre_ghost_deconstructed(event)
@@ -270,6 +292,14 @@ local function process_mined_rail_replacement(event, entity)
     if not expected_target then return end
 
     local key = replacement_key(entity)
+    if event.name == defines.events.on_robot_mined_entity then
+        local join = storage.em.blueprint_undo_join.marks[key]
+        if join and not join.mined then
+            join.mined = true
+            join.retry_tick = game.tick + 1
+            log("[ElectrifiedMainline][em-undo-join] mined key=" .. key .. " tick=" .. game.tick)
+        end
+    end
     local pending = storage.em.pending_rail_replacements[key]
     if not pending or pending.target_name ~= expected_target then return end
 
@@ -288,12 +318,68 @@ local function process_pending_rail_ghosts(tick)
     end
 end
 
+-- Experimental: attach existing blueprint ghosts to native Undo; straight rails only.
+local function process_blueprint_undo_joins(tick)
+    local state = storage.em.blueprint_undo_join
+    for key, pending in pairs(state.marks) do
+        if tick - pending.marked_tick > 3600 then
+            state.marks[key] = nil
+        elseif pending.mined and tick >= pending.retry_tick then
+            local surface = game.surfaces[pending.surface_index]
+            local player = game.get_player(pending.player_index)
+            if not (surface and player and player.valid and player.force.name == pending.force_name) then
+                state.marks[key] = nil
+            else
+                local matched
+                for _, ghost in pairs(surface.find_entities_filtered{position = pending.position, name = "entity-ghost"}) do
+                    if ghost.valid and ghost.ghost_name == pending.target_name
+                        and ghost.direction == pending.direction
+                        and ghost.force.name == pending.force_name then
+                        matched = ghost
+                        break
+                    end
+                end
+                if matched then
+                    local pos = {x = matched.position.x, y = matched.position.y}
+                    local direction = matched.direction
+                    local quality = matched.quality and matched.quality.name or nil
+                    matched.destroy()
+                    local spec = {
+                        name = "entity-ghost", inner_name = pending.target_name,
+                        position = pos, direction = direction, force = player.force,
+                        player = player, undo_index = 1, expires = false
+                    }
+                    if quality then spec.quality = quality end
+                    local ok, new_ghost = pcall(function() return surface.create_entity(spec) end)
+                    if not (ok and new_ghost and new_ghost.valid) then
+                        spec.player = nil
+                        spec.undo_index = nil
+                        local restored_ok, restored = pcall(function() return surface.create_entity(spec) end)
+                        log("[ElectrifiedMainline][em-undo-join] ERROR rejoin key=" .. key
+                            .. " error=" .. tostring(new_ghost) .. " restored="
+                            .. tostring(restored_ok and restored and restored.valid or false))
+                    else
+                        log("[ElectrifiedMainline][em-undo-join] joined key=" .. key
+                            .. " tick=" .. tick .. " player=" .. pending.player_index
+                            .. " undo_index=1")
+                    end
+                    state.marks[key] = nil
+                elseif tick > pending.retry_tick + 300 then
+                    log("[ElectrifiedMainline][em-undo-join] missing_blueprint_ghost key=" .. key)
+                    state.marks[key] = nil
+                end
+            end
+        end
+    end
+end
+
 local function on_cancelled_deconstruction(event)
     ensure_storage()
     diag_entity("on_cancelled_deconstruction", event, event.entity)
     local entity = event.entity
     if not (entity and entity.valid) then return end
     storage.em.pending_rail_replacements[replacement_key(entity)] = nil
+    storage.em.blueprint_undo_join.marks[replacement_key(entity)] = nil
 end
 
 local function mark_rail(rail)
@@ -498,6 +584,7 @@ local function on_tick(event)
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
 
+    process_blueprint_undo_joins(event.tick)
     local pending_replacements = storage.em.pending_rail_replacements
     if pending_replacements and next(pending_replacements) then
         process_pending_rail_ghosts(event.tick)
