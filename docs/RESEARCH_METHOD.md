@@ -4,6 +4,8 @@
 
 ## Rule
 
+This protocol is mandatory for all contributors and AI coding agents. See the repository [contributor guide](../CONTRIBUTING.md) for the practical checklist and [AGENTS.md](../AGENTS.md) for repository-wide enforcement rules.
+
 **Find a working mechanism -> inspect its real prototypes and code -> check the exact Factorio API -> compare against our source -> change the minimum necessary -> verify in Factorio -> record evidence.**
 
 Never guess engine flags, event order, or API effects when a comparable implementation can be inspected. Never say "unsupported" solely because an earlier prototype failed. Analogy generates a *testable hypothesis*, not a guarantee.
