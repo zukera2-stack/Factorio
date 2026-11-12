@@ -1,3 +1,9 @@
+# Current: 0.1.8 test candidate
+
+Branch `test/undo-stabilization-018`, based on `fb3e5ca6307cf09585d67cd83566fa16e07839a8`. Manual blueprint Undo join removed; independent selection queue and native Upgrade Planner preserved. A-D statically reviewed; all 0.1.8 game tests pending. See `ElectrifiedMainline/TEST_UNDO_018.txt` (repository root) and `docs/BUILD_018.yaml` for provenance. No main merge without player log and approval.
+
+## Historical 0.1.7 handoff (preserved)
+
 # Development status
 
 **Branch-specific status:** `diagnostic/blueprint-rail-undo`, ElectrifiedMainline **0.1.7**.

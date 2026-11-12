@@ -3,9 +3,9 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: diagnostic/blueprint-rail-undo
+  active_test_branch: test/undo-stabilization-018
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.7"
+  mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
   user_installation_label: "2.1.20b"
@@ -74,7 +74,7 @@ implementation:
   staged_fallback_selection_tool: source_implemented_game_test_required
   staged_fallback_selection_scope: vanilla_four_ground_rail_geometries_only
   staged_fallback_operation: order_deconstruction_then_create_matching_custom_rail_ghost
-  scripted_blueprint_superforce_undo: partial_0_1_6_not_fully_reversible
+  scripted_blueprint_superforce_undo: removed_in_0_1_8
   blueprint_rail_undo_diagnostics: game_tested_logging
   blueprint_rail_undo_test_branch: diagnostic/blueprint-rail-undo
   persistent_storage_lazy_initialization: present_in_source
@@ -100,7 +100,7 @@ last_game_test:
   date: "2026-11-12"
   game_version: "2.1.20"
   game_build: 87512
-  installed_mod_version: "0.1.7"
+  installed_mod_version: "0.1.8"
   test_path: native_green_upgrade_planner_straight_ground_rails
   environment_mods:
     bobassembly: "3.0.2"
@@ -245,7 +245,7 @@ engineering_method_policy:
   evidence_labels: [implemented, api_confirmed, game_tested, inferred, unverified, planned]
   case_study:
     feature: native_ground_rail_upgrade_undo_redo
-    mod_version: "0.1.7"
+    mod_version: "0.1.8"
     user_confirmed: true
     tested_geometry: straight_ground_rail
     tested_count: 20
@@ -254,3 +254,14 @@ engineering_method_policy:
     ctrl_z_restored_vanilla: true
     ctrl_y_reapplied_upgrade: true
     other_geometries_and_blueprint_path: unverified
+
+undo_stabilization_018:
+  base_commit: fb3e5ca6307cf09585d67cd83566fa16e07839a8
+  manual_undo_join: removed
+  legacy_marks: discarded_without_replay
+  selection_queue: preserved_independent
+  native_upgrade: unchanged_from_0_1_7
+  tests_A_B_C_D_static: passed_source_review
+  tests_A_B_C_D_game: unverified
+  build_manifest: docs/BUILD_018.yaml
+  main_merge: requires_player_log_and_approval

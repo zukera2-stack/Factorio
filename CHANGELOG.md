@@ -1,3 +1,7 @@
+# 0.1.8 test candidate
+
+Remove experimental blueprint ghost Undo joining; retain native upgrades and separate selection-tool queue. Discard old experimental marks. Game regression pending.
+
 # Changelog
 
 All notable project changes are recorded here.

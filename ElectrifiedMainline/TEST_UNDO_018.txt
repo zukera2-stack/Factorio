@@ -1,0 +1,9 @@
+ElectrifiedMainline 0.1.8 — Undo stabilization
+Use a disposable save, Factorio 2.1.20 build 87512. Record mod list, source SHA, ZIP SHA-256 and factorio-current.log.
+Experimental ghost destruction/recreation and fixed undo index removed. Native upgrade prototypes and observational handler unchanged. Selection tool queue retained. Old saved experimental marks discarded.
+A: Upgrade 20 straight rails with green planner; wait; Undo; wait; Redo; wait. Expected 20/20 each phase. Static: native code unchanged. Game: NOT TESTED in 0.1.8.
+B: Place rail blueprint (test normal and Ctrl+Shift separately), delay robots, perform unrelated placement X. First Undo must cancel X only (LIFO); second Undo cancels blueprint. Redo blueprint then X. Repeat allowing robots to arrive between actions. No rail action may attach to X. Static: no manual undo-index/ghost join remains. Game: NOT TESTED.
+C: Repeat A over several Undo/Redo cycles, including partially completed robot jobs. Record final rails and inventory after settling. Static: no custom queue edits remain. Game: NOT TESTED.
+D: Use special rail replacement selection tool for all four geometries; wait for robots, check targets/directions/quality/counts. Cancel a pending job; save/load with pending jobs; upgrade a 0.1.7 save with both legacy experimental marks and tool tasks. Tool tasks must survive; legacy join marks must not execute. Static: independent scheduling preserved. Game: NOT TESTED. Full native Undo semantics for this staged tool are NOT promised.
+Historical: 0.1.7 native straight 20/20 Upgrade/Undo/Redo passed; 0.1.6 Ctrl+Shift experiment did not restore original rails. Neither proves 0.1.8 passes.
+Known issues: retry queue cleanup, diagnostic overhead, rolling-stock items, mod compatibility, unimplemented electricity. No main merge before player log and explicit approval.
