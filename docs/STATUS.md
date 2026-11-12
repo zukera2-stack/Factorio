@@ -1,6 +1,6 @@
 # Current: ElectrifiedMainline 0.1.8 — core Undo regression game-tested
 
-**Branch:** `test/undo-stabilization-018` (do not merge into `main` without player approval). **Source:** `ac4624ef5873a1d3adf65194c289e09aee5224ae`. **Game:** Factorio 2.1.20 build 87512. **Test date:** 2026-11-12.
+**Validated branch:** `test/undo-stabilization-018`. **Release:** PR [#6](https://github.com/zukera2-stack/Factorio/pull/6) to `main`, explicitly approved by the player; merge subject to CI. **Source:** `ac4624ef5873a1d3adf65194c289e09aee5224ae`. **Game:** Factorio 2.1.20 build 87512. **Test date:** 2026-11-12.
 
 - **Game-tested:** green Upgrade Planner + robot Undo/Redo for 26 straight, 4 curved-A, 4 curved-B rails; independent chest/rail Undo history; Ctrl+Shift superforced blueprint overlay with Undo/Redo for 14 straight, 4 curved-A and 4 curved-B rails. Two distinct user log sessions, no observed Lua errors.
 - **Source-audited:** fixed `undo_index=1` and manual blueprint Undo joining removed. Native upgrades preserved. Obsolete join marks discarded; independent custom selection-tool queue retained.

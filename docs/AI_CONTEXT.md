@@ -1,6 +1,6 @@
 # Current AI handoff: ElectrifiedMainline 0.1.8
 
-**Active test branch:** `test/undo-stabilization-018`; **tested source commit:** `ac4624ef5873a1d3adf65194c289e09aee5224ae`; **Factorio:** 2.1.20 build 87512. Keep `main` unchanged pending explicit approval.
+**Validated source branch:** `test/undo-stabilization-018`; **tested source commit:** `ac4624ef5873a1d3adf65194c289e09aee5224ae`; **Factorio:** 2.1.20 build 87512. **Release target:** `main`, [PR #6](https://github.com/zukera2-stack/Factorio/pull/6); user approved the merge on 2026-11-12.
 
 **Current verified scope:** native green Upgrade Planner + Undo/Redo for 26 straight, 4 curved-A, 4 curved-B rails; unrelated chest and rail history entries remain separate; superforced Ctrl+Shift blueprint overlay + Undo/Redo for 22 mixed-geometry rails (14 straight, 4 curved-A, 4 curved-B). Factory upgrades were tested as unrelated history actions. See [gameplay test record](tests/undo-0.1.8-2026-11-12.md) and [build provenance](BUILD_018.yaml). Two distinct user logs; no observed mod Lua errors.
 
@@ -8,7 +8,7 @@
 
 **Do not overclaim:** A passed; B and C only partially passed; D unverified. No half-diagonal gameplay, special selection tool, interrupted robot jobs, complete signal/inventory or compatibility regression yet. Electric traction, batteries and regeneration remain unimplemented.
 
-**Read order:** `AGENTS.md` -> this handoff -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> live source. Historical 0.1.7 details follow and must not override this current 0.1.8 status.
+**Read order:** `AGENTS.md` -> this handoff -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> live source. Historical 0.1.7 details follow and must not override this current 0.1.8 status. Historical 0.1.4 `main` context is archived at [docs/history/AI_CONTEXT-main-0.1.4.md](history/AI_CONTEXT-main-0.1.4.md) and [docs/history/PROJECT_STATE-main-0.1.4.yaml](history/PROJECT_STATE-main-0.1.4.yaml); [exact-version Factorio 2.1.20 API notes](FACTORIO_2_1_RAIL_API_NOTES.md) are preserved as research, not as current gameplay status.
 
 ## Historical 0.1.7 handoff (preserved for provenance)
 

@@ -1,0 +1,638 @@
+   0.001 2026-11-10 20:43:06; Factorio 2.1.20 (build 87512, win64, steam, space-age)
+   0.002 Operating system: Windows 10 (build 19045) 
+   0.000 Initializing Steam API.
+   0.002 Program arguments: "factorio.exe" 
+   0.002 Config path: C:/Users/Zukera/AppData/Roaming/Factorio/config/config.ini
+   0.002 Read data path: E:/Factorio Space Age v2.1.20b/data
+   0.002 Write data path: C:/Users/Zukera/AppData/Roaming/Factorio [216912/457236MB]
+   0.002 Binaries path: E:/Factorio Space Age v2.1.20b/bin
+   0.031 System info: [CPU: Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60GHz, 28 cores, RAM: 12636/32672 MB, page: 14613/116640 MB, virtual: 4342/134217727 MB, extended virtual: 0 MB]
+   0.071 Memory info:
+   0.071  [0]: Undefined Atermiter 16384 MB 2400 MHz 1.2 v 72|72
+   0.071  [1]: Undefined Atermiter 16384 MB 2400 MHz 1.2 v 72|72
+   0.250 Display options: [FullScreen: true] [VSync: true] [UIScale: automatic (100.0%)] [Native DPI: true] [Screen: 4294967295] [Special: lmw] [Lang: ru]
+   0.331 Video driver: windows
+   0.331 Available displays: 2
+   0.331  [0]: \\.\DISPLAY1 - NVIDIA GeForce RTX 3060 {0x05, [0,0], 1920x1080, 32bit, 60Hz}
+   0.332  [1]: \\.\DISPLAY2 - NVIDIA GeForce RTX 3060 {0x01, [-1280,0], 1280x1024, 32bit, 60Hz}
+   0.429 [Direct3D11] Display: 4294967295, Output: 0, DisplayAdapter: 0, RenderingAdapter: -1; d3dcompiler_47.dll
+   0.772 Initialised Direct3D[0]: NVIDIA GeForce RTX 3060; id: 10de-2504; driver: nvldumdx.dll 32.0.16.2101
+   0.772   D3D Feature Level: 11.1, DXGI 1.5+, SwapChain: 3,flip-discard,-,-,-,none
+   0.772   [Local Video Memory] Budget: 11347MB, CurrentUsage: 6MB, Reservation: 0/5801MB
+   0.773   [Non-Local Vid.Mem.] Budget: 15568MB, CurrentUsage: 0MB, Reservation: 0/7912MB
+   0.773   Tiled resources: Tier 2
+   0.773   Unified Memory Architecture: No
+   0.773   BGR 565 Supported: Yes
+   0.773   MaximumFrameLatency: 3, GPUThreadPriority: 0
+   0.773 Graphics settings preset: very-high
+   0.773   Dedicated video memory size 12115 MB
+   0.847 Desktop composition is active.
+   0.847 Graphics options: [Graphics quality: high] [Video memory usage: all] [DXT: high-quality]
+   0.847                   [Max threads (load/render): 32/28] [Max texture size: 0] [Tex.Stream.: false] [Rotation quality: normal] [Other: STDCWTl] [B:0,C:0,S:100]
+   1.097 [Audio] Driver:wasapi, Device:Default device, Depth:32, Channels:2, Frequency:44100
+   1.276 Info ModManager.cpp:450: FeatureFlag expansion = true
+   1.276 Info ModManager.cpp:450: FeatureFlag expansion-shaders = true
+   1.276 Info ModManager.cpp:450: FeatureFlag freezing = true
+   1.276 Info ModManager.cpp:450: FeatureFlag quality = true
+   1.276 Info ModManager.cpp:450: FeatureFlag rail-bridges = true
+   1.276 Info ModManager.cpp:450: FeatureFlag segmented-units = true
+   1.276 Info ModManager.cpp:450: FeatureFlag space-travel = true
+   1.276 Info ModManager.cpp:450: FeatureFlag spoiling = true
+   1.279 Loading mod settings bobinserters 3.0.0 (settings.lua)
+   1.279 Loading mod settings boblibrary 3.0.1 (settings.lua)
+   1.280 Loading mod settings bobores 3.0.0 (settings.lua)
+   1.280 Loading mod settings bobenemies 3.0.1 (settings.lua)
+   1.281 Loading mod settings factory_solver 0.8.2 (settings.lua)
+   1.281 Loading mod settings pypostprocessing 3.1.5 (settings.lua)
+   1.282 Loading mod settings rocket-payload-capacity 0.2.0 (settings.lua)
+   1.282 Loading mod settings bobplates 3.0.2 (settings.lua)
+   1.283 Loading mod settings bobassembly 3.0.2 (settings.lua)
+   1.283 Loading mod settings bobelectronics 3.0.1 (settings.lua)
+   1.283 Loading mod settings boblogistics 3.0.2 (settings.lua)
+   1.284 Loading mod settings bobmining 3.0.2 (settings.lua)
+   1.285 Loading mod settings bobrevamp 3.0.1 (settings.lua)
+   1.285 Loading mod settings bobtech 3.0.0 (settings.lua)
+   1.286 Loading mod settings bobwarfare 3.0.2 (settings.lua)
+   1.286 Loading mod settings bobvehicleequipment 3.0.0 (settings.lua)
+   1.287 Loading mod settings bobenemies 3.0.1 (settings-updates.lua)
+   1.287 Loading mod settings pypostprocessing 3.1.5 (settings-updates.lua)
+   1.288 Loading mod settings bobplates 3.0.2 (settings-updates.lua)
+   1.288 Loading mod settings boblogistics 3.0.2 (settings-updates.lua)
+   1.289 Loading mod settings pypostprocessing 3.1.5 (settings-final-fixes.lua)
+   1.293 Loading mod core 0.0.0 (data.lua)
+   1.319 Loading mod base 2.1.20 (data.lua)
+   1.572 Loading mod bobinserters 3.0.0 (data.lua)
+   1.581 Loading mod boblibrary 3.0.1 (data.lua)
+   1.596 Loading mod ElectrifiedMainline 0.1.5 (data.lua)
+   1.609 Loading mod elevated-rails 2.1.20 (data.lua)
+   1.637 Loading mod flib 0.17.2 (data.lua)
+   1.646 Loading mod recycler 2.1.20 (data.lua)
+   1.660 Loading mod bobores 3.0.0 (data.lua)
+   1.673 Loading mod quality 2.1.20 (data.lua)
+   1.683 Loading mod space-age 2.1.20 (data.lua)
+   2.061 Loading mod bobenemies 3.0.1 (data.lua)
+   2.264 Loading mod factory_solver 0.8.2 (data.lua)
+   2.279 Loading mod pypostprocessing 3.1.5 (data.lua)
+   2.280 Script @__pypostprocessing__/data.lua:4: MODSET:
+{
+  ElectrifiedMainline = "0.1.5",
+  UndoIndexProbe = "0.1.0",
+  base = "2.1.20",
+  bobassembly = "3.0.2",
+  bobelectronics = "3.0.1",
+  bobenemies = "3.0.1",
+  bobequipment = "3.0.0",
+  bobgreenhouse = "3.0.1",
+  bobinserters = "3.0.0",
+  boblibrary = "3.0.1",
+  boblogistics = "3.0.2",
+  bobmining = "3.0.2",
+  bobores = "3.0.0",
+  bobplates = "3.0.2",
+  bobrevamp = "3.0.1",
+  bobtech = "3.0.0",
+  bobvehicleequipment = "3.0.0",
+  bobwarfare = "3.0.2",
+  ["elevated-rails"] = "2.1.20",
+  factory_solver = "0.8.2",
+  factoryplanner = "2.1.16",
+  flib = "0.17.2",
+  pypostprocessing = "3.1.5",
+  quality = "2.1.20",
+  recycler = "2.1.20",
+  ["rocket-payload-capacity"] = "0.2.0",
+  ["space-age"] = "2.1.20"
+}
+   2.281 Script @__pypostprocessing__/data.lua:7: SETTINGS:
+{
+  startup = {
+    ["bobmods-assembly-burner"] = {
+      value = true
+    },
+    ["bobmods-assembly-centrifuge"] = {
+      value = true
+    },
+    ["bobmods-assembly-chemicalplants"] = {
+      value = true
+    },
+    ["bobmods-assembly-distilleries"] = {
+      value = true
+    },
+    ["bobmods-assembly-electrolysers"] = {
+      value = true
+    },
+    ["bobmods-assembly-electronicmachines"] = {
+      value = true
+    },
+    ["bobmods-assembly-furnaces"] = {
+      value = true
+    },
+    ["bobmods-assembly-limits"] = {
+      value = false
+    },
+    ["bobmods-assembly-multipurposefurnaces"] = {
+      value = true
+    },
+    ["bobmods-assembly-oilfurnaces"] = {
+      value = true
+    },
+    ["bobmods-assembly-oilrefineries"] = {
+      value = true
+    },
+    ["bobmods-enemies-aliensdropartifacts"] = {
+      value = true
+    },
+    ["bobmods-enemies-biggersooner"] = {
+      value = false
+    },
+    ["bobmods-enemies-enableartifacts"] = {
+      value = true
+    },
+    ["bobmods-enemies-enablenewartifacts"] = {
+      value = true
+    },
+    ["bobmods-enemies-enablesmallartifacts"] = {
+      value = true
+    },
+    ["bobmods-enemies-factionlist"] = {
+      value = "piercing,electric,acid,explosive,poison,fire"
+    },
+    ["bobmods-enemies-factionsappear"] = {
+      value = 0.5
+    },
+    ["bobmods-enemies-healthincrease"] = {
+      value = false
+    },
+    ["bobmods-enemies-leviathanfrequency"] = {
+      value = 0.05
+    },
+    ["bobmods-enemies-originalcolors"] = {
+      value = false
+    },
+    ["bobmods-enemies-qualityenemies"] = {
+      value = true
+    },
+    ["bobmods-enemies-radarscanlimit"] = {
+      value = 100
+    },
+    ["bobmods-enemies-randomizeenemies"] = {
+      value = false
+    },
+    ["bobmods-enemies-superspawner"] = {
+      value = true
+    },
+    ["bobmods-inserters-long1"] = {
+      value = true
+    },
+    ["bobmods-inserters-long2"] = {
+      value = true
+    },
+    ["bobmods-inserters-more2"] = {
+      value = true
+    },
+    ["bobmods-library-recipe-cleanup"] = {
+      value = true
+    },
+    ["bobmods-logistics-beltoverhaul"] = {
+      value = true
+    },
+    ["bobmods-logistics-beltoverhaulspeed"] = {
+      value = false
+    },
+    ["bobmods-logistics-beltperlevel"] = {
+      value = 4
+    },
+    ["bobmods-logistics-beltrequireprevious"] = {
+      value = true
+    },
+    ["bobmods-logistics-beltspeedperlevel"] = {
+      value = 15
+    },
+    ["bobmods-logistics-beltstarting"] = {
+      value = 3
+    },
+    ["bobmods-logistics-disableroboports"] = {
+      value = false
+    },
+    ["bobmods-logistics-drainlessinserters"] = {
+      value = false
+    },
+    ["bobmods-logistics-fluidwagonbase"] = {
+      value = 50
+    },
+    ["bobmods-logistics-flyingrobotframes"] = {
+      value = true
+    },
+    ["bobmods-logistics-inserteroverhaul"] = {
+      value = true
+    },
+    ["bobmods-logistics-inserterrequireprevious"] = {
+      value = true
+    },
+    ["bobmods-logistics-pipeperlevel"] = {
+      value = 4
+    },
+    ["bobmods-logistics-pipestarting"] = {
+      value = 11
+    },
+    ["bobmods-logistics-robotparts"] = {
+      value = true
+    },
+    ["bobmods-logistics-robotrequireprevious"] = {
+      value = true
+    },
+    ["bobmods-logistics-storagetankbase"] = {
+      value = 25
+    },
+    ["bobmods-logistics-trains"] = {
+      value = true
+    },
+    ["bobmods-logistics-ugdistanceoverhaul"] = {
+      value = true
+    },
+    ["bobmods-mining-areadrills"] = {
+      value = true
+    },
+    ["bobmods-mining-miningaxes"] = {
+      value = true
+    },
+    ["bobmods-mining-miningdrills"] = {
+      value = true
+    },
+    ["bobmods-mining-pumpjacks"] = {
+      value = true
+    },
+    ["bobmods-mining-steamminingdrills"] = {
+      value = true
+    },
+    ["bobmods-mining-waterminers"] = {
+      value = true
+    },
+    ["bobmods-gems-amethystratio"] = {
+      value = 0.5
+    },
+    ["bobmods-gems-diamondratio"] = {
+      value = 0.2
+    },
+    ["bobmods-gems-emeraldratio"] = {
+      value = 0.6
+    },
+    ["bobmods-gems-rubyratio"] = {
+      value = 1
+    },
+    ["bobmods-gems-sapphireratio"] = {
+      value = 0.8
+    },
+    ["bobmods-gems-topazratio"] = {
+      value = 0.4
+    },
+    ["bobmods-ores-enablebauxite"] = {
+      value = true
+    },
+    ["bobmods-ores-enablecobaltore"] = {
+      value = false
+    },
+    ["bobmods-ores-enablegemsore"] = {
+      value = true
+    },
+    ["bobmods-ores-enablegoldore"] = {
+      value = true
+    },
+    ["bobmods-ores-enableleadore"] = {
+      value = true
+    },
+    ["bobmods-ores-enablenickelore"] = {
+      value = true
+    },
+    ["bobmods-ores-enablequartz"] = {
+      value = true
+    },
+    ["bobmods-ores-enablerutile"] = {
+      value = true
+    },
+    ["bobmods-ores-enablesilverore"] = {
+      value = true
+    },
+    ["bobmods-ores-enablethoriumore"] = {
+      value = true
+    },
+    ["bobmods-ores-enabletinore"] = {
+      value = true
+    },
+    ["bobmods-ores-enabletungstenore"] = {
+      value = true
+    },
+    ["bobmods-ores-enablewaterores"] = {
+      value = false
+    },
+    ["bobmods-ores-enablezincore"] = {
+      value = true
+    },
+    ["bobmods-ores-gemprobability"] = {
+      value = 0.05
+    },
+    ["bobmods-ores-gemsfromotherores"] = {
+      value = false
+    },
+    ["bobmods-ores-infiniteore"] = {
+      value = false
+    },
+    ["bobmods-ores-leadgivesnickel"] = {
+      value = false
+    },
+    ["bobmods-ores-leadnickelratio"] = {
+      value = 0.6
+    },
+    ["bobmods-ores-nickelcobaltratio"] = {
+      value = 0.4
+    },
+    ["bobmods-ores-nickelgivescobalt"] = {
+      value = false
+    },
+    ["bobmods-ores-startinggroundwater"] = {
+      value = false
+    },
+    ["bobmods-ores-unsortedgemore"] = {
+      value = false
+    },
+    ["bobmods-plates-batteryupdate"] = {
+      value = true
+    },
+    ["bobmods-plates-bluedeuterium"] = {
+      value = false
+    },
+    ["bobmods-plates-cheapersteel"] = {
+      value = true
+    },
+    ["bobmods-plates-convert-recipes"] = {
+      value = false
+    },
+    ["bobmods-plates-expensive-electrolysis"] = {
+      value = true
+    },
+    ["bobmods-plates-groundwater"] = {
+      value = false
+    },
+    ["bobmods-plates-inventorysize"] = {
+      value = 80
+    },
+    ["bobmods-plates-purewater"] = {
+      value = true
+    },
+    ["bobmods-plates-vanillabarrelling"] = {
+      value = false
+    },
+    ["bobmods-revamp-hardmode"] = {
+      value = true
+    },
+    ["bobmods-revamp-oil"] = {
+      value = true
+    },
+    ["bobmods-revamp-old-oil"] = {
+      value = true
+    },
+    ["bobmods-revamp-rtg"] = {
+      value = true
+    },
+    ["bobmods-burnerphase"] = {
+      value = true
+    },
+    ["bobmods-vehicleequipment-enablevehiclegrids"] = {
+      value = true
+    },
+    ["bobmods-warfare-drainlesslaserturrets"] = {
+      value = false
+    },
+    ["bobmods-warfare-robotupdate"] = {
+      value = true
+    },
+    ["bobmods-warfare-spidertron-needsfuel"] = {
+      value = "default"
+    },
+    ["bobmods-warfare-spidertron-overhaul"] = {
+      value = true
+    },
+    ["bobmods-warfare-vehicleflamethrowerstartsfires"] = {
+      value = false
+    },
+    ["pypp-big-inventory-gui"] = {
+      value = false
+    },
+    ["pypp-compactified-recipe-tooltips"] = {
+      value = true
+    },
+    ["pypp-extended-recipe-signals"] = {
+      value = false
+    },
+    ["pypp-no-globals"] = {
+      value = false
+    },
+    ["pypp-tests"] = {
+      value = false
+    },
+    ["pypp-log-level"] = {
+      value = "info"
+    },
+    size_of_rocket = {
+      value = 10
+    },
+    cheap_rocket = {
+      value = 100
+    }
+  }
+}
+   2.284 Script @__pypostprocessing__/lib/log.lua:5: log level: 1
+   2.304 Loading mod rocket-payload-capacity 0.2.0 (data.lua)
+   2.319 Loading mod bobplates 3.0.2 (data.lua)
+   2.354 Loading mod factoryplanner 2.1.16 (data.lua)
+   2.372 Loading mod bobassembly 3.0.2 (data.lua)
+   2.418 Loading mod bobelectronics 3.0.1 (data.lua)
+   2.436 Loading mod bobgreenhouse 3.0.1 (data.lua)
+   2.454 Loading mod boblogistics 3.0.2 (data.lua)
+   2.512 Loading mod bobmining 3.0.2 (data.lua)
+   2.557 Loading mod bobrevamp 3.0.1 (data.lua)
+   2.576 Loading mod bobtech 3.0.0 (data.lua)
+   2.596 Loading mod bobwarfare 3.0.2 (data.lua)
+   2.655 Loading mod bobequipment 3.0.0 (data.lua)
+   2.680 Loading mod bobvehicleequipment 3.0.0 (data.lua)
+   2.707 Loading mod base 2.1.20 (data-updates.lua)
+   2.729 Loading mod bobinserters 3.0.0 (data-updates.lua)
+   2.748 Loading mod ElectrifiedMainline 0.1.5 (data-updates.lua)
+   2.767 Loading mod recycler 2.1.20 (data-updates.lua)
+   2.820 Loading mod bobores 3.0.0 (data-updates.lua)
+   2.842 Loading mod space-age 2.1.20 (data-updates.lua)
+   2.862 Loading mod bobenemies 3.0.1 (data-updates.lua)
+   2.886 Loading mod pypostprocessing 3.1.5 (data-updates.lua)
+   2.906 Loading mod bobplates 3.0.2 (data-updates.lua)
+   2.933 Loading mod bobassembly 3.0.2 (data-updates.lua)
+   2.961 Loading mod bobelectronics 3.0.1 (data-updates.lua)
+   2.983 Loading mod bobgreenhouse 3.0.1 (data-updates.lua)
+   3.004 Loading mod boblogistics 3.0.2 (data-updates.lua)
+   3.037 Loading mod bobmining 3.0.2 (data-updates.lua)
+   3.060 Loading mod bobrevamp 3.0.1 (data-updates.lua)
+   3.087 Loading mod bobtech 3.0.0 (data-updates.lua)
+   3.109 Loading mod bobwarfare 3.0.2 (data-updates.lua)
+   3.142 Loading mod bobequipment 3.0.0 (data-updates.lua)
+   3.168 Loading mod bobvehicleequipment 3.0.0 (data-updates.lua)
+   3.196 Loading mod bobinserters 3.0.0 (data-final-fixes.lua)
+   3.216 Loading mod boblibrary 3.0.1 (data-final-fixes.lua)
+   3.217 Script @__boblibrary__/recipe-functions.lua:310: Running recipe ingredients cleanup...
+   3.267 Loading mod ElectrifiedMainline 0.1.5 (data-final-fixes.lua)
+   3.270 Script @__ElectrifiedMainline__/data-final-fixes.lua:148: [ElectrifiedMainline][upgrade-check] straight-rail -> em-high-speed-straight-rail | source_minable=PASS source_visible=PASS source_hidden_mining_product=PASS source_not_upgradable_removed=false | target_visible=PASS target_visible_build_item=em-high-speed-rail | group=em-rail-upgrade collision_box=PASS collision_mask=PASS
+   3.272 Script @__ElectrifiedMainline__/data-final-fixes.lua:148: [ElectrifiedMainline][upgrade-check] curved-rail-a -> em-curved-high-speed-rail | source_minable=PASS source_visible=PASS source_hidden_mining_product=PASS source_not_upgradable_removed=false | target_visible=PASS target_visible_build_item=em-high-speed-rail | group=em-rail-upgrade collision_box=PASS collision_mask=PASS
+   3.274 Script @__ElectrifiedMainline__/data-final-fixes.lua:148: [ElectrifiedMainline][upgrade-check] curved-rail-b -> em-curved-high-speed-rail-b | source_minable=PASS source_visible=PASS source_hidden_mining_product=PASS source_not_upgradable_removed=false | target_visible=PASS target_visible_build_item=em-high-speed-rail | group=em-rail-upgrade collision_box=PASS collision_mask=PASS
+   3.276 Script @__ElectrifiedMainline__/data-final-fixes.lua:148: [ElectrifiedMainline][upgrade-check] half-diagonal-rail -> em-half-diagonal-high-speed-rail | source_minable=PASS source_visible=PASS source_hidden_mining_product=PASS source_not_upgradable_removed=false | target_visible=PASS target_visible_build_item=em-high-speed-rail | group=em-rail-upgrade collision_box=PASS collision_mask=PASS
+   3.294 Loading mod pypostprocessing 3.1.5 (data-final-fixes.lua)
+   3.315 Loading mod rocket-payload-capacity 0.2.0 (data-final-fixes.lua)
+   3.336 Loading mod bobplates 3.0.2 (data-final-fixes.lua)
+   3.358 Loading mod factoryplanner 2.1.16 (data-final-fixes.lua)
+   3.381 Loading mod bobassembly 3.0.2 (data-final-fixes.lua)
+   3.401 Loading mod bobelectronics 3.0.1 (data-final-fixes.lua)
+   3.421 Loading mod boblogistics 3.0.2 (data-final-fixes.lua)
+   3.443 Loading mod bobtech 3.0.0 (data-final-fixes.lua)
+   3.463 Loading mod bobwarfare 3.0.2 (data-final-fixes.lua)
+   3.750 Checksum for core: 4184468063
+   3.750 Checksum of base: 3335213449
+   3.750 Checksum of bobinserters: 3684174014
+   3.750 Checksum of boblibrary: 4196401178
+   3.750 Checksum of ElectrifiedMainline: 3507013791
+   3.750 Checksum of elevated-rails: 1429039930
+   3.751 Checksum of flib: 3410458141
+   3.751 Checksum of recycler: 2113261148
+   3.751 Checksum of bobores: 1415080451
+   3.751 Checksum of quality: 3330349790
+   3.751 Checksum of UndoIndexProbe: 0
+   3.751 Checksum of space-age: 1593001569
+   3.751 Checksum of bobenemies: 1456907209
+   3.751 Checksum of factory_solver: 469142008
+   3.751 Checksum of pypostprocessing: 3834666811
+   3.751 Checksum of rocket-payload-capacity: 2049503645
+   3.751 Checksum of bobplates: 1592698106
+   3.751 Checksum of factoryplanner: 1164571243
+   3.751 Checksum of bobassembly: 1023979791
+   3.751 Checksum of bobelectronics: 3008731816
+   3.751 Checksum of bobgreenhouse: 1115211692
+   3.751 Checksum of boblogistics: 4162476841
+   3.751 Checksum of bobmining: 3730150413
+   3.751 Checksum of bobrevamp: 460603157
+   3.751 Checksum of bobtech: 1280285343
+   3.751 Checksum of bobwarfare: 4244245451
+   3.751 Checksum of bobequipment: 3142046642
+   3.751 Checksum of bobvehicleequipment: 2286502927
+   4.915 Prototype list checksum: 3725700044
+   5.066 Loading sounds...
+   5.519 Info PlayerData.cpp:564: Cloud player-data.json available
+   5.522 Post-data load graphics options: [Light occlusion: YES]
+   6.352 Initial atlas bitmap size is 16384
+   6.378 Created an atlas bitmap (size 16384x16380) [none]
+   6.404 Created an atlas bitmap (size 16384x16380) [none]
+   6.444 Created an atlas bitmap (size 16384x16384) [none]
+   6.457 Created an atlas bitmap (size 16384x16372) [none]
+   6.457 Created an atlas bitmap (size 4096x3140) [none]
+   6.468 Created an atlas bitmap (size 16384x16384) [low-object]
+   6.469 Created an atlas bitmap (size 8192x1856) [low-object]
+   6.476 Created an atlas bitmap (size 16384x16324) [corpse-decay]
+   6.476 Created an atlas bitmap (size 4096x2804) [corpse-decay]
+   6.478 Created an atlas bitmap (size 16384x9332) [decal]
+   6.479 Created an atlas bitmap (size 16384x5956) [none]
+   6.480 Created an atlas bitmap (size 8192x2800) [none]
+   6.480 Created an atlas bitmap (size 16384x3436) [procession-cover, linear-minification, linear-magnification]
+   6.481 Created an atlas bitmap (size 4096x1392) [none]
+   6.481 Created an atlas bitmap (size 1676x79) [not-compressed]
+   6.483 Created an atlas bitmap (size 16384x4432) [mipmap, linear-minification, linear-magnification, linear-mip-level]
+   6.483 Created an atlas bitmap (size 320x320) [low-object, mipmap, linear-minification, linear-magnification, linear-mip-level]
+   6.484 Created an atlas bitmap (size 4096x3040) [smoke, mipmap, linear-minification, linear-magnification]
+   6.500 Created an atlas bitmap (size 16384x16368) [terrain, mipmap, linear-minification, linear-mip-level]
+   6.501 Created an atlas bitmap (size 16384x10752) [terrain, mipmap, linear-minification, linear-mip-level]
+   6.502 Created an atlas bitmap (size 8192x6096) [terrain-effect-map, mipmap, linear-minification, linear-mip-level]
+   6.503 Created an atlas bitmap (size 8192x2800) [mipmap]
+   6.503 Created an atlas bitmap (size 8192x4544) [mipmap]
+   6.504 Created an atlas bitmap (size 8192x3408) [mipmap]
+   6.504 Created an atlas bitmap (size 3504x768) [mipmap]
+   6.505 Created an atlas bitmap (size 4096x3152) [mipmap]
+   6.505 Created an atlas bitmap (size 4096x3152) [mipmap]
+   6.505 Created an atlas bitmap (size 4096x3152) [mipmap]
+   6.508 Created an atlas bitmap (size 8192x5104) [icon, not-compressed, mipmap, linear-minification, linear-magnification, linear-mip-level]
+   6.511 Created an atlas bitmap (size 16384x10268) [alpha-mask]
+   6.543 Created an atlas bitmap (size 16384x16384) [shadow, linear-magnification, alpha-mask]
+   6.550 Created an atlas bitmap (size 16384x16364) [shadow, linear-magnification, alpha-mask]
+   6.551 Created an atlas bitmap (size 8192x5036) [shadow, linear-magnification, alpha-mask]
+   6.552 Created an atlas bitmap (size 8192x5216) [shadow, mipmap, linear-magnification, alpha-mask]
+   6.552 Created an atlas bitmap (size 4096x496) [icon-background, not-compressed, mipmap, linear-minification, linear-magnification, linear-mip-level, ]
+   6.552 Loading 3D bitmaps: 21
+   6.576 Texture processor created (4096). GPU accelerated compression Supported: yes, Enabled: yes/yes. Test passed. YCoCgDXT PSNR: 35.83, BC3 PSNR: 33.82
+   6.687 Parallel sprite loader initialized (threads: 27, bitmaps: 10254)
+  27.680 Sprites loaded
+  27.749 Generated mipmaps (4) for atlas [5] of size 16384x16384   
+  27.763 Generated mipmaps (4) for atlas [6] of size 8192x1856   
+  27.785 Generated mipmaps (3) for atlas [15] of size 16384x4432   
+  27.798 Generated mipmaps (4) for atlas [16] of size 320x320   
+  27.811 Generated mipmaps (3) for atlas [17] of size 4096x3040   
+  27.844 Generated mipmaps (3) for atlas [18] of size 16384x16368   
+  27.865 Generated mipmaps (3) for atlas [19] of size 16384x10752   
+  27.876 Generated mipmaps (3) for atlas [20] of size 8192x6096   
+  27.974 Generated mipmaps (3) for atlas [21] of size 8192x2800   
+  28.046 Generated mipmaps (3) for atlas [22] of size 8192x4544   
+  28.058 Generated mipmaps (3) for atlas [23] of size 8192x3408   
+  28.069 Generated mipmaps (3) for atlas [24] of size 3504x768   
+  28.080 Generated mipmaps (3) for atlas [25] of size 4096x3152   
+  28.126 Generated mipmaps (3) for atlas [26] of size 4096x3152   
+  28.138 Generated mipmaps (3) for atlas [27] of size 4096x3152   
+  28.160 Generated mipmaps (5) for atlas [28] of size 8192x5104   
+  28.172 Generated mipmaps (3) for atlas [33] of size 8192x5216   
+  28.236 Custom mipmaps uploaded (3753)
+  28.282 Estimated VRAM usage for textures: 4100.66 MB (Atlases: 3893.11 MB, Textures: 207.56 MB)
+  28.282 Real VRAM usage for the whole program: 4367.93 MB
+  28.288 Custom inputs active: 26
+  28.525 Factorio initialised
+  28.530 Steam Storage Quota: 64/64
+  32.053 Loading map C:\Users\Zukera\AppData\Roaming\Factorio\saves\ВСМ.zip: 3009139 bytes.
+  32.144 Loading level.dat: 2089153 bytes.
+  32.144 Info Scenario.cpp:152: Map version 2.1.20-4
+  32.208 Loading blueprint storage: Local timestamp -1, Cloud timestamp -1
+  32.208 Blueprint storage "blueprint-storage-2.dat" was not found, trying to load previous version storage "blueprint-storage.dat"
+  32.209 Loading blueprint storage: Local timestamp -1, Cloud timestamp -1
+  32.220 Loading script.dat: 9862493 bytes.
+  32.225 Checksum for script __level__/control.lua: 1148695780
+  32.229 Checksum for script __bobinserters__/control.lua: 3407440666
+  32.231 Checksum for script __ElectrifiedMainline__/control.lua: 3199066299
+  32.232 Checksum for script __bobores__/control.lua: 3782704031
+  32.233 Checksum for script __UndoIndexProbe__/control.lua: 2456338330
+  32.236 Checksum for script __bobenemies__/control.lua: 4203569557
+  32.290 Checksum for script __factory_solver__/control.lua: 2757492848
+  32.296 Script @__pypostprocessing__/lib/events.lua:153: Finalized 12 events for pypostprocessing
+  32.296 Checksum for script __pypostprocessing__/control.lua: 263675023
+  32.298 Checksum for script __bobplates__/control.lua: 2943813389
+  32.352 Checksum for script __factoryplanner__/control.lua: 148745923
+  32.354 Checksum for script __bobelectronics__/control.lua: 101682827
+  32.356 Checksum for script __boblogistics__/control.lua: 2849198677
+  32.357 Checksum for script __bobtech__/control.lua: 2913293256
+  32.754 Script @__factory_solver__/fs_log.lua:74: [fs/INFO] virtual: registered 10 spoilage virtual recipes
+  32.805 Script @__factory_solver__/fs_log.lua:74: [fs/INFO] virtual: registered 1039 source + 1095 sink virtual recipes
+  54.513 Script @__UndoIndexProbe__/control.lua:9: [UndoIndexProbe] probe_created tick=14467 player=1 first_position=(-40.0,-48.0) first_undo_index=0 second_position=(-36.0,-48.0) second_undo_index=1
+  56.597 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_robot_built_entity tick=14592 player=nil entity=em-high-speed-straight-rail type=straight-rail ghost_name=nil surface=1 position=(-35.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  56.663 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_robot_built_entity tick=14596 player=nil entity=em-high-speed-straight-rail type=straight-rail ghost_name=nil surface=1 position=(-39.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  68.668 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_marked_for_deconstruction tick=15314 player=1 entity=em-high-speed-straight-rail type=straight-rail ghost_name=nil surface=1 position=(-35.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  68.668 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_marked_for_deconstruction tick=15314 player=1 entity=em-high-speed-straight-rail type=straight-rail ghost_name=nil surface=1 position=(-39.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  68.668 Script @__ElectrifiedMainline__/scripts/control.lua:95: [ElectrifiedMainline][em-rail-diag] event=on_undo_applied tick=15314 player=1 action_count=2
+  68.668 Script @__ElectrifiedMainline__/scripts/control.lua:109: [ElectrifiedMainline][em-rail-diag] on_undo_applied_action=1 type=built-entity target_name=em-high-speed-straight-rail target_position=(-39.000,-47.000) target_direction=nil target_quality=nil surface_index=1 original_name=nil original_quality=nil
+  68.668 Script @__ElectrifiedMainline__/scripts/control.lua:109: [ElectrifiedMainline][em-rail-diag] on_undo_applied_action=2 type=built-entity target_name=em-high-speed-straight-rail target_position=(-35.000,-47.000) target_direction=nil target_quality=nil surface_index=1 original_name=nil original_quality=nil
+  68.668 Script @__UndoIndexProbe__/control.lua:9: [UndoIndexProbe] event=on_undo_applied tick=15314 player=1 action_count=2
+  68.668 Script @__UndoIndexProbe__/control.lua:9: [UndoIndexProbe] on_undo_applied_action=1 type=built-entity target=em-high-speed-straight-rail target_type=nil position=(-39.00,-47.00) surface=1 original=nil
+  68.668 Script @__UndoIndexProbe__/control.lua:9: [UndoIndexProbe] on_undo_applied_action=2 type=built-entity target=em-high-speed-straight-rail target_type=nil position=(-35.00,-47.00) surface=1 original=nil
+  70.414 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_robot_mined_entity tick=15419 player=nil entity=em-high-speed-straight-rail type=straight-rail ghost_name=nil surface=1 position=(-35.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  70.481 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_robot_mined_entity tick=15423 player=nil entity=em-high-speed-straight-rail type=straight-rail ghost_name=nil surface=1 position=(-39.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  79.859 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_built_entity tick=15981 player=1 entity=entity-ghost type=entity-ghost ghost_name=em-high-speed-straight-rail surface=1 position=(-39.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  79.859 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_built_entity tick=15981 player=1 entity=entity-ghost type=entity-ghost ghost_name=em-high-speed-straight-rail surface=1 position=(-35.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  79.859 Script @__ElectrifiedMainline__/scripts/control.lua:95: [ElectrifiedMainline][em-rail-diag] event=on_redo_applied tick=15981 player=1 action_count=2
+  79.859 Script @__ElectrifiedMainline__/scripts/control.lua:109: [ElectrifiedMainline][em-rail-diag] on_redo_applied_action=1 type=removed-entity target_name=em-high-speed-straight-rail target_position=(-35.000,-47.000) target_direction=nil target_quality=nil surface_index=1 original_name=nil original_quality=nil
+  79.859 Script @__ElectrifiedMainline__/scripts/control.lua:109: [ElectrifiedMainline][em-rail-diag] on_redo_applied_action=2 type=removed-entity target_name=em-high-speed-straight-rail target_position=(-39.000,-47.000) target_direction=nil target_quality=nil surface_index=1 original_name=nil original_quality=nil
+  79.859 Script @__UndoIndexProbe__/control.lua:9: [UndoIndexProbe] event=on_redo_applied tick=15981 player=1 action_count=2
+  79.859 Script @__UndoIndexProbe__/control.lua:9: [UndoIndexProbe] on_redo_applied_action=1 type=removed-entity target=em-high-speed-straight-rail target_type=nil position=(-35.00,-47.00) surface=1 original=nil
+  79.859 Script @__UndoIndexProbe__/control.lua:9: [UndoIndexProbe] on_redo_applied_action=2 type=removed-entity target=em-high-speed-straight-rail target_type=nil position=(-39.00,-47.00) surface=1 original=nil
+  81.943 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_robot_built_entity tick=16106 player=nil entity=em-high-speed-straight-rail type=straight-rail ghost_name=nil surface=1 position=(-35.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  82.007 Script @__ElectrifiedMainline__/scripts/control.lua:86: [ElectrifiedMainline][em-rail-diag] event=on_robot_built_entity tick=16110 player=nil entity=em-high-speed-straight-rail type=straight-rail ghost_name=nil surface=1 position=(-39.000,-47.000) direction=0 force=player quality=normal build_mode=nil
+  88.987 Info AppManager.cpp:364: Deleting active scenario.
+  90.444 Quitting: user-quit.
+  90.954 Steam API shutdown.
+  90.964 Goodbye

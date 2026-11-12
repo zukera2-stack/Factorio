@@ -4,6 +4,16 @@ project:
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
   active_test_branch: test/undo-stabilization-018
+  release_target_branch: main
+  release_pull_request: 6
+  release_merge_approved_by_user: true
+  release_status: approved_pending_pr_checks
+  previous_main_baseline: "0.1.4"
+  previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
+  previous_main_state_archive: docs/history/PROJECT_STATE-main-0.1.4.yaml
+  exact_version_rail_api_notes: docs/FACTORIO_2_1_RAIL_API_NOTES.md
+  project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
+  github_projects_board_required: false
   mod_directory: ElectrifiedMainline
   mod_version: "0.1.8"
   factorio_target: "2.1"
