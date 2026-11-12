@@ -337,7 +337,7 @@ feature_35kv_019:
   rail_signal_style_placement: not_implemented
   actual_power_transfer: not_implemented
   real_electrified_rail_graph: not_implemented
-  source_syntax_check: awaiting_ci
-  zip_check: awaiting_ci
+  source_syntax_check: awaiting_feature_branch_ci
+  zip_check: awaiting_feature_branch_ci
   game_test: not_run
   merge_to_main: prohibited_until_game_test

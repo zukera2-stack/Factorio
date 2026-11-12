@@ -2,7 +2,7 @@ name: Validate project documentation
 
 on:
   push:
-    branches: [main, diagnostic/blueprint-rail-undo]
+    branches: [main, diagnostic/blueprint-rail-undo, 'feature/**']
     paths:
       - "docs/**"
       - "AGENTS.md"
