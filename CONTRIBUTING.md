@@ -41,19 +41,14 @@ A successful CI run proves only what its checks actually execute. A ZIP build is
 
 ## Research record template
 
-For a non-trivial mechanic, add a short record containing:
+For every non-trivial mechanic, compatibility change, or bug workaround, copy [the research worksheet](docs/PROTOTYPE_RESEARCH_TEMPLATE.md) into `docs/research/<topic>-<version>.md`.
 
-| Field | What to record |
-|---|---|
-| Question | Exact player-visible behavior to implement |
-| Target | Factorio version/build and relevant mod versions |
-| Native precedent | Prototype/source path or state that none was found |
-| Third-party precedent | Repository, file, ref/commit, version, and why it is comparable |
-| Official API | Versioned documentation links and relevant constraints |
-| Comparison | Relevant properties and behavioral differences |
-| Hypothesis | Minimal proposed change and expected outcome |
-| Test | Exact save/setup, action, entity type/geometry, and expected result |
-| Result | Observed outcome, log evidence, and remaining uncertainty |
+- Complete the question, acceptance test, analogue search, prototype/API comparison, and hypothesis sections **before writing code**.
+- After implementation, record changed files and static, data-stage, and CI results.
+- After in-game testing, record the exact game build, modpack, player action, entity type/geometry, result, log evidence, and unverified cases.
+- Do not fill missing source revisions, API versions, or test results from memory or guesswork; mark them unknown.
+- For trivial documentation-only edits or isolated spelling fixes, a separate research record is not required.
+- See the [0.1.7 native rail-upgrade record](docs/research/rail-native-upgrade-0.1.7.md) as a completed example.
 
 ## Case study: native rail upgrade and Undo/Redo
 
