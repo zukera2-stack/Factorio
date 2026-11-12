@@ -71,7 +71,6 @@
 - [Шаблон исследования прототипов](docs/PROTOTYPE_RESEARCH_TEMPLATE.md)
 - [Пример исследования рельсов 0.1.7](docs/research/rail-native-upgrade-0.1.7.md)
 - [Правила для участников разработки](CONTRIBUTING.md)
-- [Регламент разработки и обязательный чек-лист](CONTRIBUTING.md)
 - [Состояние проекта для продолжения работы](docs/PROJECT_STATE.yaml)
 - [English overview](README.md)
 
