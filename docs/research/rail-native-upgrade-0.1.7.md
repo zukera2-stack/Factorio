@@ -1,6 +1,6 @@
 # Research record: native ground-rail upgrade and Undo/Redo (0.1.7)
 
-<badge>Game-tested: straight ground rails only</badge>
+**Status: Game-tested — straight ground rails only.**
 
 ## 1. Research metadata
 
