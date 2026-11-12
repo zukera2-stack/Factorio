@@ -1,7 +1,7 @@
 # Electrified Mainline — current AI handoff
 
 > Updated 2026-11-12 after the user confirmed the 0.1.7 native rail replacement/Undo/Redo test works. The confirmed scope remains the tested straight-ground-rail path. This is the compact current handoff; older failures and 0.1.6 history are below, not current capability statements.
-> Read in order: `AGENTS.md` -> this file -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> `CONTRIBUTING.md` -> relevant live source files. Full older notebook: `PROJECT_CONTEXT.md`.
+> Read in order: `AGENTS.md` -> this file -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> `CONTRIBUTING.md` -> relevant live source files. Before any non-trivial mechanic or workaround, copy `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` into a new `docs/research/` record and complete the research sections before coding. Full older notebook: `PROJECT_CONTEXT.md` (historical only).
 
 ## 1. Current repository and environment
 
@@ -104,7 +104,7 @@ Research sequence:
 
 **0.1.7 outcome**: native green Upgrade Planner made a reversible `upgraded-entity` transaction for 20 straight rails. No custom Undo/Redo implementation needed in that path. We changed several conditions together; the log does not prove which one alone was necessary.
 
-Full process and source references: [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md) and repository [`CONTRIBUTING.md`](../CONTRIBUTING.md). This is now a mandatory project-wide method, not merely a lesson from the rail bug. Never replace API research with guessed flags or write scripted Undo before checking engine-native ownership.
+Full process and source references: [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md) and repository [`CONTRIBUTING.md`](../CONTRIBUTING.md). Use the [research worksheet](PROTOTYPE_RESEARCH_TEMPLATE.md) for each non-trivial future mechanic; the [completed 0.1.7 rail-upgrade record](research/rail-native-upgrade-0.1.7.md) shows the required evidence level. This is a mandatory project-wide method, not merely a lesson from the rail bug. Never replace API research with guessed flags or write scripted Undo before checking engine-native ownership.
 
 ## 6. Immediate next tests and work
 
@@ -126,7 +126,7 @@ Full process and source references: [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md) a
 
 ## 8. Handoff protocol
 
-Read `AGENTS.md` -> this file -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> live source. Check the branch head and version. Research existing functionality **before proposing new scripts**. Test only changed behavior, report actual observations and open questions, then synchronize docs and changelog.
+Read `AGENTS.md` -> this file -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> `CONTRIBUTING.md` -> live source. For non-trivial mechanics, complete `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` in a new `docs/research/` record before coding. Check the active branch head and mod version. Research existing functionality **before proposing new scripts**. Test only changed behavior, report actual observations and open questions, then synchronize docs and changelog.
 
 
 ## 9. Mandatory research-first contribution method
