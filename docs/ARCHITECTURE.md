@@ -53,7 +53,7 @@ The core mod should depend only on Base unless a required feature proves otherwi
 - The native green Upgrade Planner then owns robot mining/building, and Factorio's native Undo/Redo. `on_marked_for_upgrade` observes native orders and **must not** cancel them.
 - This native mechanism has been game-tested for **straight ground rails** in 0.1.7, not yet every geometry.
 - `scripts/control.lua` still contains the `em-rail-replacement-planner` two-stage deconstruction/ghost fallback and an experimental Ctrl+Shift blueprint Undo join. Those are **not** equivalent to native upgrades and their reversible behavior is unverified/incomplete.
-- Before modifying a mechanic, follow [working-analogue research protocol](RESEARCH_METHOD.md). Compare prototype type, group, upgrade chain, collision, mining/placement, and API with an existing proven implementation.
+- Before modifying a mechanic, follow the [working-analogue research protocol](RESEARCH_METHOD.md) and complete a [prototype research record](PROTOTYPE_RESEARCH_TEMPLATE.md). Compare prototype type, group, upgrade chain, collision, mining/placement, runtime ownership, and target-version API with a proven implementation; save the record under `docs/research/`.
 
 ## Change and verification policy
 
