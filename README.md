@@ -2,7 +2,7 @@
 
 A Factorio 2.1 mod project exploring high-speed railway infrastructure, an electric locomotive concept, battery support and regenerative braking.
 
-> **Development status:** early prototype. The repository contains source files and a 0.1.0 archive, but the current implementation has not yet been fully validated in-game. Some items and mechanics are placeholders or incomplete. See [Development status](docs/STATUS.md) before installing or building on this project.
+> **Development status:** early prototype. On the experimental `diagnostic/blueprint-rail-undo` branch, **0.1.7** was game-tested on 2026-11-12: a native Upgrade Planner job replaced **20 straight ground rails** using robots; Ctrl+Z restored them and Ctrl+Y re-upgraded them. Curved geometry, Ctrl+Shift superforce blueprint Undo, and the future electricity mechanics are not yet verified/implemented. The `main` branch is not the same as this experimental build. See [current status](docs/STATUS.md).
 
 ## Project contents
 
@@ -35,7 +35,7 @@ These are project goals, not a claim that every feature is currently complete. T
 
 ## Installation
 
-The repository includes `mods/ElectrifiedMainline_0.1.0.zip`. It is retained as an existing package; it has **not** been independently verified against the current source tree.
+For the current test branch, download the latest successful **Build Factorio mod ZIP** artifact from [GitHub Actions](https://github.com/zukera2-stack/Factorio/actions/workflows/build-mod.yml) (artifact name `ElectrifiedMainline-test-build`). The old committed `mods/ElectrifiedMainline_0.1.0.zip` is a historical snapshot **not** the latest version.
 
 For a manual test:
 
@@ -52,16 +52,18 @@ The mod source is kept in `ElectrifiedMainline/` as a self-contained Factorio mo
 
 Before preparing a release:
 
-1. Validate all prototypes and recipe/technology references against the target Factorio version.
+1. Follow the [research-first method](docs/RESEARCH_METHOD.md): inspect working native/third-party analogues and official prototype API before coding; then validate prototypes and recipe/technology references against the target Factorio version.
 2. Test loading with only the base game, then with the intended expansion setup.
 3. Exercise placement, mining, train creation, train merging/splitting and save/load behavior.
-4. Build the distributable ZIP from the contents of `ElectrifiedMainline/` (the archive must contain `info.json` at its root, not an extra enclosing directory).
+4. Build the Factorio mod ZIP with **exactly one mod-version folder**, e.g. `ElectrifiedMainline_0.1.7/info.json` at archive root. The current CI packages a folder named `ElectrifiedMainline/` inside the ZIP (no duplicate nested copy); metadata validation checks it. Do not package the inner contents bare or insert a second redundant folder.
 5. Update `CHANGELOG.md` and the version in `info.json` together.
 
 ## Documentation
 
 - [Development status and known gaps](docs/STATUS.md)
 - [Architecture and design notes](docs/ARCHITECTURE.md)
+- [Research method: working analogues over guesses](docs/RESEARCH_METHOD.md)
+- [Project state](docs/PROJECT_STATE.yaml)
 - [Russian overview](README.ru.md)
 
 ## License
