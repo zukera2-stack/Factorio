@@ -157,7 +157,8 @@ next_actions:
 compatibility_policy:
   core_requires_only_base: true
   optional_mods_are_hard_dependencies: false
-  avoid_mutating_foreign_prototypes: true\n  allowed_vanilla_upgrade_mapping: only_when_no_conflicting_existing_upgrade_chain
+  avoid_mutating_foreign_prototypes: true
+  allowed_vanilla_upgrade_mapping: only_when_no_conflicting_existing_upgrade_chain
   guard_optional_prototypes: true
   unknown_entities_must_be_tolerated: true
   versioned_storage_migrations_required_before_storage_schema_changes: true
