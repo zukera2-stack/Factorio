@@ -32,6 +32,10 @@ jobs:
           python -m pip install -r scripts/sprites/requirements.txt
           sudo apt-get update
           sudo apt-get install -y lua5.2
+      - name: Prepare rail-aware split sprite fixtures
+        run: |
+          python scripts/sprites/game_test_pack.py --mode demo --mod-dir ElectrifiedMainline --out build/sprites/game-test
+          python scripts/sprites/split_012.py --graphics-dir ElectrifiedMainline/graphics/entity/35kv --report build/sprites/game-test/split-012.json
       - name: Run positive and negative image tests
         run: python -m unittest discover -s scripts/sprites -p 'test_*.py' -v
       - name: Build deterministic demo and Lua prototype snippet
