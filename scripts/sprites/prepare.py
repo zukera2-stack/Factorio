@@ -23,7 +23,7 @@ def prepare_image(src: Path, asset: dict) -> Image.Image:
     bbox=alpha.getbbox()
     if not bbox:
         raise QAError("raw art is empty")
-    if sum(v>=32 for v in alpha.getdata())/ (image.width*image.height) > 0.85:
+    if sum(alpha.histogram()[32:]) / (image.width*image.height) > 0.85:
         raise QAError("raw art is mostly opaque: remove background before preparing")
     if bbox[0]==0 or bbox[1]==0 or bbox[2]==image.width or bbox[3]==image.height:
         raise QAError("raw subject touches image edge; cannot prove it is complete")

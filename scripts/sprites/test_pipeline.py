@@ -42,6 +42,10 @@ class SpriteTests(unittest.TestCase):
         with self.assertRaisesRegex(QAError,"stripes"):
             inspect(self.source/a["source"],a)
 
+    def test_uniform_image_is_not_misclassified_as_periodic_stripes(self):
+        im=Image.new("RGBA",(256,384),(55,60,80,255))
+        self.assertFalse(striped(im))
+
     def test_opaque_background_rejected(self):
         a=self.spec["assets"][0]
         Image.new("RGBA",tuple(a["size"]),(55,60,80,255)).save(self.source/a["source"])

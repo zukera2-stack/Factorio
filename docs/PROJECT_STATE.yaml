@@ -401,7 +401,9 @@ sprite_pipeline_0111:
   mod_prototypes_modified: false
   visual_graph_modified: false
   static_qa: passed_14_unit_tests_and_api_guard_run_43387041605
-  preparation_ci: pending
+  preparation_ci: failed_first_run_43387247942_false_positive_uniform_opaque_detected_as_stripes
+  preparation_ci_fix: pending_retest
+  regression_test: uniform_opaque_must_not_be_called_periodic_stripes
   api_contract_guard: scripts/sprites/api_contract.py
   api_contract_tests: scripts/sprites/test_api_contract.py
   api_contract_ci: passed_run_43387041605

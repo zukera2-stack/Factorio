@@ -63,3 +63,7 @@ The RotatedSprite documentation explicitly notes a maximum input texture width o
 - Contact wire sprite stretching and rendering: **not implemented**, old line renderer preserved.
 - Status: **implemented and CI-validated as offline QA pipeline only**. NOT API-confirmed for 2.1.20 and NOT game-tested.
 - Next experiment: approve actual source art, integrate pole RotatedSprite in a separate versioned game branch, load Factorio 2.1.20 and check scale/shift/shadow, then separately prototype textured wires.
+
+## 10. QA regression discovered during AI-art preparation
+
+First preparation CI #43387247942 failed 1/18 tests: the periodic-stripe heuristic flagged a uniform opaque image because every column repeats. This was a **false positive classifier label**; the image was still invalid, but for the wrong reason. Corrected the heuristic to require at least two distinct sampled column signatures, added a dedicated regression test, and left opaque-background rejection to the separate coverage gate. Also replaced deprecated Pillow alpha getdata usage in preparation with a histogram. Re-test pending.

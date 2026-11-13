@@ -44,6 +44,10 @@ def striped(im):
         return False
     p=im.load()
     ys=list(range(0,h,max(1,h//24)))
+    # Uniform images are not periodic stripe corruption. They fail alpha/colour QA separately.
+    signatures={tuple(p[x,y] for y in ys) for x in range(0,w,max(1,w//100))}
+    if len(signatures)<2:
+        return False
     if sum(any(p[x,y][3] > 32 for x in range(0,w,max(1,w//32))) for y in ys) < 0.8*len(ys):
         return False
     for period in (2,4,8,16):
