@@ -1,0 +1,25 @@
+ElectrifiedMainline 0.1.13 — HOTFIX for Factorio 2.1.20 prototype load error
+
+Root cause (verified in user factorio-current log, 2026-11-13):
+"Error while loading entity prototype "em-35kv-catenary-pole" (electric-pole):
+ Count of wire positions doesn't match the count of pictures of the pole"
+
+The 0.1.12 prototype inherited multiple connection_points from vanilla
+small-electric-pole but replaced pictures with a single-direction invisible
+sprite. Factorio requires equal counts, regardless of the copper-reach flags.
+
+Fix: explicitly retain only the first cloned WireConnectionPoint.
+The resulting count is 1, matching direction_count=1 on both picture layers.
+The original 0.1.12 runtime control and rail-following geometry are UNCHANGED.
+No rail signal/chain signal prototypes or logic are modified. No energy transfer.
+
+Static checks: Lua 5.4 data-stage stub executes prototypes/power_019.lua,
+verifies source point count of 4 and destination point count of 1, all
+zero-copper invariants, correct visual sprite count and 8 named graphics.
+Lua syntax checks for all mod Lua files; PNG integrity + dimension check;
+ZIP CRC/integrity check; compare byte-for-byte unchanged files from 0.1.12.
+This is not a real Factorio 2.1.20 gameplay/load verification.
+
+Install: close Factorio, remove/disable 0.1.12 ZIP and add
+ElectrifiedMainline_0.1.13.zip; restart on a COPY of your save.
+Send new factorio-current.log if another error occurs.

@@ -1,0 +1,29 @@
+ElectrifiedMainline 0.1.12 — EXPERIMENTAL GAME TEST (Factorio 2.1.20)
+
+Purpose: automatic G-mast facing according to nearby high-speed rails; rail-following
+contact connections across a turn; no new rail signal entities, no electrical MW.
+
+1. Back up the 0.1.11 save; disable/remove its ZIP. Use just ElectrifiedMainline_0.1.12.zip.
+2. Open the TEST save. Existing contact supports should orient automatically. No R required.
+3. Place fresh supports on the four sides of a straight HSR rail; check the cantilever
+   faces the rail. Repeat on diagonal and curved HSR. Standalone poles face east by default.
+4. Place poles 8-12 tiles apart around a 90-degree turn. The contact/messenger wires
+   should follow a multi-segment curve rather than an unrelated diagonal chord.
+   IMPORTANT: this is a visual approximation, not an exact rail spline.
+5. Test two unrelated parallel HSR lines close together: must NOT join by corner wires.
+6. Run /em-35kv-status: inspect curved_spans, oriented_sprites, feeder_lines,
+   stale_nodes=0. Verify energized=NO and transfer_MW=0.
+7. Mine a support, then Ctrl+Z / Ctrl+Y with construction bots; verify the visual
+   sprite and wire rendering clean up and rebuild. Save/reload and repeat.
+8. Test a normal/chain rail signal and train routing independently; all vanilla signal
+   behaviour must remain unchanged.
+9. Send screenshots in ZIP + factorio-current.log and output from /em-35kv-status.
+
+LIMITS: The base pole's physical position is NOT snapped/replaced/teleported by script.
+Only its rendered arm selects a direction. Railway signals are never created,
+modified, or used to divide train blocks. Cosmetic catenary wires carry NO energy.
+Existing ordinary electric grid behaviour remains unchanged.
+
+STATIC QA: 10 Lua files syntax-checked with local liblua5.4, pure geometry assertions,
+mock runtime tests (build, curve, refresh, removal), PNG sizes/alpha and ZIP checks.
+These are not a Factorio 2.1.20 data-stage or gameplay test.

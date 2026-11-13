@@ -1,12 +1,12 @@
 # Recovery record: uploaded ElectrifiedMainline 0.1.12 -> 0.1.13 (2026-11-13)
 
-**Purpose:** Restore a verifiable development handoff. Do not conflate the user-supplied 0.1.13 **data-stage hotfix** with the separately discussed 0.1.13 **visual patch**. No release, merge, or gameplay approval is implied.
+**Update 2026-11-13:** This recovery record describes the **pre-import** state of the `reconcile/catenary-013-archive` branch. The subsequent `feature/catenary-visuals-014` branch **does contain** the exact 0.1.13 extracted source and all 12 PNGs, pinned by `docs/builds/013-payload.json`. No gameplay test has been run.\n\n**Purpose:** Restore a verifiable development handoff. Do not conflate the user-supplied 0.1.13 **data-stage hotfix** with the separately discussed 0.1.13 **visual patch**. No release, merge, or gameplay approval is implied.
 
 ## Source-of-truth hierarchy
 
 1. **Stable gameplay baseline:** `main`, mod **0.1.8**, native Upgrade Planner and scoped Undo/Redo user-tested in Factorio **2.1.20 build 87512**. Leave untouched.
 2. **GitHub experimental branch:** `feature/rail-aware-catenary-012` at `a8cb3772930779dcc02dc0c959fa8695a0b69d69`, source `info.json=0.1.12`. This branch contains **a different 0.1.12 rendering implementation** from the user-uploaded ZIP and **does not track the PNGs** in `ElectrifiedMainline/graphics/entity/35kv/`. Its existing CI does not establish provenance of the uploaded ZIP.
-3. **User-uploaded test ZIPs:** `ElectrifiedMainline_0.1.12(1).zip` and `ElectrifiedMainline_0.1.13(2).zip`. These were inspected locally in ChatGPT, **not imported to GitHub**. They are the only complete copies of the specific test build supplied in this handoff.
+3. **User-uploaded test ZIPs:** `ElectrifiedMainline_0.1.12(1).zip` and `ElectrifiedMainline_0.1.13(2).zip`. These were inspected locally in ChatGPT. The exact extracted **0.1.13** files have now been imported to `feature/catenary-visuals-014`, with a full payload hash manifest. The original ZIP container itself remains a user upload and is not committed.
 4. **Visual redesign:** The separately generated `EM_visual_patch_013.zip` is a proposed art/rendering patch, **not contained in the uploaded 0.1.13 hotfix**. Give the next combined test build a distinct version (e.g. 0.1.14) after reconciling sources.
 
 ## Exact uploaded ZIP provenance
@@ -51,7 +51,7 @@ Path prefix: `ElectrifiedMainline/graphics/entity/35kv/`. SHA-256 below verifies
 
 ## Reconciliation and next acceptance gate
 
-1. Import **the exact 0.1.13 archive source and PNGs** to a dedicated GitHub branch (not `main`), retaining byte-level provenance. Do not merge conflicting 0.1.12 renderers blindly. The recovery branch currently stores **documentation only**; its `ElectrifiedMainline/` source remains 0.1.12.
+1. Import **the exact 0.1.13 archive source and PNGs** to a dedicated GitHub branch (not `main`), retaining byte-level provenance. Do not merge conflicting 0.1.12 renderers blindly. The original `reconcile/catenary-013-archive` branch stores **documentation only**; `feature/catenary-visuals-014` now contains the exact imported 0.1.13 source and PNGs.
 2. Add a reproducible single-ZIP GitHub Actions build and compare the resulting mod payload files to the archived SHA-256 manifest. Record any intentional changes. A release build must include all referenced PNGs.
 3. Reproduce Factorio **2.1.20** data-stage load on a test save and collect `factorio-current.log`. Confirm the `connection_points` hotfix without changing native rail signals.
 4. Check `/em-35kv-status`, actual pole facing on both sides of straight/diagonal/curved HSR, visual contact and messenger wires across a 90° curve, save/reload and build/remove/Undo/Redo.

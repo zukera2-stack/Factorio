@@ -7,6 +7,8 @@ on:
       - "ElectrifiedMainline/**"
       - "tests/**"
       - "scripts/sprites/**"
+      - "scripts/verify_013_payload.py"
+      - "docs/builds/013-payload.json"
       - "art/sprites/**"
       - ".github/workflows/build-mod.yml"
   pull_request:
@@ -37,7 +39,11 @@ jobs:
             luac5.2 -p "$file"
           done < <(find ElectrifiedMainline -type f -name '*.lua' -print0)
           lua5.2 tests/35kv_topology.lua
-          lua5.2 tests/35kv_curve_topology.lua
+          if grep -q '"version": "0.1.13"' ElectrifiedMainline/info.json; then
+            lua5.2 tests/35kv_visual_013.lua
+          else
+            lua5.2 tests/35kv_curve_topology.lua
+          fi
 
       - name: Set up Python for experimental sprite atlas
         uses: actions/setup-python@v5
@@ -135,6 +141,14 @@ jobs:
           print(f"Entries: {len(names)}")
           print(f"Mod: {info['name']} {info['version']} / Factorio {info['factorio_version']}")
           PY
+
+      - name: Verify exact user-archive 0.1.13 payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q '"version": "0.1.13"' ElectrifiedMainline/info.json; then
+            python3 scripts/verify_013_payload.py
+          fi
 
       - name: Upload test ZIP
         uses: actions/upload-artifact@v4

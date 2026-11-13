@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: reconcile/catenary-013-archive
-  feature_version: "0.1.12"
-  feature_status: uploaded_013_archive_documented_not_imported_gameplay_unverified
+  active_feature_branch: feature/catenary-visuals-014
+  feature_version: "0.1.13"
+  feature_status: exact_uploaded_013_source_and_art_imported_static_qa_pending_gameplay_unverified
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.12"
+  mod_version: "0.1.13"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -40,13 +40,28 @@ latest_uploaded_archive:
   version: "0.1.13"
   sha256: e89d803dcd87252c50786949f53bb028f64af2f9df0e6daa16b3e29fbb959174
   archive_type: data_stage_wire_connection_point_hotfix
-  imported_into_github: false
-  graphics_tracked_in_github: false
+  imported_into_github: true
+  graphics_tracked_in_github: true
   screenshot_review: visual_overhead_wire_continuity_unverified
   factorio_2_1_20_game_load: unverified_in_this_handoff
   recovery_record: docs/RECOVERY_013.md
   stable_main_version: "0.1.8"
-  git_source_mod_version: "0.1.12"
+  git_source_mod_version: "0.1.13"
+  exact_source_files_committed: 32
+  exact_graphics_files_committed: 12
+  archive_manifest: docs/builds/013-payload.json
+  static_verification: scripts/verify_013_payload.py
+  next_visual_version: "0.1.14"
+
+visual_development:
+  branch: feature/catenary-visuals-014
+  baseline: exact_user_uploaded_0_1_13
+  scope: graphics_sprite_alignment_and_wire_rendering_only
+  preserve_rail_upgrade_undo_redo: true
+  preserve_rail_signals: true
+  electrical_MW_transfer: disabled
+  actual_gameplay_test: pending_user_factorio_2_1_20
+  visual_research: docs/VISUAL_BASELINE_013.md
 
 user_decisions:
   rail_modernization: replace_vanilla_rails_with_high_speed_rails

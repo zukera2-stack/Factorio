@@ -18,15 +18,30 @@ catenary.draw_copper_wires = false
 catenary.draw_circuit_wires = false
 catenary.rewire_neighbours_when_destroying = false
 flag_once(catenary, "get-by-unit-number")
--- 0.1.12: upright mast; arm is rendered independently facing nearby HSR.
--- Keep the native nonconducting electric pole and its original Undo identity.
+-- 0.1.13: A one-direction RotatedSprite MUST have exactly one matching
+-- WireConnectionPoint.  The copied vanilla small pole can have multiple
+-- connection_points (rotations), even when its copper/circuit wires are disabled.
+-- Factorio 2.1.20 rejects a mismatch at data-stage validation with:
+-- "Count of wire positions doesn't match the count of pictures of the pole".
+-- Retain one valid vanilla point rather than manufacturing an empty one.
+-- The decorative contact wires remain LuaRendering objects; these connection
+-- points do not create native power wires (all wire-reach flags are zero).
+assert(catenary.connection_points and catenary.connection_points[1],
+    "ElectrifiedMainline: base small-electric-pole has no wire connection point")
+catenary.connection_points = {table.deepcopy(catenary.connection_points[1])}
+-- 0.1.12: The electric-pole entity cannot be rotated like a RailSignal.
+-- Hide only its ordinary picture; render the arm via runtime SpritePrototypes
+-- selected from nearby high-speed rail geometry. Signal prototypes stay untouched.
 local graphics = "__ElectrifiedMainline__/graphics/entity/35kv/"
-catenary.pictures = {layers={
-    {filename=graphics.."pole-mast-hr.png",width=512,height=384,
-        direction_count=1,scale=0.5,shift={0,-2.53125}},
-    {filename=graphics.."pole-shadow-static-hr.png",width=512,height=384,
-        direction_count=1,scale=0.5,shift={0,-2.53125},draw_as_shadow=true},
+catenary.pictures = {layers = {
+    {filename = graphics .. "hidden-pole-012.png", width = 1,
+        height = 1, direction_count = 1},
+    {filename = graphics .. "pole-shadow-4dir-hr.png",
+        width = 512, height = 384, direction_count = 1,
+        scale = 0.5, shift = {0,-2.53125},
+        draw_as_shadow = true},
 }}
+catenary.active_picture = nil
 
 local substation = table.deepcopy(data.raw["electric-pole"]["substation"])
 substation.name = "em-35kv-traction-substation"
@@ -37,8 +52,47 @@ flag_once(substation, "get-by-unit-number")
 
 data:extend({
     catenary, substation,
-    {type="sprite",name="em-35kv-cantilever",
-        filename=graphics.."pole-arm-hr.png",width=512,height=512,scale=0.5},
+    -- Face names reflect the rail's position relative to the mast, not its own direction.
+    {
+        type = "sprite", name = "em-35kv-facing-east",
+        filename = graphics .. "pole-east-012.png",
+        width = 512, height = 384, scale = 0.5,
+    },
+    {
+        type = "sprite", name = "em-35kv-facing-southeast",
+        filename = graphics .. "pole-southeast-012.png",
+        width = 512, height = 384, scale = 0.5,
+    },
+    {
+        type = "sprite", name = "em-35kv-facing-south",
+        filename = graphics .. "pole-south-012.png",
+        width = 512, height = 384, scale = 0.5,
+    },
+    {
+        type = "sprite", name = "em-35kv-facing-southwest",
+        filename = graphics .. "pole-southwest-012.png",
+        width = 512, height = 384, scale = 0.5,
+    },
+    {
+        type = "sprite", name = "em-35kv-facing-west",
+        filename = graphics .. "pole-west-012.png",
+        width = 512, height = 384, scale = 0.5,
+    },
+    {
+        type = "sprite", name = "em-35kv-facing-northwest",
+        filename = graphics .. "pole-northwest-012.png",
+        width = 512, height = 384, scale = 0.5,
+    },
+    {
+        type = "sprite", name = "em-35kv-facing-north",
+        filename = graphics .. "pole-north-012.png",
+        width = 512, height = 384, scale = 0.5,
+    },
+    {
+        type = "sprite", name = "em-35kv-facing-northeast",
+        filename = graphics .. "pole-northeast-012.png",
+        width = 512, height = 384, scale = 0.5,
+    },
     {
         type = "sprite", name = "em-35kv-contact-wire-texture",
         filename = graphics .. "contact-wire-hr.png",

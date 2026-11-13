@@ -1,7 +1,7 @@
--- 0.1.10 rail-oriented visual contact graph; NO energy transfer.
+-- 0.1.12 rail-following visual contact graph, cosmetic sprites only; no MW transfer.
 local M = {}
 local geometry = require("scripts.power_topology")
-local visuals = require("scripts.catenary_visuals_012")
+local view = require("scripts.overhead_geometry_012")
 local POLE,SUB = "em-35kv-catenary-pole","em-35kv-traction-substation"
 local SPAN,RADIUS = 16,3
 local RAILS = {"em-high-speed-straight-rail","em-curved-high-speed-rail",
@@ -11,10 +11,10 @@ for _,name in pairs(RAILS) do RAIL_SET[name]=true end
 
 function M.ensure_storage()
     storage.em=storage.em or {}
-    storage.em.power_019=storage.em.power_019 or {version=3,nodes={},edges={},rail_queue={},arm_renders={}}
+    storage.em.power_019=storage.em.power_019 or {version=3,nodes={},edges={},rail_queue={},sprites={}}
     local s=storage.em.power_019
     s.nodes=s.nodes or {};s.edges=s.edges or {};s.rail_queue=s.rail_queue or {}
-    s.arm_renders=s.arm_renders or {}
+    s.sprites=s.sprites or {}
     return s
 end
 local function edge_key(a,b)
@@ -24,16 +24,40 @@ end
 local function delete_edge(s,key)
     local e=s.edges[key]
     if not e then return end
-    for _,id in pairs({e.contact_render,e.messenger_render}) do
-        local o=rendering.get_object_by_id(id)
+    local ids=e.render_ids or {e.contact_render,e.messenger_render}
+    for _,id in pairs(ids) do
+        if id then
+            local o=rendering.get_object_by_id(id)
+            if o and o.valid then o.destroy() end
+        end
+    end
+    s.edges[key]=nil
+end
+local function clear_sprite(s,id)
+    local rid=s.sprites[id]
+    if rid then
+        local o=rendering.get_object_by_id(rid)
         if o and o.valid then o.destroy() end
     end
-    visuals.destroy_edge(e)
-    s.edges[key]=nil
+    s.sprites[id]=nil
+end
+local function render_sprite(s,e)
+    local id=e.unit_number
+    if not id then return end
+    clear_sprite(s,id)
+    local n=s.nodes[id]
+    local face=n and n.face or "east"
+    local obj=rendering.draw_sprite{
+        sprite="em-35kv-facing-"..face,
+        surface=e.surface,
+        target={entity=e,offset={0,-2.53125}},
+        render_layer="object",
+    }
+    s.sprites[id]=obj.id
 end
 local function rail_tangent(e)
     local rails=e.surface.find_entities_filtered{
-        position=e.position,radius=RADIUS+2,name=RAILS,force=e.force}
+        position=e.position,radius=RADIUS,name=RAILS,force=e.force}
     local best,d2=nil,math.huge
     for _,r in pairs(rails) do
         local x,y=e.position.x-r.position.x,e.position.y-r.position.y
@@ -55,11 +79,7 @@ local function rail_tangent(e)
     end
     local cross=tx*dy-ty*dx
     local side=cross>0.25 and 1 or (cross < -0.25 and -1 or 0)
-    local nx,ny=geometry.rail_normal(tx,ty,side,
-        e.position.x,e.position.y,best.position.x,best.position.y)
-    local dist=math.abs(nx*(best.position.x-e.position.x)
-        +ny*(best.position.y-e.position.y))
-    return tx,ty,side,nx,ny,dist
+    return tx,ty,side,best
 end
 local function register(s,e)
     local id=e.unit_number
@@ -68,8 +88,11 @@ local function register(s,e)
         surface_index=e.surface.index,force_name=e.force.name,
         rail_adjacent=e.name==SUB}
     if e.name==POLE then
-        n.tx,n.ty,n.side,n.nx,n.ny,n.rail_offset=rail_tangent(e)
+        local rail
+        n.tx,n.ty,n.side,rail=rail_tangent(e)
         n.rail_adjacent=n.tx~=nil
+        n.rail_id=rail and rail.unit_number or nil
+        n.face=view.face(e.position,rail and rail.position)
     end
     s.nodes[id]=n
 end
@@ -83,33 +106,146 @@ local function resolve(s,id)
     end
 end
 local function corridor(surface,force,a,b)
-    return visuals.corridor(surface,force,a,b,RAILS,RADIUS)
+    for _,t in pairs({0.25,0.5,0.75}) do
+        if surface.count_entities_filtered{
+            position={x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t},
+            radius=RADIUS,name=RAILS,force=force,limit=1}==0 then
+            return false
+        end
+    end
+    return true
 end
-local function draw(s,a,b,kind)
+local function draw(s,a,b,kind,corner)
     local key=edge_key(a.unit_number,b.unit_number)
     if s.edges[key] then return end
-    if kind=="contact" then
-        s.edges[key]=visuals.draw_contact(s,a,b)
-        return
+    local renders={}
+    local function segment(from,to,color,width)
+        local o=rendering.draw_line{
+            surface=a.surface, from=from,to=to,
+            color=color,width=width}
+        renders[#renders+1]=o.id
     end
-    local first=rendering.draw_line{
-        surface=a.surface,
-        from={entity=a,offset={0,-0.5}},
-        to={entity=b,offset={0,-0.5}},
-        color=kind=="feeder" and {r=0.35,g=0.8,b=1,a=0.95}
-            or {r=0.95,g=0.7,b=0.2,a=0.95},
-        width=2}
-    local second
-    if kind=="contact" then
-        second=rendering.draw_line{
-            surface=a.surface,
-            from={entity=a,offset={0,-0.75}},
-            to={entity=b,offset={0,-0.75}},
-            color={r=0.5,g=0.6,b=0.85,a=0.7},width=1}
+    if kind=="feeder" then
+        segment({entity=a,offset={0,-0.5}},
+            {entity=b,offset={0,-0.5}},
+            {r=0.35,g=0.8,b=1,a=0.9},1.5)
+    else
+        local na,nb=s.nodes[a.unit_number],s.nodes[b.unit_number]
+        local from=view.wire_anchor(na,0.5)
+        local to=view.wire_anchor(nb,0.5)
+        -- Direction from the adjacent railway is authoritative, not the R key.
+        local A={x=from.x,y=from.y,tx=na.tx,ty=na.ty}
+        local B={x=to.x,y=to.y,tx=nb.tx,ty=nb.ty}
+        local pts=corner and view.bezier(A,B,8) or {A,B}
+        for i=1,#pts-1 do
+            local x,y=pts[i],pts[i+1]
+            segment(x,y,{r=0.57,g=0.60,b=0.62,a=0.95},1.5)
+            segment({x=x.x,y=x.y-0.20},{x=y.x,y=y.y-0.20},
+                {r=0.38,g=0.43,b=0.48,a=0.85},1.0)
+        end
     end
     s.edges[key]={a=a.unit_number,b=b.unit_number,kind=kind,
-        contact_render=first.id,messenger_render=second and second.id or nil}
+        render_ids=renders,corner=corner or false}
 end
+
+-- This is deliberately *not* RailSignalPrototype: no changes to train blocks.
+-- Check real rail connectivity, so nearby but independent tracks do not join.
+local function connected_rail_path(a,b)
+    if not (a.rail_id and b.rail_id) then return false end
+    if a.rail_id==b.rail_id then return true end
+    -- Resolve rails spatially: unlike our poles, third-party rail prototypes may
+    -- not carry the get-by-unit-number flag. A stored number is just an identity.
+    local surface=game.surfaces[a.surface_index]
+    local force=game.forces[a.force_name]
+    if not (surface and force) then return false end
+    local start
+    for _,candidate in pairs(surface.find_entities_filtered{
+        position={x=a.x,y=a.y},radius=RADIUS,name=RAILS,force=force}) do
+        if candidate.unit_number==a.rail_id then start=candidate;break end
+    end
+    if not (start and start.valid and RAIL_SET[start.name]) then return false end
+    local queue={start};local seen={[start.unit_number]=true};local index=1
+    local directions={defines.rail_direction.front,defines.rail_direction.back}
+    local turns={defines.rail_connection_direction.straight,
+        defines.rail_connection_direction.left,defines.rail_connection_direction.right}
+    while index<=#queue and index<=96 do
+        local rail=queue[index];index=index+1
+        for _,d in pairs(directions) do
+            for _,c in pairs(turns) do
+                local other=rail.get_connected_rail{
+                    rail_direction=d,rail_connection_direction=c}
+                if other and other.valid and RAIL_SET[other.name]
+                    and other.unit_number and not seen[other.unit_number]
+                    and other.force.name==a.force_name
+                    and other.surface.index==a.surface_index then
+                    if other.unit_number==b.rail_id then return true end
+                    seen[other.unit_number]=true
+                    queue[#queue+1]=other
+                end
+            end
+        end
+    end
+    return false
+end
+
+local function curve_corridor(surface,force,a,b)
+    local A={x=a.x,y=a.y,tx=a.tx,ty=a.ty}
+    local B={x=b.x,y=b.y,tx=b.tx,ty=b.ty}
+    local pts=view.bezier(A,B,8)
+    for i=2,#pts-1 do
+        if surface.count_entities_filtered{
+            position=pts[i],radius=RADIUS+1,name=RAILS,force=force,limit=1}==0 then
+            return false
+        end
+    end
+    return true
+end
+
+local function build_corner_edges(s,touched)
+    local degrees={}
+    for _,edge in pairs(s.edges) do
+        if edge.kind=="contact" then
+            degrees[edge.a]=(degrees[edge.a] or 0)+1
+            degrees[edge.b]=(degrees[edge.b] or 0)+1
+        end
+    end
+    local candidates={}
+    for id,e in pairs(touched) do
+        local a=s.nodes[id]
+        if a and a.name==POLE and a.rail_adjacent and (degrees[id] or 0)<2 then
+            for _,other in pairs(e.surface.find_entities_filtered{
+                position=e.position,radius=SPAN*1.45,name=POLE,force=e.force}) do
+                local b=s.nodes[other.unit_number]
+                if b and (degrees[b.id] or 0)<2
+                    and not s.edges[edge_key(id,b.id)] then
+                    local possible,dist=view.corner_candidate(a,b,SPAN)
+                    if possible and connected_rail_path(a,b)
+                        and curve_corridor(e.surface,e.force,a,b) then
+                        candidates[#candidates+1]={a=id,b=b.id,dist=dist}
+                    end
+                end
+            end
+        end
+    end
+    table.sort(candidates,function(x,y)
+        if x.dist~=y.dist then return x.dist<y.dist end
+        if x.a~=y.a then return x.a<y.a end
+        return x.b<y.b
+    end)
+    for _,c in pairs(candidates) do
+        local key=edge_key(c.a,c.b)
+        if not s.edges[key] and (degrees[c.a] or 0)<2
+            and (degrees[c.b] or 0)<2 then
+            local a,b=resolve(s,c.a),resolve(s,c.b)
+            if a and b then
+                draw(s,a,b,"contact",true)
+                degrees[c.a]=(degrees[c.a] or 0)+1
+                degrees[c.b]=(degrees[c.b] or 0)+1
+            end
+        end
+    end
+end
+
 local function build_edges(s,touched)
     local choices,checks={},{}
     local function select_neighbours(e)
@@ -167,6 +303,7 @@ local function build_edges(s,touched)
             if nearest then draw(s,e,nearest,"feeder") end
         end
     end
+    build_corner_edges(s,touched)
 end
 local function refresh(surface,force,pos)
     local s=M.ensure_storage()
@@ -175,6 +312,7 @@ local function refresh(surface,force,pos)
         position=pos,radius=SPAN*2+2,name={POLE,SUB},force=force}) do
         if e.valid and s.nodes[e.unit_number] then
             register(s,e);touched[e.unit_number]=e
+        if e.name==POLE then render_sprite(s,e) end
         end
     end
     -- A touched pole may have a feeder from a substation just outside
@@ -193,9 +331,6 @@ local function refresh(surface,force,pos)
     for id,e in pairs(additional) do
         register(s,e);touched[id]=e
     end
-    for _,e in pairs(touched) do
-        if e.name==POLE then visuals.update_arm(s,e) end
-    end
     local stale={}
     for key,edge in pairs(s.edges) do
         if touched[edge.a] or touched[edge.b] then stale[#stale+1]=key end
@@ -206,22 +341,20 @@ end
 function M.rebuild_all()
     local s=M.ensure_storage()
     for key in pairs(s.edges) do delete_edge(s,key) end
-    visuals.clear_arms(s)
-    s.nodes={};s.edges={};s.rail_queue={};s.arm_renders={}
+    for id in pairs(s.sprites) do clear_sprite(s,id) end
+    s.nodes={};s.edges={};s.rail_queue={};s.sprites={}
     local all={}
     for _,surface in pairs(game.surfaces) do
         for _,e in pairs(surface.find_entities_filtered{name={POLE,SUB}}) do
             if e.valid and e.unit_number then
                 register(s,e);all[e.unit_number]=e
+                if e.name==POLE then render_sprite(s,e) end
             end
         end
     end
     s.version=3
-    for _,e in pairs(all) do
-        if e.name==POLE then visuals.update_arm(s,e) end
-    end
     build_edges(s,all)
-    log("[ElectrifiedMainline][35kv] rebuilt visual graph (schema 2)")
+    log("[ElectrifiedMainline][35kv] rebuilt rail-following visual graph (schema 3)")
 end
 function M.on_built(event)
     local e=event.entity
@@ -239,7 +372,7 @@ function M.on_removed(event)
     if not (e and e.valid and (e.name==POLE or e.name==SUB)) then return end
     local s=M.ensure_storage()
     s.nodes[e.unit_number]=nil
-    visuals.delete_arm(s,e.unit_number)
+    clear_sprite(s,e.unit_number)
     local stale={}
     for key,edge in pairs(s.edges) do
         if edge.a==e.unit_number or edge.b==e.unit_number then
@@ -287,19 +420,23 @@ function M.on_tick(tick)
 end
 function M.status(player)
     local s=M.ensure_storage()
-    local poles,subs,contacts,feeders,stale,arms=0,0,0,0,0,0
+    local poles,subs,contacts,feeders,stale,turns=0,0,0,0,0,0
     for id,n in pairs(s.nodes) do
         if n.name==POLE then poles=poles+1 else subs=subs+1 end
         if not resolve(s,id) then stale=stale+1 end
     end
     for _,e in pairs(s.edges) do
-        if e.kind=="contact" then contacts=contacts+1
+        if e.kind=="contact" then
+            contacts=contacts+1
+            if e.corner then turns=turns+1 end
         elseif e.kind=="feeder" then feeders=feeders+1 end
     end
-    for _ in pairs(s.arm_renders) do arms=arms+1 end
     player.print("[ElectrifiedMainline][35kv] poles="..poles..
         " substations="..subs.." contact_spans="..contacts..
-        " feeder_lines="..feeders.." arm_sprites="..arms.." stale_nodes="..stale..
+        " feeder_lines="..feeders.." curved_spans="..turns..
+        " oriented_sprites="..tostring(s.sprites and (function()
+            local count=0;for _ in pairs(s.sprites) do count=count+1 end
+            return count end)() or 0).." stale_nodes="..stale..
         " energized=NO transfer_MW=0 (visual only)")
 end
 return M

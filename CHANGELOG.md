@@ -1,3 +1,10 @@
+## 0.1.13 (user-archive recovery; experimental visual baseline)
+
+- Imported the exact user-supplied 0.1.13 mod payload into isolated `feature/catenary-visuals-014`, preserving 12 original PNGs and the eight-facing rail-aware runtime.
+- The only 0.1.12 -> 0.1.13 source hotfix limits invisible pole `connection_points` to one to match `direction_count=1`; no change to signal logic, rail Upgrade Planner, Undo or real energy transfer.
+- Added immutable per-file SHA-256 manifest and source/ZIP validation; next art revisions must use a new version (0.1.14).
+- This is a source recovery and static QA milestone, **not** a Factorio 2.1.20 gameplay certification.
+
 ## 0.1.12 (experimental graphics branch)
 
 - Mast remains upright while a separate rendered cantilever aims automatically toward nearest high-speed rail. No manual R or signal entity.
