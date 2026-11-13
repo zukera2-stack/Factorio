@@ -28,7 +28,10 @@ class PreparationTests(unittest.TestCase):
         with Image.open(output) as im:
             alpha=im.getchannel("A")
             self.assertGreater(alpha.getpixel((75,250)),32)
-            self.assertGreater(alpha.getpixel((170,90)),32)
+            # Resizing moves the arm vertically; inspect a band, not one fixed pixel.
+            arm=sum(alpha.getpixel((x,y))>=32 for y in range(60,150)
+                    for x in range(155,230))
+            self.assertGreater(arm,100)
             self.assertLess(alpha.getpixel((40,90)),32)
 
     def test_opaque_raw_art_rejected(self):

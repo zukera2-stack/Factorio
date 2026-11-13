@@ -424,3 +424,5 @@ sprite_pipeline_0111:
   generated_pole_orientation: right_only
   left_hand_and_rotated_variants: pending
   geometry_qa: pending_ci
+  geometry_first_ci: failed_run_43388513885_one_brittle_pixel_test
+  geometry_regression_test_fix: check_upper_right_arm_band_not_fixed_pixel
