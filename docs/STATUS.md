@@ -1,3 +1,5 @@
+> **0.1.11 test ZIP built:** [GitHub Actions #43410505808](https://github.com/zukera2-stack/Factorio/actions/runs/43410505808), 28 Python tests, Lua syntax, PNG atlas and ZIP verification passed. [Artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43410505808/artifacts/14029696360). Gameplay 2.1.20 still untested; final artwork not included.
+
 > **0.1.11 experimental Г-sprite game build in progress:** [test plan](SPRITE_GAME_TEST_0111.md). Four-frame mirror atlas, separate shadow, zero-copper isolation preserved; CI and actual Factorio load pending. Stable main and 0.1.10 unchanged.
 
 > **Г-shaped catenary support preview:** [22 passing QA tests](https://github.com/zukera2-stack/Factorio/actions/runs/43388634580), [updated preview artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43388634580/artifacts/14019876083). Off-centre mast anchor and one-sided arm enforced. Not yet a playable sprite replacement.

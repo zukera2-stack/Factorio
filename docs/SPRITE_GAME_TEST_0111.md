@@ -30,3 +30,7 @@ Build steps in GitHub Actions: Lua 5.2 syntax + topology tests; Pillow unit test
 ## Known limits
 
 A four-frame atlas does not guarantee that a vanilla electric pole can be manually rotated; this is the central experiment. No native Factorio 2.1.20 test is available in CI. The generated art is a technical fixture; it must not be mistaken for the polished AI illustration or production-ready game sprite.
+
+## CI evidence
+
+[GitHub Actions #43410505808](https://github.com/zukera2-stack/Factorio/actions/runs/43410505808) passed 28 Python tests, Lua syntax, topology tests and ZIP packaging. [Artifact 14029696360](https://github.com/zukera2-stack/Factorio/actions/runs/43410505808/artifacts/14029696360) is the test mod ZIP wrapper. A documentation CI version mismatch was discovered and corrected separately. This build remains gameplay-unverified.
