@@ -69,6 +69,14 @@ visual_development:
   actual_gameplay_test: pending_user_factorio_2_1_20
   exact_013_static_qa: passed
   visual_research: docs/VISUAL_BASELINE_013.md
+  rail_signal_slot_research: docs/research/catenary-rail-signal-slots-0.1.14.md
+  rail_signal_slot_api: LuaEntity.get_rail_end_LuaRailEnd_out_in_signal_locations
+  rail_signal_clone_allowed: false
+  rail_support_clone_allowed: false
+  placement_only_on_custom_hsr: proposed_user_requirement_not_implemented
+  next_technical_experiment: read_only_engine_signal_slot_visualizer
+  build_integration_and_undo: pending_game_test
+
 
 user_decisions:
   rail_modernization: replace_vanilla_rails_with_high_speed_rails
