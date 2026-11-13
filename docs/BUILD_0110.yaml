@@ -1,0 +1,27 @@
+version: "0.1.10"
+branch: feature/catenary-topology-0110
+source_commit: 60bfda99d29e2960a01c1192d26eea0c434eaca7
+parent_branch: feature/35kv-catenary-019
+parent_commit: f13701ae7b67f10c09e2fb96fef87c405b2b8d27
+archive_name_inside_artifact: ElectrifiedMainline_0.1.10.zip
+artifact_name: ElectrifiedMainline-test-build
+build_run: 43382092112
+build_url: https://github.com/zukera2-stack/Factorio/actions/runs/43382092112
+artifact_id: 14016553350
+artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43382092112/artifacts/14016553350
+artifact_expires_at: "2026-12-13T06:55:56Z"
+artifact_wrapper_sha256: b00c4a51b5c3c3a8e8211be0d6aff0257c64a9380ec481e6b176b18769e2b0e9
+archive_inner_sha256: not_calculated
+artifact_file_count: 1
+lua_syntax: passed
+pure_lua_geometry_unit_tests: passed
+zip_integrity: passed
+docs_run: 43382163410
+docs_result: passed
+factorio_load: not_tested
+old_save_migration: not_tested
+visual_spans_and_feeder: not_tested
+copper_network_isolation: not_tested
+rail_upgrade_undo_regression: not_tested
+energy_transfer: not_implemented
+warning: "Artifact wrapper SHA is not the inner mod ZIP SHA. Automated CI does not prove Factorio gameplay."

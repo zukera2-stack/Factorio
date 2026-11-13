@@ -1,3 +1,5 @@
+> **CI passed for 0.1.10:** [one-ZIP build and Lua geometry tests](https://github.com/zukera2-stack/Factorio/actions/runs/43382092112); [docs validation](https://github.com/zukera2-stack/Factorio/actions/runs/43382163410). [Download test artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43382092112/artifacts/14016553350). Gameplay not tested; no MW transfer.
+
 > **0.1.10 experimental branch:** Corrects the 0.1.9 visual substation spiderweb with a single feeder and nearest-neighbour contact spans along a locally estimated rail axis. Includes save-graph migration, rail-change refresh and Lua geometry tests. **Gameplay unverified, energy transmission unimplemented.** See [0.1.10 test worksheet](POWER_TEST_0110.md).
 
 > **0.1.9 preliminary CI:** Lua syntax and ZIP build passed at cf49a518; documentation YAML/link validation passed at 97f35b45. Download the experimental artifact from [Actions](https://github.com/zukera2-stack/Factorio/actions/runs/43279773067). All game-play claims remain unverified, and 35kV energy transfer is intentionally disabled. See [BUILD_019.yaml](BUILD_019.yaml).

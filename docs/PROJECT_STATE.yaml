@@ -368,6 +368,12 @@ feature_catenary_topology_0110:
   electric_transfer: not_implemented
   exact_curve_geometry: not_implemented
   rail_signal_snapping: not_implemented
-  ci_status: pending
+  ci_lua_syntax_and_unit_tests: passed_run_43382092112
+  ci_zip_single_file: passed_run_43382092112
+  ci_docs: passed_run_43382163410
+  source_commit: 60bfda99d29e2960a01c1192d26eea0c434eaca7
+  archive_name: ElectrifiedMainline_0.1.10.zip
+  archive_artifact_id: 14016553350
+  build_manifest: docs/BUILD_0110.yaml
   game_test: not_run
   main_merge: prohibited_until_user_acceptance
