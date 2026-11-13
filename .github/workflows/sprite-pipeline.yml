@@ -37,6 +37,7 @@ jobs:
       - name: Build deterministic demo and Lua prototype snippet
         run: |
           python scripts/sprites/pipeline.py demo --out build/sprites/demo
+          python scripts/sprites/prepare.py --input build/sprites/demo/source/pole.png --asset pole --output build/sprites/demo/prepared-pole.png
           luac5.2 -p build/sprites/demo/prototype-snippet.lua
           python scripts/sprites/api_contract.py build/sprites/demo
           python - <<'PY'

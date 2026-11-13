@@ -387,6 +387,9 @@ sprite_pipeline_0111:
   api_docs_inspected: "2.1.24"
   exact_version_api_match: false
   source_script: scripts/sprites/pipeline.py
+  raw_art_preparation: scripts/sprites/prepare.py
+  raw_art_preparation_tests: scripts/sprites/test_prepare.py
+  source_image_generation: manual_or_external_image_model_not_automated
   manifest: art/sprites/manifest.json
   tests: scripts/sprites/test_pipeline.py
   workflow: .github/workflows/sprite-pipeline.yml
@@ -398,6 +401,7 @@ sprite_pipeline_0111:
   mod_prototypes_modified: false
   visual_graph_modified: false
   static_qa: passed_14_unit_tests_and_api_guard_run_43387041605
+  preparation_ci: pending
   api_contract_guard: scripts/sprites/api_contract.py
   api_contract_tests: scripts/sprites/test_api_contract.py
   api_contract_ci: passed_run_43387041605

@@ -21,6 +21,18 @@ python scripts/sprites/api_contract.py build/sprites/demo
 
 Inspect build/sprites/demo/preview.png and report.json. The generated Lua prototype snippet is deliberately not loaded by data.lua.
 
+## Prepare raw AI-generated art without cropping
+
+The generator or artist may provide a larger RGBA PNG, not the exact target dimensions. First normalize it with the [preparation tool](../scripts/sprites/prepare.py). This extracts the complete alpha silhouette, preserves aspect ratio, aligns the pole base to the manifest anchor, resizes with antialiasing, adds transparent margins and then runs the same QA gates. It **rejects opaque backgrounds, vertical stripes and subjects touching the source image boundary** rather than inventing missing pixels or masking a screenshot. For example:
+
+```bash
+python scripts/sprites/prepare.py --input art/raw/pole.png --asset pole --output art/sprites/source/pole.png
+python scripts/sprites/prepare.py --input art/raw/shadow.png --asset shadow --output art/sprites/source/shadow.png
+python scripts/sprites/prepare.py --input art/raw/wire.png --asset wire --output art/sprites/source/wire.png
+```
+
+The tool does not remove backgrounds or generate new art with an AI model. Art generation remains a separate manual/connected-model stage; the pipeline ensures that exported artwork meets our technical contract.
+
 ## Production source workflow
 
 Provide real **transparent RGBA PNG** source images in art/sprites/source/: pole.png (256x384), shadow.png (256x384), wire.png (512x48). No checkerboard or terrain baked into transparency. The manifest specifies alpha coverage, minimum transparent margins, pivot pixels and scale 0.5.
