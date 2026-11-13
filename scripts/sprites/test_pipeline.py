@@ -30,6 +30,24 @@ class SpriteTests(unittest.TestCase):
         second=run("demo",None,out)
         self.assertEqual(hashes,[x["output_sha256"] for x in second["assets"]])
 
+    def test_pole_has_right_only_cantilever_and_offcentre_base(self):
+        a=self.spec["assets"][0]
+        im,_=inspect(self.source/a["source"],a)
+        alpha=im.getchannel("A")
+        self.assertLess(alpha.getpixel((45,91)),32)  # no left crossarm
+        self.assertGreater(alpha.getpixel((181,92)),32)  # right cantilever
+        self.assertGreater(alpha.getpixel((75,250)),32)  # mast below arm
+        self.assertEqual(a["anchor"],[75,354])
+
+    def test_symmetric_t_crossarm_rejected(self):
+        a=self.spec["assets"][0]
+        with Image.open(self.source/a["source"]) as raw:
+            im=raw.copy()
+        ImageDraw.Draw(im).rectangle((28,86,65,97),fill=(100,110,120,255))
+        im.save(self.source/a["source"])
+        with self.assertRaisesRegex(QAError,"one-sided"):
+            inspect(self.source/a["source"],a)
+
     def test_stripes_rejected(self):
         a=self.spec["assets"][0]
         im=Image.new("RGBA",tuple(a["size"]))
@@ -82,7 +100,7 @@ class SpriteTests(unittest.TestCase):
             run("demo",None,self.root/"out",install=True)
 
     def test_shift_in_world_tiles(self):
-        self.assertEqual(shift(self.spec["assets"][0]),(0.0,-2.53125))
+        self.assertEqual(shift(self.spec["assets"][0]),(0.828125,-2.53125))
 
 if __name__=="__main__":
     unittest.main(verbosity=2)

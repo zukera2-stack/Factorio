@@ -29,6 +29,13 @@ def spec_read():
             raise QAError("dimensions outside conservative atlas limits")
         if not (0 < a["scale"] <= 1):
             raise QAError("invalid scale")
+        if a["id"] in ("pole","shadow"):
+            ax,ay=a["anchor"]
+            fx,fy=a["source_anchor_fraction"]
+            if not (0<=ax<w and 0<=ay<h and 0<fx<1 and 0<fy<1):
+                raise QAError("invalid ground anchor/source fractions")
+        if a["id"]=="pole" and a.get("geometry")!="right_cantilever":
+            raise QAError("contact support must be a right-hand Г cantilever")
         for key in ("source","output"):
             if Path(a[key]).name != a[key] or not a[key].endswith(".png"):
                 raise QAError("unsafe asset name")
@@ -96,6 +103,21 @@ def inspect(path,asset):
     colors=len({(r,g,b) for r,g,b,a in px if a>=32})
     if colors < asset["min_colors"]:
         raise QAError(asset["id"]+": flat colours")
+    if asset.get("geometry")=="right_cantilever":
+        ax,_=asset["anchor"]
+        y1,y2=asset["crossarm_band"]
+        # Heuristic: a single rightward arm, not a symmetric T/gantry.
+        left=sum(p[x,y][3]>=32 for y in range(y1,y2)
+                 for x in range(0,max(0,ax-18)))
+        right=sum(p[x,y][3]>=32 for y in range(y1,y2)
+                  for x in range(min(im.width,ax+80),im.width))
+        if left>25 or right<100:
+            raise QAError(asset["id"]+": expected one-sided right-hand Г cantilever")
+        y1,y2=asset["mast_band"]
+        mast=sum(p[x,y][3]>=32 for y in range(y1,y2)
+                 for x in range(max(0,ax-10),min(im.width,ax+11)))
+        if mast<100:
+            raise QAError(asset["id"]+": vertical mast not aligned with ground anchor")
     if "anchor" in asset:
         ax,ay=asset["anchor"]
         radius=asset["anchor_radius"]
@@ -144,28 +166,39 @@ def demo_sources(spec,folder):
     def ln(d,seq,color,width):
         d.line(points(seq),fill=color,width=round(width*S),joint="curve")
     im,d=setup(256,384)
-    d.polygon(points([(113,350),(118,42),(138,42),(143,350)]),fill=(53,65,74,255))
-    d.polygon(points([(120,345),(124,47),(130,47),(134,345)]),fill=(155,163,167,255))
+    # Single-sided Г-shaped catenary cantilever: mast at x=75, arm reaches RIGHT.
+    # The mast foot (75,354) is the entity origin, not the image centre.
+    d.polygon(points([(62,350),(65,42),(85,42),(89,350)]),fill=(53,65,74,255))
+    d.polygon(points([(69,346),(72,48),(78,48),(81,346)]),fill=(155,163,167,255))
     for y in range(60,330,25):
-        ln(d,[(116,y),(140,y+22)],(26,34,40,255),3)
-        ln(d,[(139,y),(117,y+22)],(183,189,193,255),2)
-        ln(d,[(114,y),(141,y)],(38,49,55,255),3)
-    d.polygon(points([(49,85),(207,85),(207,100),(49,100)]),fill=(61,72,81,255))
-    ln(d,[(50,89),(205,89)],(187,191,190,255),3)
-    ln(d,[(64,99),(125,142),(192,99)],(52,58,64,255),5)
-    for x in (64,100,151,189):
+        ln(d,[(64,y),(87,y+22)],(26,34,40,255),3)
+        ln(d,[(87,y),(64,y+22)],(183,189,193,255),2)
+        ln(d,[(62,y),(89,y)],(38,49,55,255),3)
+    # Rightward cantilever and diagonal structural brace; NO left crossarm.
+    d.polygon(points([(77,85),(230,85),(230,99),(77,99)]),fill=(61,72,81,255))
+    ln(d,[(79,89),(228,89)],(187,191,190,255),3)
+    ln(d,[(81,178),(162,100)],(52,58,64,255),7)
+    ln(d,[(86,175),(165,100)],(155,163,167,255),2)
+    for x in range(96,216,22):
+        ln(d,[(x,87),(x+18,97)],(37,47,52,255),2)
+        ln(d,[(x+18,87),(x,97)],(137,144,148,255),1)
+    # Porcelain insulators on the overhead arm.
+    for x in (179,219):
         d.rectangle((x*S,72*S,(x+8)*S,87*S),fill=(102,73,44,255))
         for j in range(3):
             ln(d,[(x-3,74+j*4),(x+11,74+j*4)],(191,140+j*8,72,255),2)
-    for y in range(110,345,23):
-        d.ellipse((125*S,y*S,130*S,(y+5)*S),fill=(210,208,190,255))
-    d.polygon(points([(101,349),(155,349),(149,363),(107,363)]),fill=(79,81,77,255))
-    for x in range(105,148,12):
+    # Short hanger and clamp, but no long baked-in overhead conductor.
+    ln(d,[(205,99),(205,126)],(88,96,104,255),3)
+    ln(d,[(196,127),(215,127)],(178,183,184,255),4)
+    for y in range(112,345,23):
+        d.ellipse((73*S,y*S,78*S,(y+5)*S),fill=(210,208,190,255))
+    d.polygon(points([(49,349),(104,349),(100,363),(53,363)]),fill=(79,81,77,255))
+    for x in range(52,101,12):
         ln(d,[(x,352),(x+8,360)],(225,176,45,255),4)
     im.resize((256,384),Image.Resampling.LANCZOS).save(folder/"pole.png")
     im,d=setup(256,384)
-    d.ellipse((75*S,344*S,214*S,370*S),fill=(5,7,11,85))
-    d.polygon(points([(126,350),(212,354),(205,363),(128,359)]),fill=(4,5,9,98))
+    d.ellipse((43*S,344*S,221*S,371*S),fill=(5,7,11,130))
+    d.polygon(points([(75,351),(215,354),(207,363),(74,359)]),fill=(4,5,9,98))
     im.resize((256,384),Image.Resampling.LANCZOS).save(folder/"shadow.png")
     im,d=setup(512,48)
     ln(d,[(16,24),(496,24)],(24,30,35,255),5)

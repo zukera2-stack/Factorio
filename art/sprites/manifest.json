@@ -13,7 +13,7 @@
         384
       ],
       "anchor": [
-        128,
+        75,
         354
       ],
       "anchor_radius": 12,
@@ -24,7 +24,20 @@
         0.6
       ],
       "min_soft_pixels": 20,
-      "min_colors": 15
+      "min_colors": 15,
+      "source_anchor_fraction": [
+        0.15,
+        0.97
+      ],
+      "geometry": "right_cantilever",
+      "crossarm_band": [
+        60,
+        150
+      ],
+      "mast_band": [
+        180,
+        340
+      ]
     },
     {
       "id": "shadow",
@@ -36,7 +49,7 @@
         384
       ],
       "anchor": [
-        128,
+        75,
         354
       ],
       "anchor_radius": 16,
@@ -47,7 +60,11 @@
         0.25
       ],
       "min_soft_pixels": 20,
-      "min_colors": 1
+      "min_colors": 1,
+      "source_anchor_fraction": [
+        0.2,
+        0.38
+      ]
     },
     {
       "id": "wire",

@@ -416,3 +416,11 @@ sprite_pipeline_0111:
   art_brief: docs/ART_BRIEF_35KV.md
   game_test: not_run
   main_merge: prohibited_until_art_approval_and_factorio_game_test
+
+  geometry_revision: right_hand_G_cantilever
+  previous_demo_geometry: symmetric_T_rejected
+  pole_anchor_pixels: [75, 354]
+  shadow_anchor_pixels: [75, 354]
+  generated_pole_orientation: right_only
+  left_hand_and_rotated_variants: pending
+  geometry_qa: pending_ci

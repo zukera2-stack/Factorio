@@ -30,32 +30,28 @@ def prepare_image(src: Path, asset: dict) -> Image.Image:
     cut=image.crop(bbox)
     w,h=asset["size"]
     margin=asset["min_margin"]+3
-    if asset["id"]=="pole":
+    if "source_anchor_fraction" in asset:
+        # Asymmetric Г mast: align its base, NOT the bounding-box centre.
         ax,ay=asset["anchor"]
-        bottom=ay+5
-        maxw=2*min(ax-margin,w-ax-margin)
-        maxh=bottom-margin
-    elif asset["id"]=="shadow":
-        ax,ay=asset["anchor"]
-        center_y=ay+2
-        maxw=2*min(ax-margin,w-ax-margin)
-        maxh=2*min(center_y-margin,h-margin-center_y)
+        fx,fy=asset["source_anchor_fraction"]
+        source_x=cut.width*fx
+        source_y=cut.height*fy
+        sides=((ax-margin,source_x),(w-margin-ax,cut.width-source_x),
+               (ay-margin,source_y),(h-margin-ay,cut.height-source_y))
+        factor=min(space/distance for space,distance in sides if distance>0)
     else:
-        maxw=w-2*margin
-        maxh=h-2*margin
-    factor=min(maxw/cut.width,maxh/cut.height)
+        factor=min((w-2*margin)/cut.width,(h-2*margin)/cut.height)
     if factor<=0:
         raise QAError("invalid manifest canvas/anchor")
     neww=max(1,int(cut.width*factor))
     newh=max(1,int(cut.height*factor))
     scaled=cut.resize((neww,newh),Image.Resampling.LANCZOS)
     out=Image.new("RGBA",(w,h))
-    if asset["id"]=="pole":
-        x=ax-neww//2
-        y=bottom-newh
-    elif asset["id"]=="shadow":
-        x=ax-neww//2
-        y=center_y-newh//2
+    if "source_anchor_fraction" in asset:
+        ax,ay=asset["anchor"]
+        fx,fy=asset["source_anchor_fraction"]
+        x=round(ax-neww*fx)
+        y=round(ay-newh*fy)
     else:
         x=(w-neww)//2
         y=(h-newh)//2

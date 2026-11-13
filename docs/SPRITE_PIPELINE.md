@@ -81,3 +81,7 @@ The [offline API contract checker](../scripts/sprites/api_contract.py) compares 
 ## Verified CI evidence
 
 [Sprite pipeline run #43387041605](https://github.com/zukera2-stack/Factorio/actions/runs/43387041605) passed 14 positive/negative unit tests, generated 3 RGBA PNGs, verified Lua 5.2 syntax, validated the offline Factorio sprite contract and uploaded [preview artifact 14018364046](https://github.com/zukera2-stack/Factorio/actions/runs/43387041605/artifacts/14018364046). [Docs run #43387041331](https://github.com/zukera2-stack/Factorio/actions/runs/43387041331) passed. The preview artifact is NOT a playable mod; no art has been loaded by Factorio.
+
+### Г-shaped support correction
+
+The catenary support is **one-sided, right-facing**, with its vertical mast on the left and a cantilever reaching over the tracks to the right. The prior symmetric T-shaped demo was incorrect. The pole and shadow anchors are now (75,354) on a 256x384 canvas. A silhouette QA gate rejects left-side upper crossarms and requires a substantial right-side extension. `prepare.py` aligns the source alpha-bbox anchor using manifest `source_anchor_fraction` rather than centering the whole image. A separate mirrored/rotated sprite variant is still needed for all rail directions; current `direction_count=1` cannot provide that.

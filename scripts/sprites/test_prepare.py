@@ -21,6 +21,16 @@ class PreparationTests(unittest.TestCase):
             _,stats=inspect(out,a)
             self.assertGreaterEqual(stats["margin"],a["min_margin"])
 
+    def test_asymmetric_mast_anchor_survives_preparation(self):
+        a=self.spec["assets"][0]
+        output=self.root/"pole-prepared.png"
+        prepare_file(self.source/a["source"],"pole",output)
+        with Image.open(output) as im:
+            alpha=im.getchannel("A")
+            self.assertGreater(alpha.getpixel((75,250)),32)
+            self.assertGreater(alpha.getpixel((170,90)),32)
+            self.assertLess(alpha.getpixel((40,90)),32)
+
     def test_opaque_raw_art_rejected(self):
         path=self.root/"opaque.png"
         Image.new("RGBA",(256,384),(50,60,80,255)).save(path)
