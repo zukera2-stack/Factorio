@@ -430,3 +430,25 @@ sprite_pipeline_0111:
   geometry_final_docs_ci: passed_run_43388634599
   geometry_final_artifact_id: 14019876083
   geometry_final_source_commit: 4df2b5dc0383ce4cef95a6f22acc7d432987215e
+
+sprite_game_test_0111:
+  branch: feature/catenary-sprite-game-test-0111
+  parent_branch: feature/sprite-pipeline-0111
+  parent_commit: bfcbd89fee1fd815fd1973792157d77a3667cc82
+  mod_version: "0.1.11"
+  target_game: "2.1.20"
+  api_docs_reviewed: "2.1.24"
+  experimental_sprite_generator: scripts/sprites/game_test_pack.py
+  sprite_test: scripts/sprites/test_game_test_pack.py
+  art_source: synthetic_qa_fixture_not_production
+  pole_frame_size: [512, 384]
+  pole_atlas_size: [1024, 768]
+  directions: 4
+  line_length: 2
+  frame_handedness: [right, right, left, left]
+  mast_anchor_pixels: [256, 354]
+  contact_wire_runtime: old_draw_line_unchanged
+  energy_transfer: not_implemented
+  game_test: not_run
+  ci: pending
+  main_merge: prohibited_until_user_acceptance

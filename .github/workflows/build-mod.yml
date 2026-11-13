@@ -6,6 +6,8 @@ on:
     paths:
       - "ElectrifiedMainline/**"
       - "tests/**"
+      - "scripts/sprites/**"
+      - "art/sprites/**"
       - ".github/workflows/build-mod.yml"
   pull_request:
     branches: [main]
@@ -35,6 +37,28 @@ jobs:
             luac5.2 -p "$file"
           done < <(find ElectrifiedMainline -type f -name '*.lua' -print0)
           lua5.2 tests/35kv_topology.lua
+
+      - name: Set up Python for experimental sprite atlas
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build 0.1.11 sprite atlas and run image regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          info=json.loads(Path("ElectrifiedMainline/info.json").read_text())
+          if info["version"] == "0.1.11":
+              assert Path("scripts/sprites/game_test_pack.py").is_file()
+          PY
+          if grep -q '"version": "0.1.11"' ElectrifiedMainline/info.json; then
+            python -m pip install -r scripts/sprites/requirements.txt
+            python -m unittest discover -s scripts/sprites -p 'test_*.py' -v
+            python scripts/sprites/game_test_pack.py --mode demo --mod-dir ElectrifiedMainline --out build/sprites/game-test
+          fi
 
       - name: Validate metadata and build archive
         shell: bash
@@ -87,6 +111,17 @@ jobs:
               if packaged_info != info:
                   raise SystemExit("ERROR: packaged info.json differs from source")
 
+          if info["version"] == "0.1.11":
+              expected = (
+                  "graphics/entity/35kv/pole-4dir-hr.png",
+                  "graphics/entity/35kv/pole-shadow-4dir-hr.png",
+                  "graphics/entity/35kv/contact-wire-hr.png",
+              )
+              for suffix in expected:
+                  if root + suffix not in names:
+                      raise SystemExit("ERROR: 0.1.11 sprite missing from mod ZIP: " + suffix)
+              if len([n for n in names if n.endswith("pole-4dir-hr.png")]) != 1:
+                  raise SystemExit("ERROR: duplicate pole atlas")
           print(f"Built and validated {archive}")
           print(f"Entries: {len(names)}")
           print(f"Mod: {info['name']} {info['version']} / Factorio {info['factorio_version']}")

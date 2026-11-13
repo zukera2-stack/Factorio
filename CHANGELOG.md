@@ -1,3 +1,10 @@
+## 0.1.11 (test branch only — visual sprite integration)
+
+- Experimental one-sided Г-shaped overhead contact support rendered from 4-frame right/left atlas and separate shadow.
+- Procedural QA sprite generation in GitHub Actions; final artist-approved artwork is NOT included.
+- Contact wire sprite registered but not yet drawn; existing line graph and electrical isolation preserved.
+- Factorio 2.1.20 game loading and rotation behavior not yet verified.
+
 ## 0.1.10 — contact topology correction (experimental, not released)
 
 - Correct multiple diagonal substation wires seen in the 0.1.9 game screenshot: one distinct feeder to nearest eligible support.

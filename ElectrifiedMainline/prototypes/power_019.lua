@@ -18,6 +18,24 @@ catenary.draw_copper_wires = false
 catenary.draw_circuit_wires = false
 catenary.rewire_neighbours_when_destroying = false
 flag_once(catenary, "get-by-unit-number")
+-- 0.1.11 TEST: 4-frame Г cantilever (N/E right, S/W left).
+-- Frame 512x384 at scale 0.5; foot at (256,354), so shift Y=-2.53125 tiles.
+-- Actual Factorio 2.1.20 rotation and alignment still require gameplay tests.
+local graphics = "__ElectrifiedMainline__/graphics/entity/35kv/"
+catenary.pictures = {layers = {
+    {
+        filename = graphics .. "pole-4dir-hr.png",
+        width = 512, height = 384, direction_count = 4, line_length = 2,
+        scale = 0.5, shift = {0, -2.53125}, apply_projection = false,
+    },
+    {
+        filename = graphics .. "pole-shadow-4dir-hr.png",
+        width = 512, height = 384, direction_count = 4, line_length = 2,
+        scale = 0.5, shift = {0, -2.53125}, apply_projection = false,
+        draw_as_shadow = true,
+    },
+}}
+
 
 local substation = table.deepcopy(data.raw["electric-pole"]["substation"])
 substation.name = "em-35kv-traction-substation"
@@ -28,6 +46,11 @@ flag_once(substation, "get-by-unit-number")
 
 data:extend({
     catenary, substation,
+    {
+        type = "sprite", name = "em-35kv-contact-wire-texture",
+        filename = graphics .. "contact-wire-hr.png",
+        width = 512, height = 48, scale = 0.5,
+    },
     {
         type = "item", name = "em-35kv-catenary-pole",
         icon = "__base__/graphics/icons/medium-electric-pole.png",
