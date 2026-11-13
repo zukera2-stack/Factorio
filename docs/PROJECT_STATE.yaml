@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/35kv-catenary-019
-  feature_version: "0.1.9"
-  feature_status: early_visual_prototype_awaiting_game_test
+  active_feature_branch: feature/catenary-topology-0110
+  feature_version: "0.1.10"
+  feature_status: source_implemented_awaiting_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,12 +22,12 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.9"
+  mod_version: "0.1.10"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
   user_installation_label: "2.1.20b"
-  last_state_update: "2026-11-12"
+  last_state_update: "2026-11-13"
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -349,3 +349,25 @@ feature_35kv_019:
   build_manifest: docs/BUILD_019.yaml
   game_test: not_run
   merge_to_main: prohibited_until_game_test
+
+feature_catenary_topology_0110:
+  branch: feature/catenary-topology-0110
+  parent_branch: feature/35kv-catenary-019
+  parent_commit: f13701ae7b67f10c09e2fb96fef87c405b2b8d27
+  mod_version: "0.1.10"
+  status: source_implemented_awaiting_ci_and_game_test
+  user_observed_019: placement_and_visual_lines_work; substation_diagonal_spiderweb
+  contact_topology: mutual_nearest_forward_backward_rail_aligned_max_two
+  rail_corridor: three_sample_approximation_not_connected_rail_graph
+  substation_feeder: one_nearest_eligible_pole_per_substation
+  migration: rebuild_all_on_configuration_changed_019_to_0110
+  rail_edits: queued_local_refresh_after_one_tick
+  pure_lua_tests: tests/35kv_topology.lua
+  gameplay_tests: docs/POWER_TEST_0110.md
+  research: docs/research/catenary-topology-0.1.10.md
+  electric_transfer: not_implemented
+  exact_curve_geometry: not_implemented
+  rail_signal_snapping: not_implemented
+  ci_status: pending
+  game_test: not_run
+  main_merge: prohibited_until_user_acceptance

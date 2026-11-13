@@ -1,3 +1,10 @@
+## 0.1.10 — contact topology correction (experimental, not released)
+
+- Correct multiple diagonal substation wires seen in the 0.1.9 game screenshot: one distinct feeder to nearest eligible support.
+- Contact spans connect mutually selected nearest neighbours along the estimated rail axis, at most two per pole, with corridor sampling and track-side checks.
+- Migrate existing 0.1.9 visual graph on configuration change; refresh local topology when rails are built or removed.
+- Add pure Lua geometry tests and an in-game test worksheet. No MW transfer or exact rail-signal placement.
+
 ## 0.1.9 — experimental branch (not released)
 
 - Added strictly copper-disconnected 35 kV contact support prototype and vanilla-side traction substation prototype.

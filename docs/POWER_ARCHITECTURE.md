@@ -15,3 +15,12 @@ No live rail signal clones. Signal-like placement needs a proven neutral mechani
 Future energy contract: per simulation step delivered_J <= source_debited_J * efficiency, transfer_J <= max_MW * step_seconds * 1000000, no closed-loop charging. Test separately both directions, two substations and a stranded remote outpost.
 
 Traction source remains void placeholder. Plan: overhead first, battery backup, regeneration to grid before battery. No locomotive power code in 0.1.9 phase B.
+## 0.1.10 visual topology correction
+
+Contact supports are now limited to nearest mutually selected neighbours in each direction of an approximate local rail axis, so each support has at most two contact spans. Candidate poles must lie within 16 tiles, agree on track side and axis, and have rail entities near three points between them. Straight-rail axis is inferred from direction; curved/half-diagonal axis is an approximation from rail-anchor-to-support offset. This does NOT prove continuous rail connectivity and can omit valid curved spans.
+
+Substations connect to the single closest eligible support by ONE visually distinct blue feeder line, not a pair of contact wires to every nearby support. Substation-to-substation lines are not drawn. Neither line carries actual energy.
+
+After updating an existing 0.1.9 save to 0.1.10, on_configuration_changed deletes old render objects and reconstructs the graph from existing placed entities. Construction/removal of EM rails queues a local graph refresh on the next tick, after engine removal has completed. Normal pole changes refresh locally immediately.
+
+Pure geometry is tested by tests/35kv_topology.lua. In-game geometry, multiplayer, Undo/Redo, crossings, sharp curves and save migration still need player validation.
