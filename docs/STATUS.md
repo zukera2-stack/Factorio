@@ -1,3 +1,5 @@
+> **Higher-detail optional sprite ZIP:** ChatGPT-local `ElectrifiedMainline_0.1.11.zip` uses original generated Г-art, not committed to GitHub; source Lua equals CI-verified 0.1.11. Local ZIP and alpha checks passed, game load pending. [Details](SPRITE_GAME_TEST_0111.md).
+
 > **0.1.11 test ZIP built:** [GitHub Actions #43410505808](https://github.com/zukera2-stack/Factorio/actions/runs/43410505808), 28 Python tests, Lua syntax, PNG atlas and ZIP verification passed. [Artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43410505808/artifacts/14029696360). Gameplay 2.1.20 still untested; final artwork not included.
 
 > **0.1.11 experimental Г-sprite game build in progress:** [test plan](SPRITE_GAME_TEST_0111.md). Four-frame mirror atlas, separate shadow, zero-copper isolation preserved; CI and actual Factorio load pending. Stable main and 0.1.10 unchanged.

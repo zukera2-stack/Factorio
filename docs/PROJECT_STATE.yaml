@@ -454,3 +454,7 @@ sprite_game_test_0111:
   build_artifact_id: 14029696360
   docs_ci: pending_fix_mod_version
   main_merge: prohibited_until_user_acceptance
+  local_ai_art_preview_zip: ElectrifiedMainline_0.1.11.zip
+  local_ai_art_preview_zip_sha256: de177dc3eb9a6e97bc1f3f3db3f34335a9b85a20034b073fa6f514f55276429c
+  local_ai_art_preview_in_git: false
+  local_ai_art_preview_game_test: not_run
