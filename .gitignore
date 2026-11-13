@@ -15,3 +15,6 @@ Desktop.ini
 
 # Local test artifacts
 *.orig
+
+# Generated sprite previews and staging files
+build/sprites/

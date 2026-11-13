@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-topology-0110
+  active_feature_branch: feature/sprite-pipeline-0111
   feature_version: "0.1.10"
-  feature_status: source_implemented_awaiting_game_test
+  feature_status: sprite_pipeline_qa_preview_only_pending_ci
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -377,3 +377,26 @@ feature_catenary_topology_0110:
   build_manifest: docs/BUILD_0110.yaml
   game_test: not_run
   main_merge: prohibited_until_user_acceptance
+
+sprite_pipeline_0111:
+  branch: feature/sprite-pipeline-0111
+  parent_branch: feature/catenary-topology-0110
+  parent_commit: 592253eef2af581af73a56375148696524f18856
+  mod_version_unchanged: "0.1.10"
+  target_game: "2.1.20"
+  api_docs_inspected: "2.1.24"
+  exact_version_api_match: false
+  source_script: scripts/sprites/pipeline.py
+  manifest: art/sprites/manifest.json
+  tests: scripts/sprites/test_pipeline.py
+  workflow: .github/workflows/sprite-pipeline.yml
+  guide: docs/SPRITE_PIPELINE.md
+  research: docs/research/sprite-pipeline-0.1.11.md
+  demo_assets: synthetic_fixture_not_production
+  production_art_source: not_supplied
+  generated_lua: review_only_not_loaded
+  mod_prototypes_modified: false
+  visual_graph_modified: false
+  static_qa: pending_ci
+  game_test: not_run
+  main_merge: prohibited_until_art_approval_and_factorio_game_test
