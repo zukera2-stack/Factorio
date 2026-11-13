@@ -37,13 +37,14 @@ jobs:
             luac5.2 -p "$file"
           done < <(find ElectrifiedMainline -type f -name '*.lua' -print0)
           lua5.2 tests/35kv_topology.lua
+          lua5.2 tests/35kv_curve_topology.lua
 
       - name: Set up Python for experimental sprite atlas
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Build 0.1.11 sprite atlas and run image regression tests
+      - name: Generate 0.1.12 sprite layers and test image QA
         shell: bash
         run: |
           set -euo pipefail
@@ -51,13 +52,16 @@ jobs:
           import json
           from pathlib import Path
           info=json.loads(Path("ElectrifiedMainline/info.json").read_text())
-          if info["version"] == "0.1.11":
+          if info["version"] in ("0.1.11","0.1.12"):
               assert Path("scripts/sprites/game_test_pack.py").is_file()
           PY
-          if grep -q '"version": "0.1.11"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0.1.1(1|2)"' ElectrifiedMainline/info.json; then
             python -m pip install -r scripts/sprites/requirements.txt
-            python -m unittest discover -s scripts/sprites -p 'test_*.py' -v
             python scripts/sprites/game_test_pack.py --mode demo --mod-dir ElectrifiedMainline --out build/sprites/game-test
+            if grep -q '"version": "0.1.12"' ElectrifiedMainline/info.json; then
+              python scripts/sprites/split_012.py --graphics-dir ElectrifiedMainline/graphics/entity/35kv --report build/sprites/game-test/split-012.json
+            fi
+            python -m unittest discover -s scripts/sprites -p 'test_*.py' -v
           fi
 
       - name: Validate metadata and build archive
@@ -122,6 +126,11 @@ jobs:
                       raise SystemExit("ERROR: 0.1.11 sprite missing from mod ZIP: " + suffix)
               if len([n for n in names if n.endswith("pole-4dir-hr.png")]) != 1:
                   raise SystemExit("ERROR: duplicate pole atlas")
+          if info["version"] == "0.1.12":
+              for suffix in ("pole-mast-hr.png","pole-arm-hr.png","pole-shadow-static-hr.png","contact-wire-hr.png"):
+                  name=root+"graphics/entity/35kv/"+suffix
+                  if names.count(name)!=1:
+                      raise SystemExit("ERROR: missing/duplicate 0.1.12 sprite "+name)
           print(f"Built and validated {archive}")
           print(f"Entries: {len(names)}")
           print(f"Mod: {info['name']} {info['version']} / Factorio {info['factorio_version']}")
