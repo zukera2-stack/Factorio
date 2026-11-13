@@ -1,3 +1,5 @@
+> **Sprite QA preview CI:** [first successful run #43386844327](https://github.com/zukera2-stack/Factorio/actions/runs/43386844327), 10 image tests and deterministic preview; [docs #43386901818](https://github.com/zukera2-stack/Factorio/actions/runs/43386901818) passed. Added an offline Factorio API contract guard; not a data-stage/game test.
+
 > **0.1.11-dev sprite QA preview branch:** Art source validation and reproducible preview pipeline added; playable 0.1.10 remains unchanged. Demo art is synthetic and not production quality. Real artist assets, game integration and 2.1.20 tests pending. [Sprite guide](SPRITE_PIPELINE.md) · [API research](research/sprite-pipeline-0.1.11.md).
 
 > **CI passed for 0.1.10:** [one-ZIP build and Lua geometry tests](https://github.com/zukera2-stack/Factorio/actions/runs/43382092112); [docs validation](https://github.com/zukera2-stack/Factorio/actions/runs/43382163410). [Download test artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43382092112/artifacts/14016553350). Gameplay not tested; no MW transfer.

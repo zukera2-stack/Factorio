@@ -16,6 +16,7 @@ Install Python 3.12 and Pillow, then from the repository root:
 python -m pip install -r scripts/sprites/requirements.txt
 python -m unittest discover -s scripts/sprites -p 'test_*.py' -v
 python scripts/sprites/pipeline.py demo --out build/sprites/demo
+python scripts/sprites/api_contract.py build/sprites/demo
 ```
 
 Inspect build/sprites/demo/preview.png and report.json. The generated Lua prototype snippet is deliberately not loaded by data.lua.
@@ -48,6 +49,7 @@ Production mode refuses to fall back to synthetic demo images. The install switc
 | Opaque pixels near base anchor | Floating or misregistered pole and shadow |
 | Calculated scale and shift in 32px/tile coordinates | Reproducible planned Factorio positioning |
 | Lua 5.2 syntax, SHA-256, deterministic rerun | Syntactic invalidity or nondeterministic preprocessing |
+| Offline Factorio API contract guard | Sprite paths, output hashes/dimensions, known RotatedSprite fields, source copper isolation invariants |
 
 These checks cannot certify artistic quality, visual style match, real wire sag, perspective, in-game sprite atlas loading, correct render layers, or exact Factorio 2.1.20 compatibility.
 
@@ -59,3 +61,5 @@ These checks cannot certify artistic quality, visual style match, real wire sag,
 4. Prototype textured wire spans using rendering.draw_sprite with orientation and x_scale/y_scale, verify 2/8/16-tile spans, corners, sag and clean removal. Retain working rendering.draw_line until verified.
 5. Verify existing save, blueprint, robots, Ctrl+Z/Ctrl+Y, save/reload and UPS for 100+ supports. Record screenshots and factorio-current.log.
 6. Only then publish a playable ZIP with new graphics. The CI sprite artifact is a **preview**, not a mod release.
+
+The [offline API contract checker](../scripts/sprites/api_contract.py) compares generated Lua to a known reviewed schema, checks every output PNG SHA/dimension/path, and asserts existing pole isolation fields and the old line renderer remain unchanged. It labels 2.1.24 API references separately from target 2.1.20; it is **not** an engine schema validator or a substitute for Factorio data-stage loading.

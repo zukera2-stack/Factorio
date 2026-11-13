@@ -397,6 +397,10 @@ sprite_pipeline_0111:
   generated_lua: review_only_not_loaded
   mod_prototypes_modified: false
   visual_graph_modified: false
-  static_qa: pending_ci
+  static_qa: passed_10_unit_tests_and_preview_run_43386844327
+  api_contract_guard: scripts/sprites/api_contract.py
+  api_contract_tests: scripts/sprites/test_api_contract.py
+  api_contract_ci: pending
+  docs_ci: passed_run_43386901818
   game_test: not_run
   main_merge: prohibited_until_art_approval_and_factorio_game_test

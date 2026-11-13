@@ -38,6 +38,7 @@ jobs:
         run: |
           python scripts/sprites/pipeline.py demo --out build/sprites/demo
           luac5.2 -p build/sprites/demo/prototype-snippet.lua
+          python scripts/sprites/api_contract.py build/sprites/demo
           python - <<'PY'
           import json
           from pathlib import Path
@@ -57,6 +58,7 @@ jobs:
             build/sprites/demo/ready/*.png
             build/sprites/demo/preview.png
             build/sprites/demo/report.json
+            build/sprites/demo/api-contract-report.json
             build/sprites/demo/prototype-snippet.lua
           if-no-files-found: error
           retention-days: 14
