@@ -472,5 +472,12 @@ rail_aware_catenary_012:
   graph_schema: 3
   electricity_transfer: not_implemented
   game_test: unverified
-  ci: pending
+  ci: passed_33_python_tests_lua_and_zip_43418015719
+  latest_source_sha: df9f5069ec64ccbec1fdadc46a02cc94dd3119f8
+  ci_artifact_id: 14033350683
+  ci_run_id: 43418015719
+  local_art_variant_sha256: c972337853fb6ee859c291a9ed10acc5dbc1d37d6806a3e765db973583e59eb0
+  local_art_variant_source: generated_from_previous_original_AI_pole_only_PNG_replacement
+  art_variant_lua_byte_identical_to_CI: true
+  art_variant_game_test: not_run
   main_merge: prohibited

@@ -1,3 +1,5 @@
+> **0.1.12 latest CI PASS:** [build #43418015719](https://github.com/zukera2-stack/Factorio/actions/runs/43418015719), 33 image tests, Lua geometry/syntax and ZIP validation; [artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43418015719/artifacts/14033350683). Exact 2.1.20 game loading and visually correct arm/wire rotation remain UNVERIFIED. A conversation-local higher-detail ZIP uses byte-identical Lua but three different artistic PNGs.
+
 > **0.1.12:** auto-aiming Г-cantilever and curved textured wires; zero energy transfer, signal/Undo untouched; game/CI pending. See docs/POWER_TEST_012.md.
 
 > **Higher-detail optional sprite ZIP:** ChatGPT-local `ElectrifiedMainline_0.1.11.zip` uses original generated Г-art, not committed to GitHub; source Lua equals CI-verified 0.1.11. Local ZIP and alpha checks passed, game load pending. [Details](SPRITE_GAME_TEST_0111.md).

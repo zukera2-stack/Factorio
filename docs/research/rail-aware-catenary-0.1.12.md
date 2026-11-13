@@ -40,3 +40,9 @@ For contact lines, allow ~45-degree local tangent changes (with mutual-nearest a
 - **Game:** screenshot curved track and four corner directions with supports, verify anchored arms and nonstraight wire spans, `/em-35kv-status`, robot placement/removal, save reload, rail Upgrade Planner+Undo/Redo, no altered train signals. Exact player-provided Factorio log required to mark game-tested.
 
 Implementation record and CI link to be appended after source changes.
+
+## Implementation and check results (2026-11-13)
+
+Changed: scripts/power_topology.lua (pure geometry), scripts/catenary_visuals_012.lua (script rendering), scripts/power_019.lua (lifecycle hooks and graph schema 3), prototypes/power_019.lua (static mast, separately registered arm), info.json 0.1.12, scripts/sprites/split_012.py and its negative tests, tests/35kv_curve_topology.lua. CI scripts generate PNGs reproducibly from synthetic test sprites; real art is a local byte-checked replacement of 3 PNGs only. No rail-signal or rail-chain-signal entities or prototypes introduced; physical poles keep no copper reach. Poles are not teleported/snapped and original rail Undo event handling remains untouched.
+
+Source commit df9f5069ec64ccbec1fdadc46a02cc94dd3119f8. [CI #43418015719](https://github.com/zukera2-stack/Factorio/actions/runs/43418015719) PASS with 33 Python unit tests, Lua syntax, pure Lua original and curve assertions including right-angle elbow, and single 0.1.12 mod ZIP. [Artifact 14033350683](https://github.com/zukera2-stack/Factorio/actions/runs/43418015719/artifacts/14033350683). Offline evidence only: runtime Factorio 2.1.20 and game visual/UPS/Undo are **unverified**. Some complicated switches/curved piece anchors may still need real-game geometry refinement.

@@ -17,3 +17,7 @@ Back up the 0.1.11 save. Install exactly one ElectrifiedMainline_0.1.12.zip in m
 The pole's physical position is **not** snapped/teleported like a signal, to keep native Undo stable. Rotation occurs on the *visual arm only after placement*. It is an engineering compromise, not native rail-signal alignment.
 
 Provide screenshot ZIP and factorio-current.log, plus status output. CI tests syntax/geometry/ZIP only; no actual Factorio client available during source build.
+
+## Build and artifact evidence
+
+Latest source code commit df9f5069ec64ccbec1fdadc46a02cc94dd3119f8. GitHub Actions [#43418015719](https://github.com/zukera2-stack/Factorio/actions/runs/43418015719) passed Lua syntax, original/curve geometry tests, 33 Python image QA tests, and checked the 0.1.12 ZIP sprite entries. Exactly one inner ElectrifiedMainline_0.1.12.zip in [artifact 14033350683](https://github.com/zukera2-stack/Factorio/actions/runs/43418015719/artifacts/14033350683). The optional conversation-local ZIP swaps just three PNGs for higher-detail AI-generated art and retains byte-identical Lua, info.json and other files. Its SHA256 is c972337853fb6ee859c291a9ed10acc5dbc1d37d6806a3e765db973583e59eb0. Neither the CI synthetic-art nor the local art variant has been run in the 2.1.20 game. Do not assert a real in-game rendering pass.
