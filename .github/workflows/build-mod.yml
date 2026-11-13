@@ -39,8 +39,11 @@ jobs:
             luac5.2 -p "$file"
           done < <(find ElectrifiedMainline -type f -name '*.lua' -print0)
           lua5.2 tests/35kv_topology.lua
-          if grep -q '"version": "0.1.13"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0.1.1(3|4)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/35kv_visual_013.lua
+            if grep -q '"version": "0.1.14"' ElectrifiedMainline/info.json; then
+              lua5.2 tests/35kv_slots_014.lua
+            fi
           else
             lua5.2 tests/35kv_curve_topology.lua
           fi

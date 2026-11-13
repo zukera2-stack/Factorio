@@ -6,8 +6,8 @@ project:
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
   active_feature_branch: feature/catenary-visuals-014
-  feature_version: "0.1.13"
-  feature_status: exact_uploaded_013_source_and_art_imported_static_qa_passed_gameplay_unverified
+  feature_version: "0.1.14"
+  feature_status: read_only_engine_signal_slot_diagnostic_014_static_mock_passed_gameplay_unverified
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.13"
+  mod_version: "0.1.14"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -74,7 +74,11 @@ visual_development:
   rail_signal_clone_allowed: false
   rail_support_clone_allowed: false
   placement_only_on_custom_hsr: proposed_user_requirement_not_implemented
-  next_technical_experiment: read_only_engine_signal_slot_visualizer
+  next_technical_experiment: user_factorio_test_engine_signal_slot_visualizer
+  diagnostic_command: /em-35kv-slots
+  diagnostic_mod_version: '0.1.14'
+  diagnostic_behavior: read_only_rail_slot_markers_no_placement_change
+  diagnostic_gameplay_validation: pending
   build_integration_and_undo: pending_game_test
 
 

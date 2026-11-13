@@ -1,3 +1,10 @@
+## 0.1.14 (experimental; read-only rail slot diagnostic)
+
+- Added `/em-35kv-slots` to display up to eight engine-provided signal-slot positions beside the selected or nearest ВСМ rail, with direction/layer printout and 15-second markers.
+- Added mocked Lua slot geometry test; no signal entity creation, pole snapping, native signal edits, Undo queue modifications or real electrical MW transfer.
+- HSR-only placement restriction is **not implemented** in this diagnostic version; screenshots are required to choose safe mast offsets.
+- Factorio 2.1.20 runtime testing **pending**; this is not a gameplay-certified release.
+
 ## 0.1.13 (user-archive recovery; experimental visual baseline)
 
 - Imported the exact user-supplied 0.1.13 mod payload into isolated `feature/catenary-visuals-014`, preserving 12 original PNGs and the eight-facing rail-aware runtime.

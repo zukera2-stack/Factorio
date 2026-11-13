@@ -1,0 +1,21 @@
+ElectrifiedMainline 0.1.14 — TEST ONLY / ENGINE RAIL SLOT MARKERS
+
+Purpose: read-only visualization of the Factorio engine's rail-signal placement slots
+beside custom ВСМ tracks. NO pole snapping, NO placement restriction yet.
+
+1. Install ElectrifiedMainline_0.1.14.zip in Factorio 2.1.20 (remove 0.1.13 ZIP
+   to avoid duplicate mod versions; keep a backup of your save).
+2. Open a test save with straight, half-diagonal, and both curved ВСМ rails.
+3. Point at a ВСМ rail (or stand within 10 tiles) and open console (~).
+4. Run: /em-35kv-slots
+5. Green rings = out/alternative-out positions; yellow = in/alternative-in.
+   Each ring is labeled with index and engine direction; lasts 15 seconds.
+6. Screenshot each rail shape, especially curves, and send factorio-current.log
+   if any errors appear. Repeat with a real signal beside the same rail.
+
+Important: Factorio console commands can disable achievements on a save. Use
+an expendable test save. The diagnostic does not spawn or modify entities,
+change rail signals, move poles, or alter Undo/Redo.
+
+Known limitation: the slots belong to signals, not necessarily the ideal
+mast foot position. The later mast offset must be determined from screenshots.

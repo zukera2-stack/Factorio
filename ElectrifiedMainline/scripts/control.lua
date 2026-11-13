@@ -592,3 +592,9 @@ commands.add_command("em-35kv-status", "Show 35kV test graph; no MW transfer imp
     local player = event.player_index and game.get_player(event.player_index)
     if player and player.valid then power019.status(player) end
 end)
+
+-- 0.1.14: diagnostic only. No automatic snapping, entity creation or Undo changes.
+commands.add_command("em-35kv-slots", "Mark engine rail-signal slots near a selected ВСМ rail for 15 seconds.", function(event)
+    local player = event.player_index and game.get_player(event.player_index)
+    if player and player.valid then require("scripts.rail_slot_debug_014").show(player) end
+end)
