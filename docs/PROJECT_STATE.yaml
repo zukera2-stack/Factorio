@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/catenary-visuals-014
   feature_version: "0.1.13"
-  feature_status: exact_uploaded_013_source_and_art_imported_static_qa_pending_gameplay_unverified
+  feature_status: exact_uploaded_013_source_and_art_imported_static_qa_passed_gameplay_unverified
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -51,6 +51,12 @@ latest_uploaded_archive:
   exact_graphics_files_committed: 12
   archive_manifest: docs/builds/013-payload.json
   static_verification: scripts/verify_013_payload.py
+  ci_build_run: 43452497607
+  ci_build_result: passed
+  ci_docs_run: 43452497543
+  ci_docs_result: passed
+  ci_artifact_id: 14053025333
+  ci_source_commit: 52b8aca3518f5baaa3949d15c6d6928494d31267
   next_visual_version: "0.1.14"
 
 visual_development:
@@ -61,6 +67,7 @@ visual_development:
   preserve_rail_signals: true
   electrical_MW_transfer: disabled
   actual_gameplay_test: pending_user_factorio_2_1_20
+  exact_013_static_qa: passed
   visual_research: docs/VISUAL_BASELINE_013.md
 
 user_decisions:

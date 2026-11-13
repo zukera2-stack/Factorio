@@ -45,3 +45,11 @@ User gameplay screenshots show thin-looking masts, inconsistent visual reach of 
 ## Provenance boundary
 
 All 12 PNGs in this baseline are exact user-supplied archive bytes, not newly generated artwork. The separately discussed local `EM_visual_patch_013.zip` is **not included** here. Do not mix its prototype code with this baseline without explicit comparison and a new version.
+
+## Verified CI result — 2026-11-13
+
+- Source commit: `52b8aca3518f5baaa3949d15c6d6928494d31267`.
+- [Build #43452497607](https://github.com/zukera2-stack/Factorio/actions/runs/43452497607): **PASS**; Lua 5.2 syntax, `tests/35kv_topology.lua`, `tests/35kv_visual_013.lua`, immutable payload SHA-256 checks and single-ZIP packaging.
+- [Artifact #14053025333](https://github.com/zukera2-stack/Factorio/actions/runs/43452497607/artifacts/14053025333): contains `ElectrifiedMainline_0.1.13.zip` for testing.
+- [Docs #43452497543](https://github.com/zukera2-stack/Factorio/actions/runs/43452497543): **PASS**.
+- In-game sprite alignment, curves, rail signals, native Undo/Redo and data-stage loading **remain unverified in this CI**.
