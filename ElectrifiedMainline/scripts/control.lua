@@ -5,6 +5,7 @@
 -- and tracks which custom rail segments are adjacent to custom electric poles.
 
 local power019 = require("scripts.power_019")
+local rail_slot_debug014 = require("scripts.rail_slot_debug_014")
 
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
@@ -596,5 +597,5 @@ end)
 -- 0.1.14: diagnostic only. No automatic snapping, entity creation or Undo changes.
 commands.add_command("em-35kv-slots", "Mark engine rail-signal slots near a selected ВСМ rail for 15 seconds.", function(event)
     local player = event.player_index and game.get_player(event.player_index)
-    if player and player.valid then require("scripts.rail_slot_debug_014").show(player) end
+    if player and player.valid then rail_slot_debug014.show(player) end
 end)
