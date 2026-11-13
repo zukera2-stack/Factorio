@@ -1,3 +1,5 @@
+> **Recovery 2026-11-13 (uploaded 0.1.13):** The user-supplied 0.1.13 ZIP is a **prototype connection-point count hotfix**, not the separately discussed 0.1.13 visual patch. The uploaded ZIP includes 12 graphics PNGs and a different 0.1.12 renderer not tracked in this GitHub branch. **The archive has NOT been imported or game-tested here.** Stable `main` remains 0.1.8. See [exact hashes, archive diff, screenshot review, and next steps](RECOVERY_013.md).
+
 > **0.1.12 latest CI PASS:** [build #43418015719](https://github.com/zukera2-stack/Factorio/actions/runs/43418015719), 33 image tests, Lua geometry/syntax and ZIP validation; [artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43418015719/artifacts/14033350683). Exact 2.1.20 game loading and visually correct arm/wire rotation remain UNVERIFIED. A conversation-local higher-detail ZIP uses byte-identical Lua but three different artistic PNGs.
 
 > **0.1.12:** auto-aiming Г-cantilever and curved textured wires; zero energy transfer, signal/Undo untouched; game/CI pending. See docs/POWER_TEST_012.md.

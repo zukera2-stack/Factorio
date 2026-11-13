@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/rail-aware-catenary-012
+  active_feature_branch: reconcile/catenary-013-archive
   feature_version: "0.1.12"
-  feature_status: sprite_pipeline_static_qa_passed_gameplay_unverified
+  feature_status: uploaded_013_archive_documented_not_imported_gameplay_unverified
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -35,6 +35,18 @@ project:
   research_record_template: docs/PROTOTYPE_RESEARCH_TEMPLATE.md
   research_record_directory: docs/research/
   current_status: docs/STATUS.md
+
+latest_uploaded_archive:
+  version: "0.1.13"
+  sha256: e89d803dcd87252c50786949f53bb028f64af2f9df0e6daa16b3e29fbb959174
+  archive_type: data_stage_wire_connection_point_hotfix
+  imported_into_github: false
+  graphics_tracked_in_github: false
+  screenshot_review: visual_overhead_wire_continuity_unverified
+  factorio_2_1_20_game_load: unverified_in_this_handoff
+  recovery_record: docs/RECOVERY_013.md
+  stable_main_version: "0.1.8"
+  git_source_mod_version: "0.1.12"
 
 user_decisions:
   rail_modernization: replace_vanilla_rails_with_high_speed_rails
