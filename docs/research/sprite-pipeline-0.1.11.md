@@ -46,3 +46,20 @@ The RotatedSprite documentation explicitly notes a maximum input texture width o
 - Documentation version mismatch 2.1.24 vs installed 2.1.20 remains unresolved until game load.
 - No power transfer, rail signal snapping or rail topology behavior is modified by this pipeline.
 - No third-party art or game sprite files copied.
+
+## 8. Implementation record (2026-11-13)
+
+- Source branch: feature/sprite-pipeline-0111, implementation commits 606a0706 and 536167b6.
+- Python/Pillow pipeline: scripts/sprites/pipeline.py; manifest: art/sprites/manifest.json; positive and negative tests: scripts/sprites/test_pipeline.py.
+- Offline Factorio contract guard: scripts/sprites/api_contract.py and scripts/sprites/test_api_contract.py. Checks exact generated Lua schema, PNG paths/dimensions/SHA-256, current prototype zero-copper invariants and unchanged line renderer.
+- No external code or art copied; demo fixture generated procedurally by our own code.
+- CI [#43387041605](https://github.com/zukera2-stack/Factorio/actions/runs/43387041605): **14 unit tests PASS**, deterministic 3 RGBA PNGs PASS, generated Lua syntax PASS, offline API contract PASS, preview artifact 14018364046. Documentation CI #43387041331 PASS.
+- The actual 0.1.10 mod prototypes, data.lua and runtime were not changed; source version remains 0.1.10.
+
+## 9. Game tests and conclusion
+
+- Factorio 2.1.20 data-stage load: **not run**.
+- User art approval: **not performed**; real source PNGs not supplied.
+- Contact wire sprite stretching and rendering: **not implemented**, old line renderer preserved.
+- Status: **implemented and CI-validated as offline QA pipeline only**. NOT API-confirmed for 2.1.20 and NOT game-tested.
+- Next experiment: approve actual source art, integrate pole RotatedSprite in a separate versioned game branch, load Factorio 2.1.20 and check scale/shift/shadow, then separately prototype textured wires.

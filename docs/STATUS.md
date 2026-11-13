@@ -1,3 +1,5 @@
+> **Sprite pipeline QA passed:** [CI #43387041605](https://github.com/zukera2-stack/Factorio/actions/runs/43387041605) (14 tests + Lua syntax + offline API contract); [docs #43387041331](https://github.com/zukera2-stack/Factorio/actions/runs/43387041331) passed. [Download preview](https://github.com/zukera2-stack/Factorio/actions/runs/43387041605/artifacts/14018364046). No game integration; 0.1.10 unchanged.
+
 > **Sprite QA preview CI:** [first successful run #43386844327](https://github.com/zukera2-stack/Factorio/actions/runs/43386844327), 10 image tests and deterministic preview; [docs #43386901818](https://github.com/zukera2-stack/Factorio/actions/runs/43386901818) passed. Added an offline Factorio API contract guard; not a data-stage/game test.
 
 > **0.1.11-dev sprite QA preview branch:** Art source validation and reproducible preview pipeline added; playable 0.1.10 remains unchanged. Demo art is synthetic and not production quality. Real artist assets, game integration and 2.1.20 tests pending. [Sprite guide](SPRITE_PIPELINE.md) · [API research](research/sprite-pipeline-0.1.11.md).

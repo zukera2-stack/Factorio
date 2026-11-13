@@ -63,3 +63,7 @@ These checks cannot certify artistic quality, visual style match, real wire sag,
 6. Only then publish a playable ZIP with new graphics. The CI sprite artifact is a **preview**, not a mod release.
 
 The [offline API contract checker](../scripts/sprites/api_contract.py) compares generated Lua to a known reviewed schema, checks every output PNG SHA/dimension/path, and asserts existing pole isolation fields and the old line renderer remain unchanged. It labels 2.1.24 API references separately from target 2.1.20; it is **not** an engine schema validator or a substitute for Factorio data-stage loading.
+
+## Verified CI evidence
+
+[Sprite pipeline run #43387041605](https://github.com/zukera2-stack/Factorio/actions/runs/43387041605) passed 14 positive/negative unit tests, generated 3 RGBA PNGs, verified Lua 5.2 syntax, validated the offline Factorio sprite contract and uploaded [preview artifact 14018364046](https://github.com/zukera2-stack/Factorio/actions/runs/43387041605/artifacts/14018364046). [Docs run #43387041331](https://github.com/zukera2-stack/Factorio/actions/runs/43387041331) passed. The preview artifact is NOT a playable mod; no art has been loaded by Factorio.
