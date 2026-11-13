@@ -48,8 +48,14 @@ local function ensure_storage()
     power019.ensure_storage()
 end
 
-script.on_init(ensure_storage)
-script.on_configuration_changed(ensure_storage)
+script.on_init(function()
+    ensure_storage()
+    power019.rebuild_all()
+end)
+script.on_configuration_changed(function()
+    ensure_storage()
+    power019.rebuild_all()
+end)
 
 -- Temporary diagnostics for blueprint rail replacement and undo/redo.
 -- These handlers observe events only; they do not change replacement behavior.
@@ -352,6 +358,7 @@ local function on_built(event)
     power019.on_built(event)
     if RAIL_NAMES[entity.name] then
         mark_rail(entity)
+        power019.on_rail_changed(entity)
     elseif entity.name == "em-electric-pole" then
         mark_rails_near_pole(entity)
     end
@@ -386,6 +393,7 @@ local function cleanup_train_for_entity(event)
 
     if RAIL_NAMES[entity.name] then
         unmark_rail(entity)
+        power019.on_rail_changed(entity)
     end
 end
 
@@ -505,6 +513,7 @@ local function on_tick(event)
     -- on_configuration_changed when only runtime code changed. Initialize
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
+    power019.on_tick(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end

@@ -5,6 +5,7 @@ on:
     branches: [main, diagnostic/blueprint-rail-undo, test/undo-stabilization-018, 'feature/**']
     paths:
       - "ElectrifiedMainline/**"
+      - "tests/**"
       - ".github/workflows/build-mod.yml"
   pull_request:
     branches: [main]
@@ -33,6 +34,7 @@ jobs:
           while IFS= read -r -d '' file; do
             luac5.2 -p "$file"
           done < <(find ElectrifiedMainline -type f -name '*.lua' -print0)
+          lua5.2 tests/35kv_topology.lua
 
       - name: Validate metadata and build archive
         shell: bash
