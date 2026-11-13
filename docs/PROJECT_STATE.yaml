@@ -5,8 +5,8 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/sprite-pipeline-0111
-  feature_version: "0.1.10"
+  active_feature_branch: feature/rail-aware-catenary-012
+  feature_version: "0.1.12"
   feature_status: sprite_pipeline_static_qa_passed_gameplay_unverified
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.11"
+  mod_version: "0.1.12"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -458,3 +458,19 @@ sprite_game_test_0111:
   local_ai_art_preview_zip_sha256: de177dc3eb9a6e97bc1f3f3db3f34335a9b85a20034b073fa6f514f55276429c
   local_ai_art_preview_in_git: false
   local_ai_art_preview_game_test: not_run
+
+rail_aware_catenary_012:
+  branch: feature/rail-aware-catenary-012
+  from_version: "0.1.11"
+  mod_version: "0.1.12"
+  research: docs/research/rail-aware-catenary-0.1.12.md
+  test_plan: docs/POWER_TEST_012.md
+  auto_orientation: visual_arm_facing_nearest_hsr
+  physical_support_entity: electric_pole_unchanged
+  native_signal_prototypes: untouched
+  spline_contact_lines: 8_segments_each_contact_and_messenger
+  graph_schema: 3
+  electricity_transfer: not_implemented
+  game_test: unverified
+  ci: pending
+  main_merge: prohibited

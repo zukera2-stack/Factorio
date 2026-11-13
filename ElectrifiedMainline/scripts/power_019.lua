@@ -1,6 +1,7 @@
 -- 0.1.10 rail-oriented visual contact graph; NO energy transfer.
 local M = {}
 local geometry = require("scripts.power_topology")
+local visuals = require("scripts.catenary_visuals_012")
 local POLE,SUB = "em-35kv-catenary-pole","em-35kv-traction-substation"
 local SPAN,RADIUS = 16,3
 local RAILS = {"em-high-speed-straight-rail","em-curved-high-speed-rail",
@@ -10,9 +11,10 @@ for _,name in pairs(RAILS) do RAIL_SET[name]=true end
 
 function M.ensure_storage()
     storage.em=storage.em or {}
-    storage.em.power_019=storage.em.power_019 or {version=2,nodes={},edges={},rail_queue={}}
+    storage.em.power_019=storage.em.power_019 or {version=3,nodes={},edges={},rail_queue={},arm_renders={}}
     local s=storage.em.power_019
     s.nodes=s.nodes or {};s.edges=s.edges or {};s.rail_queue=s.rail_queue or {}
+    s.arm_renders=s.arm_renders or {}
     return s
 end
 local function edge_key(a,b)
@@ -26,6 +28,7 @@ local function delete_edge(s,key)
         local o=rendering.get_object_by_id(id)
         if o and o.valid then o.destroy() end
     end
+    visuals.destroy_edge(e)
     s.edges[key]=nil
 end
 local function rail_tangent(e)
@@ -52,7 +55,11 @@ local function rail_tangent(e)
     end
     local cross=tx*dy-ty*dx
     local side=cross>0.25 and 1 or (cross < -0.25 and -1 or 0)
-    return tx,ty,side
+    local nx,ny=geometry.rail_normal(tx,ty,side,
+        e.position.x,e.position.y,best.position.x,best.position.y)
+    local dist=math.abs(nx*(best.position.x-e.position.x)
+        +ny*(best.position.y-e.position.y))
+    return tx,ty,side,nx,ny,dist
 end
 local function register(s,e)
     local id=e.unit_number
@@ -61,7 +68,7 @@ local function register(s,e)
         surface_index=e.surface.index,force_name=e.force.name,
         rail_adjacent=e.name==SUB}
     if e.name==POLE then
-        n.tx,n.ty,n.side=rail_tangent(e)
+        n.tx,n.ty,n.side,n.nx,n.ny,n.rail_offset=rail_tangent(e)
         n.rail_adjacent=n.tx~=nil
     end
     s.nodes[id]=n
@@ -76,18 +83,15 @@ local function resolve(s,id)
     end
 end
 local function corridor(surface,force,a,b)
-    for _,t in pairs({0.25,0.5,0.75}) do
-        if surface.count_entities_filtered{
-            position={x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t},
-            radius=RADIUS,name=RAILS,force=force,limit=1}==0 then
-            return false
-        end
-    end
-    return true
+    return visuals.corridor(surface,force,a,b,RAILS,RADIUS)
 end
 local function draw(s,a,b,kind)
     local key=edge_key(a.unit_number,b.unit_number)
     if s.edges[key] then return end
+    if kind=="contact" then
+        s.edges[key]=visuals.draw_contact(s,a,b)
+        return
+    end
     local first=rendering.draw_line{
         surface=a.surface,
         from={entity=a,offset={0,-0.5}},
@@ -189,6 +193,9 @@ local function refresh(surface,force,pos)
     for id,e in pairs(additional) do
         register(s,e);touched[id]=e
     end
+    for _,e in pairs(touched) do
+        if e.name==POLE then visuals.update_arm(s,e) end
+    end
     local stale={}
     for key,edge in pairs(s.edges) do
         if touched[edge.a] or touched[edge.b] then stale[#stale+1]=key end
@@ -199,7 +206,8 @@ end
 function M.rebuild_all()
     local s=M.ensure_storage()
     for key in pairs(s.edges) do delete_edge(s,key) end
-    s.nodes={};s.edges={};s.rail_queue={}
+    visuals.clear_arms(s)
+    s.nodes={};s.edges={};s.rail_queue={};s.arm_renders={}
     local all={}
     for _,surface in pairs(game.surfaces) do
         for _,e in pairs(surface.find_entities_filtered{name={POLE,SUB}}) do
@@ -208,7 +216,10 @@ function M.rebuild_all()
             end
         end
     end
-    s.version=2
+    s.version=3
+    for _,e in pairs(all) do
+        if e.name==POLE then visuals.update_arm(s,e) end
+    end
     build_edges(s,all)
     log("[ElectrifiedMainline][35kv] rebuilt visual graph (schema 2)")
 end
@@ -228,6 +239,7 @@ function M.on_removed(event)
     if not (e and e.valid and (e.name==POLE or e.name==SUB)) then return end
     local s=M.ensure_storage()
     s.nodes[e.unit_number]=nil
+    visuals.delete_arm(s,e.unit_number)
     local stale={}
     for key,edge in pairs(s.edges) do
         if edge.a==e.unit_number or edge.b==e.unit_number then
@@ -275,7 +287,7 @@ function M.on_tick(tick)
 end
 function M.status(player)
     local s=M.ensure_storage()
-    local poles,subs,contacts,feeders,stale=0,0,0,0,0
+    local poles,subs,contacts,feeders,stale,arms=0,0,0,0,0,0
     for id,n in pairs(s.nodes) do
         if n.name==POLE then poles=poles+1 else subs=subs+1 end
         if not resolve(s,id) then stale=stale+1 end
@@ -284,9 +296,10 @@ function M.status(player)
         if e.kind=="contact" then contacts=contacts+1
         elseif e.kind=="feeder" then feeders=feeders+1 end
     end
+    for _ in pairs(s.arm_renders) do arms=arms+1 end
     player.print("[ElectrifiedMainline][35kv] poles="..poles..
         " substations="..subs.." contact_spans="..contacts..
-        " feeder_lines="..feeders.." stale_nodes="..stale..
+        " feeder_lines="..feeders.." arm_sprites="..arms.." stale_nodes="..stale..
         " energized=NO transfer_MW=0 (visual only)")
 end
 return M

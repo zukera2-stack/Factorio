@@ -1,3 +1,10 @@
+## 0.1.12 (experimental graphics branch)
+
+- Mast remains upright while a separate rendered cantilever aims automatically toward nearest high-speed rail. No manual R or signal entity.
+- Contact and messenger wire textures follow a rail-oriented Hermite path through corners.
+- 35 kV is still a visual prototype; native signals, upgrade Undo, power isolation are preserved.
+- Factorio 2.1.20 game test pending.
+
 ## 0.1.11 (test branch only — visual sprite integration)
 
 - Experimental one-sided Г-shaped overhead contact support rendered from 4-frame right/left atlas and separate shadow.
