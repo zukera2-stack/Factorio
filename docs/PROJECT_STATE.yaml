@@ -423,6 +423,10 @@ sprite_pipeline_0111:
   shadow_anchor_pixels: [75, 354]
   generated_pole_orientation: right_only
   left_hand_and_rotated_variants: pending
-  geometry_qa: pending_ci
+  geometry_qa: passed_22_tests_run_43388634580
   geometry_first_ci: failed_run_43388513885_one_brittle_pixel_test
   geometry_regression_test_fix: check_upper_right_arm_band_not_fixed_pixel
+  geometry_final_ci: passed_22_tests_run_43388634580
+  geometry_final_docs_ci: passed_run_43388634599
+  geometry_final_artifact_id: 14019876083
+  geometry_final_source_commit: 4df2b5dc0383ce4cef95a6f22acc7d432987215e

@@ -85,3 +85,5 @@ The [offline API contract checker](../scripts/sprites/api_contract.py) compares 
 ### Г-shaped support correction
 
 The catenary support is **one-sided, right-facing**, with its vertical mast on the left and a cantilever reaching over the tracks to the right. The prior symmetric T-shaped demo was incorrect. The pole and shadow anchors are now (75,354) on a 256x384 canvas. A silhouette QA gate rejects left-side upper crossarms and requires a substantial right-side extension. `prepare.py` aligns the source alpha-bbox anchor using manifest `source_anchor_fraction` rather than centering the whole image. A separate mirrored/rotated sprite variant is still needed for all rail directions; current `direction_count=1` cannot provide that.
+
+**Verified correction:** [CI #43388634580](https://github.com/zukera2-stack/Factorio/actions/runs/43388634580) passed 22 tests, including an explicit symmetric T rejection and off-centre mast alignment after resizing. [New preview artifact 14019876083](https://github.com/zukera2-stack/Factorio/actions/runs/43388634580/artifacts/14019876083). This replaces the older T-shaped QA demo artifact. Game load remains unverified.
