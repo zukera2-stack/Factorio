@@ -33,7 +33,7 @@ local function delete_edge(s,key)
 end
 local function rail_tangent(e)
     local rails=e.surface.find_entities_filtered{
-        position=e.position,radius=RADIUS,name=RAILS,force=e.force}
+        position=e.position,radius=RADIUS+2,name=RAILS,force=e.force}
     local best,d2=nil,math.huge
     for _,r in pairs(rails) do
         local x,y=e.position.x-r.position.x,e.position.y-r.position.y

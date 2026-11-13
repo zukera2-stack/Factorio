@@ -13,8 +13,10 @@ function M.compatible(a,b,span)
     if abs(dot(dx,dy,a.tx,a.ty))<0.38*length
         or abs(dot(dx,dy,b.tx,b.ty))<0.38*length then return false end
     local similarity=abs(dot(a.tx,a.ty,b.tx,b.ty))
-    if similarity<0.17 then return false end
-    local lateral=similarity>0.91 and 2.5 or 7
+    -- At the final pole before a 90-degree turn and first pole after it,
+    -- tangents can be perpendicular; trust endpoint projections and the
+    -- sampled rail corridor rather than forbidding the angle outright.
+    local lateral=similarity>0.91 and 2.5 or math.max(7,0.80*length)
     if abs(cross(a.tx,a.ty,dx,dy))>lateral
         or abs(cross(b.tx,b.ty,dx,dy))>lateral then return false end
     if similarity>0.91 and a.side and b.side and a.side~=0
