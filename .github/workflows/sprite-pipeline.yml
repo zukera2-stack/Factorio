@@ -1,0 +1,62 @@
+name: Generate and QA Factorio sprite previews
+
+on:
+  push:
+    branches: ['feature/**']
+    paths:
+      - 'scripts/sprites/**'
+      - 'art/sprites/**'
+      - '.github/workflows/sprite-pipeline.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/sprites/**'
+      - 'art/sprites/**'
+      - '.github/workflows/sprite-pipeline.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sprite-qa:
+    name: Generate demo assets and reject corrupt sprites
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Pillow and Lua checker
+        run: |
+          python -m pip install -r scripts/sprites/requirements.txt
+          sudo apt-get update
+          sudo apt-get install -y lua5.2
+      - name: Run positive and negative image tests
+        run: python -m unittest discover -s scripts/sprites -p 'test_*.py' -v
+      - name: Build deterministic demo and Lua prototype snippet
+        run: |
+          python scripts/sprites/pipeline.py demo --out build/sprites/demo
+          luac5.2 -p build/sprites/demo/prototype-snippet.lua
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("build/sprites/demo/report.json").read_text())
+          assert report["status"] == "static_qa_passed_gameplay_unverified"
+          assert len(report["assets"]) == 3
+          assert report["game_test"] is False
+          assert all((Path("build/sprites/demo/ready") / a["output"]).is_file()
+                     for a in report["assets"])
+          print("3 static QA assets verified; Factorio game test NOT claimed")
+          PY
+      - name: Upload preview, not playable mod
+        uses: actions/upload-artifact@v4
+        with:
+          name: ElectrifiedMainline-sprite-QA-preview
+          path: |
+            build/sprites/demo/ready/*.png
+            build/sprites/demo/preview.png
+            build/sprites/demo/report.json
+            build/sprites/demo/prototype-snippet.lua
+          if-no-files-found: error
+          retention-days: 14

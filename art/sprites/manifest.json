@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "target_mod": "ElectrifiedMainline",
+  "target_game": "2.1.20",
+  "assets": [
+    {
+      "id": "pole",
+      "source": "pole.png",
+      "output": "pole-hr.png",
+      "kind": "entity",
+      "size": [
+        256,
+        384
+      ],
+      "anchor": [
+        128,
+        354
+      ],
+      "anchor_radius": 12,
+      "scale": 0.5,
+      "min_margin": 8,
+      "coverage": [
+        0.02,
+        0.6
+      ],
+      "min_soft_pixels": 20,
+      "min_colors": 15
+    },
+    {
+      "id": "shadow",
+      "source": "shadow.png",
+      "output": "pole-shadow-hr.png",
+      "kind": "shadow",
+      "size": [
+        256,
+        384
+      ],
+      "anchor": [
+        128,
+        354
+      ],
+      "anchor_radius": 16,
+      "scale": 0.5,
+      "min_margin": 8,
+      "coverage": [
+        0.01,
+        0.25
+      ],
+      "min_soft_pixels": 20,
+      "min_colors": 1
+    },
+    {
+      "id": "wire",
+      "source": "wire.png",
+      "output": "contact-wire-hr.png",
+      "kind": "segment",
+      "size": [
+        512,
+        48
+      ],
+      "scale": 0.5,
+      "min_margin": 8,
+      "coverage": [
+        0.02,
+        0.25
+      ],
+      "min_soft_pixels": 20,
+      "min_colors": 8
+    }
+  ]
+}
