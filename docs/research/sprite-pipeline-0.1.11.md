@@ -67,3 +67,7 @@ The RotatedSprite documentation explicitly notes a maximum input texture width o
 ## 10. QA regression discovered during AI-art preparation
 
 First preparation CI #43387247942 failed 1/18 tests: the periodic-stripe heuristic flagged a uniform opaque image because every column repeats. This was a **false positive classifier label**; the image was still invalid, but for the wrong reason. Corrected the heuristic to require at least two distinct sampled column signatures, added a dedicated regression test, and left opaque-background rejection to the separate coverage gate. Also replaced deprecated Pillow alpha getdata usage in preparation with a histogram. Re-test pending.
+
+## 11. Final offline result after classifier fix
+
+[CI #43387339441](https://github.com/zukera2-stack/Factorio/actions/runs/43387339441) passed **19 tests** and all packaging-preview stages: AI-art alpha preparation, no-crop fit, stripe-vs-uniform classification, RGBA QA, Lua syntax and offline Factorio API guard. Artifact [14018579988](https://github.com/zukera2-stack/Factorio/actions/runs/43387339441/artifacts/14018579988). [Docs #43387339420](https://github.com/zukera2-stack/Factorio/actions/runs/43387339420) passed. The failure in #43387247942 was fixed and independently retested. This is **not** evidence of an actual Factorio 2.1.20 load.

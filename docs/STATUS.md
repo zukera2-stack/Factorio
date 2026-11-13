@@ -1,3 +1,5 @@
+> **Sprite pipeline verified offline:** [CI #43387339441](https://github.com/zukera2-stack/Factorio/actions/runs/43387339441) passed 19 tests, Lua syntax and API contract guard; [QA preview](https://github.com/zukera2-stack/Factorio/actions/runs/43387339441/artifacts/14018579988). [Art brief](ART_BRIEF_35KV.md). Playable 0.1.10 remains unchanged; actual 2.1.20 load and real art not tested.
+
 > **Sprite pipeline QA passed:** [CI #43387041605](https://github.com/zukera2-stack/Factorio/actions/runs/43387041605) (14 tests + Lua syntax + offline API contract); [docs #43387041331](https://github.com/zukera2-stack/Factorio/actions/runs/43387041331) passed. [Download preview](https://github.com/zukera2-stack/Factorio/actions/runs/43387041605/artifacts/14018364046). No game integration; 0.1.10 unchanged.
 
 > **Sprite QA preview CI:** [first successful run #43386844327](https://github.com/zukera2-stack/Factorio/actions/runs/43386844327), 10 image tests and deterministic preview; [docs #43386901818](https://github.com/zukera2-stack/Factorio/actions/runs/43386901818) passed. Added an offline Factorio API contract guard; not a data-stage/game test.

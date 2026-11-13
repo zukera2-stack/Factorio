@@ -1,3 +1,5 @@
+> **Latest successful verification:** [19 tests + Lua syntax + offline API guard](https://github.com/zukera2-stack/Factorio/actions/runs/43387339441), [preview artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43387339441/artifacts/14018579988). Use the [generation brief and prompt pack](ART_BRIEF_35KV.md) to prepare actual source art; demo images are not final.
+
 # ElectrifiedMainline — sprite generation and QA pipeline
 
 **Branch:** feature/sprite-pipeline-0111. **Playable mod:** still 0.1.10, unchanged. **Target game:** Factorio 2.1.20; official API pages inspected were 2.1.24, not an exact match.

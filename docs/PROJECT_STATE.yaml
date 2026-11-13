@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/sprite-pipeline-0111
   feature_version: "0.1.10"
-  feature_status: sprite_pipeline_qa_preview_only_pending_ci
+  feature_status: sprite_pipeline_static_qa_passed_gameplay_unverified
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -401,15 +401,18 @@ sprite_pipeline_0111:
   mod_prototypes_modified: false
   visual_graph_modified: false
   static_qa: passed_14_unit_tests_and_api_guard_run_43387041605
-  preparation_ci: failed_first_run_43387247942_false_positive_uniform_opaque_detected_as_stripes
-  preparation_ci_fix: pending_retest
+  preparation_ci: passed_19_tests_run_43387339441
+  preparation_ci_fix: confirmed_passed
   regression_test: uniform_opaque_must_not_be_called_periodic_stripes
   api_contract_guard: scripts/sprites/api_contract.py
   api_contract_tests: scripts/sprites/test_api_contract.py
   api_contract_ci: passed_run_43387041605
   docs_ci: passed_run_43387041331
   source_commit: 536167b649e645e054fdeae186d88d2b5c46105c
-  qa_preview_artifact_id: 14018364046
-  qa_preview_artifact_run: 43387041605
+  qa_preview_artifact_id: 14018579988
+  qa_preview_artifact_run: 43387339441
+  docs_ci_after_preparation: passed_run_43387339420
+  latest_qa_source_commit: 5be81ac4152e6612ca2de9867329e9a5100e443a
+  art_brief: docs/ART_BRIEF_35KV.md
   game_test: not_run
   main_merge: prohibited_until_art_approval_and_factorio_game_test
