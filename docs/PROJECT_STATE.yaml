@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/catenary-geometry-016
   feature_version: "0.1.16"
-  feature_status: read_only_rail_end_mast_preview_016_implemented_static_ci_gameplay_pending
+  feature_status: read_only_rail_end_mast_preview_016_lua_ci_zip_passed_factorio_gameplay_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -116,7 +116,15 @@ visual_development:
   geometry_016_research: docs/research/catenary-rail-end-geometry-0.1.16.md
   geometry_016_test_plan: ElectrifiedMainline/TEST_GEOMETRY_016.txt
   geometry_016_test: tests/35kv_geometry_016.lua
-  geometry_016_static_ci: pending
+  geometry_016_static_ci: passed_lua52_syntax_mock_tests_and_zip
+  geometry_016_ci_run: 43586035896
+  geometry_016_ci_build_commit: 9864662d8bc41e7a35d2ba6424d2ba4d3d8c0bf3
+  geometry_016_ci_artifact_id: 14109793189
+  geometry_016_ci_artifact_name: ElectrifiedMainline-test-build
+  geometry_016_ci_artifact_inside: ElectrifiedMainline_0.1.16.zip
+  geometry_016_ci_artifact_link: https://github.com/zukera2-stack/Factorio/actions/runs/43586035896/artifacts/14109793189
+  geometry_016_install_guide: docs/TEST_INSTALL_016.md
+  geometry_016_docs_ci_implementation_run: 43586035869
   geometry_016_gameplay: pending
   geometry_016_real_placement: not_implemented
   build_integration_and_undo: pending_game_test

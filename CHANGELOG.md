@@ -1,3 +1,11 @@
+## 0.1.16 (experimental; read-only rail-end mast geometry)
+
+- Added `/em-35kv-geometry [offset] [index]` (default offset 1.5 tiles), deriving at most four symmetric mast-base candidates from **engine rail-end locations** instead of per-signal positions; exact overlaps are removed.
+- The preview draws short numbered colored rings and at most **one translucent full-size existing Г-mast SpritePrototype**, oriented toward the corresponding rail end. An optional index chooses which candidate to inspect. The colour reports only prototype collision clearance.
+- Existing `/em-35kv-slots` (0.1.14) and `/em-35kv-preview` (0.1.15) remain available for independent A/B comparison. Real rails, poles, train signals, actual placement, native Upgrade Planner/Undo/Redo, power and save storage are untouched.
+- [Research and falsification plan](docs/research/catenary-rail-end-geometry-0.1.16.md), [test worksheet](docs/TEST_INSTALL_016.md), standalone mocked Lua test and 0.1.15 regression tests are present; [CI Lua/ZIP PASS #43586035896](https://github.com/zukera2-stack/Factorio/actions/runs/43586035896). **Factorio 2.1.20 gameplay for 0.1.16 remains UNVERIFIED.**
+- Current feature branch `feature/catenary-geometry-016`, based on 0.1.15 screenshot-evidence commit `727e998`. Stable `main` unchanged.
+
 ## 0.1.15 (experimental; read-only mast position preview)
 
 - Added `/em-35kv-preview [0.5..3]` to draw L/R mast-base candidates from engine signal slots of custom ВСМ rails (default offset 1 tile).

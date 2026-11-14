@@ -4,6 +4,10 @@ A Factorio 2.1 mod project exploring high-speed railway infrastructure, an elect
 
 > **Development status: 0.1.8, game-tested baseline in `main` (PR #6 merged).** Factorio 2.1.20 build 87512: native Upgrade Planner upgraded **26 straight + 8 curved** rails with working Ctrl+Z/Ctrl+Y; Ctrl+Shift superforced blueprint overlay upgraded **14 straight + 8 curved** rails with working Undo/Redo. Experimental scripted Undo joining was removed. Half-diagonal gameplay, the separate replacement selection tool and interrupted robot jobs remain unverified; electric traction, battery, overhead transfer and regeneration are not yet implemented. See [current status](docs/STATUS.md) and [test evidence](docs/tests/undo-0.1.8-2026-11-12.md).
 
+## Experimental rail-end geometry 0.1.16 (current development)
+
+The active GitHub branch is [`feature/catenary-geometry-016`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-geometry-016) and the source mod version is **0.1.16**. The game-tested stable baseline remains **0.1.8 in `main`**. New command `/em-35kv-geometry [offset] [index]` gives up to four read-only candidate base positions from engine rail ends, with one translucent Г-shaped mast sprite at a selected collision-clear spot. No real pole placement or Undo logic changes. Static tests and ZIP packaging [passed](https://github.com/zukera2-stack/Factorio/actions/runs/43586035896); **0.1.16 game testing is pending**. For the correct two-layer ZIP download and commands, use the [0.1.16 installation/test guide](docs/TEST_INSTALL_016.md). The 0.1.15 experiment below is kept as the previous snapshot.
+
 ## Experimental build 0.1.15 (not a release)
 
 The repository has **two distinct tracks**:
