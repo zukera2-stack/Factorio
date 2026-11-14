@@ -1,7 +1,7 @@
 # ElectrifiedMainline 0.1.17 — test native rail slot corridor preview
 
 Experiment branch: feature/catenary-corridor-preview-017. Factorio 2.1.20 build 87512. Safe read-only preview; no pole placement.
-Use the GitHub Actions Build Factorio mod ZIP artifact for THIS branch. Its outer ZIP contains ElectrifiedMainline_0.1.17.zip. Place only that inner archive in Factorio/mods; remove older simultaneous copies. Backup save first.
+Verified successful ZIP build: https://github.com/zukera2-stack/Factorio/actions/runs/43595022975/artifacts/14114052350 (run #43595022975, commit e351146, artifact #14114052350). Lua mock PASS, real Factorio gameplay unverified. Use the GitHub Actions Build Factorio mod ZIP artifact for THIS branch. Its outer ZIP contains ElectrifiedMainline_0.1.17.zip. Place only that inner archive in Factorio/mods; remove older simultaneous copies. Backup save first.
 
 ## Steps
 

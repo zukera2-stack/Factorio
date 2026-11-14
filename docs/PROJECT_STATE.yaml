@@ -64,13 +64,21 @@ visual_development:
   corridor_017_branch: feature/catenary-corridor-preview-017
   corridor_017_version: '0.1.17'
   corridor_017_command: /em-35kv-corridor
-  corridor_017_status: implemented_mock_ci_pending_gameplay_unverified
+  corridor_017_status: implemented_lua52_mock_ci_and_zip_pass_gameplay_unverified
   corridor_017_algorithm: bounded_connected_hsr_rails_engine_signal_slots_read_only
   corridor_017_no_signal_proxy: true
   corridor_017_no_undo_or_build_mutation: true
   corridor_017_research: docs/research/catenary-corridor-native-slots-0.1.17.md
   corridor_017_test_plan: docs/TEST_INSTALL_017.md
   corridor_017_mock_test: tests/35kv_corridor_017.lua
+  corridor_017_source_commit: e3511464949b5b5dbf6630d3caa06cb43c01c064
+  corridor_017_ci_run: 43595022975
+  corridor_017_ci_result: success
+  corridor_017_ci_artifact_id: 14114052350
+  corridor_017_ci_archive: ElectrifiedMainline_0.1.17.zip
+  corridor_017_ci_file_count: 40
+  corridor_017_gameplay_test: unverified
+  corridor_017_build_manifest: docs/BUILD_017.yaml
   branch: feature/catenary-snap-research-017
   last_implementation_branch: feature/catenary-geometry-016
   last_implementation_commit: 9864662d8bc41e7a35d2ba6424d2ba4d3d8c0bf3
