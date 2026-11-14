@@ -61,7 +61,7 @@ Target API exact version availability varies: RailLocation docs were 2.1.20, Lua
 
 ## 7. Implementation record
 
-Pending implementation; CI, commit and game results must be filled after code is committed.
+Implemented in `ElectrifiedMainline/scripts/mast_preview_015.lua` and registered at control.lua parse time (commit `d07755c0f3491003d7bc7558b5f0c3b84c7d1d80`). Added mocked checks `tests/35kv_preview_015.lua`, test plan `TEST_PREVIEW_015.txt`, metadata version 0.1.15, CI build workflow and synchronized PROJECT_STATE/AI_CONTEXT. No external code/assets copied. Static CI and exact Factorio 2.1.20 game results must still be collected.
 
 ## 8. Game experiment
 
