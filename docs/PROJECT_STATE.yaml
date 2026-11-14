@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-native-player-build-018
-  feature_version: "0.1.18"
-  feature_status: 018_game_tested_markers_and_alt_real_pole_build_undo_unverified
+  active_feature_branch: feature/catenary-mast-art-plan-021
+  feature_version: "0.1.18" # ART PLAN ONLY; NOT a new mod ZIP
+  feature_status: art_sketches_planned_not_started_2026_11_14
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -61,6 +61,31 @@ latest_uploaded_archive:
   next_visual_version: "0.1.14"
 
 visual_development:
+  mast_art_plan_021_branch: feature/catenary-mast-art-plan-021
+  mast_art_plan_021_from: feature/catenary-native-player-build-018
+  mast_art_plan_021_parent_sha: 8883b8990663349bbd0cae60b7e00d08e3460c25
+  mast_art_plan_021_codebase_version: '0.1.18'
+  mast_art_plan_021_status: plan_approved_sketches_not_created
+  mast_art_plan_021_order:
+    - sketch_three_concepts_A_B_C
+    - user_explicitly_chooses_concept
+    - sprite_eight_directions_and_shadows
+    - static_qa_ci_and_factorio_in_game_art_test
+    - separate_catenary_contact_and_messenger_wire_visuals
+    - separate_traction_electrical_logic_last
+  mast_art_plan_021_next_action: draw_and_present_three_mast_sketches_only
+  mast_art_plan_021_user_concept_approval: pending
+  mast_art_plan_021_new_sprites_created: false
+  mast_art_plan_021_game_zip_created: false
+  mast_art_plan_021_game_art_test: not_started
+  mast_art_plan_021_full_spec: docs/ART_DIRECTION_35KV.md
+  mast_art_plan_021_chat_handoff: docs/NEXT_35KV_VISUAL.md
+  mast_art_plan_021_external_lmb_020_test_report: https://github.com/zukera2-stack/Factorio/blob/feature/catenary-item-click-probe-020/docs/tests/catenary-click-probe-0.1.20-game-fail-2026-11-14.md
+  mast_art_plan_021_rejected_capsule_gate: game_failed_020
+  mast_art_plan_021_physical_pole_lmb_anywhere: allowed
+  mast_art_plan_021_visual_wires_only_near_custom_hsr: current_code_behavior
+  mast_art_plan_021_energy_transfer: disabled_zero_MW
+  mast_art_plan_021_main_untouched: true
   cursor_018_branch: feature/catenary-native-player-build-018
   cursor_018_version: '0.1.18'
   cursor_018_status: partial_game_pass_real_pole_at_30_5_negative_17_5_alt_undo_unverified

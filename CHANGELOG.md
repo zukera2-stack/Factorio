@@ -1,3 +1,9 @@
+## 2026-11-14 — user-approved catenary mast ART DIRECTION, documentation only
+
+- Work order pinned for cross-chat continuity: **sketch concepts A/B/C first → explicit choice → 8-direction mast PNG + shadow pass → real Factorio screenshot game QA → independent contact-wire visual pass → electrical logic last**. No sprites or new ZIP in this commit.
+- New [full visual specification](docs/ART_DIRECTION_35KV.md), [short next-chat handoff](docs/NEXT_35KV_VISUAL.md), and updated `docs/AI_CONTEXT.md`, `docs/STATUS.md`, `docs/PROJECT_STATE.yaml`.
+- New planning branch `feature/catenary-mast-art-plan-021` based on game-tested 0.1.18 docs head, deliberately excluding failed 0.1.20 capsule placement experiment. Existing main 0.1.8 unchanged.
+
 ## 0.1.18 — 2026-11-14 gameplay observations (docs only)
 
 - Two user screenshots + Factorio 2.1.20 log verify colored rail-adjacent squares while holding the real 35kV pole and one Alt+LMB `build_from_cursor` construction at (30.5,-17.5), true `electric-pole` type.
