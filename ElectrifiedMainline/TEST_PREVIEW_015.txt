@@ -1,0 +1,26 @@
+ElectrifiedMainline 0.1.15 — READ-ONLY MAST POSITION PREVIEW
+Game target: Factorio 2.1.20 build 87512
+GitHub branch: feature/catenary-preview-015
+Only install 0.1.15 (remove 0.1.14 / earlier archive copies).
+
+1. Load a disposable save with custom ВСМ rails.
+2. Point cursor at one straight ВСМ rail; run /em-35kv-preview
+   Two candidate mast bases are painted around each engine signal slot:
+   L/R = left/right of signal-facing direction; green=CLEAR (collision only),
+   red=BLOCKED, magenta=API error. Line points from base TO reference slot;
+   label shows the proposed facing of the existing 8-direction cantilever art.
+   All shapes expire after 15 seconds. No mast is created.
+3. Compare /em-35kv-preview 0.5, /em-35kv-preview 1.5,
+   /em-35kv-preview 2 (let previous marks expire between calls).
+4. Repeat on half-diagonal, curved-A, curved-B custom ВСМ rail.
+5. Far from ВСМ, with only vanilla rail: expect no candidate marks.
+6. Try /em-35kv-preview 4: expect usage, no render objects.
+7. The command must not move/delete/create masts, rails, real signals,
+   ghosts, Undo or Redo actions. Existing poles and trains remain unchanged.
+
+Send screenshot for each rail type and console/log with candidate coordinates,
+face and CLEAR/BLOCKED. Identify which offset/side looks usable.
+
+IMPORTANT: This is NOT snap placement or signal geometry replacement.
+CLEAR is only Factorio's collision check. A signal slot may not be
+the correct cantilever wire target. No HSR-only build restriction yet.

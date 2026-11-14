@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-visuals-014
-  feature_version: "0.1.14"
-  feature_status: read_only_engine_signal_slot_diagnostic_014_static_mock_passed_gameplay_unverified
+  active_feature_branch: feature/catenary-preview-015
+  feature_version: "0.1.15"
+  feature_status: read_only_mast_candidate_preview_015_implemented_ci_and_gameplay_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,12 +22,12 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.14"
+  mod_version: "0.1.15"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
   user_installation_label: "2.1.20b"
-  last_state_update: "2026-11-13"
+  last_state_update: "2026-11-14"
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -60,9 +60,11 @@ latest_uploaded_archive:
   next_visual_version: "0.1.14"
 
 visual_development:
-  branch: feature/catenary-visuals-014
+  branch: feature/catenary-preview-015
+  parent_visual_branch: feature/catenary-visuals-014
+  parent_visual_commit: 9916f11758491f29d3c89a8628ae2a78d6fe39d5
   baseline: exact_user_uploaded_0_1_13
-  scope: graphics_sprite_alignment_and_wire_rendering_only
+  scope: read_only_mast_candidate_visualization
   preserve_rail_upgrade_undo_redo: true
   preserve_rail_signals: true
   electrical_MW_transfer: disabled
@@ -74,11 +76,17 @@ visual_development:
   rail_signal_clone_allowed: false
   rail_support_clone_allowed: false
   placement_only_on_custom_hsr: proposed_user_requirement_not_implemented
-  next_technical_experiment: user_factorio_test_engine_signal_slot_visualizer
+  next_technical_experiment: user_factorio_test_015_candidate_preview_on_all_four_rail_shapes
   diagnostic_command: /em-35kv-slots
   diagnostic_mod_version: '0.1.14'
   diagnostic_behavior: read_only_rail_slot_markers_no_placement_change
-  diagnostic_gameplay_validation: pending
+  diagnostic_gameplay_validation: user_screenshot_four_signal_slot_markers_on_one_rail
+  preview_command: /em-35kv-preview
+  preview_version: "0.1.15"
+  preview_offset_range_tiles: "0.5..3"
+  preview_test_plan: ElectrifiedMainline/TEST_PREVIEW_015.txt
+  preview_research: docs/research/catenary-mast-preview-0.1.15.md
+  preview_gameplay_validation: pending
   build_integration_and_undo: pending_game_test
 
 
