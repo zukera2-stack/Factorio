@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-geometry-016
+  active_feature_branch: feature/catenary-snap-research-017
   feature_version: "0.1.16"
-  feature_status: read_only_rail_end_mast_preview_016_lua_ci_zip_passed_factorio_gameplay_pending
+  feature_status: read_only_016_game_tested_straight_curves_and_017_signal_snap_research_only
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -61,7 +61,9 @@ latest_uploaded_archive:
   next_visual_version: "0.1.14"
 
 visual_development:
-  branch: feature/catenary-geometry-016
+  branch: feature/catenary-snap-research-017
+  last_implementation_branch: feature/catenary-geometry-016
+  last_implementation_commit: 9864662d8bc41e7a35d2ba6424d2ba4d3d8c0bf3
   previous_visual_branch: feature/catenary-preview-015
   previous_visual_commit: 727e998b5e4698298adc5a4f1b04c50bd5fba212
   parent_visual_branch: feature/catenary-visuals-014
@@ -125,8 +127,22 @@ visual_development:
   geometry_016_ci_artifact_link: https://github.com/zukera2-stack/Factorio/actions/runs/43586035896/artifacts/14109793189
   geometry_016_install_guide: docs/TEST_INSTALL_016.md
   geometry_016_docs_ci_implementation_run: 43586035869
-  geometry_016_gameplay: pending
+  geometry_016_gameplay: game_tested_log_11_runs_straight_curved_a_curved_b_all_clear
+  geometry_016_gameplay_log_version: 2.1.20
+  geometry_016_gameplay_build: 87512
+  geometry_016_gameplay_log_filename: factorio-current(20261114-115034).log
+  geometry_016_gameplay_screenshots: 11
+  geometry_016_gameplay_evidence: docs/tests/catenary-geometry-0.1.16-2026-11-14.md
+  geometry_016_half_diagonal_gameplay: untested
+  geometry_016_real_catenary_placement: untested_not_implemented
   geometry_016_real_placement: not_implemented
+  research_017_branch: feature/catenary-snap-research-017
+  research_017_code_changes: none
+  research_017_mod_version: '0.1.16'
+  research_017_report: docs/research/native-signal-snap-for-catenary-0.1.17.md
+  research_017_external_analogue: AudricSan_Factorio_Mods_ElectrifiedRailways_main_3c9b713_source_0.3.26
+  research_017_risk: cloned_rail_signal_proxy_affects_blocks_may_break_native_undo
+  research_017_decision: evaluate_read_only_full_corridor_slot_visualization_first
   build_integration_and_undo: pending_game_test
 
 

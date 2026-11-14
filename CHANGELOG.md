@@ -1,3 +1,9 @@
+## 0.1.17 — research only (no mod version bump or runtime changes)
+
+- Recorded full 0.1.16 game evidence: user screenshots and Factorio 2.1.20 build 87512 log confirm eleven `/em-35kv-geometry` invocations on straight, curved A/B custom rails with all 4 candidates CLEAR; half-diagonal, real pole placement, and Undo untested.
+- Inspected Factorio's native signal placement UI and the exact AudricSan Electrified Railways GPL-3.0 source analogue using a **temporary rail-signal placement proxy** followed by pole replacement. Identified risks to block semantics and native Undo/Redo; **do not introduce the proxy in our code yet**.
+- Documented safer full-track read-only signal-slot preview and future native-player-build experimental gates. Research branch `feature/catenary-snap-research-017`, **info.json and source stay 0.1.16**; `main` stays stable.
+
 ## 0.1.16 (experimental; read-only rail-end mast geometry)
 
 - Added `/em-35kv-geometry [offset] [index]` (default offset 1.5 tiles), deriving at most four symmetric mast-base candidates from **engine rail-end locations** instead of per-signal positions; exact overlaps are removed.
