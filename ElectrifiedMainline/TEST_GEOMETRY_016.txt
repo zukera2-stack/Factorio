@@ -1,0 +1,34 @@
+ElectrifiedMainline 0.1.16 — READ-ONLY RAIL-END GEOMETRY AND G-MAST GHOST TEST
+Branch: feature/catenary-geometry-016
+Game target: Factorio 2.1.20 build 87512
+Do not test in a valuable save. Install ONLY ElectrifiedMainline_0.1.16.zip.
+
+1. Point at a straight custom ВСМ rail and run:
+     /em-35kv-geometry 1.5
+   Look for at most FOUR numbered mast base rings (not 8 or 10).
+   L/R are relative to each individual rail end's heading.
+   One translucent real-size Г-mast sprite and its cyan guide line appear
+   for the nearest CLEAR candidate (to the player's position).
+2. Select a particular marker to view ONLY its mast sprite:
+     /em-35kv-geometry 1.5 1
+     /em-35kv-geometry 1.5 2
+   Wait 15 seconds between commands so the previews do not overlap.
+3. Repeat on both curved-А/Б shapes and half-diagonal HSR rails.
+4. Compare with the previous (unchanged) command:
+     /em-35kv-preview 1.5
+   This OLD command uses signal-slot origins and shows more rings.
+5. With only vanilla rails (no ВСМ in 10 tiles) the command must not draw.
+6. Invalid options: /em-35kv-geometry 0  and
+     /em-35kv-geometry 1.5 9
+   Should report an error and not draw anything.
+7. Inspect live train signals / real electric poles / Undo. The new command
+   does NOT build, move, delete, teleport or undo ANY entity.
+
+RINGS: green = can_place_entity CLEAR (collision only), red = BLOCKED,
+magenta = API_ERR. Numbering and data are in console.
+Selected candidate = * and a cyan line to the engine RAIL END reference.
+Translucent full-size mast = existing eight-facing art, NOT a placed pole.
+
+SEND: screenshots straight (H/V), both curves, half-diagonal, console or log,
+and which marked candidate/offset visually puts the G arm above the track.
+Important: do not interpret collision CLEAR as HSR-only placement permission.

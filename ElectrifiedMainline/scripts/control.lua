@@ -7,6 +7,7 @@
 local power019 = require("scripts.power_019")
 local rail_slot_debug014 = require("scripts.rail_slot_debug_014")
 local mast_preview015 = require("scripts.mast_preview_015")
+local mast_geometry016 = require("scripts.mast_geometry_016")
 
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
@@ -605,4 +606,11 @@ end)
 commands.add_command("em-35kv-preview", "Show 15-second mast position and facing candidates (optional offset 0.5..3).", function(event)
     local player = event.player_index and game.get_player(event.player_index)
     if player and player.valid then mast_preview015.show(player, event) end
+end)
+
+-- 0.1.16: visual geometry from native rail ends, one ghost sprite only.
+-- Existing rail/Undo machinery and real pole placement remain unchanged.
+commands.add_command("em-35kv-geometry", "Read-only rail-end mast candidates: [0.5..3] [index 1..4].", function(event)
+    local player = event.player_index and game.get_player(event.player_index)
+    if player and player.valid then mast_geometry016.show(player, event) end
 end)

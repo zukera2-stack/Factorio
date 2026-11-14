@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-preview-015
-  feature_version: "0.1.15"
-  feature_status: read_only_mast_candidate_preview_015_game_screenshots_straight_curved_a_curved_b_pass_geometry_unverified
+  active_feature_branch: feature/catenary-geometry-016
+  feature_version: "0.1.16"
+  feature_status: read_only_rail_end_mast_preview_016_implemented_static_ci_gameplay_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.15"
+  mod_version: "0.1.16"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -61,11 +61,13 @@ latest_uploaded_archive:
   next_visual_version: "0.1.14"
 
 visual_development:
-  branch: feature/catenary-preview-015
+  branch: feature/catenary-geometry-016
+  previous_visual_branch: feature/catenary-preview-015
+  previous_visual_commit: 727e998b5e4698298adc5a4f1b04c50bd5fba212
   parent_visual_branch: feature/catenary-visuals-014
   parent_visual_commit: 9916f11758491f29d3c89a8628ae2a78d6fe39d5
   baseline: exact_user_uploaded_0_1_13
-  scope: read_only_mast_candidate_visualization
+  scope: read_only_native_rail_end_mast_candidate_visualization
   preserve_rail_upgrade_undo_redo: true
   preserve_rail_signals: true
   electrical_MW_transfer: disabled
@@ -77,7 +79,7 @@ visual_development:
   rail_signal_clone_allowed: false
   rail_support_clone_allowed: false
   placement_only_on_custom_hsr: proposed_user_requirement_not_implemented
-  next_technical_experiment: user_factorio_test_015_candidate_preview_on_all_four_rail_shapes
+  next_technical_experiment: user_factorio_test_016_rail_end_ghost_preview_on_four_rail_shapes
   diagnostic_command: /em-35kv-slots
   diagnostic_mod_version: '0.1.14'
   diagnostic_behavior: read_only_rail_slot_markers_no_placement_change
@@ -107,6 +109,16 @@ visual_development:
   preview_screenshot_game_build: not_visible
   preview_candidate_placement_geometry: not_accepted_clear_is_collision_only
   preview_next_unverified: half_diagonal_negative_cases_undo_real_mast_arm_wire_alignment
+  geometry_016_command: /em-35kv-geometry
+  geometry_016_version: "0.1.16"
+  geometry_016_parent_commit: 727e998b5e4698298adc5a4f1b04c50bd5fba212
+  geometry_016_algorithm: two_candidates_per_native_rail_end_one_selected_translucent_real_sprite
+  geometry_016_research: docs/research/catenary-rail-end-geometry-0.1.16.md
+  geometry_016_test_plan: ElectrifiedMainline/TEST_GEOMETRY_016.txt
+  geometry_016_test: tests/35kv_geometry_016.lua
+  geometry_016_static_ci: pending
+  geometry_016_gameplay: pending
+  geometry_016_real_placement: not_implemented
   build_integration_and_undo: pending_game_test
 
 
