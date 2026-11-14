@@ -75,10 +75,10 @@ visual_development:
   click_020_research: docs/research/catenary-item-local-lmb-capsule-0.1.20.md
   click_020_test: docs/TEST_INSTALL_020.md
   click_020_mock: tests/35kv_item_lmb_capsule_020.lua
-  click_020_source_commit: 9dde1d23e02991c89dd569297da6d0c55241dbff
-  click_020_ci_run_id: 43626117619
+  click_020_source_commit: 52344275baa2d2728a89a40addecf14215ed13c0
+  click_020_ci_run_id: 43628474166
   click_020_ci_status: success
-  click_020_ci_artifact_id: 14125619952
+  click_020_ci_artifact_id: 14127098330
   click_020_ci_zip: ElectrifiedMainline_0.1.20.zip
   click_020_build_manifest: docs/BUILD_020.yaml
   click_020_no_rail_signal_proxy: true

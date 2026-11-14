@@ -2,11 +2,11 @@ name: ElectrifiedMainline
 version: "0.1.20"
 factorio_version: "2.1"
 branch: feature/catenary-item-click-probe-020
-source_sha: 9dde1d23e02991c89dd569297da6d0c55241dbff
-build_run: 43626117619
+source_sha: 52344275baa2d2728a89a40addecf14215ed13c0
+build_run: 43628474166
 build_status: success
-artifact_id: 14125619952
-artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43626117619/artifacts/14125619952
+artifact_id: 14127098330
+artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43628474166/artifacts/14127098330
 archive_inside_artifact: ElectrifiedMainline_0.1.20.zip
 lua52_syntax: pass
 mock_tests_013_to_020: pass
@@ -23,3 +23,8 @@ global_lmb_overridden: false
 item_migration: none
 stable_main_version: 0.1.8
 stable_main_modified: false
+
+locale_validation: pass
+locale_hotfix: duplicate_section_headers_ru_en_removed
+previous_broken_zip_artifact_id: 14125619952
+previous_broken_zip_cause: duplicate_locale_sections
