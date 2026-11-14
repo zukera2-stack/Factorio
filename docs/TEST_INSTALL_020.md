@@ -66,3 +66,8 @@ type, migration of saved inventory/blueprints/robots, and preventing alternative
 
 from placing the same pole outside HSR. Until then HSR-only is not enforced in mod.
 
+
+
+## Verified CI artifact
+
+**Static build: PASS**, [GitHub Actions #43626117619](https://github.com/zukera2-stack/Factorio/actions/runs/43626117619) from source commit `9dde1d23e02991c89dd569297da6d0c55241dbff`. Lua 5.2 syntax and mocked regression tests 0.1.13–0.1.20 passed; `ElectrifiedMainline_0.1.20.zip` created and verified as artifact [#14125619952](https://github.com/zukera2-stack/Factorio/actions/runs/43626117619/artifacts/14125619952). **Not yet game tested**: capsule/placement input priority and off-rail rejection.

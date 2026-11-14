@@ -3,7 +3,7 @@
 - Separate experimental **item only** `em-35kv-click-probe-020` with both `capsule_action` (non-consuming harmless instant script trigger) and `place_result` pointing to actual existing 35kV `electric-pole`. Crafted 1:1 from ordinary pole; no new world entities, rail signals, ground tiles, proxies, entity destruction/recreation or Undo injection.
 - `on_player_used_capsule` checks exact engine-native ВСМ reference green-square click, engine `LuaPlayer.can_build_from_cursor` and `build_from_cursor` for true cursor-owned building. All other items unchanged; ordinary LMB is not globally overridden.
 - **Engine action priority is unverified; if off-track click directly places pole, this hypothesis FAILS.** The existing ordinary mast item remains placeable outside ВСМ and is deliberately not migrated until proven safe. Actual in-game result required.
-- Separate 2.1.20 source research, mocked behavioral test, strict disposable save instructions and CI packaging.
+- Separate 2.1.20 source research, mocked behavioral test and strict disposable save instructions. [CI #43626117619](https://github.com/zukera2-stack/Factorio/actions/runs/43626117619) PASS (Lua 5.2 syntax, mocks, ZIP), [artifact #14125619952](https://github.com/zukera2-stack/Factorio/actions/runs/43626117619/artifacts/14125619952); game action priority still unverified.
 
 ## 0.1.18 — 2026-11-14 gameplay observations (docs only)
 

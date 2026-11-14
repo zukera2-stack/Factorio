@@ -57,3 +57,12 @@ Rollback to source 0.1.18 ZIP; stable main 0.1.8 never modified. Keep code exper
 
 ## 7. Licensing
 Uses Factorio's own base capsule structure as reference; third-party source/assets not copied.
+
+
+## 8. Implementation / static test 2026-11-14
+
+- Extra item prototype `prototypes/click_capsule_probe_020.lua`, world entity still exactly existing electric pole. `capsule_action.uses_stack=false`, instant script effect, target is a world coordinate, `place_result` references the same pole. Recipe converts exactly one real pole item to one probe item.
+- Runtime `scripts/catenary_click_020.lua` runs only on `on_player_used_capsule` for the probe item and automatically renders green/red/yellow squares while that item is held. Only clicks within the visible square (+0.09-tile margin) are accepted, and `can_build_from_cursor` must succeed before calling `build_from_cursor`. A new log line explicitly records `count_before` and `count_after`.
+- Existing real pole item, Alt+LMB handler, prototypes, HSR rails, Upgrade Planner and Undo callbacks are unchanged. No direct create/destroy/teleport of entities; no new world entity or tile.
+- **Static build: PASS**, [GitHub Actions #43626117619](https://github.com/zukera2-stack/Factorio/actions/runs/43626117619) from source commit `9dde1d23e02991c89dd569297da6d0c55241dbff`. Lua 5.2 syntax and mocked regression tests 0.1.13–0.1.20 passed; `ElectrifiedMainline_0.1.20.zip` created and verified as artifact [#14125619952](https://github.com/zukera2-stack/Factorio/actions/runs/43626117619/artifacts/14125619952). **Not yet game tested**: capsule/placement input priority and off-rail rejection.
+- Failure criteria not waived: if LMB anywhere outside HSR places a pole by native item `place_result`, or no capsule event is fired, or genuine `build_from_cursor` refuses a capsule, reject this architecture. No final migration or release approval.
