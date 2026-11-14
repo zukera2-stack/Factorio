@@ -1,3 +1,10 @@
+## 0.1.18 — 2026-11-14 gameplay observations (docs only)
+
+- Two user screenshots + Factorio 2.1.20 log verify colored rail-adjacent squares while holding the real 35kV pole and one Alt+LMB `build_from_cursor` construction at (30.5,-17.5), true `electric-pole` type.
+- Event detail: tick 49936 shows two `on_pre_build` but one `on_built_entity`. Normal/robot pole Undo/Redo works, but Alt-built pole's Undo/Redo is still unverified because no undo action targeted its position.
+- Next isolated test: 3 poles -> exactly one Alt click -> immediate Ctrl+Z/Ctrl+Y; verify item counts and native undo event. [Full evidence](docs/tests/catenary-native-player-build-0.1.18-2026-11-14.md).
+- No new mod code/build or main changes.
+
 ## 0.1.18 — 2026-11-14 experimental Factorio-owned mast building
 
 - When the real 35 kV mast item is held, automatically paint short-lived green/amber/red ground squares from nearby native rail signal location references, normalized to the actual electric pole grid. No sparse 16-tile filter or fake rail-signal entities.
