@@ -29,3 +29,13 @@ player.surface.find_entities_filtered=function(_) return {} end
 slot.show(player)
 assert(#prints==6,'no HSR must print a message, not create a signal')
 print('0.1.14 slot diagnostic mocked geometry: PASS')
+-- Regression: Factorio forbids require() in a command callback after script parsing.
+-- The diagnostic module must be loaded once at control.lua top level.
+local control_file = assert(io.open('ElectrifiedMainline/scripts/control.lua', 'r'))
+local control_source = control_file:read('*a')
+control_file:close()
+assert(control_source:find('local rail_slot_debug014 = require("scripts.rail_slot_debug_014")', 1, true),
+  'slot diagnostic must be required at control.lua parse time')
+assert(not control_source:find('then require("scripts.rail_slot_debug_014")', 1, true),
+  'slot diagnostic must not be required from the runtime command handler')
+print('0.1.14 command callback require regression: PASS')
