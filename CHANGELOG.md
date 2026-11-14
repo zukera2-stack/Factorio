@@ -69,6 +69,14 @@
 
 # Changelog
 
+## [0.1.17] - 2026-11-14 (isolated experimental native-slot preview)
+
+- Introduce /em-35kv-corridor to draw transient collision-classified native rail-signal location markers along connected custom HSR rails (straight, curved A/B, half diagonal); no real signals, build/move/replace, inventory, MW or Undo interaction.
+- Hard caps: 128 rails and 160 unique physical slots, bounded radius 8..32; no per-tick scan. Existing diagnostics retained.
+- Add Lua 5.2 mock contract regression, build workflow integration and in-game test instructions. Static CI and in-game status must be tracked separately; gameplay unverified.
+- Stable main 0.1.8 untouched. Research: docs/research/catenary-corridor-native-slots-0.1.17.md.
+
+
 ## [0.1.8] - 2026-11-12 (test branch, Undo stabilization)
 
 - Remove experimental scripted blueprint ghost Undo joining and fixed `undo_index=1`; discard obsolete `blueprint_undo_join` storage marks. Keep native upgrade prototypes, observational event handlers, and the independent special selection-tool queue.

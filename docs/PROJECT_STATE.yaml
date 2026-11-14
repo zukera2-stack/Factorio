@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-snap-research-017
-  feature_version: "0.1.16"
-  feature_status: read_only_016_game_tested_straight_curves_and_017_signal_snap_research_only
+  active_feature_branch: feature/catenary-corridor-preview-017
+  feature_version: "0.1.17"
+  feature_status: read_only_connected_engine_slot_preview_017_implemented_gameplay_unverified
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.16"
+  mod_version: "0.1.17"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -61,6 +61,16 @@ latest_uploaded_archive:
   next_visual_version: "0.1.14"
 
 visual_development:
+  corridor_017_branch: feature/catenary-corridor-preview-017
+  corridor_017_version: '0.1.17'
+  corridor_017_command: /em-35kv-corridor
+  corridor_017_status: implemented_mock_ci_pending_gameplay_unverified
+  corridor_017_algorithm: bounded_connected_hsr_rails_engine_signal_slots_read_only
+  corridor_017_no_signal_proxy: true
+  corridor_017_no_undo_or_build_mutation: true
+  corridor_017_research: docs/research/catenary-corridor-native-slots-0.1.17.md
+  corridor_017_test_plan: docs/TEST_INSTALL_017.md
+  corridor_017_mock_test: tests/35kv_corridor_017.lua
   branch: feature/catenary-snap-research-017
   last_implementation_branch: feature/catenary-geometry-016
   last_implementation_commit: 9864662d8bc41e7a35d2ba6424d2ba4d3d8c0bf3
