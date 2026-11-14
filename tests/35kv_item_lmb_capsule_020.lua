@@ -18,7 +18,7 @@ package.loaded["scripts.catenary_cursor_018"]={
     end
 }
 local M=require("scripts.catenary_click_020")
-local surface={},force={name="player"}
+local surface,force={},{name="player"}
 local cursor={valid_for_read=true,name="em-35kv-click-probe-020",count=3}
 local count_built,draws,logs=0,{},{}
 local pl={valid=true,index=1,surface=surface,force=force,cursor_stack=cursor,
