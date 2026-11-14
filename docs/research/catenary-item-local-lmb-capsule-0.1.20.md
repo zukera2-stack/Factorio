@@ -66,3 +66,21 @@ Uses Factorio's own base capsule structure as reference; third-party source/asse
 - Existing real pole item, Alt+LMB handler, prototypes, HSR rails, Upgrade Planner and Undo callbacks are unchanged. No direct create/destroy/teleport of entities; no new world entity or tile.
 - **Static build: PASS**, [GitHub Actions #43626117619](https://github.com/zukera2-stack/Factorio/actions/runs/43626117619) from source commit `9dde1d23e02991c89dd569297da6d0c55241dbff`. Lua 5.2 syntax and mocked regression tests 0.1.13–0.1.20 passed; `ElectrifiedMainline_0.1.20.zip` created and verified as artifact [#14125619952](https://github.com/zukera2-stack/Factorio/actions/runs/43626117619/artifacts/14125619952). **Not yet game tested**: capsule/placement input priority and off-rail rejection.
 - Failure criteria not waived: if LMB anywhere outside HSR places a pole by native item `place_result`, or no capsule event is fired, or genuine `build_from_cursor` refuses a capsule, reject this architecture. No final migration or release approval.
+
+
+## 9. USER FACTORIO 2.1.20 RESULT: FALSIFIED (2026-11-14)
+
+## What was observed in the game
+
+- 0.1.20 successfully completed the data stage and locale stage, initialized and loaded the user's ВСМ save; user quit normally. Hotfix from 2026-11-14 fixed the prior fatal duplicate locale.
+- Four real `em-35kv-catenary-pole` electric-pole entity placements were logged via ordinary `on_pre_build` + `on_built_entity`:
+  - tick 47935, (-9.5,54.5)
+  - tick 49949, (3.5,2.5)
+  - tick 50503, (7.5,8.5)
+  - tick 50892, (6.5,2.5)
+- **No** `[ElectrifiedMainline][0.1.20][probe]` events or `on_player_used_capsule`-derived build attempts appear. The log alone doesn't label which cursor item generated each event; the **user explicitly reports** off-HSR build with the probe item.
+- This **falsifies the proposed safety invariant**: an item prototype having both capsule action and `place_result` is not a reliable vanilla-LMB pre-build HSR gate on Factorio 2.1.20. Likely `place_result` takes precedence on LMB (game test supports behavioral outcome, not isolated engine cause). No reason to keep developing this dual-use capsule pathway. Keep as archived experiment; NO release to main.
+
+
+
+See [game report](../tests/catenary-click-probe-0.1.20-game-fail-2026-11-14.md). Capsule plus place_result does NOT provide item-specific normal LMB HSR-only restriction in the tested game. **STOP trying to ship 0.1.20 as an HSR-placement gate.** User suggests simplifying requirement to rail-dependent contact wire visibility; existing `power_019.lua` implements this **visual** restriction, not real electricity. No production code changed.

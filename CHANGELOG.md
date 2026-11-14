@@ -1,3 +1,8 @@
+## 0.1.20 user-game verification: failed placement concept, no code changes
+
+- Fixed-locale 0.1.20 ZIP loads in Factorio 2.1.20; user confirmed normal LMB still places click-probe mast outside ВСМ. Log shows four ordinary real electric-pole builds and zero `[0.1.20][probe]` handler events.
+- Dual-use capsule + place_result pre-build gate rejected; no new release or main merge. Recommend physically free masts with contact wire rendering only along four custom ВСМ rail types (already present in code), and traction energy remains unimplemented (MW=0). [Full game-test report](docs/tests/catenary-click-probe-0.1.20-game-fail-2026-11-14.md).
+
 ## 0.1.20 locale hotfix (new CI rebuild; same version)
 
 - Fixed duplicate `[item-name]`, `[item-description]`, `[recipe-name]` section headers in Russian and English locale files introduced with click-probe item. User's Factorio 2.1.20 reported fatal `Duplicate key "item-name" in property tree at ROOT` on startup.

@@ -71,7 +71,16 @@ visual_development:
   click_020_new_items: 1
   click_020_old_mast_original_item_changed: false
   click_020_original_mast_lmb_off_hsr_possible: true
-  click_020_gameplay: unverified
+  click_020_gameplay: failed_off_hsr_lmb_place_result_bypass
+  click_020_game_evidence: docs/tests/catenary-click-probe-0.1.20-game-fail-2026-11-14.md
+  click_020_game_version: 2.1.20_build_87512
+  click_020_prototype_hypothesis: rejected
+  click_020_real_entity_built_off_hsr: confirmed_by_user
+  click_020_capsule_events_logged: 0
+  click_020_log_built_real_pole_count: 4
+  click_020_recommendation: allow_physical_mast_anywhere_only_visual_contact_network_near_hsr
+  click_020_visual_graph_rail_radius_tiles: 3
+  click_020_traction_energy_transfer: disabled_MW_0
   click_020_research: docs/research/catenary-item-local-lmb-capsule-0.1.20.md
   click_020_test: docs/TEST_INSTALL_020.md
   click_020_mock: tests/35kv_item_lmb_capsule_020.lua
