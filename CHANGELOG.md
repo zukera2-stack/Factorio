@@ -1,3 +1,9 @@
+## 0.1.17 — 2026-11-14 user game-test evidence (docs only)
+
+- Nine screenshots and Factorio 2.1.20 build 87512 log confirm nine /em-35kv-corridor invocations, zero API errors, 7-43 HSR rails per call and 30-160 native slots; two capped radius-32 views.
+- Connected curved and straight segments display reference locations; densely parallel rails show many collision-blocked positions. This is not accepted real mast placement geometry, and Undo/signalling under traffic remain unverified.
+- [Game-test report](docs/tests/catenary-corridor-0.1.17-2026-11-14.md). No code, game ZIP or main changes.
+
 ## 0.1.17 — research only (no mod version bump or runtime changes)
 
 - Recorded full 0.1.16 game evidence: user screenshots and Factorio 2.1.20 build 87512 log confirm eleven `/em-35kv-geometry` invocations on straight, curved A/B custom rails with all 4 candidates CLEAR; half-diagonal, real pole placement, and Undo untested.

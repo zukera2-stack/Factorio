@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/catenary-corridor-preview-017
   feature_version: "0.1.17"
-  feature_status: read_only_connected_engine_slot_preview_017_implemented_gameplay_unverified
+  feature_status: read_only_connected_engine_slot_preview_017_game_tested_limited_9_runs
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -64,7 +64,7 @@ visual_development:
   corridor_017_branch: feature/catenary-corridor-preview-017
   corridor_017_version: '0.1.17'
   corridor_017_command: /em-35kv-corridor
-  corridor_017_status: implemented_lua52_mock_ci_and_zip_pass_gameplay_unverified
+  corridor_017_status: game_tested_read_only_preview_9_runs_geometry_not_approved
   corridor_017_algorithm: bounded_connected_hsr_rails_engine_signal_slots_read_only
   corridor_017_no_signal_proxy: true
   corridor_017_no_undo_or_build_mutation: true
@@ -77,7 +77,15 @@ visual_development:
   corridor_017_ci_artifact_id: 14114052350
   corridor_017_ci_archive: ElectrifiedMainline_0.1.17.zip
   corridor_017_ci_file_count: 40
-  corridor_017_gameplay_test: unverified
+  corridor_017_gameplay_test: game_tested_read_only_factorio_2_1_20_build_87512
+  corridor_017_gameplay_evidence: docs/tests/catenary-corridor-0.1.17-2026-11-14.md
+  corridor_017_gameplay_screenshots: 9
+  corridor_017_gameplay_command_executions: 9
+  corridor_017_gameplay_api_errors: 0
+  corridor_017_gameplay_capped_calls: 2
+  corridor_017_mast_geometry: unverified
+  corridor_017_pole_build_undo: unverified
+  corridor_017_signal_block_invariance: unverified
   corridor_017_build_manifest: docs/BUILD_017.yaml
   branch: feature/catenary-snap-research-017
   last_implementation_branch: feature/catenary-geometry-016

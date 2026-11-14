@@ -24,3 +24,8 @@ Implementation: scripts/catenary_corridor_017.lua. On-demand /em-35kv-corridor [
 CI: Lua 5.2 parser; mocked two connected HSR rails + vanilla continuation + disconnected parallel HSR; dedupe, elevated filter, collision preflight, invalid args, negative case, immutability source guard; ZIP packaging. In-game target 2.1.20: screenshots of horizontal/vertical straight, curve A/B, half-diagonal, parallel/disconnected, crossing, occupied spot, only vanilla; record marker count and actual geometry. Compare native signal item view. Use real trains/signals to check block invariance and Ctrl+Z/Redo separately. CI is NOT an in-game test. Until tested, verdict is implemented / gameplay unverified.
 
 Rollback: switch to 0.1.16 branch/build. Stable main 0.1.8 untouched. No GPL source/assets copied.
+
+
+## 2026-11-14 gameplay result
+
+[Evidence: 9 screenshots and exact Factorio 2.1.20 log](../tests/catenary-corridor-0.1.17-2026-11-14.md) confirms read-only connected native rail slot rendering, nine calls with no API errors and two intentional 160-slot limits. Outer green and inner blocked candidate patterns on close rails show that native reference plus pole collision is useful, but it cannot establish mast base/arm geometry or desired 16-tile spacing. Verdict: read-only *reference acquisition* GAME-TESTED; actual native pole installation / Undo / signalling safety UNVERIFIED.
