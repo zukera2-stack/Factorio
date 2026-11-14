@@ -1,0 +1,33 @@
+ElectrifiedMainline 0.1.20 -- ITEM-LOCAL LEFT-CLICK FEASIBILITY TEST
+Target Factorio 2.1.20 build 87512. Source branch feature/catenary-item-click-probe-020.
+IMPORTANT: This is a risky/isolated prototype hypothesis, NOT a completed HSR-only placement release.
+The original 35kV mast item remains unchanged; it can still be placed outside HSR via normal LMB.
+
+1. Use a DISPOSABLE save copy. Do not do this on a main save.
+2. Obtain one or more existing 35kV mast items. Craft a new distinct item
+   "Клик-проба опоры 35 кВ" (recipe 1 real pole -> 1 click-probe).
+   The diagnostic item is a CAPSULE with place_result = the SAME original electric pole.
+   It is NOT a world entity / proxy / rail signal.
+3. Hold ONLY this click-probe item. It should display green/amber/red rail slot squares,
+   calculated from four custom HSR rails.
+4. FIRST click ordinary LMB on empty terrain FAR (>20 tiles) from any HSR.
+   Required PASS: no pole appears and no item disappears.
+   If an off-track real pole appears, THIS CONCEPT FAILS: the engine chose place_result
+   before capsule_action. STOP; send Factorio log and screenshot. Do not continue.
+5. If step 4 passes, click normal LMB directly on a GREEN square near custom HSR.
+   Required PASS: one original REAL "em-35kv-catenary-pole" electric-pole at center;
+   cursor stack decreases exactly by ONE; log has
+   [0.1.20][probe] BUILD_REQUEST and BUILD_RESULT.
+6. Immediately Ctrl+Z / Ctrl+Y and inspect Undo target and robot behavior.
+7. Check ordinary LMB near vanilla rails, far from all HSR, and on RED/AMBER candidate
+   squares: none should place anything from the probe item.
+8. Compare geometry on straight, curve A/B, half diagonal and branching parallel rails.
+9. If no on_player_used_capsule events / all candidate squares yellow, this is a
+   controlled FAILURE, not permission to create fake signals or scripted replacement.
+10. Send factorio-current.log and screenshots, exact cursor item count before/after.
+
+This experiment modifies NO actual pole entity, signals, rail prototypes, custom input
+bindings, terrain types, or Undo stack. It adds one test ITEM prototype, not world entities.
+If it passes, a separate version can discuss changing the existing mast item to this
+type, migration of saved inventory/blueprints/robots, and preventing alternative items
+from placing the same pole outside HSR. Until then HSR-only is not enforced in mod.

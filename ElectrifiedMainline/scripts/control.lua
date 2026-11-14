@@ -10,6 +10,7 @@ local mast_preview015 = require("scripts.mast_preview_015")
 local mast_geometry016 = require("scripts.mast_geometry_016")
 local corridor_preview017 = require("scripts.catenary_corridor_017")
 local catenary_cursor018 = require("scripts.catenary_cursor_018")
+local catenary_click020 = require("scripts.catenary_click_020")
 
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
@@ -627,7 +628,11 @@ end)
 -- Never intercept plain LMB or native Upgrade Planner/Undo callbacks.
 script.on_nth_tick(12, function(_)
     catenary_cursor018.refresh_all()
+    catenary_click020.refresh_all()
 end)
 script.on_event("em-place-catenary-native", function(event)
     catenary_cursor018.on_place(event)
 end)
+
+-- Experimental item-local vanilla capsule-use event: only probe item is handled.
+script.on_event(defines.events.on_player_used_capsule, catenary_click020.on_capsule)

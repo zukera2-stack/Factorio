@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-native-player-build-018
-  feature_version: "0.1.18"
-  feature_status: 018_game_tested_markers_and_alt_real_pole_build_undo_unverified
+  active_feature_branch: feature/catenary-item-click-probe-020
+  feature_version: "0.1.20"
+  feature_status: 020_item_local_lmb_capsule_place_result_priority_gameplay_unknown
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.18"
+  mod_version: "0.1.20"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -61,6 +61,23 @@ latest_uploaded_archive:
   next_visual_version: "0.1.14"
 
 visual_development:
+  click_020_branch: feature/catenary-item-click-probe-020
+  click_020_version: '0.1.20'
+  click_020_status: experimental_capsule_place_result_dual_use_unknown
+  click_020_item: em-35kv-click-probe-020
+  click_020_world_entity: em-35kv-catenary-pole
+  click_020_world_entity_type: electric-pole
+  click_020_new_world_entities: zero
+  click_020_new_items: 1
+  click_020_old_mast_original_item_changed: false
+  click_020_original_mast_lmb_off_hsr_possible: true
+  click_020_gameplay: unverified
+  click_020_research: docs/research/catenary-item-local-lmb-capsule-0.1.20.md
+  click_020_test: docs/TEST_INSTALL_020.md
+  click_020_mock: tests/35kv_item_lmb_capsule_020.lua
+  click_020_no_rail_signal_proxy: true
+  click_020_no_terrain_modification: true
+  click_020_no_global_lmb_custom_input: true
   cursor_018_branch: feature/catenary-native-player-build-018
   cursor_018_version: '0.1.18'
   cursor_018_status: partial_game_pass_real_pole_at_30_5_negative_17_5_alt_undo_unverified
