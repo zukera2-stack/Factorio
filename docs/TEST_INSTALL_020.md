@@ -1,3 +1,5 @@
+**0.1.20 locale load hotfix 2026-11-14:** User Factorio 2.1.20 log on Windows (21:38:34) stops after data-final-fixes with `Failed to load locale: Duplicate key "item-name" in property tree at ROOT` due to duplicate `[item-name]`, `[item-description]`, `[recipe-name]` appended in both `ru.cfg`/`en.cfg`. These sections have been consolidated in their existing blocks. Added `scripts/validate_factorio_locale.py` to CI, which rejects duplicated sections and duplicate keys. The log's `Unknown collision layer "item"` is emitted on fallback loading `core` after Factorio disabled the failed mod, not yet evidence of another defect in the mod. Core capsule/LMB code untouched; engine gameplay of the experiment still unverified. Rebuild 0.1.20 ZIP from new source, REPLACE the previous 0.1.20 ZIP completely. Do not install both; stable main 0.1.8 unchanged.
+
 # Factorio 0.1.20 item-local Left Click experiment
 
 ElectrifiedMainline 0.1.20 -- ITEM-LOCAL LEFT-CLICK FEASIBILITY TEST

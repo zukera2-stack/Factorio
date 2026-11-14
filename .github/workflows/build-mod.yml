@@ -7,6 +7,7 @@ on:
       - "ElectrifiedMainline/**"
       - "tests/**"
       - "scripts/sprites/**"
+      - "scripts/validate_factorio_locale.py"
       - "scripts/verify_013_payload.py"
       - "docs/builds/013-payload.json"
       - "art/sprites/**"
@@ -28,6 +29,12 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+
+      - name: Validate Factorio locale property trees
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/validate_factorio_locale.py
 
       - name: Validate Lua syntax
         shell: bash

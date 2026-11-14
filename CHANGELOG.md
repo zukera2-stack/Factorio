@@ -1,3 +1,9 @@
+## 0.1.20 locale hotfix (new CI rebuild; same version)
+
+- Fixed duplicate `[item-name]`, `[item-description]`, `[recipe-name]` section headers in Russian and English locale files introduced with click-probe item. User's Factorio 2.1.20 reported fatal `Duplicate key "item-name" in property tree at ROOT` on startup.
+- Added executable locale property-tree QA (`scripts/validate_factorio_locale.py`) to CI. No game logic changed; normal LMB capsule-vs-place_result priority remains unverified in-game.
+- Reinstall by replacing old 0.1.20 ZIP rather than leaving multiple ZIP copies of same mod version. Main stable remains 0.1.8.
+
 ## 0.1.20 — experimental item-local normal-LMB capsule proof
 
 - Separate experimental **item only** `em-35kv-click-probe-020` with both `capsule_action` (non-consuming harmless instant script trigger) and `place_result` pointing to actual existing 35kV `electric-pole`. Crafted 1:1 from ordinary pole; no new world entities, rail signals, ground tiles, proxies, entity destruction/recreation or Undo injection.
