@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-corridor-preview-017
-  feature_version: "0.1.17"
-  feature_status: read_only_connected_engine_slot_preview_017_game_tested_limited_9_runs
+  active_feature_branch: feature/catenary-native-player-build-018
+  feature_version: "0.1.18"
+  feature_status: experimental_real_electric_pole_build_from_cursor_018_gameplay_unverified
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.17"
+  mod_version: "0.1.18"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -61,6 +61,24 @@ latest_uploaded_archive:
   next_visual_version: "0.1.14"
 
 visual_development:
+  cursor_018_branch: feature/catenary-native-player-build-018
+  cursor_018_version: '0.1.18'
+  cursor_018_status: experimental_native_player_build_gameplay_unverified
+  cursor_018_target_factorio: 2.1.20_build_87512
+  cursor_018_cursor_input: ALT_left_mouse_button
+  cursor_018_item: em-35kv-catenary-pole
+  cursor_018_actual_entity_type: electric-pole
+  cursor_018_marker_source: LuaRailEnd_signal_locations_snapped_to_actual_pole_1x1_tile_grid
+  cursor_018_draw: short_ttl_when_actual_item_held
+  cursor_018_build_api: LuaPlayer_build_from_cursor
+  cursor_018_preflight: LuaPlayer_can_build_from_cursor
+  cursor_018_no_signal_proxy: true
+  cursor_018_no_spacing_filter: true
+  cursor_018_undo_proof: pending_gameplay
+  cursor_018_gameplay: unverified
+  cursor_018_research: docs/research/native-catenary-cursor-build-0.1.18.md
+  cursor_018_test_plan: docs/TEST_INSTALL_018.md
+  cursor_018_mock_test: tests/35kv_cursor_build_018.lua
   corridor_017_branch: feature/catenary-corridor-preview-017
   corridor_017_version: '0.1.17'
   corridor_017_command: /em-35kv-corridor

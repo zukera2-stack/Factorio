@@ -9,6 +9,7 @@ local rail_slot_debug014 = require("scripts.rail_slot_debug_014")
 local mast_preview015 = require("scripts.mast_preview_015")
 local mast_geometry016 = require("scripts.mast_geometry_016")
 local corridor_preview017 = require("scripts.catenary_corridor_017")
+local catenary_cursor018 = require("scripts.catenary_cursor_018")
 
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
@@ -620,4 +621,13 @@ end)
 commands.add_command("em-35kv-corridor", "Read-only native signal-slot markers on connected ВСМ rails: [radius 8..32].", function(event)
     local player = event.player_index and game.get_player(event.player_index)
     if player and player.valid then corridor_preview017.show(player, event) end
+end)
+
+-- 0.1.18: draw short-lived native-slot-origin squares only when actual mast held.
+-- Never intercept plain LMB or native Upgrade Planner/Undo callbacks.
+script.on_nth_tick(12, function(_)
+    catenary_cursor018.refresh_all()
+end)
+script.on_event("em-place-catenary-native", function(event)
+    catenary_cursor018.on_place(event)
 end)

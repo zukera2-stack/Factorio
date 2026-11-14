@@ -1,0 +1,43 @@
+ElectrifiedMainline 0.1.18 — REAL ELECTRIC-POLE CURSOR BUILD EXPERIMENT
+Factorio 2.1.20 build 87512 | branch feature/catenary-native-player-build-018
+Strictly experimental. Use disposable save. main remains stable 0.1.8.
+
+1. Place ElectrifiedMainline_0.1.18.zip in mods; disable older simultaneous versions.
+2. Equip the REAL item "Контактная опора 35 кВ", item em-35kv-catenary-pole.
+   Green/amber/red ground SQUARES should automatically show near your character
+   as long as this actual pole item is held. Move along ВСМ to reveal other positions.
+   No command is necessary. Wait ~0.2s for refresh.
+3. GREEN: Factorio player.can_build_from_cursor says yes for that 1x1 pole grid cell.
+   YELLOW/AMBER: surface collision is clear but Factorio cannot currently build
+     (e.g., too far from player, no permission). RED: blocked by collision.
+   MAGENTA: preflight API error, should never happen; check log if observed.
+4. With the cursor near a GREEN square, hold ALT and click LEFT MOUSE:
+   ALT+LMB invokes the game's real player.build_from_cursor at the nearest
+   engine-reference-derived pole grid center. It is the real electric-pole,
+   NOT a semaphor/rail-signal replacement or a script-created fake pole.
+   Maximum snap distance 1.25 tiles from click; no 16-tile spacing filter.
+5. Normal LMB remains Factorio's original unsnapped pole placement.
+   The Alt+LMB custom input is global for that key combination. If another
+   mod or normal game uses Alt+LMB, test carefully and report conflicts.
+6. Check exact resulting mast position, rotated Г-arm and wire geometry.
+   VERY IMPORTANT: the signal coordinate is adapted to a real pole's native
+   half-tile grid; this does not prove correct contact-wire alignment.
+7. Compare a nearby vanilla rail signal's green positions. They ARE hard-coded
+   engine signal cursor previews; our green squares ARE NOT native signal UI.
+   We use engine rail-slot coordinates + native player build API only.
+8. Check straight horizontal/vertical, curved A/B, half-diagonal, parallel,
+   crossovers, occupied sites, out of reach, vanilla-only, and no rail nearby.
+9. Place 2-3 poles with Alt+LMB; count items and verify NO SIGNALS
+   were created, poles can be mined normally, and Ctrl+Z then Ctrl+Y
+   actually undo/redo the pole placement independently of existing rails.
+   Script-built native Undo behavior is NOT assumed until the game log proves it.
+10. Confirm green Upgrade Planner, blueprint rails and their Undo/Redo unchanged.
+    Collect screenshots with held mast, resulting built pole, inventory and
+    factorio-current.log. Previous 0.1.17 /em-35kv-corridor command remains.
+
+TECHNICAL:
+  Marker sources are LuaRailEnd in/out signal positions from HSR rails only.
+  Actual build position is normalized to 1x1 electric pole tile center.
+  Masts remain electric-pole entities; no signal proxy, entity create/destroy,
+  script refunds, fake Undo records, invisible helper entities or range spacing.
+  On unsuccessful build, native player API leaves the world unchanged.
