@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/catenary-preview-015
   feature_version: "0.1.15"
-  feature_status: read_only_mast_candidate_preview_015_mocked_lua_and_build_ci_passed_gameplay_pending
+  feature_status: read_only_mast_candidate_preview_015_game_screenshots_straight_curved_a_curved_b_pass_geometry_unverified
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -69,7 +69,7 @@ visual_development:
   preserve_rail_upgrade_undo_redo: true
   preserve_rail_signals: true
   electrical_MW_transfer: disabled
-  actual_gameplay_test: pending_user_factorio_2_1_20
+  actual_gameplay_test: partial_user_screenshots_015_straight_curved_a_curved_b_exact_game_build_unverified
   exact_013_static_qa: passed
   visual_research: docs/VISUAL_BASELINE_013.md
   rail_signal_slot_research: docs/research/catenary-rail-signal-slots-0.1.14.md
@@ -101,7 +101,12 @@ visual_development:
   preview_docs_run_not_download: 43572508712
   preview_docs_ci_run: 43572508712
   preview_docs_ci_result: success
-  preview_gameplay_validation: pending
+  preview_gameplay_validation: screenshot_pass_straight_horizontal_vertical_curved_a_b_offsets_1_and_1_5
+  preview_gameplay_evidence: docs/tests/catenary-preview-0.1.15-screenshots-2026-11-14.md
+  preview_gameplay_evidence_count: 7
+  preview_screenshot_game_build: not_visible
+  preview_candidate_placement_geometry: not_accepted_clear_is_collision_only
+  preview_next_unverified: half_diagonal_negative_cases_undo_real_mast_arm_wire_alignment
   build_integration_and_undo: pending_game_test
 
 

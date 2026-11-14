@@ -9,6 +9,8 @@
 
 - Documentation correction (2026-11-14): separate stable 0.1.8 and experimental 0.1.15 in both READMEs; add [ZIP installation/test instructions](docs/TEST_INSTALL_015.md), distinguish build artifacts from documentation-only Actions and mark the archived 0.1.13 pre-import handoff as superseded. No runtime changes.
 
+- Gameplay evidence update (2026-11-14): seven user screenshots verify visible read-only marker rendering on straight horizontal/vertical and curved A/B for offsets 1.0/1.5, but NOT correct mast positioning; see [detailed scoped record](docs/tests/catenary-preview-0.1.15-screenshots-2026-11-14.md). No code modifications; half-diagonal and Undo tests remain pending.
+
 ## 0.1.14 (experimental; read-only rail slot diagnostic)
 
 - Added `/em-35kv-slots` to display up to eight engine-provided signal-slot positions beside the selected or nearest ВСМ rail, with direction/layer printout and 15-second markers.

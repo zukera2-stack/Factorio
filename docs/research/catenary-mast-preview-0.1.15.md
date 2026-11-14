@@ -65,11 +65,11 @@ Implemented in `ElectrifiedMainline/scripts/mast_preview_015.lua` and registered
 
 ## 8. Game experiment
 
-Not run. User screenshot of **0.1.14** is evidence of four rendered slot markers on a rail, **not** 0.1.15 mast geometry or gameplay.
+**Partial in-game screenshot confirmation (2026-11-14):** seven user-supplied screenshots show the 0.1.15 command rendering candidate rings, guide lines and CLEAR/BLOCKED labels on straight horizontal/vertical rails and curves A/B at offsets 1.0 and 1.5. See [detailed per-file observation table](../tests/catenary-preview-0.1.15-screenshots-2026-11-14.md). All shown commands list 0 non-ground slots skipped and no API_ERR. At offset 1.5 curve A has 6 CLEAR/4 BLOCKED among 10 candidates; `alternative_in` slot 3 has *two* CLEAR candidates, so collision results do not establish a unique position. Curved markers/labels crowd each other. Exact Factorio build not printed on screenshots; screenshots do not prove actual mast alignment, HSR-only placement or Undo/Redo. The earlier **0.1.14** screenshot only established 4 signal markers on one track.
 
 ## 9. Evidence labels and next step
 
-**API-confirmed** at documented versions: temporary rendering and collision checks are available, rail slots expose positions/directions. **Planned/Unverified:** candidate visual alignment in Factorio 2.1.20; the safe offset; rail-specific assembly behavior. Next: install 0.1.15 test ZIP from Actions and compare one straight, one half-diagonal and both curves with screenshots, no placement.
+**API-confirmed** at documented versions: temporary rendering and collision checks are available, rail slots expose positions/directions. **Game screenshot-tested (limited):** visible 0.1.15 marker command on horizontal/vertical straight and curved A/B rails at offsets 1.0/1.5. **Unverified:** safe offset, intended mast/arm position, half-diagonal, negative cases, Undo/Redo, and exact game build identification. Next: install 0.1.15 test ZIP from Actions and compare one straight, one half-diagonal and both curves with screenshots, no placement.
 
 ## 10. Source use
 
