@@ -36,3 +36,10 @@ There is no supported same-entity native primitive satisfying **ALL** requiremen
 
 ## License
 Official Factorio vanilla prototype deep-copy; no third-party code or graphics.
+
+
+## Static build outcome
+
+**CI result (static only):** [GitHub Actions #43617514935](https://github.com/zukera2-stack/Factorio/actions/runs/43617514935) SUCCESS, source code commit a2187304c4e922fb182e8358b46b0cba0dca8b36; [artifact #14122508955](https://github.com/zukera2-stack/Factorio/actions/runs/43617514935/artifacts/14122508955) contains ElectrifiedMainline_0.1.19.zip. Lua 5.2 mocked test and package integrity passed; Factorio 2.1.20 real loading of probe remains UNVERIFIED.
+
+No game-test claim: Lua mocks cannot validate actual signal placement snapping, multiplayer or network state. Do not use on operational rails.

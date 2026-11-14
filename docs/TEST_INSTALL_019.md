@@ -26,3 +26,8 @@ Target game: Factorio 2.1.20 build 87512.
 
 Engineering fact: no native electric-pole prototype flag can give it signal placement, no native train-signal prototype field filters to custom HSR rail names; rail-signal proxy would need conversions and risks signalling and native Undo. This experimental ZIP deliberately never swaps entities.
 
+
+
+## ZIP from CI
+
+**CI result (static only):** [GitHub Actions #43617514935](https://github.com/zukera2-stack/Factorio/actions/runs/43617514935) SUCCESS, source code commit a2187304c4e922fb182e8358b46b0cba0dca8b36; [artifact #14122508955](https://github.com/zukera2-stack/Factorio/actions/runs/43617514935/artifacts/14122508955) contains ElectrifiedMainline_0.1.19.zip. Lua 5.2 mocked test and package integrity passed; Factorio 2.1.20 real loading of probe remains UNVERIFIED.

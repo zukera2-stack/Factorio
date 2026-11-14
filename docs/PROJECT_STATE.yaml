@@ -72,6 +72,12 @@ visual_development:
   native_signal_probe_019_research: docs/research/native-signal-vs-electric-pole-0.1.19.md
   native_signal_probe_019_test_plan: docs/TEST_INSTALL_019.md
   native_signal_probe_019_mock_test: tests/35kv_native_signal_probe_019.lua
+  native_signal_probe_019_source_commit: a2187304c4e922fb182e8358b46b0cba0dca8b36
+  native_signal_probe_019_build_run: 43617514935
+  native_signal_probe_019_build_status: success
+  native_signal_probe_019_artifact_id: 14122508955
+  native_signal_probe_019_game_test: unverified
+  native_signal_probe_019_build_manifest: docs/BUILD_019.yaml
   cursor_018_branch: feature/catenary-native-player-build-018
   cursor_018_version: '0.1.18'
   cursor_018_status: partial_game_pass_real_pole_at_30_5_negative_17_5_alt_undo_unverified
