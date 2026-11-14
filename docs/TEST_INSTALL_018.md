@@ -86,3 +86,10 @@ TECHNICAL:
 
   On unsuccessful build, native player API leaves the world unchanged.
 
+
+
+## Verified static package
+
+**STATIC CI PASS:** [Build #43601951663](https://github.com/zukera2-stack/Factorio/actions/runs/43601951663) from source commit 78a010cb44995ba71bcfe8e5337a7f63070eff8f; [download ZIP artifact #14115959103](https://github.com/zukera2-stack/Factorio/actions/runs/43601951663/artifacts/14115959103). Lua 5.2 syntax, all mock tests 0.1.13-0.1.18 including new cursor placement test, and versioned ZIP packaging passed. [Docs CI #43601951644](https://github.com/zukera2-stack/Factorio/actions/runs/43601951644) PASS. Game load/real item Ctrl+Z/Ctrl+Y remain unverified.
+
+The ZIP artifact was built from source commit 78a010cb; subsequent documentation-only commits do not change mod contents or require repackaging.

@@ -2,7 +2,7 @@
 
 - When the real 35 kV mast item is held, automatically paint short-lived green/amber/red ground squares from nearby native rail signal location references, normalized to the actual electric pole grid. No sparse 16-tile filter or fake rail-signal entities.
 - Alt + Left Click tries the nearest HSR-adjacent pole site using LuaPlayer.can_build_from_cursor and LuaPlayer.build_from_cursor. Native engine handles actual entity and cursor item. Vanilla LMB preserved; script does not create/destroy/teleport pole, inject Undo actions or place rail-signal proxies.
-- New Lua 5.2 mocked contract checks, CI packaging and test plan. Actual pole positions, signal-style UI fidelity and scripted native undo ownership remain unverified until Factorio 2.1.20 user test.
+- New Lua 5.2 mocked contract checks, CI packaging and test plan. Static Lua 5.2 syntax/mock regression tests and ZIP packaging PASSED in [Actions #43601951663](https://github.com/zukera2-stack/Factorio/actions/runs/43601951663) (ZIP artifact 14115959103); actual pole positions, signal-style UI fidelity and scripted native undo ownership remain unverified until Factorio 2.1.20 user test.
 - Stable main 0.1.8 and existing 0.1.17 tools untouched.
 
 ## 0.1.17 — 2026-11-14 user game-test evidence (docs only)

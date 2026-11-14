@@ -52,3 +52,12 @@ Record changed files, actual API loading, exact screenshots/log, cursor consumpt
 
 ## 10. Licensing
 No third-party code or art copied. Only official semantics and observed behavior are used.
+
+
+## 7. Implementation and static test record, 2026-11-14
+
+- Source commit: 78a010cb44995ba71bcfe8e5337a7f63070eff8f on feature/catenary-native-player-build-018.
+- Changed: new scripts/catenary_cursor_018.lua, prototypes/catenary_cursor_input_018.lua, data.lua and scripts/control.lua loading/input registration, locale ru/en, info.json v0.1.18, tests/35kv_cursor_build_018.lua, .github/workflows/build-mod.yml, in-game test plan, synchronized state/status/changelog.
+- Official native player API: real electric-pole item and place_result remain unchanged; nearest native HSR `LuaRailEnd` reference adapted to 1x1 electric-pole grid, native `can_build_from_cursor` preflight, then `build_from_cursor`. No pseudo signal, no `surface.create_entity`, entity destruction, scripted refunds, Undo injection or 16-tile restriction. Alt+LMB custom binding has global input scope; plain LMB untouched.
+- **STATIC CI PASS:** [Build #43601951663](https://github.com/zukera2-stack/Factorio/actions/runs/43601951663) from source commit 78a010cb44995ba71bcfe8e5337a7f63070eff8f; [download ZIP artifact #14115959103](https://github.com/zukera2-stack/Factorio/actions/runs/43601951663/artifacts/14115959103). Lua 5.2 syntax, all mock tests 0.1.13-0.1.18 including new cursor placement test, and versioned ZIP packaging passed. [Docs CI #43601951644](https://github.com/zukera2-stack/Factorio/actions/runs/43601951644) PASS. Game load/real item Ctrl+Z/Ctrl+Y remain unverified.
+- **NOT GAME TESTED:** data-stage/game load, input conflict with other controls/mods, actual placement position/inventory, native Undo/Redo for `build_from_cursor`, rail geometry alignment. Mock test cannot prove any of these.
