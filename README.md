@@ -4,6 +4,19 @@ A Factorio 2.1 mod project exploring high-speed railway infrastructure, an elect
 
 > **Development status: 0.1.8, game-tested baseline in `main` (PR #6 merged).** Factorio 2.1.20 build 87512: native Upgrade Planner upgraded **26 straight + 8 curved** rails with working Ctrl+Z/Ctrl+Y; Ctrl+Shift superforced blueprint overlay upgraded **14 straight + 8 curved** rails with working Undo/Redo. Experimental scripted Undo joining was removed. Half-diagonal gameplay, the separate replacement selection tool and interrupted robot jobs remain unverified; electric traction, battery, overhead transfer and regeneration are not yet implemented. See [current status](docs/STATUS.md) and [test evidence](docs/tests/undo-0.1.8-2026-11-12.md).
 
+## Experimental build 0.1.15 (not a release)
+
+The repository has **two distinct tracks**:
+
+| Track | GitHub branch | Version | Evidence |
+| --- | --- | --- | --- |
+| Stable baseline | `main` | **0.1.8** | Native rail Upgrade Planner and scoped Undo/Redo game-tested in Factorio 2.1.20 |
+| Catenary geometry experiment | [`feature/catenary-preview-015`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-preview-015) | **0.1.15** | Lua 5.2 tests and GitHub ZIP packaging passed; **0.1.15 not yet game-tested** |
+
+**0.1.15 downloads:** use the [Build Factorio mod ZIP run #43572452213](https://github.com/zukera2-stack/Factorio/actions/runs/43572452213), expand **Artifacts**, and click `ElectrifiedMainline-test-build`. The outer GitHub artifact archive contains the **inner `ElectrifiedMainline_0.1.15.zip`**; place **only the inner ZIP** in Factorio's `mods` directory. The similarly named [documentation validation run #43572508712](https://github.com/zukera2-stack/Factorio/actions/runs/43572508712) has **no mod ZIP**. GitHub artifact download may require sign-in, and artifacts have limited retention.
+
+See the [step-by-step installation and test guide](docs/TEST_INSTALL_015.md). The new `/em-35kv-preview [0.5..3]` command draws **temporary candidate mast bases and eight-facing direction hints**, not real build snapping or power delivery. The earlier `/em-35kv-slots` command remains diagnostic. **No automatic pole placement, real rail signals, or Undo modifications** were added in 0.1.15.
+
 ## Project contents
 
 | Path | Purpose |

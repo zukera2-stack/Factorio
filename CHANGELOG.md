@@ -7,6 +7,8 @@
 - Includes mocked Lua tests, new test worksheet and [research](docs/research/catenary-mast-preview-0.1.15.md). [Static CI passed](https://github.com/zukera2-stack/Factorio/actions/runs/43572452213) (Lua 5.2 geometry tests and ZIP packaging); [documentation checks passed](https://github.com/zukera2-stack/Factorio/actions/runs/43572508712). Actual Factorio 2.1.20 game testing **pending**.
 - Isolated branch `feature/catenary-preview-015` from 0.1.14 `9916f11`. Stable `main` unchanged.
 
+- Documentation correction (2026-11-14): separate stable 0.1.8 and experimental 0.1.15 in both READMEs; add [ZIP installation/test instructions](docs/TEST_INSTALL_015.md), distinguish build artifacts from documentation-only Actions and mark the archived 0.1.13 pre-import handoff as superseded. No runtime changes.
+
 ## 0.1.14 (experimental; read-only rail slot diagnostic)
 
 - Added `/em-35kv-slots` to display up to eight engine-provided signal-slot positions beside the selected or nearest ВСМ rail, with direction/layer printout and 15-second markers.

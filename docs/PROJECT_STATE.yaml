@@ -28,6 +28,7 @@ project:
   user_tested_game: "2.1.20"
   user_installation_label: "2.1.20b"
   last_state_update: "2026-11-14"
+  documentation_audit: updated_015_installation_ci_evidence_and_historical_handoff_2026_11_14
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -81,6 +82,7 @@ visual_development:
   diagnostic_mod_version: '0.1.14'
   diagnostic_behavior: read_only_rail_slot_markers_no_placement_change
   diagnostic_gameplay_validation: user_screenshot_four_signal_slot_markers_on_one_rail
+  diagnostic_gameplay_proof_scope: screenshot_only_labels_in_out_d0_d8_no_full_log_or_four_shapes
   preview_command: /em-35kv-preview
   preview_version: "0.1.15"
   preview_offset_range_tiles: "0.5..3"
@@ -91,6 +93,12 @@ visual_development:
   preview_ci_build_result: success
   preview_ci_build_commit: d07755c0f3491003d7bc7558b5f0c3b84c7d1d80
   preview_ci_artifact_id: 14105370603
+  preview_ci_artifact_name: ElectrifiedMainline-test-build
+  preview_ci_artifact_contains: ElectrifiedMainline_0.1.15.zip
+  preview_ci_download_run_url: https://github.com/zukera2-stack/Factorio/actions/runs/43572452213
+  preview_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43572452213/artifacts/14105370603
+  preview_installation_guide: docs/TEST_INSTALL_015.md
+  preview_docs_run_not_download: 43572508712
   preview_docs_ci_run: 43572508712
   preview_docs_ci_result: success
   preview_gameplay_validation: pending
