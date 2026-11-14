@@ -4,7 +4,7 @@
 - Shows proposed eight-face cantilever direction toward each signal **reference** and `LuaSurface.can_place_entity` collision hints; circles, lines and labels expire after 15 seconds.
 - Filters to ground rail-layer slots; invalid offset and non-ВСМ selection produce messages without marker creation.
 - No pole or ghost creation, no train signal or existing mast changes, no Undo/Redo hooks, no electrical MW transfer, no enforced HSR-only building.
-- Includes mocked Lua tests, new test worksheet and [research](docs/research/catenary-mast-preview-0.1.15.md). CI and actual Factorio 2.1.20 game testing are separate acceptance gates.
+- Includes mocked Lua tests, new test worksheet and [research](docs/research/catenary-mast-preview-0.1.15.md). [Static CI passed](https://github.com/zukera2-stack/Factorio/actions/runs/43572452213) (Lua 5.2 geometry tests and ZIP packaging); [documentation checks passed](https://github.com/zukera2-stack/Factorio/actions/runs/43572508712). Actual Factorio 2.1.20 game testing **pending**.
 - Isolated branch `feature/catenary-preview-015` from 0.1.14 `9916f11`. Stable `main` unchanged.
 
 ## 0.1.14 (experimental; read-only rail slot diagnostic)

@@ -61,7 +61,7 @@ Target API exact version availability varies: RailLocation docs were 2.1.20, Lua
 
 ## 7. Implementation record
 
-Implemented in `ElectrifiedMainline/scripts/mast_preview_015.lua` and registered at control.lua parse time (commit `d07755c0f3491003d7bc7558b5f0c3b84c7d1d80`). Added mocked checks `tests/35kv_preview_015.lua`, test plan `TEST_PREVIEW_015.txt`, metadata version 0.1.15, CI build workflow and synchronized PROJECT_STATE/AI_CONTEXT. No external code/assets copied. Static CI and exact Factorio 2.1.20 game results must still be collected.
+Implemented in `ElectrifiedMainline/scripts/mast_preview_015.lua` and registered at control.lua parse time (commit `d07755c0f3491003d7bc7558b5f0c3b84c7d1d80`). Added mocked checks `tests/35kv_preview_015.lua`, test plan `TEST_PREVIEW_015.txt`, metadata version 0.1.15, CI build workflow and synchronized PROJECT_STATE/AI_CONTEXT. No external code/assets copied. CI: GitHub Actions [build #43572452213](https://github.com/zukera2-stack/Factorio/actions/runs/43572452213) passed Lua 5.2 syntax, 0.1.13 visual tests, 0.1.14 signal-slot tests and the new 0.1.15 mocked candidate/collision tests; produced [ZIP artifact #14105370603](https://github.com/zukera2-stack/Factorio/actions/runs/43572452213/artifacts/14105370603). [Documentation CI #43572508712](https://github.com/zukera2-stack/Factorio/actions/runs/43572508712) passed. **No actual Factorio 2.1.20 session for 0.1.15 yet.**
 
 ## 8. Game experiment
 

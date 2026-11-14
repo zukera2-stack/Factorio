@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/catenary-preview-015
   feature_version: "0.1.15"
-  feature_status: read_only_mast_candidate_preview_015_implemented_ci_and_gameplay_pending
+  feature_status: read_only_mast_candidate_preview_015_mocked_lua_and_build_ci_passed_gameplay_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -86,6 +86,13 @@ visual_development:
   preview_offset_range_tiles: "0.5..3"
   preview_test_plan: ElectrifiedMainline/TEST_PREVIEW_015.txt
   preview_research: docs/research/catenary-mast-preview-0.1.15.md
+  preview_static_lua_test_result: passed_in_github_actions
+  preview_ci_build_run: 43572452213
+  preview_ci_build_result: success
+  preview_ci_build_commit: d07755c0f3491003d7bc7558b5f0c3b84c7d1d80
+  preview_ci_artifact_id: 14105370603
+  preview_docs_ci_run: 43572508712
+  preview_docs_ci_result: success
   preview_gameplay_validation: pending
   build_integration_and_undo: pending_game_test
 
