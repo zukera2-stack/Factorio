@@ -1,3 +1,10 @@
+## 0.1.19 — isolated native rail-signal snap research experiment
+
+- Added a separate explicitly named **true rail-signal** placement probe with an easy 1-iron-plate recipe. Its only purpose is testing Factorio's exact native green signal snap positions with normal LMB on custom vs vanilla rails. It affects rail signals when placed; test on disposable, non-operational rail only.
+- NO conversion to poles, NO signal replacements/proxies in the actual catenary, NO inventory/Undo scripting and NO mutation of existing 0.1.18 pole behavior. **A real 35kV electric pole still allows ordinary LMB outside custom HSR: user's final requirement is unsolved and blocked by native prototype semantics.**
+- New research record / test protocol; engine gameplay of the test entity pending.
+- User 0.1.18 follow-up log additionally confirms Undo/Redo for native Alt+LMB placement of three real poles.
+
 ## 0.1.18 — 2026-11-14 gameplay observations (docs only)
 
 - Two user screenshots + Factorio 2.1.20 log verify colored rail-adjacent squares while holding the real 35kV pole and one Alt+LMB `build_from_cursor` construction at (30.5,-17.5), true `electric-pole` type.

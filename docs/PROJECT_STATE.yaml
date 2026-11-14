@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-native-player-build-018
-  feature_version: "0.1.18"
-  feature_status: 018_game_tested_markers_and_alt_real_pole_build_undo_unverified
+  active_feature_branch: research/native-signal-mast-probe-019
+  feature_version: "0.1.19"
+  feature_status: native_rail_signal_feasibility_probe_019_not_hsr_only_catenary
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.18"
+  mod_version: "0.1.19"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -61,6 +61,17 @@ latest_uploaded_archive:
   next_visual_version: "0.1.14"
 
 visual_development:
+  native_signal_probe_019_branch: research/native-signal-mast-probe-019
+  native_signal_probe_019_version: '0.1.19'
+  native_signal_probe_019_status: prototype_proof_not_real_catenary_placement
+  native_signal_probe_019_type: rail-signal
+  native_signal_probe_019_entity: em-35kv-native-placement-probe
+  native_signal_probe_019_caution: true_rail_signal_changes_train_blocks
+  native_signal_probe_019_original_mast: still_electric_pole
+  native_signal_probe_019_mast_outside_hsr_prohibited: false
+  native_signal_probe_019_research: docs/research/native-signal-vs-electric-pole-0.1.19.md
+  native_signal_probe_019_test_plan: docs/TEST_INSTALL_019.md
+  native_signal_probe_019_mock_test: tests/35kv_native_signal_probe_019.lua
   cursor_018_branch: feature/catenary-native-player-build-018
   cursor_018_version: '0.1.18'
   cursor_018_status: partial_game_pass_real_pole_at_30_5_negative_17_5_alt_undo_unverified
@@ -84,7 +95,7 @@ visual_development:
   cursor_018_alt_build_real_entity: confirmed_electric_pole
   cursor_018_alt_build_pre_build_events_same_tick: 2
   cursor_018_alt_build_built_entity_events_same_tick: 1
-  cursor_018_alt_build_undo_redo: unverified_no_matching_log_event
+  cursor_018_alt_build_undo_redo: game_tested_in_followup_2026_11_14_log_three_alt_builds_undo_redo
   cursor_018_normal_pole_undo_redo: game_tested
   cursor_018_ghost_robot_placement: game_tested
   cursor_018_next_test: immediate_alt_click_undo_redo_and_inventory_counter

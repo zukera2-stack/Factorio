@@ -1,0 +1,28 @@
+# 0.1.19 — native signal placement probe (not actual mast)
+
+ElectrifiedMainline 0.1.19 — native rail-signal snap feasibility ZIP
+
+NOT a finished catenary placement release.
+
+Target game: Factorio 2.1.20 build 87512.
+
+1. USE DISPOSABLE SAVE without running trains. A diagnostic probe is a TRUE RAIL SIGNAL and can change the railway blocks.
+
+2. Install ZIP and craft "Пробник штатной привязки к рельсам" (1 iron plate) via recipe; item id em-35kv-native-placement-probe.
+
+3. Hold this *test* item and hover near ground rails ВСМ: native Factorio green signal squares should appear.
+
+4. Click normal LMB on one green square. A true rail signal must appear. Check Ctrl+Z, Ctrl+Y.
+
+5. Hold the same test item near vanilla non-ВСМ rails and repeat; report whether the native grid appears.
+
+6. Away from any rails, try LMB: native rail signal should refuse placement.
+
+7. Compare with *real* em-35kv-catenary-pole. The real pole remains electric-pole and 0.1.18 manual mechanics are unchanged; plain LMB can still place it outside ВСМ. This does NOT satisfy final strict-ВСМ-only mast requirement.
+
+8. Send screenshots and factorio-current.log. Do not save operational rail signaling changes.
+
+
+
+Engineering fact: no native electric-pole prototype flag can give it signal placement, no native train-signal prototype field filters to custom HSR rail names; rail-signal proxy would need conversions and risks signalling and native Undo. This experimental ZIP deliberately never swaps entities.
+
