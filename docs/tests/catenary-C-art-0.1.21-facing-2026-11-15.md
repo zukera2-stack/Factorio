@@ -2,6 +2,12 @@
 
 Date: 2026-11-15. Source: user's exact `2026-11-15_17-11-59.zip` (6 screenshots), `factorio-current(20261115-141332).log` (Factorio 2.1.20 build 87512). Game mod: **ElectrifiedMainline 0.1.21**. This is genuine 0.1.21 gameplay; its C sprite ZIP was generated locally, and its **PNG assets are not yet committed to GitHub**.
 
+## Visual evidence now stored in GitHub
+
+![Contact sheet: 6 screenshots of 0.1.21 mast faces](evidence/021-six-screenshots-contact.jpg)
+
+This montage preserves all six screenshots at reduced resolution for cross-chat review. The original full-resolution screenshots remain in the user's uploaded ZIP (28,397,144 bytes, SHA256 recorded below), not in this repository.
+
 ## Evidence (uploaded)
 - ZIP screenshots SHA256: `e8ef76cf924fb5d480df44d7b7da05a25ea813317695c75b8bfac9e402374faf`, size 28,397,144 bytes. Images `2026-11-15_17-05-22.png`, `17-07-03.png`, `17-08-16.png`, `17-10-20.png`, `17-11-50.png`, `17-11-59.png`. Full-resolution files remain in user upload, **not** in GitHub. Do not claim GitHub has the image binaries.
 - Factorio log SHA256 `4d47ca466d132b297a5a09079c73fa19715534fa0f037192be93b1548151ef6c`, size 112,256 bytes.

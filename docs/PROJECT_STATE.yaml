@@ -96,6 +96,14 @@ visual_development:
   mast_face_022_test: tests/35kv_facing_022.lua
   mast_face_022_gameplay: unverified
   mast_face_022_sprites_transferred_to_github: true
+  mast_face_022_full_resolution_source_art_in_github: true
+  mast_face_022_full_resolution_source_art_index: art/sources/021-C/README.md
+  mast_face_022_source_art_original_concept_C_in_github: true
+  mast_face_022_six_screenshot_contact_sheet_in_github: docs/tests/evidence/021-six-screenshots-contact.jpg
+  mast_face_022_full_original_user_screenshots_in_github: false
+  mast_face_022_ci_run_id: 43725722949
+  mast_face_022_ci_status: success
+  mast_face_022_ci_artifact_id: 14166570620
   mast_face_022_asset_source_version: '0.1.21'
   mast_face_022_original_zip_in_github: art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip
   mast_face_022_archive_git_blob_sha: c339d25ae1f82c535d0810715ca5594a1793898a

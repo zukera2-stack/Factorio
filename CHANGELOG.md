@@ -1,3 +1,9 @@
+## 2026-11-15 — complete C concept art archive and user test montage
+
+- Committed **all nine original full-resolution C images** to `art/sources/021-C/`, verified by per-file original SHA256 and Git blob SHA. No palette conversions or recompression.
+- Committed six-image 0.1.21 **Factorio user screenshot contact sheet** to `docs/tests/evidence/`, embedded in the existing facing failure report. User's original six screenshot files total 28 MB and remain in original chat attachment; repository version is a review montage, not unmodified evidence originals.
+- 0.1.22 source build [Actions #43725722949](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949) **SUCCESS**, [artifact #14166570620](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949/artifacts/14166570620). Actual revised facing in Factorio still unverified.
+
 ## 0.1.22 — Github-source complete C-mast facing experiment
 
 - Original C-mast PNG images (8 facings plus common base shadow) are now tracked **byte-identically** in the repository. They match the user's 0.1.21 tested ZIP; no quality-reducing conversion. Exact 0.1.21 ZIP saved as `art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip`.
