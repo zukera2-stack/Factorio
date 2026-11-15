@@ -1,3 +1,10 @@
+## 2026-11-15 — 0.1.23 user game evidence + native cursor API design decision (docs only)
+
+- User reports full item icon, successful ghost placement/copy/deconstruction/robot building; screenshot/log inspection confirms mod loads and ghost/Undo/Redo events occur. The mouse placement model is still invisible (only shadow), no game Lua exception.
+- Found incorrect 0.1.23 assumption: `placeable_position_visualization` does not replace engine `ElectricPolePrototype.pictures`, which drives the native cursor/ghost graphics. Native blue blur cannot simply be applied by `LuaRendering.tint`.
+- Select **native fixed lattice mast body plus eight Lua-rendered arm-only overlays** as next scoped artwork experiment (0.1.24), not yet produced; preserve 0.1.23 mechanics. [Decision](docs/research/catenary-native-cursor-ghost-decision-0.1.24.md).
+- [User test report](docs/tests/catenary-visual-0.1.23-user-test-2026-11-15.md). `main` untouched; no gameplay code or PNG changes in this commit.
+
 ## 2026-11-15 — 0.1.23 CI/ZIP ready for user testing
 
 - [GitHub Actions #43731628908](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908) PASS, [downloadable build](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908/artifacts/14168876545) with `ElectrifiedMainline_0.1.23.zip` nested inside, 38 files. Lua mocks for ghost lifecycle/rail-slot rings and icon dimensions PASS.

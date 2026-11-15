@@ -769,13 +769,18 @@ visual_polish_023:
   changed_placement: false
   changed_orientation_022: false
   changed_undo: false
-  game_status: UNVERIFIED
+  game_status: user_tested_inventory_ghost_and_bots_PASS_cursor_world_model_MISSING
+  gameplay_evidence: docs/tests/catenary-visual-0.1.23-user-test-2026-11-15.md
+  api_cursor_diagnosis: placeable_position_visualization_is_supplement_not_entity_picture
+  chosen_future_architecture: native_fixed_mast_plus_8_scripted_arm_only
+  future_architecture_decision: docs/research/catenary-native-cursor-ghost-decision-0.1.24.md
+  visual_polish_024_implemented: false
   github_ci_status: SUCCESS
   github_ci_run_id: 43731628908
   github_ci_artifact_id: 14168876545
   github_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43731628908/artifacts/14168876545
   nested_mod_zip: ElectrifiedMainline_0.1.23.zip
   static_lua_and_sprite_checks: PASS
-  factorio_2_1_20_ghost_and_cursor_game_test: UNVERIFIED
+  factorio_2_1_20_ghost_and_cursor_game_test: ghosts_and_icon_work_cursor_world_model_missing
   test: tests/35kv_ghost_023.lua
   api_research: docs/research/catenary-ghost-cursor-0.1.23.md

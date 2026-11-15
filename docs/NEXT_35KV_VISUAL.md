@@ -1,15 +1,7 @@
-**GitHub Actions 0.1.23 compiled:** [Run #43731628908](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908) SUCCESS, [test ZIP artifact #14168876545](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908/artifacts/14168876545). Download outer archive and install inner `ElectrifiedMainline_0.1.23.zip` only. Source includes real 8 C PNG untouched, new south icon, ghost/preview/circle improvements. CI is NOT a Factorio game test.
+# Next visual work: native mouse cursor silhouette / C mast body split
 
-# 0.1.23 next game test: ghost, cursor icon, quiet circles
+Current version `0.1.23` game tested: inventory icon works, green/red rings present, ghosts build/copy/dismantle/robot-build/undo, no shown runtime errors; **world cursor model missing**. The prior prototype's `placeable_position_visualization` did not solve this; do not repeat that approach. Source: [user five screenshots/log](tests/catenary-visual-0.1.23-user-test-2026-11-15.md) and [2.1 API design decision](research/catenary-native-cursor-ghost-decision-0.1.24.md).
 
-Branch `feature/catenary-visual-polish-023`; source version 0.1.23, based on tested 0.1.22 C sprites and RailEnd facing. User screenshot `2026-11-15_18-15-24.png` shows very vivid green/red square overlays and invisible ghost/build cursor shape. Latest requested changes are visual only.
+**Decision, not yet implemented:** separate fixed lattice shaft/foot (native `electric-pole.pictures`) from eight orientation-specific arm/insulator sprites (LuaRendering), keeping native base ghost blur. Ghost Lua overlay becomes arm-only. Test 1 shaft + 2 angles before mass-splitting all eight. Preserve `0.1.22` facing algorithm, stable item ID, copy/ghost/Undo behavior, standard LMB and grid. No new power, `supply_area_distance=0`, no special proxy signals.
 
-- Inventory item/icon from south C sprite; 64x64 RGBA, also electric-pole entity icon.
-- Native cursor placement preview via `placeable_position_visualization` using south C sprite. Normal built pole `pictures` remains hidden, so eight LuaRendered sprites cannot be doubled. **API exists, game display still to test**.
-- Actual `entity-ghost` visual via `scripts/ghost_mast_023.lua`: blue-tinted same 8 sprites, anchored to actual ghost, auto removed when ghost destroyed, rebuild existing ghosts on save migration.
-- Subdued unfilled circles instead of green/red/amber/magenta squares. All marker placement semantics stay the same.
-- New tests: `tests/35kv_ghost_023.lua`, icon structural PNG QA, packaging CI. No Factorio gameplay test by AI.
-
-**User test:** install only 0.1.23 in a copy of ВСМ save; test item icon, preview while holding, ghost via Shift+LMB, blueprints, robots build/remove, Ctrl+Z/Ctrl+Y, save/reload. Inspect bright markers and any double-render. Send screenshots + factorio-current.log. Previous build 0.1.22 had good mast directions per user; verify no regressions. If cursor preview missing even with `placeable_position_visualization`, do NOT fake direct mouse position via `LuaPlayer.cursor_position` (not an API read property) or revive 0.1.20 LMB capsule. Reference: `docs/research/catenary-ghost-cursor-0.1.23.md`.
-
-Stable `main` remains 0.1.8. Wires and traction electricity later; MW=0.
+**Branch:** `feature/catenary-visual-polish-023` still holds current validated 0.1.23; start separate 0.1.24 experiment later. Do not describe a ZIP or screenshots of 0.1.24 as already existing. Stable `main` 0.1.8 untouched.
