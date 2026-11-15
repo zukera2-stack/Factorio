@@ -1,15 +1,32 @@
 # Electrified Mainline
 
-A Factorio 2.1 mod project exploring high-speed railway infrastructure, an electric locomotive concept, battery support and regenerative braking.
+A **Factorio 2.1** mod for high-speed railway infrastructure and 35 kV overhead-line support masts; real electric traction, onboard energy storage and regeneration remain future work.
 
-> **Development status: 0.1.8, game-tested baseline in `main` (PR #6 merged).** Factorio 2.1.20 build 87512: native Upgrade Planner upgraded **26 straight + 8 curved** rails with working Ctrl+Z/Ctrl+Y; Ctrl+Shift superforced blueprint overlay upgraded **14 straight + 8 curved** rails with working Undo/Redo. Experimental scripted Undo joining was removed. Half-diagonal gameplay, the separate replacement selection tool and interrupted robot jobs remain unverified; electric traction, battery, overhead transfer and regeneration are not yet implemented. See [current status](docs/STATUS.md) and [test evidence](docs/tests/undo-0.1.8-2026-11-12.md).
+**Current user-accepted source milestone: 0.1.24**, tested with **Factorio 2.1.20 build 87512** on the `ВСМ` save, approved for promotion to `main`. The C catenary-mast graphics show a native visible shaft in the placement cursor, eight rail-facing cantilevers, translucent ghosts, native robot construction/Undo, the SOUTH-based item icon and subdued circular placement hints. [Scoped game-test evidence](docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [0.1.24 GitHub Actions ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195/artifacts/14171451634).
+
+**The rendered overhead wires are cosmetic.** Actual traction transfer remains `transfer_MW=0`, so this is a **visual milestone**, not a complete electrification system.
+
+The prior **0.1.8 ZIP** remains the historical rollback baseline and preserves game evidence for native Upgrade Planner + Undo/Redo on straight and curved-A/B rails. Those full rail regressions have **not** all been rerun in 0.1.24. [0.1.8 test details](docs/tests/undo-0.1.8-2026-11-12.md).
+
+## Current 35 kV mast architecture
+
+- A single native `electric-pole.pictures` C lattice shaft supplies the standard mouse cursor and engine-rendered ghost body.
+- Eight cantilever-only sprites are dynamically selected using RailEnd projection, with blue-tinted arm-only overlays for ghosts.
+- Placement, ghost creation, copying, robots and Undo/Redo remain engine-native, not proxy signal entities.
+- All source graphics and image QA live in the repository; original eight full C frames are retained for rollback.
+
+Next: **contact and messenger wire artwork/alignment along high-speed rails**, then separately research and implement actual MW energy exchange. [Status](docs/STATUS.md) · [Architecture](docs/ARCHITECTURE.md) · [AI handoff](docs/AI_CONTEXT.md).
+
+## History
+
+Versions 0.1.15–0.1.23 are historical implementation steps, not current builds. Their studies and evidence are under [research](docs/research/) and [test reports](docs/tests/), with full source ancestry in Git history.
 
 ## Project contents
 
 | Path | Purpose |
 | --- | --- |
 | `ElectrifiedMainline/` | Mod source. This directory is the mod root and contains `info.json`, data-stage scripts, runtime script and locale files. |
-| `mods/` | Previously packaged mod archive(s). |
+| `dist/` | Versioned test ZIP / stable 0.1.8 baseline; new builds are published via GitHub Actions. |
 | `docs/` | Design notes, implementation status and development guidance. |
 | `CONTRIBUTING.md` | Mandatory research-first contributor workflow and evidence rules. |
 | `README.ru.md` | Russian version of this overview. |
@@ -36,7 +53,7 @@ These are project goals, not a claim that every feature is currently complete. T
 
 ## Installation
 
-For the 0.1.8 release baseline, use the committed [validated 0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) or a successful **Build Factorio mod ZIP** artifact from [GitHub Actions](https://github.com/zukera2-stack/Factorio/actions/workflows/build-mod.yml) (artifact name `ElectrifiedMainline-test-build`). The old `mods/ElectrifiedMainline_0.1.0.zip` is historical, **not** the current version. The game-tested ZIP checksum and source SHA are in [BUILD_018.yaml](docs/BUILD_018.yaml).
+For 0.1.24, download [the accepted GitHub Actions artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195/artifacts/14171451634), extract the **inner** `ElectrifiedMainline_0.1.24.zip` and install only that inner ZIP in `mods`. The [0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) is preserved for historical rollback, not the active source version.
 
 For a manual test:
 

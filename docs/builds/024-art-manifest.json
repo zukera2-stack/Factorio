@@ -1,0 +1,47 @@
+{
+  "pole-native-mast-024.png": {
+    "size": 52359,
+    "sha256": "f0ef6c0f58b328547c0612cdce812dcfff6248aa7a0bd0d48631c97369d67cd3",
+    "git_blob_sha": "2af2027dff405e8be6b81d1d210a57aef278dc4f"
+  },
+  "pole-arm-east-024.png": {
+    "size": 52349,
+    "sha256": "71eca4e9e4a5f8734c4e72cd443b9adca0721b1560e0754a0834951b79abf4fa",
+    "git_blob_sha": "beed63440eb358c1d5e0b70583e1e4ee6b360610"
+  },
+  "pole-arm-southeast-024.png": {
+    "size": 56980,
+    "sha256": "460ae7ba9b425007ffce7986b8108b75eb0d628b6bc521c12527f3b35ae860fb",
+    "git_blob_sha": "9c0f9dcce9b9ea30c0eeceed4bc67a29f878211e"
+  },
+  "pole-arm-south-024.png": {
+    "size": 52517,
+    "sha256": "ea17b128ce360e7c619736124aa4b443f82e3f96f76a94cb2565e7d5cfc63add",
+    "git_blob_sha": "5b978508de5479702c4936197bb795796b06fd3a"
+  },
+  "pole-arm-southwest-024.png": {
+    "size": 61333,
+    "sha256": "0b6e9d8e9ae00f83391a23d90198b73d12eefa4f4d2b9c9cb544aa4f2149d5f3",
+    "git_blob_sha": "a2d6c506b7ce801270e98d0d2a3d21932e6bc3bb"
+  },
+  "pole-arm-west-024.png": {
+    "size": 55413,
+    "sha256": "6a304dea73145819df82ff6fd47766bf4964d7fd3e00a70270a44a6659315fc2",
+    "git_blob_sha": "608d9a523d3836c751287fe0ba92418bac6d8e60"
+  },
+  "pole-arm-northwest-024.png": {
+    "size": 63625,
+    "sha256": "e6beced4b94b077092f67a35d44903484ccf016ccf967abc93437915f998cc07",
+    "git_blob_sha": "cbc6630976cecc03f5820ce62870bc31fee4ca29"
+  },
+  "pole-arm-north-024.png": {
+    "size": 59638,
+    "sha256": "4e0a2e7ee8866fd7b48add74c802995581017188d5d0354a49d8a8cd2c663728",
+    "git_blob_sha": "7f8932322d446b8db092fa3cfaf4db74ef34b991"
+  },
+  "pole-arm-northeast-024.png": {
+    "size": 62471,
+    "sha256": "d2a8b47a37fa2f0f890e55f13199c3ef01bb516929493bcd520bd2df185e9dde",
+    "git_blob_sha": "5c6051709924cf844b50480c08df593dd24301b3"
+  }
+}

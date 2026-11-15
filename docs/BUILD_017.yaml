@@ -1,0 +1,20 @@
+# ElectrifiedMainline 0.1.17 experimental test artifact provenance
+mod_version: "0.1.17"
+factorio_version: "2.1"
+source_branch: feature/catenary-corridor-preview-017
+source_commit: e3511464949b5b5dbf6630d3caa06cb43c01c064
+build_workflow: .github/workflows/build-mod.yml
+ci_run_id: 43595022975
+ci_run_url: https://github.com/zukera2-stack/Factorio/actions/runs/43595022975
+ci_status: success
+ci_lua52_syntax: success
+ci_mock_017: success
+ci_zip_structure: success
+zip_inner_filename: ElectrifiedMainline_0.1.17.zip
+zip_inner_entries: 40
+outer_artifact_name: ElectrifiedMainline-test-build
+outer_artifact_id: 14114052350
+outer_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43595022975/artifacts/14114052350
+user_gameplay_test: unverified
+purpose: read_only_native_rail_slot_corridor_preview_no_signal_proxy_or_undo_mutation
+stable_main_modified: false

@@ -5,12 +5,15 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
+  active_feature_branch: none # 0.1.24 accepted for main, next branch to be created
+  feature_version: "0.1.24" # accepted native mast + eight C arms
+  feature_status: 024_visual_user_accepted_awaiting_main_merge
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
   release_merge_commit: 973559aa4d0643b2a942edce413e9530494bc498
   release_merge_approved_by_user: true
-  release_status: merged_into_main_2026_11_12
+  release_status: promotion_024_main_merge_in_progress
   next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.4"
   previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
@@ -19,11 +22,13 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.8"
+  mod_version: "0.1.24"
+  main_baseline_mod_version: "0.1.24" # pending GitHub merge confirmation
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
   user_installation_label: "2.1.20b"
-  last_state_update: "2026-11-12"
+  last_state_update: "2026-11-15"
+  documentation_audit: accepted_024_game_evidence_and_current_handoff_2026_11_15
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -31,6 +36,256 @@ project:
   research_record_template: docs/PROTOTYPE_RESEARCH_TEMPLATE.md
   research_record_directory: docs/research/
   current_status: docs/STATUS.md
+
+latest_uploaded_archive:
+  version: "0.1.13"
+  sha256: e89d803dcd87252c50786949f53bb028f64af2f9df0e6daa16b3e29fbb959174
+  archive_type: data_stage_wire_connection_point_hotfix
+  imported_into_github: true
+  graphics_tracked_in_github: true
+  screenshot_review: visual_overhead_wire_continuity_unverified
+  factorio_2_1_20_game_load: unverified_in_this_handoff
+  recovery_record: docs/RECOVERY_013.md
+  stable_main_version: "0.1.8"
+  git_source_mod_version: "0.1.13"
+  exact_source_files_committed: 32
+  exact_graphics_files_committed: 12
+  archive_manifest: docs/builds/013-payload.json
+  static_verification: scripts/verify_013_payload.py
+  ci_build_run: 43452497607
+  ci_build_result: passed
+  ci_docs_run: 43452497543
+  ci_docs_result: passed
+  ci_artifact_id: 14053025333
+  ci_source_commit: 52b8aca3518f5baaa3949d15c6d6928494d31267
+  next_visual_version: "0.1.14"
+
+visual_development:
+  mast_art_plan_021_branch: feature/catenary-mast-art-plan-021
+  mast_art_plan_021_from: feature/catenary-native-player-build-018
+  mast_art_plan_021_parent_sha: 8883b8990663349bbd0cae60b7e00d08e3460c25
+  mast_art_plan_021_codebase_version: '0.1.18'
+  mast_art_plan_021_status: 021_game_test_rotation_issue_022_source_and_art_fully_in_github
+  mast_art_plan_021_order:
+    - sketch_three_concepts_A_B_C
+    - user_explicitly_chooses_concept
+    - sprite_eight_directions_and_shadows
+    - static_qa_ci_and_factorio_in_game_art_test
+    - separate_catenary_contact_and_messenger_wire_visuals
+    - separate_traction_electrical_logic_last
+  mast_art_plan_021_next_action: historical_completed_024_user_accepted_wires_next
+  mast_art_plan_021_user_concept_approval: C_selected_2026_11_15
+  mast_art_plan_021_three_sketches_presented: true
+  mast_art_plan_021_selected_concept: C_balanced_industrial
+  mast_art_plan_021_C2_spec: docs/concepts/35kv-mast-C-refinement-2026-11-15.md
+  mast_art_plan_021_C2_status: user_requested_sprite_production_following_C2_concept
+  mast_art_plan_021_anchor_points: P0_base_P1_mast_arm_joint_P2_contact_wire_hanger
+  mast_art_plan_021_sketch_image_in_repo: true
+  mast_art_plan_021_new_sprites_created: true # byte-identical 021 PNG now in GitHub
+  mast_art_plan_021_local_zip_version: '0.1.21'
+  mast_art_plan_021_local_zip_filename: ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip
+  mast_art_plan_021_local_zip_bytes: 654494
+  mast_art_plan_021_local_zip_sha256: 234f26cd11a1efa380dd849af2278234db3db90ec23b8049096c66cf0863da42
+  mast_art_plan_021_local_zip_game_status: loaded_in_factorio_2_1_20_facing_defects_seen
+  mast_art_plan_021_game_log_sha256: 4d47ca466d132b297a5a09079c73fa19715534fa0f037192be93b1548151ef6c
+  mast_art_plan_021_screenshot_zip_sha256: e8ef76cf924fb5d480df44d7b7da05a25ea813317695c75b8bfac9e402374faf
+  mast_art_plan_021_real_game_report: docs/tests/catenary-C-art-0.1.21-facing-2026-11-15.md
+  mast_face_022_branch: feature/catenary-facing-geometry-022
+  mast_face_022_proposed_cause: wrong_reference_rail_entity_center
+  mast_face_022_fix: projected_rail_end_running_line_visual_only
+  mast_face_022_test: tests/35kv_facing_022.lua
+  mast_face_022_gameplay: observed_indirectly_in_024_rail_end_logs_not_full_matrix
+  mast_face_022_sprites_transferred_to_github: true
+  mast_face_022_full_resolution_source_art_in_github: false # active tree; recover from history
+  mast_face_022_full_resolution_source_art_history_commit: 64f81365ae5aa654d9b6cca1598cd30cc98289b3
+  mast_face_022_source_art_original_concept_C_in_github: false # active tree, in Git history
+  mast_face_022_six_screenshot_contact_sheet_in_github: docs/tests/evidence/021-six-screenshots-contact.jpg
+  mast_face_022_full_original_user_screenshots_in_github: false
+  mast_face_022_ci_run_id: 43725722949
+  mast_face_022_ci_status: success
+  mast_face_022_ci_artifact_id: 14166570620
+  mast_face_022_asset_source_version: '0.1.21'
+  mast_face_022_original_zip_in_active_tree: false
+  mast_face_022_original_zip_history_commit: 64f81365ae5aa654d9b6cca1598cd30cc98289b3
+  mast_face_022_archive_git_blob_sha: c339d25ae1f82c535d0810715ca5594a1793898a
+  mast_face_022_c_sprite_png_sha_verified: 8_of_8_exact
+  mast_face_022_shadow_sha_verified: true
+  mast_face_022_ci_build: success_43725722949_verified_nested_zip_exact_pngs
+  mast_face_022_art_validation_in_factorio: game_observed_in_024_scoped
+  mast_face_022_code_source_sha: 272c11468f8ee6e2f5226743dba16d112bdf1c6e
+  mast_face_022_build_artifact_zip: ElectrifiedMainline_0.1.22.zip
+  mast_face_022_github_actions_artifact: https://github.com/zukera2-stack/Factorio/actions/runs/43725722949/artifacts/14166570620
+  mast_face_022_nested_zip_integrity: pass
+  mast_face_022_nested_zip_all_eight_sprites_exact_match_021: true
+  mast_face_022_nested_zip_shadow_exact_match_021: true
+  mast_face_022_nested_zip_face_module_present: true
+  mast_face_022_mod_version: '0.1.22'
+  mast_face_022_test_guide: docs/TEST_INSTALL_022.md
+  mast_face_022_build_manifest: docs/BUILD_022.yaml
+  mast_art_plan_021_sprite_png_committed_to_github: true
+  mast_art_plan_021_git_repo_mod_version: '0.1.22'
+  mast_art_plan_021_zip_based_on: game_tested_018_zip_artifact_14115959103
+  mast_art_plan_021_art_projection_south: east_side_on
+  mast_art_plan_021_art_projection_north: west_side_on
+  mast_art_plan_021_build_report: docs/builds/021-local-c-mast-game-test.md
+  mast_art_plan_021_game_zip_created: true
+  mast_art_plan_021_game_art_test: 021_tested_some_incorrect_mast_orientations_022_pending
+  mast_art_plan_021_full_spec: docs/ART_DIRECTION_35KV.md
+  mast_art_plan_021_chat_handoff: docs/NEXT_35KV_VISUAL.md
+  mast_art_plan_021_external_lmb_020_test_report: https://github.com/zukera2-stack/Factorio/blob/feature/catenary-item-click-probe-020/docs/tests/catenary-click-probe-0.1.20-game-fail-2026-11-14.md
+  mast_art_plan_021_rejected_capsule_gate: game_failed_020
+  mast_art_plan_021_physical_pole_lmb_anywhere: allowed
+  mast_art_plan_021_visual_wires_only_near_custom_hsr: current_code_behavior
+  mast_art_plan_021_energy_transfer: disabled_zero_MW
+  mast_art_plan_021_main_untouched: true
+  cursor_018_branch: feature/catenary-native-player-build-018
+  cursor_018_version: '0.1.18'
+  cursor_018_status: partial_game_pass_real_pole_at_30_5_negative_17_5_alt_undo_unverified
+  cursor_018_target_factorio: 2.1.20_build_87512
+  cursor_018_cursor_input: ALT_left_mouse_button
+  cursor_018_item: em-35kv-catenary-pole
+  cursor_018_actual_entity_type: electric-pole
+  cursor_018_marker_source: LuaRailEnd_signal_locations_snapped_to_actual_pole_1x1_tile_grid
+  cursor_018_draw: short_ttl_when_actual_item_held
+  cursor_018_build_api: LuaPlayer_build_from_cursor
+  cursor_018_preflight: LuaPlayer_can_build_from_cursor
+  cursor_018_no_signal_proxy: true
+  cursor_018_no_spacing_filter: true
+  cursor_018_undo_proof: pending_gameplay
+  cursor_018_gameplay: partial_game_pass_factorio_2_1_20_build_87512
+  cursor_018_game_evidence: docs/tests/catenary-native-player-build-0.1.18-2026-11-14.md
+  cursor_018_uploaded_screenshots: 2
+  cursor_018_alt_build_requests: 1
+  cursor_018_alt_build_tick: 49936
+  cursor_018_alt_build_position: "(30.5,-17.5)"
+  cursor_018_alt_build_real_entity: confirmed_electric_pole
+  cursor_018_alt_build_pre_build_events_same_tick: 2
+  cursor_018_alt_build_built_entity_events_same_tick: 1
+  cursor_018_alt_build_undo_redo: unverified_no_matching_log_event
+  cursor_018_normal_pole_undo_redo: game_tested
+  cursor_018_ghost_robot_placement: game_tested
+  cursor_018_next_test: immediate_alt_click_undo_redo_and_inventory_counter
+  cursor_018_research: docs/research/native-catenary-cursor-build-0.1.18.md
+  cursor_018_test_plan: docs/TEST_INSTALL_018.md
+  cursor_018_mock_test: tests/35kv_cursor_build_018.lua
+  cursor_018_source_commit: 78a010cb44995ba71bcfe8e5337a7f63070eff8f
+  cursor_018_ci_run: 43601951663
+  cursor_018_ci_result: success
+  cursor_018_ci_artifact_id: 14115959103
+  cursor_018_ci_inner_zip: ElectrifiedMainline_0.1.18.zip
+  cursor_018_docs_ci_run: 43601951644
+  cursor_018_docs_ci_result: success
+  cursor_018_build_manifest: docs/BUILD_018.yaml
+  corridor_017_branch: feature/catenary-corridor-preview-017
+  corridor_017_version: '0.1.17'
+  corridor_017_command: /em-35kv-corridor
+  corridor_017_status: game_tested_read_only_preview_9_runs_geometry_not_approved
+  corridor_017_algorithm: bounded_connected_hsr_rails_engine_signal_slots_read_only
+  corridor_017_no_signal_proxy: true
+  corridor_017_no_undo_or_build_mutation: true
+  corridor_017_research: docs/research/catenary-corridor-native-slots-0.1.17.md
+  corridor_017_test_plan: docs/TEST_INSTALL_017.md
+  corridor_017_mock_test: tests/35kv_corridor_017.lua
+  corridor_017_source_commit: e3511464949b5b5dbf6630d3caa06cb43c01c064
+  corridor_017_ci_run: 43595022975
+  corridor_017_ci_result: success
+  corridor_017_ci_artifact_id: 14114052350
+  corridor_017_ci_archive: ElectrifiedMainline_0.1.17.zip
+  corridor_017_ci_file_count: 40
+  corridor_017_gameplay_test: game_tested_read_only_factorio_2_1_20_build_87512
+  corridor_017_gameplay_evidence: docs/tests/catenary-corridor-0.1.17-2026-11-14.md
+  corridor_017_gameplay_screenshots: 9
+  corridor_017_gameplay_command_executions: 9
+  corridor_017_gameplay_api_errors: 0
+  corridor_017_gameplay_capped_calls: 2
+  corridor_017_mast_geometry: unverified
+  corridor_017_pole_build_undo: unverified
+  corridor_017_signal_block_invariance: unverified
+  corridor_017_build_manifest: docs/BUILD_017.yaml
+  branch: feature/catenary-snap-research-017
+  last_implementation_branch: feature/catenary-geometry-016
+  last_implementation_commit: 9864662d8bc41e7a35d2ba6424d2ba4d3d8c0bf3
+  previous_visual_branch: feature/catenary-preview-015
+  previous_visual_commit: 727e998b5e4698298adc5a4f1b04c50bd5fba212
+  parent_visual_branch: feature/catenary-visuals-014
+  parent_visual_commit: 9916f11758491f29d3c89a8628ae2a78d6fe39d5
+  baseline: exact_user_uploaded_0_1_13
+  scope: read_only_native_rail_end_mast_candidate_visualization
+  preserve_rail_upgrade_undo_redo: true
+  preserve_rail_signals: true
+  electrical_MW_transfer: disabled
+  actual_gameplay_test: partial_user_screenshots_015_straight_curved_a_curved_b_exact_game_build_unverified
+  exact_013_static_qa: passed
+  visual_research: docs/VISUAL_BASELINE_013.md
+  rail_signal_slot_research: docs/research/catenary-rail-signal-slots-0.1.14.md
+  rail_signal_slot_api: LuaEntity.get_rail_end_LuaRailEnd_out_in_signal_locations
+  rail_signal_clone_allowed: false
+  rail_support_clone_allowed: false
+  placement_only_on_custom_hsr: proposed_user_requirement_not_implemented
+  next_technical_experiment: user_factorio_test_016_rail_end_ghost_preview_on_four_rail_shapes
+  diagnostic_command: /em-35kv-slots
+  diagnostic_mod_version: '0.1.14'
+  diagnostic_behavior: read_only_rail_slot_markers_no_placement_change
+  diagnostic_gameplay_validation: user_screenshot_four_signal_slot_markers_on_one_rail
+  diagnostic_gameplay_proof_scope: screenshot_only_labels_in_out_d0_d8_no_full_log_or_four_shapes
+  preview_command: /em-35kv-preview
+  preview_version: "0.1.15"
+  preview_offset_range_tiles: "0.5..3"
+  preview_test_plan: ElectrifiedMainline/TEST_PREVIEW_015.txt
+  preview_research: docs/research/catenary-mast-preview-0.1.15.md
+  preview_static_lua_test_result: passed_in_github_actions
+  preview_ci_build_run: 43572452213
+  preview_ci_build_result: success
+  preview_ci_build_commit: d07755c0f3491003d7bc7558b5f0c3b84c7d1d80
+  preview_ci_artifact_id: 14105370603
+  preview_ci_artifact_name: ElectrifiedMainline-test-build
+  preview_ci_artifact_contains: ElectrifiedMainline_0.1.15.zip
+  preview_ci_download_run_url: https://github.com/zukera2-stack/Factorio/actions/runs/43572452213
+  preview_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43572452213/artifacts/14105370603
+  preview_installation_guide: docs/TEST_INSTALL_015.md
+  preview_docs_run_not_download: 43572508712
+  preview_docs_ci_run: 43572508712
+  preview_docs_ci_result: success
+  preview_gameplay_validation: screenshot_pass_straight_horizontal_vertical_curved_a_b_offsets_1_and_1_5
+  preview_gameplay_evidence: docs/tests/catenary-preview-0.1.15-screenshots-2026-11-14.md
+  preview_gameplay_evidence_count: 7
+  preview_screenshot_game_build: not_visible
+  preview_candidate_placement_geometry: not_accepted_clear_is_collision_only
+  preview_next_unverified: half_diagonal_negative_cases_undo_real_mast_arm_wire_alignment
+  geometry_016_command: /em-35kv-geometry
+  geometry_016_version: "0.1.16"
+  geometry_016_parent_commit: 727e998b5e4698298adc5a4f1b04c50bd5fba212
+  geometry_016_algorithm: two_candidates_per_native_rail_end_one_selected_translucent_real_sprite
+  geometry_016_research: docs/research/catenary-rail-end-geometry-0.1.16.md
+  geometry_016_test_plan: ElectrifiedMainline/TEST_GEOMETRY_016.txt
+  geometry_016_test: tests/35kv_geometry_016.lua
+  geometry_016_static_ci: passed_lua52_syntax_mock_tests_and_zip
+  geometry_016_ci_run: 43586035896
+  geometry_016_ci_build_commit: 9864662d8bc41e7a35d2ba6424d2ba4d3d8c0bf3
+  geometry_016_ci_artifact_id: 14109793189
+  geometry_016_ci_artifact_name: ElectrifiedMainline-test-build
+  geometry_016_ci_artifact_inside: ElectrifiedMainline_0.1.16.zip
+  geometry_016_ci_artifact_link: https://github.com/zukera2-stack/Factorio/actions/runs/43586035896/artifacts/14109793189
+  geometry_016_install_guide: docs/TEST_INSTALL_016.md
+  geometry_016_docs_ci_implementation_run: 43586035869
+  geometry_016_gameplay: game_tested_log_11_runs_straight_curved_a_curved_b_all_clear
+  geometry_016_gameplay_log_version: 2.1.20
+  geometry_016_gameplay_build: 87512
+  geometry_016_gameplay_log_filename: factorio-current(20261114-115034).log
+  geometry_016_gameplay_screenshots: 11
+  geometry_016_gameplay_evidence: docs/tests/catenary-geometry-0.1.16-2026-11-14.md
+  geometry_016_half_diagonal_gameplay: untested
+  geometry_016_real_catenary_placement: untested_not_implemented
+  geometry_016_real_placement: not_implemented
+  research_017_branch: feature/catenary-snap-research-017
+  research_017_code_changes: none
+  research_017_mod_version: '0.1.16'
+  research_017_report: docs/research/native-signal-snap-for-catenary-0.1.17.md
+  research_017_external_analogue: AudricSan_Factorio_Mods_ElectrifiedRailways_main_3c9b713_source_0.3.26
+  research_017_risk: cloned_rail_signal_proxy_affects_blocks_may_break_native_undo
+  research_017_decision: evaluate_read_only_full_corridor_slot_visualization_first
+  build_integration_and_undo: pending_game_test
+
 
 user_decisions:
   rail_modernization: replace_vanilla_rails_with_high_speed_rails
@@ -111,55 +366,46 @@ implementation:
   large_modpack_interoperability: unverified
 
 last_game_test:
-  date: "2026-11-12"
+  date: "2026-11-15"
   game_version: "2.1.20"
   game_build: 87512
-  installed_mod_version: "0.1.8"
-  source_commit: ac4624ef5873a1d3adf65194c289e09aee5224ae
-  test_branch: test/undo-stabilization-018
-  evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
-  log_sessions:
-    - filename: "factorio-current(20261112-170348).log"
-      sha256: 832808759fea8270384155799f6cd3f64a83b3dd4144ee3c187d04f0ce833171
-      duplicate_upload: "factorio-current(20261112-170208).log"
-    - filename: "factorio-current(20261112-171003).log"
-      sha256: e5ccf8b67c51cbdcbad9e43ba1b2151bf5bc1c3ded041d3dfe30b96df3d1cb22
-  native_green_planner:
-    geometry_counts: { straight: 26, curved_a: 4, curved_b: 4 }
-    undo_tick: 23999
-    redo_tick: 24581
-    result: game_tested_success
-  unrelated_chest_undo_redo:
-    undo_chest_tick: 29766
-    undo_rails_tick: 29988
-    redo_rails_tick: 30251
-    redo_chest_tick: 31701
-    result: game_tested_separate_history_entries
-  blueprint_superforce_straight:
-    build_mode: 2
-    geometry_counts: { straight: 14 }
-    undo_tick: 39434
-    redo_in_this_session: not_observed
-  blueprint_superforce_mixed:
-    build_mode: 2
-    build_tick: 20353
-    geometry_counts: { straight: 14, curved_a: 4, curved_b: 4 }
-    undo_tick: 20721
-    redo_tick: 20971
-    result: game_tested_success
-  unrelated_assembling_machine_actions:
-    undo_tick: 16902
-    action_count: 2
-  errors_attributed_to_mod_in_supplied_logs: none_observed
-  game_exit: normal
+  installed_mod_version: "0.1.24"
+  source_commit: c83f2bc45180b814c344dfa28df18a77f7507d04
+  test_branch: feature/catenary-native-mast-body-024
+  evidence_record: docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md
+  screenshot_archive: "2026-11-15_21-27-44.zip"
+  screenshot_sha256: fd73991e6fc408e2a6cc931cbc5d1c47189e622f283844e1bb792111badefd12
+  log_filename: "factorio-current(20261115-183047).log"
+  log_sha256: 506bee98a83260408ff8e3fa50307800b7132a6a7fcd9050acf7a139e7608af9
+  validation_scope: mast_native_cursor_visual_and_ghosts_robot_build_undo_redo
+  user_acceptance: accepted_visual_and_approved_main_merge
+  native_cursor_mast_body: visible
+  C_directional_arm: visible_on_built_masts
+  ghost_blue_composite: visible
+  rail_slot_circle_markers: visible
+  robot_built_poles: observed
+  manual_pole_placement: observed
+  undo_redo_events: observed
+  lua_errors: none_observed
+  exit_status: normal_user_quit
+  power_transfer_MW: 0
   not_verified:
-    - half_diagonal_rail_gameplay
-    - dedicated_selection_tool
-    - blueprint_and_unrelated_action_interleaved_during_delayed_robots
-    - partially_completed_robot_jobs
-    - inventory_refunds_and_rail_signal_integrity
+    - every_mast_facing_x_rail_geometry_combination
+    - native_half_diagonal_upgrade_planner_undo
+    - separate_selection_tool_regressions
+    - interrupted_bot_jobs_and_multiplayer
+    - real_electricity_storage_regeneration
 
 historical_game_tests:
+  "0.1.8":
+    date: "2026-11-12"
+    game_version: "2.1.20"
+    game_build: 87512
+    source_commit: ac4624ef5873a1d3adf65194c289e09aee5224ae
+    evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
+    green_planner_verified: {straight: 26, curved_a: 4, curved_b: 4}
+    superforced_blueprint_verified: {straight: 14, curved_a: 4, curved_b: 4}
+    scope: native_upgrade_planner_and_undo_redo_scoped
   "0.1.7":
     date: "2026-11-12"
     game_version: "2.1.20"
@@ -189,6 +435,8 @@ historical_game_tests:
     pipe_item_correction: implemented
 
 next_actions:
+  - preserve_0_1_24_accepted_visual_baseline_in_main_and_branch_future_work
+  - improve_cosmetic_contact_and_messenger_wire_anchor_alignment_on_straight_curves_and_half_diagonal
   - test_native_green_upgrade_planner_and_undo_redo_on_half_diagonal_ground_rails
   - test_blueprint_interleaved_with_unrelated_action_during_delayed_robot_jobs
   - evaluate_and_regress_staged_custom_selection_tool_fallback_before_removal
@@ -315,4 +563,272 @@ undo_stabilization_018:
     selection_queue_preserved: true
   evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
   build_manifest: docs/BUILD_018.yaml
-  main_merge: requires_player_log_and_approval
+  main_merge: merged_0_1_8_PR_6
+
+feature_35kv_019:
+  branch: feature/35kv-catenary-019
+  base_commit: cea1926ca08cabd667219c6e676a09d372a6696c
+  mod_version: "0.1.9"
+  stage: source_implemented_visual_prototype
+  research_doc: docs/research/35kv-catenary-0.1.9.md
+  architecture_doc: docs/POWER_ARCHITECTURE.md
+  api_references: docs/POWER_API_REFERENCES.yaml
+  support_prototype: em-35kv-catenary-pole
+  substation_prototype: em-35kv-traction-substation
+  existing_em_electric_pole: preserved_ordinary_network
+  contact_wire: nonconducting_rendered_pairs
+  wire_span_limit_tiles: 16
+  nearby_rail_detection_radius_tiles: 3
+  rail_signal_style_placement: not_implemented
+  actual_power_transfer: not_implemented
+  real_electrified_rail_graph: not_implemented
+  source_syntax_check: passed_github_actions_run_43279773067
+  zip_check: passed_github_actions_run_43279773067
+  docs_yaml_and_links_check: passed_github_actions_run_43279908413
+  tested_source_commit: cf49a518b1cb73fc89af474bbaf8e8deb9b88542
+  built_archive: ElectrifiedMainline_0.1.9.zip
+  build_artifact_id: 13979183874
+  artifact_019_corrected_only_one_zip: true
+  artifact_019_corrected_run: 43297148331
+  build_manifest: docs/BUILD_019.yaml
+  game_test: not_run
+  merge_to_main: prohibited_until_game_test
+
+feature_catenary_topology_0110:
+  branch: feature/catenary-topology-0110
+  parent_branch: feature/35kv-catenary-019
+  parent_commit: f13701ae7b67f10c09e2fb96fef87c405b2b8d27
+  mod_version: "0.1.10"
+  status: source_implemented_awaiting_ci_and_game_test
+  user_observed_019: placement_and_visual_lines_work; substation_diagonal_spiderweb
+  contact_topology: mutual_nearest_forward_backward_rail_aligned_max_two
+  rail_corridor: three_sample_approximation_not_connected_rail_graph
+  substation_feeder: one_nearest_eligible_pole_per_substation
+  migration: rebuild_all_on_configuration_changed_019_to_0110
+  rail_edits: queued_local_refresh_after_one_tick
+  pure_lua_tests: tests/35kv_topology.lua
+  gameplay_tests: docs/POWER_TEST_0110.md
+  research: docs/research/catenary-topology-0.1.10.md
+  electric_transfer: not_implemented
+  exact_curve_geometry: not_implemented
+  rail_signal_snapping: not_implemented
+  ci_lua_syntax_and_unit_tests: passed_run_43382092112
+  ci_zip_single_file: passed_run_43382092112
+  ci_docs: passed_run_43382163410
+  source_commit: 60bfda99d29e2960a01c1192d26eea0c434eaca7
+  archive_name: ElectrifiedMainline_0.1.10.zip
+  archive_artifact_id: 14016553350
+  build_manifest: docs/BUILD_0110.yaml
+  game_test: not_run
+  main_merge: prohibited_until_user_acceptance
+
+sprite_pipeline_0111:
+  branch: feature/sprite-pipeline-0111
+  parent_branch: feature/catenary-topology-0110
+  parent_commit: 592253eef2af581af73a56375148696524f18856
+  mod_version_unchanged: "0.1.10"
+  target_game: "2.1.20"
+  api_docs_inspected: "2.1.24"
+  exact_version_api_match: false
+  source_script: scripts/sprites/pipeline.py
+  raw_art_preparation: scripts/sprites/prepare.py
+  raw_art_preparation_tests: scripts/sprites/test_prepare.py
+  source_image_generation: manual_or_external_image_model_not_automated
+  manifest: art/sprites/manifest.json
+  tests: scripts/sprites/test_pipeline.py
+  workflow: .github/workflows/sprite-pipeline.yml
+  guide: docs/SPRITE_PIPELINE.md
+  research: docs/research/sprite-pipeline-0.1.11.md
+  demo_assets: synthetic_fixture_not_production
+  production_art_source: not_supplied
+  generated_lua: review_only_not_loaded
+  mod_prototypes_modified: false
+  visual_graph_modified: false
+  static_qa: passed_14_unit_tests_and_api_guard_run_43387041605
+  preparation_ci: passed_19_tests_run_43387339441
+  preparation_ci_fix: confirmed_passed
+  regression_test: uniform_opaque_must_not_be_called_periodic_stripes
+  api_contract_guard: scripts/sprites/api_contract.py
+  api_contract_tests: scripts/sprites/test_api_contract.py
+  api_contract_ci: passed_run_43387041605
+  docs_ci: passed_run_43387041331
+  source_commit: 536167b649e645e054fdeae186d88d2b5c46105c
+  qa_preview_artifact_id: 14018579988
+  qa_preview_artifact_run: 43387339441
+  docs_ci_after_preparation: passed_run_43387339420
+  latest_qa_source_commit: 5be81ac4152e6612ca2de9867329e9a5100e443a
+  art_brief: docs/ART_BRIEF_35KV.md
+  game_test: not_run
+  main_merge: prohibited_until_art_approval_and_factorio_game_test
+
+  geometry_revision: right_hand_G_cantilever
+  previous_demo_geometry: symmetric_T_rejected
+  pole_anchor_pixels: [75, 354]
+  shadow_anchor_pixels: [75, 354]
+  generated_pole_orientation: right_only
+  left_hand_and_rotated_variants: pending
+  geometry_qa: passed_22_tests_run_43388634580
+  geometry_first_ci: failed_run_43388513885_one_brittle_pixel_test
+  geometry_regression_test_fix: check_upper_right_arm_band_not_fixed_pixel
+  geometry_final_ci: passed_22_tests_run_43388634580
+  geometry_final_docs_ci: passed_run_43388634599
+  geometry_final_artifact_id: 14019876083
+  geometry_final_source_commit: 4df2b5dc0383ce4cef95a6f22acc7d432987215e
+
+sprite_game_test_0111:
+  branch: feature/catenary-sprite-game-test-0111
+  parent_branch: feature/sprite-pipeline-0111
+  parent_commit: bfcbd89fee1fd815fd1973792157d77a3667cc82
+  mod_version: "0.1.11"
+  target_game: "2.1.20"
+  api_docs_reviewed: "2.1.24"
+  experimental_sprite_generator: scripts/sprites/game_test_pack.py
+  sprite_test: scripts/sprites/test_game_test_pack.py
+  art_source: synthetic_qa_fixture_not_production
+  pole_frame_size: [512, 384]
+  pole_atlas_size: [1024, 768]
+  directions: 4
+  line_length: 2
+  frame_handedness: [right, right, left, left]
+  mast_anchor_pixels: [256, 354]
+  contact_wire_runtime: old_draw_line_unchanged
+  energy_transfer: not_implemented
+  game_test: not_run
+  ci: passed_build_run_43410505808_28_tests
+  build_artifact_id: 14029696360
+  docs_ci: pending_fix_mod_version
+  main_merge: prohibited_until_user_acceptance
+  local_ai_art_preview_zip: ElectrifiedMainline_0.1.11.zip
+  local_ai_art_preview_zip_sha256: de177dc3eb9a6e97bc1f3f3db3f34335a9b85a20034b073fa6f514f55276429c
+  local_ai_art_preview_in_git: false
+  local_ai_art_preview_game_test: not_run
+
+rail_aware_catenary_012:
+  branch: feature/rail-aware-catenary-012
+  from_version: "0.1.11"
+  mod_version: "0.1.12"
+  research: docs/research/rail-aware-catenary-0.1.12.md
+  test_plan: docs/POWER_TEST_012.md
+  auto_orientation: visual_arm_facing_nearest_hsr
+  physical_support_entity: electric_pole_unchanged
+  native_signal_prototypes: untouched
+  spline_contact_lines: 8_segments_each_contact_and_messenger
+  graph_schema: 3
+  electricity_transfer: not_implemented
+  game_test: unverified
+  ci: passed_33_python_tests_lua_and_zip_43418015719
+  latest_source_sha: df9f5069ec64ccbec1fdadc46a02cc94dd3119f8
+  ci_artifact_id: 14033350683
+  ci_run_id: 43418015719
+  local_art_variant_sha256: c972337853fb6ee859c291a9ed10acc5dbc1d37d6806a3e765db973583e59eb0
+  local_art_variant_source: generated_from_previous_original_AI_pole_only_PNG_replacement
+  art_variant_lua_byte_identical_to_CI: true
+  art_variant_game_test: not_run
+  main_merge: prohibited
+
+repository_cleanup_2026_11_15:
+  applied_branch: feature/catenary-facing-geometry-022
+  original_tree_head: 9025ddbf2496e73c5b7ca704e9c09199894ddc1f
+  removed_file_count: 21
+  removed_tree_bytes: 6866337
+  removed_groups: [large_source_art, historical_021_zip, obsolete_4dir_atlas, outdated_in_mod_test_memos]
+  new_active_022_test_memo: ElectrifiedMainline/TEST_FACING_022.txt
+  active_eight_c_mast_sprites_kept: true
+  active_shadow_kept: true
+  current_lua_and_prototypes_unchanged: true
+  visual_evidence_contact_sheet_kept: true
+  stable_main_unchanged: true
+  original_assets_recoverable_from_commit: 64f81365ae5aa654d9b6cca1598cd30cc98289b3
+  report: docs/REPOSITORY_AUDIT_2026-11-15.md
+  post_cleanup_ci: success
+  post_cleanup_ci_run_id: 43727816486
+  post_cleanup_ci_artifact_id: 14167038465
+  post_cleanup_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465
+  post_cleanup_ci_source_sha: 59d8e362ccefeb36447b62808a18bd65563bc5d2
+
+visual_polish_023:
+  source_branch: feature/catenary-visual-polish-023
+  mod_version: "0.1.23"
+  basis: working_022_8_c_mast_sprite_rotation
+  icon: ElectrifiedMainline/graphics/icons/35kv-mast-south-icon-64.png
+  icon_source: ElectrifiedMainline/graphics/entity/35kv/pole-south-012.png
+  cursor_visualization: placeable_position_visualization
+  native_real_pole_picture: unchanged_hidden
+  ghost_module: ElectrifiedMainline/scripts/ghost_mast_023.lua
+  ghost_tint: blue_translucent
+  ghost_events: [built, robot_built, script_built, ghost_deconstructed, rebuild_all, prune]
+  marker_shape: faint_unfilled_circles
+  marker_semantics: [READY, BLOCKED, OUT_OF_REACH, ERROR]
+  changed_placement: false
+  changed_orientation_022: false
+  changed_undo: false
+  game_status: user_tested_inventory_ghost_and_bots_PASS_cursor_world_model_MISSING
+  gameplay_evidence: docs/tests/catenary-visual-0.1.23-user-test-2026-11-15.md
+  api_cursor_diagnosis: placeable_position_visualization_is_supplement_not_entity_picture
+  chosen_future_architecture: native_fixed_mast_plus_8_scripted_arm_only
+  future_architecture_decision: docs/research/catenary-native-cursor-ghost-decision-0.1.24.md
+  visual_polish_024_implemented: false
+  github_ci_status: SUCCESS
+  github_ci_run_id: 43731628908
+  github_ci_artifact_id: 14168876545
+  github_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43731628908/artifacts/14168876545
+  nested_mod_zip: ElectrifiedMainline_0.1.23.zip
+  static_lua_and_sprite_checks: PASS
+  factorio_2_1_20_ghost_and_cursor_game_test: ghosts_and_icon_work_cursor_world_model_missing
+  test: tests/35kv_ghost_023.lua
+  api_research: docs/research/catenary-ghost-cursor-0.1.23.md
+
+native_mast_body_024:
+  branch: feature/catenary-native-mast-body-024
+  source_base: user_tested_0_1_23
+  source_sprite_basis: exact_C_0_1_21_all_8_preserved
+  version: '0.1.24'
+  native_pole_picture: ElectrifiedMainline/graphics/entity/35kv/pole-native-mast-024.png
+  native_ghost_body: factorio_native_engine
+  custom_arm_prefix: ElectrifiedMainline/graphics/entity/35kv/pole-arm-
+  custom_arm_directions: 8
+  native_body_render_shift: [0, -2.53125]
+  arm_render_layer: higher-object-above
+  old_full_sprite_preserved_in_repo: true
+  debug_circular_markers: unchanged_023
+  item_south_icon: unchanged_023
+  runtime_facing_algorithm: unchanged_022
+  ghost_native_creation_and_undo: unchanged
+  physical_pole_and_energy: unchanged
+  static_art_validation: scripts/sprites/verify_024.py
+  art_hash_manifest: docs/builds/024-art-manifest.json
+  preview_image_local: art-024-comparison.png
+  factorio_game_validation: user_accepted_visual_2026_11_15_scoped
+  github_ci_status: success
+  github_ci_run_id: 43737875221
+  github_ci_artifact_id: 14171016545
+  github_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43737875221/artifacts/14171016545
+  github_ci_source_sha: ddf6a1e5817aab84e4ee30511c9174831bbe5cd5
+  sprite_qa_ci_run_id: 43737875150
+  sprite_qa_ci_status: success
+  game_test: passed_scoped_user_acceptance
+  user_game_test_evidence: docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md
+  user_approved_main_merge: true
+  screenshot_sha256: fd73991e6fc408e2a6cc931cbc5d1c47189e622f283844e1bb792111badefd12
+  log_sha256: 506bee98a83260408ff8e3fa50307800b7132a6a7fcd9050acf7a139e7608af9
+  test_guide: ElectrifiedMainline/TEST_VISUAL_024.txt
+
+accepted_milestone_024:
+  version: "0.1.24"
+  accepted_by_user: true
+  accepted_date: "2026-11-15"
+  merge_into_main_requested: true
+  merge_into_main_status: pending_final_github_pr
+  screenshot_log_evidence: docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md
+  source_branch: feature/catenary-native-mast-body-024
+  source_commit: c83f2bc45180b814c344dfa28df18a77f7507d04
+  ci_run_id: 43738070195
+  ci_status: success
+  ci_artifact_id: 14171451634
+  icon_south: approved
+  cursor_native_shaft: approved
+  arm_count: 8
+  ghost_native_body_lua_arm: approved
+  circle_markers: approved
+  real_traction_power_MW: 0
+  upcoming_scope: contact_and_messenger_wire_art_then_real_electricity

@@ -1,150 +1,30 @@
-# Current AI handoff: ElectrifiedMainline 0.1.8
+# AI handoff — ElectrifiedMainline 0.1.24 accepted visual milestone
 
-**Current baseline branch:** `main`, ElectrifiedMainline **0.1.8**; [PR #6](https://github.com/zukera2-stack/Factorio/pull/6) merged on 2026-11-12 at [`973559aa`](https://github.com/zukera2-stack/Factorio/commit/973559aa4d0643b2a942edce413e9530494bc498). **Game-tested source:** `ac4624ef5873a1d3adf65194c289e09aee5224ae`, validated in `test/undo-stabilization-018`; **Factorio:** 2.1.20 build 87512. Both CI checks passed. Start new feature branches from `main`; the old test branch remains historical evidence.
+**Updated:** 2026-11-15. Repository: [zukera2-stack/Factorio](https://github.com/zukera2-stack/Factorio). **Accepted source version 0.1.24**, promotion to `main` user-authorized. Prior 0.1.8 ZIP is preserved as historical rollback; development should branch from `main` after merge.
 
-**Current verified scope:** native green Upgrade Planner + Undo/Redo for 26 straight, 4 curved-A, 4 curved-B rails; unrelated chest and rail history entries remain separate; superforced Ctrl+Shift blueprint overlay + Undo/Redo for 22 mixed-geometry rails (14 straight, 4 curved-A, 4 curved-B). Factory upgrades were tested as unrelated history actions. See [gameplay test record](tests/undo-0.1.8-2026-11-12.md) and [build provenance](BUILD_018.yaml). Two distinct user logs; no observed mod Lua errors.
+## What was verified
 
-**Code audit:** `ElectrifiedMainline/scripts/control.lua` no longer uses fixed `undo_index` or scripted blueprint Undo joining. `blueprint_undo_join` storage is discarded, `pending_rail_replacements` is preserved. Native upgrade and Undo/Redo event observers are non-mutating.
+User's actual Factorio **2.1.20 build 87512** ran `ElectrifiedMainline 0.1.24` on `ВСМ.zip`, accepted the look and asked for merge. Screenshot shows native cursor shaft, composites of lattice shaft + directional G arm, bluish ghosts and subtle colored circular diagnostic markers. Log: manual placement, ghost creation, robot placement, Undo and Redo, no Lua exception. **Test is scoped, not exhaustive**. [Exact test evidence and SHA](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [CI artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195/artifacts/14171451634).
 
-**Do not overclaim:** A passed; B and C only partially passed; D unverified. No half-diagonal gameplay, special selection tool, interrupted robot jobs, complete signal/inventory or compatibility regression yet. Electric traction, batteries and regeneration remain unimplemented.
+Historical rail upgrade + Undo/Redo working 0.1.8 test: [26 straight/8 curved and blueprint](tests/undo-0.1.8-2026-11-12.md); do not treat it as a new full regression of all rail paths in 0.1.24.
 
-**Read order:** `AGENTS.md` -> this handoff -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> live source. Historical 0.1.7 details follow and must not override this current 0.1.8 status. Historical 0.1.4 `main` context is archived at [docs/history/AI_CONTEXT-main-0.1.4.md](history/AI_CONTEXT-main-0.1.4.md) and [docs/history/PROJECT_STATE-main-0.1.4.yaml](history/PROJECT_STATE-main-0.1.4.yaml); [exact-version Factorio 2.1.20 API notes](FACTORIO_2_1_RAIL_API_NOTES.md) are preserved as research, not as current gameplay status.
+## Current graphics architecture (DO NOT undo casually)
 
-## Historical 0.1.7 handoff (preserved for provenance)
+- `ElectrifiedMainline/prototypes/power_019.lua`: real 1×1 Factorio `electric-pole`, native `pictures` one shared C lattice shaft `graphics/entity/35kv/pole-native-mast-024.png` and base shadow, 1 wire connection point matching direction count; `maximum_wire_distance=0`, `supply_area_distance=0`. The native picture powers ordinary placement cursor and ghost shaft blur. Do not set it transparent again, or re-enable obsolete `placeable_position_visualization` as an alternate world model.
+- `ElectrifiedMainline/scripts/power_019.lua`: real masts draw **only eight C arm/insulator overlays**, chosen by `scripts/mast_facing_022.lua` using RailEnd projection; render layer `higher-object-above`, offset `{0,-2.53125}`. Preserve user artistic preference **SOUTH≈EAST silhouette**, **NORTH≈WEST silhouette**. On a mast with no nearby custom HSR, facing defaults to east.
+- `ElectrifiedMainline/scripts/ghost_mast_023.lua`: `entity-ghost` arm-only blue-tinted overlay anchored to ghost with cleanup on bot revival, cancellation/Undo and save migration. Native Factorio draws shaft's own ghost. Never add duplicate full shaft Lua draw.
+- `ElectrifiedMainline/scripts/catenary_cursor_018.lua`: conventional native build and advisory muted circular markers, not green signal-grid proxy. 64×64 `graphics/icons/35kv-mast-south-icon-64.png` comes from SOUTH C.
+- Original eight `pole-*-012.png` full frames retained as reproducibility/rollback. New nine 0.1.24 sprites verified 512×384 RGBA via [scripts/sprites/verify_024.py](../scripts/sprites/verify_024.py) and [manifest](builds/024-art-manifest.json).
 
-# Electrified Mainline — current AI handoff
+## IMPORTANT: status boundaries
 
-> Updated 2026-11-12 after the user confirmed the 0.1.7 native rail replacement/Undo/Redo test works. The confirmed scope remains the tested straight-ground-rail path. This is the compact current handoff; older failures and 0.1.6 history are below, not current capability statements.
-> Read in order: `AGENTS.md` -> this file -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> `CONTRIBUTING.md` -> relevant live source files. Before any non-trivial mechanic or workaround, copy `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` into a new `docs/research/` record and complete the research sections before coding. Full older notebook: `PROJECT_CONTEXT.md` (historical only).
+- **Real power is NOT IMPLEMENTED**: `energized=NO`, `transfer_MW=0`; rendered contact/messenger wires are cosmetic. A substation-looking prototype does not imply MW transfer. Batteries, regeneration and grid-corridor exchange remain future work.
+- No Factorio rail signal/proxy ghosts as support placement, no scripted fake Undo join, no capsule-based placement. Ghosts and robot mining/building belong to native engine.
+- Full 0.1.24 rail geometry, P2 hanger-to-contact-wire alignment, multiplayer, interrupted bot jobs, separate rail-replacement selection tool and half-diagonal Upgrade Planner regression remain unverified. Do not infer them from the one screenshot.
+- `docs/PROJECT_STATE.yaml` records both current accepted state and historical 0.1.8 evidence; previous obsolete trial status logs are accessible via Git history, not current authority.
 
-## 1. Current repository and environment
+## Next task (proceed only when requested)
 
-- Repository: https://github.com/zukera2-stack/Factorio
-- Stable branch: `main`; **current validated experiment on** `diagnostic/blueprint-rail-undo`. Do not assume `main` contains 0.1.7.
-- Mod directory/root: `ElectrifiedMainline/`; `info.json` version **0.1.7**, Factorio metadata `2.1`, Base dependency `>= 2.1.0`.
-- User test environment: Factorio **2.1.20**, build 87512 (installation path labelled 2.1.20b), Bob's Assembly **3.0.2** and a larger Bob's/Space Age test pack.
-- GitHub Actions: `.github/workflows/build-mod.yml`, runs on relevant pushes to `main` or the diagnostic branch. A packaged ZIP is **not** game-test evidence.
+**Visual overhead contact + messenger lines**: check anchor P2 over rail on all eight orientations (especially curves A/B and half-diagonal), realistic hanging point and spans, without touching newly accepted shaft/ghost graphics or rail mechanics. Then design actual power integration as a separate project phase. Start new feature branch off `main`, keep `main` as proven checkpoint. After changes, run GitHub Actions Lua/PNG/ZIP tests and real Factorio gameplay, record evidence.
 
-## 2. Accepted product decisions
-
-These are user-approved requirements, not suggestions:
-
-| Topic | Decision |
-|---|---|
-| Rail modernization | Replace vanilla rails with high-speed rail (ВСМ), preserving network topology |
-| Power | Hybrid: overhead/contact supply plus onboard storage |
-| Rolling stock | Both vanilla and custom wagons must be supported |
-| Regeneration priority | Return energy to the shared grid first; store only the surplus onboard |
-| Grid concept | ВСМ is also an independent high-voltage-style energy corridor |
-| Substations | Connect ordinary Factorio electric network and ВСМ network bidirectionally, with a power limit |
-| Remote outposts | ВСМ power corridor should be able to feed a remote outpost through a substation |
-| Voltage | Factorio does not simulate physical kV levels; use MW, buffers, transfer limits and gameplay losses |
-| Reference mod | Electrified Railways is ideas-only. Do not copy its code, fragments, scripts or prototypes. |
-
-### Rolling-stock interoperability matrix
-
-- Vanilla locomotive on vanilla rails: yes.
-- Vanilla locomotive on ВСМ rails: yes, behaves as an ordinary vanilla locomotive.
-- Electrified Mainline locomotive on ВСМ rails: overhead supply plus onboard storage, once implemented.
-- Electrified Mainline locomotive on vanilla rails: onboard storage only, once implemented.
-- Vanilla wagons and custom wagons may be mixed in consists.
-- Third-party rolling stock must not crash our logic; unknown entities are not ours to control.
-
-
-## 3. Current source layout
-
-```text
-ElectrifiedMainline/
-├── info.json
-├── data.lua                    # Factorio entry point -> require("prototypes.bootstrap")
-├── data-updates.lua            # Factorio entry point
-├── data-final-fixes.lua        # Factorio entry point
-├── control.lua                 # Factorio entry point -> require("scripts.control")
-├── prototypes/
-│   ├── bootstrap.lua           # Current complete prototype implementation
-│   └── README.md               # Safe future extraction plan
-├── scripts/
-│   ├── control.lua             # Current complete runtime implementation
-│   └── README.md               # Future runtime module boundaries
-├── compatibility/
-│   └── README.md               # Adapter rules; no adapters implemented yet
-└── locale/
-    ├── en/en.cfg
-    └── ru/ru.cfg
-```
-
-The current monolithic prototype/runtime files were moved, not functionally decomposed. This is deliberate: first establish a stable, navigable structure without changing gameplay semantics. Split them incrementally only when each module boundary is understood.
-
-Factorio root entry points must remain at the mod root. Do not move `info.json`, `data.lua`, `data-updates.lua`, `data-final-fixes.lua` or `control.lua` out of it.
-
-
-## 4. Current implementation and verified state
-
-### Verified in-game (scoped claims)
-
-- **0.1.7 native green Upgrade Planner on straight ground vanilla rails**: 20 `straight-rail` entities were ordered to upgrade to `em-high-speed-straight-rail` (`on_marked_for_upgrade tick=14284`); robots mined vanilla and built custom rails.
-- **Ctrl+Z** (`on_undo_applied tick=14591 action_count=20`): 20 `upgraded-entity` actions with `original_name=straight-rail`; robots removed custom rails and rebuilt vanilla.
-- **Ctrl+Y** (`on_redo_applied tick=14940 action_count=20`): 20 native upgrade actions; robots mined vanilla and rebuilt custom rails.
-- This session loaded the existing save, logged no observed ElectrifiedMainline runtime errors, and ended normally.
-- Prior tests verified the unified rail planner can place custom rails through robots, and rail identity tracking detects selected vanilla and custom rail geometries.
-
-### Implemented in 0.1.7 source
-
-- Four named custom **ground** rail geometries; unified custom `rail-planner` item `em-high-speed-rail`, placement costs 1/3/3/2 by geometry.
-- `data-final-fixes.lua`: four geometry-specific `fast_replaceable_group` values (`em-native-<geometry>`), vanilla-to-custom `next_upgrade` mappings, mining/visibility/collision checks, and a guard against overwriting an existing foreign upgrade chain.
-- `scripts/control.lua`: `on_marked_for_upgrade` **observes** native upgrades; it must **not cancel** native orders.
-- The **separate** `em-rail-replacement-planner` selection tool still uses the old staged mining + custom ghost fallback. Scripted Ctrl+Shift blueprint `undo_index=1` ghost joining also remains in source.
-- Rail diagnostics and runtime train/rail tracking, a cloned locomotive/pole/wagons, recipes and technology prototypes.
-
-### Not verified or not implemented
-
-- Native upgrade + Undo/Redo for `curved-rail-a`, `curved-rail-b`, `half-diagonal-rail`. Data-stage eligibility **passed**, but these were not tested by robots in the 0.1.7 supplied log.
-- Superforced blueprint `Ctrl+Shift` with native Undo/Redo, separately from the **green Upgrade Planner**.
-- Selection-tool fallback correctness, native transitions with trains occupying tracks, signalling/route integrity, inventory refunds, multiplayer or broad compatibility.
-- **No actual energy model yet**: overhead traction, real battery charging/discharging, high-speed grid, bidirectional substations, regeneration and train-mass accounting are still planned. Locomotive uses a placeholder `void` energy source.
-- Diagnostics currently poll rails each tick; optimize after verification.
-
-## 5. Resolved bug: why 0.1.6 Undo failed and 0.1.7 works
-
-**Old mistaken conclusion:** after the 0.1.3 failed green-planner test we documented native rail robot upgrades as universally unsupported. That conclusion is **false for the straight ground rail test** and must not be repeated.
-
-Research sequence:
-1. Compare **Bob's assembler** native upgrades (`fast_replaceable_group`, `next_upgrade`, common collision geometry) with our source. Bob's public repository revision inspected is different from the installed Bob's Assembly 3.0.2: cite the difference.
-2. Find a **same-type rail precedent** (Minimal Electric Rails): vanilla and custom ground rails use paired geometry-specific `fast_replaceable_group` and `next_upgrade`.
-3. Check official Factorio `EntityPrototype` and `UpgradeItemPrototype` requirements.
-4. Set matching prototype properties and stop canceling native `on_marked_for_upgrade`; test real gameplay.
-
-**0.1.6 historical experiment**: delayed straight-rail ghost recreation with `player`/`undo_index=1` allowed a superforced blueprint Undo to remove custom rails but **did not restore** the vanilla rail originals. This legacy scripted path remains experimental.
-
-**0.1.7 outcome**: native green Upgrade Planner made a reversible `upgraded-entity` transaction for 20 straight rails. No custom Undo/Redo implementation needed in that path. We changed several conditions together; the log does not prove which one alone was necessary.
-
-Full process and source references: [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md) and repository [`CONTRIBUTING.md`](../CONTRIBUTING.md). Use the [research worksheet](PROTOTYPE_RESEARCH_TEMPLATE.md) for each non-trivial future mechanic; the [completed 0.1.7 rail-upgrade record](research/rail-native-upgrade-0.1.7.md) shows the required evidence level. This is a mandatory project-wide method, not merely a lesson from the rail bug. Never replace API research with guessed flags or write scripted Undo before checking engine-native ownership.
-
-## 6. Immediate next tests and work
-
-1. Repeat **native** green Upgrade Planner -> robot upgrade -> Ctrl+Z -> Ctrl+Y for curved-A, curved-B and half-diagonal ground rails. Verify direction/connection, quality, and item counts.
-2. Test `Ctrl+Shift` blueprint superforce **separately**; do not claim the native test covers the scripted fallback.
-3. Evaluate whether the old selection-tool/staged workflow is still needed, and avoid breaking its saves or queued bot jobs before removing it.
-4. Check signals, stations, live trains, blocked/partial bot tasks, and cancellation.
-5. Trim diagnostic polling and excess logging only after focused regressions.
-6. Research native/third-party analogue for overhead power, battery and network transfer *before* new architecture or Lua code.
-
-## 7. Project invariants and evidence
-
-- Preserve native train/rail/signals/stations and vanilla rolling-stock interoperability.
-- Core dependency stays Base unless a verified technical requirement changes it; optional mod code goes under `compatibility/` with guards.
-- Do not copy code from Electrified Railways, Bob's, Minimal Electric Rails or any reference mod. Learn the prototype contract and implement independently.
-- Evidence labels: **implemented**, **API-confirmed**, **game-tested**, **inferred**, **unverified**, **planned**.
-- Source is authoritative for what exists; `docs/PROJECT_STATE.yaml` is authoritative for statuses; user logs are proof of specific tested paths. A ZIP CI pass is never proof of gameplay.
-- Material code changes must update this file and `docs/PROJECT_STATE.yaml` in the same coherent change set.
-
-## 8. Handoff protocol
-
-Read `AGENTS.md` -> this file -> `docs/PROJECT_STATE.yaml` -> `docs/RESEARCH_METHOD.md` -> `CONTRIBUTING.md` -> live source. For non-trivial mechanics, complete `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` in a new `docs/research/` record before coding. Check the active branch head and mod version. Research existing functionality **before proposing new scripts**. Test only changed behavior, report actual observations and open questions, then synchronize docs and changelog.
-
-
-## 9. Mandatory research-first contribution method
-
-Every future mechanic, compatibility change, or bug workaround must follow `AGENTS.md`, `CONTRIBUTING.md`, and `RESEARCH_METHOD.md`: define the exact player-visible test; inspect Base/native behavior; find a working same-type mod precedent; record its source ref and version; compare relevant prototype properties and runtime ownership with the official target-version API and our source; state a falsifiable hypothesis; implement the smallest independent change; test the exact path in Factorio; and synchronize project status/evidence. If no suitable analogue exists, document the search and uncertainty rather than inventing flags. Reference code is for study, not copying.
-
-The user's confirmation that "everything works" applies to the 0.1.7 test path already recorded above (20 straight ground rails via the native green Upgrade Planner, robot replacement, Ctrl+Z restore, Ctrl+Y redo). It does not silently promote untested geometries or other replacement tools to game-tested.
+[Current status](STATUS.md) · [architecture](ARCHITECTURE.md) · [build manifest](BUILD_024.yaml) · [0.1.24 gameplay](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [contributor rules](../AGENTS.md).

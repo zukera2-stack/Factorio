@@ -4,6 +4,14 @@
 -- deferred to the energy-model pass; this file only maintains valid train state
 -- and tracks which custom rail segments are adjacent to custom electric poles.
 
+local power019 = require("scripts.power_019")
+local rail_slot_debug014 = require("scripts.rail_slot_debug_014")
+local mast_preview015 = require("scripts.mast_preview_015")
+local mast_geometry016 = require("scripts.mast_geometry_016")
+local corridor_preview017 = require("scripts.catenary_corridor_017")
+local catenary_cursor018 = require("scripts.catenary_cursor_018")
+local ghost_visual023 = require("scripts.ghost_mast_023")
+
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
 local RAIL_RADIUS = 3
@@ -15,8 +23,8 @@ local RAIL_NAMES = {
     ["em-half-diagonal-high-speed-rail"] = true,
 }
 
--- Intercept only the four explicit vanilla -> ВСМ geometry mappings. Factorio's
--- native robot upgrade operation does not safely replace rail entities.
+-- The following four mappings are for the separate selection-tool fallback.
+-- Native rail Upgrade Planner and Undo/Redo work for tested straight/curved rails.
 local VANILLA_TO_CUSTOM_RAILS = {
     ["straight-rail"] = "em-high-speed-straight-rail",
     ["curved-rail-a"] = "em-curved-high-speed-rail",
@@ -43,10 +51,19 @@ local function ensure_storage()
         storage.em.pending_rail_replacements or {}
     -- Discard obsolete experimental marks; preserve the independent replacement queue.
     storage.em.blueprint_undo_join = nil
+    power019.ensure_storage()
 end
 
-script.on_init(ensure_storage)
-script.on_configuration_changed(ensure_storage)
+script.on_init(function()
+    ensure_storage()
+    power019.rebuild_all()
+    ghost_visual023.rebuild_all()
+end)
+script.on_configuration_changed(function()
+    ensure_storage()
+    power019.rebuild_all()
+    ghost_visual023.rebuild_all()
+end)
 
 -- Temporary diagnostics for blueprint rail replacement and undo/redo.
 -- These handlers observe events only; they do not change replacement behavior.
@@ -136,6 +153,7 @@ local function on_diag_marked_for_deconstruction(event)
 end
 
 local function on_diag_pre_ghost_deconstructed(event)
+    ghost_visual023.on_removed(event.ghost)
     diag_entity("on_pre_ghost_deconstructed", event, event.ghost)
 end
 
@@ -346,8 +364,11 @@ local function on_built(event)
         or "on_built_entity", event, entity)
     if not (entity and entity.valid) then return end
 
+    power019.on_built(event)
+    ghost_visual023.on_built(entity)
     if RAIL_NAMES[entity.name] then
         mark_rail(entity)
+        power019.on_rail_changed(entity)
     elseif entity.name == "em-electric-pole" then
         mark_rails_near_pole(entity)
     end
@@ -363,6 +384,8 @@ local function cleanup_train_for_entity(event)
     diag_entity(diag_name, event, entity)
     if not (entity and entity.valid) then return end
 
+    power019.on_removed(event)
+    ghost_visual023.on_removed(entity)
     if event.name == defines.events.on_robot_mined_entity
         or event.name == defines.events.on_player_mined_entity then
         process_mined_rail_replacement(event, entity)
@@ -381,6 +404,7 @@ local function cleanup_train_for_entity(event)
 
     if RAIL_NAMES[entity.name] then
         unmark_rail(entity)
+        power019.on_rail_changed(entity)
     end
 end
 
@@ -500,6 +524,8 @@ local function on_tick(event)
     -- on_configuration_changed when only runtime code changed. Initialize
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
+    power019.on_tick(event.tick)
+    ghost_visual023.on_tick(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
@@ -572,3 +598,43 @@ script.on_event(defines.events.on_player_selected_area, on_player_selected_area)
 script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconstruction)
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_tick, on_tick)
+
+-- Read-only diagnostic for the unpowered 0.1.9 visual catenary graph.
+commands.add_command("em-35kv-status", "Show 35kV test graph; no MW transfer implemented.", function(event)
+    local player = event.player_index and game.get_player(event.player_index)
+    if player and player.valid then power019.status(player) end
+end)
+
+-- 0.1.14: diagnostic only. No automatic snapping, entity creation or Undo changes.
+commands.add_command("em-35kv-slots", "Mark engine rail-signal slots near a selected ВСМ rail for 15 seconds.", function(event)
+    local player = event.player_index and game.get_player(event.player_index)
+    if player and player.valid then rail_slot_debug014.show(player) end
+end)
+
+-- 0.1.15: read-only candidate preview; does not build/teleport or join Undo.
+commands.add_command("em-35kv-preview", "Show 15-second mast position and facing candidates (optional offset 0.5..3).", function(event)
+    local player = event.player_index and game.get_player(event.player_index)
+    if player and player.valid then mast_preview015.show(player, event) end
+end)
+
+-- 0.1.16: visual geometry from native rail ends, one ghost sprite only.
+-- Existing rail/Undo machinery and real pole placement remain unchanged.
+commands.add_command("em-35kv-geometry", "Read-only rail-end mast candidates: [0.5..3] [index 1..4].", function(event)
+    local player = event.player_index and game.get_player(event.player_index)
+    if player and player.valid then mast_geometry016.show(player, event) end
+end)
+
+-- 0.1.17: on-demand engine-derived HSR corridor slot overlay. Purely observational.
+commands.add_command("em-35kv-corridor", "Read-only native signal-slot markers on connected ВСМ rails: [radius 8..32].", function(event)
+    local player = event.player_index and game.get_player(event.player_index)
+    if player and player.valid then corridor_preview017.show(player, event) end
+end)
+
+-- 0.1.23: soft short-lived rail-slot rings only while holding actual mast item.
+-- Never intercept plain LMB or native Upgrade Planner/Undo callbacks.
+script.on_nth_tick(12, function(_)
+    catenary_cursor018.refresh_all()
+end)
+script.on_event("em-place-catenary-native", function(event)
+    catenary_cursor018.on_place(event)
+end)

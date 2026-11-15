@@ -4,8 +4,9 @@
 -- API verification notes (2.1.20):
 -- - Locomotives use energy_source :: BurnerEnergySource or VoidEnergySource
 -- - Rail types are separate: straight-rail, curved-rail, half-diagonal-rail
--- - No electric-pole entity exists in 2.1 base data — poles are visual only.
--- - Train regenerative braking implemented via runtime events (on_tick)
+-- - Vanilla electric-pole exists. Existing em-electric-pole is on the ordinary grid.
+-- - New isolated 35kV supports are defined separately in prototypes/power_019.lua.
+-- - Train regeneration is not implemented; on_tick only observes rail/speed.
 
 data:extend({
     {

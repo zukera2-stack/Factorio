@@ -22,7 +22,17 @@ The root Lua files are thin entry points where practical. Implementation is kept
 - `docs/PROJECT_STATE.yaml` — machine-readable accepted decisions and implementation status.
 - `AGENTS.md` — instructions for AI contributors.
 
-The prototype and runtime implementations are intentionally still single files. They were moved without semantic refactoring to establish stable paths first. Split them incrementally only after mapping dependencies and preserving load order.
+The original core rail logic remains in stable modules; the 35 kV visual subsystem now has its own prototype and runtime modules. Keep the native engine's responsibility for placement and train signaling separate from cosmetic LuaRendering objects.
+
+## Current 0.1.24 catenary visual subsystem
+
+- `prototypes/power_019.lua`: clones a real `electric-pole` and uses one native steel-lattice shaft (`pole-native-mast-024.png`) and an existing shadow in `pictures`, with exactly one wire connection point matching `direction_count=1`. The entity has no native wire reach or MW transfer.
+- `scripts/power_019.lua`: registers placed masts and substations, renders **only** eight cantilever/insulator overlays plus cosmetic contact/messenger/feeder connections. Some contact graph drawing is approximate and must be visually reviewed next.
+- `scripts/mast_facing_022.lua`: projects the mast location onto a sampled RailEnd path for the 8-way facing; does not physically rotate or relocate native poles.
+- `scripts/ghost_mast_023.lua`: ghost-tied blue arm overlay, allows Factorio engine to draw its own native shaft ghost and handle native construction/Undo.
+- `scripts/catenary_cursor_018.lua`: native player cursor construction and advisory muted circles. No rail-signal-proxy placement.
+- `graphics/entity/35kv/pole-arm-*-024.png`: 8 512×384 RGBA directional C cantilevers, `higher-object-above` at offset `{0,-2.53125}`; original `pole-*-012.png` full frames retained.
+- [Game-accepted 0.1.24 scope](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md). **Electricity `transfer_MW=0`.**
 
 ## Intended module boundaries
 

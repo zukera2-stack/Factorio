@@ -2,9 +2,14 @@ name: Build Factorio mod ZIP
 
 on:
   push:
-    branches: [main, diagnostic/blueprint-rail-undo, test/undo-stabilization-018]
+    branches: [main, diagnostic/blueprint-rail-undo, test/undo-stabilization-018, 'feature/**']
     paths:
       - "ElectrifiedMainline/**"
+      - "tests/**"
+      - "scripts/sprites/**"
+      - "scripts/verify_013_payload.py"
+      - "docs/builds/013-payload.json"
+      - "art/sprites/**"
       - ".github/workflows/build-mod.yml"
   pull_request:
     branches: [main]
@@ -33,6 +38,79 @@ jobs:
           while IFS= read -r -d '' file; do
             luac5.2 -p "$file"
           done < <(find ElectrifiedMainline -type f -name '*.lua' -print0)
+          lua5.2 tests/35kv_topology.lua
+          lua5.2 tests/35kv_facing_022.lua
+          lua5.2 tests/35kv_ghost_023.lua
+          if grep -Eq '"version": "0.1.(1(3|4|5|6|7|8)|2[2-4])"' ElectrifiedMainline/info.json; then
+            lua5.2 tests/35kv_visual_013.lua
+            if grep -Eq '"version": "0.1.(1(4|5|6|7|8)|2[2-4])"' ElectrifiedMainline/info.json; then
+              lua5.2 tests/35kv_slots_014.lua
+            fi
+            if grep -Eq '"version": "0.1.(1(5|6|7|8)|2[2-4])"' ElectrifiedMainline/info.json; then
+              lua5.2 tests/35kv_preview_015.lua
+            fi
+            if grep -Eq '"version": "0.1.(1(6|7|8)|2[2-4])"' ElectrifiedMainline/info.json; then
+              lua5.2 tests/35kv_geometry_016.lua
+            fi
+            if grep -Eq '"version": "0.1.(1(7|8)|2[2-4])"' ElectrifiedMainline/info.json; then
+              lua5.2 tests/35kv_corridor_017.lua
+            fi
+            if grep -Eq '"version": "0.1.(18|2[2-4])"' ElectrifiedMainline/info.json; then
+              lua5.2 tests/35kv_cursor_build_018.lua
+            fi
+          else
+            lua5.2 tests/35kv_curve_topology.lua
+          fi
+
+      - name: Set up Python for experimental sprite atlas
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate 0.1.12 sprite layers and test image QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          info=json.loads(Path("ElectrifiedMainline/info.json").read_text())
+          if info["version"] in ("0.1.11","0.1.12"):
+              assert Path("scripts/sprites/game_test_pack.py").is_file()
+          PY
+          if grep -Eq '"version": "0.1.1(1|2)"' ElectrifiedMainline/info.json; then
+            python -m pip install -r scripts/sprites/requirements.txt
+            python scripts/sprites/game_test_pack.py --mode demo --mod-dir ElectrifiedMainline --out build/sprites/game-test
+            if grep -q '"version": "0.1.12"' ElectrifiedMainline/info.json; then
+              python scripts/sprites/split_012.py --graphics-dir ElectrifiedMainline/graphics/entity/35kv --report build/sprites/game-test/split-012.json
+            fi
+            python -m unittest discover -s scripts/sprites -p 'test_*.py' -v
+          fi
+
+      - name: Validate 0.1.23 icon PNG contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -Eq '"version": "0.1.2[34]"' ElectrifiedMainline/info.json; then
+            python3 - <<'PY'
+          import struct
+          from pathlib import Path
+          icon=Path("ElectrifiedMainline/graphics/icons/35kv-mast-south-icon-64.png")
+          data=icon.read_bytes()
+          assert data[:8]==b"\x89PNG\r\n\x1a\n"
+          width,height,bitdepth,color=struct.unpack(">IIBB",data[16:26])
+          assert (width,height,bitdepth,color)==(64,64,8,6)
+          print("0.1.23 mast icon PNG: valid 64x64 RGBA")
+          PY
+          fi
+
+      - name: Validate 0.1.24 split mast alpha and exact asset hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q '"version": "0.1.24"' ElectrifiedMainline/info.json; then
+            python3 scripts/sprites/verify_024.py
+          fi
 
       - name: Validate metadata and build archive
         shell: bash
@@ -63,6 +141,11 @@ jobs:
 
           output_dir = Path("dist")
           output_dir.mkdir(parents=True, exist_ok=True)
+          # Historical ZIPs are tracked in this repository. Do not include
+          # them in the release artifact for the version being built.
+          # This deletion affects only the checkout in the CI runner.
+          for stale_archive in output_dir.glob("ElectrifiedMainline_*.zip"):
+              stale_archive.unlink()
           archive = output_dir / f'{info["name"]}_{info["version"]}.zip'
           with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
               for path in sorted(mod_dir.rglob("*")):
@@ -80,15 +163,41 @@ jobs:
               if packaged_info != info:
                   raise SystemExit("ERROR: packaged info.json differs from source")
 
+          if info["version"] == "0.1.11":
+              expected = (
+                  "graphics/entity/35kv/pole-4dir-hr.png",
+                  "graphics/entity/35kv/pole-shadow-4dir-hr.png",
+                  "graphics/entity/35kv/contact-wire-hr.png",
+              )
+              for suffix in expected:
+                  if root + suffix not in names:
+                      raise SystemExit("ERROR: 0.1.11 sprite missing from mod ZIP: " + suffix)
+              if len([n for n in names if n.endswith("pole-4dir-hr.png")]) != 1:
+                  raise SystemExit("ERROR: duplicate pole atlas")
+          if info["version"] == "0.1.12":
+              for suffix in ("pole-mast-hr.png","pole-arm-hr.png","pole-shadow-static-hr.png","contact-wire-hr.png"):
+                  name=root+"graphics/entity/35kv/"+suffix
+                  if names.count(name)!=1:
+                      raise SystemExit("ERROR: missing/duplicate 0.1.12 sprite "+name)
           print(f"Built and validated {archive}")
           print(f"Entries: {len(names)}")
           print(f"Mod: {info['name']} {info['version']} / Factorio {info['factorio_version']}")
           PY
 
+      - name: Verify exact user-archive 0.1.13 payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q '"version": "0.1.13"' ElectrifiedMainline/info.json; then
+            python3 scripts/verify_013_payload.py
+          fi
+
       - name: Upload test ZIP
         uses: actions/upload-artifact@v4
         with:
           name: ElectrifiedMainline-test-build
+          # The build step removes obsolete archives; assert the artifact
+          # contains only the ZIP matching info.json.
           path: dist/ElectrifiedMainline_*.zip
           if-no-files-found: error
           retention-days: 30

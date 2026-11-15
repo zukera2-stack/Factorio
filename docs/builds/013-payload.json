@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "version": "0.1.13",
+  "source_archive": "ElectrifiedMainline_0.1.13(2).zip",
+  "source_archive_sha256": "e89d803dcd87252c50786949f53bb028f64af2f9df0e6daa16b3e29fbb959174",
+  "note": "Immutable user-uploaded archive payload. Hashes cover decompressed files, not ZIP container metadata. No gameplay claim.",
+  "files": {
+    "ElectrifiedMainline/TEST_AUTO_ORIENT_012.txt": {
+      "bytes": 1976,
+      "sha256": "5c7f52339f818e7a7570fcfce671364ac7d7e9d336d0ecc06136c29d7c3a3c80"
+    },
+    "ElectrifiedMainline/TEST_HOTFIX_013.txt": {
+      "bytes": 1440,
+      "sha256": "006cae9f86f6ae0616b172e196b71399b416a091d6cecafb77b826009bc83df5"
+    },
+    "ElectrifiedMainline/TEST_UNDO_017.txt": {
+      "bytes": 1197,
+      "sha256": "4ae1f18cef8594e5951338d939b4bee5122ebfc551cb3616e4685aa5e679fac1"
+    },
+    "ElectrifiedMainline/TEST_UNDO_018.txt": {
+      "bytes": 1853,
+      "sha256": "d29b9f6690b1f93efc868ca8e1425e2bf079974ee4c03ffc5f927211d47b1cde"
+    },
+    "ElectrifiedMainline/compatibility/README.md": {
+      "bytes": 849,
+      "sha256": "1c92750630c80da368e136f8895438ed5bde987220c9d1358a75dfd5777f4b2e"
+    },
+    "ElectrifiedMainline/control.lua": {
+      "bytes": 141,
+      "sha256": "e236c9fffd84d43b99d61c1841439ef92881310227d43b431ffec67f238ba5e8"
+    },
+    "ElectrifiedMainline/data-final-fixes.lua": {
+      "bytes": 7763,
+      "sha256": "da90cd5ac6227fac05881e6cfbec300a62ba5bba2b112165d4cc0e540628ac93"
+    },
+    "ElectrifiedMainline/data-updates.lua": {
+      "bytes": 293,
+      "sha256": "94e798310def4d79811e120b8d4d96b89742c50fecf5d6d6faeb36ac6b10adcf"
+    },
+    "ElectrifiedMainline/data.lua": {
+      "bytes": 178,
+      "sha256": "a0dffc7d633f81ff4e06cfe4655027cbb0f2093dbcc0d0afe1cde1814d462a89"
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/contact-wire-hr.png": {
+      "bytes": 1745,
+      "sha256": "df922489d8c41b11e3074116017e9996bc47f733fba9860e08605a9036887d3a",
+      "dimensions": [
+        512,
+        48
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/hidden-pole-012.png": {
+      "bytes": 70,
+      "sha256": "c2153f77e11087fcb078ae38527fa83bef29791e3700e30cc87fec4405a66d0f",
+      "dimensions": [
+        1,
+        1
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-4dir-hr.png": {
+      "bytes": 130271,
+      "sha256": "0c15cd55f9c5e75a0c3ae7dc415dfd402a5ab117dfd4d19971e80365c5f0cc3b",
+      "dimensions": [
+        1024,
+        768
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-east-012.png": {
+      "bytes": 62036,
+      "sha256": "3365cfd6bf2c310024c3246ae4d54ca576590cd20aeefc114fa8484ba460af68",
+      "dimensions": [
+        512,
+        384
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-north-012.png": {
+      "bytes": 47992,
+      "sha256": "1026994ea4bb04e2019d6cdce473a831f210bbd09904e4ae040a792ea1b6191e",
+      "dimensions": [
+        512,
+        384
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-northeast-012.png": {
+      "bytes": 55513,
+      "sha256": "cd61380cde6b75ed2db5094122ca2a85a3a28810f23ce12c74fbfe6be8befc7b",
+      "dimensions": [
+        512,
+        384
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-northwest-012.png": {
+      "bytes": 56048,
+      "sha256": "c2ea52253b5dddd51e0ce8b7520f06c7c8142a7a7f28d4b15e190f9454fd29b9",
+      "dimensions": [
+        512,
+        384
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-shadow-4dir-hr.png": {
+      "bytes": 8193,
+      "sha256": "35c04b2668756a053113f2d23d5e947295fdacb73ed0c48762717b858dfe4630",
+      "dimensions": [
+        1024,
+        768
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-south-012.png": {
+      "bytes": 48134,
+      "sha256": "6c2c3d94acc57862febb469c2c64a390e4815fe284a1ec19c4952e0be099d93d",
+      "dimensions": [
+        512,
+        384
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-southeast-012.png": {
+      "bytes": 55981,
+      "sha256": "42314ae7575370cf7f2f33384481d149a045ef03f902a5b834f18fc522eeea76",
+      "dimensions": [
+        512,
+        384
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-southwest-012.png": {
+      "bytes": 55370,
+      "sha256": "8cd1ef1b94caeb37ab929df4e06025d11ec64a76ca98764680670c3c0178a37d",
+      "dimensions": [
+        512,
+        384
+      ]
+    },
+    "ElectrifiedMainline/graphics/entity/35kv/pole-west-012.png": {
+      "bytes": 62303,
+      "sha256": "0599d0a4c7d541551b79374d1a425e630a06814b4bbc518fb393123da3ab4078",
+      "dimensions": [
+        512,
+        384
+      ]
+    },
+    "ElectrifiedMainline/info.json": {
+      "bytes": 434,
+      "sha256": "1318fb6a23c81a05f2091c54ead7d383a2b8ad719ecc1d6223a2920ee5c76246"
+    },
+    "ElectrifiedMainline/locale/en/en.cfg": {
+      "bytes": 5146,
+      "sha256": "73cbe1f1808cb81124d6c4434271d92c82fb04ebe534b9eb76da496dd4ebbbd9"
+    },
+    "ElectrifiedMainline/locale/ru/ru.cfg": {
+      "bytes": 7664,
+      "sha256": "93c3b6e9c152e1e25a58d21e75cda269eb55da343a898cb98d62694ad95a9472"
+    },
+    "ElectrifiedMainline/prototypes/README.md": {
+      "bytes": 883,
+      "sha256": "0710b6caf7c4d3aab37edefcc6f98c2ceb4c3ddebc9ab3f1f6eaeee34e5a9102"
+    },
+    "ElectrifiedMainline/prototypes/bootstrap.lua": {
+      "bytes": 18172,
+      "sha256": "f312523c4297b473fecefddfa9617e91cfe852fb80fd93fab162332749fa5791"
+    },
+    "ElectrifiedMainline/prototypes/power_019.lua": {
+      "bytes": 6272,
+      "sha256": "8321d154496712665cf989b1ffb39beea7100136ea8c791cb41106d8dcd9ac6b"
+    },
+    "ElectrifiedMainline/scripts/README.md": {
+      "bytes": 597,
+      "sha256": "da5e0879de184557c1e93be24fe44b8cea5135da44cea240affc5971732239aa"
+    },
+    "ElectrifiedMainline/scripts/control.lua": {
+      "bytes": 22164,
+      "sha256": "436050e25f2773595981fc1e86ffe8f7c0861d97a3dd78132d72a05d343fa1c0"
+    },
+    "ElectrifiedMainline/scripts/overhead_geometry_012.lua": {
+      "bytes": 2440,
+      "sha256": "4383af58d795fdc7a7ab51f53579178b2f38d2427e2f71819a7c94093357fb85"
+    },
+    "ElectrifiedMainline/scripts/power_019.lua": {
+      "bytes": 17137,
+      "sha256": "f4f4bd211c4d7143f9e807c70bbf6f10b165fa588c8ba25687d6b664bd4637fe"
+    },
+    "ElectrifiedMainline/scripts/power_topology.lua": {
+      "bytes": 1587,
+      "sha256": "1a612e60d9bbb42d0451b5d35c7d3350456f88a583caafd699dc17481a9cc28c"
+    }
+  }
+}
