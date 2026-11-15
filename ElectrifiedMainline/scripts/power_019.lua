@@ -2,6 +2,7 @@
 local M = {}
 local geometry = require("scripts.power_topology")
 local view = require("scripts.overhead_geometry_012")
+local face022 = require("scripts.mast_facing_022")
 local POLE,SUB = "em-35kv-catenary-pole","em-35kv-traction-substation"
 local SPAN,RADIUS = 16,3
 local RAILS = {"em-high-speed-straight-rail","em-curved-high-speed-rail",
@@ -92,7 +93,19 @@ local function register(s,e)
         n.tx,n.ty,n.side,rail=rail_tangent(e)
         n.rail_adjacent=n.tx~=nil
         n.rail_id=rail and rail.unit_number or nil
-        n.face=view.face(e.position,rail and rail.position)
+        -- The visual G-arm must face the closest point of running track,
+        -- not the arbitrary entity center of a curved/half-diagonal rail.
+        -- Rail tangent and contact-line graph semantics remain unchanged.
+        local rails=e.surface.find_entities_filtered{
+            position=e.position,radius=RADIUS,name=RAILS,force=e.force}
+        local reference=face022.nearest(e.position,rails,
+            defines.rail_direction.front,defines.rail_direction.back,
+            defines.rail_layer.ground)
+        local target=reference and reference.point or (rail and rail.position)
+        n.face=view.face(e.position,target)
+        n.face_source=reference and reference.method or "no_rail_default"
+        n.face_rail_name=reference and reference.rail_name or nil
+        n.face_target=target and {x=target.x,y=target.y} or nil
     end
     s.nodes[id]=n
 end
@@ -366,6 +379,17 @@ function M.on_built(event)
         if player and player.valid then player.print({"message.em-35kv-no-rail"}) end
     end
     refresh(e.surface,e.force,e.position)
+    if e.name==POLE then
+        local n=s.nodes[e.unit_number]
+        if n then
+            local target=n.face_target
+            log(string.format(
+                "[ElectrifiedMainline][face022] pole=(%.3f,%.3f) face=%s via=%s rail=%s target=%s",
+                n.x,n.y,tostring(n.face),tostring(n.face_source),
+                tostring(n.face_rail_name),target and
+                string.format("(%.3f,%.3f)",target.x,target.y) or "nil"))
+        end
+    end
 end
 function M.on_removed(event)
     local e=event.entity

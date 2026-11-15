@@ -1,3 +1,9 @@
+## 2026-11-15 — 0.1.21 game-test; begin isolated 0.1.22 visual-facing correction (not a release)
+
+- User screenshots and log confirm actual Factorio 2.1.20 game load of C mast art (0.1.21), but multiple curved/half-diagonal cases point G-arms away from the nearby rail. [Game report](docs/tests/catenary-C-art-0.1.21-facing-2026-11-15.md).
+- Source analysis identifies facing by `rail LuaEntity.position`, not by nearest running-line point. New read-only helper `mast_facing_022.lua` projects to RailEnd chord or sampled curve; changes only SpritePrototype-facing selection in `power_019.lua`. No placement filters or script placement adjustments.
+- Added mocked facing regression and diagnostic logs. **Factorio runtime of revised algorithm not tested.** Exact 0.1.21 C-art binaries remain outside GitHub; this commit is NOT yet a reproducible 0.1.22 C-art ZIP. Main stable 0.1.8 unchanged.
+
 ## 2026-11-15 — local 0.1.21 art ZIP ready for user Factorio test (DOCS only in GitHub)
 
 - Concept C eight-direction sprite assets generated locally from selected art, with SOUTH=east-like and NORTH=west-like screen projection. Local ZIP with replacement 512×384 RGBA sprites, new base shadow, version bump 0.1.21 and tester memo successfully verified for archive/image integrity.
