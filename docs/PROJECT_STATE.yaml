@@ -858,4 +858,10 @@ visual_wire_025:
   visual_limitations: perspective_not_physical_and_parallel_link_regression_needed
   source_qa: tests/35kv_wire_025.lua
   game_test: pending
+  github_ci_run_id: 43750162585
+  github_ci_status: success
+  github_ci_artifact_id: 14175542846
+  github_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43750162585/artifacts/14175542846
+  documentation_ci_run_id: 43750162313
+  documentation_ci_status: success
   main_version: '0.1.24'

@@ -1,3 +1,8 @@
+## 2026-11-15 — 0.1.25 wire preview CI pass
+
+- [Build #43750162585](https://github.com/zukera2-stack/Factorio/actions/runs/43750162585) PASS, [mod ZIP artifact #14175542846](https://github.com/zukera2-stack/Factorio/actions/runs/43750162585/artifacts/14175542846). Offline new wire profile and existing Lua regressions pass; docs CI #43750162313 PASS.
+- Gameplay rendering, P2 visual consistency on curves and impact of ~19 render objects per contact span are **not game tested**. `main` 0.1.24 unchanged.
+
 ## 0.1.25 — experimental suspended decorative catenary wire (game-test pending)
 
 - Contact wire still follows existing rail-side node graph; each visual span now has a thin copper/steel contact line and a slightly sagging upper messenger with three short vertical droppers, on both straight and curved spans.
