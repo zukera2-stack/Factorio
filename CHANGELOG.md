@@ -1,3 +1,12 @@
+## 0.1.23 — Visual polish (experimental GitHub Actions ZIP; game pending)
+
+- Generate 64x64 transparent catenary icon from the **south** of the existing approved C sprites, use it for the item and entity.
+- Add native cursor placement visualization of the southern C mast without touching the real world's invisible electric-pole picture. Appearance must be validated in Factorio 2.1.20.
+- Draw 8-way blue translucent C sprites for actual `entity-ghost` entities via LuaRendering, auto-destroy with ghost target and restore across mod/save migration. No gameplay changes to ghost build/robot/Undo.
+- Replace bright square marker overlays with muted green/red/amber/magenta open circular rings, leaving READY/BLOCKED/OUT_OF_REACH/ERROR classification and Alt+LMB untouched.
+- Add mocked ghost lifecycle regression, icon PNG structural QA and [API research](docs/research/catenary-ghost-cursor-0.1.23.md). CI/static pass **does not** prove gameplay.
+- `main` 0.1.8 untouched; power 0 MW.
+
 ## 2026-11-15 — cleanup CI pass and corrected history links (docs-only)
 
 - [Post-cleanup ZIP build #43727816486](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486) PASS, artifact [#14167038465](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465). Exactly the same 0.1.22 playable Lua and current C graphics, with obsolete assets and test memos excluded.

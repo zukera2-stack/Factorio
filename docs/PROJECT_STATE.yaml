@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-facing-geometry-022
-  feature_version: "0.1.22" # GitHub source with authentic 0.1.21 C sprites and facing experiment
-  feature_status: 022_github_source_exact_C_art_committed_ci_and_factorio_test_pending
+  active_feature_branch: feature/catenary-visual-polish-023
+  feature_version: "0.1.23" # visuals: C icon, cursor, ghosts, rings
+  feature_status: 023_visual_polish_ghosts_cursor_icon_rings_ci_and_game_test_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,12 +22,12 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.22"
+  mod_version: "0.1.23"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
   user_installation_label: "2.1.20b"
-  last_state_update: "2026-11-14"
+  last_state_update: "2026-11-15"
   documentation_audit: updated_015_installation_ci_evidence_and_historical_handoff_2026_11_14
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
@@ -752,3 +752,24 @@ repository_cleanup_2026_11_15:
   post_cleanup_ci_artifact_id: 14167038465
   post_cleanup_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465
   post_cleanup_ci_source_sha: 59d8e362ccefeb36447b62808a18bd65563bc5d2
+
+visual_polish_023:
+  source_branch: feature/catenary-visual-polish-023
+  mod_version: "0.1.23"
+  basis: working_022_8_c_mast_sprite_rotation
+  icon: ElectrifiedMainline/graphics/icons/35kv-mast-south-icon-64.png
+  icon_source: ElectrifiedMainline/graphics/entity/35kv/pole-south-012.png
+  cursor_visualization: placeable_position_visualization
+  native_real_pole_picture: unchanged_hidden
+  ghost_module: ElectrifiedMainline/scripts/ghost_mast_023.lua
+  ghost_tint: blue_translucent
+  ghost_events: [built, robot_built, script_built, ghost_deconstructed, rebuild_all, prune]
+  marker_shape: faint_unfilled_circles
+  marker_semantics: [READY, BLOCKED, OUT_OF_REACH, ERROR]
+  changed_placement: false
+  changed_orientation_022: false
+  changed_undo: false
+  game_status: UNVERIFIED
+  github_ci_status: pending
+  test: tests/35kv_ghost_023.lua
+  api_research: docs/research/catenary-ghost-cursor-0.1.23.md

@@ -463,4 +463,14 @@ function M.status(player)
             return count end)() or 0).." stale_nodes="..stale..
         " energized=NO transfer_MW=0 (visual only)")
 end
+-- Share the same RailEnd projection with non-native ghost images.
+-- This does not mutate real poles or their contact graph.
+function M.facing_at(entity)
+    local rails=entity.surface.find_entities_filtered{
+        position=entity.position,radius=RADIUS,name=RAILS,force=entity.force}
+    local reference=face022.nearest(entity.position,rails,
+        defines.rail_direction.front,defines.rail_direction.back,
+        defines.rail_layer.ground)
+    return view.face(entity.position,reference and reference.point)
+end
 return M

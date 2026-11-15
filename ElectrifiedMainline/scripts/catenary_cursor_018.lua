@@ -100,10 +100,10 @@ function M.classify(player,point)
 end
 
 local COLORS={
-    READY={r=0.10,g=1,b=0.38},
-    BLOCKED={r=1,g=0.20,b=0.19},
-    OUT_OF_REACH={r=1,g=0.73,b=0.18},
-    ERROR={r=1,g=0.25,b=1}
+    READY={r=0.28,g=0.77,b=0.34},
+    BLOCKED={r=0.84,g=0.29,b=0.27},
+    OUT_OF_REACH={r=0.82,g=0.62,b=0.28},
+    ERROR={r=0.70,g=0.42,b=0.85}
 }
 
 function M.show_held(player)
@@ -113,19 +113,13 @@ function M.show_held(player)
     for _,point in ipairs(candidates) do
         local color=COLORS[M.classify(player,point)]
         local x,y=point.position.x,point.position.y
-        -- Subtle ground tiles, styled after signal availability cells.
-        rendering.draw_rectangle{
-            surface=player.surface,left_top={x=x-0.33,y=y-0.33},
-            right_bottom={x=x+0.33,y=y+0.33},
-            color={r=color.r,g=color.g,b=color.b,a=0.16},
-            filled=true,draw_on_ground=true,
-            time_to_live=17,players={player}
-        }
-        rendering.draw_rectangle{
-            surface=player.surface,left_top={x=x-0.33,y=y-0.33},
-            right_bottom={x=x+0.33,y=y+0.33},
-            color={r=color.r,g=color.g,b=color.b,a=0.85},
-            width=1.8,draw_on_ground=true,
+        -- 0.1.23: soft, unfilled rings instead of glaring ground squares.
+        -- Only a diagnostic overlay; it never changes native placement.
+        rendering.draw_circle{
+            surface=player.surface,target={x=x,y=y},
+            radius=0.28,width=1.5,
+            color={r=color.r,g=color.g,b=color.b,a=0.54},
+            filled=false,draw_on_ground=true,
             time_to_live=17,players={player}
         }
     end

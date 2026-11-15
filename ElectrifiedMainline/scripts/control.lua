@@ -10,6 +10,7 @@ local mast_preview015 = require("scripts.mast_preview_015")
 local mast_geometry016 = require("scripts.mast_geometry_016")
 local corridor_preview017 = require("scripts.catenary_corridor_017")
 local catenary_cursor018 = require("scripts.catenary_cursor_018")
+local ghost_visual023 = require("scripts.ghost_mast_023")
 
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
@@ -56,10 +57,12 @@ end
 script.on_init(function()
     ensure_storage()
     power019.rebuild_all()
+    ghost_visual023.rebuild_all()
 end)
 script.on_configuration_changed(function()
     ensure_storage()
     power019.rebuild_all()
+    ghost_visual023.rebuild_all()
 end)
 
 -- Temporary diagnostics for blueprint rail replacement and undo/redo.
@@ -150,6 +153,7 @@ local function on_diag_marked_for_deconstruction(event)
 end
 
 local function on_diag_pre_ghost_deconstructed(event)
+    ghost_visual023.on_removed(event.ghost)
     diag_entity("on_pre_ghost_deconstructed", event, event.ghost)
 end
 
@@ -361,6 +365,7 @@ local function on_built(event)
     if not (entity and entity.valid) then return end
 
     power019.on_built(event)
+    ghost_visual023.on_built(entity)
     if RAIL_NAMES[entity.name] then
         mark_rail(entity)
         power019.on_rail_changed(entity)
@@ -380,6 +385,7 @@ local function cleanup_train_for_entity(event)
     if not (entity and entity.valid) then return end
 
     power019.on_removed(event)
+    ghost_visual023.on_removed(entity)
     if event.name == defines.events.on_robot_mined_entity
         or event.name == defines.events.on_player_mined_entity then
         process_mined_rail_replacement(event, entity)
@@ -519,6 +525,7 @@ local function on_tick(event)
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
     power019.on_tick(event.tick)
+    ghost_visual023.on_tick(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
@@ -623,7 +630,7 @@ commands.add_command("em-35kv-corridor", "Read-only native signal-slot markers o
     if player and player.valid then corridor_preview017.show(player, event) end
 end)
 
--- 0.1.18: draw short-lived native-slot-origin squares only when actual mast held.
+-- 0.1.23: soft short-lived rail-slot rings only while holding actual mast item.
 -- Never intercept plain LMB or native Upgrade Planner/Undo callbacks.
 script.on_nth_tick(12, function(_)
     catenary_cursor018.refresh_all()

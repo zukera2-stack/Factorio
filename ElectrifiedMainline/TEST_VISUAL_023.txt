@@ -1,0 +1,21 @@
+ElectrifiedMainline 0.1.23 — VISUAL POLISH GAME TEST
+
+Base: 0.1.22 C eight-direction mast sprites; no gameplay placement changes.
+
+1. Install ONLY ElectrifiedMainline_0.1.23.zip, use a COPY of save ВСМ.zip.
+2. Check 64x64 35kV mast icon in inventory/toolbar. It is from SOUTH C mast.
+3. Hold mast item: look for mast placement visualization under mouse (southern
+   C preview), rather than shadow alone. Actual pole must still face railway.
+4. With mast held: green/red/amber/magenta rail slots are faint outlined
+   CIRCLES, not bright filled squares. They are advisory, not build permissions.
+5. Shift+LMB place a GHOST; it should show translucent blue C mast facing track.
+   Also test blueprint ghosts, curve A/B, half diagonals, and parallel tracks.
+6. Have robots build ghost: ghost image must go away; built full-color C mast
+   appears ONLY ONCE. Check no duplicate mast and no stuck phantom overlays.
+7. Cancel ghost manually, Ctrl+Z/Ctrl+Y, save/reload several pending ghosts.
+8. Test normal LMB, Alt+LMB, upgrade planner, and live masts on both sides.
+9. Send screenshots with no held tool (to hide markers) and factorio-current.log.
+
+UNVERIFIED in game: native placeable_position_visualization on Factorio 2.1.20,
+visual ghost lifecycle, circles. GitHub Actions passing is static verification.
+No traction MW, signal proxies, or Undo/ghost construction mechanics added.

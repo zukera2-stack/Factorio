@@ -33,6 +33,18 @@ catenary.connection_points = {table.deepcopy(catenary.connection_points[1])}
 -- Hide only its ordinary picture; render the arm via runtime SpritePrototypes
 -- selected from nearby high-speed rail geometry. Signal prototypes stay untouched.
 local graphics = "__ElectrifiedMainline__/graphics/entity/35kv/"
+local mast_icon = "__ElectrifiedMainline__/graphics/icons/35kv-mast-south-icon-64.png"
+-- The native entity must stay hidden after construction: Lua draws the
+-- correctly facing C mast. This independent sprite is for the build cursor.
+catenary.placeable_position_visualization = {
+    filename = graphics .. "pole-south-012.png",
+    width = 512, height = 384, scale = 0.5,
+    shift = {0,-2.53125},
+    tint = {r=0.75,g=0.92,b=1,a=0.62},
+}
+catenary.icons = nil
+catenary.icon = mast_icon
+catenary.icon_size = 64
 catenary.pictures = {layers = {
     {filename = graphics .. "hidden-pole-012.png", width = 1,
         height = 1, direction_count = 1},
@@ -100,7 +112,7 @@ data:extend({
     },
     {
         type = "item", name = "em-35kv-catenary-pole",
-        icon = "__base__/graphics/icons/medium-electric-pole.png",
+        icon = mast_icon,
         icon_size = 64, subgroup = "energy",
         order = "a[electric-pole]-z[35kv-catenary]",
         stack_size = 50, place_result = "em-35kv-catenary-pole",

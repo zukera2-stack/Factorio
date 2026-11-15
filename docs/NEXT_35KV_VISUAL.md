@@ -1,15 +1,13 @@
-> **After repository audit:** latest cleaned 0.1.22 build: [Actions #43727816486](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465) (PASS). All eight C sprites + shadow, rendering code and facing math untouched, 21 redundant source/archive/atlas/old instructions removed from active tree. Original assets still in Git history; [audit](REPOSITORY_AUDIT_2026-11-15.md). User testing earlier artifact #14166570620 may continue, since the playable code/PNG have not changed.
+# 0.1.23 next game test: ghost, cursor icon, quiet circles
 
-> **2026-11-15 repository audit:** Current 0.1.22 code and all 8 C sprites retained. Raw art / historical 0.1.21 archive / outdated in-ZIP test memos removed only from active tree (Git history preserved); current mod includes TEST_FACING_022.txt. [Audit](REPOSITORY_AUDIT_2026-11-15.md).
+Branch `feature/catenary-visual-polish-023`; source version 0.1.23, based on tested 0.1.22 C sprites and RailEnd facing. User screenshot `2026-11-15_18-15-24.png` shows very vivid green/red square overlays and invisible ghost/build cursor shape. Latest requested changes are visual only.
 
-# HANDOFF: 0.1.22 GitHub C sprite art + experimental facing correction
+- Inventory item/icon from south C sprite; 64x64 RGBA, also electric-pole entity icon.
+- Native cursor placement preview via `placeable_position_visualization` using south C sprite. Normal built pole `pictures` remains hidden, so eight LuaRendered sprites cannot be doubled. **API exists, game display still to test**.
+- Actual `entity-ghost` visual via `scripts/ghost_mast_023.lua`: blue-tinted same 8 sprites, anchored to actual ghost, auto removed when ghost destroyed, rebuild existing ghosts on save migration.
+- Subdued unfilled circles instead of green/red/amber/magenta squares. All marker placement semantics stay the same.
+- New tests: `tests/35kv_ghost_023.lua`, icon structural PNG QA, packaging CI. No Factorio gameplay test by AI.
 
-**Current GitHub branch:** `feature/catenary-facing-geometry-022`. Actual version `ElectrifiedMainline 0.1.22`. **All original eight 0.1.21 C PNG sprites and shadow are committed now**, byte-identical to the user's actual game-tested local ZIP. The duplicate 0.1.21 ZIP has been removed from the active tree in the repository cleanup, but is [available in Git history](https://github.com/zukera2-stack/Factorio/blob/64f81365ae5aa654d9b6cca1598cd30cc98289b3/art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip).
+**User test:** install only 0.1.23 in a copy of ВСМ save; test item icon, preview while holding, ghost via Shift+LMB, blueprints, robots build/remove, Ctrl+Z/Ctrl+Y, save/reload. Inspect bright markers and any double-render. Send screenshots + factorio-current.log. Previous build 0.1.22 had good mast directions per user; verify no regressions. If cursor preview missing even with `placeable_position_visualization`, do NOT fake direct mouse position via `LuaPlayer.cursor_position` (not an API read property) or revive 0.1.20 LMB capsule. Reference: `docs/research/catenary-ghost-cursor-0.1.23.md`.
 
-**Game tested baseline:** 0.1.21 loaded successfully in Factorio 2.1.20. Six user screenshots show incorrect cantilever orientation at some curves and half diagonals. Root cause is likely `power_019.lua::register` using the nearest rail entity's center. Green valid placement squares themselves are not implicated and must not be pruned. Original log/screenshot SHA in `docs/tests/catenary-C-art-0.1.21-facing-2026-11-15.md`.
-
-**Change 0.1.22:** Added pure `scripts/mast_facing_022.lua`, projects mast to closest point on a rail-end chord or approximated curve, then picks one of the same eight facing SpritePrototypes. This affects **only** the graphical orientation. Existing `rail_tangent`/contact-edge topology, placement API, Undo, rail types, train blocks, sprites, wire graphics unchanged. Each new mast logs `[face022]` with octant and reference rail.
-
-**CI COMPLETED:** [Build #43725722949](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949) PASS; [nested mod ZIP artifact #14166570620](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949/artifacts/14166570620) physically verified byte-for-byte to include exact 0.1.21 C sprites. **Next:** user tests on disposable copy of ВСМ save, reproduces problem spots from prior screenshots and sends new screenshots/log. Do not label new algorithm game-proven until that happens. See `docs/TEST_INSTALL_022.md`. Fix only observed facing mismatch. Do not change placement slots or power.
-
-**Later:** after acceptance of masts, visual contact wires; electricity last. Stable `main` 0.1.8 untouched. Do not use failed 0.1.20 capsule placement experiment.
+Stable `main` remains 0.1.8. Wires and traction electricity later; MW=0.

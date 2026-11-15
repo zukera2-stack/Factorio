@@ -4,7 +4,11 @@ A Factorio 2.1 mod project exploring high-speed railway infrastructure, an elect
 
 > **Development status: 0.1.8, game-tested baseline in `main` (PR #6 merged).** Factorio 2.1.20 build 87512: native Upgrade Planner upgraded **26 straight + 8 curved** rails with working Ctrl+Z/Ctrl+Y; Ctrl+Shift superforced blueprint overlay upgraded **14 straight + 8 curved** rails with working Undo/Redo. Experimental scripted Undo joining was removed. Half-diagonal gameplay, the separate replacement selection tool and interrupted robot jobs remain unverified; electric traction, battery, overhead transfer and regeneration are not yet implemented. See [current status](docs/STATUS.md) and [test evidence](docs/tests/undo-0.1.8-2026-11-12.md).
 
-## Current development: visual mast facing 0.1.22
+## 0.1.23 visual polish (test build, Factorio gameplay pending)
+
+Current development: [`feature/catenary-visual-polish-023`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-visual-polish-023). The selected C mast keeps all eight 0.1.22 facing sprites, with a new icon from the south sprite, a build-cursor visualization, visible translucent entity ghosts and muted circular rail-slot indicators. **0.1.23 has NOT been game-tested yet**. See [research and test scope](docs/research/catenary-ghost-cursor-0.1.23.md). Stable main remains 0.1.8.
+
+## Previous development: visual mast facing 0.1.22
 
 The active test branch is [`feature/catenary-facing-geometry-022`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-facing-geometry-022); the stable release remains **0.1.8 in `main`**. The user successfully loaded **0.1.21** with the new eight-direction C mast artwork, but screenshots showed some cantilevers turning away from curved or half-diagonal track. The **0.1.22** test build changes only the graphic facing algorithm to refer to RailEnd geometry. [0.1.22 test instructions](docs/TEST_INSTALL_022.md) · [latest recorded successful mod build](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465) · [repository audit](docs/REPOSITORY_AUDIT_2026-11-15.md).
 
