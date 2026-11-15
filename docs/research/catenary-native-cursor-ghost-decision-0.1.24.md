@@ -38,4 +38,4 @@
 6. End users test straight, curved A/B, half diagonal, parallel, blueprint, Shift+LMB ghost, robot build and Ctrl+Z/Ctrl+Y. CI static packaging is **not** a game test.
 7. Do not merge to stable `main` 0.1.8 without explicit user approval.
 
-This document **records the decision only**. No 0.1.24 sprites, LUA edits or game ZIP are created by it.
+**Implementation update 2026-11-15:** `feature/catenary-native-mast-body-024` implements the native shaft and eight arm overlays as experimental graphics. One common mast is extracted from exact original south C sprite with the cantilever area masked; each arm-only overlay is a directional C source masked to the cantilever joint/beam/insulator. The masks leave small seam/artistic differences on west/north orientations, intended for **game validation, not asserted final perfection**. No 0.1.24 runtime/game result yet. Original full sprites remain in the repository; backup via Git checkout is straightforward. CI [scripts/sprites/verify_024.py](../../scripts/sprites/verify_024.py) verifies SHA and 512x384 RGBA structural constraints. 0.1.24 ZIP is expected only after successful GitHub Actions.

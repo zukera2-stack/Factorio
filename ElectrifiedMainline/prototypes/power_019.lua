@@ -30,24 +30,22 @@ assert(catenary.connection_points and catenary.connection_points[1],
     "ElectrifiedMainline: base small-electric-pole has no wire connection point")
 catenary.connection_points = {table.deepcopy(catenary.connection_points[1])}
 -- 0.1.12: The electric-pole entity cannot be rotated like a RailSignal.
--- Hide only its ordinary picture; render the arm via runtime SpritePrototypes
--- selected from nearby high-speed rail geometry. Signal prototypes stay untouched.
+-- The native picture now holds the common C mast shaft; Lua renders only
+-- orientation-specific cantilevers. Signal prototypes stay untouched.
 local graphics = "__ElectrifiedMainline__/graphics/entity/35kv/"
 local mast_icon = "__ElectrifiedMainline__/graphics/icons/35kv-mast-south-icon-64.png"
--- The native entity must stay hidden after construction: Lua draws the
--- correctly facing C mast. This independent sprite is for the build cursor.
-catenary.placeable_position_visualization = {
-    filename = graphics .. "pole-south-012.png",
-    width = 512, height = 384, scale = 0.5,
-    shift = {0,-2.53125},
-    tint = {r=0.75,g=0.92,b=1,a=0.62},
-}
+-- 0.1.24: the engine owns the non-rotating steel truss and placement
+-- preview/vanilla ghost tint. The cantilever alone is dynamically drawn
+-- from the RailEnd-selected 8-way sprite set in scripts/power_019.lua.
+-- The former placeable_position_visualization is NOT a cursor-model API.
+catenary.placeable_position_visualization = nil
 catenary.icons = nil
 catenary.icon = mast_icon
 catenary.icon_size = 64
 catenary.pictures = {layers = {
-    {filename = graphics .. "hidden-pole-012.png", width = 1,
-        height = 1, direction_count = 1},
+    {filename = graphics .. "pole-native-mast-024.png",
+        width = 512, height = 384, direction_count = 1,
+        scale = 0.5, shift = {0,-2.53125}},
     {filename = graphics .. "pole-shadow-4dir-hr.png",
         width = 512, height = 384, direction_count = 1,
         scale = 0.5, shift = {0,-2.53125},
@@ -67,42 +65,42 @@ data:extend({
     -- Face names reflect the rail's position relative to the mast, not its own direction.
     {
         type = "sprite", name = "em-35kv-facing-east",
-        filename = graphics .. "pole-east-012.png",
+        filename = graphics .. "pole-arm-east-024.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-southeast",
-        filename = graphics .. "pole-southeast-012.png",
+        filename = graphics .. "pole-arm-southeast-024.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-south",
-        filename = graphics .. "pole-south-012.png",
+        filename = graphics .. "pole-arm-south-024.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-southwest",
-        filename = graphics .. "pole-southwest-012.png",
+        filename = graphics .. "pole-arm-southwest-024.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-west",
-        filename = graphics .. "pole-west-012.png",
+        filename = graphics .. "pole-arm-west-024.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-northwest",
-        filename = graphics .. "pole-northwest-012.png",
+        filename = graphics .. "pole-arm-northwest-024.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-north",
-        filename = graphics .. "pole-north-012.png",
+        filename = graphics .. "pole-arm-north-024.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-northeast",
-        filename = graphics .. "pole-northeast-012.png",
+        filename = graphics .. "pole-arm-northeast-024.png",
         width = 512, height = 384, scale = 0.5,
     },
     {

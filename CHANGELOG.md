@@ -1,3 +1,11 @@
+## 0.1.24 — native cursor mast and direction-specific arm sprites (EXPERIMENTAL)
+
+- Isolate original eight C mast PNGs into a common **native lattice mast shaft** and eight **arm-only C graphics**, all RGBA 512x384. Original full original sprites retained in repo for exact rollback. Static transparent masks preserve lower 225 px foot/shaft and arm positions; artistic seams require game confirmation.
+- `prototypes/power_019.lua` sets `catenary.pictures` to shaft (one orientation), retains existing shadow and one wire connection point. Removes incorrect `placeable_position_visualization` as full cursor picture.
+- Lua faces still selected by unchanged RailEnd algorithm. Built mast and ghost render only cantilever/insulator with higher-object-above ordering; Factorio engine renders shaft, placement cursor and native ghost shaft.
+- The south item icon, circular rail-slot indicator, native build, ghost lifecycle, robotic construction, rail Upgrade Planner and Undo unchanged. Electricity 0 MW.
+- Added PNG integrity and geometry static QA (no engine test). Test guide in `ElectrifiedMainline/TEST_VISUAL_024.txt`. `main` 0.1.8 untouched.
+
 ## 2026-11-15 — 0.1.23 user game evidence + native cursor API design decision (docs only)
 
 - User reports full item icon, successful ghost placement/copy/deconstruction/robot building; screenshot/log inspection confirms mod loads and ghost/Undo/Redo events occur. The mouse placement model is still invisible (only shadow), no game Lua exception.

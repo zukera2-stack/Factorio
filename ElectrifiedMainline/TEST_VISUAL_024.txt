@@ -1,0 +1,28 @@
+ElectrifiedMainline 0.1.24 — TEST NATIVE MAST BODY / 8 WAY CANTILEVER
+Factorio 2.1.20 build 87512 | Branch feature/catenary-native-mast-body-024
+Experimental graphics only. Stable main remains 0.1.8.
+
+Install ONLY ElectrifiedMainline_0.1.24.zip (inside GitHub Actions artifact).
+Use a COPY of the ВСМ.zip save.
+
+1. Equip 35kV mast item and move cursor around. Expect the full HEIGHT of the
+   STEEL MAST SHAFT AND FOOT, no longer only a shadow. The arm is NOT visible
+   until placed (current Factorio native cursor limitation of electric pole).
+2. Place one pole near custom straight ВСМ. The completed pole should have
+   exactly ONE shaft, one arm and one shadow, arm facing track.
+3. Place poles both sides of track, on curves A/B, half-diagonal and parallels.
+   Check seams/misalignment where metal arm joins native shaft.
+4. Shift+LMB create catenary entity-ghost and blueprint several. Expect
+   native-style blue ghost SHAFT + separate blue-tinted direction-correct ARM.
+   There may be minor shader differences at the join; screenshot them.
+5. Have bots build, and remove ghosts manually, Ctrl+Z then Ctrl+Y, save/reload
+   while ghosts exist. No phantom arm or duplicated shaft must remain.
+6. The south item icon and quiet circular green/red/orange markers should match
+   0.1.23 unchanged. Verify regular LMB, Alt+LMB and Upgrade Planner unchanged.
+7. Screenshots: cursor held, a ghost, a newly built pole, a curve, one cancelled
+   ghost. Send factorio-current.log. If the game fails to load, capture full log.
+
+The authored image set has one common 512x384 RGBA mast body and 8 arm overlays,
+same P0 anchor and rendering offset {0,-2.53125}. Native pictures direction
+count=1 and exactly one wire connection point. Electrical MW=0.
+This build passes only static image/Lua CI until user Factorio validation.

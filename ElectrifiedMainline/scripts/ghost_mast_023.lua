@@ -1,5 +1,6 @@
 -- 0.1.23: visual ONLY overlay for ghosts of the catenary electric-pole.
--- Ghosts use the hidden native electric-pole picture just like real masts.
+-- 0.1.24: Factorio draws the common native steel shaft and its own ghost
+-- shader; Lua only adds an orientation-specific tinted C cantilever.
 -- LuaRendering is anchored to the ghost: the engine removes it on ghost death
 -- or robot revival. No collision, build permissions, ghost manipulation or Undo.
 local M={}
@@ -50,7 +51,7 @@ function M.on_built(entity)
         surface=entity.surface,
         target={entity=entity,offset=OFFSET},
         tint=TINT,
-        render_layer="object",
+        render_layer="higher-object-above",
     }
     sprites[k]=obj.id
     return true

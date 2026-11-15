@@ -52,7 +52,9 @@ local function render_sprite(s,e)
         sprite="em-35kv-facing-"..face,
         surface=e.surface,
         target={entity=e,offset={0,-2.53125}},
-        render_layer="object",
+        -- Native shaft is drawn by the engine on the object layer.
+        -- The C arm must be in front of its own native mounting plate.
+        render_layer="higher-object-above",
     }
     s.sprites[id]=obj.id
 end

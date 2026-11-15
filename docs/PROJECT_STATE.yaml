@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-visual-polish-023
-  feature_version: "0.1.23" # visuals: C icon, cursor, ghosts, rings
-  feature_status: 023_visual_polish_ghosts_cursor_icon_rings_ci_and_game_test_pending
+  active_feature_branch: feature/catenary-native-mast-body-024
+  feature_version: "0.1.24" # split body/arm visual experiment
+  feature_status: 024_native_mast_preview_and_8_arm_overlays_ci_game_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.23"
+  mod_version: "0.1.24"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -784,3 +784,27 @@ visual_polish_023:
   factorio_2_1_20_ghost_and_cursor_game_test: ghosts_and_icon_work_cursor_world_model_missing
   test: tests/35kv_ghost_023.lua
   api_research: docs/research/catenary-ghost-cursor-0.1.23.md
+
+native_mast_body_024:
+  branch: feature/catenary-native-mast-body-024
+  source_base: user_tested_0_1_23
+  source_sprite_basis: exact_C_0_1_21_all_8_preserved
+  version: '0.1.24'
+  native_pole_picture: ElectrifiedMainline/graphics/entity/35kv/pole-native-mast-024.png
+  native_ghost_body: factorio_native_engine
+  custom_arm_prefix: ElectrifiedMainline/graphics/entity/35kv/pole-arm-
+  custom_arm_directions: 8
+  native_body_render_shift: [0, -2.53125]
+  arm_render_layer: higher-object-above
+  old_full_sprite_preserved_in_repo: true
+  debug_circular_markers: unchanged_023
+  item_south_icon: unchanged_023
+  runtime_facing_algorithm: unchanged_022
+  ghost_native_creation_and_undo: unchanged
+  physical_pole_and_energy: unchanged
+  static_art_validation: scripts/sprites/verify_024.py
+  art_hash_manifest: docs/builds/024-art-manifest.json
+  preview_image_local: art-024-comparison.png
+  factorio_game_validation: UNVERIFIED
+  github_ci_status: pending
+  test_guide: ElectrifiedMainline/TEST_VISUAL_024.txt
