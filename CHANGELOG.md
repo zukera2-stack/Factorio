@@ -1,3 +1,14 @@
+## 0.1.24 — accepted 35 kV C-mast visual milestone (2026-11-15)
+
+**Game-tested by user on Factorio 2.1.20 build 87512**, and explicitly approved for promotion to `main`. [Actual screenshot/log evidence](docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md); [GitHub Actions ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195/artifacts/14171451634).
+
+- Factorio-native visible lattice shaft under build cursor; native ghost shaft effect.
+- Eight Lua-rendered rail-facing C cantilever/insulator overlays; blue-tinted arm-only ghost art.
+- SOUTH sprite 64×64 inventory icon and muted circular rail-slot hints.
+- User-tested manual/robot construction, ghosts and native Undo/Redo sequences without reported Lua errors. Existing 0.1.8 rail Upgrade Planner evidence retained; not every scenario was re-run in 0.1.24.
+- **No real overhead power (`transfer_MW=0`), batteries or energy regeneration.** Next phase: precise visual contact/messenger wires.
+- This is an accepted *visual* baseline, not a claim of complete railway electrification.
+
 ## 2026-11-15 — 0.1.24 GitHub ZIP static verification
 
 - [Build run #43737875221](https://github.com/zukera2-stack/Factorio/actions/runs/43737875221): SUCCESS, [ZIP artifact #14171016545](https://github.com/zukera2-stack/Factorio/actions/runs/43737875221/artifacts/14171016545). Lua/ghost/cursor regressions, 9 PNG SHA256/alpha tests, package metadata and ZIP PASS.

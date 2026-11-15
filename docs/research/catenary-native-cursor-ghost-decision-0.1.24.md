@@ -1,3 +1,5 @@
+> **Outcome 2026-11-15:** The selected architecture is **IMPLEMENTED in 0.1.24**, static CI passed, and user accepted visual/gameplay results in Factorio 2.1.20 build 87512. [Scoped user evidence](../tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md). The earlier "not yet implemented" sentences below are dated *design history*, not current status. The approach was approved for `main`; battery and traction electricity are not implemented.
+
 # Decision: native cursor/ghost body, dynamic C cantilever — 0.1.24 candidate
 
 **Decision date:** 2026-11-15. **Target:** Factorio 2.1.20 build 87512, ElectrifiedMainline 0.1.24 **future isolated art experiment**. Current working 0.1.23 remains unchanged until game-tested replacement.

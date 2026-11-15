@@ -5,15 +5,15 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: feature/catenary-native-mast-body-024
-  feature_version: "0.1.24" # split body/arm visual experiment
-  feature_status: 024_native_mast_preview_and_8_arm_overlays_ci_game_pending
+  active_feature_branch: none # 0.1.24 accepted for main, next branch to be created
+  feature_version: "0.1.24" # accepted native mast + eight C arms
+  feature_status: 024_visual_user_accepted_awaiting_main_merge
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
   release_merge_commit: 973559aa4d0643b2a942edce413e9530494bc498
   release_merge_approved_by_user: true
-  release_status: merged_into_main_2026_11_12
+  release_status: promotion_024_main_merge_in_progress
   next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.4"
   previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
@@ -23,12 +23,12 @@ project:
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
   mod_version: "0.1.24"
-  main_baseline_mod_version: "0.1.8"
+  main_baseline_mod_version: "0.1.24" # pending GitHub merge confirmation
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
   user_installation_label: "2.1.20b"
   last_state_update: "2026-11-15"
-  documentation_audit: updated_015_installation_ci_evidence_and_historical_handoff_2026_11_14
+  documentation_audit: accepted_024_game_evidence_and_current_handoff_2026_11_15
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -73,7 +73,7 @@ visual_development:
     - static_qa_ci_and_factorio_in_game_art_test
     - separate_catenary_contact_and_messenger_wire_visuals
     - separate_traction_electrical_logic_last
-  mast_art_plan_021_next_action: user_test_022_github_actions_zip_on_same_curve_positions
+  mast_art_plan_021_next_action: historical_completed_024_user_accepted_wires_next
   mast_art_plan_021_user_concept_approval: C_selected_2026_11_15
   mast_art_plan_021_three_sketches_presented: true
   mast_art_plan_021_selected_concept: C_balanced_industrial
@@ -94,7 +94,7 @@ visual_development:
   mast_face_022_proposed_cause: wrong_reference_rail_entity_center
   mast_face_022_fix: projected_rail_end_running_line_visual_only
   mast_face_022_test: tests/35kv_facing_022.lua
-  mast_face_022_gameplay: unverified
+  mast_face_022_gameplay: observed_indirectly_in_024_rail_end_logs_not_full_matrix
   mast_face_022_sprites_transferred_to_github: true
   mast_face_022_full_resolution_source_art_in_github: false # active tree; recover from history
   mast_face_022_full_resolution_source_art_history_commit: 64f81365ae5aa654d9b6cca1598cd30cc98289b3
@@ -111,7 +111,7 @@ visual_development:
   mast_face_022_c_sprite_png_sha_verified: 8_of_8_exact
   mast_face_022_shadow_sha_verified: true
   mast_face_022_ci_build: success_43725722949_verified_nested_zip_exact_pngs
-  mast_face_022_art_validation_in_factorio: pending
+  mast_face_022_art_validation_in_factorio: game_observed_in_024_scoped
   mast_face_022_code_source_sha: 272c11468f8ee6e2f5226743dba16d112bdf1c6e
   mast_face_022_build_artifact_zip: ElectrifiedMainline_0.1.22.zip
   mast_face_022_github_actions_artifact: https://github.com/zukera2-stack/Factorio/actions/runs/43725722949/artifacts/14166570620
@@ -366,55 +366,46 @@ implementation:
   large_modpack_interoperability: unverified
 
 last_game_test:
-  date: "2026-11-12"
+  date: "2026-11-15"
   game_version: "2.1.20"
   game_build: 87512
-  installed_mod_version: "0.1.8"
-  source_commit: ac4624ef5873a1d3adf65194c289e09aee5224ae
-  test_branch: test/undo-stabilization-018
-  evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
-  log_sessions:
-    - filename: "factorio-current(20261112-170348).log"
-      sha256: 832808759fea8270384155799f6cd3f64a83b3dd4144ee3c187d04f0ce833171
-      duplicate_upload: "factorio-current(20261112-170208).log"
-    - filename: "factorio-current(20261112-171003).log"
-      sha256: e5ccf8b67c51cbdcbad9e43ba1b2151bf5bc1c3ded041d3dfe30b96df3d1cb22
-  native_green_planner:
-    geometry_counts: { straight: 26, curved_a: 4, curved_b: 4 }
-    undo_tick: 23999
-    redo_tick: 24581
-    result: game_tested_success
-  unrelated_chest_undo_redo:
-    undo_chest_tick: 29766
-    undo_rails_tick: 29988
-    redo_rails_tick: 30251
-    redo_chest_tick: 31701
-    result: game_tested_separate_history_entries
-  blueprint_superforce_straight:
-    build_mode: 2
-    geometry_counts: { straight: 14 }
-    undo_tick: 39434
-    redo_in_this_session: not_observed
-  blueprint_superforce_mixed:
-    build_mode: 2
-    build_tick: 20353
-    geometry_counts: { straight: 14, curved_a: 4, curved_b: 4 }
-    undo_tick: 20721
-    redo_tick: 20971
-    result: game_tested_success
-  unrelated_assembling_machine_actions:
-    undo_tick: 16902
-    action_count: 2
-  errors_attributed_to_mod_in_supplied_logs: none_observed
-  game_exit: normal
+  installed_mod_version: "0.1.24"
+  source_commit: c83f2bc45180b814c344dfa28df18a77f7507d04
+  test_branch: feature/catenary-native-mast-body-024
+  evidence_record: docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md
+  screenshot_archive: "2026-11-15_21-27-44.zip"
+  screenshot_sha256: fd73991e6fc408e2a6cc931cbc5d1c47189e622f283844e1bb792111badefd12
+  log_filename: "factorio-current(20261115-183047).log"
+  log_sha256: 506bee98a83260408ff8e3fa50307800b7132a6a7fcd9050acf7a139e7608af9
+  validation_scope: mast_native_cursor_visual_and_ghosts_robot_build_undo_redo
+  user_acceptance: accepted_visual_and_approved_main_merge
+  native_cursor_mast_body: visible
+  C_directional_arm: visible_on_built_masts
+  ghost_blue_composite: visible
+  rail_slot_circle_markers: visible
+  robot_built_poles: observed
+  manual_pole_placement: observed
+  undo_redo_events: observed
+  lua_errors: none_observed
+  exit_status: normal_user_quit
+  power_transfer_MW: 0
   not_verified:
-    - half_diagonal_rail_gameplay
-    - dedicated_selection_tool
-    - blueprint_and_unrelated_action_interleaved_during_delayed_robots
-    - partially_completed_robot_jobs
-    - inventory_refunds_and_rail_signal_integrity
+    - every_mast_facing_x_rail_geometry_combination
+    - native_half_diagonal_upgrade_planner_undo
+    - separate_selection_tool_regressions
+    - interrupted_bot_jobs_and_multiplayer
+    - real_electricity_storage_regeneration
 
 historical_game_tests:
+  "0.1.8":
+    date: "2026-11-12"
+    game_version: "2.1.20"
+    game_build: 87512
+    source_commit: ac4624ef5873a1d3adf65194c289e09aee5224ae
+    evidence_record: docs/tests/undo-0.1.8-2026-11-12.md
+    green_planner_verified: {straight: 26, curved_a: 4, curved_b: 4}
+    superforced_blueprint_verified: {straight: 14, curved_a: 4, curved_b: 4}
+    scope: native_upgrade_planner_and_undo_redo_scoped
   "0.1.7":
     date: "2026-11-12"
     game_version: "2.1.20"
@@ -444,6 +435,8 @@ historical_game_tests:
     pipe_item_correction: implemented
 
 next_actions:
+  - preserve_0_1_24_accepted_visual_baseline_in_main_and_branch_future_work
+  - improve_cosmetic_contact_and_messenger_wire_anchor_alignment_on_straight_curves_and_half_diagonal
   - test_native_green_upgrade_planner_and_undo_redo_on_half_diagonal_ground_rails
   - test_blueprint_interleaved_with_unrelated_action_during_delayed_robot_jobs
   - evaluate_and_regress_staged_custom_selection_tool_fallback_before_removal
@@ -805,7 +798,7 @@ native_mast_body_024:
   static_art_validation: scripts/sprites/verify_024.py
   art_hash_manifest: docs/builds/024-art-manifest.json
   preview_image_local: art-024-comparison.png
-  factorio_game_validation: UNVERIFIED
+  factorio_game_validation: user_accepted_visual_2026_11_15_scoped
   github_ci_status: success
   github_ci_run_id: 43737875221
   github_ci_artifact_id: 14171016545
@@ -813,5 +806,29 @@ native_mast_body_024:
   github_ci_source_sha: ddf6a1e5817aab84e4ee30511c9174831bbe5cd5
   sprite_qa_ci_run_id: 43737875150
   sprite_qa_ci_status: success
-  game_test: unverified
+  game_test: passed_scoped_user_acceptance
+  user_game_test_evidence: docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md
+  user_approved_main_merge: true
+  screenshot_sha256: fd73991e6fc408e2a6cc931cbc5d1c47189e622f283844e1bb792111badefd12
+  log_sha256: 506bee98a83260408ff8e3fa50307800b7132a6a7fcd9050acf7a139e7608af9
   test_guide: ElectrifiedMainline/TEST_VISUAL_024.txt
+
+accepted_milestone_024:
+  version: "0.1.24"
+  accepted_by_user: true
+  accepted_date: "2026-11-15"
+  merge_into_main_requested: true
+  merge_into_main_status: pending_final_github_pr
+  screenshot_log_evidence: docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md
+  source_branch: feature/catenary-native-mast-body-024
+  source_commit: c83f2bc45180b814c344dfa28df18a77f7507d04
+  ci_run_id: 43738070195
+  ci_status: success
+  ci_artifact_id: 14171451634
+  icon_south: approved
+  cursor_native_shaft: approved
+  arm_count: 8
+  ghost_native_body_lua_arm: approved
+  circle_markers: approved
+  real_traction_power_MW: 0
+  upcoming_scope: contact_and_messenger_wire_art_then_real_electricity

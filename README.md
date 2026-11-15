@@ -1,35 +1,25 @@
 # Electrified Mainline
 
-A Factorio 2.1 mod project exploring high-speed railway infrastructure, an electric locomotive concept, battery support and regenerative braking.
+A **Factorio 2.1** mod for high-speed railway infrastructure and 35 kV overhead-line support masts; real electric traction, onboard energy storage and regeneration remain future work.
 
-> **Development status: 0.1.8, game-tested baseline in `main` (PR #6 merged).** Factorio 2.1.20 build 87512: native Upgrade Planner upgraded **26 straight + 8 curved** rails with working Ctrl+Z/Ctrl+Y; Ctrl+Shift superforced blueprint overlay upgraded **14 straight + 8 curved** rails with working Undo/Redo. Experimental scripted Undo joining was removed. Half-diagonal gameplay, the separate replacement selection tool and interrupted robot jobs remain unverified; electric traction, battery, overhead transfer and regeneration are not yet implemented. See [current status](docs/STATUS.md) and [test evidence](docs/tests/undo-0.1.8-2026-11-12.md).
+**Current user-accepted source milestone: 0.1.24**, tested with **Factorio 2.1.20 build 87512** on the `ВСМ` save, approved for promotion to `main`. The C catenary-mast graphics show a native visible shaft in the placement cursor, eight rail-facing cantilevers, translucent ghosts, native robot construction/Undo, the SOUTH-based item icon and subdued circular placement hints. [Scoped game-test evidence](docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [0.1.24 GitHub Actions ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195/artifacts/14171451634).
 
-## 0.1.23 visual polish (test build, Factorio gameplay pending)
+**The rendered overhead wires are cosmetic.** Actual traction transfer remains `transfer_MW=0`, so this is a **visual milestone**, not a complete electrification system.
 
-Current development: [`feature/catenary-visual-polish-023`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-visual-polish-023). The selected C mast keeps all eight 0.1.22 facing sprites, with a new icon from the south sprite, a build-cursor visualization, visible translucent entity ghosts and muted circular rail-slot indicators. **0.1.23 has NOT been game-tested yet**. See [research and test scope](docs/research/catenary-ghost-cursor-0.1.23.md). Stable main remains 0.1.8.
+The prior **0.1.8 ZIP** remains the historical rollback baseline and preserves game evidence for native Upgrade Planner + Undo/Redo on straight and curved-A/B rails. Those full rail regressions have **not** all been rerun in 0.1.24. [0.1.8 test details](docs/tests/undo-0.1.8-2026-11-12.md).
 
-## Previous development: visual mast facing 0.1.22
+## Current 35 kV mast architecture
 
-The active test branch is [`feature/catenary-facing-geometry-022`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-facing-geometry-022); the stable release remains **0.1.8 in `main`**. The user successfully loaded **0.1.21** with the new eight-direction C mast artwork, but screenshots showed some cantilevers turning away from curved or half-diagonal track. The **0.1.22** test build changes only the graphic facing algorithm to refer to RailEnd geometry. [0.1.22 test instructions](docs/TEST_INSTALL_022.md) · [latest recorded successful mod build](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465) · [repository audit](docs/REPOSITORY_AUDIT_2026-11-15.md).
+- A single native `electric-pole.pictures` C lattice shaft supplies the standard mouse cursor and engine-rendered ghost body.
+- Eight cantilever-only sprites are dynamically selected using RailEnd projection, with blue-tinted arm-only overlays for ghosts.
+- Placement, ghost creation, copying, robots and Undo/Redo remain engine-native, not proxy signal entities.
+- All source graphics and image QA live in the repository; original eight full C frames are retained for rollback.
 
-**Current 0.1.22 game-facing fix is unverified.** Overhead wire geometry is visual only, and traction electrical transfer is still OFF (MW=0). Production-ready 8 C sprites and shadow are committed to the mod's graphics directory; heavyweight original artwork is stored only in recoverable Git history, not the active tree.
+Next: **contact and messenger wire artwork/alignment along high-speed rails**, then separately research and implement actual MW energy exchange. [Status](docs/STATUS.md) · [Architecture](docs/ARCHITECTURE.md) · [AI handoff](docs/AI_CONTEXT.md).
 
-## Archived experiment: rail-end geometry 0.1.16 (historical, not current)
+## History
 
-The historical 0.1.16 branch is [`feature/catenary-geometry-016`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-geometry-016) and the source mod version is **0.1.16**. The game-tested stable baseline remains **0.1.8 in `main`**. New command `/em-35kv-geometry [offset] [index]` gives up to four read-only candidate base positions from engine rail ends, with one translucent Г-shaped mast sprite at a selected collision-clear spot. No real pole placement or Undo logic changes. Static tests and ZIP packaging [passed](https://github.com/zukera2-stack/Factorio/actions/runs/43586035896); **0.1.16 game testing is pending**. For the correct two-layer ZIP download and commands, use the [0.1.16 installation/test guide](docs/TEST_INSTALL_016.md). The 0.1.15 experiment below is kept as the previous snapshot.
-
-## Experimental build 0.1.15 (not a release)
-
-The repository has **two distinct tracks**:
-
-| Track | GitHub branch | Version | Evidence |
-| --- | --- | --- | --- |
-| Stable baseline | `main` | **0.1.8** | Native rail Upgrade Planner and scoped Undo/Redo game-tested in Factorio 2.1.20 |
-| Catenary geometry experiment | [`feature/catenary-preview-015`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-preview-015) | **0.1.15** | Lua 5.2 tests and GitHub ZIP packaging passed; **0.1.15 not yet game-tested** |
-
-**0.1.15 downloads:** use the [Build Factorio mod ZIP run #43572452213](https://github.com/zukera2-stack/Factorio/actions/runs/43572452213), expand **Artifacts**, and click `ElectrifiedMainline-test-build`. The outer GitHub artifact archive contains the **inner `ElectrifiedMainline_0.1.15.zip`**; place **only the inner ZIP** in Factorio's `mods` directory. The similarly named [documentation validation run #43572508712](https://github.com/zukera2-stack/Factorio/actions/runs/43572508712) has **no mod ZIP**. GitHub artifact download may require sign-in, and artifacts have limited retention.
-
-See the [step-by-step installation and test guide](docs/TEST_INSTALL_015.md). The new `/em-35kv-preview [0.5..3]` command draws **temporary candidate mast bases and eight-facing direction hints**, not real build snapping or power delivery. The earlier `/em-35kv-slots` command remains diagnostic. **No automatic pole placement, real rail signals, or Undo modifications** were added in 0.1.15.
+Versions 0.1.15–0.1.23 are historical implementation steps, not current builds. Their studies and evidence are under [research](docs/research/) and [test reports](docs/tests/), with full source ancestry in Git history.
 
 ## Project contents
 
@@ -63,7 +53,7 @@ These are project goals, not a claim that every feature is currently complete. T
 
 ## Installation
 
-For the 0.1.8 release baseline, use the committed [validated 0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) or a successful **Build Factorio mod ZIP** artifact from [GitHub Actions](https://github.com/zukera2-stack/Factorio/actions/workflows/build-mod.yml) (artifact name `ElectrifiedMainline-test-build`). The old `mods/ElectrifiedMainline_0.1.0.zip` is historical, **not** the current version. The game-tested ZIP checksum and source SHA are in [BUILD_018.yaml](docs/BUILD_018.yaml).
+For 0.1.24, download [the accepted GitHub Actions artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195/artifacts/14171451634), extract the **inner** `ElectrifiedMainline_0.1.24.zip` and install only that inner ZIP in `mods`. The [0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) is preserved for historical rollback, not the active source version.
 
 For a manual test:
 

@@ -1,16 +1,11 @@
-**0.1.24 CI PASS:** [ZIP #14171016545](https://github.com/zukera2-stack/Factorio/actions/runs/43737875221/artifacts/14171016545), [build #43737875221](https://github.com/zukera2-stack/Factorio/actions/runs/43737875221) SUCCESS, [sprite QA](https://github.com/zukera2-stack/Factorio/actions/runs/43737875150) SUCCESS. User must now test native shaft cursor, native/arm blue ghost composite, bot placement/Undo and arm junctions. **No Factorio game test claimed.**
+# Next task — overhead contact/messenger wire visuals after accepted 0.1.24
 
-# CURRENT 0.1.24 — native shaft plus 8 C cantilever overlays
+**Canonical baseline:** version 0.1.24 accepted by user in Factorio 2.1.20 build 87512; promotion to `main` approved. [Evidence](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [current status](STATUS.md).
 
-Code/art branch `feature/catenary-native-mast-body-024`. The previous 0.1.23 game test proved icon works and native ghost/robot/undo work, but **cursor showed only shadow**. API diagnosis in `docs/research/catenary-native-cursor-ghost-decision-0.1.24.md`.
+The native lattice mast body, eight arm overlays, ghost/robot/Undo lifecycle, cursor image, SOUTH item icon and subtle circular markers are accepted **and should be preserved**. Existing original 8 C full PNGs remain as rollback.
 
-Implemented as 0.1.24 isolated **art-splitting test**:
-1. Native `ElectricPolePrototype.pictures` renders a fixed C lattice shaft+foot; should make actual placement cursor/vanilla ghost shaft visible. Existing native shadow and one wire connection point retained.
-2. `SpritePrototype em-35kv-facing-*` source paths point to new `pole-arm-<octant>-024.png`: one cantilever+insulator for each existing 8 direction. Lua chooses face with unchanged `scripts/mast_facing_022.lua`.
-3. Ghost overlay `scripts/ghost_mast_023.lua` uses same arm-only sprite with blue tint; the engine owns the shaft and its own native ghost blur.
-4. Existing 8 full C PNGs `pole-*-012.png` remain in GitHub source as rollback. Approved south item icon and subtle circular markers unchanged.
-5. Static unit tests + PNG check via `scripts/sprites/verify_024.py`; factorio 2.1.20 gameplay unverified. `main` remains 0.1.8.
+**Next stage:** examine visual contact wire and messenger cable across straight, curves A/B, half diagonals, transitions and parallel HSR lines. Verify P2 arm clamp center against rail centerline and nearest mast; do not accidentally connect independent parallel rails or draw diagonal feeder spiderwebs. Use actual screenshots, RailEnd projection, realistic suspension height, geometry tests, and isolated feature branch **from merged `main`**. If the visual wire must change, do so separately from traction/electricity code.
 
-**FIRST GAME QA:** install *only* 0.1.24 in disposable `ВСМ.zip` copy; check cursor shows bare steel shaft (not full arm; this limitation is intentional for current API) and native bluish shaft ghost. Check built masts still have ONE shaft and one correctly facing arm; watch for seam/duplicate steel at join. Then blueprint ghost, robot revival, manual ghost cancel, undo/redo and save/load, curves A/B, half diagonal, adjacent tracks. Send screenshot/log; confirm no wire connection point count errors.
+**Outside scope until wire approval:** real supply, MW transfer, batteries, regeneration, separate HSR power grid; currently `transfer_MW=0` and `energized=NO`. Likewise do not alter native Undo, Upgrade Planner, collision points or physical rail signals.
 
-**Important:** the full turned arm under moving cursor is NOT possible through our current engine-native `electric-pole.pictures` without cursor coordinate API; 0.1.24 shows fixed shaft preview, actual and ghost arms dynamically. Do not claim it implements a directional cursor preview.
+Test acceptance: render at all 8 mast orientations, curve A/B both sides, half diagonals, a crossover, parallel rails; check anchor P2 continuity, support positions, save/load and ghost/bot lifecycle; record Factorio 2.1.20 screenshot/log. Branch, PR and CI before merging the next step.
