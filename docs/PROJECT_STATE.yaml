@@ -770,6 +770,12 @@ visual_polish_023:
   changed_orientation_022: false
   changed_undo: false
   game_status: UNVERIFIED
-  github_ci_status: pending
+  github_ci_status: SUCCESS
+  github_ci_run_id: 43731628908
+  github_ci_artifact_id: 14168876545
+  github_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43731628908/artifacts/14168876545
+  nested_mod_zip: ElectrifiedMainline_0.1.23.zip
+  static_lua_and_sprite_checks: PASS
+  factorio_2_1_20_ghost_and_cursor_game_test: UNVERIFIED
   test: tests/35kv_ghost_023.lua
   api_research: docs/research/catenary-ghost-cursor-0.1.23.md

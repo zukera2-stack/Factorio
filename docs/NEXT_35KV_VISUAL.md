@@ -1,3 +1,5 @@
+**GitHub Actions 0.1.23 compiled:** [Run #43731628908](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908) SUCCESS, [test ZIP artifact #14168876545](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908/artifacts/14168876545). Download outer archive and install inner `ElectrifiedMainline_0.1.23.zip` only. Source includes real 8 C PNG untouched, new south icon, ghost/preview/circle improvements. CI is NOT a Factorio game test.
+
 # 0.1.23 next game test: ghost, cursor icon, quiet circles
 
 Branch `feature/catenary-visual-polish-023`; source version 0.1.23, based on tested 0.1.22 C sprites and RailEnd facing. User screenshot `2026-11-15_18-15-24.png` shows very vivid green/red square overlays and invisible ghost/build cursor shape. Latest requested changes are visual only.

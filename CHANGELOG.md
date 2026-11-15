@@ -1,3 +1,9 @@
+## 2026-11-15 — 0.1.23 CI/ZIP ready for user testing
+
+- [GitHub Actions #43731628908](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908) PASS, [downloadable build](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908/artifacts/14168876545) with `ElectrifiedMainline_0.1.23.zip` nested inside, 38 files. Lua mocks for ghost lifecycle/rail-slot rings and icon dimensions PASS.
+- Changes to test fixtures only after initial commit; real build/ghost/wire/Undo code unchanged in those fixes.
+- **No in-game 0.1.23 confirmation yet**. Await user's ghost, cursor-preview and robot Undo screenshots/log.
+
 ## 0.1.23 — Visual polish (experimental GitHub Actions ZIP; game pending)
 
 - Generate 64x64 transparent catenary icon from the **south** of the existing approved C sprites, use it for the item and entity.

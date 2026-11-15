@@ -7,3 +7,10 @@ Changes: prototypes icon + placement preview; one runtime ghost overlay module +
 Static QA: Lua syntax and stub tests, packaging and icon PNG contract by GitHub Actions. **Factorio 2.1.20 gameplay remains UNVERIFIED**. Ghost visibility and build preview particularly need physical game screenshots.
 
 User test checklist is in `ElectrifiedMainline/TEST_VISUAL_023.txt` inside mod ZIP. Expecting screenshots/log. If placement preview absent, investigate native UI with same prototype type; do not fabricate `LuaPlayer.cursor_position` or overwrite default LMB.
+
+## Actual GitHub Actions result
+
+- Commit with implementation: `08aa383e3a4a33a29b547645d97107a484cbbc42`; two test-mock follow-up commits corrected a missing Factorio `log` stub and obsolete rectangle-count expectation, **without changing gameplay code**.
+- Final source build CI: [#43731628908](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908) **SUCCESS**, [artifact #14168876545](https://github.com/zukera2-stack/Factorio/actions/runs/43731628908/artifacts/14168876545).
+- Linux Lua5.2 syntax and mocked regressions passed: ghost 0.1.23, cursor 0.1.23, facing 0.1.22, historical 0.1.13–0.1.18. 64×64 RGBA icon check passed. Package generated `dist/ElectrifiedMainline_0.1.23.zip`, **38 files**.
+- Real Factorio 2.1.20 display/ghost lifecycle: **not yet tested**. The only authoritative next validation is user's actual screenshots and log.
