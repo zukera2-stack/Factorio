@@ -1,6 +1,6 @@
 # Development status — ElectrifiedMainline 0.1.24
 
-**Updated:** 2026-11-15. **Mainline promotion:** user-approved; PR/merge tracked in GitHub. `info.json` version **0.1.24**. Target Factorio **2.1**, real user gameplay Factorio **2.1.20 build 87512**.
+**Updated:** 2026-11-15. **Mainline promotion:** **MERGED [PR #8](https://github.com/zukera2-stack/Factorio/pull/8)** on 2026-11-15; merge `43dd05a5`; [post-merge build #43748406702](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702) and [docs #43748406753](https://github.com/zukera2-stack/Factorio/actions/runs/43748406753) successful. `info.json` version **0.1.24**. Target Factorio **2.1**, real user gameplay Factorio **2.1.20 build 87512**.
 
 ## Current accepted milestone
 

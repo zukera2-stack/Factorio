@@ -1,6 +1,6 @@
 # Next task — overhead contact/messenger wire visuals after accepted 0.1.24
 
-**Canonical baseline:** version 0.1.24 accepted by user in Factorio 2.1.20 build 87512; promotion to `main` approved. [Evidence](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [current status](STATUS.md).
+**Canonical baseline:** version 0.1.24 accepted by user in Factorio 2.1.20 build 87512; [PR #8 merged](https://github.com/zukera2-stack/Factorio/pull/8) into `main`. [Evidence](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [current status](STATUS.md).
 
 The native lattice mast body, eight arm overlays, ghost/robot/Undo lifecycle, cursor image, SOUTH item icon and subtle circular markers are accepted **and should be preserved**. Existing original 8 C full PNGs remain as rollback.
 
@@ -9,3 +9,5 @@ The native lattice mast body, eight arm overlays, ghost/robot/Undo lifecycle, cu
 **Outside scope until wire approval:** real supply, MW transfer, batteries, regeneration, separate HSR power grid; currently `transfer_MW=0` and `energized=NO`. Likewise do not alter native Undo, Upgrade Planner, collision points or physical rail signals.
 
 Test acceptance: render at all 8 mast orientations, curve A/B both sides, half diagonals, a crossover, parallel rails; check anchor P2 continuity, support positions, save/load and ghost/bot lifecycle; record Factorio 2.1.20 screenshot/log. Branch, PR and CI before merging the next step.
+
+**Start next wire-art branch from `main` at/after `43dd05a544a02de75f3b4a3c3689cd795f853d21`**. Post-merge 0.1.24 [CI artifact #14175755233](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233); do not treat a future new branch as a power system until MW transfer is separately implemented and tested.

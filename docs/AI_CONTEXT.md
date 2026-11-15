@@ -1,6 +1,6 @@
 # AI handoff — ElectrifiedMainline 0.1.24 accepted visual milestone
 
-**Updated:** 2026-11-15. Repository: [zukera2-stack/Factorio](https://github.com/zukera2-stack/Factorio). **Accepted source version 0.1.24**, promotion to `main` user-authorized. Prior 0.1.8 ZIP is preserved as historical rollback; development should branch from `main` after merge.
+**Updated:** 2026-11-15. Repository: [zukera2-stack/Factorio](https://github.com/zukera2-stack/Factorio). **Current `main` mod version 0.1.24, [PR #8 merged](https://github.com/zukera2-stack/Factorio/pull/8), merge SHA `43dd05a544a02de75f3b4a3c3689cd795f853d21`**. Prior 0.1.8 ZIP preserved as historical rollback; all next development should branch from updated `main`.
 
 ## What was verified
 
@@ -28,3 +28,7 @@ Historical rail upgrade + Undo/Redo working 0.1.8 test: [26 straight/8 curved an
 **Visual overhead contact + messenger lines**: check anchor P2 over rail on all eight orientations (especially curves A/B and half-diagonal), realistic hanging point and spans, without touching newly accepted shaft/ghost graphics or rail mechanics. Then design actual power integration as a separate project phase. Start new feature branch off `main`, keep `main` as proven checkpoint. After changes, run GitHub Actions Lua/PNG/ZIP tests and real Factorio gameplay, record evidence.
 
 [Current status](STATUS.md) · [architecture](ARCHITECTURE.md) · [build manifest](BUILD_024.yaml) · [0.1.24 gameplay](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [contributor rules](../AGENTS.md).
+
+## Post-merge source of truth
+
+The `main` branch at merge `43dd05a544a02de75f3b4a3c3689cd795f853d21` contains 0.1.24. [Build #43748406702](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702) **PASS**, [download nested 0.1.24 ZIP from artifact #14175755233](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233), [documentation CI #43748406753](https://github.com/zukera2-stack/Factorio/actions/runs/43748406753) **PASS**. `info.json` matches the YAML canonical project version. The original user screenshot and log remain attachments to the 2026-11-15 conversation; checksums in [test record](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md).

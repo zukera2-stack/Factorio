@@ -1,3 +1,9 @@
+## 2026-11-15 — 0.1.24 merged into main (PR #8)
+
+- User-approved catenary C-mast visual milestone [merged via PR #8](https://github.com/zukera2-stack/Factorio/pull/8), merge commit `43dd05a544a02de75f3b4a3c3689cd795f853d21`. The `main` `info.json` now reports **0.1.24**.
+- Post-merge [GitHub Actions build #43748406702](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702) PASS, [main ZIP artifact #14175755233](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233), [post-merge docs validation #43748406753](https://github.com/zukera2-stack/Factorio/actions/runs/43748406753) PASS. Only documentation adjustments follow this merge.
+- Old `dist/ElectrifiedMainline_0.1.8.zip` remains for rollback. **Electricity `transfer_MW=0`**, wires visual only; next engineering phase is contact/messenger wire art and geometry, not an untested power simulation.
+
 ## 0.1.24 — accepted 35 kV C-mast visual milestone (2026-11-15)
 
 **Game-tested by user on Factorio 2.1.20 build 87512**, and explicitly approved for promotion to `main`. [Actual screenshot/log evidence](docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md); [GitHub Actions ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195/artifacts/14171451634).

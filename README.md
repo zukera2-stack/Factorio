@@ -2,7 +2,7 @@
 
 A **Factorio 2.1** mod for high-speed railway infrastructure and 35 kV overhead-line support masts; real electric traction, onboard energy storage and regeneration remain future work.
 
-**Current user-accepted source milestone: 0.1.24**, tested with **Factorio 2.1.20 build 87512** on the `ВСМ` save, approved for promotion to `main`. The C catenary-mast graphics show a native visible shaft in the placement cursor, eight rail-facing cantilevers, translucent ghosts, native robot construction/Undo, the SOUTH-based item icon and subdued circular placement hints. [Scoped game-test evidence](docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [0.1.24 GitHub Actions ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195/artifacts/14171451634).
+**Current `main` version: 0.1.24**, user-tested with **Factorio 2.1.20 build 87512** on the `ВСМ` save. The promotion was merged in [PR #8](https://github.com/zukera2-stack/Factorio/pull/8). The C catenary-mast graphics show a native visible shaft in the placement cursor, eight rail-facing cantilevers, translucent ghosts, native robot construction/Undo, the SOUTH-based item icon and subdued circular placement hints. [Scoped game-test evidence](docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [0.1.24 GitHub Actions ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233).
 
 **The rendered overhead wires are cosmetic.** Actual traction transfer remains `transfer_MW=0`, so this is a **visual milestone**, not a complete electrification system.
 
@@ -53,7 +53,7 @@ These are project goals, not a claim that every feature is currently complete. T
 
 ## Installation
 
-For 0.1.24, download [the accepted GitHub Actions artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195/artifacts/14171451634), extract the **inner** `ElectrifiedMainline_0.1.24.zip` and install only that inner ZIP in `mods`. The [0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) is preserved for historical rollback, not the active source version.
+For 0.1.24, download [the accepted GitHub Actions artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233), extract the **inner** `ElectrifiedMainline_0.1.24.zip` and install only that inner ZIP in `mods`. The [0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) is preserved for historical rollback, not the active source version.
 
 For a manual test:
 

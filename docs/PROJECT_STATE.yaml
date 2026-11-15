@@ -5,15 +5,17 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: none # 0.1.24 accepted for main, next branch to be created
+  active_feature_branch: none # 0.1.24 merged to main; branch next work from main
   feature_version: "0.1.24" # accepted native mast + eight C arms
-  feature_status: 024_visual_user_accepted_awaiting_main_merge
+  feature_status: 024_visual_game_accepted_and_merged_main
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
-  release_pull_request: 6
-  release_merge_commit: 973559aa4d0643b2a942edce413e9530494bc498
+  release_pull_request: 8
+  release_merge_commit: 43dd05a544a02de75f3b4a3c3689cd795f853d21
+  previous_release_pull_request: 6
+  previous_release_merge_commit: 973559aa4d0643b2a942edce413e9530494bc498
   release_merge_approved_by_user: true
-  release_status: promotion_024_main_merge_in_progress
+  release_status: merged_into_main_2026_11_15
   next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.4"
   previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
@@ -23,7 +25,7 @@ project:
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
   mod_version: "0.1.24"
-  main_baseline_mod_version: "0.1.24" # pending GitHub merge confirmation
+  main_baseline_mod_version: "0.1.24" # merged PR #8
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
   user_installation_label: "2.1.20b"
@@ -818,7 +820,14 @@ accepted_milestone_024:
   accepted_by_user: true
   accepted_date: "2026-11-15"
   merge_into_main_requested: true
-  merge_into_main_status: pending_final_github_pr
+  merge_into_main_status: merged_pr_8
+  merge_commit: 43dd05a544a02de75f3b4a3c3689cd795f853d21
+  main_ci_build_run_id: 43748406702
+  main_ci_artifact_id: 14175755233
+  main_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233
+  main_ci_docs_run_id: 43748406753
+  main_ci_status: success
+  previous_main_0_1_8_historical_rollback_zip: dist/ElectrifiedMainline_0.1.8.zip
   screenshot_log_evidence: docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md
   source_branch: feature/catenary-native-mast-body-024
   source_commit: c83f2bc45180b814c344dfa28df18a77f7507d04
