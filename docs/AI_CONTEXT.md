@@ -1,3 +1,9 @@
+# EXPERIMENT 0.1.26 — native copper-wire endpoints for future 25 kV AC catenary (2026-11-15)
+
+Branch **experiment/native-25kv-wire-026** starts from the accepted 0.1.24 main commit 04a290da, not from the separate 0.1.25 cosmetic-line branch. Probe is for **visual native wiring only**, NOT voltage, MW traction, battery or regeneration. Maintains all main C mast sprites, rail algorithms, native Undo and current thin cosmetic lines. Two hidden zero-collision helper electric poles at projected C-arm tips are created ONLY by /em-25kv-probe start; player-origin copper connector is requested. Status/clear and parent mast removal handle cleanup. Offline tests do not establish actual wire visibility; user must test on Factorio 2.1.20 with screenshots and log. See docs/research/native-copper-wire-probe-0.1.26.md and ElectrifiedMainline/TEST_NATIVE_WIRE_026.txt. Main remains **0.1.24**, approved. Do not merge before successful in-game QA.
+
+---
+
 # AI handoff — ElectrifiedMainline 0.1.24 accepted visual milestone
 
 **Updated:** 2026-11-15. Repository: [zukera2-stack/Factorio](https://github.com/zukera2-stack/Factorio). **Current `main` mod version 0.1.24, [PR #8 merged](https://github.com/zukera2-stack/Factorio/pull/8), merge SHA `43dd05a544a02de75f3b4a3c3689cd795f853d21`**. Prior 0.1.8 ZIP preserved as historical rollback; all next development should branch from updated `main`.

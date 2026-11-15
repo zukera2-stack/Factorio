@@ -1,3 +1,9 @@
+## 0.1.26 — experimental native copper-wire probe, NOT a release (2026-11-15)
+
+- Separate `experiment/native-25kv-wire-026` branch from accepted 0.1.24 main; independent of 0.1.25 thin-line experiment.
+- Two invisible offset helper poles at existing C-mast arm tips plus on-demand visible copper connection via the Factorio engine. Commands: `/em-25kv-probe start`, `status`, `clear`.
+- No new engine wire type, no real 25 kV AC/MW model, no traction or regeneration. Existing mast art and native rail/Undo remain unchanged. Needs user game screenshots and logs; CI only checks source/ZIP.
+
 ## 2026-11-15 — 0.1.24 merged into main (PR #8)
 
 - User-approved catenary C-mast visual milestone [merged via PR #8](https://github.com/zukera2-stack/Factorio/pull/8), merge commit `43dd05a544a02de75f3b4a3c3689cd795f853d21`. The `main` `info.json` now reports **0.1.24**.

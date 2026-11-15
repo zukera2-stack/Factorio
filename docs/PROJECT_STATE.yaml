@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: none # 0.1.24 merged to main; branch next work from main
-  feature_version: "0.1.24" # accepted native mast + eight C arms
-  feature_status: 024_visual_game_accepted_and_merged_main
+  active_feature_branch: experiment/native-25kv-wire-026 # isolated experimental branch; main remains 0.1.24
+  feature_version: "0.1.26" # optional on-demand native-wire visibility probe
+  feature_status: 026_native_wire_probe_pending_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 8
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.24"
+  mod_version: "0.1.26" # experimental branch only
   main_baseline_mod_version: "0.1.24" # merged PR #8
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -38,6 +38,22 @@ project:
   research_record_template: docs/PROTOTYPE_RESEARCH_TEMPLATE.md
   research_record_directory: docs/research/
   current_status: docs/STATUS.md
+
+native_wire_probe_026:
+  branch: experiment/native-25kv-wire-026
+  parent_main_commit: 04a290da887477d759b9ec53edb67371a6835a90
+  target_nominal_voltage: "25 kV AC (future model only)"
+  game_test: pending
+  visual_wire: native_player_origin_copper_experiment
+  helper_prototype: em-25kv-wire-probe-anchor
+  command: em-25kv-probe
+  command_options: [start, status, clear]
+  normal_mast_prototype_unchanged: true
+  native_undo_changed: false
+  applied_to_main: false
+  actual_electric_power_transfer: false
+  documentation: docs/research/native-copper-wire-probe-0.1.26.md
+  game_test_instructions: ElectrifiedMainline/TEST_NATIVE_WIRE_026.txt
 
 latest_uploaded_archive:
   version: "0.1.13"

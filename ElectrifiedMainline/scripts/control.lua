@@ -11,6 +11,7 @@ local mast_geometry016 = require("scripts.mast_geometry_016")
 local corridor_preview017 = require("scripts.catenary_corridor_017")
 local catenary_cursor018 = require("scripts.catenary_cursor_018")
 local ghost_visual023 = require("scripts.ghost_mast_023")
+local native_wire_probe026 = require("scripts.native_wire_probe_026")
 
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
@@ -52,6 +53,7 @@ local function ensure_storage()
     -- Discard obsolete experimental marks; preserve the independent replacement queue.
     storage.em.blueprint_undo_join = nil
     power019.ensure_storage()
+    native_wire_probe026.ensure_storage()
 end
 
 script.on_init(function()
@@ -384,6 +386,7 @@ local function cleanup_train_for_entity(event)
     diag_entity(diag_name, event, entity)
     if not (entity and entity.valid) then return end
 
+    native_wire_probe026.on_mast_removed(entity)
     power019.on_removed(event)
     ghost_visual023.on_removed(entity)
     if event.name == defines.events.on_robot_mined_entity
@@ -637,4 +640,9 @@ script.on_nth_tick(12, function(_)
 end)
 script.on_event("em-place-catenary-native", function(event)
     catenary_cursor018.on_place(event)
+end)
+
+-- 0.1.26 probe: deliberately command-only, never changes native Undo ownership.
+commands.add_command("em-25kv-probe", "Temporary native copper wire test: start | status | clear.", function(event)
+    native_wire_probe026.command(event,power019)
 end)
