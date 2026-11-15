@@ -61,7 +61,7 @@ engine source.
 ## 7. Implementation
 Added isolated helper prototype, projection module, command-only runtime and
 pure Lua geometry/prototype contract QA. Main masts and legacy contact graph are
-untouched. CI can prove Lua and ZIP packaging, not native game behavior.
+untouched. GitHub Actions accepts experiment/** pushes for Lua/ZIP and documentation checks. CI can prove Lua and ZIP packaging, not native game behavior.
 
 ## 8. In-game evidence
 PENDING — user Factorio 2.1.20 screenshot and factorio-current.log.
