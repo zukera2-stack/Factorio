@@ -1,0 +1,11 @@
+# 0.1.25 visual contact wire — recovered reference and decision
+
+**Recovered local reference:** `/mnt/data/техническая_концепция_опоры_контактной_сети_всм.png`, a design sheet in the user project (no long wires drawn), with P0 base, P1 arm joint, and P2 contact clamp. Source docs: [C2 chosen](../concepts/35kv-mast-C-refinement-2026-11-15.md), [art brief](../ART_BRIEF_35KV.md), [phase separation](../ART_DIRECTION_35KV.md), [topology reference](catenary-topology-0.1.10.md).
+
+**What was originally agreed:** a separate drawn contact wire over custom HSR track and supporting construction, disconnected from ordinary copper, no actual electricity before a later phase. The current repository already has `graphics/entity/35kv/contact-wire-hr.png`; it is a visual sprite asset, not sufficient to automatically create geometry. Wire anchor `scripts/overhead_geometry_012.lua` historically approximates 1.5 tiles toward the track; this must be visually reconciled with the approved C2 P2.
+
+**0.1.25 first iteration:** keep current contact graph and endpoints exactly to isolate visual changes. Draw contact line (copper-grey, thin), upper messenger (cold steel, light sag) and three short vertical droppers for each local span (LuaRendering `draw_line` only). For curved spans keep old Bézier path. No new entities, textures, rail proxy placement, electricity, power network changes, or Undo handlers. Straight segments use 8 intermediate points for messenger sag.
+
+**Limitations:** Difference in projected y is an artistic isometric screen approximation, NOT real wire height, tension or dynamic sag. The local design sheet gives no exact steel cable sag or droppers spacing; constants 0.30/0.11 tiles are tentative art settings to validate in Factorio. Does not fix P2 image projection inaccuracies or unknown parallel track linking. No claim of real chain-catenary mechanics or pantograph contacts.
+
+**Game QA:** straight and both curves, half diagonal, crossovers, parallel rail lines; 3–6 masts 8–16 tiles apart; ensure no unrelated track connections; remove middle mast, Ctrl+Z/Y, robot construction and save/load. Performance test 50–100 masts important because each span now uses 19 render objects versus 2. User acceptance before merge into main.

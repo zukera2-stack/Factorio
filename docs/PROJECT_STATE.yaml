@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: none # 0.1.24 merged to main; branch next work from main
-  feature_version: "0.1.24" # accepted native mast + eight C arms
-  feature_status: 024_visual_game_accepted_and_merged_main
+  active_feature_branch: feature/catenary-wire-visual-025 # experimental, not merged
+  feature_version: "0.1.25" # experimental wire visual only
+  feature_status: 025_wire_catenary_visual_ci_and_game_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 8
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.24"
+  mod_version: "0.1.25"
   main_baseline_mod_version: "0.1.24" # merged PR #8
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -841,3 +841,21 @@ accepted_milestone_024:
   circle_markers: approved
   real_traction_power_MW: 0
   upcoming_scope: contact_and_messenger_wire_art_then_real_electricity
+
+visual_wire_025:
+  branch: feature/catenary-wire-visual-025
+  base: main_0_1_24_user_accepted
+  new_version: '0.1.25'
+  contact_wire: thin_rail_axis_line
+  messenger_wire: slight_parabolic_sag_in_world_screen_y
+  vertical_droppers_per_span: 3
+  drawing_only: true
+  current_graph_topology_unchanged: true
+  P2_anchor_unchanged: true
+  ghost_undo_placement_unchanged: true
+  substation_blue_feeder_unchanged: true
+  electrical_MW: 0
+  visual_limitations: perspective_not_physical_and_parallel_link_regression_needed
+  source_qa: tests/35kv_wire_025.lua
+  game_test: pending
+  main_version: '0.1.24'

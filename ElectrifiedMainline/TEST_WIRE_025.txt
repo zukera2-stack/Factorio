@@ -1,0 +1,19 @@
+ElectrifiedMainline 0.1.25 — WIRE VISUAL ONLY GAME TEST
+Factorio 2.1.20 build 87512. Original 0.1.24 mast sprites UNCHANGED.
+Experimental GitHub branch feature/catenary-wire-visual-025.
+
+1. Install the nested ElectrifiedMainline_0.1.25.zip in mods, on a COPY of ВСМ.
+2. Place 3-6 masts on a straight custom HSR track within 16 tiles of each other.
+3. Expect lower contact wire and above it gently curved messenger, plus three
+   short vertical hangers between them on every completed connected span.
+4. Check at Factorio normal zoom: is it visually readable, properly attached
+   at C-mast P2, not excessively thick or dark against different surfaces?
+5. Repeat with curve A, curve B, half-diagonal, parallel tracks and junctions.
+   Screenshot ANY wrong diagonal link, broken P2 attachment, or skewed spans.
+6. Ghost/robots and normal Ctrl+Z/Ctrl+Y must work as before. Remove middle mast:
+   relevant wires should vanish; rebuild should restore. Save/load.
+7. Log command /em-35kv-status if available. Send screenshots + factorio-current.log.
+
+Note: world y offsets produce stylized sag, not engineering-height simulation.
+Old graph heuristics may still connect imperfectly around parallel rails.
+This is visual only! No MW power transfer, no battery, no regeneration.

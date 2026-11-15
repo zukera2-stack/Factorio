@@ -1,3 +1,10 @@
+## 0.1.25 — experimental suspended decorative catenary wire (game-test pending)
+
+- Contact wire still follows existing rail-side node graph; each visual span now has a thin copper/steel contact line and a slightly sagging upper messenger with three short vertical droppers, on both straight and curved spans.
+- Existing C mast native/8-arm artwork, cursor/ghost native build, near-track P2 estimate, blue feeder, checks against connected rails, and Undo/Upgrade Planner **unchanged**.
+- Added pure Lua profile regression test. **Not physically scaled perspective**; requires user visual validation and performance check on long tracks. Real energy `transfer_MW=0`.
+- Isolated `feature/catenary-wire-visual-025` from approved 0.1.24 main. No merge until in-game test.
+
 ## 2026-11-15 — 0.1.24 merged into main (PR #8)
 
 - User-approved catenary C-mast visual milestone [merged via PR #8](https://github.com/zukera2-stack/Factorio/pull/8), merge commit `43dd05a544a02de75f3b4a3c3689cd795f853d21`. The `main` `info.json` now reports **0.1.24**.

@@ -1,13 +1,9 @@
-# Next task — overhead contact/messenger wire visuals after accepted 0.1.24
+# 0.1.25 visual wire test — NOT merged into main
 
-**Canonical baseline:** version 0.1.24 accepted by user in Factorio 2.1.20 build 87512; [PR #8 merged](https://github.com/zukera2-stack/Factorio/pull/8) into `main`. [Evidence](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [current status](STATUS.md).
+The user-accepted 0.1.24 mast baseline is in `main`. This separate experimental branch adds **two different visual cable lines and 3 suspended droppers** to existing local pole-to-pole spans. References: `docs/ART_BRIEF_35KV.md` contact texture spec, `docs/ART_DIRECTION_35KV.md` wire phase, `docs/concepts/35kv-mast-C-refinement-2026-11-15.md` P2 anchor, and original 0.1.9/0.1.10 contact topology notes.
 
-The native lattice mast body, eight arm overlays, ghost/robot/Undo lifecycle, cursor image, SOUTH item icon and subtle circular markers are accepted **and should be preserved**. Existing original 8 C full PNGs remain as rollback.
+**No mechanical/topology changes:** `SPan=16`, existing connected rails checks, pole locations, P2 offsets, 0.1.22 arm-facing, native 0.1.24 mast, ghost/cursor/Undo/robots, blue feeder and power status remain unchanged.
 
-**Next stage:** examine visual contact wire and messenger cable across straight, curves A/B, half diagonals, transitions and parallel HSR lines. Verify P2 arm clamp center against rail centerline and nearest mast; do not accidentally connect independent parallel rails or draw diagonal feeder spiderwebs. Use actual screenshots, RailEnd projection, realistic suspension height, geometry tests, and isolated feature branch **from merged `main`**. If the visual wire must change, do so separately from traction/electricity code.
+**User test:** install `ElectrifiedMainline_0.1.25.zip` from GitHub Actions in copied `ВСМ` save. Try 3–6 masts on straight, A/B curves and half diagonals, both sides; parallel tracks close together and switches. Inspect no spanning off-track diagonals, that each span has visibly separate messenger + contact line with three small dropper strings, end attachment to P2 and no floating/overlapping near curves. Check Ctrl+Z/Redo, ghost/drones, load/save; compare in same zoom to 0.1.24. Send screenshots and factorio-current.log. CI mocks cannot assert quality/performance in engine.
 
-**Outside scope until wire approval:** real supply, MW transfer, batteries, regeneration, separate HSR power grid; currently `transfer_MW=0` and `energized=NO`. Likewise do not alter native Undo, Upgrade Planner, collision points or physical rail signals.
-
-Test acceptance: render at all 8 mast orientations, curve A/B both sides, half diagonals, a crossover, parallel rails; check anchor P2 continuity, support positions, save/load and ghost/bot lifecycle; record Factorio 2.1.20 screenshot/log. Branch, PR and CI before merging the next step.
-
-**Start next wire-art branch from `main` at/after `43dd05a544a02de75f3b4a3c3689cd795f853d21`**. Post-merge 0.1.24 [CI artifact #14175755233](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233); do not treat a future new branch as a power system until MW transfer is separately implemented and tested.
+**Then:** adjust wire P2 anchors separately, avoid assuming vertical y offset corresponds to actual physical elevation. No electricity (`transfer_MW=0`). Do not merge into main without user screenshot acceptance.

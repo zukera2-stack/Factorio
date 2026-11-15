@@ -151,12 +151,27 @@ local function draw(s,a,b,kind,corner)
         -- Direction from the adjacent railway is authoritative, not the R key.
         local A={x=from.x,y=from.y,tx=na.tx,ty=na.ty}
         local B={x=to.x,y=to.y,tx=nb.tx,ty=nb.ty}
-        local pts=corner and view.bezier(A,B,8) or {A,B}
-        for i=1,#pts-1 do
-            local x,y=pts[i],pts[i+1]
-            segment(x,y,{r=0.57,g=0.60,b=0.62,a=0.95},1.5)
-            segment({x=x.x,y=x.y-0.20},{x=y.x,y=y.y-0.20},
-                {r=0.38,g=0.43,b=0.48,a=0.85},1.0)
+        -- Keep the existing topology and accepted P2 anchor. Only
+        -- replace the old pair of straight-looking lines with a thin
+        -- contact wire, curved messenger and three short dropper hangers.
+        local pts=corner and view.bezier(A,B,8) or {}
+        if not corner then
+            for i=0,8 do
+                local t=i/8
+                pts[#pts+1]={x=A.x+(B.x-A.x)*t,
+                    y=A.y+(B.y-A.y)*t}
+            end
+        end
+        local contact,messenger,droppers=view.suspension(pts,0.30,0.11)
+        for i=1,#contact-1 do
+            segment(contact[i],contact[i+1],
+                {r=0.69,g=0.65,b=0.54,a=0.91},1.2)
+            segment(messenger[i],messenger[i+1],
+                {r=0.47,g=0.51,b=0.55,a=0.83},0.9)
+        end
+        for _,drop in ipairs(droppers) do
+            segment(drop.from,drop.to,
+                {r=0.53,g=0.55,b=0.55,a=0.76},0.65)
         end
     end
     s.edges[key]={a=a.unit_number,b=b.unit_number,kind=kind,

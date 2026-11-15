@@ -44,6 +44,41 @@ function M.bezier(a, b, steps)
     end
     return points
 end
+-- 0.1.25: purely decorative 2-line suspended wire geometry.
+-- Coordinates are Factorio world-space; y shift is a screen-space visual
+-- approximation, NOT physical wire height or electrical power transfer.
+-- The contact line stays at the approved C-mast P2 anchor; the messenger
+-- line is above it, with gentle downward curvature between masts.
+function M.suspension(points, upper_gap, messenger_sag)
+    upper_gap=upper_gap or 0.28
+    messenger_sag=messenger_sag or 0.12
+    if not points or #points<2 then return {},{},{} end
+    local contact,upper,droppers={},{},{}
+    for i,p in ipairs(points) do
+        local t=(i-1)/(#points-1)
+        local bend=4*t*(1-t)
+        contact[i]={x=p.x,y=p.y}
+        upper[i]={x=p.x,y=p.y-upper_gap+messenger_sag*bend}
+    end
+    -- Three small hangers: at 25%, 50%, 75% for the standard 8 steps.
+    -- Keep both terminal clamps clear, particularly around short/curved spans.
+    for _,t in ipairs({0.25,0.5,0.75}) do
+        local pos=1+t*(#contact-1)
+        local i=math.floor(pos)
+        local frac=pos-i
+        local j=math.min(#contact,i+1)
+        local x=contact[i].x+(contact[j].x-contact[i].x)*frac
+        local y=contact[i].y+(contact[j].y-contact[i].y)*frac
+        local rise=upper_gap-messenger_sag*4*t*(1-t)
+        if rise>0.04 then
+            droppers[#droppers+1]={
+                from={x=x,y=y-rise},to={x=x,y=y}
+            }
+        end
+    end
+    return contact,upper,droppers
+end
+
 function M.corner_candidate(a,b,span)
     if not (a and b and a.tx and b.tx and a.rail_adjacent and b.rail_adjacent) then return false end
     if a.id==b.id or a.surface_index~=b.surface_index or a.force_name~=b.force_name then return false end
