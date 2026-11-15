@@ -6,8 +6,8 @@ project:
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
   active_feature_branch: feature/catenary-facing-geometry-022
-  feature_version: "0.1.18" # ART PLAN ONLY; NOT a new mod ZIP
-  feature_status: 021_art_game_test_facing_defect_022_fix_mock_pending_real_game
+  feature_version: "0.1.22" # GitHub source with authentic 0.1.21 C sprites and facing experiment
+  feature_status: 022_github_source_exact_C_art_committed_ci_and_factorio_test_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -22,7 +22,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.18"
+  mod_version: "0.1.22"
   main_baseline_mod_version: "0.1.8"
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -95,7 +95,17 @@ visual_development:
   mast_face_022_fix: projected_rail_end_running_line_visual_only
   mast_face_022_test: tests/35kv_facing_022.lua
   mast_face_022_gameplay: unverified
-  mast_face_022_sprites_transferred_to_github: false
+  mast_face_022_sprites_transferred_to_github: true
+  mast_face_022_asset_source_version: '0.1.21'
+  mast_face_022_original_zip_in_github: art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip
+  mast_face_022_archive_git_blob_sha: c339d25ae1f82c535d0810715ca5594a1793898a
+  mast_face_022_c_sprite_png_sha_verified: 8_of_8_exact
+  mast_face_022_shadow_sha_verified: true
+  mast_face_022_ci_build: pending
+  mast_face_022_art_validation_in_factorio: pending
+  mast_face_022_mod_version: '0.1.22'
+  mast_face_022_test_guide: docs/TEST_INSTALL_022.md
+  mast_face_022_build_manifest: docs/BUILD_022.yaml
   mast_art_plan_021_sprite_png_committed_to_github: false
   mast_art_plan_021_git_repo_mod_version: '0.1.18'
   mast_art_plan_021_zip_based_on: game_tested_018_zip_artifact_14115959103

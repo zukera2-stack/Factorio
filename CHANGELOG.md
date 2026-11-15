@@ -1,3 +1,11 @@
+## 0.1.22 — Github-source complete C-mast facing experiment
+
+- Original C-mast PNG images (8 facings plus common base shadow) are now tracked **byte-identically** in the repository. They match the user's 0.1.21 tested ZIP; no quality-reducing conversion. Exact 0.1.21 ZIP saved as `art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip`.
+- `info.json` bumped to 0.1.22; package is now fully reproducible by GitHub Actions, no conversation-local binaries needed.
+- `scripts/mast_facing_022.lua` and `power_019.lua` change ONLY selection of the visual G-arm octant, using closest RailEnd geometry rather than rail entity.center. Added `[face022]` logging and mocked regression tests.
+- No changes to placement tiles, green markers, native Undo, train signals, Upgrade Planner, or electrical power (still 0 MW).
+- **Gameplay result of 0.1.22 new algorithm is pending.** See [0.1.21 user visual evidence](docs/tests/catenary-C-art-0.1.21-facing-2026-11-15.md) and [new test instructions](docs/TEST_INSTALL_022.md).
+
 ## 2026-11-15 — 0.1.21 game-test; begin isolated 0.1.22 visual-facing correction (not a release)
 
 - User screenshots and log confirm actual Factorio 2.1.20 game load of C mast art (0.1.21), but multiple curved/half-diagonal cases point G-arms away from the nearby rail. [Game report](docs/tests/catenary-C-art-0.1.21-facing-2026-11-15.md).

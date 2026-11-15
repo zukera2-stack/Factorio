@@ -1,0 +1,21 @@
+mod_name: ElectrifiedMainline
+version: "0.1.22"
+source_branch: feature/catenary-facing-geometry-022
+art_source_version: "0.1.21"
+art_exact_user_tested_png: true
+sprite_directions: [east, southeast, south, southwest, west, northwest, north, northeast]
+sprite_format: 512x384_RGBA_scale_0_5
+art_original_zip_path: art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip
+art_original_zip_bytes: 654494
+art_original_zip_sha256: 234f26cd11a1efa380dd849af2278234db3db90ec23b8049096c66cf0863da42
+art_original_zip_git_blob_sha: c339d25ae1f82c535d0810715ca5594a1793898a
+runtime_facing: LuaRailEnd_projection_chord_and_curved_cubic_approximation
+facing_implementation: ElectrifiedMainline/scripts/mast_facing_022.lua
+facing_regression: tests/35kv_facing_022.lua
+user_reference_screenshots: docs/tests/catenary-C-art-0.1.21-facing-2026-11-15.md
+game_test_021: loaded_but_visual_rotation_failed_at_some_curves
+game_test_022: NOT_YET_TESTED
+electrical_transfer_MW: 0
+native_placement_unchanged: true
+contact_topology_unchanged: true
+stable_main_modified: false
