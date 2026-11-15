@@ -1,3 +1,9 @@
+## 2026-11-15 — cleanup CI pass and corrected history links (docs-only)
+
+- [Post-cleanup ZIP build #43727816486](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486) PASS, artifact [#14167038465](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465). Exactly the same 0.1.22 playable Lua and current C graphics, with obsolete assets and test memos excluded.
+- Repaired Markdown links referencing removed full-res art sources: use immutable pre-cleanup Git commit. The first documentation check failed on those references; rerun required after correction.
+- No game-tested claim for 0.1.22 facing, and stable main 0.1.8 unchanged.
+
 ## 2026-11-15 — audited 0.1.22 repository cleanup, no gameplay code changes
 
 - Removed **21 superseded files** (about 6.55 MiB): 0.1.21 raw high-res C source images and original duplicate ZIP (still recoverable from Git history), outdated unreferenced 4-frame atlas, and old in-mod 0.1.12–0.1.18 test memo files.

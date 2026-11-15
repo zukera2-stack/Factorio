@@ -55,10 +55,17 @@
 1. **Нет изменений Lua, JSON-прототипов, игровых PNG, данных/управления/электричества.** Версия и содержание `info.json` остаются **0.1.22**.
 2. Остаётся восемь кадров C и действующая тень, выбранная пользователем художественная проекция ЮГ≈ВОСТОК, СЕВЕР≈ЗАПАД.
 3. Исправленный выбор `n.face` из `scripts/mast_facing_022.lua` в исходниках сохранён, но в Factorio ещё проходит проверку пользователем.
-4. Рабочие API тесты и CI не должны требовать удалённых PNG, архивов и TXT. **Новый успешный CI нужен после чистки, до отметки PASS.**
+4. Рабочие API тесты и CI не должны требовать удалённых PNG, архивов и TXT. **После очистки успешно прошли Lua-проверки и упаковка мода:** [GitHub Actions #43727816486](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486), [очищенный ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465). Проверку новой ориентации непосредственно в Factorio всё ещё выполняет пользователь.
 5. **Установочный файл 0.1.22, проверяемый пользователем**, зафиксирован предыдущим успешным запуском [Actions #43725722949](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949/artifacts/14166570620); результаты его игрового теста относятся к тому артефакту, не к новым неподтверждённым изменениям.
 6. Сам фактический ZIP без удалённых старых памяток и атласа будет иметь изменённый SHA; это **не изменение игрового кода**.
 
 ## Восстановление и дальнейшая работа
 
 Оригиналы концепта C доступны только по истории: [source art](https://github.com/zukera2-stack/Factorio/tree/64f81365ae5aa654d9b6cca1598cd30cc98289b3/art/sources/021-C); [старый ZIP](https://github.com/zukera2-stack/Factorio/blob/64f81365ae5aa654d9b6cca1598cd30cc98289b3/art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip). Для дальнейшего арта хранить оригиналы локально или в отдельном личном хранилище, **не возвращать в текущую рабочую ветку** без новой необходимости. Следующая задача — завершить пользовательский тест ориентации мачт на прямых, кривых A/B и полудиагоналях, затем заняться визуализацией контактной сети. Реального питания пока нет (`transfer_MW=0`). 
+
+## CI после очистки
+
+- Source commit: `59d8e362ccefeb36447b62808a18bd65563bc5d2`.
+- Build: [GitHub Actions #43727816486](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486) — **SUCCESS**; Lua syntax/regressions and ZIP integrity completed.
+- Packaged mod ZIP: [artifact #14167038465](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465) (nested `ElectrifiedMainline_0.1.22.zip`).
+- Documentation CI failed on first cleanup commit because two old Markdown links pointed at deleted `art/sources/021-C/README.md`; links corrected to immutable Git history in the follow-up commit. **Docs validation must be rerun and confirmed before marking this part PASS.**

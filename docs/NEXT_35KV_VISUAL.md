@@ -1,3 +1,5 @@
+> **After repository audit:** latest cleaned 0.1.22 build: [Actions #43727816486](https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465) (PASS). All eight C sprites + shadow, rendering code and facing math untouched, 21 redundant source/archive/atlas/old instructions removed from active tree. Original assets still in Git history; [audit](REPOSITORY_AUDIT_2026-11-15.md). User testing earlier artifact #14166570620 may continue, since the playable code/PNG have not changed.
+
 > **2026-11-15 repository audit:** Current 0.1.22 code and all 8 C sprites retained. Raw art / historical 0.1.21 archive / outdated in-ZIP test memos removed only from active tree (Git history preserved); current mod includes TEST_FACING_022.txt. [Audit](REPOSITORY_AUDIT_2026-11-15.md).
 
 # HANDOFF: 0.1.22 GitHub C sprite art + experimental facing correction

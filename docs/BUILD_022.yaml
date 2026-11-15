@@ -39,4 +39,9 @@ gameplay_facing_fix: UNVERIFIED
 source_cleanup_2026_11_15: removed_duplicate_art_and_old_in_mod_guides
 current_mast_sprites_in_git: true
 new_in_mod_test_guide: ElectrifiedMainline/TEST_FACING_022.txt
-post_cleanup_ci_status: pending
+post_cleanup_ci_status: success
+post_cleanup_ci_run_id: 43727816486
+post_cleanup_ci_artifact_id: 14167038465
+post_cleanup_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465
+post_cleanup_mod_lua_changed: false
+post_cleanup_gameplay_test: unverified

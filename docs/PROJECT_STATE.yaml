@@ -747,4 +747,8 @@ repository_cleanup_2026_11_15:
   stable_main_unchanged: true
   original_assets_recoverable_from_commit: 64f81365ae5aa654d9b6cca1598cd30cc98289b3
   report: docs/REPOSITORY_AUDIT_2026-11-15.md
-  post_cleanup_ci: pending
+  post_cleanup_ci: success
+  post_cleanup_ci_run_id: 43727816486
+  post_cleanup_ci_artifact_id: 14167038465
+  post_cleanup_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43727816486/artifacts/14167038465
+  post_cleanup_ci_source_sha: 59d8e362ccefeb36447b62808a18bd65563bc5d2
