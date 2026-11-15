@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/catenary-mast-art-plan-021
   feature_version: "0.1.18" # ART PLAN ONLY; NOT a new mod ZIP
-  feature_status: art_sketches_planned_not_started_2026_11_14
+  feature_status: concept_C_selected_precision_C2_pending_2026_11_15
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -65,7 +65,7 @@ visual_development:
   mast_art_plan_021_from: feature/catenary-native-player-build-018
   mast_art_plan_021_parent_sha: 8883b8990663349bbd0cae60b7e00d08e3460c25
   mast_art_plan_021_codebase_version: '0.1.18'
-  mast_art_plan_021_status: plan_approved_sketches_not_created
+  mast_art_plan_021_status: three_sketches_presented_C_selected_C2_pending
   mast_art_plan_021_order:
     - sketch_three_concepts_A_B_C
     - user_explicitly_chooses_concept
@@ -73,8 +73,14 @@ visual_development:
     - static_qa_ci_and_factorio_in_game_art_test
     - separate_catenary_contact_and_messenger_wire_visuals
     - separate_traction_electrical_logic_last
-  mast_art_plan_021_next_action: draw_and_present_three_mast_sketches_only
-  mast_art_plan_021_user_concept_approval: pending
+  mast_art_plan_021_next_action: draw_C2_with_P0_P1_P2_then_request_user_approval
+  mast_art_plan_021_user_concept_approval: C_selected_2026_11_15
+  mast_art_plan_021_three_sketches_presented: true
+  mast_art_plan_021_selected_concept: C_balanced_industrial
+  mast_art_plan_021_C2_spec: docs/concepts/35kv-mast-C-refinement-2026-11-15.md
+  mast_art_plan_021_C2_status: planned_not_drawn_or_approved
+  mast_art_plan_021_anchor_points: P0_base_P1_mast_arm_joint_P2_contact_wire_hanger
+  mast_art_plan_021_sketch_image_in_repo: false
   mast_art_plan_021_new_sprites_created: false
   mast_art_plan_021_game_zip_created: false
   mast_art_plan_021_game_art_test: not_started

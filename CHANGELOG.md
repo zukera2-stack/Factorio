@@ -1,3 +1,10 @@
+## 2026-11-15 — user selects C mast concept, C2 visual refinement specification (docs only)
+
+- User viewed three artistic sketch options and chose C, balanced industrial lattice mast. No more A/B/C choice needed.
+- New [C2 refinement plan](docs/concepts/35kv-mast-C-refinement-2026-11-15.md) specifies simplified single arm, compact 1×1 base, P0/P1/P2 anchor locations, streamlined insulators, no baked-in long wires or substation box.
+- C2 sketch still pending approval. Later: one east prototype frame, seven other sprites/shadows, CI ZIP, real Factorio test, visual wires, electricity last.
+- No code or art binary changed; stable main 0.1.8 unchanged.
+
 ## 2026-11-14 — user-approved catenary mast ART DIRECTION, documentation only
 
 - Work order pinned for cross-chat continuity: **sketch concepts A/B/C first → explicit choice → 8-direction mast PNG + shadow pass → real Factorio screenshot game QA → independent contact-wire visual pass → electrical logic last**. No sprites or new ZIP in this commit.
