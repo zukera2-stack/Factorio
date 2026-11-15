@@ -41,7 +41,7 @@ local player={
 S.can_place_entity=function(p) return p.position.y<0 end
 game={tick=23,connected_players={player},
     get_player=function(i) return i==1 and player end}
-rendering={draw_rectangle=function(p)
+rendering={draw_circle=function(p)
     count_checks[#count_checks+1]={render=true,ttl=p.time_to_live}
 end}
 log=function(_) end
@@ -61,7 +61,7 @@ local render_count=0
 for _,entry in ipairs(count_checks) do if entry.render then
     render_count=render_count+1;assert(entry.ttl==17)
 end end
-assert(render_count==8)
+assert(render_count==4, "one subtle circular marker per slot")
 M.on_place({player_index=1,cursor_position={x=2.61,y=0.56}})
 assert(#built==1 and cursor.count==3,"native API invoked only once, no manual refund")
 M.on_place({player_index=1,cursor_position={x=2.6,y=-1.4}})
@@ -87,4 +87,4 @@ assert(core:find("player.build_from_cursor",1,true))
 for _,forbidden in ipairs({"create_entity","destroy(", "undo_index", "teleport(", "order_deconstruction"}) do
     assert(not core:find(forbidden,1,true),"forbidden API found: "..forbidden)
 end
-print("0.1.18 native player cursor build + per-item overlay mocks: PASS")
+print("0.1.23 native cursor placement unchanged + quiet circle overlay mocks: PASS")
