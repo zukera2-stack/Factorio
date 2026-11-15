@@ -65,7 +65,7 @@ visual_development:
   mast_art_plan_021_from: feature/catenary-native-player-build-018
   mast_art_plan_021_parent_sha: 8883b8990663349bbd0cae60b7e00d08e3460c25
   mast_art_plan_021_codebase_version: '0.1.18'
-  mast_art_plan_021_status: local_021_eight_sprite_zip_built_user_game_test_pending
+  mast_art_plan_021_status: 021_game_test_rotation_issue_022_source_and_art_fully_in_github
   mast_art_plan_021_order:
     - sketch_three_concepts_A_B_C
     - user_explicitly_chooses_concept
@@ -73,15 +73,15 @@ visual_development:
     - static_qa_ci_and_factorio_in_game_art_test
     - separate_catenary_contact_and_messenger_wire_visuals
     - separate_traction_electrical_logic_last
-  mast_art_plan_021_next_action: user_game_test_021_local_zip_send_screenshots_and_log
+  mast_art_plan_021_next_action: user_test_022_github_actions_zip_on_same_curve_positions
   mast_art_plan_021_user_concept_approval: C_selected_2026_11_15
   mast_art_plan_021_three_sketches_presented: true
   mast_art_plan_021_selected_concept: C_balanced_industrial
   mast_art_plan_021_C2_spec: docs/concepts/35kv-mast-C-refinement-2026-11-15.md
   mast_art_plan_021_C2_status: user_requested_sprite_production_following_C2_concept
   mast_art_plan_021_anchor_points: P0_base_P1_mast_arm_joint_P2_contact_wire_hanger
-  mast_art_plan_021_sketch_image_in_repo: false
-  mast_art_plan_021_new_sprites_created: true # LOCAL ZIP ONLY, not GitHub
+  mast_art_plan_021_sketch_image_in_repo: true
+  mast_art_plan_021_new_sprites_created: true # byte-identical 021 PNG now in GitHub
   mast_art_plan_021_local_zip_version: '0.1.21'
   mast_art_plan_021_local_zip_filename: ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip
   mast_art_plan_021_local_zip_bytes: 654494
@@ -109,19 +109,26 @@ visual_development:
   mast_face_022_archive_git_blob_sha: c339d25ae1f82c535d0810715ca5594a1793898a
   mast_face_022_c_sprite_png_sha_verified: 8_of_8_exact
   mast_face_022_shadow_sha_verified: true
-  mast_face_022_ci_build: pending
+  mast_face_022_ci_build: success_43725722949_verified_nested_zip_exact_pngs
   mast_face_022_art_validation_in_factorio: pending
+  mast_face_022_code_source_sha: 272c11468f8ee6e2f5226743dba16d112bdf1c6e
+  mast_face_022_build_artifact_zip: ElectrifiedMainline_0.1.22.zip
+  mast_face_022_github_actions_artifact: https://github.com/zukera2-stack/Factorio/actions/runs/43725722949/artifacts/14166570620
+  mast_face_022_nested_zip_integrity: pass
+  mast_face_022_nested_zip_all_eight_sprites_exact_match_021: true
+  mast_face_022_nested_zip_shadow_exact_match_021: true
+  mast_face_022_nested_zip_face_module_present: true
   mast_face_022_mod_version: '0.1.22'
   mast_face_022_test_guide: docs/TEST_INSTALL_022.md
   mast_face_022_build_manifest: docs/BUILD_022.yaml
-  mast_art_plan_021_sprite_png_committed_to_github: false
-  mast_art_plan_021_git_repo_mod_version: '0.1.18'
+  mast_art_plan_021_sprite_png_committed_to_github: true
+  mast_art_plan_021_git_repo_mod_version: '0.1.22'
   mast_art_plan_021_zip_based_on: game_tested_018_zip_artifact_14115959103
   mast_art_plan_021_art_projection_south: east_side_on
   mast_art_plan_021_art_projection_north: west_side_on
   mast_art_plan_021_build_report: docs/builds/021-local-c-mast-game-test.md
-  mast_art_plan_021_game_zip_created: false
-  mast_art_plan_021_game_art_test: not_started
+  mast_art_plan_021_game_zip_created: true
+  mast_art_plan_021_game_art_test: 021_tested_some_incorrect_mast_orientations_022_pending
   mast_art_plan_021_full_spec: docs/ART_DIRECTION_35KV.md
   mast_art_plan_021_chat_handoff: docs/NEXT_35KV_VISUAL.md
   mast_art_plan_021_external_lmb_020_test_report: https://github.com/zukera2-stack/Factorio/blob/feature/catenary-item-click-probe-020/docs/tests/catenary-click-probe-0.1.20-game-fail-2026-11-14.md

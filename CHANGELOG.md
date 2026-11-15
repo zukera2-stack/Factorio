@@ -1,3 +1,9 @@
+## 2026-11-15 — verify finished GitHub-built 0.1.22 ZIP (docs only)
+
+- GitHub Actions [#43725722949](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949) passed 0.1.22 Lua syntax, mocks and packaging. The delivered ZIP was independently downloaded and inspected: nested mod archive is valid, exact original 0.1.21 C PNGs and shadow match byte-for-byte, and new 0.1.22 facing module is inside.
+- GitHub project-state was reconciled: obsolete "PNG not uploaded", "022 CI pending" and "021 visual test not started" flags were updated to the observed facts. New facing code is STILL unverified in real Factorio.
+- Stable main remains untouched.
+
 ## 2026-11-15 — complete C concept art archive and user test montage
 
 - Committed **all nine original full-resolution C images** to `art/sources/021-C/`, verified by per-file original SHA256 and Git blob SHA. No palette conversions or recompression.

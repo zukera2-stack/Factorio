@@ -6,6 +6,6 @@
 
 **Change 0.1.22:** Added pure `scripts/mast_facing_022.lua`, projects mast to closest point on a rail-end chord or approximated curve, then picks one of the same eight facing SpritePrototypes. This affects **only** the graphical orientation. Existing `rail_tangent`/contact-edge topology, placement API, Undo, rail types, train blocks, sprites, wire graphics unchanged. Each new mast logs `[face022]` with octant and reference rail.
 
-**Next:** CI builds `ElectrifiedMainline_0.1.22.zip`; user tests on disposable copy of ВСМ save, reproduces problem spots from prior screenshots and sends new screenshots/log. Do not label new algorithm game-proven until that happens. See `docs/TEST_INSTALL_022.md`. Fix only observed facing mismatch. Do not change placement slots or power.
+**CI COMPLETED:** [Build #43725722949](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949) PASS; [nested mod ZIP artifact #14166570620](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949/artifacts/14166570620) physically verified byte-for-byte to include exact 0.1.21 C sprites. **Next:** user tests on disposable copy of ВСМ save, reproduces problem spots from prior screenshots and sends new screenshots/log. Do not label new algorithm game-proven until that happens. See `docs/TEST_INSTALL_022.md`. Fix only observed facing mismatch. Do not change placement slots or power.
 
 **Later:** after acceptance of masts, visual contact wires; electricity last. Stable `main` 0.1.8 untouched. Do not use failed 0.1.20 capsule placement experiment.

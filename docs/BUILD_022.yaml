@@ -19,3 +19,17 @@ electrical_transfer_MW: 0
 native_placement_unchanged: true
 contact_topology_unchanged: true
 stable_main_modified: false
+
+source_commit_with_game_code: 272c11468f8ee6e2f5226743dba16d112bdf1c6e
+ci_run_id: 43725722949
+ci_conclusion: success
+ci_artifact_id: 14166570620
+ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43725722949/artifacts/14166570620
+nested_zip: ElectrifiedMainline_0.1.22.zip
+nested_zip_integrity: pass
+nested_info_version: '0.1.22'
+nested_eight_sprite_png_byte_equality_with_021_original: PASS
+nested_shadow_png_byte_equality_with_021_original: PASS
+nested_face_022_module: present
+static_regression_tests: pass
+gameplay_facing_fix: UNVERIFIED
