@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/catenary-mast-art-plan-021
   feature_version: "0.1.18" # ART PLAN ONLY; NOT a new mod ZIP
-  feature_status: concept_C_selected_precision_C2_pending_2026_11_15
+  feature_status: local_021_sprite_zip_complete_gameplay_pending_images_not_in_github
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 6
@@ -65,7 +65,7 @@ visual_development:
   mast_art_plan_021_from: feature/catenary-native-player-build-018
   mast_art_plan_021_parent_sha: 8883b8990663349bbd0cae60b7e00d08e3460c25
   mast_art_plan_021_codebase_version: '0.1.18'
-  mast_art_plan_021_status: three_sketches_presented_C_selected_C2_pending
+  mast_art_plan_021_status: local_021_eight_sprite_zip_built_user_game_test_pending
   mast_art_plan_021_order:
     - sketch_three_concepts_A_B_C
     - user_explicitly_chooses_concept
@@ -73,15 +73,26 @@ visual_development:
     - static_qa_ci_and_factorio_in_game_art_test
     - separate_catenary_contact_and_messenger_wire_visuals
     - separate_traction_electrical_logic_last
-  mast_art_plan_021_next_action: draw_C2_with_P0_P1_P2_then_request_user_approval
+  mast_art_plan_021_next_action: user_game_test_021_local_zip_send_screenshots_and_log
   mast_art_plan_021_user_concept_approval: C_selected_2026_11_15
   mast_art_plan_021_three_sketches_presented: true
   mast_art_plan_021_selected_concept: C_balanced_industrial
   mast_art_plan_021_C2_spec: docs/concepts/35kv-mast-C-refinement-2026-11-15.md
-  mast_art_plan_021_C2_status: planned_not_drawn_or_approved
+  mast_art_plan_021_C2_status: user_requested_sprite_production_following_C2_concept
   mast_art_plan_021_anchor_points: P0_base_P1_mast_arm_joint_P2_contact_wire_hanger
   mast_art_plan_021_sketch_image_in_repo: false
-  mast_art_plan_021_new_sprites_created: false
+  mast_art_plan_021_new_sprites_created: true # LOCAL ZIP ONLY, not GitHub
+  mast_art_plan_021_local_zip_version: '0.1.21'
+  mast_art_plan_021_local_zip_filename: ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip
+  mast_art_plan_021_local_zip_bytes: 654494
+  mast_art_plan_021_local_zip_sha256: 234f26cd11a1efa380dd849af2278234db3db90ec23b8049096c66cf0863da42
+  mast_art_plan_021_local_zip_game_status: UNVERIFIED
+  mast_art_plan_021_sprite_png_committed_to_github: false
+  mast_art_plan_021_git_repo_mod_version: '0.1.18'
+  mast_art_plan_021_zip_based_on: game_tested_018_zip_artifact_14115959103
+  mast_art_plan_021_art_projection_south: east_side_on
+  mast_art_plan_021_art_projection_north: west_side_on
+  mast_art_plan_021_build_report: docs/builds/021-local-c-mast-game-test.md
   mast_art_plan_021_game_zip_created: false
   mast_art_plan_021_game_art_test: not_started
   mast_art_plan_021_full_spec: docs/ART_DIRECTION_35KV.md

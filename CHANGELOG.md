@@ -1,3 +1,10 @@
+## 2026-11-15 — local 0.1.21 art ZIP ready for user Factorio test (DOCS only in GitHub)
+
+- Concept C eight-direction sprite assets generated locally from selected art, with SOUTH=east-like and NORTH=west-like screen projection. Local ZIP with replacement 512×384 RGBA sprites, new base shadow, version bump 0.1.21 and tester memo successfully verified for archive/image integrity.
+- **IMPORTANT: GitHub source assets and this ZIP are NOT checked in**; this docs update records their name/SHA256 and precise build methodology. GitHub code remains 0.1.18 art branch, and no GitHub CI/game-test result for 0.1.21 yet.
+- Test instructions and evidence boundary in [builds/021-local-c-mast-game-test.md](docs/builds/021-local-c-mast-game-test.md). User next tests copy of save, captures screenshots and log. If accepted, persist graphics into GitHub properly.
+- No changes to power transfer, rail physics, Undo/Redo, signal blocks or stable main.
+
 ## 2026-11-15 — user selects C mast concept, C2 visual refinement specification (docs only)
 
 - User viewed three artistic sketch options and chose C, balanced industrial lattice mast. No more A/B/C choice needed.
