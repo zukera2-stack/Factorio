@@ -4,9 +4,15 @@ A Factorio 2.1 mod project exploring high-speed railway infrastructure, an elect
 
 > **Development status: 0.1.8, game-tested baseline in `main` (PR #6 merged).** Factorio 2.1.20 build 87512: native Upgrade Planner upgraded **26 straight + 8 curved** rails with working Ctrl+Z/Ctrl+Y; Ctrl+Shift superforced blueprint overlay upgraded **14 straight + 8 curved** rails with working Undo/Redo. Experimental scripted Undo joining was removed. Half-diagonal gameplay, the separate replacement selection tool and interrupted robot jobs remain unverified; electric traction, battery, overhead transfer and regeneration are not yet implemented. See [current status](docs/STATUS.md) and [test evidence](docs/tests/undo-0.1.8-2026-11-12.md).
 
-## Experimental rail-end geometry 0.1.16 (current development)
+## Current development: visual mast facing 0.1.22
 
-The active GitHub branch is [`feature/catenary-geometry-016`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-geometry-016) and the source mod version is **0.1.16**. The game-tested stable baseline remains **0.1.8 in `main`**. New command `/em-35kv-geometry [offset] [index]` gives up to four read-only candidate base positions from engine rail ends, with one translucent Г-shaped mast sprite at a selected collision-clear spot. No real pole placement or Undo logic changes. Static tests and ZIP packaging [passed](https://github.com/zukera2-stack/Factorio/actions/runs/43586035896); **0.1.16 game testing is pending**. For the correct two-layer ZIP download and commands, use the [0.1.16 installation/test guide](docs/TEST_INSTALL_016.md). The 0.1.15 experiment below is kept as the previous snapshot.
+The active test branch is [`feature/catenary-facing-geometry-022`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-facing-geometry-022); the stable release remains **0.1.8 in `main`**. The user successfully loaded **0.1.21** with the new eight-direction C mast artwork, but screenshots showed some cantilevers turning away from curved or half-diagonal track. The **0.1.22** test build changes only the graphic facing algorithm to refer to RailEnd geometry. [0.1.22 test instructions](docs/TEST_INSTALL_022.md) · [latest recorded successful mod build](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949/artifacts/14166570620) · [repository audit](docs/REPOSITORY_AUDIT_2026-11-15.md).
+
+**Current 0.1.22 game-facing fix is unverified.** Overhead wire geometry is visual only, and traction electrical transfer is still OFF (MW=0). Production-ready 8 C sprites and shadow are committed to the mod's graphics directory; heavyweight original artwork is stored only in recoverable Git history, not the active tree.
+
+## Archived experiment: rail-end geometry 0.1.16 (historical, not current)
+
+The historical 0.1.16 branch is [`feature/catenary-geometry-016`](https://github.com/zukera2-stack/Factorio/tree/feature/catenary-geometry-016) and the source mod version is **0.1.16**. The game-tested stable baseline remains **0.1.8 in `main`**. New command `/em-35kv-geometry [offset] [index]` gives up to four read-only candidate base positions from engine rail ends, with one translucent Г-shaped mast sprite at a selected collision-clear spot. No real pole placement or Undo logic changes. Static tests and ZIP packaging [passed](https://github.com/zukera2-stack/Factorio/actions/runs/43586035896); **0.1.16 game testing is pending**. For the correct two-layer ZIP download and commands, use the [0.1.16 installation/test guide](docs/TEST_INSTALL_016.md). The 0.1.15 experiment below is kept as the previous snapshot.
 
 ## Experimental build 0.1.15 (not a release)
 
@@ -26,7 +32,7 @@ See the [step-by-step installation and test guide](docs/TEST_INSTALL_015.md). Th
 | Path | Purpose |
 | --- | --- |
 | `ElectrifiedMainline/` | Mod source. This directory is the mod root and contains `info.json`, data-stage scripts, runtime script and locale files. |
-| `mods/` | Previously packaged mod archive(s). |
+| `dist/` | Versioned test ZIP / stable 0.1.8 baseline; new builds are published via GitHub Actions. |
 | `docs/` | Design notes, implementation status and development guidance. |
 | `CONTRIBUTING.md` | Mandatory research-first contributor workflow and evidence rules. |
 | `README.ru.md` | Russian version of this overview. |

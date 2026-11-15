@@ -18,3 +18,11 @@ Desktop.ini
 
 # Generated sprite previews and staging files
 build/sprites/
+
+# Keep high-resolution art sources and duplicate test archives out of active Git tree.
+# Archived pre-cleanup versions remain retrievable from Git history.
+art/sources/
+art/archives/
+
+# CI generates ZIPs in dist; the explicitly tracked 0.1.8 baseline stays available.
+dist/ElectrifiedMainline_*.zip

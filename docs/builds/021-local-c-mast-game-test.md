@@ -1,3 +1,5 @@
+> **Historical build report:** The statements below that 0.1.21 C art was not pushed to GitHub were true when the local ZIP was created. The exact 8 gameplay PNGs and shadow are NOW committed to current 0.1.22 source. The redundant old ZIP was later deleted from the active tree, recoverable from [this historical Git commit](https://github.com/zukera2-stack/Factorio/blob/64f81365ae5aa654d9b6cca1598cd30cc98289b3/art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip). The current tested build is 0.1.22, not 0.1.21.
+
 # ElectrifiedMainline 0.1.21 — art-only local test ZIP from approved C mast
 
 **Created:** 2026-11-15. **Requested by user:** Eight art sprites for selected variant C, with south projection east-like and north projection west-like, plus ZIP for gameplay testing.

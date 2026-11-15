@@ -1,6 +1,8 @@
+> **2026-11-15 repository audit:** Current 0.1.22 code and all 8 C sprites retained. Raw art / historical 0.1.21 archive / outdated in-ZIP test memos removed only from active tree (Git history preserved); current mod includes TEST_FACING_022.txt. [Audit](REPOSITORY_AUDIT_2026-11-15.md).
+
 # HANDOFF: 0.1.22 GitHub C sprite art + experimental facing correction
 
-**Current GitHub branch:** `feature/catenary-facing-geometry-022`. Actual version `ElectrifiedMainline 0.1.22`. **All original eight 0.1.21 C PNG sprites and shadow are committed now**, byte-identical to the user's actual game-tested local ZIP. Original ZIP also saved inside GitHub `art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip`.
+**Current GitHub branch:** `feature/catenary-facing-geometry-022`. Actual version `ElectrifiedMainline 0.1.22`. **All original eight 0.1.21 C PNG sprites and shadow are committed now**, byte-identical to the user's actual game-tested local ZIP. The duplicate 0.1.21 ZIP has been removed from the active tree in the repository cleanup, but is [available in Git history](https://github.com/zukera2-stack/Factorio/blob/64f81365ae5aa654d9b6cca1598cd30cc98289b3/art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip).
 
 **Game tested baseline:** 0.1.21 loaded successfully in Factorio 2.1.20. Six user screenshots show incorrect cantilever orientation at some curves and half diagonals. Root cause is likely `power_019.lua::register` using the nearest rail entity's center. Green valid placement squares themselves are not implicated and must not be pruned. Original log/screenshot SHA in `docs/tests/catenary-C-art-0.1.21-facing-2026-11-15.md`.
 

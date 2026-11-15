@@ -1,3 +1,10 @@
+## 2026-11-15 — audited 0.1.22 repository cleanup, no gameplay code changes
+
+- Removed **21 superseded files** (about 6.55 MiB): 0.1.21 raw high-res C source images and original duplicate ZIP (still recoverable from Git history), outdated unreferenced 4-frame atlas, and old in-mod 0.1.12–0.1.18 test memo files.
+- Kept all eight active 0.1.21-origin C sprite images, active shadow, current Lua/rail/Undo logic, sprite QA pipeline, user test screenshot evidence and historical research; added accurate 0.1.22 test memo inside the mod instead.
+- Updated README current-development text (previously incorrectly said 0.1.16 was active) and corrected authoritative status/source-archive locations. [Full audit](docs/REPOSITORY_AUDIT_2026-11-15.md).
+- Stable main 0.1.8 unaffected. Build/QA after this cleanup required before claiming the new archive works.
+
 ## 2026-11-15 — verify finished GitHub-built 0.1.22 ZIP (docs only)
 
 - GitHub Actions [#43725722949](https://github.com/zukera2-stack/Factorio/actions/runs/43725722949) passed 0.1.22 Lua syntax, mocks and packaging. The delivered ZIP was independently downloaded and inspected: nested mod archive is valid, exact original 0.1.21 C PNGs and shadow match byte-for-byte, and new 0.1.22 facing module is inside.

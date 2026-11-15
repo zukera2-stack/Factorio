@@ -1,0 +1,21 @@
+ElectrifiedMainline 0.1.22 — TEST OF C-MAST VISUAL FACING
+Factorio 2.1.20 build 87512. Source branch: feature/catenary-facing-geometry-022.
+This 0.1.22 trial keeps the same 8 original C mast PNGs tested in 0.1.21.
+Change is ONLY the Lua algorithm selecting the pictured G-arm direction.
+
+1. Install only ElectrifiedMainline_0.1.22.zip (from Actions nested ZIP).
+2. Use a COPY of the save ВСМ.zip. Do not alter your stable main 0.1.8 setup.
+3. Repeat the same physical mast positions on both sides of straight, curved A/B,
+   half-diagonal rails, parallel routes, switches and straight-to-curve transitions.
+4. Inspect cantilever pointing toward track. The desired artistic appearance:
+   SOUTH looks EAST-like, NORTH looks WEST-like. This is intentional.
+5. Put pole item away to hide green/red position overlay before screenshots.
+6. Log should contain '[ElectrifiedMainline][face022]' for new masts:
+   face, via=rail_end_chord/rail_end_curve/entity_center_fallback and target.
+   Fallback by curves may be a defect, not proof of working geometry.
+7. Verify Ctrl+Z/Ctrl+Y of a newly placed mast and normal Upgrade Planner.
+8. Send full-resolution screenshots with coordinates and factorio-current.log.
+
+Limits: correct facing on curves remains UNVERIFIED in real Factorio.
+No new terrain, signals, item click interception, placement restrictions or MW.
+Full instructions and game evidence: docs/TEST_INSTALL_022.md in GitHub.

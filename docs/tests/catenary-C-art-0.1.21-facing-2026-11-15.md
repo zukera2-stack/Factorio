@@ -1,3 +1,5 @@
+> **Current correction 2026-11-15:** The statement below that 0.1.21 C art was not yet in GitHub describes the situation **at game-test time**. All eight corresponding 512×384 gameplay sprites and the active shadow were subsequently committed and remain in `ElectrifiedMainline/graphics/entity/35kv/`. Source-resolution artwork was later removed from active tree on user request but can be restored from commit `64f81365ae5aa654d9b6cca1598cd30cc98289b3`.
+
 # 0.1.21 user game test — visual rotation diagnosis
 
 Date: 2026-11-15. Source: user's exact `2026-11-15_17-11-59.zip` (6 screenshots), `factorio-current(20261115-141332).log` (Factorio 2.1.20 build 87512). Game mod: **ElectrifiedMainline 0.1.21**. This is genuine 0.1.21 gameplay; its C sprite ZIP was generated locally, and its **PNG assets are not yet committed to GitHub**.

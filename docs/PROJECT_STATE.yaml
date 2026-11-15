@@ -96,16 +96,17 @@ visual_development:
   mast_face_022_test: tests/35kv_facing_022.lua
   mast_face_022_gameplay: unverified
   mast_face_022_sprites_transferred_to_github: true
-  mast_face_022_full_resolution_source_art_in_github: true
-  mast_face_022_full_resolution_source_art_index: art/sources/021-C/README.md
-  mast_face_022_source_art_original_concept_C_in_github: true
+  mast_face_022_full_resolution_source_art_in_github: false # active tree; recover from history
+  mast_face_022_full_resolution_source_art_history_commit: 64f81365ae5aa654d9b6cca1598cd30cc98289b3
+  mast_face_022_source_art_original_concept_C_in_github: false # active tree, in Git history
   mast_face_022_six_screenshot_contact_sheet_in_github: docs/tests/evidence/021-six-screenshots-contact.jpg
   mast_face_022_full_original_user_screenshots_in_github: false
   mast_face_022_ci_run_id: 43725722949
   mast_face_022_ci_status: success
   mast_face_022_ci_artifact_id: 14166570620
   mast_face_022_asset_source_version: '0.1.21'
-  mast_face_022_original_zip_in_github: art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip
+  mast_face_022_original_zip_in_active_tree: false
+  mast_face_022_original_zip_history_commit: 64f81365ae5aa654d9b6cca1598cd30cc98289b3
   mast_face_022_archive_git_blob_sha: c339d25ae1f82c535d0810715ca5594a1793898a
   mast_face_022_c_sprite_png_sha_verified: 8_of_8_exact
   mast_face_022_shadow_sha_verified: true
@@ -731,3 +732,19 @@ rail_aware_catenary_012:
   art_variant_lua_byte_identical_to_CI: true
   art_variant_game_test: not_run
   main_merge: prohibited
+
+repository_cleanup_2026_11_15:
+  applied_branch: feature/catenary-facing-geometry-022
+  original_tree_head: 9025ddbf2496e73c5b7ca704e9c09199894ddc1f
+  removed_file_count: 21
+  removed_tree_bytes: 6866337
+  removed_groups: [large_source_art, historical_021_zip, obsolete_4dir_atlas, outdated_in_mod_test_memos]
+  new_active_022_test_memo: ElectrifiedMainline/TEST_FACING_022.txt
+  active_eight_c_mast_sprites_kept: true
+  active_shadow_kept: true
+  current_lua_and_prototypes_unchanged: true
+  visual_evidence_contact_sheet_kept: true
+  stable_main_unchanged: true
+  original_assets_recoverable_from_commit: 64f81365ae5aa654d9b6cca1598cd30cc98289b3
+  report: docs/REPOSITORY_AUDIT_2026-11-15.md
+  post_cleanup_ci: pending

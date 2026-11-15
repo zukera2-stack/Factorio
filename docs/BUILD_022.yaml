@@ -5,7 +5,9 @@ art_source_version: "0.1.21"
 art_exact_user_tested_png: true
 sprite_directions: [east, southeast, south, southwest, west, northwest, north, northeast]
 sprite_format: 512x384_RGBA_scale_0_5
-art_original_zip_path: art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip
+art_original_zip_in_active_tree: false
+art_original_zip_history_commit: 64f81365ae5aa654d9b6cca1598cd30cc98289b3
+art_original_zip_history_url: https://github.com/zukera2-stack/Factorio/blob/64f81365ae5aa654d9b6cca1598cd30cc98289b3/art/archives/ElectrifiedMainline_0.1.21_C-mast-art_TEST.zip
 art_original_zip_bytes: 654494
 art_original_zip_sha256: 234f26cd11a1efa380dd849af2278234db3db90ec23b8049096c66cf0863da42
 art_original_zip_git_blob_sha: c339d25ae1f82c535d0810715ca5594a1793898a
@@ -33,3 +35,8 @@ nested_shadow_png_byte_equality_with_021_original: PASS
 nested_face_022_module: present
 static_regression_tests: pass
 gameplay_facing_fix: UNVERIFIED
+
+source_cleanup_2026_11_15: removed_duplicate_art_and_old_in_mod_guides
+current_mast_sprites_in_git: true
+new_in_mod_test_guide: ElectrifiedMainline/TEST_FACING_022.txt
+post_cleanup_ci_status: pending
