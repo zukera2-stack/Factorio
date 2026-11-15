@@ -3,6 +3,7 @@ package.path="./ElectrifiedMainline/?.lua;"..package.path
 local actual_faces=0
 package.loaded["scripts.power_019"]={facing_at=function(_) actual_faces=actual_faces+1;return "south" end}
 storage={}
+log=function(_) end -- Factorio global; mocked by unit tests.
 local objects,drawn={},{}
 local next_id=0
 rendering={
