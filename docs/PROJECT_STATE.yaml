@@ -44,6 +44,7 @@ native_wire_probe_026:
   parent_main_commit: 04a290da887477d759b9ec53edb67371a6835a90
   target_nominal_voltage: "25 kV AC (future model only)"
   game_test: pending
+  ci_initial_failure: legacy_curve_test_wrong_version_gate_fixed
   visual_wire: native_player_origin_copper_experiment
   helper_prototype: em-25kv-wire-probe-anchor
   command: em-25kv-probe
