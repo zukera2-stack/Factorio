@@ -806,5 +806,12 @@ native_mast_body_024:
   art_hash_manifest: docs/builds/024-art-manifest.json
   preview_image_local: art-024-comparison.png
   factorio_game_validation: UNVERIFIED
-  github_ci_status: pending
+  github_ci_status: success
+  github_ci_run_id: 43737875221
+  github_ci_artifact_id: 14171016545
+  github_ci_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/43737875221/artifacts/14171016545
+  github_ci_source_sha: ddf6a1e5817aab84e4ee30511c9174831bbe5cd5
+  sprite_qa_ci_run_id: 43737875150
+  sprite_qa_ci_status: success
+  game_test: unverified
   test_guide: ElectrifiedMainline/TEST_VISUAL_024.txt

@@ -1,3 +1,5 @@
+**0.1.24 CI PASS:** [ZIP #14171016545](https://github.com/zukera2-stack/Factorio/actions/runs/43737875221/artifacts/14171016545), [build #43737875221](https://github.com/zukera2-stack/Factorio/actions/runs/43737875221) SUCCESS, [sprite QA](https://github.com/zukera2-stack/Factorio/actions/runs/43737875150) SUCCESS. User must now test native shaft cursor, native/arm blue ghost composite, bot placement/Undo and arm junctions. **No Factorio game test claimed.**
+
 # CURRENT 0.1.24 — native shaft plus 8 C cantilever overlays
 
 Code/art branch `feature/catenary-native-mast-body-024`. The previous 0.1.23 game test proved icon works and native ghost/robot/undo work, but **cursor showed only shadow**. API diagnosis in `docs/research/catenary-native-cursor-ghost-decision-0.1.24.md`.

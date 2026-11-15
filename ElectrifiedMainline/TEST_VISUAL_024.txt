@@ -26,3 +26,6 @@ The authored image set has one common 512x384 RGBA mast body and 8 arm overlays,
 same P0 anchor and rendering offset {0,-2.53125}. Native pictures direction
 count=1 and exactly one wire connection point. Electrical MW=0.
 This build passes only static image/Lua CI until user Factorio validation.
+
+GitHub CI build PASS: https://github.com/zukera2-stack/Factorio/actions/runs/43737875221
+Download outer artifact (contains exact inner ZIP): https://github.com/zukera2-stack/Factorio/actions/runs/43737875221/artifacts/14171016545

@@ -1,3 +1,9 @@
+## 2026-11-15 — 0.1.24 GitHub ZIP static verification
+
+- [Build run #43737875221](https://github.com/zukera2-stack/Factorio/actions/runs/43737875221): SUCCESS, [ZIP artifact #14171016545](https://github.com/zukera2-stack/Factorio/actions/runs/43737875221/artifacts/14171016545). Lua/ghost/cursor regressions, 9 PNG SHA256/alpha tests, package metadata and ZIP PASS.
+- [Sprite QA #43737875150](https://github.com/zukera2-stack/Factorio/actions/runs/43737875150): SUCCESS.
+- New `0.1.24` Factorio game behavior remains unverified; expected mouse cursor displays nonrotating mast shaft rather than full G-arm. Main 0.1.8 not touched.
+
 ## 0.1.24 — native cursor mast and direction-specific arm sprites (EXPERIMENTAL)
 
 - Isolate original eight C mast PNGs into a common **native lattice mast shaft** and eight **arm-only C graphics**, all RGBA 512x384. Original full original sprites retained in repo for exact rollback. Static transparent masks preserve lower 225 px foot/shaft and arm positions; artistic seams require game confirmation.
