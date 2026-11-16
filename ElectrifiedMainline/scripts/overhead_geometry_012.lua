@@ -49,11 +49,15 @@ function M.corner_candidate(a,b,span)
     if a.id==b.id or a.surface_index~=b.surface_index or a.force_name~=b.force_name then return false end
     local dx,dy=b.x-a.x,b.y-a.y
     local d2=dx*dx+dy*dy
-    if d2<0.01 or d2>(span*1.45)^2 then return false end
+    if d2<0.01 or d2>span*span then return false end
     local dot=abs(a.tx*b.tx+a.ty*b.ty)
     -- Only turns, not parallel neighbouring tracks; rule out facing directly across the railway.
-    if dot>0.92 then return false end
-    if abs(dx*a.tx+dy*a.ty)<1.0 or abs(dx*b.tx+dy*b.ty)<1.0 then return false end
+    if dot>0.999 then return false end
+    local length=sqrt(d2)
+    if abs(dx*a.tx+dy*a.ty)<0.28*length
+        or abs(dx*b.tx+dy*b.ty)<0.28*length then return false end
+    if a.side and b.side and a.side~=0 and b.side~=0
+        and a.side~=b.side then return false end
     return true,d2
 end
 return M

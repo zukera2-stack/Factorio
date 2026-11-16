@@ -4,8 +4,9 @@ local M = {}
 local geometry = require("scripts.power_topology")
 local view = require("scripts.overhead_geometry_012")
 local face022 = require("scripts.mast_facing_022")
+local limits = require("scripts.catenary_limits_029")
 local POLE,SUB = "em-35kv-catenary-pole","em-35kv-traction-substation"
-local SPAN,RADIUS = 16,3
+local SPAN,CURVE_SPAN,RADIUS = limits.STRAIGHT,limits.CURVE,3
 local RAILS = {"em-high-speed-straight-rail","em-curved-high-speed-rail",
     "em-curved-high-speed-rail-b","em-half-diagonal-high-speed-rail"}
 local RAIL_SET = {}
@@ -122,9 +123,15 @@ local function resolve(s,id)
     end
 end
 local function corridor(surface,force,a,b)
-    for _,t in pairs({0.25,0.5,0.75}) do
+    local dx,dy=b.x-a.x,b.y-a.y
+    local distance=math.sqrt(dx*dx+dy*dy)
+    -- At 32 tiles, three samples could miss a removed middle HSR segment.
+    -- Check approximately every 2 tiles in addition to graph connectivity.
+    local samples=math.max(3,math.ceil(distance/2))
+    for i=1,samples-1 do
+        local t=i/samples
         if surface.count_entities_filtered{
-            position={x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t},
+            position={x=a.x+dx*t,y=a.y+dy*t},
             radius=RADIUS,name=RAILS,force=force,limit=1}==0 then
             return false
         end
@@ -142,58 +149,73 @@ end
 
 -- This is deliberately *not* RailSignalPrototype: no changes to train blocks.
 -- Check real rail connectivity, so nearby but independent tracks do not join.
-local function connected_rail_path(a,b)
-    if not (a.rail_id and b.rail_id) then return false end
-    if a.rail_id==b.rail_id then return true end
-    -- Resolve rails spatially: unlike our poles, third-party rail prototypes may
-    -- not carry the get-by-unit-number flag. A stored number is just an identity.
+local function rail_path_info(a,b)
+    if not (a and b and a.rail_id and b.rail_id
+        and a.surface_index==b.surface_index
+        and a.force_name==b.force_name) then return nil end
     local surface=game.surfaces[a.surface_index]
     local force=game.forces[a.force_name]
-    if not (surface and force) then return false end
+    if not (surface and force) then return nil end
     local start
-    for _,candidate in pairs(surface.find_entities_filtered{
+    for _,r in pairs(surface.find_entities_filtered{
         position={x=a.x,y=a.y},radius=RADIUS,name=RAILS,force=force}) do
-        if candidate.unit_number==a.rail_id then start=candidate;break end
+        if r.unit_number==a.rail_id then start=r;break end
     end
-    if not (start and start.valid and RAIL_SET[start.name]) then return false end
-    local queue={start};local seen={[start.unit_number]=true};local index=1
+    if not (start and start.valid and RAIL_SET[start.name]) then return nil end
+    local straight="em-high-speed-straight-rail"
+    if a.rail_id==b.rail_id then
+        return {length=0,curved=start.name~=straight}
+    end
     local directions={defines.rail_direction.front,defines.rail_direction.back}
     local turns={defines.rail_connection_direction.straight,
         defines.rail_connection_direction.left,defines.rail_connection_direction.right}
-    while index<=#queue and index<=96 do
-        local rail=queue[index];index=index+1
-        for _,d in pairs(directions) do
-            for _,c in pairs(turns) do
-                local other=rail.get_connected_rail{
-                    rail_direction=d,rail_connection_direction=c}
-                if other and other.valid and RAIL_SET[other.name]
-                    and other.unit_number and not seen[other.unit_number]
-                    and other.force.name==a.force_name
-                    and other.surface.index==a.surface_index then
-                    if other.unit_number==b.rail_id then return true end
-                    seen[other.unit_number]=true
-                    queue[#queue+1]=other
+    -- Bounded lowest-cost rail walk; never traverse vanilla, elevated,
+    -- enemy or disconnected rail. Cost is approximate entity-centre path
+    -- distance, not Factorio's exact rail spline length.
+    local queue={{rail=start,length=0,curved=start.name~=straight}}
+    local best={[start.unit_number]=0}
+    local visited=0
+    local max_walk=limits.STRAIGHT*1.5+4
+    while #queue>0 and visited<192 do
+        local best_i=1
+        for i=2,#queue do
+            if queue[i].length<queue[best_i].length then best_i=i end
+        end
+        local cur=table.remove(queue,best_i)
+        if cur.length<=best[cur.rail.unit_number]+0.00001 then
+            visited=visited+1
+            if cur.rail.unit_number==b.rail_id then
+                return {length=cur.length,curved=cur.curved}
+            end
+            for _,d in ipairs(directions) do
+                for _,turn in ipairs(turns) do
+                    local other=cur.rail.get_connected_rail{
+                        rail_direction=d,rail_connection_direction=turn}
+                    if other and other.valid and RAIL_SET[other.name]
+                        and other.unit_number and other.force.name==a.force_name
+                        and other.surface.index==a.surface_index then
+                        local dx=other.position.x-cur.rail.position.x
+                        local dy=other.position.y-cur.rail.position.y
+                        local cost=cur.length+math.max(1,math.sqrt(dx*dx+dy*dy))
+                        if cost<=max_walk and
+                            (not best[other.unit_number] or
+                                cost<best[other.unit_number]-0.00001) then
+                            best[other.unit_number]=cost
+                            queue[#queue+1]={rail=other,length=cost,
+                                curved=cur.curved or other.name~=straight}
+                        end
+                    end
                 end
             end
         end
     end
-    return false
+    return nil
+end
+local function connected_rail_path(a,b)
+    return rail_path_info(a,b)~=nil
 end
 
-local function curve_corridor(surface,force,a,b)
-    local A={x=a.x,y=a.y,tx=a.tx,ty=a.ty}
-    local B={x=b.x,y=b.y,tx=b.tx,ty=b.ty}
-    local pts=view.bezier(A,B,8)
-    for i=2,#pts-1 do
-        if surface.count_entities_filtered{
-            position=pts[i],radius=RADIUS+1,name=RAILS,force=force,limit=1}==0 then
-            return false
-        end
-    end
-    return true
-end
-
-local function build_corner_edges(s,touched)
+local function build_corner_edges(s,touched,path_info)
     local degrees={}
     for _,edge in pairs(s.edges) do
         if edge.kind=="contact" then
@@ -206,14 +228,22 @@ local function build_corner_edges(s,touched)
         local a=s.nodes[id]
         if a and a.name==POLE and a.rail_adjacent and (degrees[id] or 0)<2 then
             for _,other in pairs(e.surface.find_entities_filtered{
-                position=e.position,radius=SPAN*1.45,name=POLE,force=e.force}) do
+                position=e.position,radius=CURVE_SPAN,name=POLE,force=e.force}) do
                 local b=s.nodes[other.unit_number]
                 if b and (degrees[b.id] or 0)<2
                     and not s.edges[edge_key(id,b.id)] then
-                    local possible,dist=view.corner_candidate(a,b,SPAN)
-                    if possible and connected_rail_path(a,b)
-                        and curve_corridor(e.surface,e.force,a,b) then
-                        candidates[#candidates+1]={a=id,b=b.id,dist=dist}
+                    local info=path_info(a,b)
+                    local possible,dist=view.corner_candidate(a,b,CURVE_SPAN)
+                    if info and info.curved and limits.allowed(a,b,info) then
+                        -- The rail graph, rather than a guessed Bezier through
+                        -- empty terrain, is the authoritative curve check.
+                        if not possible and geometry.compatible(a,b,CURVE_SPAN) then
+                            local dx,dy=b.x-a.x,b.y-a.y
+                            possible,dist=true,dx*dx+dy*dy
+                        end
+                        if possible then
+                            candidates[#candidates+1]={a=id,b=b.id,dist=dist}
+                        end
                     end
                 end
             end
@@ -239,7 +269,14 @@ local function build_corner_edges(s,touched)
 end
 
 local function build_edges(s,touched)
-    local choices,checks={},{}
+    local choices,checks,path_cache={},{},{}
+    local function path_info(a,b)
+        local key=edge_key(a.id,b.id)
+        if path_cache[key]==nil then
+            path_cache[key]=rail_path_info(a,b) or false
+        end
+        return path_cache[key] or nil
+    end
     local function select_neighbours(e)
         local id=e.unit_number
         if choices[id] then return choices[id][1],choices[id][2] end
@@ -257,8 +294,10 @@ local function build_edges(s,touched)
         local function check(x,y)
             local key=edge_key(x.id,y.id)
             if checks[key]==nil then
-                checks[key]=corridor(e.surface,e.force,x,y) and
-                    connected_rail_path(x,y)
+                local info=path_info(x,y)
+                checks[key]=info and not info.curved
+                    and limits.allowed(x,y,info)
+                    and corridor(e.surface,e.force,x,y) or false
             end
             return checks[key]
         end
@@ -296,7 +335,7 @@ local function build_edges(s,touched)
             if nearest then draw(s,e,nearest,"feeder") end
         end
     end
-    build_corner_edges(s,touched)
+    build_corner_edges(s,touched,path_info)
 end
 local function refresh(surface,force,pos)
     local s=M.ensure_storage()
@@ -409,7 +448,7 @@ function M.on_tick(tick)
                 for _,pole in pairs(surface.find_entities_filtered{
                     -- A removed middle rail can be 8+ tiles from BOTH masts.
                     -- Rescan the full eligible span, not just a 5-tile circle.
-                    position=change.position,radius=SPAN*1.45+RADIUS+2,
+                    position=change.position,radius=SPAN+RADIUS+4,
                     name=POLE,force=force}) do
                     local bucket=tostring(surface.index)..":"..force.name..":"..
                         tostring(math.floor(pole.position.x/16))..":"..
@@ -444,7 +483,7 @@ function M.status(player)
         " oriented_sprites="..tostring(s.sprites and (function()
             local count=0;for _ in pairs(s.sprites) do count=count+1 end
             return count end)() or 0).." stale_nodes="..stale..
-        " energized=NO transfer_MW=0 (rail-restricted native wires)")
+        " spans=32/16 wire_reach=40 energized=NO transfer_MW=0")
 end
 -- Share the same RailEnd projection with non-native ghost images.
 -- This does not mutate real poles or their contact graph.
@@ -460,4 +499,5 @@ end
 function M.graph() return M.ensure_storage() end
 -- Used by pure-Lua regression to prove disconnected ВСМ tracks are rejected.
 M.connected_rail_path=connected_rail_path
+M.rail_path_info=rail_path_info
 return M

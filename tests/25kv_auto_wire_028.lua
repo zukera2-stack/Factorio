@@ -99,9 +99,9 @@ assert(M.ensure_storage().stats.connected==1)
 M.on_parent_removed(poleA)
 assert(M.ensure_storage().helpers[poleA.unit_number]==nil)
 local src=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
-assert(src:find("corridor(e.surface,e.force,x,y) and",1,true))
-assert(src:find("connected_rail_path(x,y)",1,true))
-assert(src:find("radius=SPAN*1.45+RADIUS+2",1,true),
+assert(src:find("corridor(e.surface,e.force,x,y)",1,true))
+assert(src:find("rail_path_info(x,y)",1,true))
+assert(src:find("radius=SPAN+RADIUS+4",1,true),
   "Broken middle track must re-check mast ends beyond 5 tiles")
 assert(not src:find("rendering.draw_line",1,true))
 -- Dynamic unit mock of rail continuity: close, disconnected ВСМ MUST be rejected.

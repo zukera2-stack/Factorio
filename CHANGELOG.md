@@ -1,3 +1,11 @@
+## 0.1.29 — experimental long 25 kV contact spans (2026-11-16)
+
+- Requested maxima: straight 32 tiles, curves 16 tiles, hidden native-copper helper 40-tile wire reach.
+- Added HSR-only bounded rail connection walk that identifies a curved piece anywhere along a span, rejects significant detours, and never traverses vanilla rail.
+- Dense straight corridor samples (~2 tiles) and enlarged rail-change rescan; removed all custom old LuaRendering lines remain removed.
+- Does not implement approved messenger/contact/dropper sprite graphics yet; native copper wire, C mast sprites, current insulator offsets, native Undo and vanilla rail behavior unchanged.
+- Not tested in-game. Do not merge into main before user's Factorio 2.1.20 test.
+
 ## 0.1.28 — experimental automatic native contact wires / nominal 25 kV (2026-11-16)
 
 - Names shown in Russian and English changed 35 kV → 25 kV, while existing prototype IDs kept for backward-compatible saves.

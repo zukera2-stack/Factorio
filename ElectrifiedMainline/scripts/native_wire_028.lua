@@ -1,4 +1,4 @@
--- 0.1.28 auto native-wire catenary, VISUAL ONLY (25 kV nominal label).
+-- 0.1.29 auto native-wire catenary (32 straight / 16 curved / 40 connector); VISUAL ONLY.
 -- Never connects standard electric poles or changes train/Undo mechanics.
 -- The eligible graph is produced by power_019, which must verify real
 -- connectivity of custom ВСМ rails for EVERY contact span.
@@ -198,7 +198,7 @@ function M.status(player,graph)
   for _ in pairs(s.helpers) do n=n+1 end
   local stats=s.stats
   player.print(string.format(
-    "[EM 25kV] helpers=%d contact_spans=%d native_wires=%d missed=%d anchor_failures=%d; power_MW=0",
+    "[EM 25kV] helpers=%d spans=%d wires=%d missed=%d anchor_failures=%d; max_straight=32 max_curve=16 reach=40 power_MW=0",
     n,stats.eligible or 0,stats.connected or 0,
     stats.missed or 0,stats.anchor_failures or 0))
 end

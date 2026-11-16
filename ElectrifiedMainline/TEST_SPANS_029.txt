@@ -1,0 +1,34 @@
+Electrified Mainline 0.1.29 — LONG SPAN EXPERIMENT
+Factorio 2.1.20 build 87512; use a COPY of saved map ВСМ.
+Install only ElectrifiedMainline_0.1.29.zip instead of 0.1.28.
+
+SETTINGS: 32 world tiles straight, 16 curved, helper copper reach 40.
+The vanilla native copper wire remains the visual conductor; user-approved
+mast art, insulators, eight arm offsets, ghosts, rail upgrades and Undo
+are unchanged. No new contact/messenger texture is added in this version.
+No physical 25 kV voltage or power transfer.
+
+A. STRAIGHT HSR:
+1. Place two 25 kV C masts at 30, then 32 tiles along uninterrupted
+   custom high-speed straight rails. /em-25kv-status should show a wire.
+2. Move a mast beyond 32 tiles: NO contact wire.
+3. Remove a CUSTOM ВСМ rail halfway between 32-tile masts: wire
+   disappears. Restore custom rail: wire returns.
+4. Replace the removed rail by vanilla rail: no wire should reappear.
+
+B. CURVES:
+5. On connected custom curved-A, curved-B and half-diagonal rails test
+   mast spacings of 10, 14, 16 tiles. Wire should follow accepted span.
+6. More than 16 tiles around a turn: NO wire. No skipping across an
+   unconnected nearby or parallel railway.
+7. Ensure small curved/straight transitions are not left unwired.
+
+C. LIFE CYCLE:
+8. Verify robots, blueprint, Undo, Redo, save/load, no orphan helpers,
+   and no link from regular power poles.
+9. /em-25kv-status prints span limits and counts.
+10. Send screenshots and factorio-current.log. If 32-tile span fails,
+    report exact mast-to-mast distance and orientation.
+
+Visual appearance remains 0.1.28 native copper; the approved dual
+contact/messenger/strut sprite design is a SEPARATE next-stage task.
