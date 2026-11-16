@@ -16,6 +16,10 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(report["result"],"offline_api_contract_passed_not_game_verified")
         self.assertFalse(report["factorio_data_stage_loaded"])
         self.assertFalse(report["docs_version_matches_target"])
+        # 0.1.27+ replaced the OLD script line renderer by native graph
+        # connectors; 0.1.30+ also uses textured catenary sprites.
+        self.assertTrue(report["new_native_and_sprite_catenary_verified"])
+        self.assertFalse(report["existing_line_renderer_preserved"])
 
     def test_tampered_lua_rejected(self):
         path=self.out/"prototype-snippet.lua"
