@@ -119,7 +119,11 @@ for _,obj in pairs(objects) do
     found=true
     local helper=all[state.helpers[a.unit_number].id]
     assert(helper and helper.valid)
-    assert(math.abs(obj.args.target.y-(helper.position.y-2.53125+0.90))<1e-6)
+    -- This is the standard C mast standing south of rail, facing north.
+    -- Its native connector stays at old tip; draw-only art shifts to
+    -- the 0.1.35 +27px shaft/arm height.
+    assert(math.abs(obj.args.target.y-
+      (helper.position.y-2.53125+0.90-0.40-27/32))<1e-6)
   end
 end
 assert(found,"north-facing sprite should render at corrected coordinate")
