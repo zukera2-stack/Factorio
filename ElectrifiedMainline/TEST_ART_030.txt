@@ -1,0 +1,32 @@
+ElectrifiedMainline 0.1.30 — FIRST STRAIGHT-SPAN ART PILOT
+Target: Factorio 2.1.20. Use a COPY of the saved ВСМ map.
+
+Accepted constants:
+  straight limit 32 world tiles; curved limit 16; native helper reach 40.
+  original C mast sprites, eight rail-relative arm tips and ВСМ rail art unchanged.
+
+Straight ВСМ spans:
+- native electric wire connector exists and is truly connected by the script;
+  draw_copper_wires=false hides its copper graphics.
+- custom contact wire = nearly straight thin warm-metal sprite;
+- upper messenger wire = short steel sprite segments, sag parabola;
+- vertical droppers = separate small sprites, quantity depends on span.
+Curved ВСМ spans: fall back to the previous VISIBLE native copper conductor.
+The normal factory copper-wire texture is NOT modified.
+This is NOT a power traction model; MW=0.
+
+Check:
+1) Place two C masts 12-16 cells apart along a continuous custom ВСМ
+   straight section. Screenshot showing TWO wires and vertical droppers.
+2) Move them to 24 and 32 cells; verify longer span adds droppers.
+3) 33+ cells: should NOT link. Check that wire ends stay at insulator tips.
+4) Add one curved connection: old single native copper stays visible there.
+5) Remove a middle custom ВСМ rail: art and hidden link should disappear.
+   Restore rail: both should return. Vanilla rail must NOT bridge the gap.
+6) Save/reload, remove/restore via robots, blueprint, Undo/Redo, tune offsets.
+7) Commands /em-25kv-status and /em-25kv-tune FACE DX DY.
+   Attach screenshot(s) and factorio-current.log.
+
+Limitations: unverified in-engine clipping/occlusion at southern mast and
+sprite rotations; the art is a trial, not a game-accepted final texture.
+No merge to main before real game evidence. Restore 0.1.29 on test failure.

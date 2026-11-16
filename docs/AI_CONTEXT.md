@@ -1,3 +1,9 @@
+# 0.1.30 experimental straight two-wire art
+
+Branch experiment/25kv-catenary-art-030 from 0.1.29. Straight spans real but invisible copper connectors, with original Factorio-style sprites (contact, messenger, droppers); curves retain native visible conductor. Stable main 0.1.24 untouched. Limit straight 32, curved 16, reach 40. No MW. Requires Factorio 2.1.20 in-game verification. Docs/research/catenary-sprite-pilot-0.1.30.md and test guide ElectrifiedMainline/TEST_ART_030.txt.
+
+---
+
 # 0.1.29 experimental catenary length (2026-11-16)
 
 Branch `experiment/25kv-span-029`, derived from 0.1.28 experiment (not main). User-approved **32 tile straight / 16 tile curves / 40 tile helper reach**. New shared pure module `scripts/catenary_limits_029.lua` controls data/runtime limits. A bounded HSR-only connected rail walk rejects vanilla rail gaps, detours and routes with any curve longer than 16 tiles. The straight 32-tile corridor is sampled ~every 2 tiles; rail middle-removed invalidation range expanded. Preserves user-approved 0.1.27 SOUTH hanger, eight C-mast sprites from 0.1.28 and game native wire. No new textured contact/messenger drawing yet; rendering of the 25kV system is still native copper. No actual AC/MW power. Main 0.1.24 untouched; needs Factorio 2.1.20 screenshots and Undo regressions. Guide `ElectrifiedMainline/TEST_SPANS_029.txt`. Research `docs/research/long-catenary-spans-0.1.29.md`.

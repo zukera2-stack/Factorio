@@ -1,3 +1,10 @@
+## 0.1.30 — visual contact catenary pilot (2026-11-16)
+
+- Straight custom ВСМ: invisible real Factorio copper connectors with textured contact, messenger and dropper sprites.
+- Curves: retain visible 0.1.29 native copper rendering. No global utility-sprite replacement.
+- C masts, rails, Undo, spacing 32/16/40 unchanged, 25 kV traction still MW=0.
+- Tests and screenshot guide; not yet game-approved, no main merge.
+
 ## 0.1.29 — experimental long 25 kV contact spans (2026-11-16)
 
 - Requested maxima: straight 32 tiles, curves 16 tiles, hidden native-copper helper 40-tile wire reach.

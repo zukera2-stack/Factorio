@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: experiment/25kv-span-029 # isolated experimental branch; main remains 0.1.24
-  feature_version: "0.1.29" # optional on-demand native-wire visibility probe
-  feature_status: 029_long_spans_pending_factorio_game_test
+  active_feature_branch: experiment/25kv-catenary-art-030 # isolated experimental branch; main remains 0.1.24
+  feature_version: "0.1.30" # optional on-demand native-wire visibility probe
+  feature_status: 030_sprite_art_pending_factorio_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 8
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.29" # experimental branch only
+  mod_version: "0.1.30" # experimental branch only
   main_baseline_mod_version: "0.1.24" # merged PR #8
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -40,7 +40,7 @@ project:
   current_status: docs/STATUS.md
 
 native_wire_probe_026:
-  branch: experiment/25kv-span-029
+  branch: experiment/25kv-catenary-art-030
   parent_main_commit: 04a290da887477d759b9ec53edb67371a6835a90
   target_nominal_voltage: "25 kV AC (future model only)"
   game_test: 028_user_reports_curve_gaps_029_long_span_pending
@@ -53,7 +53,7 @@ native_wire_probe_026:
   native_undo_changed: false
   applied_to_main: false
   actual_electric_power_transfer: false
-  documentation: docs/research/long-catenary-spans-0.1.29.md
+  documentation: docs/research/catenary-sprite-pilot-0.1.30.md
   game_test_instructions: ElectrifiedMainline/TEST_NATIVE_WIRE_026.txt
 
 latest_uploaded_archive:
