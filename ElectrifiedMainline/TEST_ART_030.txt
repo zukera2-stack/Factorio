@@ -1,3 +1,28 @@
+0.1.34 — SOUTH LIFT AND RESTORED NORTH CANTILEVER
+Game test: Factorio 2.1.20 (licensed or Steam), copy of ВСМ save.
+0.1.33 was wrong: north side displayed bare shaft because script
+skipped drawing its separate C cantilever overlay. The prototype PNG
+contains SHAFT ONLY; the arm was never baked into it.
+0.1.34 restores arm overlay for both pole types with exact native
+sprite matching shifts:
+ - NORTH of track: shortened type, arm moves with shaft (+2.20 tiles)
+ - SOUTH of track: standard type, native shaft, arm, and invisible wire
+   attachment shifted UP by 0.40 world tile (~13 game pixels)
+Both wires, messenger and droppers should end at the actual hangers.
+Rendering ghosts/blueprints of BOTH native pole types also uses the
+same individual shift. Rail path filtering, 32 straight / 16 curved
+ /40 reach, native Undo and HSR rail sprites unchanged.
+Old NORTH shortened item can remain in place: change is automatic
+when loading 0.1.34, no replacement needed.
+
+Test: put one northern shortened pair and one southern standard pair
+on the same straight ВСМ line, at the same zoom as screenshots from
+19:08:49, 19:09:28 and 19:11:14. Check the short north mast has a
+C-arm, the standard south pair is visibly higher, and the contact
+wire ends touch the insulator hanger. Check blueprint ghost/robot,
+Undo/Redo, save/reload, 12/24/32 tile spans, and /em-25kv-status.
+Send a screenshot and current log. Experimental, no main merge.
+
 ElectrifiedMainline 0.1.33 SHORT NORTHERN NATIVE MAST - TEST BUILD
 This is a separate placeable mast item, not an automatic replacement!
 North of the ВСМ track: choose item "Контактная опора 25 кВ — северная (укороченная)"

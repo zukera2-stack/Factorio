@@ -1,3 +1,10 @@
+## 0.1.34 — fixed north cantilever and raised south standard mast (2026-11-16)
+
+- Resolved 0.1.33 missing cantilever by drawing per-face C-arm sprites for north short variant, rather than assuming arm baked into its shaft-only native PNG.
+- Raised standard south-side native mast, shadow, arm and hidden copper tip by 0.40 tiles; north short remains at previous vertical shift.
+- Introduced shared visual projection table, synced blueprint ghost overlays for both entity types and added regression tests for all 8 facings.
+- No ВСМ/rail prototype, 32/16/40, electric traction or native Undo changes; requires game acceptance.
+
 ## 0.1.33 — short northern native C mast trial
 
 - Distinct north-of-track native pole item and prototype. Original south mast unchanged.

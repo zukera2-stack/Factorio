@@ -1,3 +1,9 @@
+# 0.1.34 on latest real screenshots (2026-11-16)
+
+Screenshot archive 2026-11-16_19-08-49.zip shows missing cantilever on shortened north-of-track mast and lower contact/whole mast image on the standard south-of-track side. Fixed native arm overlay for BOTH prototypes, not another sprite edit. Pure shared scripts/mast_visual_034.lua defines north short image shift (+2.20 tiles), standard south image lift (0.40 tiles), and shared helper y adjustment only for north short face=south and standard face=north. No change to rail prototypes, native Undo, C arm PNGs, 32/16/40, traction MW=0. Ghosts now handle both native pole types. Branch experiment/25kv-mast-alignment-034; in-game test pending, main untouched.
+
+---
+
 # 0.1.33 north-of-track independent native shorter mast
 
 Branch experiment/25kv-north-native-033 from 0.1.32. User screenshot 17:46:35 shows north-of-rail mast too high. A separately native placeable electric pole variant uses deterministic cropped original C mast PNG (70 source px removed from lattice middle), image shifted +2.20 tiles, resulting base ~1.11 tiles lower near ballast; native wire helper tip y +2.20, original south masts unchanged. No scripted entity swapping to avoid native Undo/blueprint problems. Item `em-35kv-catenary-pole-north` must be placed manually on north side to test. Factorio 2.1.20 game QA not yet confirmed, 32/16/40 limits and HSR graph retained, main still 0.1.24.
