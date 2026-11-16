@@ -1,3 +1,29 @@
+0.1.36 — SOUTH ATTACHMENT AND LATTICE REGRESSION (2026-11-16)
+Use COPY of saved ВСМ test. Based on user screenshot 21:51:56:
+NORTH short pole on left, SOUTH STANDARD pole on right.
+- Right standard C mast native base was drawn ABOVE the selection
+  marker by ~32 screenshot pixels. Right triangle hanger was ABOVE
+  left hanger/straight contact by ~32 pixels. Both errors were caused
+  by standard mast+arm image shift of -0.40 tile from 0.1.34.
+- 0.1.36 LOWERS only the standard native image and its separate arm
+  sprite by 0.40 tile. The native connector stays in the old location
+  and the custom contact/messenger/droppers are NOT moved.
+- Truss web is now a duplicate of 54 genuine source raster rows,
+  using 10-row seam crossfade, NOT bicubic-stretched diagonal bars.
+  Original footing and cap are preserved pixel-for-pixel in the PNG.
+- Northern shortened mast is unmodified. Categorical ВСМ rail graph
+  and 32/16/40 spacing, normal Factorio blueprint/Undo unchanged.
+Test at SAME game zoom as 21:51:56:
+1) Standard mast to SOUTH, shortened mast NORTH. Compare 2 triangular
+   cable hangers against the existing lower contact line (~same y).
+2) Look at SOUTH standard footing vs yellow placement marker; no
+   0.4 tile visible gap between them.
+3) Zoom into mid-height truss diagonals: no stretched/deformed lattice.
+4) Straight spans 12/24/32, curves native copper, independent HSR-only
+   track continuity; blueprints, robots, save/reload, Undo/Redo.
+5) Send screenshot and factorio-current.log for confirmation.
+All game rendering tests are still unverified; DO NOT MERGE into main.
+
 0.1.35 - SOUTH MAST RASTER-BASED LONG SHAFT, ORIGINAL NATIVE ANCHORS
 Old 0.1.34 had the standard SOUTH-of-track contact line ~27 screen
 pixels LOWER than the shortened north-of-track contact at 1927x1080.

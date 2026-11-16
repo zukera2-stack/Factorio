@@ -1,3 +1,9 @@
+# 0.1.36 calibrated native SOUTH mast placement + truss seam repair
+
+User screenshot 21:51:56 at high zoom shows SOUTH standard C mast hanger ~32px ABOVE northern short mast hanger and visual base ~32px ABOVE ground placement marker. Undo the native standard mast/arm -0.40 tile from 0.1.34, not the actual contact wire and not the real native connector (both stay 0.1.35 coordinates). Replace 0.1.35 bicubic-resized truss with module-duplication from original 024 sprite: generated 512x512 `pole-south-lattice-036.png`, exact alpha bbox (224,29,383,429), 54 rows inserted without stretching, 10px seam blend. Branch experiment/25kv-south-art-036, PR draft, main 0.1.24 untouched. HSR 32/16/40, rail continuity, native Undo/Redo unchanged. Need game validation.
+
+---
+
 # 0.1.35 explicit screenshot-based rail-side height correction
 
 User image 2026-11-16_20-21-29.png shows 27px vertical difference between two lower contact conductors at near-identical rail span. Native standard mast (SOUTH side facing NORTH) needs 54 RGBA source rows of truss extension at scale 0.5; footing stays fixed via 512x512 sprite and 64px pad. Independent C arm and CUSTOM sprite contact raised by 0.84375 game tile (27px). Native hidden copper helper returned to original pre-0.1.34 geometry (no -0.40). North short mast untouched. Code on experiment/25kv-south-geometry-035 from 0.1.34; main remains 0.1.24. New generator scripts/sprites/extend_south_035.py and tests/25kv_south_035.lua. All Factorio game acceptance still pending; screenshots need same zoom.

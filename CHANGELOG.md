@@ -1,3 +1,10 @@
+## 0.1.36 — native SOUTH arm lowered; stretched lattice replaced (2026-11-16)
+
+- Screenshot matched SOUTH standard C-arm ~0.40 tile too high; return native picture, shadow and separate arm DOWN 0.40 tile, aligning triangles with short NORTH and intact 25 kV contact wire and placement marker.
+- Copper helper and custom contact/messenger/dropper render positions deliberately left unchanged from 0.1.35; connected ВСМ geometry/32-16-40 and real Undo unchanged.
+- Replace 0.1.35 stretched truss with 54 unscaled source rows repeated from real 0.1.24 mast art, 10-pixel seam blend, exact original footer and cap. Add Lua and PNG contract tests.
+- Isolated gameplay screenshot trial; no main merge.
+
 ## 0.1.35 — south standard C shaft length measured from screenshot
 
 - Measured 27px mismatch of north/south contact-wire levels on 1927x1080 screenshot at game zoom (source scale .5).
