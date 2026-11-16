@@ -11,7 +11,7 @@ local mast_geometry016 = require("scripts.mast_geometry_016")
 local corridor_preview017 = require("scripts.catenary_corridor_017")
 local catenary_cursor018 = require("scripts.catenary_cursor_018")
 local ghost_visual023 = require("scripts.ghost_mast_023")
-local native_wire_probe026 = require("scripts.native_wire_probe_026")
+local native_wire028 = require("scripts.native_wire_028")
 
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
@@ -53,17 +53,18 @@ local function ensure_storage()
     -- Discard obsolete experimental marks; preserve the independent replacement queue.
     storage.em.blueprint_undo_join = nil
     power019.ensure_storage()
-    native_wire_probe026.ensure_storage()
+    native_wire028.ensure_storage()
 end
 
 script.on_init(function()
     ensure_storage()
+    native_wire028.reset()
     power019.rebuild_all()
     ghost_visual023.rebuild_all()
 end)
 script.on_configuration_changed(function()
     ensure_storage()
-    native_wire_probe026.cleanup_on_version_change()
+    native_wire028.reset()
     power019.rebuild_all()
     ghost_visual023.rebuild_all()
 end)
@@ -387,7 +388,6 @@ local function cleanup_train_for_entity(event)
     diag_entity(diag_name, event, entity)
     if not (entity and entity.valid) then return end
 
-    native_wire_probe026.on_mast_removed(entity)
     power019.on_removed(event)
     ghost_visual023.on_removed(entity)
     if event.name == defines.events.on_robot_mined_entity
@@ -643,7 +643,24 @@ script.on_event("em-place-catenary-native", function(event)
     catenary_cursor018.on_place(event)
 end)
 
--- 0.1.26 probe: deliberately command-only, never changes native Undo ownership.
-commands.add_command("em-25kv-probe", "Temporary native copper wire test: start | status | clear.", function(event)
-    native_wire_probe026.command(event,power019)
-end)
+-- 0.1.28 diagnostics: real auto-wiring is owned by power_019 graph.
+commands.add_command("em-35kv-wire-status",
+  "Show rail-validated 35kV native-wire state (no real MW transfer).",
+  function(event)
+    local player=event.player_index and game.get_player(event.player_index)
+    if player and player.valid then
+      local s=power019.ensure_storage()
+      native_wire028.status(player,s.nodes,s.edges)
+    end
+  end)
+commands.add_command("em-35kv-wire-rebuild",
+  "Cleanly regenerate 35kV native wires from existing connected HSR.",
+  function(event)
+    local player=event.player_index and game.get_player(event.player_index)
+    if player and player.valid then
+      native_wire028.reset()
+      power019.rebuild_all()
+      local s=power019.ensure_storage()
+      native_wire028.status(player,s.nodes,s.edges)
+    end
+  end)

@@ -4,6 +4,7 @@ local M = {}
 local geometry = require("scripts.power_topology")
 local view = require("scripts.overhead_geometry_012")
 local face022 = require("scripts.mast_facing_022")
+local native_wire028 = require("scripts.native_wire_028")
 local POLE,SUB = "em-35kv-catenary-pole","em-35kv-traction-substation"
 local SPAN,RADIUS = 16,3
 local RAILS = {"em-high-speed-straight-rail","em-curved-high-speed-rail",
@@ -273,7 +274,8 @@ local function build_edges(s,touched)
                 local other=candidate and resolve(s,candidate.id)
                 if other then
                     local of,ob=select_neighbours(other)
-                    if (of and of.id==id) or (ob and ob.id==id) then
+                    if ((of and of.id==id) or (ob and ob.id==id))
+                        and connected_rail_path(n,s.nodes[candidate.id]) then
                         draw(s,e,other,"contact")
                     end
                 end
@@ -329,6 +331,7 @@ local function refresh(surface,force,pos)
     end
     for _,key in pairs(stale) do delete_edge(s,key) end
     build_edges(s,touched)
+    native_wire028.sync(s.nodes,s.edges)
 end
 function M.rebuild_all()
     local s=M.ensure_storage()
@@ -346,7 +349,8 @@ function M.rebuild_all()
     end
     s.version=3
     build_edges(s,all)
-    log("[ElectrifiedMainline][35kv] rebuilt rail-following visual graph (schema 3)")
+    native_wire028.sync(s.nodes,s.edges)
+    log("[ElectrifiedMainline][35kv] rebuilt HSR graph + native 35kV auto-wire (schema 3)")
 end
 function M.on_built(event)
     local e=event.entity
