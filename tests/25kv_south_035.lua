@@ -25,8 +25,8 @@ eq(actual.x,previous.x,"do not shift x")
 eq(actual.y,previous.y-L.SOUTH_RISE-L.SOUTH_EXTEND_TILES,"source-derived 27px")
 -- Actual previous 0.1.34 helper was 0.4 tiles higher. Restoring
 -- it and adjusting visual delta causes net (old-27px) visible contact.
-eq((actual.y)-(previous.y-L.SOUTH_RISE)-L.SOUTH_RISE,
-   -L.SOUTH_EXTEND_TILES,"net visual change 27px")
+eq(actual.y-(previous.y-L.SOUTH_RISE),
+   -L.SOUTH_EXTEND_TILES,"net visible contact moves up 27px")
 local unchanged=A.visual_point(p,"south",north)
 local legacy=A.visual_point(p,"south")
 eq(unchanged.x,legacy.x);eq(unchanged.y,legacy.y)

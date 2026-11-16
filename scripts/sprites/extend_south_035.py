@@ -40,9 +40,8 @@ assert out.getbbox()==(224,29,383,429), out.getbbox()
 # Check physical image-to-world mapping: centre(old)=192, centre(new)=256.
 assert (out.getbbox()[1]-256)-(im.getbbox()[1]-192)==-EXTEND
 assert (out.getbbox()[3]-256)==(im.getbbox()[3]-192)
-assert out.crop((0,0,512,TOP_PAD-EXTEND+BAND_BEGIN)).tobytes()==(
-    im.crop((0,0,512,BAND_BEGIN)).tobytes() if TOP_PAD-EXTEND==0 else
-    out.crop((0,0,512,TOP_PAD-EXTEND+BAND_BEGIN)).tobytes())
+assert out.crop((0,TOP_PAD-EXTEND,512,TOP_PAD-EXTEND+BAND_BEGIN)).tobytes()==(
+    im.crop((0,0,512,BAND_BEGIN)).tobytes())
 assert out.crop((0,TOP_PAD+BAND_END,512,TOP_PAD+384)).tobytes()==(
     im.crop((0,BAND_END,512,384)).tobytes())
 target.parent.mkdir(parents=True,exist_ok=True)

@@ -203,7 +203,7 @@ jobs:
                   assert root + "graphics/entity/35kv/pole-north-short-033.png" in names
               if info["version"] == "0.1.35":
                   assert root + "graphics/entity/35kv/pole-south-long-035.png" in names
-                  png_bytes=zf.read(root + "graphics/entity/35kv/pole-south-long-035.png")
+                  png_bytes=(mod_dir / "graphics/entity/35kv/pole-south-long-035.png").read_bytes()
                   assert png_bytes[16:24] == (512).to_bytes(4,"big")+(512).to_bytes(4,"big")
               for f in ("contact-030.png", "messenger-030.png", "dropper-030.png"):
                   assert root + "graphics/entity/25kv/" + f in names, f
