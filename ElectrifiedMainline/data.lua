@@ -11,3 +11,6 @@ require("prototypes.native_wire_probe_026")
 
 -- Native auto-connection endpoint prototype, attached by scripts/native_wire_028.lua.
 require("prototypes.native_wire_auto_028")
+
+-- Isolated 0.1.30 double-contact wire visual pilot.
+require("prototypes.catenary_art_030")
