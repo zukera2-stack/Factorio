@@ -7,6 +7,7 @@ local lim=require("scripts.catenary_limits_029")
 -- Factorio permits require ONLY during control.lua parsing. Resolve
 -- dependencies now, never while on_configuration_changed/on_tick runs.
 local native028=require("scripts.native_wire_028")
+local mast035=require("scripts.mast_visual_034")
 local PARENT,HELPER="em-35kv-catenary-pole","em-25kv-art-anchor-030"
 local NORTH="em-35kv-catenary-pole-north"
 local function is_parent(name) return name==PARENT or name==NORTH end
@@ -14,11 +15,12 @@ local HEIGHT=2.53125
 -- The C mast SOUTH of the rails faces NORTH toward the line.
 -- This adjustment affects ONLY custom sprite drawing, not native helpers.
 local VISUAL_OFFSET={north={x=-0.22,y=0.90}}
-function M.visual_point(helper_floor,face)
+function M.visual_point(helper_floor,face,prototype_name)
   local o=VISUAL_OFFSET[face]
   return {
     x=helper_floor.x+(o and o.x or 0),
     y=helper_floor.y-HEIGHT+(o and o.y or 0)
+      +mast035.visual_delta(prototype_name,face)
   }
 end
 local function conn(e,create)
@@ -110,9 +112,9 @@ function M.geometry(a,b)
     pieces=math.max(3,math.min(12,math.ceil(len/3.2))),
     droppers=math.max(2,math.min(8,math.floor(len/3.5)))}
 end
-local function draw(s,key,ea,eb,face_a,face_b)
-  local a=M.visual_point(ea.position,face_a)
-  local b=M.visual_point(eb.position,face_b)
+local function draw(s,key,ea,eb,face_a,face_b,name_a,name_b)
+  local a=M.visual_point(ea.position,face_a,name_a)
+  local b=M.visual_point(eb.position,face_b,name_b)
   local g=M.geometry(a,b)
   if not g then erase(s,key);return false end
   local sig=string.format("%.4f/%.4f/%.4f/%.4f/%d/%d",
@@ -201,7 +203,8 @@ function M.sync(graph)
        and (ca.is_connected_to(cb,defines.wire_origin.player)
           or ca.connect_to(cb,true,defines.wire_origin.player)) then
       connected=connected+1
-      if draw(s,key,ae,be,graph.nodes[e.a].face,graph.nodes[e.b].face) then
+      if draw(s,key,ae,be,graph.nodes[e.a].face,graph.nodes[e.b].face,
+          graph.nodes[e.a].name,graph.nodes[e.b].name) then
         keep[key]=true;drawn=drawn+1
       end
     else missed=missed+1 end

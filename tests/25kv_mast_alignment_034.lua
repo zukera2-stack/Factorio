@@ -9,12 +9,12 @@ local standard="em-35kv-catenary-pole"
 local north="em-35kv-catenary-pole-north"
 eq(layout.mast_shift(standard),-2.93125)
 eq(layout.mast_shift(north),-0.33125)
-eq(layout.cantilever_shift(standard),layout.mast_shift(standard))
+eq(layout.cantilever_shift(standard),layout.mast_shift(standard)-layout.SOUTH_EXTEND_TILES)
 eq(layout.cantilever_shift(north),layout.mast_shift(north))
 local pos={x=0,y=0}
 local southStandard=geo.tip_for_pole(pos,"north",nil,standard)
 local oldStandard=geo.tip(pos,"north")
-eq(southStandard.y,oldStandard.y-layout.SOUTH_RISE)
+eq(southStandard.y,oldStandard.y)
 eq(southStandard.x,oldStandard.x)
 local northern=geo.tip_for_pole(pos,"south",nil,north)
 local oldNorth=geo.tip(pos,"south")

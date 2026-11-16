@@ -39,7 +39,7 @@ local draw=drawn[1].config
 assert(draw.sprite=="em-35kv-facing-south")
 assert(draw.render_layer=="higher-object-above")
 assert(draw.tint.a>0 and draw.tint.a<1)
-assert(draw.target.entity==ghost and draw.target.offset[2]==mast034.mast_shift(ghost.ghost_name))
+assert(draw.target.entity==ghost and draw.target.offset[2]==mast034.cantilever_shift(ghost.ghost_name))
 assert(M.on_built(ghost) and #drawn==1,"ghost must not get duplicate render")
 M.rebuild_all()
 assert(#drawn==2 and drawn[1].valid==false and drawn[2].valid)
@@ -54,7 +54,7 @@ assert(not M.on_built(ghost))
 local northGhost={valid=true,name="entity-ghost",ghost_name="em-35kv-catenary-pole-north",
   position={x=3.5,y=2.5},force=ghost.force,surface=ghost.surface}
 assert(M.on_built(northGhost))
-assert(drawn[#drawn].config.target.offset[2]==mast034.mast_shift(northGhost.ghost_name))
+assert(drawn[#drawn].config.target.offset[2]==mast034.cantilever_shift(northGhost.ghost_name))
 assert(M.on_removed(northGhost))
 local src=assert(io.open("ElectrifiedMainline/scripts/control.lua")):read("*a")
 assert(src:find("ghost_visual023.on_built(entity)",1,true))

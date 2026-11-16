@@ -52,6 +52,12 @@ catenary.pictures = {layers = {
         scale = 0.5, shift = {0,mast034.mast_shift(catenary.name)},
         draw_as_shadow = true},
 }}
+-- 0.1.35 southern standard C mast: generated 512x512 long shaft,
+-- with added 54 source rows ONLY in its middle. Its original footing and
+-- exact native floor placement remain at 0.1.34 coordinates. The C arm is
+-- drawn separately and raised by the same 27 rendered pixels.
+catenary.pictures.layers[1].filename=graphics.."pole-south-long-035.png"
+catenary.pictures.layers[1].height=512
 catenary.active_picture = nil
 
 local substation = table.deepcopy(data.raw["electric-pole"]["substation"])
@@ -69,6 +75,8 @@ northern.name="em-35kv-catenary-pole-north"
 northern.minable={mining_time=0.3,result=northern.name}
 northern.placeable_by={item=northern.name,count=1}
 northern.pictures.layers[1].filename=graphics.."pole-north-short-033.png"
+-- Northern short source remains 512x384; do not inherit south sprite height.
+northern.pictures.layers[1].height=384
 -- Original C mast has shift=-2.53125. Move its upper hardware DOWN
 -- 2.20 tiles and remove 70 source pixels from the middle of the shaft.
 -- Net base shift is ~+1.11 tiles (35px), visually nearer the ВСМ ballast.
