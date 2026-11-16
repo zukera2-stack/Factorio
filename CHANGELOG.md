@@ -1,3 +1,10 @@
+## 0.1.32 - south-of-track catenary sprite alignment trial (2026-11-16)
+
+- Screenshot observation: 0.1.31 custom contact wire and dropper graphics render, but south-side C-mast triangular hangers sit below contact sprite ends.
+- Calibrate only north-facing (south-of-rail) ART sprite endpoint by -0.22 x/+0.90 y world tiles; hidden native copper helper remains at exact 0.1.31 position.
+- All other face directions, 32/16/40 limits, Factorio native copper topology, C mast art and HSR rails unchanged.
+- Automated regression checks for visual-only correction; Factorio screenshot QA pending, do not merge main.
+
 ## 0.1.31 — critical 0.1.30 save-load crash hotfix (2026-11-16)
 
 - Fix Factorio hard error during `on_configuration_changed`: nested runtime `require` in `scripts/catenary_art_030.lua:sync` moved to top-level module initialization.

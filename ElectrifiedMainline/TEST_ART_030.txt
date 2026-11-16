@@ -1,3 +1,11 @@
+0.1.32 SOUTH-OF-TRACK ART ALIGNMENT TEST
+Load COPY of save ВСМ in Factorio 2.1.20.
+1. On straight ВСМ, place 2 poles SOUTH of rail (arms point NORTH): contact cable should now reach triangle hanger (previous ~30 px too high).
+2. Repeat with 2 poles NORTH of rail (arms point SOUTH): visual alignment must match 0.1.31 (unchanged).
+3. Check 12, 24, 32 tile intervals; curves retain visible native copper.
+4. /em-25kv-status, save/load, robot construction, Undo/Redo, removal of intermediate rail.
+5. Send paired screenshots at matching zoom. Only graphics changed, native helper coordinates preserved.
+
 0.1.31 HOTFIX for 0.1.30 game-load failure
 The former 0.1.30 crashes during on_configuration_changed because of
 runtime require in catenary_art_030.lua. Do not install the old build.
