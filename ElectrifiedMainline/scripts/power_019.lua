@@ -1,4 +1,5 @@
 -- 0.1.12 rail-following visual contact graph, cosmetic sprites only; no MW transfer.
+-- 0.1.27: C mast + native wire probe, no scripted overhead lines.
 local M = {}
 local geometry = require("scripts.power_topology")
 local view = require("scripts.overhead_geometry_012")
@@ -130,37 +131,13 @@ local function corridor(surface,force,a,b)
     end
     return true
 end
+-- 0.1.27: connectivity graph only. No cosmetic contact, messenger or feeder lines.
+-- rebuild_all() removes old saved LuaRendering IDs on a mod version change.
 local function draw(s,a,b,kind,corner)
     local key=edge_key(a.unit_number,b.unit_number)
     if s.edges[key] then return end
-    local renders={}
-    local function segment(from,to,color,width)
-        local o=rendering.draw_line{
-            surface=a.surface, from=from,to=to,
-            color=color,width=width}
-        renders[#renders+1]=o.id
-    end
-    if kind=="feeder" then
-        segment({entity=a,offset={0,-0.5}},
-            {entity=b,offset={0,-0.5}},
-            {r=0.35,g=0.8,b=1,a=0.9},1.5)
-    else
-        local na,nb=s.nodes[a.unit_number],s.nodes[b.unit_number]
-        local from=view.wire_anchor(na,0.5)
-        local to=view.wire_anchor(nb,0.5)
-        -- Direction from the adjacent railway is authoritative, not the R key.
-        local A={x=from.x,y=from.y,tx=na.tx,ty=na.ty}
-        local B={x=to.x,y=to.y,tx=nb.tx,ty=nb.ty}
-        local pts=corner and view.bezier(A,B,8) or {A,B}
-        for i=1,#pts-1 do
-            local x,y=pts[i],pts[i+1]
-            segment(x,y,{r=0.57,g=0.60,b=0.62,a=0.95},1.5)
-            segment({x=x.x,y=x.y-0.20},{x=y.x,y=y.y-0.20},
-                {r=0.38,g=0.43,b=0.48,a=0.85},1.0)
-        end
-    end
     s.edges[key]={a=a.unit_number,b=b.unit_number,kind=kind,
-        render_ids=renders,corner=corner or false}
+        corner=corner or false}
 end
 
 -- This is deliberately *not* RailSignalPrototype: no changes to train blocks.

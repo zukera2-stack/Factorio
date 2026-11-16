@@ -1,3 +1,9 @@
+# 0.1.27 experiment — native wire on C-arm insulators, no cosmetic Lua wires
+
+User game tested 0.1.26 Factorio 2.1.20: native visible copper connection confirmed (net 24, contacts 1/1), but wire ends at mast shaft, not triangular insulators. User screenshots support a SOUTH correction of approximately (+1.75,-2.30) tiles from previous helper point. The experiment/native-25kv-wire-027 branch adjusts default SOUTH helper to (+1.75,-0.80) relative to mast; other seven facings provisional. Fine tuning via /em-25kv-probe start DX DY. Removed ALL rendering.draw_line overhead and feeder lines while preserving rail graph and accepted 0.1.24 C-mast sprites/ghosts/Undo. Tracked and orphan 0.1.26 helpers removed during configuration upgrade. No actual 25 kV AC transfer yet. See docs/research/native-copper-wire-alignment-0.1.27.md. DO NOT MERGE prior to new gameplay screenshots.
+
+---
+
 # EXPERIMENT 0.1.26 — native copper-wire endpoints for future 25 kV AC catenary (2026-11-15)
 
 Branch **experiment/native-25kv-wire-026** starts from the accepted 0.1.24 main commit 04a290da, not from the separate 0.1.25 cosmetic-line branch. Probe is for **visual native wiring only**, NOT voltage, MW traction, battery or regeneration. Maintains all main C mast sprites, rail algorithms, native Undo and current thin cosmetic lines. Two hidden zero-collision helper electric poles at projected C-arm tips are created ONLY by /em-25kv-probe start; player-origin copper connector is requested. Status/clear and parent mast removal handle cleanup. PR #9 initial package CI hit the legacy curve test due to a version selector limited to 0.1.24; selector expanded to cover 0.1.26. Offline tests do not establish actual wire visibility; user must test on Factorio 2.1.20 with screenshots and log. See docs/research/native-copper-wire-probe-0.1.26.md and ElectrifiedMainline/TEST_NATIVE_WIRE_026.txt. Main remains **0.1.24**, approved. Do not merge before successful in-game QA.

@@ -1,32 +1,23 @@
-Electrified Mainline 0.1.26 — NATIVE COPPER WIRE PROBE (EXPERIMENT)
-FACTORIO 2.1.20 build 87512 / test save COPY ONLY.
-Base: accepted 0.1.24 main, NOT experimental 0.1.25 contact-line branch.
-This is a wire visibility/attachment experiment, not a 25kV power system.
+Electrified Mainline 0.1.27 — NATIVE COPPER WIRE ALIGNMENT EXPERIMENT
+Factorio 2.1.20 build 87512; test on COPY of save ВСМ.
+Install only ElectrifiedMainline_0.1.27.zip; remove previous ZIP 0.1.26.
 
-1. Install ONLY the nested ElectrifiedMainline_0.1.26.zip from GitHub Actions.
-2. Back up the save ВСМ. Use a COPY, NOT a valuable production save.
-3. Put two 0.1.24 C masts 8-12 tiles apart, near custom HSR. Stand near them.
-   Avoid unrelated masts closer to you (the command uses two nearest).
-4. Console: /em-25kv-probe start
-   Expect a line saying NATIVE player-origin copper linked (otherwise send error).
-   Two invisible helper poles are created at the projected C-arm tips.
-5. Compare appearance: is the true engine wire thick/visible and actually
-   attached to both C arms, including after zooming out?
-   Note: old thin cosmetic graph may still be drawn in the background.
-6. Console: /em-25kv-probe status
-   Record visible-connection, wire count, endpoint positions, network IDs.
-7. Check no new link to a vanilla electric pole appears. Put a vanilla pole
-   nearby and report ANY accidental auto-connection; do not intentionally
-   connect grids in this experimental save.
-8. Console: /em-25kv-probe clear
-   The visible native wire must disappear; hidden anchors are destroyed.
-9. Repeat on curved-A, curved-B and half diagonal, with mast orientation
-   variants; send screenshots + factorio-current.log.
-10. Save/load while the probe is active; then status and clear.
-11. Optional: mine one parent C mast during test. Test anchors must disappear.
-    Native mast Undo/Redo itself is not modified by this test command.
-12. DO NOT merge into main before explicit user game acceptance.
+User-tested 0.1.26 showed native player-origin copper connection (1/1)
+but wire was attached by the shaft, not by C-arm insulators.
+0.1.27 removes ALL legacy LuaRendering.draw_line contact/feeder lines.
+SOUTH helper anchor moves +1.75 tiles X and -2.30 tiles Y relative to
+the old helper. Other seven facings are preliminary mirrored estimates.
 
-IMPORTANT: Invisible helper electrical nodes form an isolated native network
-only in the tested two-pole scenario. This does not add a fourth wire type,
-does not simulate 25 kV AC, and cannot guarantee third-party isolation.
+1. Place two SOUTH-facing C masts 8-12 tiles apart near custom ВСМ.
+2. /em-25kv-probe start
+3. Inspect if orange native wire ends at BOTH triangular insulators and
+   if the faint gray/blue artificial overhead line has disappeared.
+4. Fine tune: /em-25kv-probe start -0.25 0
+   Negative DX = left, negative DY = up. Valid range -2..+2 tiles.
+   Starting again replaces and removes previous helper anchors/wire.
+5. /em-25kv-probe status
+6. /em-25kv-probe clear
+7. Send close screenshot of both insulator contacts plus factorio-current.log.
+8. Optionally test save/reload, mine one mast, robotic build/Undo and turns.
+This version DOES NOT implement a separate engine wire type or 25 kV power.
+Main 0.1.24 untouched, do not merge experimental version without acceptance.

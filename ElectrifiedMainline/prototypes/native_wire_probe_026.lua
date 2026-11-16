@@ -30,7 +30,8 @@ assert(anchor.connection_points and anchor.connection_points[1],
     "EM 0.1.26 probe needs vanilla electric-pole wire connection point")
 anchor.connection_points={table.deepcopy(anchor.connection_points[1])}
 -- The hidden entity is located at an arm-tip floor projection.
--- This pixel-space wire point is an EXPERIMENTAL screen-height approximation.
+-- WirePosition vector is relative to hidden helper, in tile coordinates.
+-- -2.53125 tiles is approximately -81 pixels at standard game scale.
 anchor.connection_points[1].wire.copper={0,-2.53125}
 anchor.connection_points[1].shadow.copper={0,0}
 data:extend({anchor})

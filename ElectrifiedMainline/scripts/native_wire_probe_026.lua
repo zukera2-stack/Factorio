@@ -1,4 +1,4 @@
--- 0.1.26 ONLY: on-demand, reversible native copper-wire visual experiment.
+-- 0.1.27: reversible native copper-wire insulator alignment probe.
 -- Does NOT enable real 25kV energy, automatic poles, Undo joins or train changes.
 local M={}
 local geo=require("scripts.native_wire_geometry_026")
@@ -36,7 +36,7 @@ end
 local function connector(e,create)
   return e.get_wire_connector(defines.wire_connector_id.pole_copper,create)
 end
-function M.start(player,power019)
+function M.start(player,power019,dx,dy)
   local s=state()
   if s.runs[player.index] then M.clear(player) end
   local masts=player.surface.find_entities_filtered{
@@ -46,7 +46,7 @@ function M.start(player,power019)
   local created={}
   for _,mast in ipairs({a,b}) do
     local face=power019.facing_at(mast)
-    local tip=geo.tip(mast.position,face)
+    local tip=geo.tip(mast.position,face,dx,dy)
     if not tip then
       for _,ent in ipairs(created) do if ent.valid then ent.destroy() end end
       player.print("[EM 25kV probe] cannot project mast face "..tostring(face))
@@ -84,12 +84,15 @@ function M.start(player,power019)
   s.runs[player.index]={
     surface_index=player.surface.index,force_name=player.force.name,
     mast_ids={a.unit_number,b.unit_number},
+    calibration={dx=dx or 0,dy=dy or 0},
     anchor_ids={created[1].unit_number,created[2].unit_number}
   }
   local msg=string.format(
-    "[EM 25kV probe] NATIVE player-origin copper linked. endpoints=(%.2f,%.2f) -> (%.2f,%.2f); net=%s/%s; contacts=%d/%d. Screenshot wire; /em-25kv-probe clear to undo test.",
+    "[EM 25kV probe] native wire: faces=%s/%s helpers=(%.2f,%.2f)->(%.2f,%.2f) adjust=(%.2f,%.2f) network=%s/%s count=%d/%d",
+    power019.facing_at(a),power019.facing_at(b),
     created[1].position.x,created[1].position.y,
     created[2].position.x,created[2].position.y,
+    dx or 0,dy or 0,
     tostring(ca.network_id),tostring(cb.network_id),
     ca.connection_count,cb.connection_count)
   player.print(msg);log(msg)
@@ -122,17 +125,40 @@ function M.on_mast_removed(mast)
     end
   end
 end
+-- Remove both recorded and orphan 0.1.26 helpers when loading 0.1.27.
+function M.cleanup_on_version_change()
+  local s=state()
+  for _,run in pairs(s.runs) do destroy_anchors(run) end
+  for _,surface in pairs(game.surfaces) do
+    for _,anchor in pairs(surface.find_entities_filtered{name=ANCHOR}) do
+      if anchor.valid then anchor.destroy() end
+    end
+  end
+  s.runs={}
+  log("[EM 25kV probe] old helper anchors removed on 0.1.27 update")
+end
 function M.command(event,power019)
   local player=event.player_index and game.get_player(event.player_index)
   if not (player and player.valid) then
-    log("[EM 25kV probe] run command in-game as a player")
+    log("[EM 25kV probe] run command in game as a player")
     return
   end
-  local action=string.match(event.parameter or "start","^%s*(%S+)") or "start"
-  if action=="start" then M.start(player,power019)
+  local args={}
+  for word in string.gmatch(event.parameter or "start","%S+") do
+    args[#args+1]=word
+  end
+  local action=args[1] or "start"
+  if action=="start" then
+    local dx,dy=0,0
+    if args[2] then dx=tonumber(args[2]) end
+    if args[3] then dy=tonumber(args[3]) end
+    if not dx or not dy or args[4] or math.abs(dx)>2 or math.abs(dy)>2 then
+      player.print("[EM 25kV probe] start [DX -2..2] [DY -2..2], negative DY moves UP")
+      return
+    end
+    M.start(player,power019,dx,dy)
   elseif action=="status" then M.status(player)
   elseif action=="clear" then M.clear(player)
-  else player.print("[EM 25kV probe] /em-25kv-probe start | status | clear")
-  end
+  else player.print("[EM 25kV probe] start [DX DY] | status | clear") end
 end
 return M

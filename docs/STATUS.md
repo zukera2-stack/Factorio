@@ -1,3 +1,5 @@
+> **Experiment 0.1.27 (2026-11-16):** Native wire tested on real game 0.1.26 (connected 1/1) but endpoints misplaced; SOUTH position reprojected to triangular insulators (+1.75,-0.80 helper offset). Previous Lua overhead/feeder lines entirely disabled. Optional /em-25kv-probe start DX DY for calibration. Main 0.1.24 unchanged; needs new game screenshots. See docs/research/native-copper-wire-alignment-0.1.27.md.
+
 > **0.1.26 ISOLATED NATIVE-WIRE EXPERIMENT (2026-11-15):** Branch `experiment/native-25kv-wire-026` from game-accepted 0.1.24 main (not 0.1.25). Two hidden helper electric-poles connect via native *player-origin copper* on command `/em-25kv-probe start`; `status` and `clear` for diagnosis/cleanup. Real main mast art / normal ghosts / Undo / rails untouched; existing cosmetic lines remain. 25 kV AC is a design target, not simulated voltage: `transfer_MW=0`. Actual rendering, P2 alignment and isolation need game test. See [research](research/native-copper-wire-probe-0.1.26.md) and [game guide](../ElectrifiedMainline/TEST_NATIVE_WIRE_026.txt). **Do not merge without user evidence.**
 
 # Development status — ElectrifiedMainline 0.1.24

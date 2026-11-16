@@ -1,3 +1,10 @@
+## 0.1.27 — experimental C-insulator native-wire alignment (2026-11-16)
+
+- Shifted native hidden copper helper toward SOUTH C-arm triangular insulator using user gameplay screenshot (+1.75 right, 2.30 up vs 0.1.26).
+- Removed all LuaRendering.draw_line contact/messenger/feeder segments; retained topology and C mast graphics.
+- Added in-game DX/DY calibration and cleaned legacy 0.1.26 helper nodes during version update.
+- 25 kV AC is future model, no automatic wiring, no main merge until user game QA.
+
 ## 0.1.26 — experimental native copper-wire probe, NOT a release (2026-11-15)
 
 - Separate `experiment/native-25kv-wire-026` branch from accepted 0.1.24 main; independent of 0.1.25 thin-line experiment.
