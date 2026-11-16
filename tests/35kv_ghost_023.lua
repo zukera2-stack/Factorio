@@ -1,6 +1,7 @@
 -- Offline mocked ghost rendering regression. Never treats CI as Factorio gameplay.
 package.path="./ElectrifiedMainline/?.lua;"..package.path
 local actual_faces=0
+local mast034=require("scripts.mast_visual_034")
 package.loaded["scripts.power_019"]={facing_at=function(_) actual_faces=actual_faces+1;return "south" end}
 storage={}
 log=function(_) end -- Factorio global; mocked by unit tests.
@@ -24,8 +25,10 @@ local ghost={
 local ordinary={valid=true,name="em-35kv-catenary-pole",position=ghost.position,
     force=ghost.force,surface=rail_surface}
 rail_surface.find_entities_filtered=function(filter)
-    assert(filter.name=="entity-ghost" and filter.ghost_name=="em-35kv-catenary-pole")
-    return {ghost}
+    assert(filter.name=="entity-ghost")
+    if filter.ghost_name=="em-35kv-catenary-pole" then return {ghost} end
+    assert(filter.ghost_name=="em-35kv-catenary-pole-north")
+    return {}
 end
 game={surfaces={[1]=rail_surface}}
 local M=require("scripts.ghost_mast_023")
@@ -36,7 +39,7 @@ local draw=drawn[1].config
 assert(draw.sprite=="em-35kv-facing-south")
 assert(draw.render_layer=="higher-object-above")
 assert(draw.tint.a>0 and draw.tint.a<1)
-assert(draw.target.entity==ghost and draw.target.offset[2]==-2.53125)
+assert(draw.target.entity==ghost and draw.target.offset[2]==mast034.mast_shift(ghost.ghost_name))
 assert(M.on_built(ghost) and #drawn==1,"ghost must not get duplicate render")
 M.rebuild_all()
 assert(#drawn==2 and drawn[1].valid==false and drawn[2].valid)
@@ -48,6 +51,11 @@ drawn[3].valid=false; ghost.valid=false
 M.on_tick(1800)
 assert(next(storage.em.ghost_visual_023.sprites)==nil)
 assert(not M.on_built(ghost))
+local northGhost={valid=true,name="entity-ghost",ghost_name="em-35kv-catenary-pole-north",
+  position={x=3.5,y=2.5},force=ghost.force,surface=ghost.surface}
+assert(M.on_built(northGhost))
+assert(drawn[#drawn].config.target.offset[2]==mast034.mast_shift(northGhost.ghost_name))
+assert(M.on_removed(northGhost))
 local src=assert(io.open("ElectrifiedMainline/scripts/control.lua")):read("*a")
 assert(src:find("ghost_visual023.on_built(entity)",1,true))
 assert(src:find("ghost_visual023.rebuild_all()",1,true))
