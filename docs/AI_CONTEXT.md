@@ -1,3 +1,9 @@
+# 0.1.35 explicit screenshot-based rail-side height correction
+
+User image 2026-11-16_20-21-29.png shows 27px vertical difference between two lower contact conductors at near-identical rail span. Native standard mast (SOUTH side facing NORTH) needs 54 RGBA source rows of truss extension at scale 0.5; footing stays fixed via 512x512 sprite and 64px pad. Independent C arm and CUSTOM sprite contact raised by 0.84375 game tile (27px). Native hidden copper helper returned to original pre-0.1.34 geometry (no -0.40). North short mast untouched. Code on experiment/25kv-south-geometry-035 from 0.1.34; main remains 0.1.24. New generator scripts/sprites/extend_south_035.py and tests/25kv_south_035.lua. All Factorio game acceptance still pending; screenshots need same zoom.
+
+---
+
 # 0.1.34 on latest real screenshots (2026-11-16)
 
 Screenshot archive 2026-11-16_19-08-49.zip shows missing cantilever on shortened north-of-track mast and lower contact/whole mast image on the standard south-of-track side. Fixed native arm overlay for BOTH prototypes, not another sprite edit. Pure shared scripts/mast_visual_034.lua defines north short image shift (+2.20 tiles), standard south image lift (0.40 tiles), and shared helper y adjustment only for north short face=south and standard face=north. No change to rail prototypes, native Undo, C arm PNGs, 32/16/40, traction MW=0. Ghosts now handle both native pole types. Branch experiment/25kv-mast-alignment-034; in-game test pending, main untouched.

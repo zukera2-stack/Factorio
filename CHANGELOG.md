@@ -1,3 +1,10 @@
+## 0.1.35 — south standard C shaft length measured from screenshot
+
+- Measured 27px mismatch of north/south contact-wire levels on 1927x1080 screenshot at game zoom (source scale .5).
+- Standard south native pole 512x512 image keeps foundation world anchor fixed; truss segment extended by 54 RGBA source rows and arm moved -0.84375 tiles. Separate wires (contact/messenger/droppers) drawn at corrected matching height.
+- Restored south native hidden copper helper attachment to its pre-0.1.34 location, without changing track graph/32/16/40/Undo. Short north native mast remains unchanged.
+- Added offline pixel-geometry contract and Lua test, game test still needed; no main merge.
+
 ## 0.1.34 — fixed north cantilever and raised south standard mast (2026-11-16)
 
 - Resolved 0.1.33 missing cantilever by drawing per-face C-arm sprites for north short variant, rather than assuming arm baked into its shaft-only native PNG.

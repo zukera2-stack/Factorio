@@ -1,3 +1,25 @@
+0.1.35 - SOUTH MAST RASTER-BASED LONG SHAFT, ORIGINAL NATIVE ANCHORS
+Old 0.1.34 had the standard SOUTH-of-track contact line ~27 screen
+pixels LOWER than the shortened north-of-track contact at 1927x1080.
+This build derives a +54 SOURCE ROW raster mast extension: scale=0.5,
+27 rendered pixels / 0.84375 world tiles; standard footing unchanged.
+Standard's arm/sprite contact raised together 27px relative to 0.1.34.
+Actual hidden native copper anchor for standard south-of-track is
+RESTORED TO PRE-0.1.34 geometry, not shifted.
+Northern shortened pole remains at its accepted 0.1.34 coordinates.
+No changes to ВСМ rail sprites, graph, 32/16/40, Undo, nominal 25kV MW=0.
+
+Test at the SAME zoom as 2026-11-16_20-21-29 screenshot:
+A. Place 2 STANDARD mast items SOUTH and 2 SHORT-NORTH items NORTH
+   of ONE straight ВСМ rail line. Crossbars should be complete.
+B. Both thin lower contact wires should visually run at the SAME
+   screen height, with no 27px vertical jump between sides.
+C. South foundation should remain at the exact old world tile.
+D. Inspect contact cable attachment to BOTH triangular hangers.
+E. Save/load, blueprints, ghosts, 12/24/32 cell straight spans, curves,
+   delete/recreate middle ВСМ rail, Undo/Redo and /em-25kv-status.
+Screenshot plus factorio-current.log. No merge before in-game acceptance.
+
 0.1.34 — SOUTH LIFT AND RESTORED NORTH CANTILEVER
 Game test: Factorio 2.1.20 (licensed or Steam), copy of ВСМ save.
 0.1.33 was wrong: north side displayed bare shaft because script
