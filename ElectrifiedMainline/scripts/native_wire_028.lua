@@ -5,6 +5,8 @@
 local M={}
 local geo=require("scripts.native_wire_geometry_028")
 local PARENT="em-35kv-catenary-pole" -- stable legacy prototype ID for saves
+local NORTH="em-35kv-catenary-pole-north"
+local function is_parent(name) return name==PARENT or name==NORTH end
 local ANCHOR="em-25kv-contact-anchor"
 local ORIGIN=function() return defines.wire_origin.player end
 local CID=function() return defines.wire_connector_id.pole_copper end
@@ -14,7 +16,7 @@ end
 local function get(id,name)
   if not id then return nil end
   local e=game.get_entity_by_unit_number(id)
-  if e and e.valid and e.name==name then return e end
+  if e and e.valid and (e.name==name or (name==PARENT and is_parent(e.name))) then return e end
 end
 function M.ensure_storage()
   storage.em=storage.em or {}
@@ -34,7 +36,7 @@ function M.mark_dirty()
   M.ensure_storage().dirty=true
 end
 function M.on_parent_removed(e)
-  if not (e and e.valid and e.name==PARENT) then return end
+  if not (e and e.valid and is_parent(e.name)) then return end
   local s=M.ensure_storage()
   local record=s.helpers[e.unit_number]
   if record then
@@ -46,7 +48,7 @@ end
 local function eligible(sgraph,e)
   if e.kind~="contact" then return false end
   local a,b=sgraph.nodes[e.a],sgraph.nodes[e.b]
-  return a and b and a.name==PARENT and b.name==PARENT
+  return a and b and is_parent(a.name) and is_parent(b.name)
      and a.rail_adjacent and b.rail_adjacent
      and a.rail_id and b.rail_id
      and a.surface_index==b.surface_index
@@ -70,7 +72,7 @@ local function ensure_anchor(s,parent,node)
   local p=get(parent,PARENT)
   if not p then return nil end
   local face=node.face
-  local pos=geo.tip(p.position,face,s.calibration)
+  local pos=geo.tip_for_pole(p.position,face,s.calibration,p.name)
   if not pos then return nil end
   local record=s.helpers[parent]
   local helper=get(record and record.id,ANCHOR)

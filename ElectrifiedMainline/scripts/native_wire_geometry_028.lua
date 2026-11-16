@@ -21,6 +21,17 @@ function M.tip(pos,face,corrections)
   return {x=pos.x+o[1]+(c and c.x or 0),
           y=pos.y+o[2]+(c and c.y or 0)}
 end
+-- The north-of-track mast is a separately placeable native pole with a
+-- vertical shaft shortened by 70 source pixels and shifted +2.20 tiles.
+-- Its native copper helper follows the shifted hanger, NOT the footprint.
+M.NORTH_SPRITE_DOWN=2.20
+function M.tip_for_pole(pos,face,corrections,prototype_name)
+  local tip=M.tip(pos,face,corrections)
+  if tip and prototype_name=="em-35kv-catenary-pole-north" and face=="south" then
+    tip.y=tip.y+M.NORTH_SPRITE_DOWN
+  end
+  return tip
+end
 function M.same_pos(a,b)
   return a and b and math.abs(a.x-b.x)<0.0001 and
     math.abs(a.y-b.y)<0.0001

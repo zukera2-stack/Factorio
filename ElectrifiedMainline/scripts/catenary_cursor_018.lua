@@ -19,7 +19,7 @@ end
 
 function M.holding_mast(player)
     local stack=player.cursor_stack
-    return stack and stack.valid_for_read and stack.name==POLE or false
+    return stack and stack.valid_for_read and (stack.name==POLE or stack.name=="em-35kv-catenary-pole-north") or false
 end
 
 -- Signal slots are an engine reference for nearby rails. The actual mast is
@@ -91,7 +91,7 @@ function M.classify(player,point)
     if allowed then return "READY" end
     local collision_ok,collision_free=pcall(function()
         return player.surface.can_place_entity{
-            name=POLE,position=point.position,
+            name=(player.cursor_stack and player.cursor_stack.name) or POLE,position=point.position,
             direction=defines.direction.north,force=player.force
         }
     end)

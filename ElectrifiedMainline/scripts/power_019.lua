@@ -5,7 +5,9 @@ local geometry = require("scripts.power_topology")
 local view = require("scripts.overhead_geometry_012")
 local face022 = require("scripts.mast_facing_022")
 local limits = require("scripts.catenary_limits_029")
-local POLE,SUB = "em-35kv-catenary-pole","em-35kv-traction-substation"
+local POLE,NORTH,SUB = "em-35kv-catenary-pole","em-35kv-catenary-pole-north","em-35kv-traction-substation"
+local POLES={POLE,NORTH}
+local function is_pole(name) return name==POLE or name==NORTH end
 local SPAN,CURVE_SPAN,RADIUS = limits.STRAIGHT,limits.CURVE,3
 local RAILS = {"em-high-speed-straight-rail","em-curved-high-speed-rail",
     "em-curved-high-speed-rail-b","em-half-diagonal-high-speed-rail"}
@@ -48,6 +50,9 @@ local function render_sprite(s,e)
     local id=e.unit_number
     if not id then return end
     clear_sprite(s,id)
+    -- The northern native prototype contains its own complete shortened C
+    -- arm. Never double-render the old full-size overlay on top of it.
+    if e.name==NORTH then return end
     local n=s.nodes[id]
     local face=n and n.face or "east"
     local obj=rendering.draw_sprite{
@@ -92,7 +97,7 @@ local function register(s,e)
     local n={id=id,name=e.name,x=e.position.x,y=e.position.y,
         surface_index=e.surface.index,force_name=e.force.name,
         rail_adjacent=e.name==SUB}
-    if e.name==POLE then
+    if is_pole(e.name) then
         local rail
         n.tx,n.ty,n.side,rail=rail_tangent(e)
         n.rail_adjacent=n.tx~=nil
@@ -226,9 +231,9 @@ local function build_corner_edges(s,touched,path_info)
     local candidates={}
     for id,e in pairs(touched) do
         local a=s.nodes[id]
-        if a and a.name==POLE and a.rail_adjacent and (degrees[id] or 0)<2 then
+        if a and is_pole(a.name) and a.rail_adjacent and (degrees[id] or 0)<2 then
             for _,other in pairs(e.surface.find_entities_filtered{
-                position=e.position,radius=CURVE_SPAN,name=POLE,force=e.force}) do
+                position=e.position,radius=CURVE_SPAN,name=POLES,force=e.force}) do
                 local b=s.nodes[other.unit_number]
                 if b and (degrees[b.id] or 0)<2
                     and not s.edges[edge_key(id,b.id)] then
@@ -281,12 +286,12 @@ local function build_edges(s,touched)
         local id=e.unit_number
         if choices[id] then return choices[id][1],choices[id][2] end
         local a=s.nodes[id]
-        if not (a and a.name==POLE and a.rail_adjacent) then
+        if not (a and is_pole(a.name) and a.rail_adjacent) then
             choices[id]={};return nil,nil
         end
         local candidates={}
         for _,other in pairs(e.surface.find_entities_filtered{
-            position=e.position,radius=SPAN,name=POLE,force=e.force}) do
+            position=e.position,radius=SPAN,name=POLES,force=e.force}) do
             if other.valid and s.nodes[other.unit_number] then
                 candidates[#candidates+1]=s.nodes[other.unit_number]
             end
@@ -307,7 +312,7 @@ local function build_edges(s,touched)
     end
     for id,e in pairs(touched) do
         local n=s.nodes[id]
-        if n and n.name==POLE and n.rail_adjacent then
+        if n and is_pole(n.name) and n.rail_adjacent then
             local f,b=select_neighbours(e)
             for _,candidate in pairs({f,b}) do
                 local other=candidate and resolve(s,candidate.id)
@@ -321,7 +326,7 @@ local function build_edges(s,touched)
         elseif n and n.name==SUB then
             local best,nearest=SPAN*SPAN+1,nil
             for _,pole in pairs(e.surface.find_entities_filtered{
-                position=e.position,radius=SPAN,name=POLE,force=e.force}) do
+                position=e.position,radius=SPAN,name=POLES,force=e.force}) do
                 local p=s.nodes[pole.unit_number]
                 if p and p.rail_adjacent then
                     local dx,dy=pole.position.x-e.position.x,pole.position.y-e.position.y
@@ -341,17 +346,17 @@ local function refresh(surface,force,pos)
     local s=M.ensure_storage()
     local touched={}
     for _,e in pairs(surface.find_entities_filtered{
-        position=pos,radius=SPAN*2+2,name={POLE,SUB},force=force}) do
+        position=pos,radius=SPAN*2+2,name={POLE,NORTH,SUB},force=force}) do
         if e.valid and s.nodes[e.unit_number] then
             register(s,e);touched[e.unit_number]=e
-        if e.name==POLE then render_sprite(s,e) end
+        if is_pole(e.name) then render_sprite(s,e) end
         end
     end
     -- A touched pole may have a feeder from a substation just outside
     -- the refresh circle. Include that substation before removing edges.
     local additional={}
     for _,e in pairs(touched) do
-        if e.name==POLE then
+        if is_pole(e.name) then
             for _,sub in pairs(surface.find_entities_filtered{
                 position=e.position,radius=SPAN,name=SUB,force=force}) do
                 if sub.valid and s.nodes[sub.unit_number] then
@@ -377,10 +382,10 @@ function M.rebuild_all()
     s.nodes={};s.edges={};s.rail_queue={};s.sprites={}
     local all={}
     for _,surface in pairs(game.surfaces) do
-        for _,e in pairs(surface.find_entities_filtered{name={POLE,SUB}}) do
+        for _,e in pairs(surface.find_entities_filtered{name={POLE,NORTH,SUB}}) do
             if e.valid and e.unit_number then
                 register(s,e);all[e.unit_number]=e
-                if e.name==POLE then render_sprite(s,e) end
+                if is_pole(e.name) then render_sprite(s,e) end
             end
         end
     end
@@ -390,15 +395,15 @@ function M.rebuild_all()
 end
 function M.on_built(event)
     local e=event.entity
-    if not (e and e.valid and (e.name==POLE or e.name==SUB)) then return end
+    if not (e and e.valid and (is_pole(e.name) or e.name==SUB)) then return end
     local s=M.ensure_storage()
     register(s,e)
-    if e.name==POLE and not s.nodes[e.unit_number].rail_adjacent then
+    if is_pole(e.name) and not s.nodes[e.unit_number].rail_adjacent then
         local player=event.player_index and game.get_player(event.player_index)
         if player and player.valid then player.print({"message.em-35kv-no-rail"}) end
     end
     refresh(e.surface,e.force,e.position)
-    if e.name==POLE then
+    if is_pole(e.name) then
         local n=s.nodes[e.unit_number]
         if n then
             local target=n.face_target
@@ -412,7 +417,7 @@ function M.on_built(event)
 end
 function M.on_removed(event)
     local e=event.entity
-    if not (e and e.valid and (e.name==POLE or e.name==SUB)) then return end
+    if not (e and e.valid and (is_pole(e.name) or e.name==SUB)) then return end
     local s=M.ensure_storage()
     s.nodes[e.unit_number]=nil
     clear_sprite(s,e.unit_number)
@@ -449,7 +454,7 @@ function M.on_tick(tick)
                     -- A removed middle rail can be 8+ tiles from BOTH masts.
                     -- Rescan the full eligible span, not just a 5-tile circle.
                     position=change.position,radius=SPAN+RADIUS+4,
-                    name=POLE,force=force}) do
+                    name=POLES,force=force}) do
                     local bucket=tostring(surface.index)..":"..force.name..":"..
                         tostring(math.floor(pole.position.x/16))..":"..
                         tostring(math.floor(pole.position.y/16))
@@ -468,7 +473,7 @@ function M.status(player)
     local s=M.ensure_storage()
     local poles,subs,contacts,feeders,stale,turns=0,0,0,0,0,0
     for id,n in pairs(s.nodes) do
-        if n.name==POLE then poles=poles+1 else subs=subs+1 end
+        if is_pole(n.name) then poles=poles+1 else subs=subs+1 end
         if not resolve(s,id) then stale=stale+1 end
     end
     for _,e in pairs(s.edges) do

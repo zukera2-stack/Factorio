@@ -60,8 +60,40 @@ substation.placeable_by = {item = substation.name, count = 1}
 substation.next_upgrade = nil
 flag_once(substation, "get-by-unit-number")
 
+-- 0.1.33: an explicit NORTHERN placement variant keeps native electric-pole
+-- placement, blueprint and Undo mechanics. Its shaft is shortened only in art.
+-- It is an independent placeable prototype rather than a runtime entity swap.
+local northern=table.deepcopy(catenary)
+northern.name="em-35kv-catenary-pole-north"
+northern.minable={mining_time=0.3,result=northern.name}
+northern.placeable_by={item=northern.name,count=1}
+northern.pictures.layers[1].filename=graphics.."pole-north-short-033.png"
+-- Original C mast has shift=-2.53125. Move its upper hardware DOWN
+-- 2.20 tiles and remove 70 source pixels from the middle of the shaft.
+-- Net base shift is ~+1.11 tiles (35px), visually nearer the ВСМ ballast.
+northern.pictures.layers[1].shift={0,-2.53125+2.20}
+-- Shadow follows the footprint, not the contact wire.
+northern.pictures.layers[2].shift={0,-2.53125+1.11}
+northern.active_picture=nil
+
 data:extend({
-    catenary, substation,
+    catenary, substation, northern,
+    {
+        type="item",name="em-35kv-catenary-pole-north",
+        icon=mast_icon,icon_size=64,subgroup="energy",
+        order="a[electric-pole]-z[35kv-catenary]-b[north]",
+        stack_size=50,place_result="em-35kv-catenary-pole-north",
+    },
+    {
+        type="recipe",name="em-35kv-catenary-pole-north",enabled=false,
+        ingredients={
+            {type="item",name="em-concrete-beam",amount=2},
+            {type="item",name="em-heavy-copper-cable",amount=4},
+            {type="item",name="steel-plate",amount=5},
+        },
+        results={{type="item",name="em-35kv-catenary-pole-north",amount=1}},
+        energy_required=5,
+    },
     -- Face names reflect the rail's position relative to the mast, not its own direction.
     {
         type = "sprite", name = "em-35kv-facing-east",
@@ -148,4 +180,5 @@ local tech = data.raw.technology["em-electrified-railways"]
 assert(tech, "ElectrifiedMainline: missing electrified railways technology")
 tech.effects = tech.effects or {}
 table.insert(tech.effects, {type = "unlock-recipe", recipe = "em-35kv-catenary-pole"})
+table.insert(tech.effects, {type = "unlock-recipe", recipe = "em-35kv-catenary-pole-north"})
 table.insert(tech.effects, {type = "unlock-recipe", recipe = "em-35kv-traction-substation"})

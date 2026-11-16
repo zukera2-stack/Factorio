@@ -8,6 +8,8 @@ local lim=require("scripts.catenary_limits_029")
 -- dependencies now, never while on_configuration_changed/on_tick runs.
 local native028=require("scripts.native_wire_028")
 local PARENT,HELPER="em-35kv-catenary-pole","em-25kv-art-anchor-030"
+local NORTH="em-35kv-catenary-pole-north"
+local function is_parent(name) return name==PARENT or name==NORTH end
 local HEIGHT=2.53125
 -- The C mast SOUTH of the rails faces NORTH toward the line.
 -- This adjustment affects ONLY custom sprite drawing, not native helpers.
@@ -25,12 +27,12 @@ end
 local function get(id,name)
   if not id then return nil end
   local e=game.get_entity_by_unit_number(id)
-  if e and e.valid and e.name==name then return e end
+  if e and e.valid and (e.name==name or (name==PARENT and is_parent(e.name))) then return e end
 end
 local function valid_edge(g,e)
   if e.kind~="contact" or e.corner then return false end
   local a,b=g.nodes[e.a],g.nodes[e.b]
-  return a and b and a.name==PARENT and b.name==PARENT
+  return a and b and is_parent(a.name) and is_parent(b.name)
     and a.rail_adjacent and b.rail_adjacent and a.rail_id and b.rail_id
     and a.surface_index==b.surface_index and a.force_name==b.force_name
 end
@@ -58,7 +60,7 @@ end
 local function anchor(s,id,node,calib)
   local parent=get(id,PARENT)
   if not parent then return nil end
-  local pos=geo.tip(parent.position,node.face,calib)
+  local pos=geo.tip_for_pole(parent.position,node.face,calib,parent.name)
   if not pos then return nil end
   local row=s.helpers[id]
   local e=get(row and row.id,HELPER)
@@ -224,7 +226,7 @@ function M.rebuild_all(graph)
 end
 function M.mark_dirty() M.ensure_storage().dirty=true end
 function M.on_parent_removed(e)
-  if not (e and e.valid and e.name==PARENT) then return end
+  if not (e and e.valid and is_parent(e.name)) then return end
   local s=M.ensure_storage()
   if s.helpers[e.unit_number] then
     destroy(s.helpers[e.unit_number]);s.helpers[e.unit_number]=nil

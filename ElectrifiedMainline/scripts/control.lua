@@ -385,7 +385,7 @@ local function on_built(event)
     if not (entity and entity.valid) then return end
 
     power019.on_built(event)
-    if entity.name=="em-35kv-catenary-pole" then
+    if entity.name=="em-35kv-catenary-pole" or entity.name=="em-35kv-catenary-pole-north" then
         nativewire028.mark_dirty()
         art030.mark_dirty()
     end
