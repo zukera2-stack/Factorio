@@ -9,6 +9,16 @@ local lim=require("scripts.catenary_limits_029")
 local native028=require("scripts.native_wire_028")
 local PARENT,HELPER="em-35kv-catenary-pole","em-25kv-art-anchor-030"
 local HEIGHT=2.53125
+-- The C mast SOUTH of the rails faces NORTH toward the line.
+-- This adjustment affects ONLY custom sprite drawing, not native helpers.
+local VISUAL_OFFSET={north={x=-0.22,y=0.90}}
+function M.visual_point(helper_floor,face)
+  local o=VISUAL_OFFSET[face]
+  return {
+    x=helper_floor.x+(o and o.x or 0),
+    y=helper_floor.y-HEIGHT+(o and o.y or 0)
+  }
+end
 local function conn(e,create)
   return e.get_wire_connector(defines.wire_connector_id.pole_copper,create)
 end
@@ -98,9 +108,9 @@ function M.geometry(a,b)
     pieces=math.max(3,math.min(12,math.ceil(len/3.2))),
     droppers=math.max(2,math.min(8,math.floor(len/3.5)))}
 end
-local function draw(s,key,ea,eb)
-  local a={x=ea.position.x,y=ea.position.y-HEIGHT}
-  local b={x=eb.position.x,y=eb.position.y-HEIGHT}
+local function draw(s,key,ea,eb,face_a,face_b)
+  local a=M.visual_point(ea.position,face_a)
+  local b=M.visual_point(eb.position,face_b)
   local g=M.geometry(a,b)
   if not g then erase(s,key);return false end
   local sig=string.format("%.4f/%.4f/%.4f/%.4f/%d/%d",
@@ -189,7 +199,9 @@ function M.sync(graph)
        and (ca.is_connected_to(cb,defines.wire_origin.player)
           or ca.connect_to(cb,true,defines.wire_origin.player)) then
       connected=connected+1
-      if draw(s,key,ae,be) then keep[key]=true;drawn=drawn+1 end
+      if draw(s,key,ae,be,graph.nodes[e.a].face,graph.nodes[e.b].face) then
+        keep[key]=true;drawn=drawn+1
+      end
     else missed=missed+1 end
   end
   for key in pairs(s.draws) do

@@ -85,6 +85,15 @@ require=function(name)
   error("Require can't be used outside of control.lua parsing: "..tostring(name))
 end
 art.rebuild_all(graph)
+-- SOUTH side poles face NORTH. Actual copper helper is unmodified.
+local north=art.visual_point({x=8,y=10},"north")
+local south=art.visual_point({x=8,y=10},"south")
+local east=art.visual_point({x=8,y=10},"east")
+assert(math.abs(north.x-7.78)<1e-6)
+assert(math.abs(north.y-(10-2.53125+0.90))<1e-6)
+assert(math.abs(south.x-8)<1e-6)
+assert(math.abs(south.y-(10-2.53125))<1e-6)
+assert(math.abs(east.x-south.x)<1e-6 and math.abs(east.y-south.y)<1e-6)
 local state=art.ensure_storage()
 assert(state.stats.eligible==1 and state.stats.connected==1)
 assert(state.stats.drawn==1 and state.stats.missed==0)
@@ -100,6 +109,20 @@ art.sync(graph)
 assert(count()==original,"unchanged sprite geometry must reuse IDs")
 assert(art.geometry({x=0,y=0},{x=32,y=0}).droppers>=5)
 assert(not art.geometry({x=0,y=0},{x=33,y=0}))
+nodes[a.unit_number].face="north"
+nodes[b.unit_number].face="north"
+art.sync(graph)
+assert(state.stats.connected==1 and state.stats.drawn==1)
+local found=false
+for _,obj in pairs(objects) do
+  if obj.valid and obj.args.sprite=="em-25kv-contact-030" then
+    found=true
+    local helper=all[state.helpers[a.unit_number].id]
+    assert(helper and helper.valid)
+    assert(math.abs(obj.args.target.y-(helper.position.y-2.53125+0.90))<1e-6)
+  end
+end
+assert(found,"north-facing sprite should render at corrected coordinate")
 graph.edges.ab.corner=true
 art.sync(graph)
 assert(state.stats.eligible==0 and not next(state.helpers))
@@ -118,4 +141,4 @@ local p=assert(io.open("ElectrifiedMainline/prototypes/catenary_art_030.lua")):r
 assert(p:find("h.draw_copper_wires=false",1,true))
 local c=assert(io.open("ElectrifiedMainline/scripts/control.lua")):read("*a")
 assert(c:find("native_curve_graph(graph)",1,true))
-print("0.1.31 runtime require guard + native hidden copper and sprite lifecycle PASS")
+print("0.1.32 north-face south-side sprite calibration and runtime require guard PASS")

@@ -45,21 +45,21 @@ jobs:
           lua5.2 tests/25kv_auto_wire_028.lua
           lua5.2 tests/25kv_span_029.lua
           lua5.2 tests/25kv_art_030.lua
-          if grep -Eq '"version": "0.1.(1(3|4|5|6|7|8)|2[2-9]|3[01])"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0.1.(1(3|4|5|6|7|8)|2[2-9]|3[012])"' ElectrifiedMainline/info.json; then
             lua5.2 tests/35kv_visual_013.lua
-            if grep -Eq '"version": "0.1.(1(4|5|6|7|8)|2[2-9]|3[01])"' ElectrifiedMainline/info.json; then
+            if grep -Eq '"version": "0.1.(1(4|5|6|7|8)|2[2-9]|3[012])"' ElectrifiedMainline/info.json; then
               lua5.2 tests/35kv_slots_014.lua
             fi
-            if grep -Eq '"version": "0.1.(1(5|6|7|8)|2[2-9]|3[01])"' ElectrifiedMainline/info.json; then
+            if grep -Eq '"version": "0.1.(1(5|6|7|8)|2[2-9]|3[012])"' ElectrifiedMainline/info.json; then
               lua5.2 tests/35kv_preview_015.lua
             fi
-            if grep -Eq '"version": "0.1.(1(6|7|8)|2[2-9]|3[01])"' ElectrifiedMainline/info.json; then
+            if grep -Eq '"version": "0.1.(1(6|7|8)|2[2-9]|3[012])"' ElectrifiedMainline/info.json; then
               lua5.2 tests/35kv_geometry_016.lua
             fi
-            if grep -Eq '"version": "0.1.(1(7|8)|2[2-9]|3[01])"' ElectrifiedMainline/info.json; then
+            if grep -Eq '"version": "0.1.(1(7|8)|2[2-9]|3[012])"' ElectrifiedMainline/info.json; then
               lua5.2 tests/35kv_corridor_017.lua
             fi
-            if grep -Eq '"version": "0.1.(18|2[2-9]|3[01])"' ElectrifiedMainline/info.json; then
+            if grep -Eq '"version": "0.1.(18|2[2-9]|3[012])"' ElectrifiedMainline/info.json; then
               lua5.2 tests/35kv_cursor_build_018.lua
             fi
           else
@@ -112,7 +112,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if grep -Eq '"version": "0.1.(2(4|6|7|8|9)|3[01])"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0.1.(2(4|6|7|8|9)|3[012])"' ElectrifiedMainline/info.json; then
             python3 scripts/sprites/verify_024.py
           fi
 
@@ -178,7 +178,7 @@ jobs:
                       raise SystemExit("ERROR: 0.1.11 sprite missing from mod ZIP: " + suffix)
               if len([n for n in names if n.endswith("pole-4dir-hr.png")]) != 1:
                   raise SystemExit("ERROR: duplicate pole atlas")
-          if info["version"] in ("0.1.30", "0.1.31"):
+          if info["version"] in ("0.1.30", "0.1.31", "0.1.32"):
               for f in ("contact-030.png", "messenger-030.png", "dropper-030.png"):
                   assert root + "graphics/entity/25kv/" + f in names, f
           if info["version"] == "0.1.12":
