@@ -100,7 +100,7 @@ M.on_parent_removed(poleA)
 assert(M.ensure_storage().helpers[poleA.unit_number]==nil)
 local src=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
 assert(src:find("corridor(e.surface,e.force,x,y)",1,true))
-assert(src:find("rail_path_info(x,y)",1,true))
+assert(src:find("path_info(x,y)",1,true))
 assert(src:find("radius=SPAN+RADIUS+4",1,true),
   "Broken middle track must re-check mast ends beyond 5 tiles")
 assert(not src:find("rendering.draw_line",1,true))
