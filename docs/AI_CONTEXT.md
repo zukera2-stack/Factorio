@@ -1,3 +1,9 @@
+# 0.1.33 north-of-track independent native shorter mast
+
+Branch experiment/25kv-north-native-033 from 0.1.32. User screenshot 17:46:35 shows north-of-rail mast too high. A separately native placeable electric pole variant uses deterministic cropped original C mast PNG (70 source px removed from lattice middle), image shifted +2.20 tiles, resulting base ~1.11 tiles lower near ballast; native wire helper tip y +2.20, original south masts unchanged. No scripted entity swapping to avoid native Undo/blueprint problems. Item `em-35kv-catenary-pole-north` must be placed manually on north side to test. Factorio 2.1.20 game QA not yet confirmed, 32/16/40 limits and HSR graph retained, main still 0.1.24.
+
+---
+
 # 0.1.32 south-side mast screenshot calibration
 
 Four Factorio 2.1.20 screenshots in user archive 2026-11-16_17-21-40.zip confirm successful 0.1.31 dual contact/messenger/dropper sprite rendering. South-of-track C masts point north. Their sprite wire endpoints are too high versus triangular hangers. New branch experiment/25kv-south-art-032 changes only art-endpoint for north to (-0.22,+0.90) tiles via catenary_art_030.lua visual_point. Real invisible copper connector positions and other 7 faces unchanged. 32 straight /16 curved /40 hidden copper, native Undo, HSR rails, C-mast sprites unchanged. Still no MW traction power. Requires in-game acceptance; main unchanged. Research docs/research/catenary-south-alignment-0.1.32.md.

@@ -31,7 +31,7 @@ assert(p:find('require("scripts.catenary_limits_029").WIRE_REACH',1,true))
 local script=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
 for _,marker in ipairs({
  'local SPAN,CURVE_SPAN,RADIUS = limits.STRAIGHT,limits.CURVE,3',
- 'position=e.position,radius=CURVE_SPAN,name=POLE',
+ 'position=e.position,radius=CURVE_SPAN,name=POLES',
  'position=change.position,radius=SPAN+RADIUS+4',
  'max_walk=limits.STRAIGHT*1.5+4',
  'and limits.allowed(x,y,info)',

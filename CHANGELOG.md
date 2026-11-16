@@ -1,3 +1,10 @@
+## 0.1.33 — short northern native C mast trial
+
+- Distinct north-of-track native pole item and prototype. Original south mast unchanged.
+- New reproducibly generated PNG shortens central mast lattice 70px, shifts graphics +2.20 tiles, base toward HSR ballast; native connectors follow hanger.
+- Graph supports mixed prototype trackside poles, 32/16/40 limits, HSR rail PNGs, normal Undo and blueprint life cycle unmodified.
+- Existing poles NOT auto-swapped; user must place variant manually for test. Traction model still MW=0.
+
 ## 0.1.32 - south-of-track catenary sprite alignment trial (2026-11-16)
 
 - Screenshot observation: 0.1.31 custom contact wire and dropper graphics render, but south-side C-mast triangular hangers sit below contact sprite ends.

@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: experiment/25kv-south-art-032 # isolated experimental branch; main remains 0.1.24
-  feature_version: "0.1.32" # optional on-demand native-wire visibility probe
-  feature_status: 032_south_side_art_calibration_pending_game_test
+  active_feature_branch: experiment/25kv-north-native-033 # isolated experimental branch; main remains 0.1.24
+  feature_version: "0.1.33" # optional on-demand native-wire visibility probe
+  feature_status: 033_short_north_native_pole_pending_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 8
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.32" # experimental branch only
+  mod_version: "0.1.33" # experimental branch only
   main_baseline_mod_version: "0.1.24" # merged PR #8
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
@@ -40,7 +40,7 @@ project:
   current_status: docs/STATUS.md
 
 native_wire_probe_026:
-  branch: experiment/25kv-south-art-032
+  branch: experiment/25kv-north-native-033
   parent_main_commit: 04a290da887477d759b9ec53edb67371a6835a90
   target_nominal_voltage: "25 kV AC (future model only)"
   game_test: 028_user_reports_curve_gaps_029_long_span_pending

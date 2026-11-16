@@ -1,3 +1,16 @@
+ElectrifiedMainline 0.1.33 SHORT NORTHERN NATIVE MAST - TEST BUILD
+This is a separate placeable mast item, not an automatic replacement!
+North of the ВСМ track: choose item "Контактная опора 25 кВ — северная (укороченная)"
+South of the same track: choose the old standard C mast item.
+The upper mast uses a shorter shaft with foundation ~35 game pixels
+closer to ballast, hanger ~70 pixels lower, and correctly adjusted
+invisible native electric connector. NO visual or mechanical changes
+to the old SOUTH mast or HSR rails. Limits remain 32/16/40.
+Test straight spans at 12/24/32 tiles, independent paths, save/load,
+robot build, blueprint ghosts and NATIVE Undo/Redo, then screenshot.
+Existing already-built northern masts do not auto-convert: mine/place
+the new item for the experiment. There is still no 25kV MW traction.
+
 0.1.32 SOUTH-OF-TRACK ART ALIGNMENT TEST
 Load COPY of save ВСМ in Factorio 2.1.20.
 1. On straight ВСМ, place 2 poles SOUTH of rail (arms point NORTH): contact cable should now reach triangle hanger (previous ~30 px too high).
