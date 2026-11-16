@@ -407,7 +407,9 @@ function M.on_tick(tick)
             local force=game.forces[change.force_name]
             if surface and force then
                 for _,pole in pairs(surface.find_entities_filtered{
-                    position=change.position,radius=RADIUS+2,
+                    -- A removed middle rail can be 8+ tiles from BOTH masts.
+                    -- Rescan the full eligible span, not just a 5-tile circle.
+                    position=change.position,radius=SPAN*1.45+RADIUS+2,
                     name=POLE,force=force}) do
                     local bucket=tostring(surface.index)..":"..force.name..":"..
                         tostring(math.floor(pole.position.x/16))..":"..

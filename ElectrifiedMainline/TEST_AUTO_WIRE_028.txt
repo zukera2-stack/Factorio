@@ -24,7 +24,9 @@ TEST B — Rail gate:
    NO wire must appear.
 5. Place two nearby unconnected ВСМ segments or parallel tracks, with masts
    aligned: there must be no false cross-track copper link.
-6. Replace a custom ВСМ rail in a connected section with vanilla or remove
+6. Remove a custom ВСМ rail exactly halfway between two 16-tile masts,
+   then repeat for shorter spans. This MUST disconnect the native wire.
+   Replace a custom ВСМ rail in a connected section with vanilla or remove
    it so track continuity breaks. Within next ticks wire must disappear.
 7. Restore connected custom ВСМ: native wire should return.
 

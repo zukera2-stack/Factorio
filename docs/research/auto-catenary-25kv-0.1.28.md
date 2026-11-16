@@ -19,6 +19,9 @@ Target game: 2.1.20 build 87512. No changes to main 0.1.24.
 - Native auto-connect disabled and unauthorized player/vanilla connections
   removed at least every 60 ticks. This is not a watertight guarantee during
   the interval or against a hostile mod creating an invisible script-origin link.
+- Rail queue scans for affected masts to full SPAN*1.45+RADIUS+2 radius,
+  ensuring a deleted midpoint rail 8+ tiles away from both masts still
+  recalculates its contact edge and removes native wires.
 - Changes are coalesced to one sync after built/removal and rail modifications
   rather than one full scan per robot build event.
 - All eight actual 0.1.24 C-arm sprite hanger locations are estimated from
