@@ -12,6 +12,7 @@ local corridor_preview017 = require("scripts.catenary_corridor_017")
 local catenary_cursor018 = require("scripts.catenary_cursor_018")
 local ghost_visual023 = require("scripts.ghost_mast_023")
 local native_wire_probe026 = require("scripts.native_wire_probe_026")
+local nativewire028 = require("scripts.native_wire_028")
 
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
@@ -54,17 +55,20 @@ local function ensure_storage()
     storage.em.blueprint_undo_join = nil
     power019.ensure_storage()
     native_wire_probe026.ensure_storage()
+    nativewire028.ensure_storage()
 end
 
 script.on_init(function()
     ensure_storage()
     power019.rebuild_all()
+    nativewire028.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
 end)
 script.on_configuration_changed(function()
     ensure_storage()
     native_wire_probe026.cleanup_on_version_change()
     power019.rebuild_all()
+    nativewire028.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
 end)
 
@@ -368,6 +372,9 @@ local function on_built(event)
     if not (entity and entity.valid) then return end
 
     power019.on_built(event)
+    if entity.name=="em-35kv-catenary-pole" then
+        nativewire028.mark_dirty()
+    end
     ghost_visual023.on_built(entity)
     if RAIL_NAMES[entity.name] then
         mark_rail(entity)
@@ -388,6 +395,7 @@ local function cleanup_train_for_entity(event)
     if not (entity and entity.valid) then return end
 
     native_wire_probe026.on_mast_removed(entity)
+    nativewire028.on_parent_removed(entity)
     power019.on_removed(event)
     ghost_visual023.on_removed(entity)
     if event.name == defines.events.on_robot_mined_entity
@@ -528,7 +536,8 @@ local function on_tick(event)
     -- on_configuration_changed when only runtime code changed. Initialize
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
-    power019.on_tick(event.tick)
+    if power019.on_tick(event.tick) then nativewire028.mark_dirty() end
+    nativewire028.on_tick(event.tick,power019.graph())
     ghost_visual023.on_tick(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
@@ -643,7 +652,23 @@ script.on_event("em-place-catenary-native", function(event)
     catenary_cursor018.on_place(event)
 end)
 
--- 0.1.26 probe: deliberately command-only, never changes native Undo ownership.
-commands.add_command("em-25kv-probe", "Temporary native copper wire test: start | status | clear.", function(event)
-    native_wire_probe026.command(event,power019)
+-- 0.1.28 native-wire auto graph commands; no scripting native Undo/Redo.
+commands.add_command("em-25kv-status", "Show auto-connected 25 kV catenary graph.", function(event)
+    local player=event.player_index and game.get_player(event.player_index)
+    if player and player.valid then
+        power019.status(player)
+        nativewire028.status(player,power019.graph())
+    end
+end)
+commands.add_command("em-25kv-tune", "Calibrate 8 C-arm wire hangers: FACE DX DY or reset.", function(event)
+    local player=event.player_index and game.get_player(event.player_index)
+    if player and player.valid then
+        nativewire028.tune(player,event,power019.graph())
+    end
+end)
+-- Keep the former console command harmless in old saves and tutorials.
+commands.add_command("em-25kv-probe", "Retired; 0.1.28 auto wires need no command.", function(event)
+    local player=event.player_index and game.get_player(event.player_index)
+    if player and player.valid then player.print(
+      "[EM 25kV] automatic catenary active; use /em-25kv-status") end
 end)

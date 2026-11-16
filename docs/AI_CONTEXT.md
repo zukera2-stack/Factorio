@@ -1,3 +1,9 @@
+# 0.1.28 automatic contact-wire experiment, nominal 25 kV AC
+
+Branch experiment/auto-25kv-028 is based on user-accepted SOUTH 0.1.27. Visible labels for catenary mast and substation now 25 kV; **internal em-35kv-* IDs remain for save compatibility**. Native hidden copper anchors auto-created and connected ONLY from topology graph edges that pass real get_connected_rail on custom ВСМ rail paths; disconnected tracks and no-rail masts excluded. Eight screenshot/sprite-based P2 offsets, only SOUTH user verified; use /em-25kv-tune FACE DX DY; /em-25kv-status reports spans. Manual probe command retired. Previous Lua line drawing stays disabled. 25 kV power, MW bridge and train traction still not implemented. Test guide ElectrifiedMainline/TEST_AUTO_WIRE_028.txt; research docs/research/auto-catenary-25kv-0.1.28.md. Main 0.1.24 not touched. Draft PR only, no merge before in-game verification.
+
+---
+
 # 0.1.27 experiment — native wire on C-arm insulators, no cosmetic Lua wires
 
 User game tested 0.1.26 Factorio 2.1.20: native visible copper connection confirmed (net 24, contacts 1/1), but wire ends at mast shaft, not triangular insulators. User screenshots support a SOUTH correction of approximately (+1.75,-2.30) tiles from previous helper point. The experiment/native-25kv-wire-027 branch adjusts default SOUTH helper to (+1.75,-0.80) relative to mast; other seven facings provisional. Fine tuning via /em-25kv-probe start DX DY. Removed ALL rendering.draw_line overhead and feeder lines while preserving rail graph and accepted 0.1.24 C-mast sprites/ghosts/Undo. Tracked and orphan 0.1.26 helpers removed during configuration upgrade. No actual 25 kV AC transfer yet. See docs/research/native-copper-wire-alignment-0.1.27.md. DO NOT MERGE prior to new gameplay screenshots.

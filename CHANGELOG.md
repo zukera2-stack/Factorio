@@ -1,3 +1,11 @@
+## 0.1.28 — experimental automatic native contact wires / nominal 25 kV (2026-11-16)
+
+- Names shown in Russian and English changed 35 kV → 25 kV, while existing prototype IDs kept for backward-compatible saves.
+- Eight C-arm sprite-specific hidden native-wire anchors; SOUTH offset accepted in gameplay 0.1.27, seven provisional and tunable.
+- Automatic native copper wires only along connected custom high-speed rail paths; straight edges now also validate get_connected_rail.
+- On every rail/mast topology change schedule coalesced native wire sync; remove helpers and forbidden ordinary electric-pole links; no Lua lines.
+- No actual 25,000 V AC electricity model/traction; no main changes until game QA.
+
 ## 0.1.27 — experimental C-insulator native-wire alignment (2026-11-16)
 
 - Shifted native hidden copper helper toward SOUTH C-arm triangular insulator using user gameplay screenshot (+1.75 right, 2.30 up vs 0.1.26).

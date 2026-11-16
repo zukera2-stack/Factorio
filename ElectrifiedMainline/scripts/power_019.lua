@@ -257,7 +257,8 @@ local function build_edges(s,touched)
         local function check(x,y)
             local key=edge_key(x.id,y.id)
             if checks[key]==nil then
-                checks[key]=corridor(e.surface,e.force,x,y)
+                checks[key]=corridor(e.surface,e.force,x,y) and
+                    connected_rail_path(x,y)
             end
             return checks[key]
         end
@@ -346,7 +347,7 @@ function M.rebuild_all()
     end
     s.version=3
     build_edges(s,all)
-    log("[ElectrifiedMainline][35kv] rebuilt rail-following visual graph (schema 3)")
+    log("[ElectrifiedMainline][25kv] rebuilt rail-following topology graph (schema 3)")
 end
 function M.on_built(event)
     local e=event.entity
@@ -397,7 +398,7 @@ function M.on_rail_changed(e)
 end
 function M.on_tick(tick)
     local s=M.ensure_storage()
-    if not next(s.rail_queue) then return end
+    if not next(s.rail_queue) then return false end
     local buckets={}
     for key,change in pairs(s.rail_queue) do
         if tick>=change.tick then
@@ -420,6 +421,7 @@ function M.on_tick(tick)
     for _,entry in pairs(buckets) do
         refresh(entry.surface,entry.force,entry.position)
     end
+    return next(buckets)~=nil
 end
 function M.status(player)
     local s=M.ensure_storage()
@@ -434,13 +436,13 @@ function M.status(player)
             if e.corner then turns=turns+1 end
         elseif e.kind=="feeder" then feeders=feeders+1 end
     end
-    player.print("[ElectrifiedMainline][35kv] poles="..poles..
+    player.print("[ElectrifiedMainline][25kv] poles="..poles..
         " substations="..subs.." contact_spans="..contacts..
         " feeder_lines="..feeders.." curved_spans="..turns..
         " oriented_sprites="..tostring(s.sprites and (function()
             local count=0;for _ in pairs(s.sprites) do count=count+1 end
             return count end)() or 0).." stale_nodes="..stale..
-        " energized=NO transfer_MW=0 (visual only)")
+        " energized=NO transfer_MW=0 (rail-restricted native wires)")
 end
 -- Share the same RailEnd projection with non-native ghost images.
 -- This does not mutate real poles or their contact graph.
@@ -452,4 +454,8 @@ function M.facing_at(entity)
         defines.rail_layer.ground)
     return view.face(entity.position,reference and reference.point)
 end
+-- Read-only graph view, consumed by experimental native-wire manager.
+function M.graph() return M.ensure_storage() end
+-- Used by pure-Lua regression to prove disconnected ВСМ tracks are rejected.
+M.connected_rail_path=connected_rail_path
 return M
