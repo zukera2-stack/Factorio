@@ -4,6 +4,7 @@
 -- the connector prototype adds the native -2.53125 tile image height.
 -- Other seven orientations are sprite-relative estimates, pending game QA.
 local M={}
+local mast034=require("scripts.mast_visual_034")
 M.OFFSETS={
   south={1.75,-0.80},
   east={1.61,-0.61},
@@ -24,11 +25,11 @@ end
 -- The north-of-track mast is a separately placeable native pole with a
 -- vertical shaft shortened by 70 source pixels and shifted +2.20 tiles.
 -- Its native copper helper follows the shifted hanger, NOT the footprint.
-M.NORTH_SPRITE_DOWN=2.20
+M.NORTH_SPRITE_DOWN=mast034.NORTH_DROP
 function M.tip_for_pole(pos,face,corrections,prototype_name)
   local tip=M.tip(pos,face,corrections)
-  if tip and prototype_name=="em-35kv-catenary-pole-north" and face=="south" then
-    tip.y=tip.y+M.NORTH_SPRITE_DOWN
+  if tip then
+    tip.y=tip.y+mast034.helper_delta(prototype_name,face)
   end
   return tip
 end

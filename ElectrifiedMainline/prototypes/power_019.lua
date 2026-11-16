@@ -1,5 +1,6 @@
 -- ElectrifiedMainline 0.1.9: visual/graph prototype; energy transfer remains OFF.
 -- These are NOT functioning rail-signal snapped supports or a bidirectional grid.
+local mast034=require("scripts.mast_visual_034")
 local function flag_once(proto, flag)
     proto.flags = table.deepcopy(proto.flags or {})
     for _, value in pairs(proto.flags) do if value == flag then return end end
@@ -45,10 +46,10 @@ catenary.icon_size = 64
 catenary.pictures = {layers = {
     {filename = graphics .. "pole-native-mast-024.png",
         width = 512, height = 384, direction_count = 1,
-        scale = 0.5, shift = {0,-2.53125}},
+        scale = 0.5, shift = {0,mast034.mast_shift(catenary.name)}},
     {filename = graphics .. "pole-shadow-4dir-hr.png",
         width = 512, height = 384, direction_count = 1,
-        scale = 0.5, shift = {0,-2.53125},
+        scale = 0.5, shift = {0,mast034.mast_shift(catenary.name)},
         draw_as_shadow = true},
 }}
 catenary.active_picture = nil
@@ -71,7 +72,7 @@ northern.pictures.layers[1].filename=graphics.."pole-north-short-033.png"
 -- Original C mast has shift=-2.53125. Move its upper hardware DOWN
 -- 2.20 tiles and remove 70 source pixels from the middle of the shaft.
 -- Net base shift is ~+1.11 tiles (35px), visually nearer the ВСМ ballast.
-northern.pictures.layers[1].shift={0,-2.53125+2.20}
+northern.pictures.layers[1].shift={0,mast034.mast_shift(northern.name)}
 -- Shadow follows the footprint, not the contact wire.
 northern.pictures.layers[2].shift={0,-2.53125+1.11}
 northern.active_picture=nil

@@ -5,6 +5,7 @@ local geometry = require("scripts.power_topology")
 local view = require("scripts.overhead_geometry_012")
 local face022 = require("scripts.mast_facing_022")
 local limits = require("scripts.catenary_limits_029")
+local mast034 = require("scripts.mast_visual_034")
 local POLE,NORTH,SUB = "em-35kv-catenary-pole","em-35kv-catenary-pole-north","em-35kv-traction-substation"
 local POLES={POLE,NORTH}
 local function is_pole(name) return name==POLE or name==NORTH end
@@ -50,15 +51,15 @@ local function render_sprite(s,e)
     local id=e.unit_number
     if not id then return end
     clear_sprite(s,id)
-    -- The northern native prototype contains its own complete shortened C
-    -- arm. Never double-render the old full-size overlay on top of it.
-    if e.name==NORTH then return end
+    -- Both native mast sprites are SHAFT ONLY: restored separate arm for
+    -- the north-side shorter mast; never suppress the cantilever here.
+    -- 0.1.33 skipped NORTH here, leaving bare shafts (user screenshot).
     local n=s.nodes[id]
     local face=n and n.face or "east"
     local obj=rendering.draw_sprite{
         sprite="em-35kv-facing-"..face,
         surface=e.surface,
-        target={entity=e,offset={0,-2.53125}},
+        target={entity=e,offset={0,mast034.cantilever_shift(e.name)}},
         -- Native shaft is drawn by the engine on the object layer.
         -- The C arm must be in front of its own native mounting plate.
         render_layer="higher-object-above",
