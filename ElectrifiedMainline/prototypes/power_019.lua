@@ -56,7 +56,7 @@ catenary.pictures = {layers = {
 -- with added 54 source rows ONLY in its middle. Its original footing and
 -- exact native floor placement remain at 0.1.34 coordinates. The C arm is
 -- drawn separately and raised by the same 27 rendered pixels.
-catenary.pictures.layers[1].filename=graphics.."pole-south-long-035.png"
+catenary.pictures.layers[1].filename=graphics.."pole-south-lattice-036.png"
 catenary.pictures.layers[1].height=512
 catenary.active_picture = nil
 

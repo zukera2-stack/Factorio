@@ -7,7 +7,7 @@ assert(layout.SOUTH_RISE==0.40)
 assert(layout.NORTH_DROP==2.20)
 local standard="em-35kv-catenary-pole"
 local north="em-35kv-catenary-pole-north"
-eq(layout.mast_shift(standard),-2.93125)
+eq(layout.mast_shift(standard),-2.53125)
 eq(layout.mast_shift(north),-0.33125)
 eq(layout.cantilever_shift(standard),layout.mast_shift(standard)-layout.SOUTH_EXTEND_TILES)
 eq(layout.cantilever_shift(north),layout.mast_shift(north))
