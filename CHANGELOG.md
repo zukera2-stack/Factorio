@@ -1,3 +1,10 @@
+## 0.1.31 — critical 0.1.30 save-load crash hotfix (2026-11-16)
+
+- Fix Factorio hard error during `on_configuration_changed`: nested runtime `require` in `scripts/catenary_art_030.lua:sync` moved to top-level module initialization.
+- Add regression test that disallows all `require` during simulated game configuration callbacks, synch, periodic ticks and cleanup.
+- No changes to C mast and ВСМ rail visuals, dual cable art, native connection/Undo, 32/16/40 limits or MW=0.
+- 0.1.30 experimental ZIP is invalid; install 0.1.31. Actual game loading still to be confirmed.
+
 ## 0.1.30 — visual contact catenary pilot (2026-11-16)
 
 - Straight custom ВСМ: invisible real Factorio copper connectors with textured contact, messenger and dropper sprites.

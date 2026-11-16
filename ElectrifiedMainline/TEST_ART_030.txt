@@ -1,3 +1,12 @@
+0.1.31 HOTFIX for 0.1.30 game-load failure
+The former 0.1.30 crashes during on_configuration_changed because of
+runtime require in catenary_art_030.lua. Do not install the old build.
+
+First acceptance gate: load an existing 0.1.29 copy of ВСМ save under
+0.1.31. The map must load WITHOUT 'Require can't be used outside of
+control.lua parsing'. Confirm /em-25kv-status works, then follow below
+original visual tests. Preserve a save backup.
+
 ElectrifiedMainline 0.1.30 — FIRST STRAIGHT-SPAN ART PILOT
 Target: Factorio 2.1.20. Use a COPY of the saved ВСМ map.
 

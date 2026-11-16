@@ -4,6 +4,9 @@
 local M={}
 local geo=require("scripts.native_wire_geometry_028")
 local lim=require("scripts.catenary_limits_029")
+-- Factorio permits require ONLY during control.lua parsing. Resolve
+-- dependencies now, never while on_configuration_changed/on_tick runs.
+local native028=require("scripts.native_wire_028")
 local PARENT,HELPER="em-35kv-catenary-pole","em-25kv-art-anchor-030"
 local HEIGHT=2.53125
 local function conn(e,create)
@@ -167,7 +170,7 @@ function M.sync(graph)
       destroy(row);s.helpers[id]=nil
     end
   end
-  local calibration=require("scripts.native_wire_028").ensure_storage().calibration
+  local calibration=native028.ensure_storage().calibration
   local failures=0
   for id in pairs(adj) do
     if not anchor(s,id,graph.nodes[id],calibration) then failures=failures+1 end

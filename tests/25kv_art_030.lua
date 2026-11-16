@@ -77,6 +77,13 @@ local nodes={
 }
 local graph={nodes=nodes,edges={ab={a=a.unit_number,b=b.unit_number,kind="contact"}}}
 local art=require("scripts.catenary_art_030")
+-- Regression for user crash on 2026-11-16: Factorio does NOT allow
+-- require after control.lua parsing. Simulate this engine restriction
+-- throughout the entire configuration-change and tick lifecycle.
+local original_require=require
+require=function(name)
+  error("Require can't be used outside of control.lua parsing: "..tostring(name))
+end
 art.rebuild_all(graph)
 local state=art.ensure_storage()
 assert(state.stats.eligible==1 and state.stats.connected==1)
@@ -104,8 +111,11 @@ graph.edges={}
 art.sync(graph)
 assert(state.stats.connected==0 and not next(state.draws))
 assert(count()==0)
+art.on_tick(60,graph)
+art.on_tick(600,graph)
+require=original_require
 local p=assert(io.open("ElectrifiedMainline/prototypes/catenary_art_030.lua")):read("*a")
 assert(p:find("h.draw_copper_wires=false",1,true))
 local c=assert(io.open("ElectrifiedMainline/scripts/control.lua")):read("*a")
 assert(c:find("native_curve_graph(graph)",1,true))
-print("0.1.30 native hidden copper + original sprite art mock PASS")
+print("0.1.31 runtime require guard + native hidden copper and sprite lifecycle PASS")

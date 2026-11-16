@@ -1,3 +1,9 @@
+# 0.1.31 critical runtime require fix (2026-11-16)
+
+Actual user `factorio-current(2).log` shows 0.1.30 failure at `catenary_art_030.lua:170` during `control.lua:on_configuration_changed`: dynamic `require("scripts.native_wire_028")` not allowed during gameplay. Fix in `experiment/25kv-catenary-031` by resolving dependency at module load. Simulated game callback test temporarily forbids all `require` after module load, exercises rebuild, sync, tick and cleanup. Do not reuse 0.1.30 ZIP; use 0.1.31. Functional design otherwise unchanged: 32 straight /16 curved /40 reach, hidden real native connectors and textured sprites on straight, vanilla native copper on curved, 25kV only nominal. Main unchanged; real Factorio validation of fix and graphics still needed.
+
+---
+
 # 0.1.30 experimental straight two-wire art
 
 Branch experiment/25kv-catenary-art-030 from 0.1.29. Straight spans real but invisible copper connectors, with original Factorio-style sprites (contact, messenger, droppers); curves retain native visible conductor. Stable main 0.1.24 untouched. Limit straight 32, curved 16, reach 40. No MW. Requires Factorio 2.1.20 in-game verification. Docs/research/catenary-sprite-pilot-0.1.30.md and test guide ElectrifiedMainline/TEST_ART_030.txt.
