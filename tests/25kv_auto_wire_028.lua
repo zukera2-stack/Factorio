@@ -18,7 +18,7 @@ close(corrected.y,7-0.64-0.25)
 -- Direct mock of helper creation and connection gating.
 storage={}
 defines={wire_origin={player=1},wire_connector_id={pole_copper=3}}
-local entities={}, idnext=100
+local entities,idnext={},100
 local function make_entity(name,pos)
  idnext=idnext+1
  local e={name=name,position=pos,unit_number=idnext,valid=true,
@@ -102,6 +102,39 @@ local src=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a"
 assert(src:find("corridor(e.surface,e.force,x,y) and",1,true))
 assert(src:find("connected_rail_path(x,y)",1,true))
 assert(not src:find("rendering.draw_line",1,true))
+-- Dynamic unit mock of rail continuity: close, disconnected ВСМ MUST be rejected.
+local power=require("scripts.power_019")
+defines.rail_direction={front=1,back=2}
+defines.rail_connection_direction={straight=1,left=2,right=3}
+local f={name="player"}
+game.forces={player=f}
+local ra={name="em-high-speed-straight-rail",unit_number=701,valid=true,
+ position={x=0,y=0},surface=surface,force=f}
+local rb={name="em-high-speed-straight-rail",unit_number=702,valid=true,
+ position={x=8,y=0},surface=surface,force=f}
+local joined=false
+function ra.get_connected_rail(_) if joined then return rb end end
+function rb.get_connected_rail(_) if joined then return ra end end
+local original_find=surface.find_entities_filtered
+function surface.find_entities_filtered(filter)
+ if filter.position and filter.name and filter.radius then
+   local x=filter.position.x
+   if math.abs(x)<=3 then return {ra}
+   elseif math.abs(x-8)<=3 then return {rb} end
+   return {}
+ end
+ return original_find(filter)
+end
+local na={rail_id=701,x=0,y=0,surface_index=1,force_name="player"}
+local nb={rail_id=702,x=8,y=0,surface_index=1,force_name="player"}
+assert(not power.connected_rail_path(na,nb),
+  "Disconnected custom high-speed rails must not connect")
+joined=true
+assert(power.connected_rail_path(na,nb),
+  "Physically connected custom HSR rails must permit the edge")
+local same={rail_id=701,x=2,y=0,surface_index=1,force_name="player"}
+assert(power.connected_rail_path(na,same))
+
 local pr=assert(io.open("ElectrifiedMainline/prototypes/native_wire_auto_028.lua")):read("*a")
 assert(pr:find("em-25kv-contact-anchor",1,true))
 print("0.1.28 eight C-sprite anchors and native ВСМ-only graph mock PASS")
