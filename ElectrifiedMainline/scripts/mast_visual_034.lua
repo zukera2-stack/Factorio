@@ -16,7 +16,7 @@ M.SOUTH_RISE=0.40  -- historical offset in the art-to-hidden-wire transform only
 -- Increase ONLY southern mast shaft above its unmodified foundation.
 M.SOUTH_EXTEND_SOURCE_ROWS=54
 M.SOUTH_EXTEND_TILES=M.SOUTH_EXTEND_SOURCE_ROWS*0.5/32
-M.NORTH_DROP=2.20  -- existing 0.1.33 short native north prototype
+M.NORTH_DROP=2.02  -- 0.1.42 user-accepted fine adjustment for shortened north mast
 M.BASE_SHIFT=-2.53125
 M.STANDARD="em-35kv-catenary-pole"
 M.SHORT_NORTH="em-35kv-catenary-pole-north"

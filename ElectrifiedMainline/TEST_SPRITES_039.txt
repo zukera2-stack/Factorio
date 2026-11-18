@@ -1,0 +1,31 @@
+Electrified Mainline 0.1.39 - image alignment test
+
+This build modifies ONLY accepted C mast and console images. The rail
+connection logic, hidden connector locations, 32 straight / 16 curved / 40
+wire reach, catenary dropper dynamics, and Undo/Redo are unchanged.
+
+Source: accepted long mast and simple separate console artwork, cropped
+by actual alpha body. Short north built by compressing the same accepted
+mast vertically, keeping its width/foundation and NO cut-and-paste seam.
+Eight console images are the same accepted console, mirrored as needed.
+
+Screenshot bug from 0.1.38: the console was fitted inside a bbox while
+unclean alpha=1 noise of source was counted as the image. Result: console
+was much too small and the cable hanger was far from the shaft.
+
+0.1.39:
+  * all C masts centered at x=256 of their native 512px sprite frame;
+  * contact hanger is registered to per-face Lua anchor pixel positions;
+  * right/left console is 132x83 source px, not 70x45;
+  * eight 512x384 RGBA facing sprites, scale=0.5, real transparent BG;
+  * south 512x512 RGBA, north 512x384 RGBA, native placeable previews;
+  * separate icons for south and north items.
+
+Check on a copy of the ВСМ save:
+1) Place standard mast south of straight ВСМ rail, short north mast north.
+2) Verify cantilever is attached to BOTH towers, triangle contacts the
+   lower contact line, and there is NO floating side-arm at low altitude.
+3) Check all eight facings, especially north/south opposite mirrors.
+4) Verify mine -> Undo -> Redo, blueprint ghost, save/reload and straight
+   (12/24/32 tiles) / curve native fallback.
+5) Send screenshots + factorio-current.log. This is NOT game-tested yet.

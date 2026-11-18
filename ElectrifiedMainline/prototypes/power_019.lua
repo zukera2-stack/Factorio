@@ -34,7 +34,8 @@ catenary.connection_points = {table.deepcopy(catenary.connection_points[1])}
 -- The native picture now holds the common C mast shaft; Lua renders only
 -- orientation-specific cantilevers. Signal prototypes stay untouched.
 local graphics = "__ElectrifiedMainline__/graphics/entity/35kv/"
-local mast_icon = "__ElectrifiedMainline__/graphics/icons/35kv-mast-south-icon-64.png"
+local mast_icon = "__ElectrifiedMainline__/graphics/icons/25kv-south-039.png"
+local north_icon = "__ElectrifiedMainline__/graphics/icons/25kv-north-039.png"
 -- 0.1.24: the engine owns the non-rotating steel truss and placement
 -- preview/vanilla ghost tint. The cantilever alone is dynamically drawn
 -- from the RailEnd-selected 8-way sprite set in scripts/power_019.lua.
@@ -56,7 +57,7 @@ catenary.pictures = {layers = {
 -- with added 54 source rows ONLY in its middle. Its original footing and
 -- exact native floor placement remain at 0.1.34 coordinates. The C arm is
 -- drawn separately and raised by the same 27 rendered pixels.
-catenary.pictures.layers[1].filename=graphics.."pole-south-lattice-036.png"
+catenary.pictures.layers[1].filename=graphics.."pole-south-039.png"
 catenary.pictures.layers[1].height=512
 catenary.active_picture = nil
 
@@ -74,7 +75,7 @@ local northern=table.deepcopy(catenary)
 northern.name="em-35kv-catenary-pole-north"
 northern.minable={mining_time=0.3,result=northern.name}
 northern.placeable_by={item=northern.name,count=1}
-northern.pictures.layers[1].filename=graphics.."pole-north-short-033.png"
+northern.pictures.layers[1].filename=graphics.."pole-north-039.png"
 -- Northern short source remains 512x384; do not inherit south sprite height.
 northern.pictures.layers[1].height=384
 -- Original C mast has shift=-2.53125. Move its upper hardware DOWN
@@ -84,12 +85,14 @@ northern.pictures.layers[1].shift={0,mast034.mast_shift(northern.name)}
 -- Shadow follows the footprint, not the contact wire.
 northern.pictures.layers[2].shift={0,-2.53125+1.11}
 northern.active_picture=nil
+northern.icon=north_icon
+northern.icon_size=64
 
 data:extend({
     catenary, substation, northern,
     {
         type="item",name="em-35kv-catenary-pole-north",
-        icon=mast_icon,icon_size=64,subgroup="energy",
+        icon=north_icon,icon_size=64,subgroup="energy",
         order="a[electric-pole]-z[35kv-catenary]-b[north]",
         stack_size=50,place_result="em-35kv-catenary-pole-north",
     },
@@ -106,42 +109,42 @@ data:extend({
     -- Face names reflect the rail's position relative to the mast, not its own direction.
     {
         type = "sprite", name = "em-35kv-facing-east",
-        filename = graphics .. "pole-arm-east-024.png",
+        filename = graphics .. "pole-arm-east-039.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-southeast",
-        filename = graphics .. "pole-arm-southeast-024.png",
+        filename = graphics .. "pole-arm-southeast-039.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-south",
-        filename = graphics .. "pole-arm-south-024.png",
+        filename = graphics .. "pole-arm-south-039.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-southwest",
-        filename = graphics .. "pole-arm-southwest-024.png",
+        filename = graphics .. "pole-arm-southwest-039.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-west",
-        filename = graphics .. "pole-arm-west-024.png",
+        filename = graphics .. "pole-arm-west-039.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-northwest",
-        filename = graphics .. "pole-arm-northwest-024.png",
+        filename = graphics .. "pole-arm-northwest-039.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-north",
-        filename = graphics .. "pole-arm-north-024.png",
+        filename = graphics .. "pole-arm-north-039.png",
         width = 512, height = 384, scale = 0.5,
     },
     {
         type = "sprite", name = "em-35kv-facing-northeast",
-        filename = graphics .. "pole-arm-northeast-024.png",
+        filename = graphics .. "pole-arm-northeast-039.png",
         width = 512, height = 384, scale = 0.5,
     },
     {

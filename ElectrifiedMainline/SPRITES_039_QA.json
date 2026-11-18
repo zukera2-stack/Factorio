@@ -1,0 +1,173 @@
+{
+  "tall_source_crop": [
+    631,
+    49,
+    820,
+    1034
+  ],
+  "console_source_crop": [
+    412,
+    364,
+    1053,
+    763
+  ],
+  "north_splice": [
+    0,
+    "continuous-resize-no-splice",
+    null
+  ],
+  "tip_contracts": [
+    {
+      "face": "south",
+      "sprite_tip_pixel": [
+        368.0,
+        140.8
+      ],
+      "image_hook": [
+        368,
+        141
+      ],
+      "error_px": 0.2,
+      "image_bbox": [
+        255,
+        59,
+        387,
+        142
+      ],
+      "mount_x_px": 255
+    },
+    {
+      "face": "east",
+      "sprite_tip_pixel": [
+        359.04,
+        206.96
+      ],
+      "image_hook": [
+        359,
+        207
+      ],
+      "error_px": 0.057,
+      "image_bbox": [
+        246,
+        125,
+        378,
+        208
+      ],
+      "mount_x_px": 246
+    },
+    {
+      "face": "southeast",
+      "sprite_tip_pixel": [
+        353.28,
+        189.68
+      ],
+      "image_hook": [
+        353,
+        190
+      ],
+      "error_px": 0.425,
+      "image_bbox": [
+        240,
+        108,
+        372,
+        191
+      ],
+      "mount_x_px": 240
+    },
+    {
+      "face": "southwest",
+      "sprite_tip_pixel": [
+        181.12,
+        196.08
+      ],
+      "image_hook": [
+        181,
+        196
+      ],
+      "error_px": 0.144,
+      "image_bbox": [
+        162,
+        114,
+        294,
+        197
+      ],
+      "mount_x_px": 294
+    },
+    {
+      "face": "west",
+      "sprite_tip_pixel": [
+        145.28,
+        205.04
+      ],
+      "image_hook": [
+        145,
+        205
+      ],
+      "error_px": 0.283,
+      "image_bbox": [
+        126,
+        123,
+        258,
+        206
+      ],
+      "mount_x_px": 258
+    },
+    {
+      "face": "northwest",
+      "sprite_tip_pixel": [
+        161.92,
+        194.8
+      ],
+      "image_hook": [
+        162,
+        195
+      ],
+      "error_px": 0.215,
+      "image_bbox": [
+        143,
+        113,
+        275,
+        196
+      ],
+      "mount_x_px": 275
+    },
+    {
+      "face": "north",
+      "sprite_tip_pixel": [
+        135.68,
+        132.48
+      ],
+      "image_hook": [
+        136,
+        132
+      ],
+      "error_px": 0.577,
+      "image_bbox": [
+        117,
+        50,
+        249,
+        133
+      ],
+      "mount_x_px": 249
+    },
+    {
+      "face": "northeast",
+      "sprite_tip_pixel": [
+        382.72,
+        210.8
+      ],
+      "image_hook": [
+        383,
+        211
+      ],
+      "error_px": 0.344,
+      "image_bbox": [
+        270,
+        129,
+        402,
+        212
+      ],
+      "mount_x_px": 270
+    }
+  ]
+}
