@@ -22,4 +22,12 @@ Technical: same 046 zero-reach script origin, own helper, 40 cells and degree <=
 The actual rejected pairs become visually eligible and electrically connected if selected, and broken HSR invalidates technical links without suppressing cosmetic candidates near remaining rails. If script link disappears incorrectly or ordinary network IDs merge, stop before main merge. Keep 046 as rollback. No asset/prototype/Undo changes.
  
 ## 7–9. Implementation / validation
-Pending.
+Implemented in code commit `8e760a4c6c2d40d7150407f9d05e4795b1badd18`: catenary_visual_policy_047 shared by built masts and placed single ghosts, independent HSR-gated technical script links, rail edit refresh, uniform visual reach, diagnostics and version-specific tests.
+
+
+## 8. Automated evidence
+- Build run [44408148534](https://github.com/zukera2-stack/Factorio/actions/runs/44408148534) and documentation run 44408148473 SUCCESS. Logs confirm 16 geometry combinations, actual rail traversal mock, same-rail/opposite-side pairs, 40-cell technical limit, broken/vanilla rail rejection, separate cosmetic choice, off-rail anchor cleanup, mock connection removal/recreation, ghost dry-run and cancellation, historical regression tests, PNG hashes. These are offline Lua tests, not game QA.
+- [Artifact 14476051835](https://github.com/zukera2-stack/Factorio/actions/runs/44408148534/artifacts/14476051835) downloaded; inner ZIP CRC check, info.json 0.1.47, 70 entries, 16 PNGs, 321030 bytes, SHA256 `6b675712330cb092cd5128e20c680dcf9d349a6fbf8208d8f5f915c56338bbed`.
+
+## 9. Outstanding QA
+No run of Factorio 047 available. Compare visible spans and ghost at sharp turns, technical network IDs and factory isolation, real HSR break/rebuild, Undo/Redo and robot lifecycle. Projected-point nearest-neighbour heuristic can still draw links between very close parallel lines or omit spans in crowded arrangements; deliberately not a full automatic railway designer. Technical bounded walk: 64 approximate route tiles, 192 visits; may reject long detours. No energy transfer. Do not merge PR #25 without acceptance.

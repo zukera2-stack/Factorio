@@ -1,3 +1,9 @@
+# 0.1.47 (experimental, 2026-11-18)
+
+- Relax cosmetic spans: 32 cells both curves and straights, max two neighbours, no side/tangent/path gate; nearest projected track points and shortcut filtering.
+- Require bounded continuous custom HSR path and nearby rail for invisible script copper: 40 cells, max five. Replan on rail edits. Preserve zero native wire reach, no MW transfer.
+- Preserve all approved PNGs and single placed ghost dry-run, native Undo; CI passed, game QA pending.
+
 # 0.1.46 (experimental, 2026-11-18)
 
 - Separate one-per-real-mast technical anchors, zero native reach, bounded script copper, whitelist and audit.

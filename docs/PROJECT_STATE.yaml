@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: experiment/25kv-relaxed-visual-hsr-gate-047 # test only
   feature_version: "0.1.47"
-  feature_status: 047_relaxed_cosmetic_HSR_gated_technical_pending_QA
+  feature_status: 047_CI_passed_pending_game_QA
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -937,5 +937,10 @@ network_047:
   technical_walk_visits: 192
   native_reach: 0
   origin: script
+  automated_status: passed
+  tested_source_commit: "8e760a4c6c2d40d7150407f9d05e4795b1badd18"
+  build_run_id: 44408148534
+  artifact_id: 14476051835
+  archive_sha256: 6b675712330cb092cd5128e20c680dcf9d349a6fbf8208d8f5f915c56338bbed
   game_status: pending
   transfer_MW: 0
