@@ -45,115 +45,15 @@ jobs:
           lua5.2 tests/25kv_auto_wire_028.lua
           lua5.2 tests/25kv_span_029.lua
           lua5.2 tests/25kv_art_030.lua
-          # 0.1.33-0.1.36 tests assert historical graphic geometry.
-          if grep -Eq '"version": "0.1.3[3-6]"' ElectrifiedMainline/info.json; then
-            lua5.2 tests/25kv_north_033.lua
-            lua5.2 tests/25kv_mast_alignment_034.lua
-            lua5.2 tests/25kv_south_035.lua
-            lua5.2 tests/25kv_alignment_036.lua
-          fi
           if grep -q '"version": "0.1.42"' ElectrifiedMainline/info.json; then
             lua5.2 tests/25kv_visual_042.lua
           fi
-          if grep -Eq '"version": "0.1.(1(3|4|5|6|7|8)|2[2-9]|3[0-6])"' ElectrifiedMainline/info.json; then
-            lua5.2 tests/35kv_visual_013.lua
-            if grep -Eq '"version": "0.1.(1(4|5|6|7|8)|2[2-9]|3[0-6])"' ElectrifiedMainline/info.json; then
-              lua5.2 tests/35kv_slots_014.lua
-            fi
-            if grep -Eq '"version": "0.1.(1(5|6|7|8)|2[2-9]|3[0-6])"' ElectrifiedMainline/info.json; then
-              lua5.2 tests/35kv_preview_015.lua
-            fi
-            if grep -Eq '"version": "0.1.(1(6|7|8)|2[2-9]|3[0-6])"' ElectrifiedMainline/info.json; then
-              lua5.2 tests/35kv_geometry_016.lua
-            fi
-            if grep -Eq '"version": "0.1.(1(7|8)|2[2-9]|3[0-6])"' ElectrifiedMainline/info.json; then
-              lua5.2 tests/35kv_corridor_017.lua
-            fi
-            if grep -Eq '"version": "0.1.(18|2[2-9]|3[0-6])"' ElectrifiedMainline/info.json; then
-              lua5.2 tests/35kv_cursor_build_018.lua
-            fi
-          else
-            # 0.1.12 historical curved-geometry contract is incompatible
-            # with the 0.1.29+ HSR-connected path selection by design.
-            if grep -q '"version": "0.1.12"' ElectrifiedMainline/info.json; then
-              lua5.2 tests/35kv_curve_topology.lua
-            fi
-          fi
+
 
       - name: Set up Python for experimental sprite atlas
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Generate 0.1.12 sprite layers and test image QA
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          info=json.loads(Path("ElectrifiedMainline/info.json").read_text())
-          if info["version"] in ("0.1.11","0.1.12"):
-              assert Path("scripts/sprites/game_test_pack.py").is_file()
-          PY
-          if grep -Eq '"version": "0.1.1(1|2)"' ElectrifiedMainline/info.json; then
-            python -m pip install -r scripts/sprites/requirements.txt
-            python scripts/sprites/game_test_pack.py --mode demo --mod-dir ElectrifiedMainline --out build/sprites/game-test
-            if grep -q '"version": "0.1.12"' ElectrifiedMainline/info.json; then
-              python scripts/sprites/split_012.py --graphics-dir ElectrifiedMainline/graphics/entity/35kv --report build/sprites/game-test/split-012.json
-            fi
-            python -m unittest discover -s scripts/sprites -p 'test_*.py' -v
-          fi
-
-      - name: Validate 0.1.23 icon PNG contract
-        shell: bash
-        run: |
-          set -euo pipefail
-          if grep -Eq '"version": "0.1.2[34]"' ElectrifiedMainline/info.json; then
-            python3 - <<'PY'
-          import struct
-          from pathlib import Path
-          icon=Path("ElectrifiedMainline/graphics/icons/35kv-mast-south-icon-64.png")
-          data=icon.read_bytes()
-          assert data[:8]==b"\x89PNG\r\n\x1a\n"
-          width,height,bitdepth,color=struct.unpack(">IIBB",data[16:26])
-          assert (width,height,bitdepth,color)==(64,64,8,6)
-          print("0.1.23 mast icon PNG: valid 64x64 RGBA")
-          PY
-          fi
-
-      - name: Validate 0.1.24 split mast alpha and exact asset hashes
-        shell: bash
-        run: |
-          set -euo pipefail
-          if grep -Eq '"version": "0.1.(2(4|6|7|8|9)|3[0-6])"' ElectrifiedMainline/info.json; then
-            python3 scripts/sprites/verify_024.py
-          fi
-
-      - name: Build 0.1.33 native northern short mast sprite
-        shell: bash
-        run: |
-          set -euo pipefail
-          if grep -Eq '"version": "0.1.3[3-6]"' ElectrifiedMainline/info.json; then
-            python3 -m pip install pillow
-            python3 scripts/sprites/generate_north_033.py
-          fi
-
-      - name: Generate 0.1.35 calibrated southern mast PNG
-        shell: bash
-        run: |
-          set -euo pipefail
-          if grep -Eq '"version": "0.1.3[56]"' ElectrifiedMainline/info.json; then
-            python3 scripts/sprites/extend_south_035.py
-          fi
-
-      - name: Generate source-faithful 0.1.36 southern lattice
-        shell: bash
-        run: |
-          set -euo pipefail
-          if grep -q '"version": "0.1.36"' ElectrifiedMainline/info.json; then
-            python3 scripts/sprites/extend_south_036.py
-          fi
 
       - name: Validate 0.1.42 user-accepted PNG hashes and layout
         shell: bash
@@ -214,32 +114,6 @@ jobs:
               if packaged_info != info:
                   raise SystemExit("ERROR: packaged info.json differs from source")
 
-          if info["version"] == "0.1.11":
-              expected = (
-                  "graphics/entity/35kv/pole-4dir-hr.png",
-                  "graphics/entity/35kv/pole-shadow-4dir-hr.png",
-                  "graphics/entity/35kv/contact-wire-hr.png",
-              )
-              for suffix in expected:
-                  if root + suffix not in names:
-                      raise SystemExit("ERROR: 0.1.11 sprite missing from mod ZIP: " + suffix)
-              if len([n for n in names if n.endswith("pole-4dir-hr.png")]) != 1:
-                  raise SystemExit("ERROR: duplicate pole atlas")
-          if info["version"] in ("0.1.30", "0.1.31", "0.1.32", "0.1.33", "0.1.34", "0.1.35", "0.1.36"):
-              if info["version"] in ("0.1.33","0.1.34","0.1.35","0.1.36"):
-                  assert root + "graphics/entity/35kv/pole-north-short-033.png" in names
-              if info["version"] in ("0.1.35","0.1.36"):
-                  assert root + "graphics/entity/35kv/pole-south-long-035.png" in names
-                  png_bytes=(mod_dir / "graphics/entity/35kv/pole-south-long-035.png").read_bytes()
-                  assert png_bytes[16:24] == (512).to_bytes(4,"big")+(512).to_bytes(4,"big")
-              if info["version"] == "0.1.36":
-                  file=root + "graphics/entity/35kv/pole-south-lattice-036.png"
-                  assert file in names, file
-                  content=(mod_dir/"graphics/entity/35kv/pole-south-lattice-036.png").read_bytes()
-                  assert content[:8]==b"\x89PNG\r\n\x1a\n"
-                  assert content[16:24]==(512).to_bytes(4,"big")*2
-              for f in ("contact-030.png", "messenger-030.png", "dropper-030.png"):
-                  assert root + "graphics/entity/25kv/" + f in names, f
           if info["version"] == "0.1.42":
               expected_042 = (
                   "graphics/entity/35kv/pole-south-039.png",
@@ -259,11 +133,6 @@ jobs:
                   for suffix in expected_042:
                       assert root + suffix in names, "0.1.42 missing: " + suffix
                       assert check_zip.read(root+suffix) == (mod_dir/suffix).read_bytes(), "0.1.42 mismatch: "+suffix
-          if info["version"] == "0.1.12":
-              for suffix in ("pole-mast-hr.png","pole-arm-hr.png","pole-shadow-static-hr.png","contact-wire-hr.png"):
-                  name=root+"graphics/entity/35kv/"+suffix
-                  if names.count(name)!=1:
-                      raise SystemExit("ERROR: missing/duplicate 0.1.12 sprite "+name)
           print(f"Built and validated {archive}")
           print(f"Entries: {len(names)}")
           print(f"Mod: {info['name']} {info['version']} / Factorio {info['factorio_version']}")

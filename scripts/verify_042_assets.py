@@ -56,8 +56,22 @@ def main():
         check_png(name, digest)
         assert name in proto, ('sprite not referenced by prototype', name)
     assert 'northern.icon=north_icon' in proto and 'icon=north_icon' in proto
-    assert 'catenary.pictures.layers[1].height=512' in proto
+    assert 'width = 512, height = 512, direction_count = 1' in proto
+    assert 'pole-native-mast-024.png' not in proto
+    assert 'em-35kv-contact-wire-texture' not in proto
     assert 'northern.pictures.layers[1].height=384' in proto
+    # Every PNG shipped is referenced by the current mod. Stale assets
+    # must fail CI instead of becoming untracked baggage in release ZIPs.
+    allowed_35kv = {'pole-south-039.png', 'pole-north-039.png',
+                    'pole-shadow-4dir-hr.png'} | {
+        f'pole-arm-{face}-039.png' for face in FACES}
+    found_35kv = {p.name for p in GFX.glob('*.png')}
+    assert found_35kv == allowed_35kv, (
+        'stale/missing mast PNGs', sorted(found_35kv ^ allowed_35kv))
+    allowed_icons = {'25kv-north-039.png','25kv-south-039.png'}
+    assert {p.name for p in ICONS.glob('*.png')} == allowed_icons
+    allowed_wire = {'contact-030.png','messenger-030.png','dropper-030.png'}
+    assert {p.name for p in (MOD/'graphics/entity/25kv').glob('*.png')} == allowed_wire
     qa = json.loads((MOD/'SPRITES_039_QA.json').read_text())
     contracts = qa['tip_contracts']
     assert len(contracts) == 8

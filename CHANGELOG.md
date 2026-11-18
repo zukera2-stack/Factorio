@@ -1,3 +1,9 @@
+### Очистка спрайтов 0.1.42 (2026-11-18)
+
+- Удалены 20 ненужных исторических PNG из экспериментальной ветки: 8 полных 012, 8 консолей 024, старый native mast, старый скрытый столб, заглушка провода и прежняя иконка. Сохранена используемая тень.
+- Убран устаревший спрайт `em-35kv-contact-wire-texture` и промежуточный 024 путь в прототипе, удалены старые 033/035/036 генераторы и растровые проверки.
+- CI теперь контролирует разрешённый список из 16 PNG и SHA-256 12 принятых спрайтов. `NORTH_DROP=2.02`, рельсы, 32/16/40 и Undo не менялись; стабильная `main` не затронута.
+
 ## 0.1.42 — visually accepted 25 kV mast family; GitHub import (2026-11-18)
 
 - User confirmed in Factorio that the long southern and short northern mast consoles visually align. North shortened variant uses `NORTH_DROP=2.02` tiles; 0.1.41 used 2.05, 0.1.40 used 2.10.

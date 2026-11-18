@@ -1,3 +1,5 @@
+> **0.1.42 GRAPHIC CLEANUP (2026-11-18):** Removed 20 unused mast/arm/icon PNGs and retired 033–036 raster generators/tests. Removed the dead `em-35kv-contact-wire-texture` placeholder. Exactly 12 user-approved 039 images, 3 conductor textures and the actively rendered native shadow remain (16 PNG total). New CI rejects extra artwork. No change to accepted height `NORTH_DROP=2.02`, ВСМ rails, 32/16/40, MW=0, Undo. `main` remains 0.1.24. [Inventory](FILE_RELEVANCE_042.md).
+
 > **ACTIVE EXPERIMENT 0.1.42 — VISUALLY ACCEPTED IN GAME (2026-11-18).** User's Factorio screenshot `2026-11-18_12-56-29.png` and explicit feedback «идеально» confirm the long southern and short northern masts and their eight-way separate cantilever asset family as the chosen visual standard. North shift `NORTH_DROP=2.02`. Active 039 PNG assets and icons are preserved byte-identically in GitHub; 0.1.38 had alpha/scale defects and is superseded. Stable `main` stays 0.1.24. Straight spans: hidden copper topology + textured contact/messenger/droppers; curved spans: native copper fallback; 32/16/40 cells; traction MW=0. Image evidence does not establish full-game Undo, all faces, curves or rail-path regression for 0.1.42. [Evidence](tests/catenary-visual-0.1.42-user-accepted-2026-11-18.md) · [File audit](FILE_RELEVANCE_042.md).
 
 > **0.1.36 SOUTH CONSOLE / LATTICE (2026-11-16):** Latest user screenshot shows SOUTH standard mast native image+arm 0.40 tile ABOVE target while hidden wire/contact sprites already correct. Lower SOUTH shaft and separate cantilever by 0.40 tile to align with NORTH shortened hanger and real yellow placement cursor. Real native copper anchor and custom contact visual-point remain unchanged. Replace stretched 0.1.35 lattice by original pixel-repeated 54 source-row truss with 10px seam stitch and unchanged footer/top. 32/16/40 and ВСМ rails/Undo unaffected. PR experimental, gameplay QA pending.
@@ -34,7 +36,7 @@
 - Physical `em-35kv-catenary-pole` is a real 1×1 `electric-pole` placed through native Factorio mechanics; ordinary LMB, ghost blueprint/Shift-click, robots, Undo/Redo have user-game evidence.
 - The **native unrotated lattice shaft and base** use `ElectricPolePrototype.pictures` and thus appear as the normal held-placement cursor and as Factorio-rendered ghost mast body.
 - Eight transparent **cantilever-only C arm/insulator sprites** use LuaRendering and `scripts/mast_facing_022.lua` to face nearest projected high-speed rail centerline. For ghosts the arm is separately blue-tinted; this is an approximation, **not identical to the engine's entire blurred ghost effect**.
-- 64×64 SOUTH C inventory icon; subtle hollow green/red/orange circles for candidate rail locations; original full C source sprites kept as rollback.
+- 64×64 SOUTH C inventory icon; subtle hollow green/red/orange circles for candidate rail locations; old C PNGs deleted in the current experimental branch; the stable main and Git history remain the rollback source.
 - User 0.1.24 Factorio test shows successful game load, native cursor shaft, composite full masts, translucent ghosts and subdued circular indicators; robot construction and Undo/Redo events in log. [0.1.24 acceptance evidence](tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md). Independent scope of comparison [0.1.23 evidence](tests/catenary-visual-0.1.23-user-test-2026-11-15.md).
 - Static [ZIP CI #43738070195](https://github.com/zukera2-stack/Factorio/actions/runs/43738070195) and [sprite QA #43737875150](https://github.com/zukera2-stack/Factorio/actions/runs/43737875150) passed.
 
@@ -48,7 +50,7 @@
 
 ## Next engineering sequence
 
-1. Preserve 0.1.24 as a known good **visual baseline** in `main`. Keep existing original full C sprites and 0.1.8 ZIP for rollback.
+1. Preserve 0.1.24 as a known good **visual baseline** in `main`. Keep the stable main and 0.1.8 ZIP for rollback; old C PNGs are removed from this experimental branch.
 2. Design/validate **contact and messenger wire visuals** on straight, both curves, half diagonals, parallel lines and transitions. Avoid adding rails signals or changing placement to "fix" art.
 3. Only after visual geometry approval: research 35 kV supply/substation topology, MW-limited energy transfer, train battery fallback, regeneration and compatibility. This is a **new feature scope**.
 4. Carry out separate rail-upgrade regression matrix prior to claiming full 0.1.24 mechanical coverage.

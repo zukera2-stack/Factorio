@@ -45,20 +45,16 @@ catenary.icons = nil
 catenary.icon = mast_icon
 catenary.icon_size = 64
 catenary.pictures = {layers = {
-    {filename = graphics .. "pole-native-mast-024.png",
-        width = 512, height = 384, direction_count = 1,
+    {filename = graphics .. "pole-south-039.png",
+        width = 512, height = 512, direction_count = 1,
         scale = 0.5, shift = {0,mast034.mast_shift(catenary.name)}},
     {filename = graphics .. "pole-shadow-4dir-hr.png",
         width = 512, height = 384, direction_count = 1,
         scale = 0.5, shift = {0,mast034.mast_shift(catenary.name)},
         draw_as_shadow = true},
 }}
--- 0.1.35 southern standard C mast: generated 512x512 long shaft,
--- with added 54 source rows ONLY in its middle. Its original footing and
--- exact native floor placement remain at 0.1.34 coordinates. The C arm is
--- drawn separately and raised by the same 27 rendered pixels.
-catenary.pictures.layers[1].filename=graphics.."pole-south-039.png"
-catenary.pictures.layers[1].height=512
+-- The engine renders the accepted long shaft also for the hand cursor
+-- and ghost. The 8 separate direction sprites render the cantilevers.
 catenary.active_picture = nil
 
 local substation = table.deepcopy(data.raw["electric-pole"]["substation"])
@@ -78,9 +74,8 @@ northern.placeable_by={item=northern.name,count=1}
 northern.pictures.layers[1].filename=graphics.."pole-north-039.png"
 -- Northern short source remains 512x384; do not inherit south sprite height.
 northern.pictures.layers[1].height=384
--- Original C mast has shift=-2.53125. Move its upper hardware DOWN
--- 2.20 tiles and remove 70 source pixels from the middle of the shaft.
--- Net base shift is ~+1.11 tiles (35px), visually nearer the ВСМ ballast.
+-- Short mast sprite and final user-approved NORTH_DROP=2.02 are
+-- independent of old raster-trimming experiments.
 northern.pictures.layers[1].shift={0,mast034.mast_shift(northern.name)}
 -- Shadow follows the footprint, not the contact wire.
 northern.pictures.layers[2].shift={0,-2.53125+1.11}
@@ -146,11 +141,6 @@ data:extend({
         type = "sprite", name = "em-35kv-facing-northeast",
         filename = graphics .. "pole-arm-northeast-039.png",
         width = 512, height = 384, scale = 0.5,
-    },
-    {
-        type = "sprite", name = "em-35kv-contact-wire-texture",
-        filename = graphics .. "contact-wire-hr.png",
-        width = 512, height = 48, scale = 0.5,
     },
     {
         type = "item", name = "em-35kv-catenary-pole",

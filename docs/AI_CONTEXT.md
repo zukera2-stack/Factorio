@@ -1,3 +1,9 @@
+# 0.1.42 — очистка исторических изображений (2026-11-18)
+
+По решению пользователя удалены 20 неиспользуемых исторических PNG, старые генераторы мачт 033/035/036 и проверки их устаревшей геометрии. В `prototypes/power_019.lua` активные `pole-south-039.png` и `pole-north-039.png` указаны непосредственно, неиспользуемый `em-35kv-contact-wire-texture` больше не регистрируется. **Тень `pole-shadow-4dir-hr.png` оставлена**, поскольку реально используется движком. Эталонные 12 PNG и три PNG проводов не перерисовывались; `NORTH_DROP=2.02`, ВСМ, 32/16/40, Undo не менялись. См. [аудит](FILE_RELEVANCE_042.md).
+
+---
+
 # Latest handoff — accepted 25 kV C mast visuals 0.1.42 (2026-11-18)
 
 Experimental branch `experiment/25kv-visual-042-accepted` forked from `experiment/25kv-south-art-036`; `main` stable 0.1.24 untouched. User accepted the Factorio 0.1.42 screenshot showing a long SOUTH and a short NORTH mast with their C console/hangers visually aligned. The 0.1.39 alpha-cropped sprite correction provides the active 12 binaries: 2 mast shaft sprites, 8 direction-specific separate cantilevers (rendered with `higher-object-above`) and 2 item icons; `NORTH_DROP=2.02` is the final accepted micro-adjustment. The actual 0.1.42 ZIP source and each new 039 PNG were checked by SHA-256 and transferred to GitHub. Original 024 PNGs remain tracked for history. Historical 033/035/036 sprite generator scripts remain, but their generated PNG outputs are intentionally absent from the 0.1.42 archive; none must regenerate or overwrite 039 assets.
