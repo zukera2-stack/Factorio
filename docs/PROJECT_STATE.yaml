@@ -45,6 +45,7 @@ accepted_visual_042:
   visual_status: user_accepted_2026_11_18
   screenshot: 2026-11-18_12-56-29.png
   screenshot_sha256: a4e15fb8a076e24ed6ca2171981e64a1502869cb4af5f31668e81df71cc90c4b
+  cropped_screenshot: docs/tests/evidence/042-mast-pair-2026-11-18.jpg
   visual_zip_sha256: d855747f758660aa083d6f3ae0e153550be7ce7bbcd49cdb5ccbcbb2e1dbf6a9
   north_drop_tiles: 2.02
   active_png_assets_verified: 12

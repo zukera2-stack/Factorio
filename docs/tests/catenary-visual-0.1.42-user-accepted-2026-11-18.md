@@ -5,6 +5,10 @@
 - Screenshot provided in conversation: `2026-11-18_12-56-29.png`, SHA-256 `a4e15fb8a076e24ed6ca2171981e64a1502869cb4af5f31668e81df71cc90c4b`.
 - User assessment: **«идеально»** after final north height adjustment (`NORTH_DROP=2.02`).
 
+![Принятая пара опор 25 кВ — фрагмент пользовательского скриншота](evidence/042-mast-pair-2026-11-18.jpg)
+
+Cropped evidence image from the original user screenshot (not a synthetic rendering): 605×633 JPEG, SHA-256 `225751041f3db5d663b3af5428fc5eed62098f2397b9c1a02b920a3b62b4e296`. The full original screenshot remains in the conversation archive and is identified above.
+
 ## Supported visual observations
 
 The game screenshot shows **two actual placed C masts** at one straight ВСМ rail line: the short northern mast and long southern mast have separate cantilevers with matching-looking hanger heights, clean lattice bodies and distinct item icons. This is acceptance of that visible arrangement and validates that Factorio rendered the sprites in the user's installed game.
