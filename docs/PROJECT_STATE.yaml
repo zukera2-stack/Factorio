@@ -55,7 +55,8 @@ accepted_visual_042:
   actual_electric_power_transfer: false
   current_docs: docs/FILE_RELEVANCE_042.md
 
-native_wire_probe_026:  branch: experiment/25kv-south-art-036
+native_wire_probe_026:
+  branch: experiment/25kv-south-art-036
   parent_main_commit: 04a290da887477d759b9ec53edb67371a6835a90
   target_nominal_voltage: "25 kV AC (future model only)"
   game_test: 028_user_reports_curve_gaps_029_long_span_pending
