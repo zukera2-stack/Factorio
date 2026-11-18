@@ -1,3 +1,9 @@
+## 0.1.42 — promoted to stable main (2026-11-18)
+
+- [PR #20](https://github.com/zukera2-stack/Factorio/pull/20) merged, commit `5e2625c49b40f03c1262507e2fbfd8862f91ba7f`. User tested the clean GitHub build and confirmed «все работает».
+- Factorio 2.1.24 (build 87808) log confirms loading, bot/ghost builds, native Undo/Redo of straight and curved rail activities without runtime error. [Final QA report](docs/tests/catenary-0.1.42-main-acceptance-2026-11-18.md).
+- Maintains 16 active PNGs, `NORTH_DROP=2.02`, 32/16/40 HSR spans and native Undo. Actual MW electric traction is future work.
+
 ### Очистка спрайтов 0.1.42 (2026-11-18)
 
 - Удалены 20 ненужных исторических PNG из экспериментальной ветки: 8 полных 012, 8 консолей 024, старый native mast, старый скрытый столб, заглушка провода и прежняя иконка. Сохранена используемая тень.
