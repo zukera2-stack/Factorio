@@ -1,5 +1,7 @@
 # Stable release: Electrified Mainline 0.1.42 (18 Nov 2026)
 
+**Experimental 0.1.44:** curved overhead contact-wire chords corrected from 11 game screenshots. Branch remains separate from stable main. [Issue audit and test scope](docs/research/25kv-curved-catenary-screenshot-audit-044.md).
+
 **Merged into `main` via [PR #20](https://github.com/zukera2-stack/Factorio/pull/20) after user-approved gameplay testing.** The screenshot from Factorio dated 2026-11-18 shows the long southern and short northern 25 kV catenary masts, with their independently rendered consoles/hangers visually aligned. All 12 approved `*-039.png` game sprites are tracked as exact binary assets. The northern calibration is `NORTH_DROP=2.02` tiles. [Experiment branch](https://github.com/zukera2-stack/Factorio/tree/experiment/25kv-visual-042-accepted) · [Game evidence](docs/tests/catenary-visual-0.1.42-user-accepted-2026-11-18.md) · [Asset/file audit](docs/FILE_RELEVANCE_042.md).
 
 **Stable `main` is 0.1.42.** The cleaned GitHub Actions build runs in Factorio 2.1.24 (build 87808), with successfully loaded saved game, native pole/robot construction and scoped Undo/Redo; user reports «все работает». [Final game evidence](docs/tests/catenary-0.1.42-main-acceptance-2026-11-18.md). 16 active PNGs; 32 straight / 16 curved / 40 helper reach. **Actual electric traction MW is not implemented.**

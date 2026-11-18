@@ -1,3 +1,9 @@
+# ACTIVE HANDOFF: EXPERIMENT 0.1.44 — CURVED CATENARY CHORDS
+
+User uploaded 11 Factorio 0.1.43 screenshots on 2026-11-18 (ZIP SHA256 6934acd38ba981a29ac7f093006ace9f84924b010c5e53082c507899345c5313), showing protruding conductors, pipe-thick steel and weak-looking droppers on curves. Root cause: 043 Catmull-Rom trace through rail entity centres does not anchor to C-arm registration points. 044 experiment uses contact wire planar chords between original accepted hanger tips on every valid curved/straight graph edge. `scripts/power_019.lua` is restored byte-identically from stable 0.1.42 (SHA256 b3940d1921c990bcca7ea19ac7f73b386ae017bd3c99f1f3911f3bcdb00f1094), preserving existing HSR/Undo graph. Steel y_scale=0.40, copper y_scale=0.48; riveted droppers made slightly wider and denser. Original 12 mast art PNG and 3 original 043 wire textures unchanged, NORTH_DROP=2.02, 32/16/40, native hidden curved graph. Added tests/25kv_curve_chord_044.lua, scripts/verify_044_assets.py, TEST_CURVE_044.txt. All offline results MUST NOT be represented as game acceptance. Do not merge PR until user test. Full report: docs/research/25kv-curved-catenary-screenshot-audit-044.md.
+
+---
+
 # AUTHORITATIVE HANDOFF — STABLE MAIN = Electrified Mainline 0.1.42 (2026-11-18)
 
 **PR #20 merged** into `main` (merge commit `5e2625c49b40f03c1262507e2fbfd8862f91ba7f`). Final clean GitHub Actions build was tested by user, who reports «все работает». Uploaded `factorio-current(3).log` is from Factorio 2.1.24 build 87808. It confirms successful mod and saved-game initialization, two native pole variants, rail-based C-arm facing, robot/ghost construction, Undo and Redo of straight rails, curved rail placement/Undo and no runtime errors. [Test report](tests/catenary-0.1.42-main-acceptance-2026-11-18.md).

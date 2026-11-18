@@ -1,3 +1,10 @@
+## 0.1.44 — curved catenary chord geometry corrected (2026-11-18, test only)
+
+- Studied 11 Factorio screenshots of 0.1.43: thick steel cable, faint copper-riveted droppers and curved conductor ends incorrectly passing behind supports.
+- Removed rail-centre Catmull-Rom spline interpolation, replaced with taut copper wire chords between registered support tips on curved spans. Curved graph remains validated via connected ВСМ rails.
+- Restored byte-identical stable 0.1.42 rail topology code; kept all 12 approved 039 mast PNG and 3 copper/steel/rivet 043 textures. Steel cross-section scaled 0.40, copper 0.48, rivet droppers 1.14 width and at shorter intervals. NORTH_DROP=2.02, 32/16/40, Undo unchanged.
+- Added detailed screenshot issue audit, offline rendered geometry/reuse/cleanup regression and SHA256 asset+rail-graph gate; pending user screenshot acceptance in Factorio. `main` remains 0.1.42.
+
 ## 0.1.43 — experimental copper/steel catenary sprites (2026-11-18)
 
 - New PNG textures with exactly the previous sprite dimensions: contact copper wire `128×10`, steel messenger wire `128×10`, riveted steel/copper dropper `10×32`, transparent RGBA; SHA-256 pinned in CI.
