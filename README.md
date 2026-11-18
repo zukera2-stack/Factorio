@@ -1,3 +1,11 @@
+# Current visual experiment: Electrified Mainline 0.1.42 (18 Nov 2026)
+
+**User-accepted in-game mast alignment, NOT merged into `main`.** The screenshot from Factorio dated 2026-11-18 shows the long southern and short northern 25 kV catenary masts, with their independently rendered consoles/hangers visually aligned. All 12 approved `*-039.png` game sprites are tracked as exact binary assets. The northern calibration is `NORTH_DROP=2.02` tiles. [Experiment branch](https://github.com/zukera2-stack/Factorio/tree/experiment/25kv-visual-042-accepted) · [Game evidence](docs/tests/catenary-visual-0.1.42-user-accepted-2026-11-18.md) · [Asset/file audit](docs/FILE_RELEVANCE_042.md).
+
+**Stable `main` remains 0.1.24.** On the experimental branch, overhead rendering has advanced to hidden native connectors plus custom two-wire contact/messenger/dropper sprites on straight ВСМ segments; curved spans retain native copper-wire graphics. Limits are **32 straight / 16 curved / 40 helper wire reach**. MW traction transfer is still not implemented. Visual acceptance does **not** establish comprehensive Factorio gameplay, Undo/Redo or rail-path regression acceptance for 0.1.42.
+
+---
+
 # Electrified Mainline
 
 A **Factorio 2.1** mod for high-speed railway infrastructure and 35 kV overhead-line support masts; real electric traction, onboard energy storage and regeneration remain future work.

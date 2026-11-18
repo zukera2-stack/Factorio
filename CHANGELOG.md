@@ -1,3 +1,11 @@
+## 0.1.42 — visually accepted 25 kV mast family; GitHub import (2026-11-18)
+
+- User confirmed in Factorio that the long southern and short northern mast consoles visually align. North shortened variant uses `NORTH_DROP=2.02` tiles; 0.1.41 used 2.05, 0.1.40 used 2.10.
+- Active 0.1.39 artwork imported as twelve **byte-identical tracked PNGs**: long and short masts, eight direction-specific console/insulator overlays, and two item icons. Original prototype IDs remain for save compatibility.
+- 0.1.37/0.1.38 source-art conversion exposed broken clipped/undersized mounts and scaling; 0.1.39 corrected alpha cropping, mount points and eight mirror projections. These older attempts are not recommended test baselines.
+- Straight 25 kV conductor visuals and hidden native connector graph inherited from 0.1.29–0.1.31, with 32 / 16 / 40 tile limits; real traction MW=0.
+- Added 0.1.42 binary-sha/source tests and version-gated older geometry tests. This experimental branch remains outside `main` (still 0.1.24). Visual acceptance is not full Factorio rail/Undo regression acceptance.
+
 ## 0.1.36 — native SOUTH arm lowered; stretched lattice replaced (2026-11-16)
 
 - Screenshot matched SOUTH standard C-arm ~0.40 tile too high; return native picture, shadow and separate arm DOWN 0.40 tile, aligning triangles with short NORTH and intact 25 kV contact wire and placement marker.
