@@ -81,3 +81,7 @@ The 0.1.7 straight-ground-rail test demonstrates why this process matters:
 - [ ] CI/source validation is complete and not misrepresented as gameplay proof.
 - [ ] In-game results and unverified cases are clearly separated.
 - [ ] `AI_CONTEXT.md`, `PROJECT_STATE.yaml`, status, and changelog are synchronized where applicable.
+
+## Game-only packaging
+
+Run `python -m unittest discover -s tests -p 'test_package_mod.py' -v` and `python scripts/package_mod.py`. The installable ZIP is in `build/package/`; the QA atlas in `build/qa/` is a separate artifact. Place developer-only material outside the mod folder. See [repository layout](docs/REPOSITORY_LAYOUT.md).

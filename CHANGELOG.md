@@ -1,3 +1,8 @@
+## 0.1.48 — packaging cleanup (no gameplay change)
+
+- Moved 16 manual test guides, sprite QA JSON and three developer notes out of the mod folder without changing their contents.
+- Game-only packaging verifies exact payload and CRC, fails on unexpected files, separates generated game ZIPs and QA atlases, preserves historical 0.1.8 rollback. Version unchanged; no new game behavior.
+
 # 0.1.48 (experimental, 2026-11-18)
 
 - Render cosmetic candidates only for confirmed own script-connected components and bounded HSR paths. Actual indirect connectivity qualifies; merely planned or equal network IDs do not.
@@ -33,7 +38,7 @@
 
 - New PNG textures with exactly the previous sprite dimensions: contact copper wire `128×10`, steel messenger wire `128×10`, riveted steel/copper dropper `10×32`, transparent RGBA; SHA-256 pinned in CI.
 - All 25 kV straight and curved spans now use short rotated LuaRendering sprites. Curved geometry is sampled from **connected ВСМ rail centres**, smoothed using Catmull-Rom; short/individual curved rail shapes remain an approximate visual fit, pending game screenshot verification. The native curve connector topology remains, but its visible copper wires are disabled.
-- Added dynamic Lua mock test `tests/25kv_curve_sprites_043.lua`, shape/asset verifier `scripts/verify_043_assets.py`, in-game checklist `ElectrifiedMainline/TEST_CURVE_043.txt` and ZIP payload checks in GitHub Actions. Stable `main` remains 0.1.42 and `NORTH_DROP=2.02` unchanged.
+- Added dynamic Lua mock test `tests/25kv_curve_sprites_043.lua`, shape/asset verifier `scripts/verify_043_assets.py`, in-game checklist `docs/tests/manual/TEST_CURVE_043.txt` and ZIP payload checks in GitHub Actions. Stable `main` remains 0.1.42 and `NORTH_DROP=2.02` unchanged.
 - No actual electric MW traction/energy transfer; this is **visual test build**.
 
 ## 0.1.42 — promoted to stable main (2026-11-18)
@@ -163,7 +168,7 @@
 - `prototypes/power_019.lua` sets `catenary.pictures` to shaft (one orientation), retains existing shadow and one wire connection point. Removes incorrect `placeable_position_visualization` as full cursor picture.
 - Lua faces still selected by unchanged RailEnd algorithm. Built mast and ghost render only cantilever/insulator with higher-object-above ordering; Factorio engine renders shaft, placement cursor and native ghost shaft.
 - The south item icon, circular rail-slot indicator, native build, ghost lifecycle, robotic construction, rail Upgrade Planner and Undo unchanged. Electricity 0 MW.
-- Added PNG integrity and geometry static QA (no engine test). Test guide in `ElectrifiedMainline/TEST_VISUAL_024.txt`. `main` 0.1.8 untouched.
+- Added PNG integrity and geometry static QA (no engine test). Test guide in `docs/tests/manual/TEST_VISUAL_024.txt`. `main` 0.1.8 untouched.
 
 ## 2026-11-15 — 0.1.23 user game evidence + native cursor API design decision (docs only)
 

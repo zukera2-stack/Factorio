@@ -92,7 +92,7 @@ native_wire_probe_026:
   applied_to_main: false
   actual_electric_power_transfer: false
   documentation: docs/research/catenary-sprite-pilot-0.1.30.md
-  game_test_instructions: ElectrifiedMainline/TEST_NATIVE_WIRE_026.txt
+  game_test_instructions: docs/tests/manual/TEST_NATIVE_WIRE_026.txt
 
 latest_uploaded_archive:
   version: "0.1.13"
@@ -538,7 +538,14 @@ repository_structure:
     - control.lua
   prototype_implementation: prototypes/bootstrap.lua
   runtime_implementation: scripts/control.lua
-  optional_integrations_directory: compatibility/
+  optional_integrations_directory: compatibility/ # reserved; create only for implemented adapters
+  manual_test_guides: docs/tests/manual/
+  developer_notes: docs/development/
+  sprite_qa_evidence: docs/tests/evidence/SPRITES_039_QA.json
+  runtime_package_script: scripts/package_mod.py
+  generated_install_archives: build/package/
+  generated_qa_atlases: build/qa/
+  historical_rollback_archive: dist/ElectrifiedMainline_0.1.8.zip
   ai_handoff: docs/AI_CONTEXT.md
   machine_readable_state: docs/PROJECT_STATE.yaml
 
@@ -789,7 +796,7 @@ repository_cleanup_2026_11_15:
   removed_file_count: 21
   removed_tree_bytes: 6866337
   removed_groups: [large_source_art, historical_021_zip, obsolete_4dir_atlas, outdated_in_mod_test_memos]
-  new_active_022_test_memo: ElectrifiedMainline/TEST_FACING_022.txt
+  new_active_022_test_memo: docs/tests/manual/TEST_FACING_022.txt
   active_eight_c_mast_sprites_kept: true
   active_shadow_kept: true
   current_lua_and_prototypes_unchanged: true
@@ -868,7 +875,7 @@ native_mast_body_024:
   user_approved_main_merge: true
   screenshot_sha256: fd73991e6fc408e2a6cc931cbc5d1c47189e622f283844e1bb792111badefd12
   log_sha256: 506bee98a83260408ff8e3fa50307800b7132a6a7fcd9050acf7a139e7608af9
-  test_guide: ElectrifiedMainline/TEST_VISUAL_024.txt
+  test_guide: docs/tests/manual/TEST_VISUAL_024.txt
 
 accepted_milestone_024:
   version: "0.1.24"
@@ -962,3 +969,15 @@ network_048:
   artifact_id: 14475494795
   archive_sha256: 0b157f746cc2d3b258cae9594c117c3929637e22fe414da30bfc068009d6493a
   game_status: pending
+
+repository_cleanup_048:
+  scope: packaging_and_document_location_only
+  base_commit: "7b2a123447fdeb48c096f2922663950949c39b05"
+  moved_without_content_change: 20
+  runtime_files_expected: 51
+  runtime_content_changed: false
+  mod_version_unchanged: true
+  game_status: pending_same_048_scope
+  main_unchanged: true
+  inventory_policy: reject_unexpected_mod_files
+  report: docs/REPOSITORY_LAYOUT.md

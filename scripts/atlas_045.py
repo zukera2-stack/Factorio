@@ -34,5 +34,5 @@ for i,(name,shift,shaft,shaft_shift) in enumerate([('long',-3.375,'south',-2.531
    d.line((x+direction*62,y+12,x,y),fill=color,width=3)
    d.ellipse((x-4,y-4,x+4,y+4),outline=color,width=2)
   d.text((ox+12,oy+485),f'Cu {p[4]},{p[5]}  Steel {p[6]},{p[7]}',fill='white')
-out=ROOT/'dist/geometry-045-atlas.png';out.parent.mkdir(exist_ok=True);canvas.save(out)
+out=ROOT/'build/qa/geometry-045-atlas.png';out.parent.mkdir(parents=True,exist_ok=True);canvas.save(out)
 print('045 PASS: actual PNG landmarks, 16 composite atlas panels')

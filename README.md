@@ -1,6 +1,6 @@
 # Stable release: Electrified Mainline 0.1.42 (18 Nov 2026)
 
-**Experimental 0.1.44:** curved overhead contact-wire chords corrected from 11 game screenshots. Branch remains separate from stable main. [Issue audit and test scope](docs/research/25kv-curved-catenary-screenshot-audit-044.md).
+**Experimental 0.1.48:** visual spans follow confirmed technical connectivity; game QA pending. Clean game-only packaging; graphics and gameplay payload unchanged by cleanup. [Research](docs/research/25kv-visible-connectivity-048.md) · [Current manual test](docs/tests/manual/TEST_NETWORK_048.txt) · [Repository layout](docs/REPOSITORY_LAYOUT.md).
 
 **Merged into `main` via [PR #20](https://github.com/zukera2-stack/Factorio/pull/20) after user-approved gameplay testing.** The screenshot from Factorio dated 2026-11-18 shows the long southern and short northern 25 kV catenary masts, with their independently rendered consoles/hangers visually aligned. All 12 approved `*-039.png` game sprites are tracked as exact binary assets. The northern calibration is `NORTH_DROP=2.02` tiles. [Experiment branch](https://github.com/zukera2-stack/Factorio/tree/experiment/25kv-visual-042-accepted) · [Game evidence](docs/tests/catenary-visual-0.1.42-user-accepted-2026-11-18.md) · [Asset/file audit](docs/FILE_RELEVANCE_042.md).
 
@@ -36,7 +36,9 @@ Versions 0.1.15–0.1.23 are historical implementation steps, not current builds
 | Path | Purpose |
 | --- | --- |
 | `ElectrifiedMainline/` | Mod source. This directory is the mod root and contains `info.json`, data-stage scripts, runtime script and locale files. |
-| `dist/` | Versioned test ZIP / stable 0.1.8 baseline; new builds are published via GitHub Actions. |
+| `build/package/` | Generated game ZIP (not tracked); published separately by GitHub Actions. |
+| `build/qa/` | Generated QA atlas (not tracked; never included in game ZIP). |
+| `dist/` | Historical 0.1.8 rollback ZIP only. |
 | `docs/` | Design notes, implementation status and development guidance. |
 | `CONTRIBUTING.md` | Mandatory research-first contributor workflow and evidence rules. |
 | `README.ru.md` | Russian version of this overview. |

@@ -72,7 +72,7 @@ def main():
     assert {p.name for p in ICONS.glob('*.png')} == allowed_icons
     allowed_wire = {'contact-030.png','messenger-030.png','dropper-030.png'}
     assert {p.name for p in (MOD/'graphics/entity/25kv').glob('*.png')} == allowed_wire
-    qa = json.loads((MOD/'SPRITES_039_QA.json').read_text())
+    qa = json.loads((ROOT/'docs/tests/evidence/SPRITES_039_QA.json').read_text())
     contracts = qa['tip_contracts']
     assert len(contracts) == 8
     assert {row['face'] for row in contracts} == set(FACES)

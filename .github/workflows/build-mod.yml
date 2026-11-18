@@ -7,7 +7,10 @@ on:
       - "ElectrifiedMainline/**"
       - "tests/**"
       - "scripts/sprites/**"
-      - "scripts/verify_013_payload.py"
+      - "scripts/verify_*.py"
+      - "scripts/package_mod.py"
+      - "scripts/atlas_045.py"
+      - "docs/tests/evidence/SPRITES_039_QA.json"
       - "docs/builds/013-payload.json"
       - "art/sprites/**"
       - ".github/workflows/build-mod.yml"
@@ -15,6 +18,9 @@ on:
     branches: [main]
     paths:
       - "ElectrifiedMainline/**"
+      - "tests/**"
+      - "scripts/**"
+      - "docs/tests/evidence/SPRITES_039_QA.json"
       - ".github/workflows/build-mod.yml"
   workflow_dispatch:
 
@@ -151,131 +157,31 @@ jobs:
             python scripts/atlas_045.py
           fi
 
-      - name: Validate metadata and build archive
+      - name: Validate package boundary
+        run: python -m unittest discover -s tests -p 'test_package_mod.py' -v
+
+      - name: Validate metadata and build game-only archive
+        id: package
         shell: bash
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import json
-          import zipfile
-          from pathlib import Path
-
-          mod_dir = Path("ElectrifiedMainline")
-          info_path = mod_dir / "info.json"
-          if not info_path.is_file():
-              raise SystemExit("ERROR: ElectrifiedMainline/info.json is missing")
-
-          info = json.loads(info_path.read_text(encoding="utf-8"))
-          required = ("name", "version", "title", "author", "factorio_version")
-          missing = [key for key in required if not isinstance(info.get(key), str) or not info[key].strip()]
-          if missing:
-              raise SystemExit("ERROR: invalid or missing info.json fields: " + ", ".join(missing))
-          if info["name"] != "ElectrifiedMainline":
-              raise SystemExit("ERROR: unexpected mod name")
-          if info["factorio_version"] != "2.1":
-              raise SystemExit("ERROR: expected factorio_version 2.1")
-          for required_file in ("control.lua", "data.lua"):
-              if not (mod_dir / required_file).is_file():
-                  raise SystemExit(f"ERROR: {required_file} is missing")
-
-          output_dir = Path("dist")
-          output_dir.mkdir(parents=True, exist_ok=True)
-          # Historical ZIPs are tracked in this repository. Do not include
-          # them in the release artifact for the version being built.
-          # This deletion affects only the checkout in the CI runner.
-          for stale_archive in output_dir.glob("ElectrifiedMainline_*.zip"):
-              stale_archive.unlink()
-          archive = output_dir / f'{info["name"]}_{info["version"]}.zip'
-          with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
-              for path in sorted(mod_dir.rglob("*")):
-                  if path.is_file():
-                      zf.write(path, path.as_posix())
-
-          with zipfile.ZipFile(archive) as zf:
-              names = zf.namelist()
-              root = mod_dir.name + "/"
-              if root + "info.json" not in names:
-                  raise SystemExit("ERROR: info.json is not at the ZIP mod-folder root")
-              if any(name.startswith(root + mod_dir.name + "/") for name in names):
-                  raise SystemExit("ERROR: ZIP contains a duplicated nested mod directory")
-              packaged_info = json.loads(zf.read(root + "info.json"))
-              if packaged_info != info:
-                  raise SystemExit("ERROR: packaged info.json differs from source")
-
-          if info["version"] == "0.1.42":
-              expected_042 = (
-                  "graphics/entity/35kv/pole-south-039.png",
-                  "graphics/entity/35kv/pole-north-039.png",
-                  "graphics/icons/25kv-south-039.png",
-                  "graphics/icons/25kv-north-039.png",
-              ) + tuple(
-                  "graphics/entity/35kv/pole-arm-" + face + "-039.png"
-                  for face in ("east","southeast","south","southwest",
-                               "west","northwest","north","northeast")
-              ) + (
-                  "graphics/entity/25kv/contact-030.png",
-                  "graphics/entity/25kv/messenger-030.png",
-                  "graphics/entity/25kv/dropper-030.png",
-              )
-              with zipfile.ZipFile(archive) as check_zip:
-                  for suffix in expected_042:
-                      assert root + suffix in names, "0.1.42 missing: " + suffix
-                      assert check_zip.read(root+suffix) == (mod_dir/suffix).read_bytes(), "0.1.42 mismatch: "+suffix
-          if info["version"] == "0.1.43":
-              expected_043 = (
-                  "graphics/entity/25kv/contact-043.png",
-                  "graphics/entity/25kv/messenger-043.png",
-                  "graphics/entity/25kv/dropper-043.png",
-              )
-              with zipfile.ZipFile(archive) as check_zip:
-                  for suffix in expected_043:
-                      assert root + suffix in names, "0.1.43 missing: "+suffix
-                      assert check_zip.read(root+suffix) == (mod_dir/suffix).read_bytes(), "0.1.43 mismatch: "+suffix
-              assert not any("graphics/entity/25kv/" in name and "-030.png" in name for name in names), "obsolete 030 PNG in 043 build"
-          if info["version"] == "0.1.44":
-              expected_044 = (
-                  "graphics/entity/25kv/contact-043.png",
-                  "graphics/entity/25kv/messenger-043.png",
-                  "graphics/entity/25kv/dropper-043.png",
-                  "graphics/entity/35kv/pole-south-039.png",
-                  "graphics/entity/35kv/pole-north-039.png",
-              ) + tuple(
-                  "graphics/entity/35kv/pole-arm-" + face + "-039.png"
-                  for face in ("east","southeast","south","southwest",
-                               "west","northwest","north","northeast")
-              )
-              with zipfile.ZipFile(archive) as check_zip:
-                  for suffix in expected_044:
-                      assert root + suffix in names, "0.1.44 missing: "+suffix
-                      assert check_zip.read(root+suffix) == (mod_dir/suffix).read_bytes(), "0.1.44 mismatch: "+suffix
-              assert not any("graphics/entity/25kv/" in name and "-030.png" in name for name in names), "obsolete 030 art"
-          print(f"Built and validated {archive}")
-          print(f"Entries: {len(names)}")
-          print(f"Mod: {info['name']} {info['version']} / Factorio {info['factorio_version']}")
-          PY
-
-      - name: Verify exact user-archive 0.1.13 payload
-        shell: bash
-        run: |
-          set -euo pipefail
-          if grep -q '"version": "0.1.13"' ElectrifiedMainline/info.json; then
-            python3 scripts/verify_013_payload.py
-          fi
+          python scripts/package_mod.py
+          version=$(python -c 'import json; print(json.load(open("ElectrifiedMainline/info.json"))["version"])')
+          echo "archive=build/package/ElectrifiedMainline_${version}.zip" >> "$GITHUB_OUTPUT"
 
       - name: Upload 045 geometry atlas
-        if: ${{ hashFiles('dist/geometry-045-atlas.png') != '' }}
+        if: ${{ hashFiles('build/qa/geometry-045-atlas.png') != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: geometry-045-atlas
-          path: dist/geometry-045-atlas.png
+          path: build/qa/geometry-045-atlas.png
           if-no-files-found: error
 
       - name: Upload test ZIP
         uses: actions/upload-artifact@v4
         with:
           name: ElectrifiedMainline-test-build
-          # The build step removes obsolete archives; assert the artifact
-          # contains only the ZIP matching info.json.
-          path: dist/ElectrifiedMainline_*.zip
+          # Exact versioned game ZIP; no wildcard, no atlas or historical ZIP.
+          path: ${{ steps.package.outputs.archive }}
           if-no-files-found: error
           retention-days: 30
