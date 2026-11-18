@@ -3,17 +3,17 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: test/undo-stabilization-018
+  active_test_branch: feature/hsr-rolling-stock-visual-049
   current_baseline_branch: main
-  active_feature_branch: experiment/package-cleanup-048 # test only
-  feature_version: "0.1.48"
-  feature_status: 048_user_accepted_HSR_visual_continuity_isolation_pending
+  active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
+  feature_version: "0.1.49" # planning target
+  feature_status: 049_visual_rolling_stock_planning
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
-  release_pull_request: 20
-  release_merge_commit: 5e2625c49b40f03c1262507e2fbfd8862f91ba7f
-  previous_release_pull_request: 8
-  previous_release_merge_commit: 43dd05a544a02de75f3b4a3c3689cd795f853d21
+  release_pull_request: 27
+  release_merge_commit: 7218360acb4fc5079e48cf4f38448fa086f1af96
+  previous_release_pull_request: 20
+  previous_release_merge_commit: 5e2625c49b40f03c1262507e2fbfd8862f91ba7f
   release_merge_approved_by_user: true
   release_status: merged_into_main_2026_11_18
   next_feature_branch_policy: branch_from_main
@@ -24,8 +24,8 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.48" # experimental only
-  main_baseline_mod_version: "0.1.42" # merged PR #20
+  mod_version: "0.1.48" # stable
+  main_baseline_mod_version: "0.1.48" # merged PR #27
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
@@ -987,7 +987,7 @@ repository_cleanup_048:
   runtime_content_changed: false
   mod_version_unchanged: true
   game_status: user_accepted_same_048_runtime_visual_scope
-  main_unchanged: true
+  main_unchanged_at_cleanup: true
   inventory_policy: reject_unexpected_mod_files
   report: docs/REPOSITORY_LAYOUT.md
   source_commit: "6027c9d789cef8b6ba5ee78cce355758e76d50a6"
@@ -1000,3 +1000,28 @@ repository_cleanup_048:
   identical_runtime_file_bytes: true
   package_boundary_tests: passed
   pull_request: 27
+
+accepted_milestone_048:
+  version: "0.1.48"
+  user_approved_main_merge: true
+  merge_status: merged
+  merge_commit: "7218360acb4fc5079e48cf4f38448fa086f1af96"
+  pull_request: 27
+  visual_scope: user_accepted_HSR_visual_continuity
+  evidence: docs/tests/catenary-0.1.48-user-acceptance.md
+  clean_ci_artifact: 14478116616
+  factory_network_isolation_measured: false
+  transfer_MW: 0
+  obsolete_branch_register: docs/history/BRANCH_ARCHIVE_048.md
+  physical_branch_refs_retained: true
+
+planned_049:
+  branch: feature/hsr-rolling-stock-visual-049
+  target_version: "0.1.49"
+  status: planning_only
+  visual_HSR: true
+  locomotive_existing_prototype_id: em-electric-locomotive
+  pantograph: separate_cosmetic_layer_stopped_down_moving_up
+  spark: deferred_optional
+  traction_power_change: false
+  catenary_art_frozen: true

@@ -1,6 +1,6 @@
 # Repository layout / структура репозитория
 
-**Current branch:** `experiment/package-cleanup-048`, based on `7b2a123447fdeb48c096f2922663950949c39b05` (0.1.48). Stable main 0.1.42 unchanged.
+**Current branch:** `experiment/package-cleanup-048`, based on `7b2a123447fdeb48c096f2922663950949c39b05` (0.1.48). Subsequently promoted to stable main 0.1.48 via PR #27. The cleanup branch is historical.
 
 ## Active directories
 | Path | Purpose |

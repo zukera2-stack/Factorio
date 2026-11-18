@@ -1,11 +1,8 @@
-# Стабильная версия: Electrified Mainline 0.1.42 (18 ноября 2026)
+# Стабильная версия: Electrified Mainline 0.1.48 (18 ноября 2026)
 
-**Эксперимент 0.1.48:** видимые пролёты согласованы с подтверждённой технической связностью; визуальная связность принята по [игровому тесту](docs/tests/catenary-0.1.48-user-acceptance.md); изоляция заводской сети ещё не измерена. Установочный ZIP содержит только файлы игры. [Исследование](docs/research/25kv-visible-connectivity-048.md) · [Текущий тест](docs/tests/manual/TEST_NETWORK_048.txt) · [Структура репозитория](docs/REPOSITORY_LAYOUT.md).
+**Объединена с main через [PR №27](https://github.com/zukera2-stack/Factorio/pull/27) по разрешению владельца.** [Игровой тест Factorio 2.1.24](docs/tests/catenary-0.1.48-user-acceptance.md): контактная сеть требует настоящих ВСМ, призраки рельсов не восстанавливают провод, ванильные рельсы разрывают пролёт; Undo и роботы работают в проверенном сценарии прямых рельсов. Изоляция по ID сетей не измерена, электротяга не реализована. Чистый [ZIP из GitHub Actions](https://github.com/zukera2-stack/Factorio/actions/runs/44413378503/artifacts/14478116616) содержит 51 игровой файл и 16 PNG. Устанавливать только внутренний ZIP. [Структура](docs/REPOSITORY_LAYOUT.md). Предыдущая стабильная 0.1.42: [игровой тест](docs/tests/catenary-0.1.42-main-acceptance-2026-11-18.md).
 
-**Версия 0.1.42 перенесена в `main` через [PR №20](https://github.com/zukera2-stack/Factorio/pull/20)** по итогам успешной игровой проверки. Длинная южная и короткая северная опоры с отдельными консолями теперь совпадают по высоте подвесов; поправка северного варианта — `NORTH_DROP=2.02`. Все 12 PNG версии `039` перенесены в GitHub без перерисовки и сверены по SHA-256. [Экспериментальная ветка](https://github.com/zukera2-stack/Factorio/tree/experiment/25kv-visual-042-accepted) · [Игровое свидетельство](docs/tests/catenary-visual-0.1.42-user-accepted-2026-11-18.md) · [Аудит файлов](docs/FILE_RELEVANCE_042.md).
-
-**Стабильная `main` теперь 0.1.42.** Пользователь проверил чистую сборку GitHub Actions и подтвердил «все работает». Лог Factorio 2.1.24 (build 87808) подтверждает загрузку сохранения, установку обеих опор роботами, Undo/Redo и действия с кривыми рельсами без ошибок. [Итоговая проверка](docs/tests/catenary-0.1.42-main-acceptance-2026-11-18.md). В моде осталось 16 активных PNG; ограничения 32/16/40. **Электрическая тяга и передача мощности пока не реализованы.**
-
+Далее: [ветка 0.1.49 — визуал ВСМ и локомотива](https://github.com/zukera2-stack/Factorio/tree/feature/hsr-rolling-stock-visual-049).
 ---
 
 # Electrified Mainline

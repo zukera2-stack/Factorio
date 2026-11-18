@@ -1,3 +1,7 @@
+## 0.1.48 — promoted to stable main
+
+- Owner-approved merge [PR #27](https://github.com/zukera2-stack/Factorio/pull/27), commit `7218360acb4fc5079e48cf4f38448fa086f1af96`. Scoped HSR visual acceptance, clean CI-only package; no actual traction MW. Next separate 0.1.49 visual rolling stock branch.
+
 ## 0.1.48 — scoped live user acceptance (no code change)
 
 - Factorio 2.1.24: user confirmed actual HSR requirement, rail ghosts do not restore wires, vanilla replacement breaks visible spans. Native Undo/robot restoration in log; no Lua errors. [Evidence](docs/tests/catenary-0.1.48-user-acceptance.md). Factory network IDs still unmeasured.
