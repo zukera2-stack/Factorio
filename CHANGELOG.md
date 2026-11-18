@@ -1,3 +1,10 @@
+## 0.1.43 — experimental copper/steel catenary sprites (2026-11-18)
+
+- New PNG textures with exactly the previous sprite dimensions: contact copper wire `128×10`, steel messenger wire `128×10`, riveted steel/copper dropper `10×32`, transparent RGBA; SHA-256 pinned in CI.
+- All 25 kV straight and curved spans now use short rotated LuaRendering sprites. Curved geometry is sampled from **connected ВСМ rail centres**, smoothed using Catmull-Rom; short/individual curved rail shapes remain an approximate visual fit, pending game screenshot verification. The native curve connector topology remains, but its visible copper wires are disabled.
+- Added dynamic Lua mock test `tests/25kv_curve_sprites_043.lua`, shape/asset verifier `scripts/verify_043_assets.py`, in-game checklist `ElectrifiedMainline/TEST_CURVE_043.txt` and ZIP payload checks in GitHub Actions. Stable `main` remains 0.1.42 and `NORTH_DROP=2.02` unchanged.
+- No actual electric MW traction/energy transfer; this is **visual test build**.
+
 ## 0.1.42 — promoted to stable main (2026-11-18)
 
 - [PR #20](https://github.com/zukera2-stack/Factorio/pull/20) merged, commit `5e2625c49b40f03c1262507e2fbfd8862f91ba7f`. User tested the clean GitHub build and confirmed «все работает».

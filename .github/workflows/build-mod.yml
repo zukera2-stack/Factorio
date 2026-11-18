@@ -44,9 +44,12 @@ jobs:
           lua5.2 tests/25kv_native_wire_probe_026.lua
           lua5.2 tests/25kv_auto_wire_028.lua
           lua5.2 tests/25kv_span_029.lua
-          lua5.2 tests/25kv_art_030.lua
           if grep -q '"version": "0.1.42"' ElectrifiedMainline/info.json; then
+            lua5.2 tests/25kv_art_030.lua
             lua5.2 tests/25kv_visual_042.lua
+          fi
+          if grep -q '"version": "0.1.43"' ElectrifiedMainline/info.json; then
+            lua5.2 tests/25kv_curve_sprites_043.lua
           fi
 
 
@@ -61,6 +64,14 @@ jobs:
           set -euo pipefail
           if grep -q '"version": "0.1.42"' ElectrifiedMainline/info.json; then
             python3 scripts/verify_042_assets.py
+          fi
+
+      - name: Validate 0.1.43 approved copper/steel sprite PNGs
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q '"version": "0.1.43"' ElectrifiedMainline/info.json; then
+            python3 scripts/verify_043_assets.py
           fi
 
       - name: Validate metadata and build archive
@@ -133,6 +144,17 @@ jobs:
                   for suffix in expected_042:
                       assert root + suffix in names, "0.1.42 missing: " + suffix
                       assert check_zip.read(root+suffix) == (mod_dir/suffix).read_bytes(), "0.1.42 mismatch: "+suffix
+          if info["version"] == "0.1.43":
+              expected_043 = (
+                  "graphics/entity/25kv/contact-043.png",
+                  "graphics/entity/25kv/messenger-043.png",
+                  "graphics/entity/25kv/dropper-043.png",
+              )
+              with zipfile.ZipFile(archive) as check_zip:
+                  for suffix in expected_043:
+                      assert root + suffix in names, "0.1.43 missing: "+suffix
+                      assert check_zip.read(root+suffix) == (mod_dir/suffix).read_bytes(), "0.1.43 mismatch: "+suffix
+              assert not any("graphics/entity/25kv/" in name and "-030.png" in name for name in names), "obsolete 030 PNG in 043 build"
           print(f"Built and validated {archive}")
           print(f"Entries: {len(names)}")
           print(f"Mod: {info['name']} {info['version']} / Factorio {info['factorio_version']}")
