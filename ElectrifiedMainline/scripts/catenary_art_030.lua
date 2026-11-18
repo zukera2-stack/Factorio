@@ -117,7 +117,10 @@ end
 local function span_geometry(a,b,curve)
   local dx,dy=b.x-a.x,b.y-a.y
   local len=math.sqrt(dx*dx+dy*dy)
-  local limit=curve and lim.CURVE or lim.STRAIGHT
+  -- The connected HSR graph enforces 16/32 between MASTS. Visual wire
+  -- endpoints are cantilever tips and can be slightly further apart.
+  -- Four tiles are reserved for tips; topology is never relaxed.
+  local limit=(curve and lim.CURVE or lim.STRAIGHT)+4
   if len<0.1 or len>limit+0.001 then return nil end
   local function contact(t)
     return {x=a.x+dx*t,y=a.y+dy*t}
@@ -134,7 +137,7 @@ local function span_geometry(a,b,curve)
     return p
   end
   return {len=len,contact=contact,messenger=messenger,
-    pieces=math.max(2,math.min(curve and 16 or 24,math.ceil(len/1.5))),
+    pieces=math.max(2,math.min(12,math.ceil(len/2.4))),
     droppers=math.max(2,math.min(12,math.floor(len/2.4)))}
 end
 function M.geometry(a,b)

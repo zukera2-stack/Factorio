@@ -23,8 +23,10 @@ for _,t in ipairs({0,0.1,0.25,0.50,0.75,0.90,1}) do
 end
 assert(near(c.messenger(0).x,a.x) and near(c.messenger(1).x,b.x),
   'steel wire must not leave hanging registration points at the masts')
-assert(art.curve_geometry(a,{x=17.1,y=0})==nil,'16-tile curved limit')
-assert(art.geometry(a,{x=33.1,y=0})==nil,'32-tile straight limit')
+assert(art.curve_geometry(a,{x=19.5,y=0}), 'valid mast span may have longer tip distance')
+assert(art.curve_geometry(a,{x=21.1,y=0})==nil,'unbounded curve drawing forbidden')
+assert(art.geometry(a,{x=35.5,y=0}), 'valid mast span may have longer tip distance')
+assert(art.geometry(a,{x=37.1,y=0})==nil,'unbounded straight drawing forbidden')
 assert(art.curve_geometry({x=0,y=0},{x=0,y=9}),
   'vertical chord should render regardless of curve rail centre approximation')
 local gv=art.curve_geometry({x=0,y=0},{x=0,y=9})
