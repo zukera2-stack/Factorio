@@ -1019,6 +1019,7 @@ planned_049:
   branch: feature/hsr-rolling-stock-visual-049
   target_version: "0.1.49"
   status: planning_only
+  development_plan: docs/plans/HSR_VISUAL_049.md
   visual_HSR: true
   locomotive_existing_prototype_id: em-electric-locomotive
   pantograph: separate_cosmetic_layer_stopped_down_moving_up
