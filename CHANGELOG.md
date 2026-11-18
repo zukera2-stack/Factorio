@@ -1,3 +1,9 @@
+# 0.1.46 (experimental, 2026-11-18)
+
+- Separate one-per-real-mast technical anchors, zero native reach, bounded script copper, whitelist and audit.
+- Independent 045 pixel-strand renderer and one-ghost dry-run visual preview.
+- Retire old duplicate curve/art helper managers from runtime; cleanup on migration. No native Undo changes or power transfer.
+
 # 0.1.45 (experimental, 2026-11-18)
 
 - Pixel-authored contact and steel attachment points independent of hidden calibration.

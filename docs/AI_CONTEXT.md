@@ -1,3 +1,5 @@
+> **0.1.46 EXPERIMENTAL / not game-tested:** separate zero-native-reach technical poles with bounded script-origin copper links (40 tiles, own types/force/surface, nearest-first max 5); visual art independently uses existing rail graph and 045 PNG landmarks. Single placed ghost predicts existing visual algorithm against real neighbours. No continuous cursor or multi-ghost guarantee; no MW bridge/traction. Main 0.1.42 unchanged. [Research](research/25kv-isolated-network-preview-046.md).
+
 > **0.1.45 EXPERIMENT — pixel-authored attachment geometry, pending game verification. Initial CI corrected historical ghost test version gate; subsequent build 44385067719 passed; corrected atlas panel clipping and expanded diagnostic filter reasons.** Visible endpoints use unchanged 039 arm PNG landmarks and exact console shift, independent of hidden helpers. Steel separate endpoints; near-vertical-only bow. Stable 042 graph, assets, limits, Undo unchanged. `/em-25kv-pairs` logs missing-span evidence. [Research](research/25kv-unified-geometry-045.md). Main stays 0.1.42.
 
 # ACTIVE HANDOFF: EXPERIMENT 0.1.44 — CURVED CATENARY CHORDS

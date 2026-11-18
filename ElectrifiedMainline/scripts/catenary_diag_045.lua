@@ -5,6 +5,7 @@ local view=require("scripts.overhead_geometry_012")
 local limits=require("scripts.catenary_limits_029")
 local geo=require("scripts.catenary_visual_geometry_045")
 local art=require("scripts.catenary_art_030")
+local technical=require("scripts.technical_network_046")
 local M={}
 local function pole(n) return n and (n.name=="em-35kv-catenary-pole" or n.name=="em-35kv-catenary-pole-north") end
 local function pstr(p) return p and string.format("(%.4f,%.4f)",p.x,p.y) or "nil" end
@@ -37,10 +38,10 @@ function M.report(player,param)
   local g=power.graph()
   local sel=player.selected
   local a=sel and sel.valid and g.nodes[sel.unit_number]
-  if not pole(a) then player.print("[EM045] Select a real catenary mast first.");return end
+  if not pole(a) then player.print("[EM046] Select a real catenary mast first.");return end
   local target=tonumber(param)
-  if param and param~="" and not target then player.print("[EM045] Optional neighbour unit ID must be numeric.");return end
-  log("[EM045 pair] selected "..node(a))
+  if param and param~="" and not target then player.print("[EM046] Optional neighbour unit ID must be numeric.");return end
+  log("[EM046 pair] selected "..node(a))
   local count=0
   for id,b in pairs(g.nodes) do
     if id~=a.id and pole(b) and b.surface_index==a.surface_index and b.force_name==a.force_name then
@@ -66,15 +67,15 @@ function M.report(player,param)
           elseif info.curved and (da>=2 or db>=2) then cause="degree-limit-or-earlier-neighbour"
           else cause="eligible-but-not-selected (inspect neighbour order)" end
         end
-        log("[EM045 pair] "..node(b))
-        log("[EM045 pair] diagnosis="..cause.." straight_corridor="..tostring(clear))
-        log(string.format("[EM045 pair] a=%d b=%d distance=%.3f rail_path=%s curved=%s limits=%s compatible=%s corner=%s side_conflict=%s degrees=%d,%d result=%s",
+        log("[EM046 pair] "..node(b))
+        log("[EM046 pair] visual_diagnosis="..cause.." straight_corridor="..tostring(clear).." technical="..technical.inspect_pair(a.id,b.id))
+        log(string.format("[EM046 pair] a=%d b=%d distance=%.3f rail_path=%s curved=%s limits=%s compatible=%s corner=%s side_conflict=%s degrees=%d,%d result=%s",
           a.id,b.id,d,info and tostring(info.length) or "none",tostring(info and info.curved),tostring(ok),
           tostring(comp),tostring(corner),tostring(side),da,db,edge))
         count=count+1
       end
     end
   end
-  player.print("[EM045] "..count.." pair reports written to factorio-current.log (filter EM045 pair).")
+  player.print("[EM046] "..count.." pair reports written to factorio-current.log (filter EM046 pair).")
 end
 return M

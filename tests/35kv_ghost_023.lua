@@ -2,7 +2,8 @@
 package.path="./ElectrifiedMainline/?.lua;"..package.path
 local actual_faces=0
 local mast034=require("scripts.mast_visual_034")
-package.loaded["scripts.power_019"]={facing_at=function(_) actual_faces=actual_faces+1;return "south" end}
+package.loaded["scripts.power_019"]={facing_at=function(_) actual_faces=actual_faces+1;return "south" end,
+ preview_at=function(_) return {rail_adjacent=true,face="south"},{} end}
 storage={}
 log=function(_) end -- Factorio global; mocked by unit tests.
 local objects,drawn={},{}
@@ -65,7 +66,7 @@ assert(proto:find('catenary.placeable_position_visualization = nil',1,true))
 -- The native ghost construction contract stays the same across art sets,
 -- but current 0.1.42 uses reviewed 039 shaft, arm and icon assets.
 local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
-if info:find('"version": "0.1.42"',1,true) or info:find('"version": "0.1.43"',1,true) or info:find('"version": "0.1.44"',1,true) or info:find('"version": "0.1.45"',1,true) then
+if info:find('"version": "0.1.42"',1,true) or info:find('"version": "0.1.43"',1,true) or info:find('"version": "0.1.44"',1,true) or info:find('"version": "0.1.45"',1,true) or info:find('"version": "0.1.46"',1,true) then
     assert(proto:find('pole-south-039.png',1,true))
     assert(proto:find('pole-north-039.png',1,true))
     assert(proto:find('pole-arm-south-039.png',1,true))

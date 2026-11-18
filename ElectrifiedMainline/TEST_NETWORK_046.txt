@@ -1,0 +1,6 @@
+0.1.46 experimental. Back up save. Remove earlier ZIP.
+1. Build two actual masts 4 tiles apart around former rejected curve/straight pair. Select each and run /em-25kv-status. Expected same nonzero native network_id; /em-25kv-pairs: separate visual and technical results.
+2. Build two masts without rail, within 40 cells. Expected technical script connection, possibly no visible spans. Separate beyond 40, no connection. Station, vanilla poles before/after, normal copper cable tool: no shared technical network ID. Log all IDs; note normal selected vanilla pole network separately using debug UI. No source/sink or MW.
+3. Remove rail: visible may change, technical remains. Remove middle mast: hidden anchor removed, eligible remaining poles re-evaluated. Undo, redo, robot revival, save/reload.
+4. Shift-place a mast ghost beside existing real mast, compare tinted arm and possible spans with actual placement at same grid. No technical anchor on ghost. Ghost removal/robot revival must remove tinted spans. Placed ghost only, not free moving cursor or blueprint multi-ghost forecast.
+5. Send log and screenshots. If missed/anchor_fail/audit_failed nonzero or ordinary network merges, do not accept. /em-25kv-tune retired.

@@ -6,6 +6,7 @@
 local M={}
 local power=require("scripts.power_019")
 local mast034=require("scripts.mast_visual_034")
+local art=require("scripts.catenary_art_030")
 local POLE="em-35kv-catenary-pole"
 local NORTH="em-35kv-catenary-pole-north"
 local POLES={POLE,NORTH}
@@ -23,8 +24,8 @@ local function state()
         s={sprites={}}
         storage.em.ghost_visual_023=s
     end
-    s.sprites=s.sprites or {}
-    return s.sprites
+    s.sprites=s.sprites or {};s.spans=s.spans or {}
+    return s.sprites,s.spans,s
 end
 local function key(entity)
     local p=entity.position
@@ -39,7 +40,7 @@ end
 
 function M.on_built(entity)
     if not is_our_ghost(entity) then return false end
-    local sprites=state()
+    local sprites,spans=state()
     local k=key(entity)
     local old=sprites[k]
     if old then
@@ -47,8 +48,12 @@ function M.on_built(entity)
         if obj and obj.valid then return true end
         sprites[k]=nil
     end
+    art.clear_preview(spans[k]);spans[k]=nil
     -- Same RailEnd-based facing selection as real poles; no entity rotation.
     local face=power.facing_at(entity)
+    local node,predicted=power.preview_at(entity)
+    if node and not node.rail_adjacent then return false end
+    face=node and node.face or face
     local obj=rendering.draw_sprite{
         sprite="em-35kv-facing-"..face,
         surface=entity.surface,
@@ -57,22 +62,30 @@ function M.on_built(entity)
         render_layer="higher-object-above",
     }
     sprites[k]=obj.id
+    spans[k]={}
+    for _,span in ipairs(predicted or {}) do
+        for _,rid in ipairs(art.preview_span(entity.surface,entity.force,span.a,span.b,span.corner)) do
+            spans[k][#spans[k]+1]=rid
+        end
+    end
     return true
 end
 
 function M.on_removed(entity)
     if not is_our_ghost(entity) then return false end
-    local sprites=state()
+    local sprites,spans=state()
     local k=key(entity)
+    art.clear_preview(spans[k]);spans[k]=nil
     clear_id(sprites[k])
     sprites[k]=nil
     return true
 end
 
 function M.rebuild_all()
-    local sprites=state()
+    local sprites,spans,s=state()
     for _,id in pairs(sprites) do clear_id(id) end
-    storage.em.ghost_visual_023.sprites={}
+    for _,ids in pairs(spans) do art.clear_preview(ids) end
+    s.sprites={};s.spans={};s.dirty=false
     local count=0
     for _,surface in pairs(game.surfaces) do
         for _,pole_name in pairs(POLES) do
@@ -87,12 +100,14 @@ end
 
 -- Ghost render objects self-destruct with their entity. Prune old ID keys
 -- occasionally so large blueprint/undo sessions do not grow storage forever.
+function M.mark_dirty() local _,_,s=state();s.dirty=true end
 function M.on_tick(tick)
-    if tick%1800~=0 then return end
-    local sprites=state()
+    local sprites,spans,s=state()
+    if s.dirty and tick%30==0 then M.rebuild_all();return end
+    if tick%60~=0 then return end
     for k,id in pairs(sprites) do
         local obj=rendering.get_object_by_id(id)
-        if not (obj and obj.valid) then sprites[k]=nil end
+        if not (obj and obj.valid) then sprites[k]=nil;art.clear_preview(spans[k]);spans[k]=nil end
     end
 end
 

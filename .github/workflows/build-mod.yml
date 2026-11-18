@@ -61,6 +61,12 @@ jobs:
             lua5.2 tests/25kv_visual_042.lua
             lua5.2 tests/25kv_unified_geometry_045.lua
           fi
+          if grep -q '"version": "0.1.46"' ElectrifiedMainline/info.json; then
+            lua5.2 tests/25kv_visual_042.lua
+            lua5.2 tests/25kv_visual_geometry_046.lua
+            lua5.2 tests/25kv_technical_046.lua
+            lua5.2 tests/25kv_preview_046.lua
+          fi
 
       - name: Set up Python for experimental sprite atlas
         uses: actions/setup-python@v5
@@ -98,6 +104,16 @@ jobs:
           if grep -q '"version": "0.1.45"' ElectrifiedMainline/info.json; then
             python -m pip install "Pillow>=11,<13"
             python scripts/verify_045_assets.py
+            python scripts/atlas_045.py
+          fi
+
+      - name: Verify isolated 0.1.46 art and technical contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q '"version": "0.1.46"' ElectrifiedMainline/info.json; then
+            python -m pip install "Pillow>=11,<13"
+            python scripts/verify_046_assets.py
             python scripts/atlas_045.py
           fi
 

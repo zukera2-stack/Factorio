@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: experiment/25kv-unified-geometry-045 # test only
-  feature_version: "0.1.45"
-  feature_status: 045_pixel_landmarks_diagnostics_pending_game_test
+  active_feature_branch: experiment/25kv-isolated-network-preview-046 # test only
+  feature_version: "0.1.46"
+  feature_status: 046_isolated_technical_and_ghost_preview_pending_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -24,13 +24,13 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.45" # experimental only
+  mod_version: "0.1.46" # experimental only
   main_baseline_mod_version: "0.1.42" # merged PR #20
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
   last_state_update: "2026-11-18"
-  documentation_audit: 045_pixel_landmarks_and_readonly_pair_diagnostics
+  documentation_audit: 046_technical_visual_separation
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -904,3 +904,15 @@ geometry_045:
   graph_changed: false
   png_changed: false
   diagnostic_command: em-25kv-pairs
+
+network_046:
+  research: docs/research/25kv-isolated-network-preview-046.md
+  source: ElectrifiedMainline/scripts/technical_network_046.lua
+  technical_reach: 40
+  native_reach: 0
+  origin: script
+  max_degree: 5
+  visual_independent: true
+  game_status: pending_zero_reach_script_wire_and_isolation_QA
+  ghost_scope: placed_single_ghost_to_real_masts
+  transfer_MW: 0

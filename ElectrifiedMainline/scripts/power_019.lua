@@ -120,6 +120,7 @@ local function register(s,e)
     s.nodes[id]=n
 end
 local function resolve(s,id)
+    if s.preview and s.preview.unit_number==id then return s.preview end
     local n=s.nodes[id]
     if not n then return nil end
     local e=game.get_entity_by_unit_number(id)
@@ -221,6 +222,15 @@ local function connected_rail_path(a,b)
     return rail_path_info(a,b)~=nil
 end
 
+-- The only additional candidate is a hypothetical single mast; live queries unchanged.
+local function add_preview(s,e,radius,list)
+    local p=s.preview
+    if p and p.unit_number~=e.unit_number and p.surface.index==e.surface.index and p.force.name==e.force.name then
+        local dx,dy=p.position.x-e.position.x,p.position.y-e.position.y
+        if dx*dx+dy*dy<=radius*radius then list[#list+1]=p end
+    end
+    return list
+end
 local function build_corner_edges(s,touched,path_info)
     local degrees={}
     for _,edge in pairs(s.edges) do
@@ -233,8 +243,8 @@ local function build_corner_edges(s,touched,path_info)
     for id,e in pairs(touched) do
         local a=s.nodes[id]
         if a and is_pole(a.name) and a.rail_adjacent and (degrees[id] or 0)<2 then
-            for _,other in pairs(e.surface.find_entities_filtered{
-                position=e.position,radius=CURVE_SPAN,name=POLES,force=e.force}) do
+            for _,other in pairs(add_preview(s,e,CURVE_SPAN,e.surface.find_entities_filtered{
+                position=e.position,radius=CURVE_SPAN,name=POLES,force=e.force})) do
                 local b=s.nodes[other.unit_number]
                 if b and (degrees[b.id] or 0)<2
                     and not s.edges[edge_key(id,b.id)] then
@@ -291,8 +301,8 @@ local function build_edges(s,touched)
             choices[id]={};return nil,nil
         end
         local candidates={}
-        for _,other in pairs(e.surface.find_entities_filtered{
-            position=e.position,radius=SPAN,name=POLES,force=e.force}) do
+        for _,other in pairs(add_preview(s,e,SPAN,e.surface.find_entities_filtered{
+            position=e.position,radius=SPAN,name=POLES,force=e.force})) do
             if other.valid and s.nodes[other.unit_number] then
                 candidates[#candidates+1]=s.nodes[other.unit_number]
             end
@@ -501,7 +511,41 @@ function M.facing_at(entity)
         defines.rail_layer.ground)
     return view.face(entity.position,reference and reference.point)
 end
--- Read-only graph view, consumed by experimental native-wire manager.
+-- Dry-run the SAME real placement graph calculation on a local copy.
+-- Only predicts one hypothetical real mast against currently built masts.
+-- No create/destroy, no rendering, no mutation of real nodes/edges.
+function M.preview_at(ghost)
+    local live=M.ensure_storage()
+    local id=9007199254740991
+    local e={unit_number=id,name=ghost.ghost_name,position=ghost.position,
+        surface=ghost.surface,force=ghost.force,valid=true}
+    if not is_pole(e.name) then return nil,{} end
+    local s={nodes={},edges={},preview=e}
+    for k,n in pairs(live.nodes) do s.nodes[k]=n end
+    register(s,e)
+    local n=s.nodes[id]
+    if not n.rail_adjacent then return n,{} end
+    local touched={[id]=e}
+    for _,other in pairs(e.surface.find_entities_filtered{
+        position=e.position,radius=SPAN*2+2,name={POLE,NORTH,SUB},force=e.force}) do
+        if other.valid and s.nodes[other.unit_number] then
+            register(s,other);touched[other.unit_number]=other
+        end
+    end
+    -- Contact edges are independent of substation feeder edges.
+    for k,edge in pairs(live.edges) do
+        if not touched[edge.a] and not touched[edge.b] then s.edges[k]=edge end
+    end
+    build_edges(s,touched)
+    local spans={}
+    for _,edge in pairs(s.edges) do
+        if edge.kind=="contact" and (edge.a==id or edge.b==id) then
+            spans[#spans+1]={a=s.nodes[edge.a],b=s.nodes[edge.b],corner=edge.corner}
+        end
+    end
+    return n,spans
+end
+-- Read-only visual graph view.
 function M.graph() return M.ensure_storage() end
 -- Used by pure-Lua regression to prove disconnected ВСМ tracks are rejected.
 M.connected_rail_path=connected_rail_path
