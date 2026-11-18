@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: experiment/25kv-sprite-wires-043 # test only, main stable 0.1.42
-  feature_version: "0.1.43" # new copper/steel PNGs and curve rendering
-  feature_status: 043_curve_sprite_experiment_waiting_user_game_test
+  active_feature_branch: experiment/25kv-chord-wires-044 # test only, main stable 0.1.42
+  feature_version: "0.1.44" # chord geometry after 11 screenshots
+  feature_status: 044_chord_geometry_static_QA_pending_user_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -24,13 +24,13 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.43" # experimental only
+  mod_version: "0.1.44" # experimental only
   main_baseline_mod_version: "0.1.42" # merged PR #20
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
   last_state_update: "2026-11-18"
-  documentation_audit: 043_curve_sprite_asset_sha256_and_mocked_display_CI
+  documentation_audit: 044_curve_screenshot_analysis_and_chord_geometry_static_QA
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -63,6 +63,14 @@ accepted_visual_042:
   native_undo_changed: false
   actual_electric_power_transfer: false
   current_docs: docs/FILE_RELEVANCE_042.md
+  next_visual_experiment_version: "0.1.44"
+  next_visual_experiment_branch: experiment/25kv-chord-wires-044
+  source_screenshots_zip_sha256: 6934acd38ba981a29ac7f093006ace9f84924b010c5e53082c507899345c5313
+  source_screenshots_count: 11
+  chord_decision: tensioned_contact_chord_between_registration_points
+  rail_graph_sha256_restored_042: b3940d1921c990bcca7ea19ac7f73b386ae017bd3c99f1f3911f3bcdb00f1094
+  visual_fix_pending_user_game_acceptance: true
+  visual_fix_report: docs/research/25kv-curved-catenary-screenshot-audit-044.md
   final_game_log_sha256: fb5e79a9f5f3429b1c7e2f4c9454a6129c167519e80229ff3f65a87cf450dd7e
   final_game_build: Factorio_2.1.24_build_87808
   final_game_report: docs/tests/catenary-0.1.42-main-acceptance-2026-11-18.md
