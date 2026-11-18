@@ -5,17 +5,17 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: experiment/25kv-visual-042-accepted # user-approved VISUAL experiment; main remains 0.1.24
-  feature_version: "0.1.42" # accepted mast visual, pending full gameplay regression
-  feature_status: 042_user_accepted_mast_visual_pending_full_regressions
+  active_feature_branch: main # 0.1.42 promoted, next experiments branch from main
+  feature_version: "0.1.42" # user-accepted clean build, stable main
+  feature_status: 042_merged_main_user_game_test_pass_extended_matrix_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
-  release_pull_request: 8
-  release_merge_commit: 43dd05a544a02de75f3b4a3c3689cd795f853d21
-  previous_release_pull_request: 6
-  previous_release_merge_commit: 973559aa4d0643b2a942edce413e9530494bc498
+  release_pull_request: 20
+  release_merge_commit: 5e2625c49b40f03c1262507e2fbfd8862f91ba7f
+  previous_release_pull_request: 8
+  previous_release_merge_commit: 43dd05a544a02de75f3b4a3c3689cd795f853d21
   release_merge_approved_by_user: true
-  release_status: merged_into_main_2026_11_15
+  release_status: merged_into_main_2026_11_18
   next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.4"
   previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
@@ -24,13 +24,13 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.42" # experimental branch only
-  main_baseline_mod_version: "0.1.24" # merged PR #8
+  mod_version: "0.1.42" # stable main via PR 20
+  main_baseline_mod_version: "0.1.42" # merged PR #20
   factorio_target: "2.1"
-  user_tested_game: "2.1.20"
-  user_installation_label: "2.1.20b"
+  user_tested_game: "2.1.24"
+  user_installation_label: "2.1.24 build 87808"
   last_state_update: "2026-11-18"
-  documentation_audit: 042_active_assets_sha256_and_file_roles_2026_11_18
+  documentation_audit: 042_main_merge_final_game_log_2026_11_18
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -59,10 +59,15 @@ accepted_visual_042:
   active_game_assets_byte_exact: true
   full_zip_byte_identical_to_local_test: false
   source_art_is_generator_for_039: false
-  full_gameplay_regression: pending
+  full_gameplay_regression: scoped_user_accepted_2026_11_18_extended_matrix_pending
   native_undo_changed: false
   actual_electric_power_transfer: false
   current_docs: docs/FILE_RELEVANCE_042.md
+  final_game_log_sha256: fb5e79a9f5f3429b1c7e2f4c9454a6129c167519e80229ff3f65a87cf450dd7e
+  final_game_build: Factorio_2.1.24_build_87808
+  final_game_report: docs/tests/catenary-0.1.42-main-acceptance-2026-11-18.md
+  merged_into_main_pr: 20
+  merged_into_main_commit: 5e2625c49b40f03c1262507e2fbfd8862f91ba7f
 
 native_wire_probe_026:
   branch: experiment/25kv-south-art-036

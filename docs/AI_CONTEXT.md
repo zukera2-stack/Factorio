@@ -1,3 +1,13 @@
+# AUTHORITATIVE HANDOFF — STABLE MAIN = Electrified Mainline 0.1.42 (2026-11-18)
+
+**PR #20 merged** into `main` (merge commit `5e2625c49b40f03c1262507e2fbfd8862f91ba7f`). Final clean GitHub Actions build was tested by user, who reports «все работает». Uploaded `factorio-current(3).log` is from Factorio 2.1.24 build 87808. It confirms successful mod and saved-game initialization, two native pole variants, rail-based C-arm facing, robot/ghost construction, Undo and Redo of straight rails, curved rail placement/Undo and no runtime errors. [Test report](tests/catenary-0.1.42-main-acceptance-2026-11-18.md).
+
+Stable sprite set: exactly 16 used PNGs (12 approved 039 masts/arms/icons, three 030 contact/messenger/dropper textures, one actively used native shadow). All unused 012/024 art removed. Mast visual calibration is **`NORTH_DROP=2.02`**. HSR rail graph plus 32 straight / 16 curve / 40 helper reach remains. **Real power MW, electric traction and regeneration are NOT implemented.** New experiments branch from `main`. User acceptance is scoped to their tested game; it does not establish exhaustive multiplayer/rail boundary coverage.
+
+---
+
+## Historical pre-merge notes (older status references below are not current)
+
 # 0.1.42 — очистка исторических изображений (2026-11-18)
 
 По решению пользователя удалены 20 неиспользуемых исторических PNG, старые генераторы мачт 033/035/036 и проверки их устаревшей геометрии. В `prototypes/power_019.lua` активные `pole-south-039.png` и `pole-north-039.png` указаны непосредственно, неиспользуемый `em-35kv-contact-wire-texture` больше не регистрируется. **Тень `pole-shadow-4dir-hr.png` оставлена**, поскольку реально используется движком. Эталонные 12 PNG и три PNG проводов не перерисовывались; `NORTH_DROP=2.02`, ВСМ, 32/16/40, Undo не менялись. См. [аудит](FILE_RELEVANCE_042.md).
