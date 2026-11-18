@@ -57,3 +57,6 @@ For the full procedure and evidence labels, follow [CONTRIBUTING.md](CONTRIBUTIN
 
 ## Packaging boundary (0.1.48)
 Only game-discovered entrypoints and runtime code/assets belong in `ElectrifiedMainline/`. Put manual tests in `docs/tests/manual/`, QA reports in `docs/tests/evidence/`, developer notes in `docs/development/`, generated archives/atlases under ignored `build/`. Run `python scripts/package_mod.py`; packaging must reject unexpected files rather than silently include them. Preserve the historical 0.1.8 rollback and historical commits. See [repository layout](docs/REPOSITORY_LAYOUT.md). Do not rename or delete Lua modules or legacy helper prototypes without a separate dependency and migration audit.
+
+## Owner distribution rule
+Build every distributable install ZIP exclusively via the repository's GitHub Actions packaging workflow. Deliver the exact inner CI-built ZIP or link to the artifact. Never produce a locally repacked user ZIP. Local checks are not release builds. Preserve CI commit/run/artifact/hash provenance and keep QA artifacts separate.

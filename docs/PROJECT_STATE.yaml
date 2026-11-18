@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: experiment/package-cleanup-048 # test only
   feature_version: "0.1.48"
-  feature_status: 048_CI_passed_pending_game_QA
+  feature_status: 048_user_accepted_HSR_visual_continuity_isolation_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -543,6 +543,8 @@ repository_structure:
   developer_notes: docs/development/
   sprite_qa_evidence: docs/tests/evidence/SPRITES_039_QA.json
   runtime_package_script: scripts/package_mod.py
+  distributable_ZIPs: GitHub_Actions_only
+  locally_repacked_distributions: forbidden
   generated_install_archives: build/package/
   generated_qa_atlases: build/qa/
   historical_rollback_archive: dist/ElectrifiedMainline_0.1.8.zip
@@ -968,7 +970,14 @@ network_048:
   build_run_id: 44411407669
   artifact_id: 14475494795
   archive_sha256: 0b157f746cc2d3b258cae9594c117c3929637e22fe414da30bfc068009d6493a
-  game_status: pending
+  game_status: user_accepted_HSR_visual_continuity
+  live_evidence: docs/tests/catenary-0.1.48-user-acceptance.md
+  live_log_sha256: c000d276150c02354d0ef2caf6b15efed916549642dcd5c6109910d30e85da59
+  real_HSR_required_user_confirmed: true
+  rail_ghost_does_not_restore_wire_user_confirmed: true
+  vanilla_replacement_breaks_wire_user_confirmed: true
+  real_network_ID_isolation_verified: false
+  visual_scope_frozen: true
 
 repository_cleanup_048:
   scope: packaging_and_document_location_only
@@ -977,7 +986,7 @@ repository_cleanup_048:
   runtime_files_expected: 51
   runtime_content_changed: false
   mod_version_unchanged: true
-  game_status: pending_same_048_scope
+  game_status: user_accepted_same_048_runtime_visual_scope
   main_unchanged: true
   inventory_policy: reject_unexpected_mod_files
   report: docs/REPOSITORY_LAYOUT.md

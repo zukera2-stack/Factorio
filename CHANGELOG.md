@@ -1,3 +1,8 @@
+## 0.1.48 — scoped live user acceptance (no code change)
+
+- Factorio 2.1.24: user confirmed actual HSR requirement, rail ghosts do not restore wires, vanilla replacement breaks visible spans. Native Undo/robot restoration in log; no Lua errors. [Evidence](docs/tests/catenary-0.1.48-user-acceptance.md). Factory network IDs still unmeasured.
+- Owner policy: distribute only GitHub Actions-built install ZIPs. No local repacking. Main unchanged.
+
 ## 0.1.48 — packaging cleanup (no gameplay change)
 
 - Moved 16 manual test guides, sprite QA JSON and three developer notes out of the mod folder without changing their contents.

@@ -1,6 +1,6 @@
 # Stable release: Electrified Mainline 0.1.42 (18 Nov 2026)
 
-**Experimental 0.1.48:** visual spans follow confirmed technical connectivity; game QA pending. Clean game-only packaging; graphics and gameplay payload unchanged by cleanup. [Research](docs/research/25kv-visible-connectivity-048.md) · [Current manual test](docs/tests/manual/TEST_NETWORK_048.txt) · [Repository layout](docs/REPOSITORY_LAYOUT.md).
+**Experimental 0.1.48:** visual spans follow confirmed technical connectivity; scoped HSR-dependent visual behavior accepted in [live game test](docs/tests/catenary-0.1.48-user-acceptance.md), ordinary-grid isolation not yet measured. Clean game-only packaging; graphics and gameplay payload unchanged by cleanup. [Research](docs/research/25kv-visible-connectivity-048.md) · [Current manual test](docs/tests/manual/TEST_NETWORK_048.txt) · [Repository layout](docs/REPOSITORY_LAYOUT.md).
 
 **Merged into `main` via [PR #20](https://github.com/zukera2-stack/Factorio/pull/20) after user-approved gameplay testing.** The screenshot from Factorio dated 2026-11-18 shows the long southern and short northern 25 kV catenary masts, with their independently rendered consoles/hangers visually aligned. All 12 approved `*-039.png` game sprites are tracked as exact binary assets. The northern calibration is `NORTH_DROP=2.02` tiles. [Experiment branch](https://github.com/zukera2-stack/Factorio/tree/experiment/25kv-visual-042-accepted) · [Game evidence](docs/tests/catenary-visual-0.1.42-user-accepted-2026-11-18.md) · [Asset/file audit](docs/FILE_RELEVANCE_042.md).
 

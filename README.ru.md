@@ -1,6 +1,6 @@
 # Стабильная версия: Electrified Mainline 0.1.42 (18 ноября 2026)
 
-**Эксперимент 0.1.48:** видимые пролёты согласованы с подтверждённой технической связностью; игровая проверка ещё впереди. Установочный ZIP содержит только файлы игры. [Исследование](docs/research/25kv-visible-connectivity-048.md) · [Текущий тест](docs/tests/manual/TEST_NETWORK_048.txt) · [Структура репозитория](docs/REPOSITORY_LAYOUT.md).
+**Эксперимент 0.1.48:** видимые пролёты согласованы с подтверждённой технической связностью; визуальная связность принята по [игровому тесту](docs/tests/catenary-0.1.48-user-acceptance.md); изоляция заводской сети ещё не измерена. Установочный ZIP содержит только файлы игры. [Исследование](docs/research/25kv-visible-connectivity-048.md) · [Текущий тест](docs/tests/manual/TEST_NETWORK_048.txt) · [Структура репозитория](docs/REPOSITORY_LAYOUT.md).
 
 **Версия 0.1.42 перенесена в `main` через [PR №20](https://github.com/zukera2-stack/Factorio/pull/20)** по итогам успешной игровой проверки. Длинная южная и короткая северная опоры с отдельными консолями теперь совпадают по высоте подвесов; поправка северного варианта — `NORTH_DROP=2.02`. Все 12 PNG версии `039` перенесены в GitHub без перерисовки и сверены по SHA-256. [Экспериментальная ветка](https://github.com/zukera2-stack/Factorio/tree/experiment/25kv-visual-042-accepted) · [Игровое свидетельство](docs/tests/catenary-visual-0.1.42-user-accepted-2026-11-18.md) · [Аудит файлов](docs/FILE_RELEVANCE_042.md).
 

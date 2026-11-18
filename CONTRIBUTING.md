@@ -85,3 +85,5 @@ The 0.1.7 straight-ground-rail test demonstrates why this process matters:
 ## Game-only packaging
 
 Run `python -m unittest discover -s tests -p 'test_package_mod.py' -v` and `python scripts/package_mod.py`. The installable ZIP is in `build/package/`; the QA atlas in `build/qa/` is a separate artifact. Place developer-only material outside the mod folder. See [repository layout](docs/REPOSITORY_LAYOUT.md).
+
+The project owner requires all installable ZIPs distributed to users to originate from GitHub Actions. The local command above is only for developer checks; use the exact CI-built inner ZIP for distribution, with source commit, run ID, artifact ID and hash recorded. Do not repackage locally.
