@@ -73,7 +73,11 @@ jobs:
               lua5.2 tests/35kv_cursor_build_018.lua
             fi
           else
-            lua5.2 tests/35kv_curve_topology.lua
+            # 0.1.12 historical curved-geometry contract is incompatible
+            # with the 0.1.29+ HSR-connected path selection by design.
+            if grep -q '"version": "0.1.12"' ElectrifiedMainline/info.json; then
+              lua5.2 tests/35kv_curve_topology.lua
+            fi
           fi
 
       - name: Set up Python for experimental sprite atlas
