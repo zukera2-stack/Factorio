@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: experiment/25kv-visible-connectivity-048 # test only
   feature_version: "0.1.48"
-  feature_status: 048_verified_visible_continuity_pending_QA
+  feature_status: 048_CI_passed_pending_game_QA
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -956,4 +956,9 @@ network_048:
   visual_requires_voltage: false
   ghost_scope: single_placed_ghost_planned_graph_forecast
   transfer_MW: 0
+  automated_status: passed
+  tested_source_commit: "9afb6beef2c8542d86d4cd8ce6673ed95fe3bf0b"
+  build_run_id: 44411407669
+  artifact_id: 14475494795
+  archive_sha256: 0b157f746cc2d3b258cae9594c117c3929637e22fe414da30bfc068009d6493a
   game_status: pending

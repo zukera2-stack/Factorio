@@ -22,4 +22,12 @@ Compute stable connected component labels (minimum mast unit number) over *confi
 Reject if cosmetic bridge persists over disconnected HSR and separate verified components, or valid indirect connection loses its span merely because no direct technical edge exists. Reject if preview creates real entities, graph changes, ordinary wires join, old art changes, or native Undo breaks. Offline tests are not Factorio QA.
 
 ## 7–9. Implementation / evidence
-Pending.
+Implemented in code commit `9afb6beef2c8542d86d4cd8ce6673ed95fe3bf0b`: verified script-edge component labels, render gate (component + bounded HSR), ghost dry-run planned components, technical-before-art initialization, component change dirty propagation, diagnostic status, regression tests.
+
+
+## 8. Automated evidence (not live Factorio)
+- Build run [44411407669](https://github.com/zukera2-stack/Factorio/actions/runs/44411407669) SUCCESS; docs run 44411407655 SUCCESS. Job 135180206691 logs confirm 16 endpoint combinations; confirmed indirect components; missing/refused native script connection hides span; equal mocked network IDs insufficient; rail break/restore; off-rail anchor removal; ghost preview and removal; unchanged 16 PNGs. Historical regressions passed.
+- [Artifact 14475494795](https://github.com/zukera2-stack/Factorio/actions/runs/44411407669/artifacts/14475494795) downloaded. Inner ElectrifiedMainline_0.1.48.zip CRC verified, info.json version 0.1.48, 71 entries, 16 PNGs, 322746 bytes, SHA256 `0b157f746cc2d3b258cae9594c117c3929637e22fe414da30bfc068009d6493a`.
+
+## 9. Outstanding QA
+No live 048 run available. Verify visual disappearance after HSR break and restoration after actual rail revival, no false missing spans on the accepted 047 layout, script-wire component and actual network IDs, ordinary grid isolation, ghost cleanup, Undo/Redo, save/reload, performance at scale. A valid bounded alternate HSR route can retain continuity. Technical-only links can remain invisible under independent 047 visual limits. Preview is a forecast, not native success proof; 60-tick audit detects unsignalled wire changes, rail edits refresh through existing queue. No voltage/traction/power delivery. Draft PR #26 not approved to merge.

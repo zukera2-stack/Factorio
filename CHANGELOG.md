@@ -1,3 +1,9 @@
+# 0.1.48 (experimental, 2026-11-18)
+
+- Render cosmetic candidates only for confirmed own script-connected components and bounded HSR paths. Actual indirect connectivity qualifies; merely planned or equal network IDs do not.
+- Rail gaps, native connector failures and component changes remove invalid spans; restoration brings them back. No voltage gate. Ghost forecasts use the same planned technical graph without creating anchors.
+- Preserve 047 neighbour policy, 045 geometry, all PNGs, prototypes and native Undo. Automated tests passed; game QA pending.
+
 # 0.1.47 (experimental, 2026-11-18)
 
 - Relax cosmetic spans: 32 cells both curves and straights, max two neighbours, no side/tangent/path gate; nearest projected track points and shortcut filtering.
