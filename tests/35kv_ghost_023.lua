@@ -62,9 +62,20 @@ assert(src:find("ghost_visual023.rebuild_all()",1,true))
 assert(src:find("ghost_visual023.on_removed(event.ghost)",1,true))
 local proto=assert(io.open("ElectrifiedMainline/prototypes/power_019.lua")):read("*a")
 assert(proto:find('catenary.placeable_position_visualization = nil',1,true))
-assert(proto:find('pole-native-mast-024.png',1,true))
-assert(proto:find('pole-arm-south-024.png',1,true))
-assert(proto:find("35kv-mast-south-icon-64.png",1,true))
+-- The native ghost construction contract stays the same across art sets,
+-- but current 0.1.42 uses reviewed 039 shaft, arm and icon assets.
+local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
+if info:find('"version": "0.1.42"',1,true) then
+    assert(proto:find('pole-south-039.png',1,true))
+    assert(proto:find('pole-north-039.png',1,true))
+    assert(proto:find('pole-arm-south-039.png',1,true))
+    assert(proto:find('25kv-south-039.png',1,true))
+    assert(proto:find('25kv-north-039.png',1,true))
+else
+    assert(proto:find('pole-native-mast-024.png',1,true))
+    assert(proto:find('pole-arm-south-024.png',1,true))
+    assert(proto:find("35kv-mast-south-icon-64.png",1,true))
+end
 local cursor=assert(io.open("ElectrifiedMainline/scripts/catenary_cursor_018.lua")):read("*a")
 assert(cursor:find("rendering.draw_circle",1,true))
 assert(not cursor:find("rendering.draw_rectangle",1,true))
