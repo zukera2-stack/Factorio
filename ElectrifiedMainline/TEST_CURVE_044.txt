@@ -1,0 +1,11 @@
+Electrified Mainline 0.1.44 - CHORD-WIRE GAME TEST (GitHub experimental)
+
+1. Install ONLY the internal ElectrifiedMainline_0.1.44.zip from the GitHub Actions artifact; remove 0.1.43 mod file.
+2. On a long straight HSR line, check copper contact (thin orange), steel messenger (slim silver) and copper-riveted droppers. Their endings must attach at the C-bracket support points.
+3. On clockwise AND counter-clockwise HSR curves use several masts <=16 tiles between supports. Expect STRAIGHT CHORD segments between hangers, NOT a wire drawn along each curved rail. Check no line protrudes through/behind a mast and no vanilla brown copper wire appears.
+4. Check near-vertical curves and right-angle transition (19:02 screenshots), confirm steel and copper stay visually distinct and droppers remain visible.
+5. Delete a middle curved rail and Undo/Redo; cable should disappear/reappear only with a genuinely connected HSR rail path.
+6. Rebuild a mast by robot, save/reload, inspect no duplicate lines/ghost artifacts.
+7. Game screenshot request: tight curve plus adjacent straight showing three consecutive supports; report any endpoint errors. Check /em-25kv-status if needed.
+
+Stable main stays 0.1.42. This release is a visual test ONLY; 32/16/40 stay unchanged; no power MW is supplied.

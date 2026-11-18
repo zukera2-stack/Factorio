@@ -1,6 +1,6 @@
--- Electrified Mainline 0.1.43: native helper topology with Factorio-style PNG
--- contact (copper), steel messenger and riveted dropper for straight and curves.
--- Curve art follows connected custom rail centre traces, not a bare chord.
+-- Electrified Mainline 0.1.44: fixed chord-wise contact for both straight
+-- and curved HSR, with slimmer copper/steel sprites and visible droppers.
+-- Valid rail paths are exclusively determined by the tested power_019 graph.
 local M={}
 local geo=require("scripts.native_wire_geometry_028")
 local lim=require("scripts.catenary_limits_029")
@@ -80,6 +80,12 @@ local function anchor(s,id,node,calib)
   s.helpers[id]={id=e.unit_number,face=node.face}
   return e
 end
+-- 0.1.44: tensioned CONTACT wire is a planar chord between registered
+-- cantilever tips even when the underlying RAIL is curved. 0.1.43 tried to
+-- interpolate the wire through rail entity centres, which created protruding
+-- ends and excursions behind masts on tight curves (screenshots 18:59:01 etc).
+-- No route sampling is needed for rendering: the power graph separately
+-- proves actual ВСМ connectivity and curved/straight length eligibility.
 local function segment(ids,surface,sprite,a,b,vertical,pixels)
   local dx,dy=b.x-a.x,b.y-a.y
   local d=math.sqrt(dx*dx+dy*dy)
@@ -91,150 +97,65 @@ local function segment(ids,surface,sprite,a,b,vertical,pixels)
     target={x=(a.x+b.x)/2,y=(a.y+b.y)/2},
     orientation=(theta/(2*math.pi))%1,
     render_layer="object"}
-  if vertical then arg.y_scale=d*32/pixels
-  else arg.x_scale=d*32/pixels end
+  if vertical then
+    arg.y_scale=d*32/pixels
+    arg.x_scale=1.14 -- make rivet heads on the droppers more legible
+  else
+    -- 0.1.43 source steel pixel thickness was 8px, close to a metal PIPE.
+    -- Keep the approved sprite artwork but render a wire-sized cross-section.
+    -- End-cap overlap (<1px per joint) prevents tiled rotated-sprite pinholes.
+    arg.x_scale=(d*32+0.8)/pixels
+    if sprite=="em-25kv-messenger-043" then
+      arg.y_scale=0.40
+    else
+      arg.y_scale=0.48
+    end
+  end
   local obj=rendering.draw_sprite(arg)
   ids[#ids+1]=obj.id
 end
-function M.geometry(a,b)
+local function span_geometry(a,b,curve)
   local dx,dy=b.x-a.x,b.y-a.y
   local len=math.sqrt(dx*dx+dy*dy)
-  if len<0.1 or len>lim.STRAIGHT+0.001 then return nil end
+  local limit=curve and lim.CURVE or lim.STRAIGHT
+  if len<0.1 or len>limit+0.001 then return nil end
   local function contact(t)
     return {x=a.x+dx*t,y=a.y+dy*t}
   end
   local function messenger(t)
     local p=contact(t)
-    p.y=p.y-0.68+0.27*4*t*(1-t)
+    local sag=4*t*(1-t)
+    -- Steel strand is suspended ABOVE the copper contact wire in the
+    -- isometric/screen projection. Its center bows very gently toward +X:
+    -- this makes the riveted steel droppers legible on near-vertical track,
+    -- while the endpoints remain *exactly fixed* over the registration points.
+    p.x=p.x+0.24*sag
+    p.y=p.y-0.68+0.23*sag
     return p
   end
   return {len=len,contact=contact,messenger=messenger,
-    pieces=math.max(3,math.min(12,math.ceil(len/3.2))),
-    droppers=math.max(2,math.min(8,math.floor(len/3.5)))}
+    pieces=math.max(2,math.min(curve and 16 or 24,math.ceil(len/1.5))),
+    droppers=math.max(2,math.min(12,math.floor(len/2.4)))}
 end
--- Sample an ordered set of connected rail entity centres, translated to
--- the actual wire attachment positions. Catmull-Rom smooths the rail trace.
--- We do not draw a guessed curve over disconnected/unrelated vanilla rails:
--- only a route produced by the bounded HSR rail walk is accepted.
-local function distance(a,b)
-  local dx,dy=a.x-b.x,a.y-b.y
-  return math.sqrt(dx*dx+dy*dy)
+function M.geometry(a,b)
+  return span_geometry(a,b,false)
 end
-local function lerp(a,b,t) return a+(b-a)*t end
-local function catmull(a,b,c,d,t)
-  local t2,t3=t*t,t*t*t
-  return 0.5*((2*b)+(-a+c)*t+(2*a-5*b+4*c-d)*t2+
-      (-a+3*b-3*c+d)*t3)
-end
-local function route_points(a,b,rail)
-  if not rail or #rail==0 then return nil end
-  local points={{x=a.x,y=a.y}}
-  if #rail>2 then
-    local span=0
-    for i=2,#rail do span=span+distance(rail[i-1],rail[i]) end
-    local walked=0
-    for i=2,#rail-1 do
-      walked=walked+distance(rail[i-1],rail[i])
-      local t=span>0 and walked/span or (i-1)/(#rail-1)
-      local ox=lerp(a.x-rail[1].x,b.x-rail[#rail].x,t)
-      local oy=lerp(a.y-rail[1].y,b.y-rail[#rail].y,t)
-      local x,y=rail[i].x+ox,rail[i].y+oy
-      if distance(points[#points],{x=x,y=y})>0.20 then
-        points[#points+1]={x=x,y=y}
-      end
-    end
-  elseif #rail==1 then
-    -- A and B can both be attached to the same curved rail entity.
-    -- A gentle bend toward its centre preserves a visible turn; this is
-    -- an approximation, NOT the precise engine rail spline.
-    local cx,cy=(a.x+b.x)/2,(a.y+b.y)/2
-    local dx,dy=b.x-a.x,b.y-a.y
-    local d=math.sqrt(dx*dx+dy*dy)
-    if d>0.1 then
-      local side=(rail[1].x-cx)*(-dy/d)+(rail[1].y-cy)*(dx/d)
-      local bend=math.max(-0.75,math.min(0.75,side*0.4))
-      points[#points+1]={x=cx-dy/d*bend,y=cy+dx/d*bend}
-    end
-  elseif #rail==2 then
-    -- Two rail centres alone cannot describe the actual curved track.
-    -- Bias the midpoint mildly toward the rail-side offset to avoid
-    -- pretending that the precise Bezier control points are known.
-    local cx,cy=(a.x+b.x)/2,(a.y+b.y)/2
-    local rx,ry=(rail[1].x+rail[2].x)/2,(rail[1].y+rail[2].y)/2
-    local dx,dy=b.x-a.x,b.y-a.y
-    local d=math.sqrt(dx*dx+dy*dy)
-    if d>0.1 then
-      local side=(rx-cx)*(-dy/d)+(ry-cy)*(dx/d)
-      local bend=math.max(-0.45,math.min(0.45,side*0.10))
-      points[#points+1]={x=cx-dy/d*bend,y=cy+dx/d*bend}
-    end
-  end
-  points[#points+1]={x=b.x,y=b.y}
-  return points
-end
-function M.curve_geometry(a,b,rail)
-  local points=route_points(a,b,rail)
-  if not points then return nil end
-  if distance(a,b)>lim.CURVE+0.001 then return nil end
-  local dense={points[1]}
-  for i=1,#points-1 do
-    local p0=points[math.max(1,i-1)]
-    local p1=points[i]
-    local p2=points[i+1]
-    local p3=points[math.min(#points,i+2)]
-    local n=math.max(2,math.min(12,math.ceil(distance(p1,p2)/0.75)))
-    for j=1,n do
-      local t=j/n
-      dense[#dense+1]={
-        x=catmull(p0.x,p1.x,p2.x,p3.x,t),
-        y=catmull(p0.y,p1.y,p2.y,p3.y,t)}
-    end
-  end
-  local lengths={0}
-  for i=2,#dense do
-    lengths[i]=lengths[i-1]+distance(dense[i-1],dense[i])
-  end
-  local total=lengths[#lengths]
-  if total<0.1 or total>lim.CURVE*1.65+0.001 then return nil end
-  local function contact(t)
-    local target=total*math.max(0,math.min(1,t))
-    for i=2,#dense do
-      if target<=lengths[i] then
-        local ds=lengths[i]-lengths[i-1]
-        local f=ds>0 and (target-lengths[i-1])/ds or 0
-        return {x=lerp(dense[i-1].x,dense[i].x,f),
-                y=lerp(dense[i-1].y,dense[i].y,f)}
-      end
-    end
-    return {x=b.x,y=b.y}
-  end
-  local function messenger(t)
-    local v=contact(t)
-    v.y=v.y-0.68+0.27*4*t*(1-t)
-    return v
-  end
-  return {len=total,contact=contact,messenger=messenger,
-    pieces=math.max(4,math.min(48,math.ceil(total/0.65))),
-    droppers=math.max(2,math.min(8,math.floor(total/3.5)))}
+function M.curve_geometry(a,b,_unused_rail_trace)
+  return span_geometry(a,b,true)
 end
 local function draw(s,key,ea,eb,face_a,face_b,name_a,name_b,edge)
   local a=M.visual_point(ea.position,face_a,name_a)
   local b=M.visual_point(eb.position,face_b,name_b)
   local g
   if edge and edge.corner then
-    g=M.curve_geometry(a,b,edge.route)
+    g=M.curve_geometry(a,b)
   else
     g=M.geometry(a,b)
   end
   if not g then erase(s,key);return false end
-  local sig=string.format("%.4f/%.4f/%.4f/%.4f/%d/%d/%s",
+  local sig=string.format("044/%.4f/%.4f/%.4f/%.4f/%d/%d/%s",
     a.x,a.y,b.x,b.y,g.pieces,g.droppers,
     edge and edge.corner and "curve" or "straight")
-  if edge and edge.corner then
-    for _,p in ipairs(edge.route or {}) do
-      sig=sig..string.format("/%.3f,%.3f",p.x,p.y)
-    end
-  end
   local previous=s.draws[key]
   if previous and previous.sig==sig then
     local good=true
@@ -375,7 +296,7 @@ function M.status(player)
   local n=0;for _ in pairs(s.helpers) do n=n+1 end
   local v=s.stats
   player.print(string.format(
-    "[EM 25kV] ART043 spans=%d hidden_native=%d sprites=%d missed=%d helpers=%d failures=%d curves=sprites MW=0",
+    "[EM 25kV] ART044 spans=%d hidden_native=%d sprites=%d missed=%d helpers=%d failures=%d curves=chord-sprites MW=0",
     v.eligible or 0,v.connected or 0,v.drawn or 0,v.missed or 0,n,v.failures or 0))
 end
 return M
