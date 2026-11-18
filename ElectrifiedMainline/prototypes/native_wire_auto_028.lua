@@ -7,6 +7,6 @@ a.name="em-25kv-contact-anchor"
 a.maximum_wire_distance=require("scripts.catenary_limits_029").WIRE_REACH
 a.auto_connect_up_to_n_wires=0
 a.supply_area_distance=0
-a.draw_copper_wires=true
+a.draw_copper_wires=false  -- 0.1.43: curve topology stays native, artwork comes from 043 PNGs
 a.rewire_neighbours_when_destroying=false
 data:extend({a})

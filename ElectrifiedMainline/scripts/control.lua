@@ -14,15 +14,10 @@ local ghost_visual023 = require("scripts.ghost_mast_023")
 local native_wire_probe026 = require("scripts.native_wire_probe_026")
 local nativewire028 = require("scripts.native_wire_028")
 local art030 = require("scripts.catenary_art_030")
--- Show vanilla native copper only on curved contact spans, sprite-based
--- two-wire art on straight spans. Keep graph and native Undo unchanged.
-local function native_curve_graph(graph)
-    local edges={}
-    for key,edge in pairs(graph.edges or {}) do
-        if edge.kind=="contact" and edge.corner then edges[key]=edge end
-    end
-    return {nodes=graph.nodes,edges=edges}
-end
+local diag045 = require("scripts.catenary_diag_045")
+local technical046 = require("scripts.technical_network_046")
+-- Legacy wire managers are retained for cleanup only. 046 technical and visual graphs are independent.
+local function empty_native_graph() return {nodes={},edges={}} end
 
 local TRAIN_UPDATE_INTERVAL = 30
 local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
@@ -67,12 +62,14 @@ local function ensure_storage()
     native_wire_probe026.ensure_storage()
     nativewire028.ensure_storage()
     art030.ensure_storage()
+    technical046.ensure_storage()
 end
 
 script.on_init(function()
     ensure_storage()
     power019.rebuild_all()
-    nativewire028.rebuild_all(native_curve_graph(power019.graph()))
+    nativewire028.rebuild_all(empty_native_graph())
+    technical046.rebuild_all(power019.graph())
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
 end)
@@ -80,7 +77,8 @@ script.on_configuration_changed(function()
     ensure_storage()
     native_wire_probe026.cleanup_on_version_change()
     power019.rebuild_all()
-    nativewire028.rebuild_all(native_curve_graph(power019.graph()))
+    nativewire028.rebuild_all(empty_native_graph())
+    technical046.rebuild_all(power019.graph())
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
 end)
@@ -386,8 +384,9 @@ local function on_built(event)
 
     power019.on_built(event)
     if entity.name=="em-35kv-catenary-pole" or entity.name=="em-35kv-catenary-pole-north" then
-        nativewire028.mark_dirty()
+        technical046.mark_dirty()
         art030.mark_dirty()
+        ghost_visual023.mark_dirty()
     end
     ghost_visual023.on_built(entity)
     if RAIL_NAMES[entity.name] then
@@ -409,7 +408,8 @@ local function cleanup_train_for_entity(event)
     if not (entity and entity.valid) then return end
 
     native_wire_probe026.on_mast_removed(entity)
-    nativewire028.on_parent_removed(entity)
+    technical046.on_parent_removed(entity)
+    if entity.name=="em-35kv-catenary-pole" or entity.name=="em-35kv-catenary-pole-north" then ghost_visual023.mark_dirty() end
     art030.on_parent_removed(entity)
     power019.on_removed(event)
     ghost_visual023.on_removed(entity)
@@ -552,11 +552,15 @@ local function on_tick(event)
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
     if power019.on_tick(event.tick) then
-        nativewire028.mark_dirty()
+        technical046.mark_dirty()
+        ghost_visual023.mark_dirty()
         art030.mark_dirty()
     end
     local graph=power019.graph()
-    nativewire028.on_tick(event.tick,native_curve_graph(graph))
+    if technical046.on_tick(event.tick,graph) then
+        art030.mark_dirty()
+        ghost_visual023.mark_dirty()
+    end
     art030.on_tick(event.tick,graph)
     ghost_visual023.on_tick(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
@@ -677,17 +681,17 @@ commands.add_command("em-25kv-status", "Show auto-connected 25 kV catenary graph
     local player=event.player_index and game.get_player(event.player_index)
     if player and player.valid then
         power019.status(player)
-        nativewire028.status(player,native_curve_graph(power019.graph()))
+        technical046.status(player)
         art030.status(player)
     end
 end)
-commands.add_command("em-25kv-tune", "Calibrate 8 C-arm wire hangers: FACE DX DY or reset.", function(event)
+commands.add_command("em-25kv-pairs", "Read-only pair diagnostics: select mast; optional neighbour ID.", function(event)
     local player=event.player_index and game.get_player(event.player_index)
-    if player and player.valid then
-        nativewire028.tune(player,event,native_curve_graph(power019.graph()))
-        art030.mark_dirty()
-        art030.sync(power019.graph())
-    end
+    if player and player.valid then diag045.report(player,event.parameter) end
+end)
+commands.add_command("em-25kv-tune", "Retired: fixed footprint technical anchors.", function(event)
+    local player=event.player_index and game.get_player(event.player_index)
+    if player and player.valid then player.print("[EM046] Tuning retired: visible pixel anchors and fixed technical footprint.") end
 end)
 -- Keep the former console command harmless in old saves and tutorials.
 commands.add_command("em-25kv-probe", "Retired; 0.1.28 auto wires need no command.", function(event)

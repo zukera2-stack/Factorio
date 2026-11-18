@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: main # 0.1.42 promoted, next experiments branch from main
-  feature_version: "0.1.42" # user-accepted clean build, stable main
-  feature_status: 042_merged_main_user_game_test_pass_extended_matrix_pending
+  active_feature_branch: experiment/package-cleanup-048 # test only
+  feature_version: "0.1.48"
+  feature_status: 048_user_accepted_HSR_visual_continuity_isolation_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -24,13 +24,13 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.42" # stable main via PR 20
+  mod_version: "0.1.48" # experimental only
   main_baseline_mod_version: "0.1.42" # merged PR #20
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
   last_state_update: "2026-11-18"
-  documentation_audit: 042_main_merge_final_game_log_2026_11_18
+  documentation_audit: 048_confirmed_connectivity_visibility
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -63,6 +63,14 @@ accepted_visual_042:
   native_undo_changed: false
   actual_electric_power_transfer: false
   current_docs: docs/FILE_RELEVANCE_042.md
+  next_visual_experiment_version: "0.1.44"
+  next_visual_experiment_branch: experiment/25kv-chord-wires-044
+  source_screenshots_zip_sha256: 6934acd38ba981a29ac7f093006ace9f84924b010c5e53082c507899345c5313
+  source_screenshots_count: 11
+  chord_decision: tensioned_contact_chord_between_registration_points
+  rail_graph_sha256_restored_042: b3940d1921c990bcca7ea19ac7f73b386ae017bd3c99f1f3911f3bcdb00f1094
+  visual_fix_pending_user_game_acceptance: true
+  visual_fix_report: docs/research/25kv-curved-catenary-screenshot-audit-044.md
   final_game_log_sha256: fb5e79a9f5f3429b1c7e2f4c9454a6129c167519e80229ff3f65a87cf450dd7e
   final_game_build: Factorio_2.1.24_build_87808
   final_game_report: docs/tests/catenary-0.1.42-main-acceptance-2026-11-18.md
@@ -84,7 +92,7 @@ native_wire_probe_026:
   applied_to_main: false
   actual_electric_power_transfer: false
   documentation: docs/research/catenary-sprite-pilot-0.1.30.md
-  game_test_instructions: ElectrifiedMainline/TEST_NATIVE_WIRE_026.txt
+  game_test_instructions: docs/tests/manual/TEST_NATIVE_WIRE_026.txt
 
 latest_uploaded_archive:
   version: "0.1.13"
@@ -530,7 +538,16 @@ repository_structure:
     - control.lua
   prototype_implementation: prototypes/bootstrap.lua
   runtime_implementation: scripts/control.lua
-  optional_integrations_directory: compatibility/
+  optional_integrations_directory: compatibility/ # reserved; create only for implemented adapters
+  manual_test_guides: docs/tests/manual/
+  developer_notes: docs/development/
+  sprite_qa_evidence: docs/tests/evidence/SPRITES_039_QA.json
+  runtime_package_script: scripts/package_mod.py
+  distributable_ZIPs: GitHub_Actions_only
+  locally_repacked_distributions: forbidden
+  generated_install_archives: build/package/
+  generated_qa_atlases: build/qa/
+  historical_rollback_archive: dist/ElectrifiedMainline_0.1.8.zip
   ai_handoff: docs/AI_CONTEXT.md
   machine_readable_state: docs/PROJECT_STATE.yaml
 
@@ -781,7 +798,7 @@ repository_cleanup_2026_11_15:
   removed_file_count: 21
   removed_tree_bytes: 6866337
   removed_groups: [large_source_art, historical_021_zip, obsolete_4dir_atlas, outdated_in_mod_test_memos]
-  new_active_022_test_memo: ElectrifiedMainline/TEST_FACING_022.txt
+  new_active_022_test_memo: docs/tests/manual/TEST_FACING_022.txt
   active_eight_c_mast_sprites_kept: true
   active_shadow_kept: true
   current_lua_and_prototypes_unchanged: true
@@ -860,7 +877,7 @@ native_mast_body_024:
   user_approved_main_merge: true
   screenshot_sha256: fd73991e6fc408e2a6cc931cbc5d1c47189e622f283844e1bb792111badefd12
   log_sha256: 506bee98a83260408ff8e3fa50307800b7132a6a7fcd9050acf7a139e7608af9
-  test_guide: ElectrifiedMainline/TEST_VISUAL_024.txt
+  test_guide: docs/tests/manual/TEST_VISUAL_024.txt
 
 accepted_milestone_024:
   version: "0.1.24"
@@ -888,3 +905,98 @@ accepted_milestone_024:
   circle_markers: approved
   real_traction_power_MW: 0
   upcoming_scope: contact_and_messenger_wire_art_then_real_electricity
+
+geometry_045:
+  research: docs/research/25kv-unified-geometry-045.md
+  source: ElectrifiedMainline/scripts/catenary_visual_geometry_045.lua
+  status: implemented_offline_QA_passed_then_atlas_and_diag_refined
+  graph_changed: false
+  png_changed: false
+  diagnostic_command: em-25kv-pairs
+
+network_046:
+  research: docs/research/25kv-isolated-network-preview-046.md
+  source: ElectrifiedMainline/scripts/technical_network_046.lua
+  technical_reach: 40
+  native_reach: 0
+  origin: script
+  max_degree: 5
+  visual_independent: true
+  automated_status: passed
+  tested_source_commit: "1a1f62ee9c805c9919b1ca15beb8fc6c90ea2712"
+  build_run_id: 44403984586
+  artifact_id: 14473543411
+  archive_sha256: 7db385cb2e53716c99c8fd2568309e991a1717d4f80a4ee81b623bd3c1440fdd
+  game_status: pending_zero_reach_script_wire_and_isolation_QA
+  ghost_scope: placed_single_ghost_to_real_masts
+  transfer_MW: 0
+
+network_047:
+  research: docs/research/25kv-relaxed-visual-hsr-gate-047.md
+  source_046_game_log: factorio-current(6).log
+  source_046_script_connections_confirmed: true
+  source_046_factory_isolation_verified: false
+  visual_reach: 32
+  visual_max_degree: 2
+  visual_connected_path_required: false
+  technical_reach: 40
+  technical_max_degree: 5
+  technical_connected_HSR_required: true
+  technical_walk_limit: 64
+  technical_walk_visits: 192
+  native_reach: 0
+  origin: script
+  automated_status: passed
+  tested_source_commit: "8e760a4c6c2d40d7150407f9d05e4795b1badd18"
+  build_run_id: 44408148534
+  artifact_id: 14476051835
+  archive_sha256: 6b675712330cb092cd5128e20c680dcf9d349a6fbf8208d8f5f915c56338bbed
+  game_status: pending
+  transfer_MW: 0
+
+network_048:
+  research: docs/research/25kv-visible-connectivity-048.md
+  source_047_game_log: factorio-current(7).log
+  source_047_visual_user_accepted: true
+  source_047_factory_isolation_verified: false
+  visual_candidate_policy_047_unchanged: true
+  visual_requires_verified_script_component: true
+  visual_requires_bounded_HSR_path: true
+  visual_requires_voltage: false
+  ghost_scope: single_placed_ghost_planned_graph_forecast
+  transfer_MW: 0
+  automated_status: passed
+  tested_source_commit: "9afb6beef2c8542d86d4cd8ce6673ed95fe3bf0b"
+  build_run_id: 44411407669
+  artifact_id: 14475494795
+  archive_sha256: 0b157f746cc2d3b258cae9594c117c3929637e22fe414da30bfc068009d6493a
+  game_status: user_accepted_HSR_visual_continuity
+  live_evidence: docs/tests/catenary-0.1.48-user-acceptance.md
+  live_log_sha256: c000d276150c02354d0ef2caf6b15efed916549642dcd5c6109910d30e85da59
+  real_HSR_required_user_confirmed: true
+  rail_ghost_does_not_restore_wire_user_confirmed: true
+  vanilla_replacement_breaks_wire_user_confirmed: true
+  real_network_ID_isolation_verified: false
+  visual_scope_frozen: true
+
+repository_cleanup_048:
+  scope: packaging_and_document_location_only
+  base_commit: "7b2a123447fdeb48c096f2922663950949c39b05"
+  moved_without_content_change: 20
+  runtime_files_expected: 51
+  runtime_content_changed: false
+  mod_version_unchanged: true
+  game_status: user_accepted_same_048_runtime_visual_scope
+  main_unchanged: true
+  inventory_policy: reject_unexpected_mod_files
+  report: docs/REPOSITORY_LAYOUT.md
+  source_commit: "6027c9d789cef8b6ba5ee78cce355758e76d50a6"
+  build_run_id: 44413378503
+  artifact_id: 14478116616
+  clean_archive_sha256: dfdeeab22c4cfb16cc9ec8e319d8566362cf86478d440ce7d738b55f9f309d15
+  clean_archive_bytes: 302634
+  previous_archive_bytes: 322746
+  archive_entries: 51
+  identical_runtime_file_bytes: true
+  package_boundary_tests: passed
+  pull_request: 27

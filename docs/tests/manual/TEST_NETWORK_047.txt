@@ -1,0 +1,6 @@
+0.1.47 EXPERIMENTAL — use backup of ВСМ save.
+1. Install instead of 046. Reproduce pairs 2516/2539 and 2717/2778 or similar. Cosmetic spans are eligible regardless of side/tangent/curve; actual rendering depends on neighbour selection. Both straight and curve 32 cells. /em-25kv-pairs.
+2. Two masts near connected HSR <=40 cells: /em-25kv-status on each, compare network_id and script-connected. Two nearby disconnected HSR paths: no technical link, cosmetic candidate allowed. Delete middle rail, expect break; restore, expect reconnect. Replace with ordinary rail, expect no technical connection. Off-rail mast no helper.
+3. Compare factory poles before/after, no shared technical network. No MW/bridge.
+4. Place ghost on opposite side, compare preview vs actual. Remove/cancel/revive. Save/reload, robots, native Undo/Redo, Upgrade Planner. Report screenshots/log.
+5. Visual nearest heuristic can join very close parallel routes. Technical path 64 approximate route tiles/192 visits; long detours rejected. No merge until accepted.

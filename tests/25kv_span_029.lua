@@ -29,6 +29,8 @@ assert(not s.compatible(a,s33,L.STRAIGHT))
 local p=assert(io.open("ElectrifiedMainline/prototypes/native_wire_auto_028.lua")):read("*a")
 assert(p:find('require("scripts.catenary_limits_029").WIRE_REACH',1,true))
 local script=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
+local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
+if not info:find('"version": "0.1.47"',1,true) and not info:find('"version": "0.1.48"',1,true) then
 for _,marker in ipairs({
  'local SPAN,CURVE_SPAN,RADIUS = limits.STRAIGHT,limits.CURVE,3',
  'position=e.position,radius=CURVE_SPAN,name=POLES',
@@ -38,5 +40,9 @@ for _,marker in ipairs({
  'and limits.allowed(a,b,info)',
  'local samples=math.max(3,math.ceil(distance/2))'
 }) do assert(script:find(marker,1,true),marker) end
+else
+ assert(script:find("limits.WIRE_REACH*1.5+4",1,true))
+ assert(script:find("visual047.plan(s.nodes)",1,true))
+end
 assert(not script:find("rendering.draw_line",1,true))
 print("0.1.29 limits straight=32 curve=16 connector=40: pure Lua PASS")

@@ -1,3 +1,51 @@
+## 0.1.48 — scoped live user acceptance (no code change)
+
+- Factorio 2.1.24: user confirmed actual HSR requirement, rail ghosts do not restore wires, vanilla replacement breaks visible spans. Native Undo/robot restoration in log; no Lua errors. [Evidence](docs/tests/catenary-0.1.48-user-acceptance.md). Factory network IDs still unmeasured.
+- Owner policy: distribute only GitHub Actions-built install ZIPs. No local repacking. Main unchanged.
+
+## 0.1.48 — packaging cleanup (no gameplay change)
+
+- Moved 16 manual test guides, sprite QA JSON and three developer notes out of the mod folder without changing their contents.
+- Game-only packaging verifies exact payload and CRC, fails on unexpected files, separates generated game ZIPs and QA atlases, preserves historical 0.1.8 rollback. Version unchanged; no new game behavior.
+
+# 0.1.48 (experimental, 2026-11-18)
+
+- Render cosmetic candidates only for confirmed own script-connected components and bounded HSR paths. Actual indirect connectivity qualifies; merely planned or equal network IDs do not.
+- Rail gaps, native connector failures and component changes remove invalid spans; restoration brings them back. No voltage gate. Ghost forecasts use the same planned technical graph without creating anchors.
+- Preserve 047 neighbour policy, 045 geometry, all PNGs, prototypes and native Undo. Automated tests passed; game QA pending.
+
+# 0.1.47 (experimental, 2026-11-18)
+
+- Relax cosmetic spans: 32 cells both curves and straights, max two neighbours, no side/tangent/path gate; nearest projected track points and shortcut filtering.
+- Require bounded continuous custom HSR path and nearby rail for invisible script copper: 40 cells, max five. Replan on rail edits. Preserve zero native wire reach, no MW transfer.
+- Preserve all approved PNGs and single placed ghost dry-run, native Undo; CI passed, game QA pending.
+
+# 0.1.46 (experimental, 2026-11-18)
+
+- Separate one-per-real-mast technical anchors, zero native reach, bounded script copper, whitelist and audit.
+- Independent 045 pixel-strand renderer and one-ghost dry-run visual preview.
+- Retire old duplicate curve/art helper managers from runtime; cleanup on migration. No native Undo changes or power transfer.
+
+# 0.1.45 (experimental, 2026-11-18)
+
+- Pixel-authored contact and steel attachment points independent of hidden calibration.
+- Near-vertical-only bow, internal-only sprite overlap, actual polyline droppers.
+- Read-only pair diagnostics; graph unchanged. Pending game test.
+
+## 0.1.44 — curved catenary chord geometry corrected (2026-11-18, test only)
+
+- Studied 11 Factorio screenshots of 0.1.43: thick steel cable, faint copper-riveted droppers and curved conductor ends incorrectly passing behind supports.
+- Removed rail-centre Catmull-Rom spline interpolation, replaced with taut copper wire chords between registered support tips on curved spans. Curved graph remains validated via connected ВСМ rails.
+- Restored byte-identical stable 0.1.42 rail topology code; kept all 12 approved 039 mast PNG and 3 copper/steel/rivet 043 textures. Steel cross-section scaled 0.40, copper 0.48, rivet droppers 1.14 width and at shorter intervals. NORTH_DROP=2.02, 32/16/40, Undo unchanged.
+- Added detailed screenshot issue audit, offline rendered geometry/reuse/cleanup regression and SHA256 asset+rail-graph gate; rendering allows up to 4 tiles beyond mast-spacing limits for C-arm tip reach, with max 12 textured segments per line. Graph eligibility remains 32/16. Pending user screenshot acceptance in Factorio. `main` remains 0.1.42.
+
+## 0.1.43 — experimental copper/steel catenary sprites (2026-11-18)
+
+- New PNG textures with exactly the previous sprite dimensions: contact copper wire `128×10`, steel messenger wire `128×10`, riveted steel/copper dropper `10×32`, transparent RGBA; SHA-256 pinned in CI.
+- All 25 kV straight and curved spans now use short rotated LuaRendering sprites. Curved geometry is sampled from **connected ВСМ rail centres**, smoothed using Catmull-Rom; short/individual curved rail shapes remain an approximate visual fit, pending game screenshot verification. The native curve connector topology remains, but its visible copper wires are disabled.
+- Added dynamic Lua mock test `tests/25kv_curve_sprites_043.lua`, shape/asset verifier `scripts/verify_043_assets.py`, in-game checklist `docs/tests/manual/TEST_CURVE_043.txt` and ZIP payload checks in GitHub Actions. Stable `main` remains 0.1.42 and `NORTH_DROP=2.02` unchanged.
+- No actual electric MW traction/energy transfer; this is **visual test build**.
+
 ## 0.1.42 — promoted to stable main (2026-11-18)
 
 - [PR #20](https://github.com/zukera2-stack/Factorio/pull/20) merged, commit `5e2625c49b40f03c1262507e2fbfd8862f91ba7f`. User tested the clean GitHub build and confirmed «все работает».
@@ -125,7 +173,7 @@
 - `prototypes/power_019.lua` sets `catenary.pictures` to shaft (one orientation), retains existing shadow and one wire connection point. Removes incorrect `placeable_position_visualization` as full cursor picture.
 - Lua faces still selected by unchanged RailEnd algorithm. Built mast and ghost render only cantilever/insulator with higher-object-above ordering; Factorio engine renders shaft, placement cursor and native ghost shaft.
 - The south item icon, circular rail-slot indicator, native build, ghost lifecycle, robotic construction, rail Upgrade Planner and Undo unchanged. Electricity 0 MW.
-- Added PNG integrity and geometry static QA (no engine test). Test guide in `ElectrifiedMainline/TEST_VISUAL_024.txt`. `main` 0.1.8 untouched.
+- Added PNG integrity and geometry static QA (no engine test). Test guide in `docs/tests/manual/TEST_VISUAL_024.txt`. `main` 0.1.8 untouched.
 
 ## 2026-11-15 — 0.1.23 user game evidence + native cursor API design decision (docs only)
 

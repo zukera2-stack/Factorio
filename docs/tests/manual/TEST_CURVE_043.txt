@@ -1,0 +1,11 @@
+ElectrifiedMainline 0.1.43 — 25 kV sprite-wire game check
+
+1. Install ONLY the GitHub Actions artifact internal ZIP version 0.1.43.
+2. With one straight ВСМ line place 2 masts, verify copper straight contact, silver steel catenary messenger, copper-riveted steel vertical droppers.
+3. Build a curved ВСМ track using curved A/B entities, place masts on both sides as appropriate (<=16 tiles). Verify visible COPPER contact, SILVER steel messenger, copper-riveted dropper on the curve. No vanilla single brown copper wire should appear.
+4. Build a branch/junction, verify wires follow only a true connected high-speed rail path. Inspect curve offset against track; rail-centre spline is APPROXIMATE on individual curved rail pieces.
+5. Delete a middle curved rail and Undo/Redo, verify no stale draw objects. Delete/rebuild a mast and check ghosts / robots.
+6. Save and reload; verify no duplicate wires. Use /em-25kv-status (if available) and observe art 'missed' counts.
+7. If the curve deviates visually from the rail, capture a screenshot with two masts and curve; do NOT consider the curve art accepted without this in-game screenshot.
+
+Versions: 0.1.42 main remains stable; this is experiment/25kv-sprite-wires-043. Engine native copper helper is hidden in 0.1.43 but logical wiring stays.
