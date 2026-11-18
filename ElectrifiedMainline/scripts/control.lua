@@ -552,6 +552,7 @@ local function on_tick(event)
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
     if power019.on_tick(event.tick) then
+        technical046.mark_dirty()
         ghost_visual023.mark_dirty()
         art030.mark_dirty()
     end

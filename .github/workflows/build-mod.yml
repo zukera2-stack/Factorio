@@ -67,6 +67,13 @@ jobs:
             lua5.2 tests/25kv_technical_046.lua
             lua5.2 tests/25kv_preview_046.lua
           fi
+          if grep -q '"version": "0.1.47"' ElectrifiedMainline/info.json; then
+            lua5.2 tests/25kv_visual_042.lua
+            lua5.2 tests/25kv_visual_geometry_047.lua
+            lua5.2 tests/25kv_technical_047.lua
+            lua5.2 tests/25kv_preview_046.lua
+            lua5.2 tests/25kv_policy_047.lua
+          fi
 
       - name: Set up Python for experimental sprite atlas
         uses: actions/setup-python@v5
@@ -114,6 +121,16 @@ jobs:
           if grep -q '"version": "0.1.46"' ElectrifiedMainline/info.json; then
             python -m pip install "Pillow>=11,<13"
             python scripts/verify_046_assets.py
+            python scripts/atlas_045.py
+          fi
+
+      - name: Verify 0.1.47 art and HSR-gated electrical policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q '"version": "0.1.47"' ElectrifiedMainline/info.json; then
+            python -m pip install "Pillow>=11,<13"
+            python scripts/verify_047_assets.py
             python scripts/atlas_045.py
           fi
 

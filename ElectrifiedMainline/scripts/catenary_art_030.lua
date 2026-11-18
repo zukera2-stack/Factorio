@@ -1,4 +1,4 @@
--- 0.1.46 cosmetic contact spans only, independent of electrical links.
+-- 0.1.47 cosmetic contact spans only, independent of electrical links.
 local M={}
 local lim=require("scripts.catenary_limits_029")
 -- Factorio permits require ONLY during control.lua parsing. Resolve
@@ -73,7 +73,7 @@ end
 local function span_geometry(a,b,ma,mb,curve)
   local dx,dy=b.x-a.x,b.y-a.y
   local len=math.sqrt(dx*dx+dy*dy)
-  local limit=(curve and lim.CURVE or lim.STRAIGHT)+4
+  local limit=lim.STRAIGHT+4 -- same cosmetic reach on curves and straights
   if len<0.1 or len>limit+0.001 then return nil end
   local pieces=math.max(2,math.min(12,math.ceil(len/2.4)))
   local function lerp(p,q,t)

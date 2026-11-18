@@ -1,5 +1,6 @@
 -- Native copper electrical topology, separate from rail/visual graph.
 -- Zero ordinary reach: only this module may create our bounded script wires.
+local power=require("scripts.power_019")
 local M={REACH=require("scripts.catenary_limits_029").WIRE_REACH,MAX_DEGREE=5}
 local NAME="em-25kv-technical-anchor-046"
 local POLE,NORTH="em-35kv-catenary-pole","em-35kv-catenary-pole-north"
@@ -19,13 +20,14 @@ local function origin() return defines.wire_origin.script end
 local function key(a,b) if a>b then a,b=b,a end;return tostring(a)..":"..tostring(b) end
 local function group(n) return tostring(n.surface_index).."/"..n.force_name end
 local function d2(a,b) return (a.x-b.x)^2+(a.y-b.y)^2 end
--- Spatial buckets, deterministic nearest-first; no rail fields or visual edges.
+-- Spatial buckets and actual continuous HSR path; no visual edges.
 -- Vanilla-inspired 5-link cap. Not a claim to reproduce engine auto-connect.
-function M.plan(nodes)
+function M.plan(nodes,path_check)
+  path_check=path_check or power.technical_path
   local buckets,valid={},{}
   local function cell(n,x,y) return group(n).."/"..x.."/"..y end
   for id,n in pairs(nodes) do
-    if mast(n.name) then
+    if mast(n.name) and n.rail_adjacent and n.rail_id then
       valid[id]=n
       local k=cell(n,math.floor(n.x/M.REACH),math.floor(n.y/M.REACH))
       buckets[k]=buckets[k] or {};buckets[k][#buckets[k]+1]=id
@@ -54,7 +56,7 @@ function M.plan(nodes)
       -- Avoid redundant triangles like ordinary short-neighbour wiring.
       local redundant=false
       for n in pairs(adj[e.a] or {}) do if adj[e.b] and adj[e.b][n] then redundant=true;break end end
-      if not redundant then
+      if not redundant and path_check(valid[e.a],valid[e.b]) then
         edges[key(e.a,e.b)]=e
         adj[e.a]=adj[e.a] or {};adj[e.b]=adj[e.b] or {}
         adj[e.a][e.b]=true;adj[e.b][e.a]=true
@@ -121,9 +123,9 @@ function M.sync(graph)
   local nodes,parents={},{}
   for id,n in pairs(graph.nodes or {}) do
     local p=mast(n.name) and get(id)
-    if p and mast(p.name) then
+    if p and mast(p.name) and n.rail_adjacent and n.rail_id then
       nodes[id]={id=id,name=p.name,x=p.position.x,y=p.position.y,
-        surface_index=p.surface.index,force_name=p.force.name}
+        surface_index=p.surface.index,force_name=p.force.name,rail_adjacent=true,rail_id=n.rail_id}
       parents[id]=p
     end
   end
@@ -149,7 +151,7 @@ function M.sync(graph)
       if ok and res then connected=connected+1
       else
         missed=missed+1
-        log("[EM046 tech] script copper refused "..key(e.a,e.b).." "..tostring(res))
+        log("[EM047 tech] script copper refused "..key(e.a,e.b).." "..tostring(res))
       end
     else missed=missed+1 end
   end
@@ -176,7 +178,7 @@ function M.on_tick(tick,graph)
   if s.dirty or tick%600==0 then M.sync(graph)
   elseif tick%60==0 then
     local n,f=audit(s)
-    if n>0 or f>0 then log("[EM046 tech] unauthorized removed="..n.." failed="..f);s.dirty=true end
+    if n>0 or f>0 then log("[EM047 tech] unauthorized removed="..n.." failed="..f);s.dirty=true end
   end
 end
 function M.inspect_pair(a,b)
@@ -191,17 +193,17 @@ function M.status(player)
   local s=M.ensure_storage();local n=0
   for _ in pairs(s.helpers) do n=n+1 end
   local v=s.stats
-  local msg=string.format("[EM046 tech] anchors=%d desired=%d connected=%d missed=%d anchor_fail=%d removed=%d audit_failed=%d reach=40 origin=script MW=0",
+  local msg=string.format("[EM047 tech] anchors=%d desired=%d connected=%d missed=%d anchor_fail=%d removed=%d audit_failed=%d reach=40 HSR-continuous origin=script MW=0",
     n,v.desired or 0,v.connected or 0,v.missed or 0,v.failures or 0,v.removed or 0,v.audit_failed or 0)
   player.print(msg);log(msg)
   local e=player.selected
   if e and e.valid and mast(e.name) then
     local h=helper(s.helpers[e.unit_number]);local c=conn(h,false)
-    local detail="[EM046 tech] mast="..e.unit_number.." anchor="..tostring(h and h.unit_number).." network_id="..tostring(c and c.network_id)
+    local detail="[EM047 tech] mast="..e.unit_number.." anchor="..tostring(h and h.unit_number).." network_id="..tostring(c and c.network_id)
     player.print(detail);log(detail)
     if c then for _,link in pairs(c.real_connections) do
       local target=link.target and link.target.valid and link.target.owner
-      if target and target.valid then log("[EM046 tech] neighbour="..target.name.." id="..tostring(target.unit_number).." origin="..tostring(link.origin)) end
+      if target and target.valid then log("[EM047 tech] neighbour="..target.name.." id="..tostring(target.unit_number).." origin="..tostring(link.origin)) end
     end end
   end
 end
