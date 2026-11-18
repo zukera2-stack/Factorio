@@ -32,3 +32,5 @@ Single pixel landmark source for all 8 PNGs; convert as (pixel - image center)*0
 
 ## 7–9. Implementation and verification
 Implemented: shared pixel register, actual parent origin, independently registered Cu/steel endpoints, near-vertical-only bow, internal overlap, polyline droppers. Hidden helper calibration unchanged. Read-only pair diagnosis reports current filters/graph outcome; it does not reconstruct every historical selection decision. Added exact endpoint tests and PNG atlas CI. No engine test yet.
+
+First CI 44384880890: syntax passed; historical ghost test fell through to removed 024 assets because its version gate recognized only 042–044. Extend gate to 045 while retaining all ghost assertions; rerun.

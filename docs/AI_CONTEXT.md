@@ -1,4 +1,4 @@
-> **0.1.45 EXPERIMENT — pixel-authored attachment geometry, pending game verification.** Visible endpoints use unchanged 039 arm PNG landmarks and exact console shift, independent of hidden helpers. Steel separate endpoints; near-vertical-only bow. Stable 042 graph, assets, limits, Undo unchanged. `/em-25kv-pairs` logs missing-span evidence. [Research](research/25kv-unified-geometry-045.md). Main stays 0.1.42.
+> **0.1.45 EXPERIMENT — pixel-authored attachment geometry, pending game verification. Initial CI corrected historical ghost test version gate.** Visible endpoints use unchanged 039 arm PNG landmarks and exact console shift, independent of hidden helpers. Steel separate endpoints; near-vertical-only bow. Stable 042 graph, assets, limits, Undo unchanged. `/em-25kv-pairs` logs missing-span evidence. [Research](research/25kv-unified-geometry-045.md). Main stays 0.1.42.
 
 # ACTIVE HANDOFF: EXPERIMENT 0.1.44 — CURVED CATENARY CHORDS
 
