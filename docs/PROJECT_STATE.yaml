@@ -1010,6 +1010,12 @@ accepted_milestone_048:
   visual_scope: user_accepted_HSR_visual_continuity
   evidence: docs/tests/catenary-0.1.48-user-acceptance.md
   clean_ci_artifact: 14478116616
+  main_ci_build_run_id: 44415412191
+  main_ci_artifact_id: 14478562971
+  main_ci_docs_run_id: 44415412661
+  main_ci_status: success
+  historical_prs_22_to_26: closed_merged_as_ancestors
+  historical_branch_count_indexed: 45
   factory_network_isolation_measured: false
   transfer_MW: 0
   obsolete_branch_register: docs/history/BRANCH_ARCHIVE_048.md
