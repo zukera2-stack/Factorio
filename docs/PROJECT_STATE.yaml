@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: main # 0.1.42 promoted, next experiments branch from main
-  feature_version: "0.1.42" # user-accepted clean build, stable main
-  feature_status: 042_merged_main_user_game_test_pass_extended_matrix_pending
+  active_feature_branch: experiment/25kv-sprite-wires-043 # test only, main stable 0.1.42
+  feature_version: "0.1.43" # new copper/steel PNGs and curve rendering
+  feature_status: 043_curve_sprite_experiment_waiting_user_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -24,13 +24,13 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.42" # stable main via PR 20
+  mod_version: "0.1.43" # experimental only
   main_baseline_mod_version: "0.1.42" # merged PR #20
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
   last_state_update: "2026-11-18"
-  documentation_audit: 042_main_merge_final_game_log_2026_11_18
+  documentation_audit: 043_curve_sprite_asset_sha256_and_mocked_display_CI
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
