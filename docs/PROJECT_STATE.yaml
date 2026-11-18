@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: experiment/25kv-relaxed-visual-hsr-gate-047 # test only
-  feature_version: "0.1.47"
-  feature_status: 047_CI_passed_pending_game_QA
+  active_feature_branch: experiment/25kv-visible-connectivity-048 # test only
+  feature_version: "0.1.48"
+  feature_status: 048_verified_visible_continuity_pending_QA
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -24,13 +24,13 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.47" # experimental only
+  mod_version: "0.1.48" # experimental only
   main_baseline_mod_version: "0.1.42" # merged PR #20
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
   last_state_update: "2026-11-18"
-  documentation_audit: 047_relaxed_visual_HSR_technical_gate
+  documentation_audit: 048_confirmed_connectivity_visibility
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -944,3 +944,16 @@ network_047:
   archive_sha256: 6b675712330cb092cd5128e20c680dcf9d349a6fbf8208d8f5f915c56338bbed
   game_status: pending
   transfer_MW: 0
+
+network_048:
+  research: docs/research/25kv-visible-connectivity-048.md
+  source_047_game_log: factorio-current(7).log
+  source_047_visual_user_accepted: true
+  source_047_factory_isolation_verified: false
+  visual_candidate_policy_047_unchanged: true
+  visual_requires_verified_script_component: true
+  visual_requires_bounded_HSR_path: true
+  visual_requires_voltage: false
+  ghost_scope: single_placed_ghost_planned_graph_forecast
+  transfer_MW: 0
+  game_status: pending

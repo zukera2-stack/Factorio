@@ -1,0 +1,6 @@
+0.1.48 EXPERIMENTAL — use backup of ВСМ save.
+1. Install instead of 047. Build same visual layout; graphics and nearest selection unchanged.
+2. Remove middle HSR (both endpoint masts still beside real HSR). After rail queue refresh, corresponding span must disappear if no local HSR path / verified component. /em-25kv-pairs: visual=no-HSR-path or technical-split, component=separate if network split. Undo creates rail ghosts: wire returns only after REAL rails restored by robot. Compare screenshots.
+3. Connected masts with indirect native path stay drawn if visual candidates and bounded HSR path. No direct script wire needed. /em-25kv-status selected masts: network_id and verified_component. Check vanilla network IDs separately; no MW.
+4. Place ghost across gap: arm but no predicted span. Restore track: preview returns; revive; no tinted remnants. Check normal ghost, cancellation, Undo/Redo, reload. Actual native connection failure hides spans regardless of forecast.
+5. A bounded alternate rail route can preserve continuity; long indirect paths alone do not render across a local disconnected route. No voltage test, no new PNGs. Send log + screenshots. Do not merge until game accepted.

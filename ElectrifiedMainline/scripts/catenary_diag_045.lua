@@ -20,10 +20,10 @@ function M.report(player,param)
   local g=power.graph()
   local sel=player.selected
   local a=sel and sel.valid and g.nodes[sel.unit_number]
-  if not pole(a) then player.print("[EM047] Select a real catenary mast first.");return end
+  if not pole(a) then player.print("[EM048] Select a real catenary mast first.");return end
   local target=tonumber(param)
-  if param and param~="" and not target then player.print("[EM047] Optional neighbour unit ID must be numeric.");return end
-  log("[EM047 pair] selected "..node(a))
+  if param and param~="" and not target then player.print("[EM048] Optional neighbour unit ID must be numeric.");return end
+  log("[EM048 pair] selected "..node(a))
   local count=0
   for id,b in pairs(g.nodes) do
     if id~=a.id and pole(b) and b.surface_index==a.surface_index and b.force_name==a.force_name then
@@ -41,14 +41,15 @@ function M.report(player,param)
           else cause="nearer-intermediate-mast-or-not-selected" end
         end
         local tech=technical.inspect_pair(a.id,b.id)
+        local component=technical.same_component(a.id,b.id) and "same" or "separate"
         local why=not (a.rail_adjacent and b.rail_adjacent) and "mast-without-HSR" or d>limits.WIRE_REACH and "technical-distance-over-40" or not info and "no-bounded-connected-HSR-path" or "HSR-path-ok"
-        log("[EM047 pair] "..node(b))
-        log(string.format("[EM047 pair] a=%d b=%d distance=%.3f rail_path=%s visual=%s degrees=%d,%d technical=%s gate=%s",
-          a.id,b.id,d,info and tostring(info.length) or "none",cause,da,db,tech,why))
+        log("[EM048 pair] "..node(b))
+        log(string.format("[EM048 pair] a=%d b=%d distance=%.3f rail_path=%s visual=%s degrees=%d,%d technical=%s component=%s gate=%s",
+          a.id,b.id,d,info and tostring(info.length) or "none",cause,da,db,tech,component,why))
         count=count+1
       end
     end
   end
-  player.print("[EM047] "..count.." pair reports written to factorio-current.log (filter EM047 pair).")
+  player.print("[EM048] "..count.." pair reports written to factorio-current.log (filter EM048 pair).")
 end
 return M

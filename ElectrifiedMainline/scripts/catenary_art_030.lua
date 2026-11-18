@@ -1,9 +1,10 @@
--- 0.1.47 cosmetic contact spans only, independent of electrical links.
+-- 0.1.48: same cosmetic candidates and geometry; render only confirmed technical continuity.
 local M={}
 local lim=require("scripts.catenary_limits_029")
 -- Factorio permits require ONLY during control.lua parsing. Resolve
 -- dependencies now, never while on_configuration_changed/on_tick runs.
 local visible=require("scripts.catenary_visual_geometry_045")
+local technical=require("scripts.technical_network_046")
 local PARENT,HELPER="em-35kv-catenary-pole","em-25kv-art-anchor-030"
 local NORTH="em-35kv-catenary-pole-north"
 local function is_parent(name) return name==PARENT or name==NORTH end
@@ -169,17 +170,18 @@ end
 function M.sync(graph)
   local s=M.ensure_storage()
   local keep={}
-  local drawn,eligible=0,0
+  local drawn,eligible,blocked=0,0,0
   for key,e in pairs(graph.edges or {}) do
     if valid_edge(graph,e) then
       eligible=eligible+1
-      if draw(s,key,graph.nodes[e.a],graph.nodes[e.b],e) then
-        keep[key]=true;drawn=drawn+1
-      end
+      local na,nb=graph.nodes[e.a],graph.nodes[e.b]
+      if technical.span_state(na,nb)=="connected" then
+        if draw(s,key,na,nb,e) then keep[key]=true;drawn=drawn+1 end
+      else blocked=blocked+1 end
     end
   end
   for key in pairs(s.draws) do if not keep[key] then erase(s,key) end end
-  s.stats={eligible=eligible,drawn=drawn,missed=eligible-drawn}
+  s.stats={eligible=eligible,drawn=drawn,blocked=blocked,missed=eligible-drawn-blocked}
   s.dirty=false
 end
 function M.rebuild_all(graph)
@@ -208,13 +210,15 @@ function M.on_tick(tick,graph)
 end
 function M.status(player)
   local v=M.ensure_storage().stats
-  player.print(string.format("[EM046 visual] eligible=%d drawn=%d missed=%d (cosmetic only)",
-    v.eligible or 0,v.drawn or 0,v.missed or 0))
+  player.print(string.format("[EM048 visual] eligible=%d drawn=%d blocked=%d render_missed=%d (verified continuity, not voltage)",
+    v.eligible or 0,v.drawn or 0,v.blocked or 0,v.missed or 0))
 end
 function M.inspect_pair(graph,a,b)
   local key=tostring(math.min(a,b))..":"..tostring(math.max(a,b))
   local e=graph.edges[key]
   if not e or e.kind~="contact" then return "no-contact-edge" end
+  local state=technical.span_state(graph.nodes[a],graph.nodes[b])
+  if state~="connected" then return state end
   local s=M.ensure_storage()
   local row=s.draws[key]
   if not row then return "no-render-record" end

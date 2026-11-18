@@ -7,6 +7,7 @@ local M={}
 local power=require("scripts.power_019")
 local mast034=require("scripts.mast_visual_034")
 local art=require("scripts.catenary_art_030")
+local technical=require("scripts.technical_network_046")
 local POLE="em-35kv-catenary-pole"
 local NORTH="em-35kv-catenary-pole-north"
 local POLES={POLE,NORTH}
@@ -51,7 +52,7 @@ function M.on_built(entity)
     art.clear_preview(spans[k]);spans[k]=nil
     -- Same RailEnd-based facing selection as real poles; no entity rotation.
     local face=power.facing_at(entity)
-    local node,predicted=power.preview_at(entity)
+    local node,predicted,preview_nodes=power.preview_at(entity)
     if node and not node.rail_adjacent then return false end
     face=node and node.face or face
     local obj=rendering.draw_sprite{
@@ -63,9 +64,14 @@ function M.on_built(entity)
     }
     sprites[k]=obj.id
     spans[k]={}
-    for _,span in ipairs(predicted or {}) do
-        for _,rid in ipairs(art.preview_span(entity.surface,entity.force,span.a,span.b,span.corner)) do
-            spans[k][#spans[k]+1]=rid
+    if preview_nodes and predicted and #predicted>0 then
+        local components=technical.preview_components(preview_nodes)
+        for _,span in ipairs(predicted) do
+            if technical.span_state(span.a,span.b,components)=="connected" then
+                for _,rid in ipairs(art.preview_span(entity.surface,entity.force,span.a,span.b,span.corner)) do
+                    spans[k][#spans[k]+1]=rid
+                end
+            end
         end
     end
     return true

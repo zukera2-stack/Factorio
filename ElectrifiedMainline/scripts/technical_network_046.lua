@@ -70,6 +70,7 @@ function M.ensure_storage()
   storage.em=storage.em or {}
   local s=storage.em.technical_046
   if not s then s={helpers={},edges={},stats={},dirty=true};storage.em.technical_046=s end
+  s.components=s.components or {}
   return s
 end
 local function destroy(id)
@@ -118,6 +119,61 @@ local function audit(s)
   end
   return removed,failed
 end
+-- Stable component label = minimum unit number in the component.
+-- Only add edges supplied by the caller; runtime supplies verified script links,
+-- preview supplies planned edges for hypothetical construction.
+function M.components(edges)
+  local parent={}
+  local function root(id)
+    if not parent[id] then parent[id]=id end
+    local r=id
+    while parent[r]~=r do r=parent[r] end
+    while parent[id]~=id do local p=parent[id];parent[id]=r;id=p end
+    return r
+  end
+  for _,e in pairs(edges) do
+    local a,b=root(e.a),root(e.b)
+    if a~=b then parent[math.max(a,b)]=math.min(a,b) end
+  end
+  local result={}
+  for id in pairs(parent) do result[id]=root(id) end
+  return result
+end
+function M.same_component(a,b,components)
+  local c=components or M.ensure_storage().components
+  return a~=b and c[a]~=nil and c[a]==c[b]
+end
+function M.span_state(a,b,components)
+  if not (a and b and power.technical_path(a,b)) then return "no-HSR-path" end
+  if not M.same_component(a.id,b.id,components) then return "technical-split" end
+  return "connected"
+end
+function M.preview_components(nodes)
+  -- Pure forecast. No electric entity, connector, storage or Undo mutation.
+  return M.components(M.plan(nodes))
+end
+function M.refresh_components()
+  local s=M.ensure_storage()
+  local verified={}
+  for k,e in pairs(s.edges) do
+    local a,b=helper(s.helpers[e.a]),helper(s.helpers[e.b])
+    local ca,cb=conn(a,false),conn(b,false)
+    if a and b and ca and cb and a.surface.index==b.surface.index
+       and a.force.name==b.force.name then
+      local ok,res=pcall(function() return ca.is_connected_to(cb,origin()) end)
+      if ok and res then verified[k]=e end
+    end
+  end
+  local next_components=M.components(verified)
+  local old=s.components
+  local changed=false
+  for id,v in pairs(next_components) do if old[id]~=v then changed=true;break end end
+  if not changed then
+    for id,v in pairs(old) do if next_components[id]~=v then changed=true;break end end
+  end
+  s.components=next_components
+  return changed
+end
 function M.sync(graph)
   local s=M.ensure_storage()
   local nodes,parents={},{}
@@ -151,13 +207,14 @@ function M.sync(graph)
       if ok and res then connected=connected+1
       else
         missed=missed+1
-        log("[EM047 tech] script copper refused "..key(e.a,e.b).." "..tostring(res))
+        log("[EM048 tech] script copper refused "..key(e.a,e.b).." "..tostring(res))
       end
     else missed=missed+1 end
   end
   s.stats={desired=desired,connected=connected,missed=missed,failures=failures,
     removed=removed,audit_failed=rejected}
   s.dirty=false
+  return M.refresh_components()
 end
 function M.mark_dirty() M.ensure_storage().dirty=true end
 function M.on_parent_removed(e)
@@ -175,11 +232,13 @@ function M.rebuild_all(graph)
 end
 function M.on_tick(tick,graph)
   local s=M.ensure_storage()
-  if s.dirty or tick%600==0 then M.sync(graph)
+  if s.dirty or tick%600==0 then return M.sync(graph)
   elseif tick%60==0 then
     local n,f=audit(s)
-    if n>0 or f>0 then log("[EM047 tech] unauthorized removed="..n.." failed="..f);s.dirty=true end
+    if n>0 or f>0 then log("[EM048 tech] unauthorized removed="..n.." failed="..f);s.dirty=true end
+    return M.refresh_components()
   end
+  return false
 end
 function M.inspect_pair(a,b)
   local s=M.ensure_storage()
@@ -193,17 +252,17 @@ function M.status(player)
   local s=M.ensure_storage();local n=0
   for _ in pairs(s.helpers) do n=n+1 end
   local v=s.stats
-  local msg=string.format("[EM047 tech] anchors=%d desired=%d connected=%d missed=%d anchor_fail=%d removed=%d audit_failed=%d reach=40 HSR-continuous origin=script MW=0",
+  local msg=string.format("[EM048 tech] anchors=%d desired=%d connected=%d missed=%d anchor_fail=%d removed=%d audit_failed=%d reach=40 HSR-continuous origin=script MW=0",
     n,v.desired or 0,v.connected or 0,v.missed or 0,v.failures or 0,v.removed or 0,v.audit_failed or 0)
   player.print(msg);log(msg)
   local e=player.selected
   if e and e.valid and mast(e.name) then
     local h=helper(s.helpers[e.unit_number]);local c=conn(h,false)
-    local detail="[EM047 tech] mast="..e.unit_number.." anchor="..tostring(h and h.unit_number).." network_id="..tostring(c and c.network_id)
+    local detail="[EM048 tech] mast="..e.unit_number.." anchor="..tostring(h and h.unit_number).." network_id="..tostring(c and c.network_id).." verified_component="..tostring(s.components[e.unit_number])
     player.print(detail);log(detail)
     if c then for _,link in pairs(c.real_connections) do
       local target=link.target and link.target.valid and link.target.owner
-      if target and target.valid then log("[EM047 tech] neighbour="..target.name.." id="..tostring(target.unit_number).." origin="..tostring(link.origin)) end
+      if target and target.valid then log("[EM048 tech] neighbour="..target.name.." id="..tostring(target.unit_number).." origin="..tostring(link.origin)) end
     end end
   end
 end

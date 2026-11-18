@@ -415,7 +415,7 @@ function M.preview_at(ghost)
             spans[#spans+1]={a=s.nodes[edge.a],b=s.nodes[edge.b],corner=edge.corner}
         end
     end
-    return n,spans
+    return n,spans,s.nodes
 end
 -- Read-only visual graph view.
 function M.graph() return M.ensure_storage() end
