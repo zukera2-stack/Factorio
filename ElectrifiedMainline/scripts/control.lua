@@ -14,8 +14,9 @@ local ghost_visual023 = require("scripts.ghost_mast_023")
 local native_wire_probe026 = require("scripts.native_wire_probe_026")
 local nativewire028 = require("scripts.native_wire_028")
 local art030 = require("scripts.catenary_art_030")
--- Show vanilla native copper only on curved contact spans, sprite-based
--- two-wire art on straight spans. Keep graph and native Undo unchanged.
+-- Native connectors on curves are retained for topology only and hidden.
+-- The 043 PNG sprites draw both straight and curved contact network art.
+-- Keep graph and vanilla Undo unchanged.
 local function native_curve_graph(graph)
     local edges={}
     for key,edge in pairs(graph.edges or {}) do

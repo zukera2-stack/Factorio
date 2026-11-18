@@ -146,11 +146,11 @@ local function corridor(surface,force,a,b)
 end
 -- 0.1.27: connectivity graph only. No cosmetic contact, messenger or feeder lines.
 -- rebuild_all() removes old saved LuaRendering IDs on a mod version change.
-local function draw(s,a,b,kind,corner)
+local function draw(s,a,b,kind,corner,route)
     local key=edge_key(a.unit_number,b.unit_number)
     if s.edges[key] then return end
     s.edges[key]={a=a.unit_number,b=b.unit_number,kind=kind,
-        corner=corner or false}
+        corner=corner or false, route=route}
 end
 
 -- This is deliberately *not* RailSignalPrototype: no changes to train blocks.
@@ -170,7 +170,8 @@ local function rail_path_info(a,b)
     if not (start and start.valid and RAIL_SET[start.name]) then return nil end
     local straight="em-high-speed-straight-rail"
     if a.rail_id==b.rail_id then
-        return {length=0,curved=start.name~=straight}
+        return {length=0,curved=start.name~=straight,
+            route={{x=start.position.x,y=start.position.y}}}
     end
     local directions={defines.rail_direction.front,defines.rail_direction.back}
     local turns={defines.rail_connection_direction.straight,
@@ -178,7 +179,8 @@ local function rail_path_info(a,b)
     -- Bounded lowest-cost rail walk; never traverse vanilla, elevated,
     -- enemy or disconnected rail. Cost is approximate entity-centre path
     -- distance, not Factorio's exact rail spline length.
-    local queue={{rail=start,length=0,curved=start.name~=straight}}
+    local queue={{rail=start,length=0,curved=start.name~=straight,
+        trace={x=start.position.x,y=start.position.y,prev=nil}}}
     local best={[start.unit_number]=0}
     local visited=0
     local max_walk=limits.STRAIGHT*1.5+4
@@ -191,7 +193,13 @@ local function rail_path_info(a,b)
         if cur.length<=best[cur.rail.unit_number]+0.00001 then
             visited=visited+1
             if cur.rail.unit_number==b.rail_id then
-                return {length=cur.length,curved=cur.curved}
+                local route={}
+                local trace=cur.trace
+                while trace do
+                    table.insert(route,1,{x=trace.x,y=trace.y})
+                    trace=trace.prev
+                end
+                return {length=cur.length,curved=cur.curved,route=route}
             end
             for _,d in ipairs(directions) do
                 for _,turn in ipairs(turns) do
@@ -208,7 +216,9 @@ local function rail_path_info(a,b)
                                 cost<best[other.unit_number]-0.00001) then
                             best[other.unit_number]=cost
                             queue[#queue+1]={rail=other,length=cost,
-                                curved=cur.curved or other.name~=straight}
+                                curved=cur.curved or other.name~=straight,
+                                trace={x=other.position.x,y=other.position.y,
+                                    prev=cur.trace}}
                         end
                     end
                 end
@@ -266,7 +276,10 @@ local function build_corner_edges(s,touched,path_info)
             and (degrees[c.b] or 0)<2 then
             local a,b=resolve(s,c.a),resolve(s,c.b)
             if a and b then
-                draw(s,a,b,"contact",true)
+                -- The trace is ordered A-to-B, same as the graph edge.
+                -- 0.1.43 uses these points for visible curved wire sprites.
+                local path=path_info(s.nodes[c.a],s.nodes[c.b])
+                draw(s,a,b,"contact",true,path and path.route)
                 degrees[c.a]=(degrees[c.a] or 0)+1
                 degrees[c.b]=(degrees[c.b] or 0)+1
             end
