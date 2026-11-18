@@ -1,3 +1,95 @@
+### Очистка спрайтов 0.1.42 (2026-11-18)
+
+- Удалены 20 ненужных исторических PNG из экспериментальной ветки: 8 полных 012, 8 консолей 024, старый native mast, старый скрытый столб, заглушка провода и прежняя иконка. Сохранена используемая тень.
+- Убран устаревший спрайт `em-35kv-contact-wire-texture` и промежуточный 024 путь в прототипе, удалены старые 033/035/036 генераторы и растровые проверки.
+- CI теперь контролирует разрешённый список из 16 PNG и SHA-256 12 принятых спрайтов. `NORTH_DROP=2.02`, рельсы, 32/16/40 и Undo не менялись; стабильная `main` не затронута.
+
+## 0.1.42 — visually accepted 25 kV mast family; GitHub import (2026-11-18)
+
+- User confirmed in Factorio that the long southern and short northern mast consoles visually align. North shortened variant uses `NORTH_DROP=2.02` tiles; 0.1.41 used 2.05, 0.1.40 used 2.10.
+- Active 0.1.39 artwork imported as twelve **byte-identical tracked PNGs**: long and short masts, eight direction-specific console/insulator overlays, and two item icons. Original prototype IDs remain for save compatibility.
+- 0.1.37/0.1.38 source-art conversion exposed broken clipped/undersized mounts and scaling; 0.1.39 corrected alpha cropping, mount points and eight mirror projections. These older attempts are not recommended test baselines.
+- Straight 25 kV conductor visuals and hidden native connector graph inherited from 0.1.29–0.1.31, with 32 / 16 / 40 tile limits; real traction MW=0.
+- Added 0.1.42 binary-sha/source tests and version-gated older geometry tests. This experimental branch remains outside `main` (still 0.1.24). Visual acceptance is not full Factorio rail/Undo regression acceptance.
+
+## 0.1.36 — native SOUTH arm lowered; stretched lattice replaced (2026-11-16)
+
+- Screenshot matched SOUTH standard C-arm ~0.40 tile too high; return native picture, shadow and separate arm DOWN 0.40 tile, aligning triangles with short NORTH and intact 25 kV contact wire and placement marker.
+- Copper helper and custom contact/messenger/dropper render positions deliberately left unchanged from 0.1.35; connected ВСМ geometry/32-16-40 and real Undo unchanged.
+- Replace 0.1.35 stretched truss with 54 unscaled source rows repeated from real 0.1.24 mast art, 10-pixel seam blend, exact original footer and cap. Add Lua and PNG contract tests.
+- Isolated gameplay screenshot trial; no main merge.
+
+## 0.1.35 — south standard C shaft length measured from screenshot
+
+- Measured 27px mismatch of north/south contact-wire levels on 1927x1080 screenshot at game zoom (source scale .5).
+- Standard south native pole 512x512 image keeps foundation world anchor fixed; truss segment extended by 54 RGBA source rows and arm moved -0.84375 tiles. Separate wires (contact/messenger/droppers) drawn at corrected matching height.
+- Restored south native hidden copper helper attachment to its pre-0.1.34 location, without changing track graph/32/16/40/Undo. Short north native mast remains unchanged.
+- Added offline pixel-geometry contract and Lua test, game test still needed; no main merge.
+
+## 0.1.34 — fixed north cantilever and raised south standard mast (2026-11-16)
+
+- Resolved 0.1.33 missing cantilever by drawing per-face C-arm sprites for north short variant, rather than assuming arm baked into its shaft-only native PNG.
+- Raised standard south-side native mast, shadow, arm and hidden copper tip by 0.40 tiles; north short remains at previous vertical shift.
+- Introduced shared visual projection table, synced blueprint ghost overlays for both entity types and added regression tests for all 8 facings.
+- No ВСМ/rail prototype, 32/16/40, electric traction or native Undo changes; requires game acceptance.
+
+## 0.1.33 — short northern native C mast trial
+
+- Distinct north-of-track native pole item and prototype. Original south mast unchanged.
+- New reproducibly generated PNG shortens central mast lattice 70px, shifts graphics +2.20 tiles, base toward HSR ballast; native connectors follow hanger.
+- Graph supports mixed prototype trackside poles, 32/16/40 limits, HSR rail PNGs, normal Undo and blueprint life cycle unmodified.
+- Existing poles NOT auto-swapped; user must place variant manually for test. Traction model still MW=0.
+
+## 0.1.32 - south-of-track catenary sprite alignment trial (2026-11-16)
+
+- Screenshot observation: 0.1.31 custom contact wire and dropper graphics render, but south-side C-mast triangular hangers sit below contact sprite ends.
+- Calibrate only north-facing (south-of-rail) ART sprite endpoint by -0.22 x/+0.90 y world tiles; hidden native copper helper remains at exact 0.1.31 position.
+- All other face directions, 32/16/40 limits, Factorio native copper topology, C mast art and HSR rails unchanged.
+- Automated regression checks for visual-only correction; Factorio screenshot QA pending, do not merge main.
+
+## 0.1.31 — critical 0.1.30 save-load crash hotfix (2026-11-16)
+
+- Fix Factorio hard error during `on_configuration_changed`: nested runtime `require` in `scripts/catenary_art_030.lua:sync` moved to top-level module initialization.
+- Add regression test that disallows all `require` during simulated game configuration callbacks, synch, periodic ticks and cleanup.
+- No changes to C mast and ВСМ rail visuals, dual cable art, native connection/Undo, 32/16/40 limits or MW=0.
+- 0.1.30 experimental ZIP is invalid; install 0.1.31. Actual game loading still to be confirmed.
+
+## 0.1.30 — visual contact catenary pilot (2026-11-16)
+
+- Straight custom ВСМ: invisible real Factorio copper connectors with textured contact, messenger and dropper sprites.
+- Curves: retain visible 0.1.29 native copper rendering. No global utility-sprite replacement.
+- C masts, rails, Undo, spacing 32/16/40 unchanged, 25 kV traction still MW=0.
+- Tests and screenshot guide; not yet game-approved, no main merge.
+
+## 0.1.29 — experimental long 25 kV contact spans (2026-11-16)
+
+- Requested maxima: straight 32 tiles, curves 16 tiles, hidden native-copper helper 40-tile wire reach.
+- Added HSR-only bounded rail connection walk that identifies a curved piece anywhere along a span, rejects significant detours, and never traverses vanilla rail.
+- Dense straight corridor samples (~2 tiles) and enlarged rail-change rescan; removed all custom old LuaRendering lines remain removed.
+- Does not implement approved messenger/contact/dropper sprite graphics yet; native copper wire, C mast sprites, current insulator offsets, native Undo and vanilla rail behavior unchanged.
+- Not tested in-game. Do not merge into main before user's Factorio 2.1.20 test.
+
+## 0.1.28 — experimental automatic native contact wires / nominal 25 kV (2026-11-16)
+
+- Names shown in Russian and English changed 35 kV → 25 kV, while existing prototype IDs kept for backward-compatible saves.
+- Eight C-arm sprite-specific hidden native-wire anchors; SOUTH offset accepted in gameplay 0.1.27, seven provisional and tunable.
+- Automatic native copper wires only along connected custom high-speed rail paths; straight edges now also validate get_connected_rail.
+- On every rail/mast topology change schedule coalesced native wire sync; remove helpers and forbidden ordinary electric-pole links; no Lua lines.
+- No actual 25,000 V AC electricity model/traction; no main changes until game QA.
+
+## 0.1.27 — experimental C-insulator native-wire alignment (2026-11-16)
+
+- Shifted native hidden copper helper toward SOUTH C-arm triangular insulator using user gameplay screenshot (+1.75 right, 2.30 up vs 0.1.26).
+- Removed all LuaRendering.draw_line contact/messenger/feeder segments; retained topology and C mast graphics.
+- Added in-game DX/DY calibration and cleaned legacy 0.1.26 helper nodes during version update.
+- 25 kV AC is future model, no automatic wiring, no main merge until user game QA.
+
+## 0.1.26 — experimental native copper-wire probe, NOT a release (2026-11-15)
+
+- Separate `experiment/native-25kv-wire-026` branch from accepted 0.1.24 main; independent of 0.1.25 thin-line experiment.
+- Two invisible offset helper poles at existing C-mast arm tips plus on-demand visible copper connection via the Factorio engine. Commands: `/em-25kv-probe start`, `status`, `clear`.
+- No new engine wire type, no real 25 kV AC/MW model, no traction or regeneration. Existing mast art and native rail/Undo remain unchanged. Needs user game screenshots and logs; CI only checks source/ZIP.
+
 ## 2026-11-15 — 0.1.24 merged into main (PR #8)
 
 - User-approved catenary C-mast visual milestone [merged via PR #8](https://github.com/zukera2-stack/Factorio/pull/8), merge commit `43dd05a544a02de75f3b4a3c3689cd795f853d21`. The `main` `info.json` now reports **0.1.24**.

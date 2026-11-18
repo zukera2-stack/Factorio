@@ -1,3 +1,15 @@
+# Experimental 0.1.42 layer (user-approved mast visuals, not main)
+
+- Main baseline remains 0.1.24; experimental branch `experiment/25kv-visual-042-accepted` has `info.json` version 0.1.42.
+- Two **native Factorio electric-pole prototypes**: long southern `em-35kv-catenary-pole` and short northern `em-35kv-catenary-pole-north`. Their legacy IDs remain unchanged for save compatibility; player-facing descriptions say **25 kV**.
+- The native `electric-pole.pictures` layer draws the long `pole-south-039.png` (512×512) or short `pole-north-039.png` (512×384), so cursor preview and base ghost use the same accepted art. Separate `rendering.draw_sprite` overlays select the eight approved `pole-arm-*-039.png` sprites in `scripts/power_019.lua`; ghosts mirror the overlay in `scripts/ghost_mast_023.lua`.
+- Per-prototype north calibration lives in `scripts/mast_visual_034.lua` with `NORTH_DROP=2.02`; `scripts/native_wire_geometry_028.lua` applies it to the hidden wire helper. This is the approved visual position and must not be changed without a new screenshot.
+- `scripts/power_019.lua` owns the HSR-connected contact graph. `scripts/native_wire_028.lua` renders native copper on curves. `scripts/catenary_art_030.lua` connects invisible copper helpers and renders separate contact, sagging messenger and dropper sprites on straight segments. Limits: 32 straight / 16 curved / 40 helper wire reach (`scripts/catenary_limits_029.lua`). No real traction energy transfer.
+- All twelve approved PNGs and the SHA-256/geometry contract are verified by `scripts/verify_042_assets.py`. Unused 012/024 PNGs, the obsolete mast generators 033/035/036 and their raster tests were removed from the experimental branch. Only the 12 approved 039 images, 030 conductor graphics and actual native shadow are packaged. See [file relevance audit](FILE_RELEVANCE_042.md).
+- Latest Factorio screenshot confirms only the visually accepted mast pair. Broader curve, save/load and Undo/Redo acceptance for 0.1.42 remains pending.
+
+---
+
 # Architecture
 
 ## Runtime constraints

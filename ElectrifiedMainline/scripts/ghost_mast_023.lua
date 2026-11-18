@@ -5,13 +5,16 @@
 -- or robot revival. No collision, build permissions, ghost manipulation or Undo.
 local M={}
 local power=require("scripts.power_019")
+local mast034=require("scripts.mast_visual_034")
 local POLE="em-35kv-catenary-pole"
-local OFFSET={0,-2.53125}
+local NORTH="em-35kv-catenary-pole-north"
+local POLES={POLE,NORTH}
+local function is_pole(name) return name==POLE or name==NORTH end
 local TINT={r=0.53,g=0.84,b=1,a=0.64}
 
 local function is_our_ghost(entity)
     return entity and entity.valid and entity.name=="entity-ghost"
-        and entity.ghost_name==POLE
+        and is_pole(entity.ghost_name)
 end
 local function state()
     storage.em=storage.em or {}
@@ -26,7 +29,7 @@ end
 local function key(entity)
     local p=entity.position
     return string.format("%d:%s:%.3f:%.3f",
-        entity.surface.index,entity.force.name,p.x,p.y)
+        entity.surface.index,entity.force.name,p.x,p.y).."#"..entity.ghost_name
 end
 local function clear_id(id)
     if not id then return end
@@ -49,7 +52,7 @@ function M.on_built(entity)
     local obj=rendering.draw_sprite{
         sprite="em-35kv-facing-"..face,
         surface=entity.surface,
-        target={entity=entity,offset=OFFSET},
+        target={entity=entity,offset={0,mast034.cantilever_shift(entity.ghost_name)}},
         tint=TINT,
         render_layer="higher-object-above",
     }
@@ -72,9 +75,11 @@ function M.rebuild_all()
     storage.em.ghost_visual_023.sprites={}
     local count=0
     for _,surface in pairs(game.surfaces) do
-        for _,entity in pairs(surface.find_entities_filtered{
-            name="entity-ghost",ghost_name=POLE}) do
-            if M.on_built(entity) then count=count+1 end
+        for _,pole_name in pairs(POLES) do
+            for _,entity in pairs(surface.find_entities_filtered{
+                name="entity-ghost",ghost_name=pole_name}) do
+                if M.on_built(entity) then count=count+1 end
+            end
         end
     end
     log("[ElectrifiedMainline][ghost023] restored "..count.." visible catenary ghosts")

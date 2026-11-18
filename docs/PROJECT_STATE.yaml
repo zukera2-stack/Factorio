@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: none # 0.1.24 merged to main; branch next work from main
-  feature_version: "0.1.24" # accepted native mast + eight C arms
-  feature_status: 024_visual_game_accepted_and_merged_main
+  active_feature_branch: experiment/25kv-visual-042-accepted # user-approved VISUAL experiment; main remains 0.1.24
+  feature_version: "0.1.42" # accepted mast visual, pending full gameplay regression
+  feature_status: 042_user_accepted_mast_visual_pending_full_regressions
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 8
@@ -24,13 +24,13 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.24"
+  mod_version: "0.1.42" # experimental branch only
   main_baseline_mod_version: "0.1.24" # merged PR #8
   factorio_target: "2.1"
   user_tested_game: "2.1.20"
   user_installation_label: "2.1.20b"
-  last_state_update: "2026-11-15"
-  documentation_audit: accepted_024_game_evidence_and_current_handoff_2026_11_15
+  last_state_update: "2026-11-18"
+  documentation_audit: 042_active_assets_sha256_and_file_roles_2026_11_18
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -38,6 +38,48 @@ project:
   research_record_template: docs/PROTOTYPE_RESEARCH_TEMPLATE.md
   research_record_directory: docs/research/
   current_status: docs/STATUS.md
+
+accepted_visual_042:
+  branch: experiment/25kv-visual-042-accepted
+  mod_version: "0.1.42"
+  visual_status: user_accepted_2026_11_18
+  screenshot: 2026-11-18_12-56-29.png
+  screenshot_sha256: a4e15fb8a076e24ed6ca2171981e64a1502869cb4af5f31668e81df71cc90c4b
+  cropped_screenshot: docs/tests/evidence/042-mast-pair-2026-11-18.jpg
+  visual_zip_sha256: d855747f758660aa083d6f3ae0e153550be7ce7bbcd49cdb5ccbcbb2e1dbf6a9
+  north_drop_tiles: 2.02
+  active_png_assets_verified: 12
+  legacy_024_source_pngs_preserved: false
+  generated_033_035_036_pngs_in_github_042_zip: false
+  unused_historical_pngs_deleted: 20
+  active_graphics_pngs: 16
+  shadow_still_in_use: true
+  inactive_mast_generators_033_035_036_removed: true
+  obsolete_raster_tests_033_036_removed: true
+  active_game_assets_byte_exact: true
+  full_zip_byte_identical_to_local_test: false
+  source_art_is_generator_for_039: false
+  full_gameplay_regression: pending
+  native_undo_changed: false
+  actual_electric_power_transfer: false
+  current_docs: docs/FILE_RELEVANCE_042.md
+
+native_wire_probe_026:
+  branch: experiment/25kv-south-art-036
+  parent_main_commit: 04a290da887477d759b9ec53edb67371a6835a90
+  target_nominal_voltage: "25 kV AC (future model only)"
+  game_test: 028_user_reports_curve_gaps_029_long_span_pending
+  ci_initial_failure: legacy_curve_test_wrong_version_gate_fixed
+  visual_wire: native_player_origin_copper_experiment
+  helper_prototype: em-25kv-wire-probe-anchor
+  command: em-25kv-probe
+  command_options: [start, status, clear]
+  normal_mast_prototype_unchanged: true
+  native_undo_changed: false
+  applied_to_main: false
+  actual_electric_power_transfer: false
+  documentation: docs/research/catenary-sprite-pilot-0.1.30.md
+  game_test_instructions: ElectrifiedMainline/TEST_NATIVE_WIRE_026.txt
 
 latest_uploaded_archive:
   version: "0.1.13"

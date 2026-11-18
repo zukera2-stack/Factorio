@@ -5,3 +5,12 @@ require("prototypes.power_019")
 
 -- Dedicated Alt+LMB alternate build uses true player cursor item.
 require("prototypes.catenary_cursor_input_018")
+
+-- Optional 0.1.26 native-wire attachment experiment (command only).
+require("prototypes.native_wire_probe_026")
+
+-- Native auto-connection endpoint prototype, attached by scripts/native_wire_028.lua.
+require("prototypes.native_wire_auto_028")
+
+-- Isolated 0.1.30 double-contact wire visual pilot.
+require("prototypes.catenary_art_030")

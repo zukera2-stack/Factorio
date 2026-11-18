@@ -1,0 +1,1 @@
+0.1.42 fine northern mast alignment: NORTH_DROP 2.05 -> 2.02 tiles (-0.03 tiles). At ~64 display pixels/tile this is a ~2px upward visual shift. All other assets and code unchanged. Real game QA pending.

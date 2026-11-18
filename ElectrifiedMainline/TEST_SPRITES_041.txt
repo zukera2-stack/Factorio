@@ -1,0 +1,3 @@
+0.1.41 local fine-tune: reduced NORTH_DROP to 2.05 tile offset.
+Effect: north shortened mast, its cantilever, helper and custom wire art move slightly UP again.
+No sprite redraw, no rail graph or span logic changes.

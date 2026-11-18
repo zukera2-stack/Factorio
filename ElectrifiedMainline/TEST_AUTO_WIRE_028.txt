@@ -1,0 +1,53 @@
+Electrified Mainline 0.1.28 — AUTOWIRE / 25 KV TEST
+TEST ONLY on backup copy of save ВСМ. Do not merge into main.
+Game target Factorio 2.1.20 build 87512.
+
+Gameplay changes:
+* Visible names: Контактная опора 25 кВ / Тяговая подстанция 25 кВ.
+  Internal em-35kv-* prototype IDs intentionally preserved for saved masts.
+* Native copper wires connect automatically between our C masts ONLY if
+  both are within 3 tiles of custom ВСМ rails, along a connected line
+  approved by the existing contact topology; vanilla rail NOT sufficient.
+* Native hidden attachment anchors cover all 8 actual C-arm sprites.
+  SOUTH remains calibrated from user-approved 0.1.27; other 7 estimates.
+* No LuaRendering wire/feeder lines, no electricity MW transfer.
+* For 0.1.28, do NOT use retired /em-25kv-probe start.
+
+TEST A — Straight connected rail:
+1. Place 3 C masts ~8–12 tiles apart near continuous custom ВСМ rail.
+2. Without commands, native orange wires should connect between all
+   neighbouring eligible pairs, without manual probe.
+3. /em-25kv-status reports native_wires and eligible contact_spans.
+
+TEST B — Rail gate:
+4. Place two masts close together but with NO custom ВСМ rail:
+   NO wire must appear.
+5. Place two nearby unconnected ВСМ segments or parallel tracks, with masts
+   aligned: there must be no false cross-track copper link.
+6. Remove a custom ВСМ rail exactly halfway between two 16-tile masts,
+   then repeat for shorter spans. This MUST disconnect the native wire.
+   Replace a custom ВСМ rail in a connected section with vanilla or remove
+   it so track continuity breaks. Within next ticks wire must disappear.
+7. Restore connected custom ВСМ: native wire should return.
+
+TEST C — Facing:
+8. Rotate layout / place along curved-A, curved-B, half-diagonal and
+   sides producing east/southeast/south/southwest/west/northwest/north/northeast.
+9. Photograph all 8 from game viewport: native copper should land at the
+   triangular insulator. NORTH/EAST/etc offsets are *not* user-validated.
+10. Fine tuning: /em-25kv-tune north 0.25 -0.25
+    (moves north joint 0.25 cells RIGHT and 0.25 cells UP).
+    /em-25kv-tune reset restores eight defaults. Tuning is stored in save.
+
+TEST D — Lifecycle and isolation:
+11. Robots/blueprints/Undo/Redo: ensure only native mast placement creates
+    support, wire returns after Redo; no orphan invisible anchors.
+12. Mine one mast and remove rail; wires and anchors must disappear.
+13. Reload save, confirm auto wires return; no old 0.1.27 manual probe wires.
+14. Place vanilla poles near the contact line: NO auto link.
+    Optional: manually connect an ordinary pole to the hidden node
+    (if possible) then inspect /em-25kv-status and logs after 1 second.
+15. Send screenshots + factorio-current.log and note all failed cases.
+
+No real 25,000 V physics or traction power enabled, and wires still use
+Factorio copper connectors between invisible pole helper entities.

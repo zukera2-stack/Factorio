@@ -60,8 +60,32 @@ def verify(out: Path, root: Path = ROOT) -> dict:
         if field not in pole:
             raise QAError("electric isolation invariant changed: "+field)
     runtime=(root/"ElectrifiedMainline/scripts/power_019.lua").read_text(encoding="utf-8")
-    if "rendering.draw_line" not in runtime:
-        raise QAError("existing visual line renderer unexpectedly replaced")
+    minor=int(info["version"].split(".")[-1])
+    if minor >= 27:
+        # The historical contract assumed old LuaRendering.draw_line survived.
+        # This was intentionally retired in 0.1.27 and replaced with native
+        # wire connectors and then sprite contact/messenger/dropper art.
+        art=(root/"ElectrifiedMainline/scripts/catenary_art_030.lua")
+        native=(root/"ElectrifiedMainline/scripts/native_wire_028.lua")
+        if not art.is_file() or not native.is_file():
+            raise QAError("new native/sprite catenary renderer missing")
+        a=art.read_text(encoding="utf-8")
+        n=native.read_text(encoding="utf-8")
+        for required in ("rendering.draw_sprite","em-25kv-contact-030",
+                         "em-25kv-messenger-030","em-25kv-dropper-030"):
+            if required not in a:
+                raise QAError("expected sprite catenary renderer absent: "+required)
+        if "get_wire_connector" not in n:
+            raise QAError("native electric connector topology missing")
+        if "rendering.draw_line" in runtime:
+            raise QAError("obsolete LuaRendering wire line unexpectedly returned")
+        old_line_renderer=False
+        sprite_catenary=True
+    else:
+        if "rendering.draw_line" not in runtime:
+            raise QAError("legacy line renderer unexpectedly replaced")
+        old_line_renderer=True
+        sprite_catenary=False
     return {
         "result":"offline_api_contract_passed_not_game_verified",
         "target_factorio":"2.1.20",
@@ -70,7 +94,8 @@ def verify(out: Path, root: Path = ROOT) -> dict:
         "rotated_sprite_allowed_fields":list(ROTATED_FIELDS),
         "sprite_prototype_allowed_fields":list(SPRITE_FIELDS),
         "prototype_source_isolation_preserved":True,
-        "existing_line_renderer_preserved":True,
+        "existing_line_renderer_preserved":old_line_renderer,
+        "new_native_and_sprite_catenary_verified":sprite_catenary,
         "lua_syntax_verified_by_separate_ci_step":True,
         "factorio_data_stage_loaded":False,
         "factorio_game_tested":False,

@@ -1,3 +1,11 @@
+# Current visual experiment: Electrified Mainline 0.1.42 (18 Nov 2026)
+
+**User-accepted in-game mast alignment, NOT merged into `main`.** The screenshot from Factorio dated 2026-11-18 shows the long southern and short northern 25 kV catenary masts, with their independently rendered consoles/hangers visually aligned. All 12 approved `*-039.png` game sprites are tracked as exact binary assets. The northern calibration is `NORTH_DROP=2.02` tiles. [Experiment branch](https://github.com/zukera2-stack/Factorio/tree/experiment/25kv-visual-042-accepted) · [Game evidence](docs/tests/catenary-visual-0.1.42-user-accepted-2026-11-18.md) · [Asset/file audit](docs/FILE_RELEVANCE_042.md).
+
+**Stable `main` remains 0.1.24.** This experimental branch has been cleaned of 20 obsolete PNGs; only 12 accepted images, three conductor graphics, and the active mast shadow remain. [Graphic inventory](docs/FILE_RELEVANCE_042.md). On the experimental branch, overhead rendering has advanced to hidden native connectors plus custom two-wire contact/messenger/dropper sprites on straight ВСМ segments; curved spans retain native copper-wire graphics. Limits are **32 straight / 16 curved / 40 helper wire reach**. MW traction transfer is still not implemented. Visual acceptance does **not** establish comprehensive Factorio gameplay, Undo/Redo or rail-path regression acceptance for 0.1.42.
+
+---
+
 # Electrified Mainline
 
 A **Factorio 2.1** mod for high-speed railway infrastructure and 35 kV overhead-line support masts; real electric traction, onboard energy storage and regeneration remain future work.
@@ -13,7 +21,7 @@ The prior **0.1.8 ZIP** remains the historical rollback baseline and preserves g
 - A single native `electric-pole.pictures` C lattice shaft supplies the standard mouse cursor and engine-rendered ghost body.
 - Eight cantilever-only sprites are dynamically selected using RailEnd projection, with blue-tinted arm-only overlays for ghosts.
 - Placement, ghost creation, copying, robots and Undo/Redo remain engine-native, not proxy signal entities.
-- All source graphics and image QA live in the repository; original eight full C frames are retained for rollback.
+- All active source graphics and PNG QA live in this branch; the obsolete 012/024 frames were removed and remain available only from Git history or the stable main branch.
 
 Next: **contact and messenger wire artwork/alignment along high-speed rails**, then separately research and implement actual MW energy exchange. [Status](docs/STATUS.md) · [Architecture](docs/ARCHITECTURE.md) · [AI handoff](docs/AI_CONTEXT.md).
 
