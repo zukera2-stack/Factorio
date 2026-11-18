@@ -94,7 +94,7 @@ Historical rail upgrade + Undo/Redo working 0.1.8 test: [26 straight/8 curved an
 - `ElectrifiedMainline/scripts/power_019.lua`: real masts draw **only eight C arm/insulator overlays**, chosen by `scripts/mast_facing_022.lua` using RailEnd projection; render layer `higher-object-above`, offset `{0,-2.53125}`. Preserve user artistic preference **SOUTH≈EAST silhouette**, **NORTH≈WEST silhouette**. On a mast with no nearby custom HSR, facing defaults to east.
 - `ElectrifiedMainline/scripts/ghost_mast_023.lua`: `entity-ghost` arm-only blue-tinted overlay anchored to ghost with cleanup on bot revival, cancellation/Undo and save migration. Native Factorio draws shaft's own ghost. Never add duplicate full shaft Lua draw.
 - `ElectrifiedMainline/scripts/catenary_cursor_018.lua`: conventional native build and advisory muted circular markers, not green signal-grid proxy. 64×64 `graphics/icons/35kv-mast-south-icon-64.png` comes from SOUTH C.
-- Original eight `pole-*-012.png` full frames retained as reproducibility/rollback. New nine 0.1.24 sprites verified 512×384 RGBA via [scripts/sprites/verify_024.py](../scripts/sprites/verify_024.py) and [manifest](builds/024-art-manifest.json).
+- Original eight `pole-*-012.png` full frames retained as reproducibility/rollback. New nine 0.1.24 sprites verified 512×384 RGBA by the retired 0.1.24 verifier (now only in Git history) and the [historical manifest](builds/024-art-manifest.json).
 
 ## IMPORTANT: status boundaries
 
