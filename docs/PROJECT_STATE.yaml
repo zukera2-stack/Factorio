@@ -48,7 +48,10 @@ accepted_visual_042:
   visual_zip_sha256: d855747f758660aa083d6f3ae0e153550be7ce7bbcd49cdb5ccbcbb2e1dbf6a9
   north_drop_tiles: 2.02
   active_png_assets_verified: 12
-  original_legacy_pngs_preserved: true
+  legacy_024_source_pngs_preserved: true
+  generated_033_035_036_pngs_in_github_042_zip: false
+  active_game_assets_byte_exact: true
+  full_zip_byte_identical_to_local_test: false
   source_art_is_generator_for_039: false
   full_gameplay_regression: pending
   native_undo_changed: false

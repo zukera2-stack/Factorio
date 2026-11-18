@@ -18,7 +18,8 @@ All twelve 039 PNG byte digests, dimensions, RGBA encoding, active references an
 
 ## Retained historical or optional files
 
-- Original `graphics/entity/35kv/*-024.png`, separate `pole-north-short-033.png`, `pole-south-long-035.png`, `pole-south-lattice-036.png`, and historical `pole-*-012.png`: **not the active 039 sprite set**; retain for rollback and provenance. The first `pole-native-mast-024.png` picture assignment in `prototypes/power_019.lua` is overwritten by the final 039 assignment before prototypes are registered. Do not copy over the original 024 files from the locally repackaged 0.1.42 ZIP; they were modified during prior illustration experiments but no longer render in 0.1.42.
+- Original `graphics/entity/35kv/*-024.png` and `pole-*-012.png` are **tracked historical PNGs** and remain unmodified in GitHub for provenance and rollback; they are not the active 039 images. The first `pole-native-mast-024.png` picture assignment in `prototypes/power_019.lua` is overridden by the final 039 assignment before prototype registration. Do not replace original 024 assets with the modified, unused copies from the locally repackaged user ZIP.
+- `pole-north-short-033.png`, `pole-south-long-035.png`, `pole-south-lattice-036.png` were **build-generated** by past 033–036 workflows, and occur in the user's older experiment ZIPs, but are intentionally not committed or packaged in the GitHub 0.1.42 build. Their original generator scripts and build history remain available. They are not needed by 0.1.42.
 - `scripts/sprites/{generate_north_033,extend_south_035,extend_south_036}.py`: historical image generators, intentionally version-gated to 0.1.33–0.1.36. **Never run on the accepted 039 PNGs.**
 - `tests/25kv_{north_033,mast_alignment_034,south_035,alignment_036}.lua`: obsolete geometry expectations for their original versions; run only with 0.1.33–0.1.36, not 0.1.42.
 - `scripts/{native_wire_probe_026,mast_preview_015,rail_slot_debug_014}.lua` and prototype `native_wire_probe_026.lua`: optional diagnostic commands/legacy tooling still loaded; do not delete without dedicated dependency and save compatibility review.
@@ -30,5 +31,9 @@ All twelve 039 PNG byte digests, dimensions, RGBA encoding, active references an
 
 1. Previous docs describe 0.1.24/0.1.36 as current without separating stable `main` from experimental visuals; README/STATUS/ARCHITECTURE/AI_CONTEXT/PROJECT_STATE now distinguish them.
 2. Older sprite CI hardcoded historical source sizes and north shift. Keep history but gate to historical versions; new **0.1.42** check verifies exactly the user-approved assets.
-3. No code or image was removed during this audit, avoiding accidental breakage of loaded optional commands, save migration or old release reproduction.
+3. No existing tracked code or image was deleted during this audit. Legacy *build-generated* 033/035/036 PNGs are omitted from the 0.1.42 GitHub package; previous versions remain reproducible through their version-gated generators, while old 024 source images remain tracked.
 4. The accepted in-game screenshot does not confirm full 32/16/40, multi-direction rail connectedness or Undo regressions in 0.1.42; separate gameplay test is required before main merge.
+
+## GitHub Actions archive versus accepted local ZIP
+
+The GitHub 0.1.42 ZIP is rebuilt from GitHub with the 12 exact active 039 PNGs and the same runtime/entry-point code as the user-approved ZIP. The historical 024 source PNGs intentionally remain in their original Git states; the user's ZIP contained modified but unused 024 copies. Past generated 033/035/036 PNGs are omitted. Thus **whole-ZIP SHA-256 will differ**, but active runtime assets and scripts are verified by direct SHA comparisons. This preserves historical source integrity without changing observed 0.1.42 gameplay art.
