@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: experiment/25kv-isolated-network-preview-046 # test only
   feature_version: "0.1.46"
-  feature_status: 046_isolated_technical_and_ghost_preview_pending_game_test
+  feature_status: 046_CI_passed_pending_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -913,6 +913,11 @@ network_046:
   origin: script
   max_degree: 5
   visual_independent: true
+  automated_status: passed
+  tested_source_commit: "1a1f62ee9c805c9919b1ca15beb8fc6c90ea2712"
+  build_run_id: 44403984586
+  artifact_id: 14473543411
+  archive_sha256: 7db385cb2e53716c99c8fd2568309e991a1717d4f80a4ee81b623bd3c1440fdd
   game_status: pending_zero_reach_script_wire_and_isolation_QA
   ghost_scope: placed_single_ghost_to_real_masts
   transfer_MW: 0

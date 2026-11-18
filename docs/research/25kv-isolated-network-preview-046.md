@@ -20,3 +20,13 @@ Visible mast prototypes remain untouched (zero native reach). New helper cloned 
 
 ## 7–9. Implementation / QA
 Implemented in 046: one technical anchor at each real mast; explicit zero-reach script-origin bounded connect; deterministic spatial candidate list; separate art sync; old helper cleanup; single placed ghost dry-run with same visual selection, tinted spans. Source and tests pending CI; engine QA remains mandatory.
+
+
+## 8. Automated and packaged evidence
+- Tested source commit: `1a1f62ee9c805c9919b1ca15beb8fc6c90ea2712`.
+- Build run [44403984586](https://github.com/zukera2-stack/Factorio/actions/runs/44403984586) SUCCESS; docs run [44403984565](https://github.com/zukera2-stack/Factorio/actions/runs/44403984565) SUCCESS.
+- Logs confirm the 16 geometry/render endpoint combinations, technical planner and connector mock (same type/force/surface, 40 tile cap, no ghosts, both unauthorized origins removed, no rail dependence), and placed single ghost dry-run mock (no live graph mutation, same straight span after revival, cleanup). Historical Lua tests and asset hashes also passed. Atlas retained. These are mocks, not engine electrical proof.
+- [Artifact 14473543411](https://github.com/zukera2-stack/Factorio/actions/runs/44403984586/artifacts/14473543411) downloaded and inner `ElectrifiedMainline_0.1.46.zip` checked with zip integrity check and info.json: 68 files, 16 PNGs, 320549 bytes, SHA256 `7db385cb2e53716c99c8fd2568309e991a1717d4f80a4ee81b623bd3c1440fdd`.
+
+## 9. Remaining gates
+In-game wire creation at zero ordinary reach with script origin, matching nonzero native network IDs, ordinary pole isolation before/after placement, save/reload, ghost preview on curves, large blueprint/performance, native Undo and robot integration remain unverified for 046. Nearest-first degree cap is not the exact vanilla engine algorithm. Visual graph retains 045 geometric limits and may legitimately omit lines; preview covers one placed mast against real masts, not mouse movement or future simultaneous blueprint poles. No merge, no power transfer. Follow TEST_NETWORK_046.txt.
