@@ -1,6 +1,6 @@
 # Repository layout / структура репозитория
 
-**Current branch:** `experiment/25kv-visible-connectivity-048`, based on `7b2a123447fdeb48c096f2922663950949c39b05` (0.1.48). Stable main 0.1.42 unchanged.
+**Current branch:** `experiment/package-cleanup-048`, based on `7b2a123447fdeb48c096f2922663950949c39b05` (0.1.48). Stable main 0.1.42 unchanged.
 
 ## Active directories
 | Path | Purpose |
@@ -50,4 +50,4 @@ No runtime Lua or assets were removed. Legacy native probe, helpers, tests and s
 
 ## Current QA
 
-Pending clean CI and ZIP comparison. Live Factorio 0.1.48 still pending independently of packaging cleanup.
+Build 44413378503: Lua regressions, approved art verification, 3 package tests, game-only ZIP, separate atlas upload all passed. Docs run 44413378502 passed. Clean artifact 14478116616 downloaded and compared: 51 entries, 16 PNGs unchanged byte for byte versus earlier 048 ZIP; 302634 bytes, CRC clean, SHA256 `dfdeeab22c4cfb16cc9ec8e319d8566362cf86478d440ce7d738b55f9f309d15`. Old archive 322746 bytes. Draft PR #27. Original branch ref update failed with GitHub API errors, so the cleanup is anchored in a separate experimental branch. Live Factorio 0.1.48 still pending independently of packaging cleanup.

@@ -5,7 +5,7 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: experiment/25kv-visible-connectivity-048 # test only
+  active_feature_branch: experiment/package-cleanup-048 # test only
   feature_version: "0.1.48"
   feature_status: 048_CI_passed_pending_game_QA
   last_validated_test_branch: test/undo-stabilization-018
@@ -981,3 +981,13 @@ repository_cleanup_048:
   main_unchanged: true
   inventory_policy: reject_unexpected_mod_files
   report: docs/REPOSITORY_LAYOUT.md
+  source_commit: "6027c9d789cef8b6ba5ee78cce355758e76d50a6"
+  build_run_id: 44413378503
+  artifact_id: 14478116616
+  clean_archive_sha256: dfdeeab22c4cfb16cc9ec8e319d8566362cf86478d440ce7d738b55f9f309d15
+  clean_archive_bytes: 302634
+  previous_archive_bytes: 322746
+  archive_entries: 51
+  identical_runtime_file_bytes: true
+  package_boundary_tests: passed
+  pull_request: 27
