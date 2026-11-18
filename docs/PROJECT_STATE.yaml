@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
   feature_version: "0.1.49" # planning target
-  feature_status: 049_visual_rolling_stock_planning
+  feature_status: 049_base_sprite_api_researched_design_probe_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -1020,6 +1020,16 @@ planned_049:
   target_version: "0.1.49"
   status: planning_only
   development_plan: docs/plans/HSR_VISUAL_049.md
+  sprite_api_research: docs/research/hsr-rolling-stock-sprite-api-049.md
+  base_source_tag: "2.1.24"
+  base_source_commit: acf5a342afcb66c066b9d88d202e8622112da117
+  preserve_native_manual_color: true
+  preserve_station_color_copy: true
+  base_locomotive_direction_count: 256
+  rail_direction_entries: 24
+  rail_variant_cells_per_ordinary_layer: 98
+  pantograph_runtime_probe_pending: true
+  exact_sprite_metadata_pending: true
   visual_HSR: true
   locomotive_existing_prototype_id: em-electric-locomotive
   pantograph: separate_cosmetic_layer_stopped_down_moving_up
