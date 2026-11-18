@@ -900,7 +900,7 @@ accepted_milestone_024:
 geometry_045:
   research: docs/research/25kv-unified-geometry-045.md
   source: ElectrifiedMainline/scripts/catenary_visual_geometry_045.lua
-  status: implemented_offline_QA_retry_after_legacy_ghost_gate
+  status: implemented_offline_QA_passed_then_atlas_and_diag_refined
   graph_changed: false
   png_changed: false
   diagnostic_command: em-25kv-pairs

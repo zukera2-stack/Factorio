@@ -15,6 +15,19 @@ local function node(n)
     tostring(n.tx),tostring(n.ty),tostring(n.side),tostring(n.face_source),
     pstr(v and v.contact),pstr(v and v.messenger))
 end
+-- Mirror the stable straight-corridor check without changing graph data.
+local rails={"em-high-speed-straight-rail","em-curved-high-speed-rail","em-curved-high-speed-rail-b","em-half-diagonal-high-speed-rail"}
+local function corridor(a,b,d)
+  local surface,force=game.surfaces[a.surface_index],game.forces[a.force_name]
+  if not (surface and force) then return false end
+  local samples=math.max(3,math.ceil(d/2))
+  for i=1,samples-1 do
+    local t=i/samples
+    if surface.count_entities_filtered{position={x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t},
+      radius=3,name=rails,force=force,limit=1}==0 then return false end
+  end
+  return true
+end
 local function degree(graph,id)
   local n=0
   for _,e in pairs(graph.edges) do if e.kind=="contact" and (e.a==id or e.b==id) then n=n+1 end end
@@ -39,10 +52,25 @@ function M.report(player,param)
         local comp=topo.compatible(a,b,info and info.curved and limits.CURVE or limits.STRAIGHT)
         local corner=view.corner_candidate(a,b,limits.CURVE)
         local side=a.side and b.side and a.side~=0 and b.side~=0 and a.side~=b.side
+        local edge=art.inspect_pair(g,a.id,b.id)
+        local da,db=degree(g,a.id),degree(g,b.id)
+        local clear=info and not info.curved and corridor(a,b,d)
+        local cause=edge
+        if edge=="no-contact-edge" then
+          if not info then cause="no-connected-hsr-path"
+          elseif not ok then cause="mast-distance-or-path-length-limit"
+          elseif side then cause="opposite-side-rejected"
+          elseif info.curved and not (corner or comp) then cause="curve-geometry-rejected"
+          elseif not info.curved and not comp then cause="straight-geometry-rejected"
+          elseif not info.curved and not clear then cause="straight-corridor-rejected"
+          elseif info.curved and (da>=2 or db>=2) then cause="degree-limit-or-earlier-neighbour"
+          else cause="eligible-but-not-selected (inspect neighbour order)" end
+        end
         log("[EM045 pair] "..node(b))
+        log("[EM045 pair] diagnosis="..cause.." straight_corridor="..tostring(clear))
         log(string.format("[EM045 pair] a=%d b=%d distance=%.3f rail_path=%s curved=%s limits=%s compatible=%s corner=%s side_conflict=%s degrees=%d,%d result=%s",
           a.id,b.id,d,info and tostring(info.length) or "none",tostring(info and info.curved),tostring(ok),
-          tostring(comp),tostring(corner),tostring(side),degree(g,a.id),degree(g,b.id),art.inspect_pair(g,a.id,b.id)))
+          tostring(comp),tostring(corner),tostring(side),da,db,edge))
         count=count+1
       end
     end

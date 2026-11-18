@@ -34,3 +34,19 @@ Single pixel landmark source for all 8 PNGs; convert as (pixel - image center)*0
 Implemented: shared pixel register, actual parent origin, independently registered Cu/steel endpoints, near-vertical-only bow, internal overlap, polyline droppers. Hidden helper calibration unchanged. Read-only pair diagnosis reports current filters/graph outcome; it does not reconstruct every historical selection decision. Added exact endpoint tests and PNG atlas CI. No engine test yet.
 
 First CI 44384880890: syntax passed; historical ghost test fell through to removed 024 assets because its version gate recognized only 042–044. Extend gate to 045 while retaining all ghost assertions; rerun.
+
+## Measured old contact endpoint error (044 minus 045, tiles)
+Independent comparison of actual PNG crossbar projection against old helper + visual offsets (calibration zero); negative Y is upward.
+
+| Face | Long dx,dy | Short dx,dy |
+| --- | --- | --- |
+| N | +0.0106,+0.0700 | +0.0106,-1.5500 |
+| NE | -0.0200,+0.0594 | -0.0200,-2.8044 |
+| E | -0.0150,+0.0619 | -0.0150,-2.8019 |
+| SE | -0.0112,+0.0575 | -0.0112,-2.8062 |
+| S | -0.0156,+0.9031 | -0.0156,+0.0594 |
+| SW | +0.0175,+0.0637 | +0.0175,-2.8000 |
+| W | +0.0200,+0.0631 | +0.0200,-2.8006 |
+| NW | +0.0144,+0.0594 | +0.0144,-2.8044 |
+
+All 32 landmark pixels checked opaque (alpha >=180); contact bar is bright metal, messenger clamp is dark metal. The new register matches actual source pixels, and test verifies exact emitted endpoints numerically. Build 44385067719 and docs 44385067539 succeeded for bfebc305. Offline visual inspection of atlas revealed clipping on long-mast panels, corrected canvas height. Pair diagnostic now reports explicit known filters including straight corridor; candidate ordering remains an inference when eligible but not chosen. Game test still required.
