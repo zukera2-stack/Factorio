@@ -14,6 +14,7 @@ local ghost_visual023 = require("scripts.ghost_mast_023")
 local native_wire_probe026 = require("scripts.native_wire_probe_026")
 local nativewire028 = require("scripts.native_wire_028")
 local art030 = require("scripts.catenary_art_030")
+local diag045 = require("scripts.catenary_diag_045")
 -- Native connectors on curves are retained for topology only and hidden.
 -- The 043 PNG sprites draw both straight and curved contact network art.
 -- Keep graph and vanilla Undo unchanged.
@@ -682,7 +683,11 @@ commands.add_command("em-25kv-status", "Show auto-connected 25 kV catenary graph
         art030.status(player)
     end
 end)
-commands.add_command("em-25kv-tune", "Calibrate 8 C-arm wire hangers: FACE DX DY or reset.", function(event)
+commands.add_command("em-25kv-pairs", "Read-only pair diagnostics: select mast; optional neighbour ID.", function(event)
+    local player=event.player_index and game.get_player(event.player_index)
+    if player and player.valid then diag045.report(player,event.parameter) end
+end)
+commands.add_command("em-25kv-tune", "Calibrate hidden helpers only: FACE DX DY or reset.", function(event)
     local player=event.player_index and game.get_player(event.player_index)
     if player and player.valid then
         nativewire028.tune(player,event,native_curve_graph(power019.graph()))

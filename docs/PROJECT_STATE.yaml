@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/undo-stabilization-018
   current_baseline_branch: main
-  active_feature_branch: experiment/25kv-chord-wires-044 # test only, main stable 0.1.42
-  feature_version: "0.1.44" # chord geometry after 11 screenshots
-  feature_status: 044_chord_geometry_static_QA_pending_user_game_test
+  active_feature_branch: experiment/25kv-unified-geometry-045 # test only
+  feature_version: "0.1.45"
+  feature_status: 045_pixel_landmarks_diagnostics_pending_game_test
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 20
@@ -24,13 +24,13 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.44" # experimental only
+  mod_version: "0.1.45" # experimental only
   main_baseline_mod_version: "0.1.42" # merged PR #20
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
   last_state_update: "2026-11-18"
-  documentation_audit: 044_curve_screenshot_analysis_and_chord_geometry_static_QA
+  documentation_audit: 045_pixel_landmarks_and_readonly_pair_diagnostics
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -896,3 +896,11 @@ accepted_milestone_024:
   circle_markers: approved
   real_traction_power_MW: 0
   upcoming_scope: contact_and_messenger_wire_art_then_real_electricity
+
+geometry_045:
+  research: docs/research/25kv-unified-geometry-045.md
+  source: ElectrifiedMainline/scripts/catenary_visual_geometry_045.lua
+  status: implemented_offline_QA_pending_game_test
+  graph_changed: false
+  png_changed: false
+  diagnostic_command: em-25kv-pairs

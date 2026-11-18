@@ -1,3 +1,9 @@
+# 0.1.45 (experimental, 2026-11-18)
+
+- Pixel-authored contact and steel attachment points independent of hidden calibration.
+- Near-vertical-only bow, internal-only sprite overlap, actual polyline droppers.
+- Read-only pair diagnostics; graph unchanged. Pending game test.
+
 ## 0.1.44 — curved catenary chord geometry corrected (2026-11-18, test only)
 
 - Studied 11 Factorio screenshots of 0.1.43: thick steel cable, faint copper-riveted droppers and curved conductor ends incorrectly passing behind supports.

@@ -57,6 +57,11 @@ jobs:
           fi
 
 
+          if grep -q '"version": "0.1.45"' ElectrifiedMainline/info.json; then
+            lua5.2 tests/25kv_visual_042.lua
+            lua5.2 tests/25kv_unified_geometry_045.lua
+          fi
+
       - name: Set up Python for experimental sprite atlas
         uses: actions/setup-python@v5
         with:
@@ -84,6 +89,16 @@ jobs:
           set -euo pipefail
           if grep -q '"version": "0.1.44"' ElectrifiedMainline/info.json; then
             python3 scripts/verify_044_assets.py
+          fi
+
+      - name: Verify 0.1.45 artwork, graph and pixel atlas
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q '"version": "0.1.45"' ElectrifiedMainline/info.json; then
+            python -m pip install "Pillow>=11,<13"
+            python scripts/verify_045_assets.py
+            python scripts/atlas_045.py
           fi
 
       - name: Validate metadata and build archive
@@ -196,6 +211,14 @@ jobs:
           if grep -q '"version": "0.1.13"' ElectrifiedMainline/info.json; then
             python3 scripts/verify_013_payload.py
           fi
+
+      - name: Upload 045 geometry atlas
+        if: ${{ hashFiles('dist/geometry-045-atlas.png') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: geometry-045-atlas
+          path: dist/geometry-045-atlas.png
+          if-no-files-found: error
 
       - name: Upload test ZIP
         uses: actions/upload-artifact@v4
