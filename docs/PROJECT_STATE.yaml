@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
   feature_version: "0.1.50" # alpha2 test target
-  feature_status: 050_alpha2_correction_CI_pending
+  feature_status: 050_alpha2_CI_passed_pending_live_QA
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -1083,6 +1083,13 @@ alpha2_050:
   scope: ground_track_visual_paint_and_locale
   ci_build_run_id: 44505222272
   ci_source_commit: "27a905c0255f943c0770154c2b857cdbb9410371"
-  ci_status: pending
+  ci_status: passed
+  ci_artifact_id: 14519920195
+  qa_artifact_id: 14518354995
+  archive_sha256: 8d876199a7f22116ff31ecf6f7d4df90c4886ea786427c98d3f077eefbb150f9
+  archive_bytes: 1806135
+  archive_entries: 58
+  unchanged_files_vs_049: 51
+  docs_run_id: 44505424976
   game_status: pending
   draft_pr: 28
