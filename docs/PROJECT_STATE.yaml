@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
   feature_version: "0.1.49" # planning target
-  feature_status: 049_locomotive_v2_scale_review_pending
+  feature_status: 049_locomotive_geometric_prototype_review_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -1026,12 +1026,7 @@ planned_049:
   model_generator: scripts/sprites/model_049.py
   model_source_blob: cc76c42be6e2319f7b44d7b95c404d5b63007392
   model_preview_frames: 16
-  model_native_calibration: horizontal_reference_calculated_native_probe_pending
-  model_refinement: scripts/sprites/refine_049.py
-  model_calibration_report: docs/development/locomotive-calibration-049.md
-  model_common_meshes_v2: 292
-  model_wire_reference_game_px: 91.93
-  model_live_game_validation: false
+  model_native_calibration: pending
   locomotive_concept_sha256: a9d01266afd38e6e0e7a036104cbdcb8ef486092e3a336256f1e8dfc4e35da82
   locomotive_concept_binary_in_git: false
   autonomous_no_human_cab: true
