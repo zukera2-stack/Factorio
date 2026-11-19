@@ -35,7 +35,7 @@ game={surfaces={[1]=rail_surface}}
 local M=require("scripts.ghost_mast_023")
 assert(not M.on_built(ordinary))
 assert(M.on_built(ghost))
-assert(#drawn==1 and actual_faces==1)
+assert(#drawn==1 and actual_faces==0,"preview face is authoritative; no duplicate facing query")
 local draw=drawn[1].config
 assert(draw.sprite=="em-35kv-facing-south")
 assert(draw.render_layer=="higher-object-above")

@@ -9,7 +9,7 @@ local function pole(n) return n and (n.name=="em-35kv-catenary-pole" or n.name==
 local function pstr(p) return p and string.format("(%.4f,%.4f)",p.x,p.y) or "nil" end
 local function node(n)
   local v=geo.points(n,n.name,n.face)
-  return string.format("id=%s type=%s pos=%s face=%s rail=%s contact=%s messenger=%s", tostring(n.id),n.name,pstr(n),tostring(n.face),tostring(n.rail_id),pstr(v and v.contact),pstr(v and v.messenger))
+  return string.format("id=%s type=%s pos=%s face=%s technical_rail=%s visual_rail=%s attachment=%s station=%s contact=%s messenger=%s", tostring(n.id),n.name,pstr(n),tostring(n.face),tostring(n.rail_id),tostring(n.axis_rail_id),tostring(n.axis_status),tostring(n.axis_station),pstr(v and v.contact),pstr(v and v.messenger))
 end
 local function degree(graph,id)
   local n=0
@@ -35,7 +35,8 @@ function M.report(player,param)
         local da,db=degree(g,a.id),degree(g,b.id)
         local cause=edge
         if edge=="no-contact-edge" then
-          if not (a.rail_adjacent and b.rail_adjacent) then cause="mast-without-HSR"
+          if a.axis_status=="ambiguous" or b.axis_status=="ambiguous" then cause="ambiguous-visual-rail"
+          elseif a.axis_status~="attached" or b.axis_status~="attached" then cause="mast-without-visual-HSR"
           elseif d>limits.STRAIGHT then cause="visual-distance-over-32"
           elseif da>=2 or db>=2 then cause="axis-neighbour-already-selected"
           else cause="no-mutual-first-mast-along-HSR-axis" end

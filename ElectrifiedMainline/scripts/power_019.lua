@@ -20,7 +20,7 @@ function M.ensure_storage()
     storage.em.power_019=storage.em.power_019 or {version=4,nodes={},edges={},rail_queue={},sprites={}}
     local s=storage.em.power_019
     s.nodes=s.nodes or {};s.edges=s.edges or {};s.rail_queue=s.rail_queue or {}
-    s.sprites=s.sprites or {}
+    s.sprites=s.sprites or {};s.sprite_faces=s.sprite_faces or {}
     return s
 end
 local function edge_key(a,b)
@@ -45,17 +45,20 @@ local function clear_sprite(s,id)
         local o=rendering.get_object_by_id(rid)
         if o and o.valid then o.destroy() end
     end
-    s.sprites[id]=nil
+    s.sprites[id]=nil;s.sprite_faces[id]=nil
 end
 local function render_sprite(s,e)
     local id=e.unit_number
     if not id then return end
+    local n=s.nodes[id]
+    if n and n.axis_status=="ambiguous" then clear_sprite(s,id);return end
+    local face=n and n.face or "east"
+    local old=s.sprites[id] and rendering.get_object_by_id(s.sprites[id])
+    if old and old.valid and s.sprite_faces[id]==face then return end
     clear_sprite(s,id)
     -- Both native mast sprites are SHAFT ONLY: restored separate arm for
     -- the north-side shorter mast; never suppress the cantilever here.
     -- 0.1.33 skipped NORTH here, leaving bare shafts (user screenshot).
-    local n=s.nodes[id]
-    local face=n and n.face or "east"
     local obj=rendering.draw_sprite{
         sprite="em-35kv-facing-"..face,
         surface=e.surface,
@@ -64,7 +67,7 @@ local function render_sprite(s,e)
         -- The C arm must be in front of its own native mounting plate.
         render_layer="higher-object-above",
     }
-    s.sprites[id]=obj.id
+    s.sprites[id]=obj.id;s.sprite_faces[id]=face
 end
 local function rail_tangent(e)
     local rails=e.surface.find_entities_filtered{
@@ -116,6 +119,7 @@ local function register(s,e)
         n.face_source=reference and reference.method or "no_rail_default"
         n.face_rail_name=reference and reference.rail_name or nil
         n.face_target=target and {x=target.x,y=target.y} or nil
+        n.fallback_face=n.face;n.fallback_target=n.face_target
     end
     s.nodes[id]=n
 end
@@ -202,11 +206,31 @@ function M.technical_path(a,b)
     return rail_path_info(a,b,limits.WIRE_REACH*1.5+4)
 end
 
--- Deterministic complete cosmetic plan, no rail walk.
--- Feeder metadata remains for future substation work.
+-- Apply the exact projection selected by the cosmetic graph, not a second
+-- nearest-rail estimate. Legacy rail_id/rail_adjacent remain technical only.
+local function apply_visual(n,p,status)
+    n.axis_status=status or "detached"
+    n.axis_rail_id=p and p.rail or nil
+    n.axis_station=p and p.s or nil
+    n.face_target=p and {x=p.x,y=p.y} or nil
+    n.face_rail_name=p and p.rail_name or nil
+    n.face_source="axis_"..n.axis_status
+    if p then n.face=view.face(n,n.face_target)
+    elseif status=="ambiguous" then n.face=nil
+    else n.face=n.fallback_face or "east";n.face_target=n.fallback_target end
+end
+-- Complete decorative plan; technical fields remain independent.
 local function build_edges(s,touched)
     for key in pairs(s.edges) do delete_edge(s,key) end
-    s.edges=axis056.plan(s.nodes)
+    local edges,placements,statuses=axis056.plan(s.nodes)
+    s.edges=edges
+    for id,n in pairs(s.nodes) do
+        if is_pole(n.name) then
+            apply_visual(n,placements[id],statuses[id])
+            local e=resolve(s,id)
+            if e then render_sprite(s,e) else clear_sprite(s,id) end
+        end
+    end
     for id,n in pairs(s.nodes) do
         if n.name==SUB then
             local e=resolve(s,id)
@@ -226,14 +250,13 @@ local function build_edges(s,touched)
         end
     end
 end
-local function refresh(surface,force,pos)
+local function refresh(surface,force,pos,defer_plan)
     local s=M.ensure_storage()
     local touched={}
     for _,e in pairs(surface.find_entities_filtered{
         position=pos,radius=SPAN*2+2,name={POLE,NORTH,SUB},force=force}) do
         if e.valid and s.nodes[e.unit_number] then
             register(s,e);touched[e.unit_number]=e
-        if is_pole(e.name) then render_sprite(s,e) end
         end
     end
     -- A touched pole may have a feeder from a substation just outside
@@ -252,24 +275,18 @@ local function refresh(surface,force,pos)
     for id,e in pairs(additional) do
         register(s,e);touched[id]=e
     end
-    local stale={}
-    for key,edge in pairs(s.edges) do
-        if touched[edge.a] or touched[edge.b] then stale[#stale+1]=key end
-    end
-    for _,key in pairs(stale) do delete_edge(s,key) end
-    build_edges(s,touched)
+    if not defer_plan then build_edges(s,touched) end
 end
 function M.rebuild_all()
     local s=M.ensure_storage()
     for key in pairs(s.edges) do delete_edge(s,key) end
     for id in pairs(s.sprites) do clear_sprite(s,id) end
-    s.nodes={};s.edges={};s.rail_queue={};s.sprites={}
+    s.nodes={};s.edges={};s.rail_queue={};s.sprites={};s.sprite_faces={}
     local all={}
     for _,surface in pairs(game.surfaces) do
         for _,e in pairs(surface.find_entities_filtered{name={POLE,NORTH,SUB}}) do
             if e.valid and e.unit_number then
                 register(s,e);all[e.unit_number]=e
-                if is_pole(e.name) then render_sprite(s,e) end
             end
         end
     end
@@ -351,8 +368,9 @@ function M.on_tick(tick)
         end
     end
     for _,entry in pairs(buckets) do
-        refresh(entry.surface,entry.force,entry.position)
+        refresh(entry.surface,entry.force,entry.position,true)
     end
+    if changed then build_edges(s,{}) end
     -- Even a rail-only edit can split a technical path.
     return changed
 end
@@ -407,11 +425,21 @@ function M.preview_at(ghost)
             register(s,other);touched[other.unit_number]=other
         end
     end
-    s.edges=axis056.plan(s.nodes)
+    local edges,placements,statuses=axis056.plan(s.nodes)
+    s.edges=edges
+    -- Preview nodes are shallow copies of live data: never change live faces.
+    local function preview_node(k)
+        local copy={}
+        for key,v in pairs(s.nodes[k]) do copy[key]=v end
+        apply_visual(copy,placements[k],statuses[k])
+        s.nodes[k]=copy
+        return copy
+    end
+    n=preview_node(id)
     local spans={}
     for _,edge in pairs(s.edges) do
         if edge.kind=="contact" and (edge.a==id or edge.b==id) then
-            spans[#spans+1]={a=s.nodes[edge.a],b=s.nodes[edge.b],corner=edge.corner}
+            spans[#spans+1]={a=preview_node(edge.a),b=preview_node(edge.b),corner=edge.corner}
         end
     end
     return n,spans,s.nodes

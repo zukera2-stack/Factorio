@@ -1,5 +1,5 @@
 -- 056: cosmetic-only centreline planner; never touches technical connectors.
-local M={REACH=32,ATTACH=3}
+local M={REACH=32,ATTACH=3,TIE_DISTANCE=0.05}
 local EPS=0.0001
 local names={"em-high-speed-straight-rail","em-half-diagonal-high-speed-rail","em-curved-high-speed-rail","em-curved-high-speed-rail-b"}
 local allowed={}
@@ -116,8 +116,43 @@ function M.select(placements,rail)
  end
  return edges
 end
+-- A tied pair may represent the same physical station ONLY at directly
+-- linked endpoints. Coincident projections on crossing tracks are not enough.
+local function same_station(a,b,rail)
+ if d2(a,b)>EPS^2 then return false end
+ local ra,rb=rail(a.rail),rail(b.rail)
+ if not (ra and rb) then return false end
+ local sa=math.abs(a.s)<=EPS and -1 or math.abs(a.s-ra.length)<=EPS and 1
+ local sb=math.abs(b.s)<=EPS and -1 or math.abs(b.s-rb.length)<=EPS and 1
+ if not (sa and sb) then return false end
+ for _,link in ipairs(ra.links(sa)) do
+  if link.id==b.rail and link.sign==-sb then
+   for _,reverse in ipairs(rb.links(sb)) do
+    if reverse.id==a.rail and reverse.sign==-sa then return true end
+   end
+  end
+ end
+ return false
+end
+function M.choose_attachment(candidates,rail)
+ if #candidates==0 then return nil,"detached" end
+ table.sort(candidates,function(a,b)
+  if a.d2~=b.d2 then return a.d2<b.d2 end
+  return a.rail<b.rail
+ end)
+ local best=candidates[1]
+ local tied={}
+ for _,p in ipairs(candidates) do
+  if math.sqrt(p.d2)-math.sqrt(best.d2)>M.TIE_DISTANCE+EPS then break end
+  for _,q in ipairs(tied) do
+   if p.rail~=q.rail and not same_station(p,q,rail) then return nil,"ambiguous" end
+  end
+  tied[#tied+1]=p
+ end
+ return best,"attached"
+end
 function M.plan(nodes)
- local cache,placements={},{}
+ local cache,placements,statuses={},{},{}
  local front,back=defines.rail_direction.front,defines.rail_direction.back
  local turns={defines.rail_connection_direction.straight,defines.rail_connection_direction.left,defines.rail_connection_direction.right}
  local function read(r)
@@ -149,21 +184,23 @@ function M.plan(nodes)
  for id,n in pairs(nodes) do
   if mast(n) then
    local surface=game.surfaces[n.surface_index];local force=game.forces[n.force_name]
-   local best
+   local candidates={}
    if surface and force then
     for _,r in pairs(surface.find_entities_filtered{position={x=n.x,y=n.y},radius=5,name=names,force=force}) do
      local row=read(r)
      if row then
       local p=M.project(n,row.points)
-      if p and p.d2<=M.ATTACH^2 and (not best or p.d2<best.d2-EPS or (math.abs(p.d2-best.d2)<=EPS and r.unit_number<best.rail)) then
-       p.rail=r.unit_number;best=p
+      if p and p.d2<=M.ATTACH^2 then
+       p.rail=r.unit_number;p.rail_name=r.name;candidates[#candidates+1]=p
       end
      end
     end
    end
+   local best,status=M.choose_attachment(candidates,function(rid) return cache[rid] or nil end)
+   statuses[id]=status
    if best then placements[id]=best end
   end
  end
- return M.select(placements,function(id) return cache[id] or nil end),placements
+ return M.select(placements,function(id) return cache[id] or nil end),placements,statuses
 end
 return M

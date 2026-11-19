@@ -50,10 +50,10 @@ function M.on_built(entity)
     end
     art.clear_preview(spans[k]);spans[k]=nil
     -- Same RailEnd-based facing selection as real poles; no entity rotation.
-    local face=power.facing_at(entity)
     local node,predicted,preview_nodes=power.preview_at(entity)
-    if node and not node.rail_adjacent then return false end
-    face=node and node.face or face
+    if node and ((node.axis_status and node.axis_status~="attached") or
+        (not node.axis_status and not node.rail_adjacent)) then return false end
+    local face=node and node.face or power.facing_at(entity)
     local obj=rendering.draw_sprite{
         sprite="em-35kv-facing-"..face,
         surface=entity.surface,

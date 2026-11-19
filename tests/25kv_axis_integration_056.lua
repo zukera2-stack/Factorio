@@ -89,7 +89,9 @@ local function sync()
 end
 power.rebuild_all();sync()
 local live=power.graph();assert(live.nodes[1] and not live.nodes[2])
-local _,spans=power.preview_at(q);assert(#spans==1)
+local gn,spans=power.preview_at(q);assert(#spans==1)
+assert(gn.axis_status=="attached" and gn.face=="north" and gn.axis_rail_id==107)
+assert(live.nodes[1].axis_status=="attached" and live.nodes[1].face=="north" and live.nodes[1].axis_rail_id==101)
 local before=created
 assert(ghost.on_built(q));assert(count_tinted_spans()>0 and created==before)
 for _,o in pairs(renders) do if o.valid and o.arg.tint and o.arg.sprite=='em-25kv-contact-043' then assert(not art.contact_at(1,force.name,o.arg.target),'ghost preview cannot trigger sparks') end end
@@ -122,4 +124,30 @@ local hmid=entities[s.helpers[3]]
 hmid.get_wire_connector().disconnect_from(b.get_wire_connector(),2)
 tech.on_tick(60,live);art.sync(live)
 assert(art.inspect_pair(live,2,3)=='drawn','cosmetic axis independent of connector')
+-- Add a separate parallel line exactly equidistant from an extra mast.
+local upper={}
+for i=1,7 do
+ local x=(i-1)*2
+ local r=entity(200+i,'em-high-speed-straight-rail',x,4);r.links={}
+ function r.get_connected_rail(q) if q.rail_connection_direction==1 then return r.links[q.rail_direction],q.rail_direction==1 and 2 or 1 end end
+ function r.get_rail_end(dir) return {location={position={x=x+(dir==1 and 1 or -1),y=4},direction=dir==1 and 4 or 12,rail_layer=0}} end
+ upper[i]=r
+end
+for i,r in ipairs(upper) do r.links[1]=upper[i+1];r.links[2]=upper[i-1] end
+local ambiguous=entity(10,name,4,2);local ag=entity(11,'entity-ghost',8,2);ag.ghost_name=name
+live=sync()
+assert(live.nodes[10].axis_status=="ambiguous" and not live.nodes[10].axis_rail_id and not live.nodes[10].face)
+assert(not live.sprites[10])
+for _,e in pairs(live.edges) do assert(e.a~=10 and e.b~=10) end
+local an,as=power.preview_at(ag);assert(an.axis_status=="ambiguous" and #as==0 and not ghost.on_built(ag))
+assert(live.nodes[1].axis_rail_id==101 and live.nodes[1].face=="north")
+-- Batched rail refresh performs one global plan regardless of several buckets.
+local axis=require('scripts.catenary_axis_056')
+local saved=axis.plan;local plans=0
+axis.plan=function(...) plans=plans+1;return saved(...) end
+local distant=entity(12,name,34,1.5);power.on_built({entity=distant})
+plans=0;game.tick=10
+power.on_rail_changed(rails[1]);power.on_rail_changed(rails[7])
+assert(power.on_tick(11) and plans==1)
+axis.plan=saved
 print('056 integration PASS: real/ghost spans, rail gap and restore, technical failure independent, intermediate mast, spark excludes ghosts')

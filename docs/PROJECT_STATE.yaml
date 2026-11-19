@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/hsr-axis-wires-056
   feature_version: "0.1.56" # rail axis wire test
-  feature_status: 056_baseline_ci_pass_phase2_research
+  feature_status: 056_unified_visual_attachment_ci_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27

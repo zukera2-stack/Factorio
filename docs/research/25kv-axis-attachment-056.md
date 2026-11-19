@@ -17,3 +17,9 @@ Coalesce multiple rail-change refresh buckets per tick into one graph build with
 
 ## 6. Falsifiable tests
 Mock exact equidistant parallel rails, reversed IDs/order, clearly nearer rail, connected shared endpoint, disconnected crossing, real/ghost facing and gap recovery, multiple changes per tick. CI must pass before claiming packaging. In-game evidence pending.
+
+## 7. Implementation
+**056 visual attachment phase 2 implemented:** one RailEnd projection determines graph and arm direction, same for ghosts; near-equal independent paths (0.05 tile experimental tolerance) are excluded and ambiguous masts have no arm/wire. Direct reciprocal shared endpoint is allowed. Technical node fields, native placement/Undo and assets unchanged. Rail-change buckets coalesced to one full plan per tick; unchanged arm sprite reused. New tests cover tie/order, shared endpoint, crossing, real/ghost agreement and batching. Full graph still recalculated per mast edit/ghost preview; load tests and in-game QA pending. Baseline CI artifact 14573715719 retained.
+
+
+CI and game evidence pending.
