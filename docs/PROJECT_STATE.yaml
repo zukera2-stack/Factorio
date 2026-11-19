@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/locomotive-polish-052
+  active_test_branch: feature/hsr-concrete-track-053
   current_baseline_branch: main
-  active_feature_branch: feature/locomotive-polish-052
+  active_feature_branch: feature/hsr-concrete-track-053
   feature_version: "0.1.52" # locomotive polish test
-  feature_status: 052_locomotive_polish_CI_passed_pending_live_QA
+  feature_status: 053_concrete_reference_calibration_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -1146,5 +1146,15 @@ locomotive_polish_052:
   png_count: 57
   outer_artifact_bytes: 13916383
   inner_zip_sha256: d6b1e7258cbb0d97f5df685e0b412cd36b6d24ba9ed4473caabba0cc869eed11
-  game_status: pending
+  game_status: owner_confirmed_locomotive_green_rail_palette_rejected
   draft_pr: 29
+
+concrete_track_053:
+  planned_version: '0.1.53'
+  base_head: 8e53e703f4eab886b982ddb8d289464c9a003607
+  base_artifact: 14532231767
+  reference_record: docs/research/hsr-concrete-053.md
+  replace_layers: [ties, backplates]
+  preserve_layers: [metals, stone_path, stone_path_background]
+  raster_calibration: pending
+  game_integration: pending
