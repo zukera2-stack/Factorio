@@ -1,3 +1,7 @@
+## 0.1.50 Alpha 2 (experimental)
+
+- User live 049: pantograph, curves and coupling accepted. Fix failed color mask, wire draw depth and malformed RU/EN locale; retain 32 directions and existing model. No new electrical mechanics. Game re-test pending.
+
 ## 0.1.49 alpha1 (experimental)
 
 - First game probe: 32-direction autonomous locomotive, native paint mask, shadow, retained native wheels, separate up/down pantograph without power changes. CI generates 5 sheets; no HSR rail texture changes. Live QA pending.

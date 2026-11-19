@@ -1,0 +1,5 @@
+0.1.50 ALPHA2 — copy of save, not main.
+1. Install GitHub CI inner ZIP instead of 049. Open existing EM locomotive: correct localized name. Set red, purple, blue, green, black, white using vanilla GUI. Stripe must follow selected color; body/roof/pantograph stay unchanged. Try copy-color-from-station. Select locomotive and run /em-pantograph-status to log actual color, orientation, state.
+2. Drive under catenary on horizontal, vertical, diagonal and both curves. Wires must draw over locomotive, all wagons and raised panto; no geometry/anchor shift. Compare screenshots. Stop/start/reverse, couple ordinary locomotive and cargo wagon.
+3. Remove intermediate HSR, ensure span disappears, native Undo ghosts do not restore until actual rail. Verify reconnect, ghost preview, no stray renders after reload. Check nearby building overlap because wires layer is higher globally.
+4. Send log and screenshots if possible. No real power/voltage or sparks. No main merge without acceptance.

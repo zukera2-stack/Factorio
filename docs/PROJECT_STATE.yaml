@@ -6,8 +6,8 @@ project:
   active_test_branch: feature/hsr-rolling-stock-visual-049
   current_baseline_branch: main
   active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
-  feature_version: "0.1.49" # planning target
-  feature_status: 049_alpha1_CI_passed_pending_live_QA
+  feature_version: "0.1.50" # alpha2 test target
+  feature_status: 050_alpha2_correction_CI_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.49" # alpha1 experimental
+  mod_version: "0.1.50" # alpha2 experimental
   main_baseline_mod_version: "0.1.48" # merged PR #27
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -1031,7 +1031,7 @@ planned_049:
   model_calibration_report: docs/development/locomotive-calibration-049.md
   model_common_meshes_v2: 292
   model_wire_reference_game_px: 91.93
-  model_live_game_validation: false
+  model_live_game_validation: scoped_owner_confirmed_049
   locomotive_concept_sha256: a9d01266afd38e6e0e7a036104cbdcb8ef486092e3a336256f1e8dfc4e35da82
   locomotive_concept_binary_in_git: false
   autonomous_no_human_cab: true
@@ -1043,7 +1043,7 @@ planned_049:
   base_locomotive_direction_count: 256
   rail_direction_entries: 24
   rail_variant_cells_per_ordinary_layer: 98
-  pantograph_runtime_probe_pending: true
+  pantograph_runtime_probe_pending: false
   exact_sprite_metadata_pending: true
   visual_HSR: true
   locomotive_existing_prototype_id: em-electric-locomotive
@@ -1062,7 +1062,7 @@ alpha1_049:
   native_color: true
   real_traction_MW: 0
   ground_track_scope: true
-  render_probe_live: pending
+  render_probe_live: owner_confirmed_stop_start_curves_coupling_color_and_wire_layer_defects
   ci_status: passed
   ci_build_run_id: 44493511441
   ci_source_commit: "bf8452768afa9c7fae21f1735f803b456d6d7368"
@@ -1072,4 +1072,17 @@ alpha1_049:
   archive_entries: 58
   archive_bytes: 1770765
   png_count: 21
+  draft_pr: 28
+ 
+alpha2_050:
+  research: docs/research/locomotive-alpha2-050.md
+  base_alpha1_user_confirmed: pantograph_curves_native_coupling
+  user_screenshot_archive: 2026-11-19_13-08-29.zip
+  runtime_tint_as_overlay: false
+  wire_render_layer: wires
+  scope: ground_track_visual_paint_and_locale
+  ci_build_run_id: 44505222272
+  ci_source_commit: "27a905c0255f943c0770154c2b857cdbb9410371"
+  ci_status: pending
+  game_status: pending
   draft_pr: 28
