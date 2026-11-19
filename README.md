@@ -2,13 +2,13 @@
 
 Merged via [PR #30](https://github.com/zukera2-stack/Factorio/pull/30) with owner approval.
 
-Original rail-axis contact graph, autonomous locomotive with 256 directions and cosmetic pantograph/sparks, concrete HSR slabs with native fasteners. [Scoped game acceptance](docs/tests/catenary-0.1.56-user-acceptance.md). [CI install ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44611594056/artifacts/14573715719) (121 files, 81 PNGs; extract only the inner ZIP). Actual traction energy transfer remains zero. Experimental phase-2 attachment excluded. Previous stable 0.1.48: [PR #27](https://github.com/zukera2-stack/Factorio/pull/27) and [historical ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44415412191/artifacts/14478562971).
+Original rail-axis contact graph, autonomous locomotive with 256 directions and cosmetic pantograph/sparks, concrete HSR slabs with native fasteners. [Scoped game acceptance](docs/tests/catenary-0.1.56-user-acceptance.md). [CI install ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44614544575/artifacts/14572849193) (121 files, 81 PNGs; extract only the inner ZIP). Actual traction energy transfer remains zero. Experimental phase-2 attachment excluded. Previous stable 0.1.48: [PR #27](https://github.com/zukera2-stack/Factorio/pull/27) and [historical ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44415412191/artifacts/14478562971).
 
 ---
 
 # Electrified Mainline
 
-A **Factorio 2.1** mod for high-speed railway infrastructure and 35 kV overhead-line support masts; real electric traction, onboard energy storage and regeneration remain future work.
+A **Factorio 2.1** mod for high-speed railway infrastructure and 25 kV overhead-line support masts; real electric traction, onboard energy storage and regeneration remain future work.
 
 **Historical previous stable `main` version: 0.1.24**, user-tested with **Factorio 2.1.20 build 87512** on the `ВСМ` save. The promotion was merged in [PR #8](https://github.com/zukera2-stack/Factorio/pull/8). The C catenary-mast graphics show a native visible shaft in the placement cursor, eight rail-facing cantilevers, translucent ghosts, native robot construction/Undo, the SOUTH-based item icon and subdued circular placement hints. [Scoped game-test evidence](docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [0.1.24 GitHub Actions ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233).
 
@@ -63,7 +63,7 @@ These are project goals, not a claim that every feature is currently complete. T
 
 ## Installation
 
-For 0.1.56, download [the accepted GitHub Actions artifact](https://github.com/zukera2-stack/Factorio/actions/runs/44611594056/artifacts/14573715719), extract the **inner** `ElectrifiedMainline_0.1.56.zip` and install only that inner ZIP in `mods`. The [0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) is preserved for historical rollback, not the active source version.
+For 0.1.56, download [the accepted GitHub Actions artifact](https://github.com/zukera2-stack/Factorio/actions/runs/44614544575/artifacts/14572849193), extract the **inner** `ElectrifiedMainline_0.1.56.zip` and install only that inner ZIP in `mods`. The [0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) is preserved for historical rollback, not the active source version.
 
 For a manual test:
 
@@ -104,3 +104,5 @@ Contributors and AI coding agents must follow [`AGENTS.md`](AGENTS.md) and the [
 ## License
 
 No license has been selected yet. Until one is added, the repository should be treated as **all rights reserved**; do not assume that the code is open for redistribution or modification by third parties.
+
+[Historical branch archive](docs/history/BRANCH_ARCHIVE_056.md). Only main is active; future development branches from main.

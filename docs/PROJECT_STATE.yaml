@@ -8,7 +8,7 @@ project:
   active_feature_branch: main
   feature_version: "0.1.56" # owner-approved original visual graph
   feature_status: 056_merged_main_visual_baseline
-  last_validated_test_branch: test/undo-stabilization-018
+  last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
   release_merge_commit: 55cb71f8f3be8c68cbd2c26fa16fd775c6ba296d
@@ -18,8 +18,8 @@ project:
   release_status: merged_into_main_2026_11_19
   next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.48"
-  previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
-  previous_main_state_archive: docs/history/PROJECT_STATE-main-0.1.4.yaml
+  previous_main_handoff_archive: https://github.com/zukera2-stack/Factorio/blob/1a94fb8a7e6a860130b071da7cd8d556a4aec96c/docs/AI_CONTEXT.md
+  previous_main_state_archive: https://github.com/zukera2-stack/Factorio/blob/1a94fb8a7e6a860130b071da7cd8d556a4aec96c/docs/PROJECT_STATE.yaml
   exact_version_rail_api_notes: docs/FACTORIO_2_1_RAIL_API_NOTES.md
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
@@ -30,7 +30,7 @@ project:
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
   last_state_update: "2026-11-19"
-  documentation_audit: 048_confirmed_connectivity_visibility
+  documentation_audit: 056_repository_cleanup
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
   contributor_guide: CONTRIBUTING.md
@@ -423,37 +423,50 @@ implementation:
   large_modpack_interoperability: unverified
 
 last_game_test:
-  date: "2026-11-15"
-  game_version: "2.1.20"
-  game_build: 87512
-  installed_mod_version: "0.1.24"
-  source_commit: c83f2bc45180b814c344dfa28df18a77f7507d04
-  test_branch: feature/catenary-native-mast-body-024
-  evidence_record: docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md
-  screenshot_archive: "2026-11-15_21-27-44.zip"
-  screenshot_sha256: fd73991e6fc408e2a6cc931cbc5d1c47189e622f283844e1bb792111badefd12
-  log_filename: "factorio-current(20261115-183047).log"
-  log_sha256: 506bee98a83260408ff8e3fa50307800b7132a6a7fcd9050acf7a139e7608af9
-  validation_scope: mast_native_cursor_visual_and_ghosts_robot_build_undo_redo
-  user_acceptance: accepted_visual_and_approved_main_merge
-  native_cursor_mast_body: visible
-  C_directional_arm: visible_on_built_masts
-  ghost_blue_composite: visible
-  rail_slot_circle_markers: visible
-  robot_built_poles: observed
-  manual_pole_placement: observed
-  undo_redo_events: observed
-  lua_errors: none_observed
-  exit_status: normal_user_quit
+  date: "2026-11-19"
+  installed_mod_version: "0.1.56"
+  source_commit: 662389ad2f8737e30170e5284c4d3ddea41d9108 # runtime-equivalent CI source; exact installed hash unverified
+  evidence_record: docs/tests/catenary-0.1.56-user-acceptance.md
+  screenshot_archive: "2026-11-19_23-50-34.zip"
+  validation_scope: owner_visual_confirmation_parallel_and_curve
+  user_acceptance: accepted_original_056_and_approved_main_merge
+  exact_game_build_in_screenshot: unverified
+  runtime_log: not_supplied_for_this_acceptance
   power_transfer_MW: 0
-  not_verified:
-    - every_mast_facing_x_rail_geometry_combination
-    - native_half_diagonal_upgrade_planner_undo
-    - separate_selection_tool_regressions
-    - interrupted_bot_jobs_and_multiplayer
-    - real_electricity_storage_regeneration
+  not_verified: [full_056_undo_redo_matrix, all_rail_geometries, factory_network_isolation, load_benchmark, real_traction]
 
 historical_game_tests:
+  "0.1.24":
+    date: "2026-11-15"
+    game_version: "2.1.20"
+    game_build: 87512
+    installed_mod_version: "0.1.24"
+    source_commit: c83f2bc45180b814c344dfa28df18a77f7507d04
+    test_branch: feature/catenary-native-mast-body-024
+    evidence_record: docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md
+    screenshot_archive: "2026-11-15_21-27-44.zip"
+    screenshot_sha256: fd73991e6fc408e2a6cc931cbc5d1c47189e622f283844e1bb792111badefd12
+    log_filename: "factorio-current(20261115-183047).log"
+    log_sha256: 506bee98a83260408ff8e3fa50307800b7132a6a7fcd9050acf7a139e7608af9
+    validation_scope: mast_native_cursor_visual_and_ghosts_robot_build_undo_redo
+    user_acceptance: accepted_visual_and_approved_main_merge
+    native_cursor_mast_body: visible
+    C_directional_arm: visible_on_built_masts
+    ghost_blue_composite: visible
+    rail_slot_circle_markers: visible
+    robot_built_poles: observed
+    manual_pole_placement: observed
+    undo_redo_events: observed
+    lua_errors: none_observed
+    exit_status: normal_user_quit
+    power_transfer_MW: 0
+    not_verified:
+      - every_mast_facing_x_rail_geometry_combination
+      - native_half_diagonal_upgrade_planner_undo
+      - separate_selection_tool_regressions
+      - interrupted_bot_jobs_and_multiplayer
+      - real_electricity_storage_regeneration
+
   "0.1.8":
     date: "2026-11-12"
     game_version: "2.1.20"
@@ -1210,7 +1223,21 @@ axis_wires_056:
   merge_status: merged
   merge_commit: 55cb71f8f3be8c68cbd2c26fa16fd775c6ba296d
   pull_request: 30
-  main_ci_status: pending
+  main_ci_status: success
+  main_ci_run: 44614544575
+  main_ci_artifact: 14572849193
+  main_ci_inner_zip_identical: true
+  main_docs_run: 44614626222
   excluded_experiment_head: e9e0883aeceb7c577b01340505fc11dfa6998704
   transfer_MW: 0
   factory_network_isolation_measured: false
+
+repository_cleanup_056:
+  active_branch: main
+  historical_branch_count: 52
+  branch_archive: docs/history/BRANCH_ARCHIVE_056.md
+  physical_refs_retained: true
+  closed_superseded_pr: 29
+  closed_superseded_issue: 7
+  phase2_excluded: true
+  source_changes: false

@@ -45,7 +45,7 @@
 
 ## Factorio constraints
 
-- Target: Factorio 2.1.20b, with `factorio_version = "2.1"`.
+- Target: Factorio 2.1 (last known owner build 2.1.24 / 87808), with `factorio_version = "2.1"`.
 - Keep the base dependency minimal unless a required API/prototype proves otherwise.
 - Optional mod integrations belong in `compatibility/` and must never become hard dependencies by accident.
 - Root files `data.lua`, `data-updates.lua`, `data-final-fixes.lua`, `control.lua`, and `info.json` are Factorio-discovered entry points/metadata and must remain in the mod root.
@@ -62,3 +62,6 @@ Only game-discovered entrypoints and runtime code/assets belong in `ElectrifiedM
 Build every distributable install ZIP exclusively via the repository's GitHub Actions packaging workflow. Deliver the exact inner CI-built ZIP or link to the artifact. Never produce a locally repacked user ZIP. Local checks are not release builds. Preserve CI commit/run/artifact/hash provenance and keep QA artifacts separate.
 
 **Owner clarification (2026-11-19):** deliver install ZIPs only by direct GitHub Actions artifact links. Do not download, copy, extract, or duplicate distributable ZIPs into the ChatGPT Library or project files for delivery. Library is for technical material, source models, sketches, experiment outputs, and evidence. Record CI validation, source commit and artifact ID; obtain inner archive SHA256 from CI logs if emitted, not by copying the release into Library.
+
+## Current baseline and branches
+Main 0.1.56 is the only active baseline. See [branch register](docs/history/BRANCH_ARCHIVE_056.md). Preserve original visual algorithm unless a reproducible defect is observed. Never merge unapproved phase-2 experiment. New work branches from main; explicit owner approval required before promotion.

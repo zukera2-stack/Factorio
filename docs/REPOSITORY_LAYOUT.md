@@ -1,12 +1,12 @@
 # Repository layout / структура репозитория
 
-**Current branch:** `experiment/package-cleanup-048`, based on `7b2a123447fdeb48c096f2922663950949c39b05` (0.1.48). Subsequently promoted to stable main 0.1.48 via PR #27. The cleanup branch is historical.
+**Current branch:** main 0.1.56, PR #30. Cleanup 048 is historical; packaging boundary remains unchanged. [Branch register](history/BRANCH_ARCHIVE_056.md).
 
 ## Active directories
 | Path | Purpose |
 |---|---|
 | `ElectrifiedMainline/` | Installable Factorio mod only: metadata/entrypoints, Lua modules, locale CFG, actual PNG textures |
-| `docs/tests/manual/` | Manual test checklists, latest [0.1.48](tests/manual/TEST_NETWORK_048.txt) |
+| `docs/tests/manual/` | Manual test checklists, historical [0.1.48](tests/manual/TEST_NETWORK_048.txt) |
 | `docs/tests/evidence/` | Test evidence, screenshots, sprite QA JSON |
 | `docs/development/` | Developer notes on prototypes, scripts and optional integrations |
 | `docs/research/` | Research decisions and provenance |
