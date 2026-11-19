@@ -14,3 +14,6 @@ Generate atlas assets from same model by CI Python/VTK renderer, body pass witho
 ## Acceptance test
 - Build: all 048 regression tests and PNG hashes, 049 pure Lua mock lifecycle and frame mapping; actual generated atlas sizes/alpha/content and mask containment. CI is not Factorio.
 - Game: existing save loads; train orientation all 8 cardinal/diagonal axes, stop/start/reverse, native colors including station color, coupling, roofs, contact wire alignment on straight/curve, delete/rebuild, save/reload, no rendering leftovers. Check native ground and elevation later separately. No new energy or physics. Test preview frames before 256 production. Do not merge until owner explicitly approves.
+
+## Implementation
+Tracked CI art generator and runtime modules implemented; tests added. Shadow is static body projection, no moving pantograph shadow. Native wheels retained, modeled wheels removed. Pantograph is one attached sprite updated on frame/state change; no overlay on cursor/ghost, after real build within a tick. Runtime frame mapping and native body rotation require direct game confirmation. No new HSR rail textures. CI result pending.

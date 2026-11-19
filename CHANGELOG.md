@@ -1,3 +1,7 @@
+## 0.1.49 alpha1 (experimental)
+
+- First game probe: 32-direction autonomous locomotive, native paint mask, shadow, retained native wheels, separate up/down pantograph without power changes. CI generates 5 sheets; no HSR rail texture changes. Live QA pending.
+
 ## 0.1.48 — promoted to stable main
 
 - Owner-approved merge [PR #27](https://github.com/zukera2-stack/Factorio/pull/27), commit `7218360acb4fc5079e48cf4f38448fa086f1af96`. Scoped HSR visual acceptance, clean CI-only package; no actual traction MW. Next separate 0.1.49 visual rolling stock branch.

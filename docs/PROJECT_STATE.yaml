@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.48" # stable
+  mod_version: "0.1.49" # alpha1 experimental
   main_baseline_mod_version: "0.1.48" # merged PR #27
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -1018,7 +1018,7 @@ accepted_milestone_048:
 planned_049:
   branch: feature/hsr-rolling-stock-visual-049
   target_version: "0.1.49"
-  status: planning_only
+  status: alpha1_implementation_pending_CI
   development_plan: docs/plans/HSR_VISUAL_049.md
   approved_locomotive_art: docs/plans/LOCOMOTIVE_ART_049.md
   locomotive_concept_user_accepted: true
@@ -1046,3 +1046,16 @@ planned_049:
   spark: deferred_optional
   traction_power_change: false
   catenary_art_frozen: true
+
+alpha1_049:
+  task: docs/plans/ALPHA1_049.md
+  directions: 32
+  source_frame: [512, 512]
+  grid: [8, 4]
+  runtime_sheets: 5
+  native_wheels: true
+  native_color: true
+  real_traction_MW: 0
+  ground_track_scope: true
+  render_probe_live: pending
+  ci_status: pending

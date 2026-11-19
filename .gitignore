@@ -29,3 +29,6 @@ art/archives/
 !/dist/ElectrifiedMainline_0.1.8.zip
 __pycache__/
 *.py[cod]
+
+# 049 game sprites are generated from tracked source by CI, never manual QA art.
+/ElectrifiedMainline/graphics/entity/locomotive-049/

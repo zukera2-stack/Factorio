@@ -16,6 +16,7 @@ local nativewire028 = require("scripts.native_wire_028")
 local art030 = require("scripts.catenary_art_030")
 local diag045 = require("scripts.catenary_diag_045")
 local technical046 = require("scripts.technical_network_046")
+local pantograph049 = require("scripts.pantograph_visual_049")
 -- Legacy wire managers are retained for cleanup only. 046 technical and visual graphs are independent.
 local function empty_native_graph() return {nodes={},edges={}} end
 
@@ -72,6 +73,7 @@ script.on_init(function()
     technical046.rebuild_all(power019.graph())
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
+    pantograph049.clear()
 end)
 script.on_configuration_changed(function()
     ensure_storage()
@@ -81,6 +83,7 @@ script.on_configuration_changed(function()
     technical046.rebuild_all(power019.graph())
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
+    pantograph049.clear()
 end)
 
 -- Temporary diagnostics for blueprint rail replacement and undo/redo.
@@ -407,6 +410,7 @@ local function cleanup_train_for_entity(event)
     diag_entity(diag_name, event, entity)
     if not (entity and entity.valid) then return end
 
+    pantograph049.remove(entity)
     native_wire_probe026.on_mast_removed(entity)
     technical046.on_parent_removed(entity)
     if entity.name=="em-35kv-catenary-pole" or entity.name=="em-35kv-catenary-pole-north" then ghost_visual023.mark_dirty() end
@@ -578,6 +582,7 @@ local function on_tick(event)
     local trains = game.train_manager.get_trains({
         stock = "em-electric-locomotive"
     })
+    pantograph049.sync(trains, get_custom_locomotives)
 
     for _, train in pairs(trains) do
         if train.valid then
@@ -698,4 +703,9 @@ commands.add_command("em-25kv-probe", "Retired; 0.1.28 auto wires need no comman
     local player=event.player_index and game.get_player(event.player_index)
     if player and player.valid then player.print(
       "[EM 25kV] automatic catenary active; use /em-25kv-status") end
+end)
+
+commands.add_command("em-pantograph-status", "Read-only 049 diagnostics: select electric locomotive.", function(event)
+    local p=event.player_index and game.get_player(event.player_index)
+    if p and p.valid then pantograph049.status(p) end
 end)

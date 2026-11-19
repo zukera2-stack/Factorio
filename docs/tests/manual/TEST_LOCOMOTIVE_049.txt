@@ -1,0 +1,5 @@
+0.1.49 ALPHA1 — use copy of ВСМ save; not main.
+1. Install CI ZIP, remove 0.1.48 copy, load existing locomotive and place another. Body no windows/headlights, native wheels and couplings, red stripe initially unless previous color. Set blue/green/white/black from locomotive GUI, copy color from station. Observe body and mask.
+2. On horizontal/vertical/diagonal tracks, stop/start/reverse. Pantograph down stopped, up moving (including manual vanilla rails; cosmetic only), no flicker. Select locomotive and run /em-pantograph-status; send log. Compare all eight directions on same zoom. Overlay may be absent in cursor/ghost until actual build.
+3. Couple ordinary wagon before/after; compare tips, wheels, body height. Move slowly and fast through A/B curves. Check contact wire not shifted and head/roof attachment. Ground track only. Screenshot if misalignment; include orientation/position from command.
+4. Multiple locomotives, save/reload, mine/destroy, rebuild. No leaked sprites. Native Upgrade Planner/Undo/robot rail restoration remain unchanged. No real power/voltage or sparks. Send factorio-current.log and screenshots; not acceptance of 256 frames or main merge.
