@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
   feature_version: "0.1.50" # alpha2 test target
-  feature_status: 050_alpha2_CI_passed_pending_live_QA
+  feature_status: 050_owner_accepted_051_palette_research
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -1091,5 +1091,16 @@ alpha2_050:
   archive_entries: 58
   unchanged_files_vs_049: 51
   docs_run_id: 44505424976
-  game_status: pending
+  game_status: owner_accepted_visual_and_checklist
   draft_pr: 28
+
+accepted_050:
+  owner_accepted: true
+  evidence: docs/tests/locomotive-0.1.50-user-acceptance.md
+  accepted_head: 6127b546a06af77fe9e2123a8b33ff0f03f0a076
+  accepted_build_artifact: 14519920195
+  game_log_sha256: 006abf20da21d9577670edccc7c41152652e633dc14113249666bab45934e814
+  rail_observations: 147
+  main_merge_authorized: false
+  traction_power_validated: false
+  distribution: github_actions_artifact_links_only
