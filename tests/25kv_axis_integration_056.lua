@@ -42,7 +42,7 @@ surface.create_entity=anchor
 local function rail(id,x)
  local r=entity(id,'em-high-speed-straight-rail',x,0);r.links={}
  function r.get_connected_rail(q) if q.rail_connection_direction==1 then return r.links[q.rail_direction],q.rail_direction==1 and 2 or 1 end end
- function r.get_rail_end(dir) return {location={position={x=x+(dir==1 and 1 or -1),y=0},direction=dir==1 and 4 or 12,rail_layer=0}} end end
+ function r.get_rail_end(dir) return {location={position={x=x+(dir==1 and 1 or -1),y=0},direction=dir==1 and 4 or 12,rail_layer=0}} end
  return r
 end
 local rails={}
