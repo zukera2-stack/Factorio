@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 MOD=ROOT/'ElectrifiedMainline'
 DIR=MOD/'graphics/entity/locomotive-049'
 names=('body','mask','shadow','pantograph-up','pantograph-down')
-assert json.loads((MOD/'info.json').read_text())['version'] in ('0.1.49','0.1.50')
+assert json.loads((MOD/'info.json').read_text())['version'] in ('0.1.49','0.1.50','0.1.51')
 assert {p.name for p in DIR.iterdir()}=={n+'.png' for n in names}
 imgs={}
 for name in names:
@@ -39,7 +39,7 @@ expected={
 }
 for n,digest in expected.items():
     assert sha256((DIR/(n+'.png')).read_bytes()).hexdigest()==digest,(n,'049 image drift')
-assert sha256((DIR/'mask.png').read_bytes()).hexdigest()!='96ea9174d469736a53c28f4861873ca07639d0f9e76820546564cf64fe7ef48c'
+assert sha256((DIR/'mask.png').read_bytes()).hexdigest()=='2ddb10f397c0de76ca94d73ef83267e9278217e5879051c7cd95453153fe1de2'
 print('050 PASS: actual grayscale mask with six distinguishable multiply colors, four approved 049 sheets byte-identical')
 assert np.count_nonzero(imgs['pantograph-up']!=imgs['pantograph-down'])>1000
 assert len(list((MOD/'graphics').rglob('*.png')))==21

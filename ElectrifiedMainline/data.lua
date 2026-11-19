@@ -17,3 +17,6 @@ require("prototypes.catenary_art_030")
 
 -- 0.1.49 alpha1: native body/mask/shadow, independently attached pantograph.
 require("prototypes.locomotive_visual_049")
+
+-- 051: native HSR appearance only; no rail geometry or runtime changes.
+require("prototypes.hsr_palette_051")

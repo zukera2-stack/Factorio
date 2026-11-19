@@ -1,3 +1,7 @@
+## 0.1.51 (experimental)
+
+- Native HSR palette probe: cooler ties/ballast, unchanged native metals, joining geometry and approved 0.1.50 rolling stock/catenary. No new concrete textures or traction mechanics.
+
 ## 0.1.50 Alpha 2 (experimental)
 
 - User live 049: pantograph, curves and coupling accepted. Fix failed color mask, wire draw depth and malformed RU/EN locale; retain 32 directions and existing model. No new electrical mechanics. Game re-test pending.
