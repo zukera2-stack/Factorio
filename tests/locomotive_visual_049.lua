@@ -36,7 +36,7 @@ function data:extend(x)sprites=x end
 require("prototypes.locomotive_visual_049")
 assert(#sprites==64 and sprites[1].x==0 and sprites[32].x==3584 and sprites[32].y==1536)
 local layers=loco.pictures.rotated.layers
-assert(#layers==3 and layers[2].apply_runtime_tint and layers[2].tint_as_overlay and layers[3].draw_as_shadow)
+assert(#layers==3 and layers[2].apply_runtime_tint and not layers[2].tint_as_overlay and layers[3].draw_as_shadow)
 for _,l in ipairs(layers) do assert(l.direction_count==32 and l.line_length==8 and l.scale==.5 and not l.apply_projection and l.shift[2]==-1) end
 assert(loco.wheels.keep and loco.color.r==1 and loco.default_copy_color_from_train_stop and loco.max_power=="600kW" and loco.energy_source.type=="void" and loco.max_speed==1.5)
 print("049 PASS: shared 32-frame mapping, native mask/physics contract, stop/reverse/hysteresis, stable render IDs and lifecycle cleanup (mock)")

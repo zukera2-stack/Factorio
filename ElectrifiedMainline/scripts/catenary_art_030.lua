@@ -49,7 +49,8 @@ local function segment(ids,surface,sprite,a,b,vertical,pixels,outer_a,outer_b,pr
     sprite=sprite,surface=surface,
     target={x=(a.x+b.x)/2,y=(a.y+b.y)/2},
     orientation=(theta/(2*math.pi))%1,
-    render_layer="object"}
+    -- Overhead conductors must render above ground rolling stock and pantograph.
+    render_layer="wires"}
   if vertical then
     arg.y_scale=d*32/pixels
     arg.x_scale=1.14 -- make rivet heads on the droppers more legible
@@ -150,7 +151,7 @@ local function draw(s,key,na,nb,edge)
   if edge.corner then g=M.curve_geometry(a,b,ma,mb)
   else g=M.geometry(a,b,ma,mb) end
   if not g then erase(s,key);return false end
-  local sig=string.format("045/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%d/%d/%s",
+  local sig=string.format("050-wires/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%d/%d/%s",
     a.x,a.y,b.x,b.y,ma.x,ma.y,mb.x,mb.y,g.pieces,g.droppers,
     edge and edge.corner and "curve" or "straight")
   local previous=s.draws[key]

@@ -58,6 +58,7 @@ end
 local function parent(id,name,pos) entities[id]={unit_number=id,name=name,position=pos,surface=surface,force=force,valid=true} end
 rendering={}
 function rendering.draw_sprite(args)
+ if args.sprite and args.sprite:find("em-25kv-",1,true) then assert(args.render_layer=="wires","050 wire must draw above train") end
  local ob={id=#order+1,valid=true,args=args}
  function ob.destroy() ob.valid=false end
  objects[ob.id]=ob;order[#order+1]=ob;return ob

@@ -7,7 +7,8 @@ local function layer(name)
         dice=4,priority="high",usage="train"}
 end
 local body,mask,shadow=layer("body"),layer("mask"),layer("shadow")
-mask.flags={"mask"};mask.apply_runtime_tint=true;mask.tint_as_overlay=true
+-- 050: authored shaded grayscale mask, normal runtime pixel multiplication.
+mask.flags={"mask"};mask.apply_runtime_tint=true;mask.tint_as_overlay=false
 shadow.flags={"shadow"};shadow.draw_as_shadow=true
 local loco=assert(data.raw.locomotive["em-electric-locomotive"])
 loco.pictures={rotated={layers={body,mask,shadow}}}

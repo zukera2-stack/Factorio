@@ -84,6 +84,8 @@ function M.status(player)
             tostring(d.orientation),tostring(d.height),tostring(d.slope),tostring(d.position and d.position.x),
             tostring(d.position and d.position.y),tostring(e.position.x),tostring(e.position.y))
     end
+    local c=e.color
+    if c then msg=msg..string.format(" color=(%.4f,%.4f,%.4f,%.4f)",c.r,c.g,c.b,c.a or 1) end
     log(msg);player.print(msg)
 end
 return M

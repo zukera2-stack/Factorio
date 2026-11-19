@@ -69,6 +69,7 @@ function surface.count_entities_filtered(_) return 1 end
 game={tick=0,surfaces={[1]=surface},forces={p=force},get_entity_by_unit_number=function(id) return entities[id] end}
 rendering={}
 function rendering.draw_sprite(arg)
+ if arg.sprite and arg.sprite:find("em-25kv-",1,true) then assert(arg.render_layer=="wires","050 wire must draw above train") end
  serial=serial+1
  local o={id=serial,valid=true,arg=arg};function o.destroy() o.valid=false end
  renders[serial]=o;return o

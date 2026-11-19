@@ -122,7 +122,11 @@ def generate(out,qa):
         b=mode(("body","mask"));body=rgba(b)
         matte=mode(("body","mask"),True)
         alpha=np.minimum(matte[:,:,0],b[:,:,3])
-        mask=Image.new("RGBA",(S,S),(255,255,255,0));mask.putalpha(Image.fromarray(alpha,"L"))
+        # Native multiply tint: use the same visible stripe shade, not flat white.
+        # Clip highlight luminance to reserve color headroom; retain exact mask alpha.
+        gray=np.rint(np.asarray(body.convert("L"),dtype=np.float32)*0.82).clip(96,222).astype(np.uint8)
+        gray[alpha==0]=0
+        mask=Image.fromarray(np.dstack((gray,gray,gray,alpha)),"RGBA")
         images={"body":body,"mask":mask,"shadow":shadow(parts,a)}
         for state in ("up","down"):
             images["pantograph-"+state]=rgba(mode((state,)))
@@ -132,7 +136,9 @@ def generate(out,qa):
             sheets[k].paste(img,((i%COLS)*S,(i//COLS)*S))
         # Actual composite proof (not Factorio tint shader or in-game image).
         if i%4==0:
-            painted=Image.new("RGBA",(S,S),(178,45,40,0));painted.putalpha(mask.getchannel("A"))
+            # Simulate documented normal multiply tint, not the Factorio GPU shader.
+            pix=np.array(mask);pix[:,:,:3]=np.rint(pix[:,:,:3].astype(np.float32)*np.array([178,45,40])/255).astype(np.uint8)
+            painted=Image.fromarray(pix,"RGBA")
             for j,state in enumerate(("down","up")):
                 comp=Image.alpha_composite(images["shadow"],body)
                 comp=Image.alpha_composite(comp,painted);comp=Image.alpha_composite(comp,images["pantograph-"+state])
