@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/hsr-concrete-track-053
   feature_version: "0.1.52" # locomotive polish test
-  feature_status: 053_concrete_reference_calibration_pending
+  feature_status: 053_blocked_native_raster_input
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -1156,5 +1156,7 @@ concrete_track_053:
   reference_record: docs/research/hsr-concrete-053.md
   replace_layers: [ties, backplates]
   preserve_layers: [metals, stone_path, stone_path_background]
-  raster_calibration: pending
+  raster_calibration: blocked_exact_demo_HTTP_404
+  calibration_run: 44546472744
+  synthetic_material_test: passed
   game_integration: pending

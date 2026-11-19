@@ -15,3 +15,6 @@ Exact wube/factorio-data 2.1.24 commit acf5a342afcb66c066b9d88d202e8622112da117,
 
 ## 6. Hypothesis / gate
 Use actual per-variation tie and backplate alpha geometry to reconstruct broad slab footprint, bridge original sleeper gaps, add narrow seams and neutral material; preserve native fastener registration exactly. No guessed curve radii or independent AI-generated 24 views. First run a technical calibration workflow against official demo, with source version and all 98 cells validated, derived preview only. If native PNG unavailable, request user-provided local 2.1.24 copies of the relevant five PNGs from data/base/graphics/entity/rails/rail; no substitute blind geometry. Do not promote into game until preview inspected. Build future install ZIP in GitHub Actions only, no Library copies. Version 0.1.53 planned, info.json remains 0.1.52 until integrated.
+
+## Calibration result
+Run 44546472744: synthetic material/alpha test passed; public exact demo URL returned HTTP 404 (curl exit 22). Actual raster validation skipped. No output or ZIP. Need the five installed 2.1.24 rail PNGs listed in section 6 from owner, or verified equivalent exact native assets. Keep 052 and main unchanged.
