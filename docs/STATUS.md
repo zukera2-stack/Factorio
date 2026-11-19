@@ -1,3 +1,5 @@
+> **0.1.49 concept accepted by owner (2026-11-19).** [Art reference specification](plans/LOCOMOTIVE_ART_049.md): autonomous locomotive robot, no human cab/glazing, neutral metal body, runtime-tinted stripe, separate two-state pantograph; no new mechanics. Original concept PNG identified by SHA256 in the document; not yet stored as binary in Git. Next: consistent model and native projection/mask/pantograph probe. Gameplay remains 0.1.48.
+
 > **0.1.49 sprite/API research:** [exact Base 2.1.24 source audit](research/hsr-rolling-stock-sprite-api-049.md). Native rail layer/atlas layout (24 direction entries, 98 variant cells/layer), locomotive 256 views and native runtime tint confirmed from tag. Preserve manual color and station color copying; neutral body + tint mask. Dynamic pantograph rendering/perspective and actual asset metadata remain probe targets. No game code/art/version change.
 
 > **0.1.49 design phase:** [plan](plans/HSR_VISUAL_049.md); no implementation or version bump yet.
