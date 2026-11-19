@@ -17,3 +17,6 @@ python scripts/sprites/model_049.py --out build/qa/locomotive049 --views 8
 - model_049.py SHA256 b35651f3211c7c7ef83ec673a53fd882d35c04dca507da57b4f0c6cb4df326f2
 
 Предварительная модель не является готовым игровым спрайтом; 256 направлений не выпущены. Не добавлять к моду и не менять info.json до native probe. Новые ZIP только через GitHub Actions. main и runtime payload без изменений.
+
+## Refined v2
+See [refinement and scale calibration](locomotive-calibration-049.md). The original model/proof hashes above refer to the historical v1; the renderer now has an optional calibration flag preserving default behavior.

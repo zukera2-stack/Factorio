@@ -107,7 +107,7 @@ def export(parts,out):
             mesh=m.copy();mesh.apply_transform(rot);scene.add_geometry(mesh,geom_name=name,node_name=name)
         (out/f'locomotive_049_{state}.glb').write_bytes(scene.export(file_type='glb'))
 
-def render(parts,out,count=8):
+def render(parts,out,count=8,calibrated=False):
     import vtk
     from vtk.util.numpy_support import numpy_to_vtk, vtk_to_numpy
     ren=vtk.vtkRenderer();ren.SetBackground(.94,.95,.96);ren.SetBackgroundAlpha(0)
@@ -118,15 +118,15 @@ def render(parts,out,count=8):
         cells=vtk.vtkCellArray()
         for face in m.faces:cells.InsertNextCell(3);[cells.InsertCellPoint(int(v)) for v in face]
         poly.SetPolys(cells);mapper=vtk.vtkPolyDataMapper();mapper.SetInputData(poly)
-        actor=vtk.vtkActor();actor.SetMapper(mapper);p=actor.GetProperty();p.SetColor(*(np.array(PALETTE[mat][:3])/255));p.SetAmbient(.65);p.SetDiffuse(.55);p.SetSpecular(.18);p.SetSpecularPower(18);p.SetInterpolationToFlat();ren.AddActor(actor);actors.append((actor,g,mat))
+        actor=vtk.vtkActor();actor.SetMapper(mapper);p=actor.GetProperty();p.SetColor(*(np.array(PALETTE[mat][:3])/255));p.SetAmbient(.43 if calibrated else .65);p.SetDiffuse(.70 if calibrated else .55);p.SetSpecular(.24 if calibrated else .18);p.SetSpecularPower(18);p.SetInterpolationToFlat();ren.AddActor(actor);actors.append((actor,g,mat))
     ren.AutomaticLightCreationOff();light=vtk.vtkLight();light.SetPosition(-5,-5,10);light.SetFocalPoint(0,0,0);light.SetIntensity(1.05);ren.AddLight(light)
-    cam=ren.GetActiveCamera();cam.ParallelProjectionOn();cam.SetParallelScale(3.65);cam.SetViewUp(0,0,1)
+    cam=ren.GetActiveCamera();cam.ParallelProjectionOn();cam.SetParallelScale(4 if calibrated else 3.65);cam.SetViewUp(0,0,1)
     frames={}
     for state in ['up','down']:
         folder=out/state;folder.mkdir(exist_ok=True)
         for act,g,mat in actors:act.SetVisibility(g in ['body','mask',state])
         for i in range(count):
-            a=2*math.pi*i/count;cam.SetFocalPoint(0,0,1.05);cam.SetPosition(12*math.sin(a),-12*math.cos(a),13.05);light.SetPosition(12*math.sin(a-.65),-12*math.cos(a-.65),18);ren.ResetCameraClippingRange();win.Render()
+            a=2*math.pi*i/count;z0=math.sqrt(2) if calibrated else 1.05;cam.SetFocalPoint(0,0,z0);cam.SetPosition(12*math.sin(a),-12*math.cos(a),12+z0);light.SetPosition(12*math.sin(a-.65),-12*math.cos(a-.65),18);ren.ResetCameraClippingRange();win.Render()
             grab=vtk.vtkWindowToImageFilter();grab.SetInput(win);grab.SetInputBufferTypeToRGBA();grab.ReadFrontBufferOff();grab.Update()
             arr=vtk_to_numpy(grab.GetOutput().GetPointData().GetScalars()).reshape(512,512,4)[::-1].copy();im=Image.fromarray(arr,'RGBA');im.save(folder/f'{i:03}.png');frames[state,i]=im
     win.Finalize()
