@@ -69,6 +69,7 @@ function surface.count_entities_filtered(_) return 1 end
 game={tick=0,surfaces={[1]=surface},forces={p=force},get_entity_by_unit_number=function(id) return entities[id] end}
 rendering={}
 function rendering.draw_sprite(arg)
+ if arg.sprite and arg.sprite:find("em-25kv-",1,true) then assert(arg.render_layer=="wires","050 wire must draw above train") end
  serial=serial+1
  local o={id=serial,valid=true,arg=arg};function o.destroy() o.valid=false end
  renders[serial]=o;return o
@@ -91,6 +92,7 @@ local live=power.graph();assert(live.nodes[1] and not live.nodes[2])
 local _,spans=power.preview_at(q);assert(#spans==1)
 local before=created
 assert(ghost.on_built(q));assert(count_tinted_spans()>0 and created==before)
+for _,o in pairs(renders) do if o.valid and o.arg.tint and o.arg.sprite=='em-25kv-contact-043' then assert(not art.contact_at(1,force.name,o.arg.target),'ghost preview cannot trigger sparks') end end
 assert(not live.nodes[2] and next(live.edges)==nil)
 assert(ghost.on_removed(q) and count_tinted_spans()==0)
 split()

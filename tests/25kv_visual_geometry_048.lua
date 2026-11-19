@@ -1,4 +1,7 @@
 package.path='./ElectrifiedMainline/?.lua;'..package.path
+local info_file=assert(io.open('ElectrifiedMainline/info.json'))
+local axis_version=info_file:read('*a'):find('"version": "0.1.56"',1,true)~=nil
+info_file:close()
 local geo=require('scripts.catenary_visual_geometry_045')
 local art=require('scripts.catenary_art_030')
 local technical=require('scripts.technical_network_046')
@@ -58,6 +61,7 @@ end
 local function parent(id,name,pos) entities[id]={unit_number=id,name=name,position=pos,surface=surface,force=force,valid=true} end
 rendering={}
 function rendering.draw_sprite(args)
+ if args.sprite and args.sprite:find("em-25kv-",1,true) then assert(args.render_layer=="wires","050 wire must draw above train") end
  local ob={id=#order+1,valid=true,args=args}
  function ob.destroy() ob.valid=false end
  objects[ob.id]=ob;order[#order+1]=ob;return ob
@@ -72,6 +76,14 @@ for _,name in ipairs(names) do for face in pairs(expected) do
  local a,b=P(0,0),P(8,4)
  parent(1,name,a);parent(2,other,b)
  local g={nodes={[1]=node(1,name,face,a),[2]=node(2,other,'west',b)},edges={['1:2']={a=1,b=2,kind='contact',corner=true}}}
+ -- 056 requires an explicit rail-axis route from its planner. Exercise both
+ -- rejection of an unqualified edge and unchanged rendering of a qualified edge.
+ if axis_version then
+  art.sync(g);assert(art.ensure_storage().stats.drawn==0)
+  assert(art.inspect_pair(g,1,2)=='no-axis-route')
+  g.edges['1:2'].axis=true
+  g.edges['1:2'].axis_length=math.sqrt(80)
+ end
  local start=#order
  art.sync(g);assert(art.ensure_storage().stats.drawn==1 and next(art.ensure_storage().helpers)==nil)
  local groups={contact={},messenger={},dropper={}}
@@ -90,11 +102,22 @@ for _,name in ipairs(names) do for face in pairs(expected) do
   point(v,want(a,name,face,j));point(w,want(b,other,'west',j))
  end
  assert(#groups.dropper>=2 and art.inspect_pair(g,1,2)=='drawn')
+ local row=art.ensure_storage().draws['1:2']
+ local p=P((row.contact_a.x+row.contact_b.x)/2,(row.contact_a.y+row.contact_b.y)/2)
+ assert(art.contact_at(1,'player',p).distance<1e-6)
+ assert(not art.contact_at(2,'player',p) and not art.contact_at(1,'enemy',p))
+ assert(not art.contact_at(1,'player',P(p.x+100,p.y+100)))
+ local ci=math.min(row.contact_pieces,math.floor(.5*row.contact_pieces)+1)
+ local ob=objects[row.ids[ci]]
+ ob.visible=false;assert(not art.contact_at(1,'player',p));ob.visible=true
+ ob.valid=false;assert(not art.contact_at(1,'player',p));ob.valid=true
+ art.mark_dirty();assert(not art.contact_at(1,'player',p))
  local old=#order;art.sync(g);assert(#order==old)
+ assert(art.contact_at(1,'player',p))
  -- The art renderer must not create an electric helper, even with no wires.
  assert(eid==100)
  g.edges={};art.sync(g)
- assert(art.inspect_pair(g,1,2)=='no-contact-edge')
+ assert(art.inspect_pair(g,1,2)=='no-contact-edge' and not art.contact_at(1,'player',p))
  for i=start+1,#order do assert(not order[i].valid) end
 end end
 print('048 PASS: 16 independent pixel/render endpoint pairs; six directions, chord, limits, cleanup, calibration independence')

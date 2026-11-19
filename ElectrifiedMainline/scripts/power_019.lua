@@ -1,7 +1,7 @@
 -- 0.1.12 rail-following visual contact graph, cosmetic sprites only; no MW transfer.
 -- 0.1.27: C mast + native wire probe, no scripted overhead lines.
 local M = {}
-local visual047 = require("scripts.catenary_visual_policy_047")
+local axis056 = require("scripts.catenary_axis_056")
 local view = require("scripts.overhead_geometry_012")
 local face022 = require("scripts.mast_facing_022")
 local limits = require("scripts.catenary_limits_029")
@@ -206,7 +206,7 @@ end
 -- Feeder metadata remains for future substation work.
 local function build_edges(s,touched)
     for key in pairs(s.edges) do delete_edge(s,key) end
-    s.edges=visual047.plan(s.nodes)
+    s.edges=axis056.plan(s.nodes)
     for id,n in pairs(s.nodes) do
         if n.name==SUB then
             local e=resolve(s,id)
@@ -275,7 +275,7 @@ function M.rebuild_all()
     end
     s.version=4
     build_edges(s,all)
-    log("[ElectrifiedMainline][25kv] rebuilt relaxed cosmetic graph (schema 4)")
+    log("[ElectrifiedMainline][25kv] rebuilt rail-axis cosmetic graph (056)")
 end
 function M.on_built(event)
     local e=event.entity
@@ -400,7 +400,6 @@ function M.preview_at(ghost)
     for k,n in pairs(live.nodes) do s.nodes[k]=n end
     register(s,e)
     local n=s.nodes[id]
-    if not n.rail_adjacent then return n,{} end
     local touched={[id]=e}
     for _,other in pairs(e.surface.find_entities_filtered{
         position=e.position,radius=SPAN*2+2,name={POLE,NORTH,SUB},force=e.force}) do
@@ -408,7 +407,7 @@ function M.preview_at(ghost)
             register(s,other);touched[other.unit_number]=other
         end
     end
-    s.edges=visual047.plan(s.nodes)
+    s.edges=axis056.plan(s.nodes)
     local spans={}
     for _,edge in pairs(s.edges) do
         if edge.kind=="contact" and (edge.a==id or edge.b==id) then

@@ -4,7 +4,6 @@ local lim=require("scripts.catenary_limits_029")
 -- Factorio permits require ONLY during control.lua parsing. Resolve
 -- dependencies now, never while on_configuration_changed/on_tick runs.
 local visible=require("scripts.catenary_visual_geometry_045")
-local technical=require("scripts.technical_network_046")
 local PARENT,HELPER="em-35kv-catenary-pole","em-25kv-art-anchor-030"
 local NORTH="em-35kv-catenary-pole-north"
 local function is_parent(name) return name==PARENT or name==NORTH end
@@ -18,7 +17,7 @@ local function valid_edge(g,e)
   if e.kind~="contact" then return false end
   local a,b=g.nodes[e.a],g.nodes[e.b]
   return a and b and is_parent(a.name) and is_parent(b.name)
-    and a.rail_adjacent and b.rail_adjacent and a.rail_id and b.rail_id
+    and e.axis==true
     and a.surface_index==b.surface_index and a.force_name==b.force_name
 end
 function M.ensure_storage()
@@ -49,7 +48,8 @@ local function segment(ids,surface,sprite,a,b,vertical,pixels,outer_a,outer_b,pr
     sprite=sprite,surface=surface,
     target={x=(a.x+b.x)/2,y=(a.y+b.y)/2},
     orientation=(theta/(2*math.pi))%1,
-    render_layer="object"}
+    -- Overhead conductors must render above ground rolling stock and pantograph.
+    render_layer="wires"}
   if vertical then
     arg.y_scale=d*32/pixels
     arg.x_scale=1.14 -- make rivet heads on the droppers more legible
@@ -150,7 +150,7 @@ local function draw(s,key,na,nb,edge)
   if edge.corner then g=M.curve_geometry(a,b,ma,mb)
   else g=M.geometry(a,b,ma,mb) end
   if not g then erase(s,key);return false end
-  local sig=string.format("045/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%d/%d/%s",
+  local sig=string.format("052-wires/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%d/%d/%s",
     a.x,a.y,b.x,b.y,ma.x,ma.y,mb.x,mb.y,g.pieces,g.droppers,
     edge and edge.corner and "curve" or "straight")
   local previous=s.draws[key]
@@ -164,8 +164,55 @@ local function draw(s,key,na,nb,edge)
   end
   erase(s,key)
   local ids=draw_geometry(pa.surface,g)
-  s.draws[key]={ids=ids,sig=sig}
+  s.draws[key]={ids=ids,sig=sig,contact_a=a,contact_b=b,contact_pieces=g.pieces,
+    surface_index=na.surface_index,force_name=na.force_name}
   return true
+end
+local CELL=16
+local function cell_key(surface,force,x,y)
+  return tostring(surface)..":"..force..":"..x..":"..y
+end
+local function index_contacts(s)
+  local index={}
+  for k,row in pairs(s.draws) do
+    local a,b=row.contact_a,row.contact_b
+    if a and b then
+      for x=math.floor((math.min(a.x,b.x)-.45)/CELL),math.floor((math.max(a.x,b.x)+.45)/CELL) do
+        for y=math.floor((math.min(a.y,b.y)-.45)/CELL),math.floor((math.max(a.y,b.y)+.45)/CELL) do
+          local id=cell_key(row.surface_index,row.force_name,x,y)
+          index[id]=index[id] or {};index[id][#index[id]+1]=k
+        end
+      end
+    end
+  end
+  s.contact_index=index
+end
+-- Already projected sprite coordinates. Only actual drawn contact IDs;
+-- preview, messenger, ghost and predicted links never enter this index.
+function M.contact_at(surface,force,p)
+  local s=M.ensure_storage()
+  if s.dirty then return nil end
+  local keys=s.contact_index and s.contact_index[cell_key(surface,force,math.floor(p.x/CELL),math.floor(p.y/CELL))] or {}
+  local best,best2=nil,.45*.45
+  for _,key in ipairs(keys) do
+    local row=s.draws[key]
+    if row and row.surface_index==surface and row.force_name==force then
+      local a,b=row.contact_a,row.contact_b
+      local dx,dy=b.x-a.x,b.y-a.y
+      local d2=dx*dx+dy*dy
+      if d2>0 then
+        local t=math.max(0,math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/d2))
+        local q={x=a.x+t*dx,y=a.y+t*dy}
+        local ds=(p.x-q.x)^2+(p.y-q.y)^2
+        local i=math.min(row.contact_pieces,math.floor(t*row.contact_pieces)+1)
+        local obj=rendering.get_object_by_id(row.ids[i])
+        if ds<=best2 and obj and obj.valid and obj.visible~=false then
+          best2=ds;best={x=q.x,y=q.y,distance=math.sqrt(ds),key=key}
+        end
+      end
+    end
+  end
+  return best
 end
 function M.sync(graph)
   local s=M.ensure_storage()
@@ -175,13 +222,12 @@ function M.sync(graph)
     if valid_edge(graph,e) then
       eligible=eligible+1
       local na,nb=graph.nodes[e.a],graph.nodes[e.b]
-      if technical.span_state(na,nb)=="connected" then
-        if draw(s,key,na,nb,e) then keep[key]=true;drawn=drawn+1 end
-      else blocked=blocked+1 end
+      if draw(s,key,na,nb,e) then keep[key]=true;drawn=drawn+1 end
     end
   end
   for key in pairs(s.draws) do if not keep[key] then erase(s,key) end end
   s.stats={eligible=eligible,drawn=drawn,blocked=blocked,missed=eligible-drawn-blocked}
+  index_contacts(s)
   s.dirty=false
 end
 function M.rebuild_all(graph)
@@ -210,15 +256,14 @@ function M.on_tick(tick,graph)
 end
 function M.status(player)
   local v=M.ensure_storage().stats
-  player.print(string.format("[EM048 visual] eligible=%d drawn=%d blocked=%d render_missed=%d (verified continuity, not voltage)",
+  player.print(string.format("[EM056 visual] eligible=%d drawn=%d blocked=%d render_missed=%d (HSR centreline; decorative only)",
     v.eligible or 0,v.drawn or 0,v.blocked or 0,v.missed or 0))
 end
 function M.inspect_pair(graph,a,b)
   local key=tostring(math.min(a,b))..":"..tostring(math.max(a,b))
   local e=graph.edges[key]
   if not e or e.kind~="contact" then return "no-contact-edge" end
-  local state=technical.span_state(graph.nodes[a],graph.nodes[b])
-  if state~="connected" then return state end
+  if not e.axis then return "no-axis-route" end
   local s=M.ensure_storage()
   local row=s.draws[key]
   if not row then return "no-render-record" end

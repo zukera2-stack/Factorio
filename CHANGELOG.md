@@ -1,3 +1,35 @@
+## 0.1.56 — owner-approved visual milestone
+
+- Replace decorative proximity selection with native HSR axis walk and first reciprocal mast per direction. Independent of hidden technical connectors. Preserve chord rendering and 055 graphics. CI passed (44611594056); owner confirms original 056 visual behavior. Phase-2 experiment excluded. See [acceptance](docs/tests/catenary-0.1.56-user-acceptance.md). Lua preflight runs before sprite generation. No traction power.
+
+## 0.1.55
+
+> **055 native fastener correction.** Owner screenshots 2026-11-19_20-59-05.zip show dark continuous-looking curved fasteners. Compared owner native rail-backplates atlas curved-a north cell with reconstructed 054 pad: solid contour loses native translucency/shading. Restore native backplates with neutral RGB tint 0.65, alpha 1, all original geometry/variants. Keep 054 slabs and dirt; no gameplay change. CI/live pending. 054 CI run 44576824110 passed. Main unchanged.
+
+## 0.1.54 (experimental)
+
+- Concrete slab front faces, subtle edge/joint/fastener dust and procedural concrete mottling. Reuse 053 geometry and black pads unchanged. CI/game test pending.
+
+## 0.1.53 (experimental)
+
+- Owner reports concrete slab/black pad visual generally good; requested thickness and dirt. CI artifact 14554565580. Native metal and bed unchanged.
+
+## 0.1.52 (experimental)
+
+- Full 256-direction locomotive body/mask/shadow and raised/folded pantograph, model-space wear, shared authored icon; native accumulator discharge cosmetic spark gated on actual rendered contact, motion and HSR. Preserve 051 rail palette and 050 electrical/visual baseline. Ground-track game test pending.
+
+## 0.1.51 (experimental)
+
+- Native HSR palette probe: cooler ties/ballast, unchanged native metals, joining geometry and approved 0.1.50 rolling stock/catenary. No new concrete textures or traction mechanics.
+
+## 0.1.50 Alpha 2 (experimental)
+
+- User live 049: pantograph, curves and coupling accepted. Fix failed color mask, wire draw depth and malformed RU/EN locale; retain 32 directions and existing model. No new electrical mechanics. Game re-test pending.
+
+## 0.1.49 alpha1 (experimental)
+
+- First game probe: 32-direction autonomous locomotive, native paint mask, shadow, retained native wheels, separate up/down pantograph without power changes. CI generates 5 sheets; no HSR rail texture changes. Live QA pending.
+
 ## 0.1.48 — promoted to stable main
 
 - Owner-approved merge [PR #27](https://github.com/zukera2-stack/Factorio/pull/27), commit `7218360acb4fc5079e48cf4f38448fa086f1af96`. Scoped HSR visual acceptance, clean CI-only package; no actual traction MW. Next separate 0.1.49 visual rolling stock branch.

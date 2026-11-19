@@ -1,8 +1,7 @@
-# Stable release: Electrified Mainline 0.1.48 (18 Nov 2026)
+# Electrified Mainline 0.1.56 — owner-approved visual milestone (19 Nov 2026)
 
-**Merged into main via [PR #27](https://github.com/zukera2-stack/Factorio/pull/27) with owner approval.** HSR-dependent visible catenary accepted in [Factorio 2.1.24 live test](docs/tests/catenary-0.1.48-user-acceptance.md). Ghost rails do not restore contact wires; vanilla replacements interrupt them; native Undo/robot restoration works in the tested straight-rail scenario. Factory-grid isolation IDs remain unverified; real traction power is not implemented. Clean [GitHub Actions install ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44415412191/artifacts/14478562971) contains 51 game files and 16 PNGs. Extract only the inner mod ZIP. [Structure](docs/REPOSITORY_LAYOUT.md). Previous stable 0.1.42: [game acceptance](docs/tests/catenary-0.1.42-main-acceptance-2026-11-18.md).
+Original rail-axis contact graph, autonomous locomotive with 256 directions and cosmetic pantograph/sparks, concrete HSR slabs with native fasteners. [Scoped game acceptance](docs/tests/catenary-0.1.56-user-acceptance.md). [CI install ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44611594056/artifacts/14573715719) (121 files, 81 PNGs; extract only the inner ZIP). Actual traction energy transfer remains zero. Experimental phase-2 attachment excluded. Previous stable 0.1.48: [PR #27](https://github.com/zukera2-stack/Factorio/pull/27) and [historical ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44415412191/artifacts/14478562971).
 
-Next: [0.1.49 visual HSR and locomotive branch](https://github.com/zukera2-stack/Factorio/tree/feature/hsr-rolling-stock-visual-049).
 ---
 
 # Electrified Mainline
@@ -15,14 +14,14 @@ A **Factorio 2.1** mod for high-speed railway infrastructure and 35 kV overhead-
 
 The prior **0.1.8 ZIP** remains the historical rollback baseline and preserves game evidence for native Upgrade Planner + Undo/Redo on straight and curved-A/B rails. Those full rail regressions have **not** all been rerun in 0.1.24. [0.1.8 test details](docs/tests/undo-0.1.8-2026-11-12.md).
 
-## Current 35 kV mast architecture
+## Current 25 kV mast architecture (legacy 35 kV prototype IDs)
 
 - A single native `electric-pole.pictures` C lattice shaft supplies the standard mouse cursor and engine-rendered ghost body.
 - Eight cantilever-only sprites are dynamically selected using RailEnd projection, with blue-tinted arm-only overlays for ghosts.
 - Placement, ghost creation, copying, robots and Undo/Redo remain engine-native, not proxy signal entities.
 - All active source graphics and PNG QA live in this branch; the obsolete 012/024 frames were removed and remain available only from Git history or the stable main branch.
 
-Next: **contact and messenger wire artwork/alignment along high-speed rails**, then separately research and implement actual MW energy exchange. [Status](docs/STATUS.md) · [Architecture](docs/ARCHITECTURE.md) · [AI handoff](docs/AI_CONTEXT.md).
+Next: separately research actual MW energy exchange; preserve the accepted visual graph. [Status](docs/STATUS.md) · [Architecture](docs/ARCHITECTURE.md) · [AI handoff](docs/AI_CONTEXT.md).
 
 ## History
 
@@ -62,7 +61,7 @@ These are project goals, not a claim that every feature is currently complete. T
 
 ## Installation
 
-For 0.1.24, download [the accepted GitHub Actions artifact](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233), extract the **inner** `ElectrifiedMainline_0.1.24.zip` and install only that inner ZIP in `mods`. The [0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) is preserved for historical rollback, not the active source version.
+For 0.1.56, download [the accepted GitHub Actions artifact](https://github.com/zukera2-stack/Factorio/actions/runs/44611594056/artifacts/14573715719), extract the **inner** `ElectrifiedMainline_0.1.56.zip` and install only that inner ZIP in `mods`. The [0.1.8 ZIP](dist/ElectrifiedMainline_0.1.8.zip) is preserved for historical rollback, not the active source version.
 
 For a manual test:
 

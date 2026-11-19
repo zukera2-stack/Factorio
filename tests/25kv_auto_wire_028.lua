@@ -100,13 +100,17 @@ M.on_parent_removed(poleA)
 assert(M.ensure_storage().helpers[poleA.unit_number]==nil)
 local src=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
 local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
-if not info:find('"version": "0.1.47"',1,true) and not info:find('"version": "0.1.48"',1,true) then
+if not info:find('"version": "0.1.47"',1,true) and not info:find('"version": "0.1.48"',1,true) and not info:find('"version": "0.1.49"',1,true) and not info:find('"version": "0.1.50"',1,true) and not info:find('"version": "0.1.51"',1,true) and not info:find('"version": "0.1.52"',1,true) and not info:find('"version": "0.1.53"',1,true) and not info:find('"version": "0.1.54"',1,true) and not info:find('"version": "0.1.55"',1,true) and not info:find('"version": "0.1.56"',1,true) then
 assert(src:find("corridor(e.surface,e.force,x,y)",1,true))
 assert(src:find("path_info(x,y)",1,true))
 assert(src:find("radius=SPAN+RADIUS+4",1,true),
   "Broken middle track must re-check mast ends beyond 5 tiles")
 else
- assert(src:find("visual047.plan(s.nodes)",1,true))
+ if info:find('"version": "0.1.56"',1,true) then
+  assert(src:find("axis056.plan(s.nodes)",1,true))
+ else
+  assert(src:find("visual047.plan(s.nodes)",1,true))
+ end
  assert(src:find("radius=limits.WIRE_REACH*1.5+4+RADIUS",1,true))
  assert(src:find("function M.technical_path(a,b)",1,true))
 end

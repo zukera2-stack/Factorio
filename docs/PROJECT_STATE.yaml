@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/hsr-rolling-stock-visual-049
+  active_test_branch: feature/release-056-accepted
   current_baseline_branch: main
-  active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
-  feature_version: "0.1.49" # planning target
-  feature_status: 049_visual_rolling_stock_planning
+  active_feature_branch: feature/release-056-accepted
+  feature_version: "0.1.56" # owner-approved original visual graph
+  feature_status: 056_owner_approved_release_candidate
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -15,7 +15,7 @@ project:
   previous_release_pull_request: 20
   previous_release_merge_commit: 5e2625c49b40f03c1262507e2fbfd8862f91ba7f
   release_merge_approved_by_user: true
-  release_status: merged_into_main_2026_11_18
+  release_status: owner_approved_056_merge_pending
   next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.4"
   previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
@@ -24,12 +24,12 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.48" # stable
+  mod_version: "0.1.56" # accepted visual milestone
   main_baseline_mod_version: "0.1.48" # merged PR #27
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
-  last_state_update: "2026-11-18"
+  last_state_update: "2026-11-19"
   documentation_audit: 048_confirmed_connectivity_visibility
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
@@ -492,8 +492,9 @@ historical_game_tests:
     pipe_item_correction: implemented
 
 next_actions:
-  - preserve_0_1_24_accepted_visual_baseline_in_main_and_branch_future_work
-  - improve_cosmetic_contact_and_messenger_wire_anchor_alignment_on_straight_curves_and_half_diagonal
+  - preserve_0_1_56_accepted_visual_baseline_in_main_and_branch_future_work
+  - freeze_visual_graph_unless_reproducible_defect
+  - verify_remaining_056_geometries_and_undo_when_relevant
   - test_native_green_upgrade_planner_and_undo_redo_on_half_diagonal_ground_rails
   - test_blueprint_interleaved_with_unrelated_action_during_delayed_robot_jobs
   - evaluate_and_regress_staged_custom_selection_tool_fallback_before_removal
@@ -1024,10 +1025,188 @@ accepted_milestone_048:
 planned_049:
   branch: feature/hsr-rolling-stock-visual-049
   target_version: "0.1.49"
-  status: planning_only
+  status: alpha1_implementation_pending_CI
+  development_plan: docs/plans/HSR_VISUAL_049.md
+  approved_locomotive_art: docs/plans/LOCOMOTIVE_ART_049.md
+  locomotive_concept_user_accepted: true
+  geometric_prototype: docs/development/locomotive-model-049.md
+  model_generator: scripts/sprites/model_049.py
+  model_source_blob: cc76c42be6e2319f7b44d7b95c404d5b63007392
+  model_preview_frames: 16
+  model_native_calibration: horizontal_reference_calculated_native_probe_pending
+  model_refinement: scripts/sprites/refine_049.py
+  model_calibration_report: docs/development/locomotive-calibration-049.md
+  model_common_meshes_v2: 292
+  model_wire_reference_game_px: 91.93
+  model_live_game_validation: scoped_owner_confirmed_049
+  locomotive_concept_sha256: a9d01266afd38e6e0e7a036104cbdcb8ef486092e3a336256f1e8dfc4e35da82
+  locomotive_concept_binary_in_git: false
+  autonomous_no_human_cab: true
+  sprite_api_research: docs/research/hsr-rolling-stock-sprite-api-049.md
+  base_source_tag: "2.1.24"
+  base_source_commit: acf5a342afcb66c066b9d88d202e8622112da117
+  preserve_native_manual_color: true
+  preserve_station_color_copy: true
+  base_locomotive_direction_count: 256
+  rail_direction_entries: 24
+  rail_variant_cells_per_ordinary_layer: 98
+  pantograph_runtime_probe_pending: false
+  exact_sprite_metadata_pending: true
   visual_HSR: true
   locomotive_existing_prototype_id: em-electric-locomotive
   pantograph: separate_cosmetic_layer_stopped_down_moving_up
   spark: deferred_optional
   traction_power_change: false
   catenary_art_frozen: true
+
+alpha1_049:
+  task: docs/plans/ALPHA1_049.md
+  directions: 32
+  source_frame: [512, 512]
+  grid: [8, 4]
+  runtime_sheets: 5
+  native_wheels: true
+  native_color: true
+  real_traction_MW: 0
+  ground_track_scope: true
+  render_probe_live: owner_confirmed_stop_start_curves_coupling_color_and_wire_layer_defects
+  ci_status: passed
+  ci_build_run_id: 44493511441
+  ci_source_commit: "bf8452768afa9c7fae21f1735f803b456d6d7368"
+  ci_artifact_id: 14513902332
+  qa_artifact_id: 14514261386
+  archive_sha256: 389337a8cce812fcbc872499dbc63d4bb99bead2f856ded7e220f6d27f5ca13e
+  archive_entries: 58
+  archive_bytes: 1770765
+  png_count: 21
+  draft_pr: 28
+ 
+alpha2_050:
+  research: docs/research/locomotive-alpha2-050.md
+  base_alpha1_user_confirmed: pantograph_curves_native_coupling
+  user_screenshot_archive: 2026-11-19_13-08-29.zip
+  runtime_tint_as_overlay: false
+  wire_render_layer: wires
+  scope: ground_track_visual_paint_and_locale
+  ci_build_run_id: 44505222272
+  ci_source_commit: "27a905c0255f943c0770154c2b857cdbb9410371"
+  ci_status: passed
+  ci_artifact_id: 14519920195
+  qa_artifact_id: 14518354995
+  archive_sha256: 8d876199a7f22116ff31ecf6f7d4df90c4886ea786427c98d3f077eefbb150f9
+  archive_bytes: 1806135
+  archive_entries: 58
+  unchanged_files_vs_049: 51
+  docs_run_id: 44505424976
+  game_status: owner_accepted_visual_and_checklist
+  draft_pr: 28
+
+accepted_050:
+  owner_accepted: true
+  evidence: docs/tests/locomotive-0.1.50-user-acceptance.md
+  accepted_head: 6127b546a06af77fe9e2123a8b33ff0f03f0a076
+  accepted_build_artifact: 14519920195
+  game_log_sha256: 006abf20da21d9577670edccc7c41152652e633dc14113249666bab45934e814
+  rail_observations: 147
+  main_merge_authorized: false
+  traction_power_validated: false
+  distribution: github_actions_artifact_links_only
+
+rail_palette_051:
+  research: docs/research/hsr-palette-051.md
+  native_layer_tints_only: true
+  custom_concrete_textures: false
+  preserved_050_png_count: 21
+  game_status: pending
+  ci_status: passed
+  ci_source_commit: 40cbdf1f1ab2c6862a65dcd57a5ed06a979b35fe
+  ci_build_run_id: 44513632305
+  ci_artifact_id: 14523833550
+  archive_entries: 59
+  outer_artifact_bytes: 1801447
+  inner_zip_hash_verified_locally: false
+
+locomotive_polish_052:
+  branch: feature/locomotive-polish-052
+  base_051_saved_head: 0331f3c4442ab9d0c97ec40ac7013db02446a85c
+  base_051_artifact: 14523833550
+  research: docs/research/locomotive-polish-052.md
+  generator: scripts/sprites/render_polish_052.py
+  directions: 256
+  frame_size: [512, 512]
+  sheets: 40
+  icon_size: 64
+  spark_source: vanilla_accumulator_discharge
+  spark_real_visual_contact_only: true
+  spark_ground_HSR_only: true
+  spark_tolerance_screen_tiles: 0.45
+  spark_lifetime_ticks: 12
+  spark_repeat_ticks: [180, 600]
+  new_traction_logic: false
+  ci_status: passed
+  ci_source_commit: 3c956bfbbcf443f71e630da9534421ff39427ea2
+  ci_build_run_id: 44520547386
+  ci_package_job_id: 135573632828
+  ci_artifact_id: 14532231767
+  qa_artifact_id: 14532856634
+  archive_entries: 95
+  png_count: 57
+  outer_artifact_bytes: 13916383
+  inner_zip_sha256: d6b1e7258cbb0d97f5df685e0b412cd36b6d24ba9ed4473caabba0cc869eed11
+  game_status: owner_confirmed_locomotive_green_rail_palette_rejected
+  draft_pr: 29
+
+concrete_track_053:
+  planned_version: '0.1.53'
+  base_head: 8e53e703f4eab886b982ddb8d289464c9a003607
+  base_artifact: 14532231767
+  reference_record: docs/research/hsr-concrete-053.md
+  replace_layers: [ties, backplates]
+  preserve_layers: [metals, stone_path, stone_path_background]
+  raster_calibration: blocked_exact_demo_HTTP_404
+  calibration_run: 44546472744
+  synthetic_material_test: passed
+  game_integration: pending
+
+slab_wear_054:
+  branch: feature/hsr-slab-wear-054
+  source_baseline_053: 075a60cb07b702ef75fc5d5dd9b66369dd274da7
+  baseline_ci_run: 44568598205
+  baseline_install_artifact: 14554565580
+  baseline_owner_feedback: straight_rail_visual_generally_ok_add_face_and_dirt
+  source_screenshot_archive: "2026-11-19_20-02-17.zip"
+  face_depth_atlas_px: [3, 4]
+  grime_masks: [edge, joint, fastener, noise]
+  preserved: [native_metal, native_lower_bed, pad_sprites, rail_geometry, runtime, locomotive]
+  ci_status: pending
+  game_status: pending
+
+native_pads_055:
+  baseline: 978a09883eef7d480c3626a80e7da4ab45d2ab12
+  tint_rgb: 0.65
+  original_atlas_alpha_and_offsets_preserved: true
+  ci_status: pending
+  game_status: pending
+
+axis_wires_056:
+  branch: feature/hsr-axis-wires-056
+  parent: e0620fc9d3dd82b734a6b1c86135e760ba37df0d
+  screenshot_archive: "2026-11-19_22-02-53.zip"
+  visible_path: native_rail_end_directed_HSR_axis_first_reciprocal_mast_each_direction
+  technical_network_changed: false
+  technical_component_is_visual_gate: false
+  branch_policy: nearest_mutual_mast_per_direction
+  maximum_axis_span_tiles: 32
+  game_status: owner_confirmed_original_visual_scope
+  ci_status: passed
+  accepted_source_commit: 662389ad2f8737e30170e5284c4d3ddea41d9108
+  ci_build_run: 44611594056
+  ci_artifact: 14573715719
+  inner_zip_sha256: 829af87f916f35743463b0ecd61029c88a444efd0c6becd724150ba80398f545
+  archive_entries: 121
+  png_count: 81
+  acceptance_evidence: docs/tests/catenary-0.1.56-user-acceptance.md
+  owner_main_merge_approved: true
+  excluded_experiment_head: e9e0883aeceb7c577b01340505fc11dfa6998704
+  transfer_MW: 0
+  factory_network_isolation_measured: false

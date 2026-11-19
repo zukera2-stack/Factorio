@@ -14,3 +14,9 @@ require("prototypes.native_wire_auto_028")
 
 -- Isolated 0.1.30 double-contact wire visual pilot.
 require("prototypes.catenary_art_030")
+
+-- 0.1.49 alpha1: native body/mask/shadow, independently attached pantograph.
+require("prototypes.locomotive_visual_049")
+
+-- 053: concrete HSR appearance only; no rail geometry or runtime changes.
+require("prototypes.hsr_concrete_053")

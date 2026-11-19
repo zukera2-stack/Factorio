@@ -1,6 +1,15 @@
-# Stable 0.1.42 architecture — user-accepted 25 kV overhead
+# Accepted 0.1.56 architecture
 
-- The stable `main` branch is now **0.1.42**, merged via PR #20 from `experiment/25kv-visual-042-accepted`.
+- Native ground HSR prototypes; concrete slab with static thickness/wear, native backplates tinted 0.65, native metals and lower bed. Build-time art only.
+- Autonomous locomotive with 256 directions, runtime tint, native wheels, cosmetic raised/folded pantograph and contact-only spark; no real electric traction.
+- `catenary_axis_056.lua` selects the first mutual mast in each direction along real HSR RailEnd connections (approximate arc, 32 tiles); `power_019.lua` maintains the graph and separate legacy technical association; `catenary_art_030.lua` draws pixel-calibrated chords and contact index; `technical_network_046.lua` is separate, not a decorative gate. Ghost preview uses same graph against existing built masts. Phase-2 unified attachment excluded.
+- Lua syntax and functional preflight before eight render jobs; CI packaging and asset QA separate. [Owner acceptance](tests/catenary-0.1.56-user-acceptance.md). No actual MW or verified factory isolation, no exhaustive live regression.
+
+---
+
+# Historical 0.1.42 architecture — user-accepted 25 kV overhead
+
+- The stable `main` branch was then **0.1.42**, merged via PR #20 from `experiment/25kv-visual-042-accepted`.
 - Two **native Factorio electric-pole prototypes**: long southern `em-35kv-catenary-pole` and short northern `em-35kv-catenary-pole-north`. Their legacy IDs remain unchanged for save compatibility; player-facing descriptions say **25 kV**.
 - The native `electric-pole.pictures` layer draws the long `pole-south-039.png` (512×512) or short `pole-north-039.png` (512×384), so cursor preview and base ghost use the same accepted art. Separate `rendering.draw_sprite` overlays select the eight approved `pole-arm-*-039.png` sprites in `scripts/power_019.lua`; ghosts mirror the overlay in `scripts/ghost_mast_023.lua`.
 - Per-prototype north calibration lives in `scripts/mast_visual_034.lua` with `NORTH_DROP=2.02`; `scripts/native_wire_geometry_028.lua` applies it to the hidden wire helper. This is the approved visual position and must not be changed without a new screenshot.
@@ -36,7 +45,7 @@ The root Lua files are thin entry points where practical. Implementation is kept
 
 The original core rail logic remains in stable modules; the 35 kV visual subsystem now has its own prototype and runtime modules. Keep the native engine's responsibility for placement and train signaling separate from cosmetic LuaRendering objects.
 
-## Current 0.1.24 catenary visual subsystem
+## Historical 0.1.24 catenary visual subsystem
 
 - `prototypes/power_019.lua`: clones a real `electric-pole` and uses one native steel-lattice shaft (`pole-native-mast-024.png`) and an existing shadow in `pictures`, with exactly one wire connection point matching `direction_count=1`. The entity has no native wire reach or MW transfer.
 - `scripts/power_019.lua`: registers placed masts and substations, renders **only** eight cantilever/insulator overlays plus cosmetic contact/messenger/feeder connections. Some contact graph drawing is approximate and must be visually reviewed next.
