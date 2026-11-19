@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/hsr-native-pads-055
+  active_test_branch: feature/hsr-axis-wires-056
   current_baseline_branch: main
-  active_feature_branch: feature/hsr-native-pads-055
-  feature_version: "0.1.55" # slab wear test
-  feature_status: 055_native_pad_ci_and_live_test_pending
+  active_feature_branch: feature/hsr-axis-wires-056
+  feature_version: "0.1.56" # slab wear test
+  feature_status: 056_axis_wire_ci_and_live_test_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.55" # experimental
+  mod_version: "0.1.56" # experimental
   main_baseline_mod_version: "0.1.48" # merged PR #27
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -1181,3 +1181,15 @@ native_pads_055:
   original_atlas_alpha_and_offsets_preserved: true
   ci_status: pending
   game_status: pending
+
+axis_wires_056:
+  branch: feature/hsr-axis-wires-056
+  parent: e0620fc9d3dd82b734a6b1c86135e760ba37df0d
+  screenshot_archive: "2026-11-19_22-02-53.zip"
+  visible_path: native_rail_end_directed_HSR_axis_first_reciprocal_mast_each_direction
+  technical_network_changed: false
+  technical_component_is_visual_gate: false
+  branch_policy: nearest_mutual_mast_per_direction
+  maximum_axis_span_tiles: 32
+  game_status: pending
+  ci_status: pending

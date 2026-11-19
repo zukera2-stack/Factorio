@@ -7,7 +7,7 @@ import verify_042_assets as accepted042
 
 ROOT=Path(__file__).resolve().parents[1]
 MOD=ROOT/'ElectrifiedMainline'
-assert json.loads((MOD/'info.json').read_text())['version'] in ('0.1.48','0.1.49','0.1.50','0.1.51','0.1.52','0.1.53','0.1.54','0.1.55')
+assert json.loads((MOD/'info.json').read_text())['version'] in ('0.1.48','0.1.49','0.1.50','0.1.51','0.1.52','0.1.53','0.1.54','0.1.55','0.1.56')
 WIRE=MOD/'graphics/entity/25kv'
 EXPECTED={
   'contact-043.png':('95542e98e67b2529c2451353ceb938976a7b183caee37d7b38c073f736327782',(128,10)),
@@ -44,8 +44,13 @@ assert 'preview_at' in (MOD/'scripts/power_019.lua').read_text()
 assert 'local limit=lim.STRAIGHT+4' in art
 assert 'path_check(valid[e.a],valid[e.b])' in tech
 assert 'technical046.mark_dirty()' in ctrl
-assert 'visual047.plan(s.nodes)' in (MOD/'scripts/power_019.lua').read_text()
-assert 'technical.span_state(na,nb)=="connected"' in art
+if json.loads((MOD/'info.json').read_text())['version']=='0.1.56':
+    assert 'axis056.plan(s.nodes)' in (MOD/'scripts/power_019.lua').read_text()
+    assert 'technical.span_state' not in art
+    assert 'e.axis==true' in art
+else:
+    assert 'visual047.plan(s.nodes)' in (MOD/'scripts/power_019.lua').read_text()
+    assert 'technical.span_state(na,nb)=="connected"' in art
 assert 'ca.is_connected_to(cb,origin())' in tech and 'M.refresh_components()' in tech
 assert 'technical046.on_tick(event.tick,graph) then' in ctrl
 assert 'preview_span' in (MOD/'scripts/ghost_mast_023.lua').read_text()

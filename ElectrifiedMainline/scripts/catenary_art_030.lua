@@ -4,7 +4,6 @@ local lim=require("scripts.catenary_limits_029")
 -- Factorio permits require ONLY during control.lua parsing. Resolve
 -- dependencies now, never while on_configuration_changed/on_tick runs.
 local visible=require("scripts.catenary_visual_geometry_045")
-local technical=require("scripts.technical_network_046")
 local PARENT,HELPER="em-35kv-catenary-pole","em-25kv-art-anchor-030"
 local NORTH="em-35kv-catenary-pole-north"
 local function is_parent(name) return name==PARENT or name==NORTH end
@@ -18,7 +17,7 @@ local function valid_edge(g,e)
   if e.kind~="contact" then return false end
   local a,b=g.nodes[e.a],g.nodes[e.b]
   return a and b and is_parent(a.name) and is_parent(b.name)
-    and a.rail_adjacent and b.rail_adjacent and a.rail_id and b.rail_id
+    and e.axis==true
     and a.surface_index==b.surface_index and a.force_name==b.force_name
 end
 function M.ensure_storage()
@@ -223,9 +222,7 @@ function M.sync(graph)
     if valid_edge(graph,e) then
       eligible=eligible+1
       local na,nb=graph.nodes[e.a],graph.nodes[e.b]
-      if technical.span_state(na,nb)=="connected" then
-        if draw(s,key,na,nb,e) then keep[key]=true;drawn=drawn+1 end
-      else blocked=blocked+1 end
+      if draw(s,key,na,nb,e) then keep[key]=true;drawn=drawn+1 end
     end
   end
   for key in pairs(s.draws) do if not keep[key] then erase(s,key) end end
@@ -259,15 +256,14 @@ function M.on_tick(tick,graph)
 end
 function M.status(player)
   local v=M.ensure_storage().stats
-  player.print(string.format("[EM048 visual] eligible=%d drawn=%d blocked=%d render_missed=%d (verified continuity, not voltage)",
+  player.print(string.format("[EM056 visual] eligible=%d drawn=%d blocked=%d render_missed=%d (HSR centreline; decorative only)",
     v.eligible or 0,v.drawn or 0,v.blocked or 0,v.missed or 0))
 end
 function M.inspect_pair(graph,a,b)
   local key=tostring(math.min(a,b))..":"..tostring(math.max(a,b))
   local e=graph.edges[key]
   if not e or e.kind~="contact" then return "no-contact-edge" end
-  local state=technical.span_state(graph.nodes[a],graph.nodes[b])
-  if state~="connected" then return state end
+  if not e.axis then return "no-axis-route" end
   local s=M.ensure_storage()
   local row=s.draws[key]
   if not row then return "no-render-record" end

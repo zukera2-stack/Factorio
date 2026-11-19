@@ -1,3 +1,7 @@
+## 0.1.56 (experimental)
+
+- Replace decorative proximity selection with native HSR axis walk and first reciprocal mast per direction. Independent of hidden technical connectors. Preserve chord rendering and 055 graphics. CI and live test pending.
+
 > **055 native fastener correction.** Owner screenshots 2026-11-19_20-59-05.zip show dark continuous-looking curved fasteners. Compared owner native rail-backplates atlas curved-a north cell with reconstructed 054 pad: solid contour loses native translucency/shading. Restore native backplates with neutral RGB tint 0.65, alpha 1, all original geometry/variants. Keep 054 slabs and dirt; no gameplay change. CI/live pending. 054 CI run 44576824110 passed. Main unchanged.
 
 ## 0.1.54 (experimental)
