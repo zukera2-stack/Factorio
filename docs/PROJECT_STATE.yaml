@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/hsr-axis-wires-056
+  active_test_branch: feature/release-056-accepted
   current_baseline_branch: main
-  active_feature_branch: feature/hsr-axis-wires-056
-  feature_version: "0.1.56" # rail axis wire test
-  feature_status: 056_lua_preflight_stabilization_pending
+  active_feature_branch: feature/release-056-accepted
+  feature_version: "0.1.56" # owner-approved original visual graph
+  feature_status: 056_owner_approved_release_candidate
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -15,7 +15,7 @@ project:
   previous_release_pull_request: 20
   previous_release_merge_commit: 5e2625c49b40f03c1262507e2fbfd8862f91ba7f
   release_merge_approved_by_user: true
-  release_status: merged_into_main_2026_11_18
+  release_status: owner_approved_056_merge_pending
   next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.4"
   previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.56" # experimental
+  mod_version: "0.1.56" # accepted visual milestone
   main_baseline_mod_version: "0.1.48" # merged PR #27
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -492,9 +492,9 @@ historical_game_tests:
     pipe_item_correction: implemented
 
 next_actions:
-  - verify_054_slab_face_grime_joins_all_directions_in_game
-  - preserve_0_1_24_accepted_visual_baseline_in_main_and_branch_future_work
-  - improve_cosmetic_contact_and_messenger_wire_anchor_alignment_on_straight_curves_and_half_diagonal
+  - preserve_0_1_56_accepted_visual_baseline_in_main_and_branch_future_work
+  - freeze_visual_graph_unless_reproducible_defect
+  - verify_remaining_056_geometries_and_undo_when_relevant
   - test_native_green_upgrade_planner_and_undo_redo_on_half_diagonal_ground_rails
   - test_blueprint_interleaved_with_unrelated_action_during_delayed_robot_jobs
   - evaluate_and_regress_staged_custom_selection_tool_fallback_before_removal
@@ -1011,6 +1011,12 @@ accepted_milestone_048:
   visual_scope: user_accepted_HSR_visual_continuity
   evidence: docs/tests/catenary-0.1.48-user-acceptance.md
   clean_ci_artifact: 14478116616
+  main_ci_build_run_id: 44415412191
+  main_ci_artifact_id: 14478562971
+  main_ci_docs_run_id: 44415412661
+  main_ci_status: success
+  historical_prs_22_to_26: closed_merged_as_ancestors
+  historical_branch_count_indexed: 45
   factory_network_isolation_measured: false
   transfer_MW: 0
   obsolete_branch_register: docs/history/BRANCH_ARCHIVE_048.md
@@ -1191,5 +1197,16 @@ axis_wires_056:
   technical_component_is_visual_gate: false
   branch_policy: nearest_mutual_mast_per_direction
   maximum_axis_span_tiles: 32
-  game_status: pending
-  ci_status: pending
+  game_status: owner_confirmed_original_visual_scope
+  ci_status: passed
+  accepted_source_commit: 662389ad2f8737e30170e5284c4d3ddea41d9108
+  ci_build_run: 44611594056
+  ci_artifact: 14573715719
+  inner_zip_sha256: 829af87f916f35743463b0ecd61029c88a444efd0c6becd724150ba80398f545
+  archive_entries: 121
+  png_count: 81
+  acceptance_evidence: docs/tests/catenary-0.1.56-user-acceptance.md
+  owner_main_merge_approved: true
+  excluded_experiment_head: e9e0883aeceb7c577b01340505fc11dfa6998704
+  transfer_MW: 0
+  factory_network_isolation_measured: false

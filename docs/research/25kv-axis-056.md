@@ -11,3 +11,6 @@ Pure Lua parallel lanes, intermediate mast, interruption/restoration, loop rejec
 
 > **056 second CI blocker diagnosed:** run 44604091272 passes corrected 028/029 and 042 tests, then fails 048 visual geometry fixture at line 77 because its synthetic edge lacks the new axis=true contract. Preserve all 16 endpoint and lifecycle assertions; for 056 additionally assert unqualified edges are rejected and mark the synthetic accepted edge as axis-qualified. No runtime or graphics change. Full CI pending.
 
+
+## Accepted original 056
+CI 44611594056 passed at 662389ad2f8737e30170e5284c4d3ddea41d9108; owner confirms original visual behavior and approves merge. [Acceptance](../tests/catenary-0.1.56-user-acceptance.md). The separate phase-2 experiment is not released. No new gameplay changes in the release preparation.
