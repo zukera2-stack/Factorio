@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/hsr-concrete-track-053
+  active_test_branch: feature/hsr-slab-wear-054
   current_baseline_branch: main
-  active_feature_branch: feature/hsr-concrete-track-053
-  feature_version: "0.1.52" # locomotive polish test
-  feature_status: 053_blocked_native_raster_input
+  active_feature_branch: feature/hsr-slab-wear-054
+  feature_version: "0.1.54" # slab wear test
+  feature_status: 054_ci_and_live_test_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -24,12 +24,12 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.52" # experimental
+  mod_version: "0.1.54" # experimental
   main_baseline_mod_version: "0.1.48" # merged PR #27
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
-  last_state_update: "2026-11-18"
+  last_state_update: "2026-11-19"
   documentation_audit: 048_confirmed_connectivity_visibility
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
@@ -492,6 +492,7 @@ historical_game_tests:
     pipe_item_correction: implemented
 
 next_actions:
+  - verify_054_slab_face_grime_joins_all_directions_in_game
   - preserve_0_1_24_accepted_visual_baseline_in_main_and_branch_future_work
   - improve_cosmetic_contact_and_messenger_wire_anchor_alignment_on_straight_curves_and_half_diagonal
   - test_native_green_upgrade_planner_and_undo_redo_on_half_diagonal_ground_rails
@@ -1160,3 +1161,16 @@ concrete_track_053:
   calibration_run: 44546472744
   synthetic_material_test: passed
   game_integration: pending
+
+slab_wear_054:
+  branch: feature/hsr-slab-wear-054
+  source_baseline_053: 075a60cb07b702ef75fc5d5dd9b66369dd274da7
+  baseline_ci_run: 44568598205
+  baseline_install_artifact: 14554565580
+  baseline_owner_feedback: straight_rail_visual_generally_ok_add_face_and_dirt
+  source_screenshot_archive: "2026-11-19_20-02-17.zip"
+  face_depth_atlas_px: [3, 4]
+  grime_masks: [edge, joint, fastener, noise]
+  preserved: [native_metal, native_lower_bed, pad_sprites, rail_geometry, runtime, locomotive]
+  ci_status: pending
+  game_status: pending

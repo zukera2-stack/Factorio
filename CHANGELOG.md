@@ -1,3 +1,11 @@
+## 0.1.54 (experimental)
+
+- Concrete slab front faces, subtle edge/joint/fastener dust and procedural concrete mottling. Reuse 053 geometry and black pads unchanged. CI/game test pending.
+
+## 0.1.53 (experimental)
+
+- Owner reports concrete slab/black pad visual generally good; requested thickness and dirt. CI artifact 14554565580. Native metal and bed unchanged.
+
 ## 0.1.52 (experimental)
 
 - Full 256-direction locomotive body/mask/shadow and raised/folded pantograph, model-space wear, shared authored icon; native accumulator discharge cosmetic spark gated on actual rendered contact, motion and HSR. Preserve 051 rail palette and 050 electrical/visual baseline. Ground-track game test pending.
