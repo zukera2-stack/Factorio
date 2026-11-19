@@ -1,0 +1,33 @@
+name: Calibrate concrete rail art 053
+on:
+  push:
+    branches: ['feature/hsr-concrete-track-053']
+    paths: ['art/rail_053/**', '.github/workflows/rail-calibration-053.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  calibration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate procedural materials on synthetic inputs
+        run: |
+          python -m pip install "numpy==2.3.5" "scipy>=1.15,<2" "Pillow>=11,<13"
+          python art/rail_053/calibrate.py --selftest
+      - name: Get exact official publicly downloadable demo
+        run: |
+          curl --fail --location --retry 2 --connect-timeout 20 --max-time 600 -o "$RUNNER_TEMP/factorio-demo.tar.xz" "https://factorio.com/get-download/2.1.24/demo/linux64"
+      - name: Calibrate original art using actual Base sprite registration
+        run: python art/rail_053/calibrate.py --archive "$RUNNER_TEMP/factorio-demo.tar.xz" --out build/qa/rail053
+      - name: Upload derivative art and comparison only
+        uses: actions/upload-artifact@v4
+        with:
+          name: concrete-053-calibration
+          path: build/qa/rail053/
+          if-no-files-found: error
+          retention-days: 7
