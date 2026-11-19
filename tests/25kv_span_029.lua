@@ -30,7 +30,7 @@ local p=assert(io.open("ElectrifiedMainline/prototypes/native_wire_auto_028.lua"
 assert(p:find('require("scripts.catenary_limits_029").WIRE_REACH',1,true))
 local script=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
 local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
-if not info:find('"version": "0.1.47"',1,true) and not info:find('"version": "0.1.48"',1,true) and not info:find('"version": "0.1.49"',1,true) and not info:find('"version": "0.1.50"',1,true) and not info:find('"version": "0.1.51"',1,true) and not info:find('"version": "0.1.52"',1,true) and not info:find('"version": "0.1.53"',1,true) and not info:find('"version": "0.1.54"',1,true) then
+if not info:find('"version": "0.1.47"',1,true) and not info:find('"version": "0.1.48"',1,true) and not info:find('"version": "0.1.49"',1,true) and not info:find('"version": "0.1.50"',1,true) and not info:find('"version": "0.1.51"',1,true) and not info:find('"version": "0.1.52"',1,true) and not info:find('"version": "0.1.53"',1,true) and not info:find('"version": "0.1.54"',1,true) and not info:find('"version": "0.1.55"',1,true) then
 for _,marker in ipairs({
  'local SPAN,CURVE_SPAN,RADIUS = limits.STRAIGHT,limits.CURVE,3',
  'position=e.position,radius=CURVE_SPAN,name=POLES',

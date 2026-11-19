@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/hsr-slab-wear-054
+  active_test_branch: feature/hsr-native-pads-055
   current_baseline_branch: main
-  active_feature_branch: feature/hsr-slab-wear-054
-  feature_version: "0.1.54" # slab wear test
-  feature_status: 054_ci_and_live_test_pending
+  active_feature_branch: feature/hsr-native-pads-055
+  feature_version: "0.1.55" # slab wear test
+  feature_status: 055_native_pad_ci_and_live_test_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.54" # experimental
+  mod_version: "0.1.55" # experimental
   main_baseline_mod_version: "0.1.48" # merged PR #27
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -1172,5 +1172,12 @@ slab_wear_054:
   face_depth_atlas_px: [3, 4]
   grime_masks: [edge, joint, fastener, noise]
   preserved: [native_metal, native_lower_bed, pad_sprites, rail_geometry, runtime, locomotive]
+  ci_status: pending
+  game_status: pending
+
+native_pads_055:
+  baseline: 978a09883eef7d480c3626a80e7da4ab45d2ab12
+  tint_rgb: 0.65
+  original_atlas_alpha_and_offsets_preserved: true
   ci_status: pending
   game_status: pending

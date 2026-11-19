@@ -1,3 +1,5 @@
+> **055 native fastener correction.** Owner screenshots 2026-11-19_20-59-05.zip show dark continuous-looking curved fasteners. Compared owner native rail-backplates atlas curved-a north cell with reconstructed 054 pad: solid contour loses native translucency/shading. Restore native backplates with neutral RGB tint 0.65, alpha 1, all original geometry/variants. Keep 054 slabs and dirt; no gameplay change. CI/live pending. 054 CI run 44576824110 passed. Main unchanged.
+
 ## 0.1.54 (experimental)
 
 - Concrete slab front faces, subtle edge/joint/fastener dust and procedural concrete mottling. Reuse 053 geometry and black pads unchanged. CI/game test pending.

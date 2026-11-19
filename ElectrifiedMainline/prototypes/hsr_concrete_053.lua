@@ -20,8 +20,13 @@ function M.apply(raw,copy)
     local side=r[6]
     if r[3]=="straight" and i%2==0 then side=384 end
     assert(s.width==side and s.height==side and s.variation_count==r[5][i], "EM053 unexpected native rail sprite "..r[3].." "..d.." "..layer)
-    s.filename="__ElectrifiedMainline__/graphics/entity/hsr-053/"..r[3].."-"..d.."-"..suffix..".png"
-    s.x=0; s.y=0; s.tint=nil
+    if layer=="ties" then
+     s.filename="__ElectrifiedMainline__/graphics/entity/hsr-053/"..r[3].."-"..d.."-"..suffix..".png"
+     s.x=0; s.y=0; s.tint=nil
+    else
+     -- Preserve native alpha, shading, variations and registration.
+     s.tint={r=0.65,g=0.65,b=0.65,a=1}
+    end
     n=n+1
    end
   end

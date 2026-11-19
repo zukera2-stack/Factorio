@@ -27,7 +27,13 @@ for _,group in pairs(raw) do
     local p=rail.pictures[d]
     if p then
      for _,k in ipairs({"ties","backplates"}) do
-      assert(p[k].filename:find("hsr-053",1,true) and p[k].x==0 and p[k].y==0 and p[k].scale==.5)
+      if k=="ties" then
+       assert(p[k].filename:find("hsr-053",1,true) and p[k].x==0 and p[k].y==0)
+      else
+       assert(p[k].filename=="native" and p[k].x==42 and p[k].y==64 and p[k].tint.r==0.65 and p[k].tint.a==1)
+       assert(group.native.pictures[d][k].tint==nil)
+      end
+      assert(p[k].scale==.5)
       assert(p[k].width==group.native.pictures[d][k].width and p[k].variation_count==group.native.pictures[d][k].variation_count)
      end
      for _,k in ipairs({"metals","stone_path","stone_path_background"}) do assert(p[k].filename=="native" and p[k].x==42 and p[k].y==64) end
