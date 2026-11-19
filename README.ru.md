@@ -1,4 +1,6 @@
-# Electrified Mainline 0.1.56 — принятая визуальная версия (19 ноября 2026)
+# Electrified Mainline 0.1.56 — стабильная визуальная версия в main (19 ноября 2026)
+
+Объединена с main через [PR №30](https://github.com/zukera2-stack/Factorio/pull/30) по разрешению владельца.
 
 Исходный алгоритм контактной сети по оси ВСМ, автономный электровоз с 256 направлениями, декоративным пантографом и искрами, бетонные плиты и штатная графика креплений. [Игровое подтверждение](docs/tests/catenary-0.1.56-user-acceptance.md). [ZIP из GitHub Actions](https://github.com/zukera2-stack/Factorio/actions/runs/44611594056/artifacts/14573715719) (121 файл, 81 PNG; устанавливать только внутренний ZIP). Реальной передачи энергии пока нет. Эксперимент второй фазы не включён. Предыдущая стабильная версия 0.1.48: [PR №27](https://github.com/zukera2-stack/Factorio/pull/27), [исторический ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44415412191/artifacts/14478562971).
 

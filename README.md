@@ -1,4 +1,6 @@
-# Electrified Mainline 0.1.56 — owner-approved visual milestone (19 Nov 2026)
+# Electrified Mainline 0.1.56 — stable main visual milestone (19 Nov 2026)
+
+Merged via [PR #30](https://github.com/zukera2-stack/Factorio/pull/30) with owner approval.
 
 Original rail-axis contact graph, autonomous locomotive with 256 directions and cosmetic pantograph/sparks, concrete HSR slabs with native fasteners. [Scoped game acceptance](docs/tests/catenary-0.1.56-user-acceptance.md). [CI install ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44611594056/artifacts/14573715719) (121 files, 81 PNGs; extract only the inner ZIP). Actual traction energy transfer remains zero. Experimental phase-2 attachment excluded. Previous stable 0.1.48: [PR #27](https://github.com/zukera2-stack/Factorio/pull/27) and [historical ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44415412191/artifacts/14478562971).
 

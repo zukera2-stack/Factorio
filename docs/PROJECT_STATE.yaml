@@ -3,21 +3,21 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/release-056-accepted
+  active_test_branch: main
   current_baseline_branch: main
-  active_feature_branch: feature/release-056-accepted
+  active_feature_branch: main
   feature_version: "0.1.56" # owner-approved original visual graph
-  feature_status: 056_owner_approved_release_candidate
+  feature_status: 056_merged_main_visual_baseline
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
-  release_pull_request: 27
-  release_merge_commit: 7218360acb4fc5079e48cf4f38448fa086f1af96
-  previous_release_pull_request: 20
-  previous_release_merge_commit: 5e2625c49b40f03c1262507e2fbfd8862f91ba7f
+  release_pull_request: 30
+  release_merge_commit: 55cb71f8f3be8c68cbd2c26fa16fd775c6ba296d
+  previous_release_pull_request: 27
+  previous_release_merge_commit: 7218360acb4fc5079e48cf4f38448fa086f1af96
   release_merge_approved_by_user: true
-  release_status: owner_approved_056_merge_pending
+  release_status: merged_into_main_2026_11_19
   next_feature_branch_policy: branch_from_main
-  previous_main_baseline: "0.1.4"
+  previous_main_baseline: "0.1.48"
   previous_main_handoff_archive: docs/history/AI_CONTEXT-main-0.1.4.md
   previous_main_state_archive: docs/history/PROJECT_STATE-main-0.1.4.yaml
   exact_version_rail_api_notes: docs/FACTORIO_2_1_RAIL_API_NOTES.md
@@ -25,7 +25,7 @@ project:
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
   mod_version: "0.1.56" # accepted visual milestone
-  main_baseline_mod_version: "0.1.48" # merged PR #27
+  main_baseline_mod_version: "0.1.56" # merged PR #30
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
@@ -1207,6 +1207,10 @@ axis_wires_056:
   png_count: 81
   acceptance_evidence: docs/tests/catenary-0.1.56-user-acceptance.md
   owner_main_merge_approved: true
+  merge_status: merged
+  merge_commit: 55cb71f8f3be8c68cbd2c26fa16fd775c6ba296d
+  pull_request: 30
+  main_ci_status: pending
   excluded_experiment_head: e9e0883aeceb7c577b01340505fc11dfa6998704
   transfer_MW: 0
   factory_network_isolation_measured: false

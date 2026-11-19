@@ -1,6 +1,8 @@
-## 0.1.56 — owner-approved visual milestone
+## 0.1.56 — stable main, owner-approved visual milestone
 
-- Replace decorative proximity selection with native HSR axis walk and first reciprocal mast per direction. Independent of hidden technical connectors. Preserve chord rendering and 055 graphics. CI passed (44611594056); owner confirms original 056 visual behavior. Phase-2 experiment excluded. See [acceptance](docs/tests/catenary-0.1.56-user-acceptance.md). Lua preflight runs before sprite generation. No traction power.
+- Merged via [PR #30](https://github.com/zukera2-stack/Factorio/pull/30); exact original 056 runtime preserved.
+
+- Replace decorative proximity selection with native HSR axis walk and first reciprocal mast per direction. Independent of hidden technical connectors. Preserve chord rendering and 055 graphics. Baseline CI passed (44611594056); owner confirms original 056 visual behavior. Phase-2 experiment excluded. See [acceptance](docs/tests/catenary-0.1.56-user-acceptance.md). Lua preflight runs before sprite generation. No traction power.
 
 ## 0.1.55
 
