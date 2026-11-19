@@ -582,7 +582,11 @@ local function on_tick(event)
     local trains = game.train_manager.get_trains({
         stock = "em-electric-locomotive"
     })
-    pantograph049.sync(trains, get_custom_locomotives)
+    pantograph049.sync(trains, get_custom_locomotives,event.tick,art030.contact_at,function(e)
+        local rail=find_rail_under_locomotive(e)
+        return rail and (rail.name=="em-high-speed-straight-rail" or rail.name=="em-half-diagonal-high-speed-rail"
+            or rail.name=="em-curved-high-speed-rail" or rail.name=="em-curved-high-speed-rail-b")
+    end)
 
     for _, train in pairs(trains) do
         if train.valid then

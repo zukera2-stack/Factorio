@@ -151,7 +151,7 @@ local function draw(s,key,na,nb,edge)
   if edge.corner then g=M.curve_geometry(a,b,ma,mb)
   else g=M.geometry(a,b,ma,mb) end
   if not g then erase(s,key);return false end
-  local sig=string.format("050-wires/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%d/%d/%s",
+  local sig=string.format("052-wires/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%.6f/%d/%d/%s",
     a.x,a.y,b.x,b.y,ma.x,ma.y,mb.x,mb.y,g.pieces,g.droppers,
     edge and edge.corner and "curve" or "straight")
   local previous=s.draws[key]
@@ -165,8 +165,55 @@ local function draw(s,key,na,nb,edge)
   end
   erase(s,key)
   local ids=draw_geometry(pa.surface,g)
-  s.draws[key]={ids=ids,sig=sig}
+  s.draws[key]={ids=ids,sig=sig,contact_a=a,contact_b=b,contact_pieces=g.pieces,
+    surface_index=na.surface_index,force_name=na.force_name}
   return true
+end
+local CELL=16
+local function cell_key(surface,force,x,y)
+  return tostring(surface)..":"..force..":"..x..":"..y
+end
+local function index_contacts(s)
+  local index={}
+  for k,row in pairs(s.draws) do
+    local a,b=row.contact_a,row.contact_b
+    if a and b then
+      for x=math.floor((math.min(a.x,b.x)-.45)/CELL),math.floor((math.max(a.x,b.x)+.45)/CELL) do
+        for y=math.floor((math.min(a.y,b.y)-.45)/CELL),math.floor((math.max(a.y,b.y)+.45)/CELL) do
+          local id=cell_key(row.surface_index,row.force_name,x,y)
+          index[id]=index[id] or {};index[id][#index[id]+1]=k
+        end
+      end
+    end
+  end
+  s.contact_index=index
+end
+-- Already projected sprite coordinates. Only actual drawn contact IDs;
+-- preview, messenger, ghost and predicted links never enter this index.
+function M.contact_at(surface,force,p)
+  local s=M.ensure_storage()
+  if s.dirty then return nil end
+  local keys=s.contact_index and s.contact_index[cell_key(surface,force,math.floor(p.x/CELL),math.floor(p.y/CELL))] or {}
+  local best,best2=nil,.45*.45
+  for _,key in ipairs(keys) do
+    local row=s.draws[key]
+    if row and row.surface_index==surface and row.force_name==force then
+      local a,b=row.contact_a,row.contact_b
+      local dx,dy=b.x-a.x,b.y-a.y
+      local d2=dx*dx+dy*dy
+      if d2>0 then
+        local t=math.max(0,math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/d2))
+        local q={x=a.x+t*dx,y=a.y+t*dy}
+        local ds=(p.x-q.x)^2+(p.y-q.y)^2
+        local i=math.min(row.contact_pieces,math.floor(t*row.contact_pieces)+1)
+        local obj=rendering.get_object_by_id(row.ids[i])
+        if ds<=best2 and obj and obj.valid and obj.visible~=false then
+          best2=ds;best={x=q.x,y=q.y,distance=math.sqrt(ds),key=key}
+        end
+      end
+    end
+  end
+  return best
 end
 function M.sync(graph)
   local s=M.ensure_storage()
@@ -183,6 +230,7 @@ function M.sync(graph)
   end
   for key in pairs(s.draws) do if not keep[key] then erase(s,key) end end
   s.stats={eligible=eligible,drawn=drawn,blocked=blocked,missed=eligible-drawn-blocked}
+  index_contacts(s)
   s.dirty=false
 end
 function M.rebuild_all(graph)
