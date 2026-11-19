@@ -6,8 +6,8 @@ project:
   active_test_branch: feature/hsr-axis-wires-056
   current_baseline_branch: main
   active_feature_branch: feature/hsr-axis-wires-056
-  feature_version: "0.1.56" # slab wear test
-  feature_status: 056_axis_wire_ci_and_live_test_pending
+  feature_version: "0.1.56" # rail axis wire test
+  feature_status: 056_axis_wire_legacy_marker_fix_ci_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27

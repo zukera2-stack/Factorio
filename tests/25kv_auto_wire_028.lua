@@ -106,7 +106,11 @@ assert(src:find("path_info(x,y)",1,true))
 assert(src:find("radius=SPAN+RADIUS+4",1,true),
   "Broken middle track must re-check mast ends beyond 5 tiles")
 else
- assert(src:find("visual047.plan(s.nodes)",1,true))
+ if info:find('"version": "0.1.56"',1,true) then
+  assert(src:find("axis056.plan(s.nodes)",1,true))
+ else
+  assert(src:find("visual047.plan(s.nodes)",1,true))
+ end
  assert(src:find("radius=limits.WIRE_REACH*1.5+4+RADIUS",1,true))
  assert(src:find("function M.technical_path(a,b)",1,true))
 end

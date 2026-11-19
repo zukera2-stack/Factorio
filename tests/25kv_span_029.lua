@@ -42,7 +42,11 @@ for _,marker in ipairs({
 }) do assert(script:find(marker,1,true),marker) end
 else
  assert(script:find("limits.WIRE_REACH*1.5+4",1,true))
- assert(script:find("visual047.plan(s.nodes)",1,true))
+ if info:find('"version": "0.1.56"',1,true) then
+  assert(script:find("axis056.plan(s.nodes)",1,true))
+ else
+  assert(script:find("visual047.plan(s.nodes)",1,true))
+ end
 end
 assert(not script:find("rendering.draw_line",1,true))
 print("0.1.29 limits straight=32 curve=16 connector=40: pure Lua PASS")
