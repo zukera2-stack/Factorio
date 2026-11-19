@@ -1,4 +1,7 @@
 package.path='./ElectrifiedMainline/?.lua;'..package.path
+local info_file=assert(io.open('ElectrifiedMainline/info.json'))
+local axis_version=info_file:read('*a'):find('"version": "0.1.56"',1,true)~=nil
+info_file:close()
 local geo=require('scripts.catenary_visual_geometry_045')
 local art=require('scripts.catenary_art_030')
 local technical=require('scripts.technical_network_046')
@@ -73,6 +76,14 @@ for _,name in ipairs(names) do for face in pairs(expected) do
  local a,b=P(0,0),P(8,4)
  parent(1,name,a);parent(2,other,b)
  local g={nodes={[1]=node(1,name,face,a),[2]=node(2,other,'west',b)},edges={['1:2']={a=1,b=2,kind='contact',corner=true}}}
+ -- 056 requires an explicit rail-axis route from its planner. Exercise both
+ -- rejection of an unqualified edge and unchanged rendering of a qualified edge.
+ if axis_version then
+  art.sync(g);assert(art.ensure_storage().stats.drawn==0)
+  assert(art.inspect_pair(g,1,2)=='no-axis-route')
+  g.edges['1:2'].axis=true
+  g.edges['1:2'].axis_length=math.sqrt(80)
+ end
  local start=#order
  art.sync(g);assert(art.ensure_storage().stats.drawn==1 and next(art.ensure_storage().helpers)==nil)
  local groups={contact={},messenger={},dropper={}}

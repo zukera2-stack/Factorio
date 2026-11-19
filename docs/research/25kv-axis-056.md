@@ -8,3 +8,6 @@ Proximity ranking before route filtering consumes degree on parallel tracks; tec
 
 ## Tests
 Pure Lua parallel lanes, intermediate mast, interruption/restoration, loop rejection, curve projection. Integration mock with native end locations and directions, ghosts, actual rendering, failed technical connection independent, intermediate pole. CI ZIP pending. Live tests: both mast sides, independent parallel routes, curves A/B, switches, rail removal/restore, blueprint ghosts, technical audit unchanged.
+
+> **056 second CI blocker diagnosed:** run 44604091272 passes corrected 028/029 and 042 tests, then fails 048 visual geometry fixture at line 77 because its synthetic edge lacks the new axis=true contract. Preserve all 16 endpoint and lifecycle assertions; for 056 additionally assert unqualified edges are rejected and mark the synthetic accepted edge as axis-qualified. No runtime or graphics change. Full CI pending.
+
