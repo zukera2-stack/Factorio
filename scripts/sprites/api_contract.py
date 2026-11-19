@@ -66,13 +66,13 @@ def verify(out: Path, root: Path = ROOT) -> dict:
         # This was intentionally retired in 0.1.27 and replaced with native
         # wire connectors and then sprite contact/messenger/dropper art.
         art=(root/"ElectrifiedMainline/scripts/catenary_art_030.lua")
-        native=(root/"ElectrifiedMainline/scripts/native_wire_028.lua")
+        native=(root/("ElectrifiedMainline/scripts/technical_network_046.lua" if minor >= 46 else "ElectrifiedMainline/scripts/native_wire_028.lua"))
         if not art.is_file() or not native.is_file():
             raise QAError("new native/sprite catenary renderer missing")
         a=art.read_text(encoding="utf-8")
         n=native.read_text(encoding="utf-8")
-        for required in ("rendering.draw_sprite","em-25kv-contact-030",
-                         "em-25kv-messenger-030","em-25kv-dropper-030"):
+        suffix="043" if minor >= 43 else "030"
+        for required in ("rendering.draw_sprite",*(f"em-25kv-{kind}-{suffix}" for kind in ("contact","messenger","dropper"))):
             if required not in a:
                 raise QAError("expected sprite catenary renderer absent: "+required)
         if "get_wire_connector" not in n:
