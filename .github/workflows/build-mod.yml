@@ -13,6 +13,7 @@ on:
       - "docs/tests/evidence/SPRITES_039_QA.json"
       - "docs/builds/013-payload.json"
       - "art/sprites/**"
+      - "art/rail_053/**"
       - ".github/workflows/build-mod.yml"
   pull_request:
     branches: [main]
@@ -38,7 +39,7 @@ jobs:
         run: echo "version=$(python3 -c 'import json; print(json.load(open("ElectrifiedMainline/info.json"))["version"])')" >> "$GITHUB_OUTPUT"
   render052:
     needs: detect
-    if: needs.detect.outputs.version == '0.1.52'
+    if: (needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53')
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -118,21 +119,24 @@ jobs:
             lua5.2 tests/25kv_preview_046.lua
             lua5.2 tests/25kv_policy_047.lua
           fi
-          if grep -Eq '"version": "0\.1\.(48|49|50|51|52)"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(48|49|50|51|52|53)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/25kv_visual_042.lua
             lua5.2 tests/25kv_visual_geometry_048.lua
             lua5.2 tests/25kv_technical_048.lua
             lua5.2 tests/25kv_policy_047.lua
             lua5.2 tests/25kv_continuity_048.lua
           fi
-          if grep -Eq '"version": "0\.1\.(50|51|52)"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(50|51|52|53)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/locomotive_visual_049.lua
           fi
           if grep -Eq '"version": "0\.1\.(51|52)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/hsr_palette_051.lua
           fi
-          if grep -q '"version": "0.1.52"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(52|53)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/pantograph_spark_052.lua
+          fi
+          if grep -q '"version": "0.1.53"' ElectrifiedMainline/info.json; then
+            lua5.2 tests/hsr_concrete_053.lua
           fi
 
       - name: Set up Python for experimental sprite atlas
@@ -198,7 +202,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if grep -Eq '"version": "0\.1\.(48|49|50|51|52)"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(48|49|50|51|52|53)"' ElectrifiedMainline/info.json; then
             python -m pip install "Pillow>=11,<13"
             python scripts/verify_048_assets.py
             python scripts/atlas_045.py
@@ -220,14 +224,14 @@ jobs:
           fi
 
       - name: Retrieve complete 052 sprite set inside GitHub Actions
-        if: needs.detect.outputs.version == '0.1.52'
+        if: (needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53')
         uses: actions/download-artifact@v4
         with:
           pattern: 052-render-chunk-*
           merge-multiple: true
           path: build/052-rendered
       - name: Verify complete 1280-cell native sprite contract
-        if: needs.detect.outputs.version == '0.1.52'
+        if: (needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53')
         run: |
           mkdir -p ElectrifiedMainline/graphics/entity/locomotive-052
           cp build/052-rendered/sprites/*.png ElectrifiedMainline/graphics/entity/locomotive-052/
@@ -235,6 +239,11 @@ jobs:
           python scripts/verify_052_assets.py
           python scripts/verify_050_locale.py
 
+      - name: Render 053 concrete and elastomer layers
+        if: needs.detect.outputs.version == '0.1.53'
+        run: |
+          python -m pip install "Pillow>=11,<13" "numpy==2.3.5" "scipy>=1.15,<2"
+          python art/rail_053/render_geometry.py
       - name: Validate package boundary
         run: python -m unittest discover -s tests -p 'test_package_mod.py' -v
 
@@ -267,7 +276,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload 052 QA preview
-        if: needs.detect.outputs.version == '0.1.52'
+        if: (needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53')
         uses: actions/upload-artifact@v4
         with:
           name: locomotive-052-qa

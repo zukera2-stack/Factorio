@@ -7,7 +7,7 @@ import verify_042_assets as accepted042
 
 ROOT=Path(__file__).resolve().parents[1]
 MOD=ROOT/'ElectrifiedMainline'
-assert json.loads((MOD/'info.json').read_text())['version'] in ('0.1.48','0.1.49','0.1.50','0.1.51','0.1.52')
+assert json.loads((MOD/'info.json').read_text())['version'] in ('0.1.48','0.1.49','0.1.50','0.1.51','0.1.52','0.1.53')
 WIRE=MOD/'graphics/entity/25kv'
 EXPECTED={
   'contact-043.png':('95542e98e67b2529c2451353ceb938976a7b183caee37d7b38c073f736327782',(128,10)),

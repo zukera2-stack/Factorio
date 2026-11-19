@@ -10,7 +10,7 @@ D=MOD/'graphics/entity/locomotive-052'
 QA=ROOT/'build/qa'
 IN=ROOT/'build/052-rendered/qa'
 layers=('body','mask','shadow','pantograph-up','pantograph-down')
-assert json.loads((MOD/'info.json').read_text())['version']=='0.1.52'
+assert json.loads((MOD/'info.json').read_text())['version'] in ('0.1.52','0.1.53')
 names={f'{s}-{j:02}.png' for s in layers for j in range(8)}
 assert {p.name for p in D.glob('*.png')}==names|{'icon.png'}
 assert len(list((MOD/'graphics').rglob('*.png')))==57
