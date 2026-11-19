@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
   feature_version: "0.1.51" # rail palette test
-  feature_status: 051_native_rail_palette_CI_pending
+  feature_status: 051_native_rail_palette_CI_passed_pending_live_QA
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -1111,4 +1111,10 @@ rail_palette_051:
   custom_concrete_textures: false
   preserved_050_png_count: 21
   game_status: pending
-  ci_status: pending
+  ci_status: passed
+  ci_source_commit: 40cbdf1f1ab2c6862a65dcd57a5ed06a979b35fe
+  ci_build_run_id: 44513632305
+  ci_artifact_id: 14523833550
+  archive_entries: 59
+  outer_artifact_bytes: 1801447
+  inner_zip_hash_verified_locally: false

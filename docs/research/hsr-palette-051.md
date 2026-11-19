@@ -8,3 +8,6 @@ Apply per-layer static cool tint to native ties and ballast on HSR only; preserv
 ## 7–9. Pending implementation, CI and game test.
 
 Implemented in `prototypes/hsr_palette_051.lua` after bootstrap. Native static per-layer tint on all four HSR prototypes, no custom raster or runtime behavior. Unit test mocks 24 active direction entries with 72 tinted leave nodes, verifies only permitted leaf fields differ, and validates nested/array variation handling. CI version gates extended; 050 mask hash now exact. Pending CI/live visual test.
+
+## CI result
+Build 44513632305 success, job 135523895233; 051 native rail palette mock, 048 continuity, 049/050 locomotive/mask, locale, asset hashes and package boundary passed. 59 files/21 PNG, exact original 050 art checks. Install artifact 14523833550 (outer 1801447 bytes). Inner hash not independently measured: per owner policy no download into Library. Documentation run 44513632313 passed. Actual rail appearance still needs game confirmation. Main unchanged.
