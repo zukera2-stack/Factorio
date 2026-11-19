@@ -169,7 +169,7 @@ jobs:
           set -euo pipefail
           if grep -q '"version": "0.1.49"' ElectrifiedMainline/info.json; then
             sudo apt-get install -y libegl1 libegl-mesa0 libgl1-mesa-dri libopengl0
-            python -m pip install "numpy==2.3.5" "trimesh==4.11.1" "vtk==9.6.2" "Pillow>=11,<13"
+            python -m pip install "numpy==2.3.5" "scipy>=1.15,<2" "networkx>=3.4,<4" "trimesh==4.11.1" "vtk==9.6.2" "Pillow>=11,<13"
             python scripts/sprites/render_alpha1_049.py --out ElectrifiedMainline/graphics/entity/locomotive-049 --qa build/qa
             python scripts/verify_049_assets.py
           fi
