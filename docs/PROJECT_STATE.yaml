@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/locomotive-polish-052
   feature_version: "0.1.52" # locomotive polish test
-  feature_status: 052_locomotive_polish_CI_pending
+  feature_status: 052_locomotive_polish_CI_passed_pending_live_QA
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -1136,5 +1136,15 @@ locomotive_polish_052:
   spark_lifetime_ticks: 12
   spark_repeat_ticks: [180, 600]
   new_traction_logic: false
-  ci_status: pending
+  ci_status: passed
+  ci_source_commit: 3c956bfbbcf443f71e630da9534421ff39427ea2
+  ci_build_run_id: 44520547386
+  ci_package_job_id: 135573632828
+  ci_artifact_id: 14532231767
+  qa_artifact_id: 14532856634
+  archive_entries: 95
+  png_count: 57
+  outer_artifact_bytes: 13916383
+  inner_zip_sha256: d6b1e7258cbb0d97f5df685e0b412cd36b6d24ba9ed4473caabba0cc869eed11
   game_status: pending
+  draft_pr: 29
