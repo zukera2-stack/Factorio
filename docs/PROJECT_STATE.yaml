@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
   feature_version: "0.1.49" # planning target
-  feature_status: 049_alpha1_CI_pending
+  feature_status: 049_alpha1_CI_passed_pending_live_QA
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -1063,4 +1063,13 @@ alpha1_049:
   real_traction_MW: 0
   ground_track_scope: true
   render_probe_live: pending
-  ci_status: pending
+  ci_status: passed
+  ci_build_run_id: 44493511441
+  ci_source_commit: "bf8452768afa9c7fae21f1735f803b456d6d7368"
+  ci_artifact_id: 14513902332
+  qa_artifact_id: 14514261386
+  archive_sha256: 389337a8cce812fcbc872499dbc63d4bb99bead2f856ded7e220f6d27f5ca13e
+  archive_entries: 58
+  archive_bytes: 1770765
+  png_count: 21
+  draft_pr: 28

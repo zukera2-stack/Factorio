@@ -17,3 +17,6 @@ Generate atlas assets from same model by CI Python/VTK renderer, body pass witho
 
 ## Implementation
 Tracked CI art generator and runtime modules implemented; tests added. Shadow is static body projection, no moving pantograph shadow. Native wheels retained, modeled wheels removed. Pantograph is one attached sprite updated on frame/state change; no overlay on cursor/ghost, after real build within a tick. Runtime frame mapping and native body rotation require direct game confirmation. No new HSR rail textures. CI result pending.
+
+## CI result
+Source `bf8452768afa9c7fae21f1735f803b456d6d7368`, run 44493511441 SUCCESS, job 135454805385. 048 regressions, 049 mocked lifecycle/mapping and mask/physics tests passed. Five 4096×2048 RGBA PNG sheets (160 cells), mask alpha contained in body, distinct panto states; all 16 original 048 PNG verified. ZIP artifact 14513902332, 58 files, 21 PNG, CRC pass, 1770765 bytes, SHA256 `389337a8cce812fcbc872499dbc63d4bb99bead2f856ded7e220f6d27f5ca13e`. QA atlas separate 14514261386. Early runs failed from an accidentally stale base tree (v2 refiner restored byte-for-byte) and missing SciPy dependency (explicit SciPy/networkx installed); old sprite QA checked obsolete 030 names, updated to actual 043 names and 046 technical graph; run 44493378977 passed. No runtime change to catenary; game QA still pending. No merge.
