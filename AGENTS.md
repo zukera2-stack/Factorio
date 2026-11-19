@@ -60,3 +60,5 @@ Only game-discovered entrypoints and runtime code/assets belong in `ElectrifiedM
 
 ## Owner distribution rule
 Build every distributable install ZIP exclusively via the repository's GitHub Actions packaging workflow. Deliver the exact inner CI-built ZIP or link to the artifact. Never produce a locally repacked user ZIP. Local checks are not release builds. Preserve CI commit/run/artifact/hash provenance and keep QA artifacts separate.
+
+**Owner clarification (2026-11-19):** deliver install ZIPs only by direct GitHub Actions artifact links. Do not download, copy, extract, or duplicate distributable ZIPs into the ChatGPT Library or project files for delivery. Library is for technical material, source models, sketches, experiment outputs, and evidence. Record CI validation, source commit and artifact ID; obtain inner archive SHA256 from CI logs if emitted, not by copying the release into Library.

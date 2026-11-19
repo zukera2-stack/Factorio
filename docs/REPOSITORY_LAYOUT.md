@@ -54,3 +54,5 @@ Build 44413378503: Lua regressions, approved art verification, 3 package tests, 
 
 ## Distribution policy (owner decision)
 All distributable mod ZIPs must be produced by GitHub Actions. The local packaging script is a CI implementation and may be used only for developer validation, not for user distribution. Download and distribute the exact inner ZIP from the successful CI artifact; do not repackage locally. Record commit, run, artifact and SHA256. Do not include QA atlases or outer artifact bundles in the game archive.
+
+**Owner clarification (2026-11-19):** deliver install ZIPs only by direct GitHub Actions artifact links. Do not download, copy, extract, or duplicate distributable ZIPs into the ChatGPT Library or project files for delivery. Library is for technical material, source models, sketches, experiment outputs, and evidence. Record CI validation, source commit and artifact ID; obtain inner archive SHA256 from CI logs if emitted, not by copying the release into Library.
