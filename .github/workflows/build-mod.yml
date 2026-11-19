@@ -28,7 +28,45 @@ permissions:
   contents: read
 
 jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: version
+        run: echo "version=$(python3 -c 'import json; print(json.load(open("ElectrifiedMainline/info.json"))["version"])')" >> "$GITHUB_OUTPUT"
+  render052:
+    needs: detect
+    if: needs.detect.outputs.version == '0.1.52'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk: [0, 1, 2, 3, 4, 5, 6, 7]
+    env:
+      LIBGL_ALWAYS_SOFTWARE: "1"
+      LP_NUM_THREADS: "2"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Render 32 unique directions
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libegl1 libegl-mesa0 libgl1-mesa-dri libopengl0
+          python -m pip install "numpy==2.3.5" "scipy>=1.15,<2" "networkx>=3.4,<4" "trimesh==4.11.1" "vtk==9.6.2" "Pillow>=11,<13"
+          python scripts/sprites/render_polish_052.py --chunk ${{ matrix.chunk }} --out build/052-rendered/sprites --qa build/052-rendered/qa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 052-render-chunk-${{ matrix.chunk }}
+          path: build/052-rendered/
+          if-no-files-found: error
+          retention-days: 3
   package:
+    needs: [detect, render052]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.render052.result == 'success' || needs.render052.result == 'skipped') }}
     name: Package and validate test ZIP
     runs-on: ubuntu-latest
     steps:
@@ -80,18 +118,21 @@ jobs:
             lua5.2 tests/25kv_preview_046.lua
             lua5.2 tests/25kv_policy_047.lua
           fi
-          if grep -Eq '"version": "0\.1\.(48|49|50|51)"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(48|49|50|51|52)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/25kv_visual_042.lua
             lua5.2 tests/25kv_visual_geometry_048.lua
             lua5.2 tests/25kv_technical_048.lua
             lua5.2 tests/25kv_policy_047.lua
             lua5.2 tests/25kv_continuity_048.lua
           fi
-          if grep -Eq '"version": "0\.1\.(50|51)"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(50|51|52)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/locomotive_visual_049.lua
           fi
-          if grep -q '"version": "0.1.51"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(51|52)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/hsr_palette_051.lua
+          fi
+          if grep -q '"version": "0.1.52"' ElectrifiedMainline/info.json; then
+            lua5.2 tests/pantograph_spark_052.lua
           fi
 
       - name: Set up Python for experimental sprite atlas
@@ -157,7 +198,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if grep -Eq '"version": "0\.1\.(48|49|50|51)"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(48|49|50|51|52)"' ElectrifiedMainline/info.json; then
             python -m pip install "Pillow>=11,<13"
             python scripts/verify_048_assets.py
             python scripts/atlas_045.py
@@ -178,6 +219,22 @@ jobs:
             python scripts/verify_050_locale.py
           fi
 
+      - name: Retrieve complete 052 sprite set inside GitHub Actions
+        if: needs.detect.outputs.version == '0.1.52'
+        uses: actions/download-artifact@v4
+        with:
+          pattern: 052-render-chunk-*
+          merge-multiple: true
+          path: build/052-rendered
+      - name: Verify complete 1280-cell native sprite contract
+        if: needs.detect.outputs.version == '0.1.52'
+        run: |
+          mkdir -p ElectrifiedMainline/graphics/entity/locomotive-052
+          cp build/052-rendered/sprites/*.png ElectrifiedMainline/graphics/entity/locomotive-052/
+          python -m pip install "numpy==2.3.5" "Pillow>=11,<13"
+          python scripts/verify_052_assets.py
+          python scripts/verify_050_locale.py
+
       - name: Validate package boundary
         run: python -m unittest discover -s tests -p 'test_package_mod.py' -v
 
@@ -188,6 +245,7 @@ jobs:
           set -euo pipefail
           python scripts/package_mod.py
           version=$(python -c 'import json; print(json.load(open("ElectrifiedMainline/info.json"))["version"])')
+          sha256sum "build/package/ElectrifiedMainline_${version}.zip"
           echo "archive=build/package/ElectrifiedMainline_${version}.zip" >> "$GITHUB_OUTPUT"
 
       - name: Upload 045 geometry atlas
@@ -208,6 +266,15 @@ jobs:
             build/qa/locomotive-049-alpha1-assets.json
           if-no-files-found: error
 
+      - name: Upload 052 QA preview
+        if: needs.detect.outputs.version == '0.1.52'
+        uses: actions/upload-artifact@v4
+        with:
+          name: locomotive-052-qa
+          path: |
+            build/qa/locomotive-052-preview.png
+            build/qa/locomotive-052-assets.json
+          if-no-files-found: error
       - name: Upload test ZIP
         uses: actions/upload-artifact@v4
         with:

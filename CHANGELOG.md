@@ -1,3 +1,7 @@
+## 0.1.52 (experimental)
+
+- Full 256-direction locomotive body/mask/shadow and raised/folded pantograph, model-space wear, shared authored icon; native accumulator discharge cosmetic spark gated on actual rendered contact, motion and HSR. Preserve 051 rail palette and 050 electrical/visual baseline. Ground-track game test pending.
+
 ## 0.1.51 (experimental)
 
 - Native HSR palette probe: cooler ties/ballast, unchanged native metals, joining geometry and approved 0.1.50 rolling stock/catenary. No new concrete textures or traction mechanics.

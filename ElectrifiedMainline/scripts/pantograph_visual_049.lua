@@ -91,6 +91,7 @@ function M.sync(trains,get_locomotives,tick,contact_at,is_hsr)
                     local sprite=string.format("em-panto-052-%s-%03d",state,frame)
                     local r=render_object(row)
                     if not r then
+                        destroy(row)
                         r=rendering.draw_sprite{sprite=sprite,surface=e.surface,
                             target={entity=e,offset={0,-1}},render_layer="higher-object-above"}
                         s[id]={id=r.id,state=state,frame=frame}

@@ -92,6 +92,7 @@ local live=power.graph();assert(live.nodes[1] and not live.nodes[2])
 local _,spans=power.preview_at(q);assert(#spans==1)
 local before=created
 assert(ghost.on_built(q));assert(count_tinted_spans()>0 and created==before)
+for _,o in pairs(renders) do if o.valid and o.arg.tint and o.arg.sprite=='em-25kv-contact-043' then assert(not art.contact_at(1,force.name,o.arg.target),'ghost preview cannot trigger sparks') end end
 assert(not live.nodes[2] and next(live.edges)==nil)
 assert(ghost.on_removed(q) and count_tinted_spans()==0)
 split()

@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/hsr-rolling-stock-visual-049
+  active_test_branch: feature/locomotive-polish-052
   current_baseline_branch: main
-  active_feature_branch: feature/hsr-rolling-stock-visual-049 # planned, separate from main
-  feature_version: "0.1.51" # rail palette test
-  feature_status: 051_native_rail_palette_CI_passed_pending_live_QA
+  active_feature_branch: feature/locomotive-polish-052
+  feature_version: "0.1.52" # locomotive polish test
+  feature_status: 052_locomotive_polish_CI_pending
   last_validated_test_branch: test/undo-stabilization-018
   release_target_branch: main
   release_pull_request: 27
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.51" # experimental
+  mod_version: "0.1.52" # experimental
   main_baseline_mod_version: "0.1.48" # merged PR #27
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -1118,3 +1118,23 @@ rail_palette_051:
   archive_entries: 59
   outer_artifact_bytes: 1801447
   inner_zip_hash_verified_locally: false
+
+locomotive_polish_052:
+  branch: feature/locomotive-polish-052
+  base_051_saved_head: 0331f3c4442ab9d0c97ec40ac7013db02446a85c
+  base_051_artifact: 14523833550
+  research: docs/research/locomotive-polish-052.md
+  generator: scripts/sprites/render_polish_052.py
+  directions: 256
+  frame_size: [512, 512]
+  sheets: 40
+  icon_size: 64
+  spark_source: vanilla_accumulator_discharge
+  spark_real_visual_contact_only: true
+  spark_ground_HSR_only: true
+  spark_tolerance_screen_tiles: 0.45
+  spark_lifetime_ticks: 12
+  spark_repeat_ticks: [180, 600]
+  new_traction_logic: false
+  ci_status: pending
+  game_status: pending
