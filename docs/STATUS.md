@@ -1,3 +1,5 @@
+> Updater 1.1 Windows run 44782770156: ZIP conversion and verify PASS; explicit OID fetch returned zero objects and bad revision, even after retries. Upstream Git promisor-remote.c (a066a90db68da5262e81e74a50d18eaeddc6783f, https://kernel.googlesource.com/pub/scm/git/git/+/a066a90db68da5262e81e74a50d18eaeddc6783f/promisor-remote.c) uses fetch.negotiationAlgorithm=noop for missing-object fetch. Added that exact option to bounded OID batches to avoid negotiating away missing blobs. Real Windows retest pending.
+
 > Updater 1.1 Windows run 44779144690 failed Git fetch --stdin because Windows PowerShell pipeline serialized the OID with a BOM/trailing character (invalid refspec). ZIP conversion, cross-volume TEMP backup and verify passed. Fix: pass validated hex OIDs directly as positional refspecs in batches of at most 400; normal 129-file install is one fetch. Re-run real Windows fresh install and all regressions. No gameplay change.
 
 > Updater 1.1 CI 44778965679 caught script parser error from a duplicated source suffix during edit of confirmation regex. Removed duplicate and restored valid expression. No user files affected. Full Windows retest required.

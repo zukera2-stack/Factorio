@@ -1326,7 +1326,7 @@ asset_freeze_060:
   runtime_files_expected: 129
 
 git_updater:
-  status: updater_1_1_refspec_fix_pending
+  status: updater_1_1_negotiation_fix_pending
   windows_run: 44774421856
   updater_artifact: 14649231054
   updater_source: 911d6f95015fd1f7c1508a6f8e69acaf7655ce02

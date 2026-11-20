@@ -45,7 +45,8 @@ function Fetch-Blobs([string[]]$Hashes) {
     for ($offset=0; $offset -lt $missing.Count; $offset+=400) {
         $end=[Math]::Min($offset+399,$missing.Count-1)
         $batch=@($missing[$offset..$end])
-        Fetch-WithRetry @('fetch','--progress','--no-tags','--no-write-fetch-head','--recurse-submodules=no','--filter=blob:none','origin') $batch
+        # Match upstream Git promisor-remote.c: never negotiate from a partial tree.
+        Fetch-WithRetry @('-c','fetch.negotiationAlgorithm=noop','fetch','--progress','--no-tags','--no-write-fetch-head','--recurse-submodules=no','--filter=blob:none','origin') $batch
     }
     if (@(Missing-Blobs $Hashes).Count) { throw 'GitHub не вернул все необходимые объекты.' }
 }
