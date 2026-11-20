@@ -9,9 +9,11 @@ on:
       - "scripts/sprites/**"
       - "scripts/verify_*.py"
       - "scripts/package_mod.py"
+      - "scripts/verify_runtime_artwork.py"
       - "scripts/atlas_045.py"
       - "docs/tests/evidence/SPRITES_039_QA.json"
       - "docs/builds/013-payload.json"
+      - "docs/builds/runtime-artwork.json"
       - "art/sprites/**"
       - "art/rail_053/**"
       - ".github/workflows/build-mod.yml"
@@ -33,10 +35,14 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
+      frozen: ${{ steps.artwork.outputs.frozen }}
     steps:
       - uses: actions/checkout@v4
       - id: version
         run: echo "version=$(python3 -c 'import json; print(json.load(open("ElectrifiedMainline/info.json"))["version"])')" >> "$GITHUB_OUTPUT"
+      - id: artwork
+        run: |
+          if test -f docs/builds/runtime-artwork.json; then echo frozen=true >> "$GITHUB_OUTPUT"; else echo frozen=false >> "$GITHUB_OUTPUT"; fi
   lua_qa:
     name: Lua syntax and functional preflight
     needs: detect
@@ -130,7 +136,7 @@ jobs:
 
   render052:
     needs: [detect, lua_qa]
-    if: (needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60')
+    if: needs.detect.outputs.frozen != 'true' && ((needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60'))
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -225,6 +231,7 @@ jobs:
           fi
 
       - name: Verify 0.1.48 visual continuity and approved assets
+        if: needs.detect.outputs.frozen != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -235,6 +242,7 @@ jobs:
           fi
 
       - name: Generate and validate 0.1.49 alpha1 locomotive sprites
+        if: needs.detect.outputs.frozen != 'true'
         shell: bash
         env:
           LIBGL_ALWAYS_SOFTWARE: "1"
@@ -250,14 +258,14 @@ jobs:
           fi
 
       - name: Retrieve complete 052 sprite set inside GitHub Actions
-        if: (needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60')
+        if: needs.detect.outputs.frozen != 'true' && ((needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60'))
         uses: actions/download-artifact@v4
         with:
           pattern: 052-render-chunk-*
           merge-multiple: true
           path: build/052-rendered
       - name: Verify complete 1280-cell native sprite contract
-        if: (needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60')
+        if: needs.detect.outputs.frozen != 'true' && ((needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60'))
         run: |
           mkdir -p ElectrifiedMainline/graphics/entity/locomotive-052
           cp build/052-rendered/sprites/*.png ElectrifiedMainline/graphics/entity/locomotive-052/
@@ -266,12 +274,12 @@ jobs:
           python scripts/verify_050_locale.py
 
       - name: Render 053 concrete and elastomer layers
-        if: needs.detect.outputs.version == '0.1.53'
+        if: needs.detect.outputs.frozen != 'true' && (needs.detect.outputs.version == '0.1.53')
         run: |
           python -m pip install "Pillow>=11,<13" "numpy==2.3.5" "scipy>=1.15,<2"
           python art/rail_053/render_geometry.py
       - name: Render and verify 054 slab depth and grime
-        if: needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60'
+        if: needs.detect.outputs.frozen != 'true' && (needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60')
         run: |
           python -m pip install "Pillow>=11,<13" "numpy==2.3.5" "scipy>=1.15,<2"
           python art/rail_053/render_geometry.py
@@ -284,10 +292,13 @@ jobs:
             test "$(find ElectrifiedMainline/graphics/entity/hsr-053 -name '*.png' | wc -l)" -eq 24
           fi
       - name: Generate and verify 057 inventory art and migration
-        if: needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60'
+        if: needs.detect.outputs.frozen != 'true' && (needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60')
         run: |
           python scripts/sprites/icons_057.py
           python scripts/verify_057.py
+      - name: Verify frozen runtime PNG manifest
+        if: needs.detect.outputs.frozen == 'true'
+        run: python scripts/verify_runtime_artwork.py
       - name: Validate package boundary
         run: python -m unittest discover -s tests -p 'test_package_mod.py' -v
 
@@ -320,7 +331,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload 052 QA preview
-        if: (needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60')
+        if: needs.detect.outputs.frozen != 'true' && ((needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60'))
         uses: actions/upload-artifact@v4
         with:
           name: locomotive-052-qa
