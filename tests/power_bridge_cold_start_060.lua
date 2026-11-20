@@ -103,12 +103,29 @@ assert(delivered>110*L and delivered<=118*L)
 source.electric_interface_mode=6;source.power_usage=L;source.power_production=0
 local battery=entity("accumulator",surface,{x=10,y=4},202,20)
 battery.type="accumulator";battery.energy=10*L;battery.electric_buffer_size=10*L
-battery.get_electric_input_flow_limit=function()return L end;battery.get_electric_output_flow_limit=function()return L end
+local small=20000
+battery.get_electric_input_flow_limit=function()return small end;battery.get_electric_output_flow_limit=function()return small end
 physical_acc={battery};sink.active=false
 M.on_tick(121,graph)
 assert(a.direction=="export" and b.direction=="import")
-b.input.energy=L;M.on_tick(122,graph)
-assert(b.output.energy==L and battery.energy==10*L)
+assert(a.input.electric_buffer_size==small and b.input.electric_buffer_size==small)
+-- Measured in real 2.1.24 trace dt=602: newly created EEIs report old
+-- prototype request L despite programmed small flow cap. Model that tick.
+assert(s.last_auto[20].demand==L and s.last_auto[30].demand==L)
+flow(20,0,0,small,small,10*L,10*L)
+net(20).parent_network.flow_last_tick.secondary_demand=L
+net(30).parent_network.flow_last_tick.secondary_demand=L
+b.input.energy=small
+M.on_tick(122,graph)
+assert(a.status=="active" and b.status=="active" and b.output.energy==small and battery.energy==10*L)
+-- Subsequent tick advertises the smaller request; no artificial load or cycle.
+net(20).parent_network.flow_last_tick.secondary_demand=small
+net(30).parent_network.flow_last_tick.secondary_demand=small
+net(30).parent_network.flow_last_tick.secondary_output=small
+b.output.energy=0;b.input.energy=small;a.input.energy=small
+M.on_tick(123,graph)
+assert(a.status=="active" and b.status=="active" and a.output.energy==small)
+flow(20,0,0);flow(30,0,0)
 source.active=false;M.on_tick(181,graph)
 assert(a.status=="auto-idle" and b.status=="auto-idle")
 print("060 cold-start runtime mock PASS: zero counters, sustained actual buffered transfer 118 ticks, battery reverse and idle")

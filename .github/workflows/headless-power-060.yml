@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/workflows/headless-power-060.yml'
       - 'docs/tests/manual/em060-native-probe/**'
+      - 'ElectrifiedMainline/**'
+      - 'tests/**'
+      - '.github/workflows/build-mod.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -12,7 +15,7 @@ permissions:
 jobs:
   native:
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 9
     steps:
       - uses: actions/checkout@v4
       - name: Obtain exact official Factorio headless build
@@ -30,9 +33,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          timeout 180 gh run watch 44761190848 --repo zukera2-stack/Factorio --exit-status --interval 5
+          run=""
+          for i in $(seq 1 24); do
+            run=$(gh run list --repo zukera2-stack/Factorio --workflow build-mod.yml --branch "$GITHUB_REF_NAME" --commit "$GITHUB_SHA" --limit 5 --json databaseId --jq '.[0].databaseId // empty')
+            if [[ -n "$run" ]]; then break; fi
+            sleep 5
+          done
+          test -n "$run"
+          echo "Native QA package run=$run source=$GITHUB_SHA"
+          timeout 240 gh run watch "$run" --repo zukera2-stack/Factorio --exit-status --interval 5
           mkdir -p "$RUNNER_TEMP/em060-mods"
-          gh run download 44761190848 --repo zukera2-stack/Factorio -n ElectrifiedMainline-test-build -D "$RUNNER_TEMP/em060-mods"
+          gh run download "$run" --repo zukera2-stack/Factorio -n ElectrifiedMainline-test-build -D "$RUNNER_TEMP/em060-mods"
           test -f "$RUNNER_TEMP/em060-mods/ElectrifiedMainline_0.1.60.zip"
           cp -a docs/tests/manual/em060-native-probe "$RUNNER_TEMP/em060-mods/em060-native-probe_0.0.1"
           printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em060-native-probe","enabled":true}]}' > "$RUNNER_TEMP/em060-mods/mod-list.json"

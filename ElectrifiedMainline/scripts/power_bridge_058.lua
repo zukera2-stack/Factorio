@@ -281,13 +281,14 @@ function M.on_tick(tick,graph)
  for _,c in ipairs(safe) do
    if accepted[c.id] then
      local r=s.stations[c.id]
+     local created=false
      if r.direction~=c.direction then stop(r);r.direction=c.direction;r.interface_retry=nil end
      if not (valid(r.input) and valid(r.output)) then
        stop(r)
        if not r.interface_retry or tick>=r.interface_retry then
          r.interface_retry=tick+60
          local ok,result=pcall(function() r.input=interface(c.src,INPUT);r.output=interface(c.dst,OUTPUT) end)
-         if not ok or not valid(r.input) or not valid(r.output) then reject(r,"interface-create-failed");log("[EM058] interface creation "..tostring(result)) end
+         if not ok or not valid(r.input) or not valid(r.output) then reject(r,"interface-create-failed");log("[EM058] interface creation "..tostring(result)) else created=true end
        end
      end
      if valid(r.input) and valid(r.output) then
@@ -295,22 +296,33 @@ function M.on_tick(tick,graph)
          reject(r,"interface-network-mismatch")
        else
          local cap=math.min(c.limit, M.LIMIT)
+         local old_size=r.input.electric_buffer_size
+         local ok,old_in,old_out=pcall(function()return r.input.input_flow_limit,r.output.output_flow_limit end)
+         old_in=(ok and type(old_in)=="number") and math.min(M.LIMIT,old_in) or M.LIMIT
+         old_out=(ok and type(old_out)=="number") and math.min(M.LIMIT,old_out) or M.LIMIT
          local ei,eo,amount=M.transfer(math.min(r.input.energy,cap),r.output.energy,r.output.electric_buffer_size)
          r.input.energy=r.input.energy-amount
          r.output.energy=eo
+         -- Engine 2.1.24 trace: an EEI newly created with the 20MW prototype
+         -- advertised its original 333333J demand for one update even after
+         -- input_flow_limit read back the requested 20000J. Keep both buffer
+         -- and flow limit bounded, and account for one transitional old limit.
+         local old_demand=math.min(old_in,math.max(0,old_size-r.input.energy))
+         local old_offer=math.min(old_out,r.output.energy)
          if c.auto then
-           -- 2.1.7+ native flow limits; old 2.1 API fallback keeps the existing buffer method.
-           local ok=pcall(function()
+           local desired=math.max(r.input.energy,cap)
+           if math.abs(r.input.electric_buffer_size-desired)>0.01 then r.input.electric_buffer_size=desired end
+           pcall(function()
              if r.input.input_flow_limit~=cap then r.input.input_flow_limit=cap end
              if r.output.output_flow_limit~=cap then r.output.output_flow_limit=cap end
            end)
-           if not ok then
-             local desired=math.max(r.input.energy,cap)
-             if math.abs(r.input.electric_buffer_size-desired)>0.01 then r.input.electric_buffer_size=desired end
-           end
          end
          local demand=math.min(cap,math.max(0,r.input.electric_buffer_size-r.input.energy))
          local offer=math.min(cap,r.output.energy)
+         if c.auto and (created or math.abs(old_in-cap)>0.01 or math.abs(old_size-r.input.electric_buffer_size)>0.01) then
+           demand=math.max(demand,old_demand)
+         end
+         if c.auto and (created or math.abs(old_out-cap)>0.01) then offer=math.max(offer,old_offer) end
          local x=s.last_auto[c.source] or {demand=0,offer=0}
          x.demand=x.demand+demand;s.last_auto[c.source]=x
          local y=s.last_auto[c.target] or {demand=0,offer=0}
