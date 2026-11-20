@@ -1,6 +1,7 @@
 -- Native separate electrical networks; actual buffered joules, never generated.
 local technical=require("scripts.technical_network_046")
 local dispatch=require("scripts.bridge_dispatch_059")
+local devices=require("scripts.bridge_devices_060")
 local M={LIMIT=20000000/60,SUB="em-35kv-traction-substation"}
 local PORT="em-25kv-bridge-port-058"
 local INPUT,OUTPUT="em-25kv-bridge-input-058","em-25kv-bridge-output-058"
@@ -132,7 +133,7 @@ function M.rebuild(graph)
    if not s.auto_migrated and (r.mode=="import" or r.mode=="export") then r.mode="auto" end
    r.direction=nil;r.interface_retry=nil;r.retry=nil
  end
- s.auto_migrated=true;s.last_auto={};s.sample_tick=nil
+ s.auto_migrated=true;s.last_auto={};s.sample_tick=nil;s.device_sample=nil;s.last_flow_log=nil
  local surface=s.surface_index and game.surfaces[s.surface_index]
  if surface and surface.valid and surface.name==LAB then
    for _,e in pairs(surface.find_entities_filtered{name={PORT,INPUT,OUTPUT}}) do destroy(e) end
@@ -178,7 +179,15 @@ function M.on_tick(tick,graph)
  if s.dirty or tick%60==0 then sync_graph(s,graph) end
  local t=technical.ensure_storage()
  local candidates,auto_edges,networks={},{},{}
- local cache={}
+ local cache,raw_flows,physical,allowed={},{},{},{}
+ for id,station in pairs(s.stations) do
+   if station.mode~="off" then
+     local p=get(id)
+     if p then local key=dispatch.network_key(p);if key then physical[p.surface.index]=p.surface;allowed[key]=true end end
+   end
+ end
+ local direct=devices.sample(s,tick,physical,allowed)
+ local previous=(s.sample_tick==tick-1 and s.last_auto or {})
  local function observe(e)
    local raw=e.electric_network_id
    if not raw then return nil end
@@ -186,7 +195,8 @@ function M.on_tick(tick,graph)
    local k,flow=dispatch.read_network(e)
    if k and flow then
      cache[raw]=k
-     networks[k]=networks[k] or dispatch.balance(flow,(s.sample_tick==tick-1 and s.last_auto or {})[k])
+     raw_flows[k]=flow
+     networks[k]=networks[k] or dispatch.balance(flow,previous[k],direct[k])
      return k
    end
  end
@@ -228,6 +238,15 @@ function M.on_tick(tick,graph)
  end
  -- Automatic allocation is coordinated across every connected ordinary/corridor network.
  local plan=dispatch.plan(networks,auto_edges,M.LIMIT)
+ if tick%600==0 or not s.last_flow_log then
+   s.last_flow_log=tick
+   local ids={};for id in pairs(networks) do ids[#ids+1]=id end;table.sort(ids)
+   for _,id in ipairs(ids) do
+     local f,n,v,o=raw_flows[id],networks[id],direct[id] or {},previous[id] or {}
+     log(string.format("[EM060 flow] net=%s raw_primary=%.0f raw_secondary=%.0f raw_solar=%.0f raw_primary_demand=%.0f raw_secondary_demand=%.0f max_prod=%.0f max_cons=%.0f raw_tertiary_out=%.0f raw_tertiary_in=%.0f raw_acc_J=%.0f raw_cap_J=%.0f own_offer=%.0f own_demand=%.0f direct_prod=%.0f direct_demand=%.0f direct_acc_J=%.0f direct_cap_J=%.0f direct_charge=%.0f direct_discharge=%.0f eei=%d accumulators=%d gen=%.0f load=%.0f battery=%.0f charge=%.0f J/tick",
+       tostring(id),f.primary_output or 0,f.secondary_output or 0,f.solar_output or 0,f.primary_demand or 0,f.secondary_demand or 0,f.maximum_production or 0,f.maximum_consumption or 0,f.tertiary_output or 0,f.tertiary_demand or 0,f.accumulator_energy or 0,f.accumulator_capacity or 0,o.offer or 0,o.demand or 0,v.production or 0,v.demand or 0,v.stored or 0,v.capacity or 0,v.charge or 0,v.discharge or 0,v.interfaces or 0,v.accumulators or 0,n.gen,n.load,n.battery,n.charge))
+   end
+ end
  for _,edge in ipairs(auto_edges) do
    local r=s.stations[edge.id]
    local v=plan[edge.id] or 0
@@ -280,16 +299,22 @@ function M.on_tick(tick,graph)
          r.input.energy=r.input.energy-amount
          r.output.energy=eo
          if c.auto then
-           -- Limit the native request for the next tick, never shrink below stored joules.
-           local desired=math.max(r.input.energy,cap)
-           if math.abs(r.input.electric_buffer_size-desired)>0.01 then r.input.electric_buffer_size=desired end
-           local demand=math.min(M.LIMIT,math.max(0,r.input.electric_buffer_size-r.input.energy))
-           local offer=math.min(M.LIMIT,r.output.energy)
-           local x=s.last_auto[c.source] or {demand=0,offer=0}
-           x.demand=x.demand+demand;s.last_auto[c.source]=x
-           local y=s.last_auto[c.target] or {demand=0,offer=0}
-           y.offer=y.offer+offer;s.last_auto[c.target]=y
+           -- 2.1.7+ native flow limits; old 2.1 API fallback keeps the existing buffer method.
+           local ok=pcall(function()
+             if r.input.input_flow_limit~=cap then r.input.input_flow_limit=cap end
+             if r.output.output_flow_limit~=cap then r.output.output_flow_limit=cap end
+           end)
+           if not ok then
+             local desired=math.max(r.input.energy,cap)
+             if math.abs(r.input.electric_buffer_size-desired)>0.01 then r.input.electric_buffer_size=desired end
+           end
          end
+         local demand=math.min(cap,math.max(0,r.input.electric_buffer_size-r.input.energy))
+         local offer=math.min(cap,r.output.energy)
+         local x=s.last_auto[c.source] or {demand=0,offer=0}
+         x.demand=x.demand+demand;s.last_auto[c.source]=x
+         local y=s.last_auto[c.target] or {demand=0,offer=0}
+         y.offer=y.offer+offer;s.last_auto[c.target]=y
          r.window_j=(r.window_j or 0)+amount;r.status="active"
          r.source_id=c.source;r.target_id=c.target
          if tick%60==0 then r.last_mw=r.window_j/1e6;r.window_j=0 end
@@ -302,8 +327,9 @@ function M.on_tick(tick,graph)
    local p=get(id);local m=get(s.feeders[id]);local anchor=get(t.helpers[s.feeders[id]])
    local line=valid(r.line_port) and r.line_port.electric_network_id
    local signature=table.concat({r.mode or "-",r.status or "-",r.direction or "-",tostring(p and p.electric_network_id),tostring(line),tostring(m and m.electric_network_id),tostring(anchor and anchor.electric_network_id)}, "/")
+   r.planned_mw=(plan[id] or 0)*60/1e6
    if signature~=r.last_signature or tick%600==0 then
-     log(string.format("[EM059] station=%d %s factory_port=%s feeder=%s measured=%.3fMW input=%.0fJ output=%.0fJ",id,signature,tostring(valid(r.factory_port) and r.factory_port.electric_network_id),tostring(s.feeders[id]),r.last_mw or 0,valid(r.input) and r.input.energy or 0,valid(r.output) and r.output.energy or 0))
+     log(string.format("[EM060] station=%d %s factory_port=%s feeder=%s measured=%.3fMW input=%.0fJ output=%.0fJ planned=%.3fMW",id,signature,tostring(valid(r.factory_port) and r.factory_port.electric_network_id),tostring(s.feeders[id]),r.last_mw or 0,valid(r.input) and r.input.energy or 0,valid(r.output) and r.output.energy or 0,r.planned_mw))
      r.last_signature=signature
    end
  end
@@ -318,11 +344,12 @@ function M.command(player,param)
  if param=="auto" or param=="import" or param=="export" or param=="off" then
    if r.mode~=param then detach(r);r.mode=param;r.direction=nil;r.retry=nil;r.interface_retry=nil;r.status="waiting";s.dirty=true end
  elseif param~="status" then player.print("[EM059] auto | import | export | off | status");return end
- local msg=string.format("[EM059] station=%d mode=%s status=%s bridge=%.3f MW / 20 MW | factory=%s line=%s input_J=%.0f output_J=%.0f feeder=%s",
+ local msg=string.format("[EM060] station=%d mode=%s status=%s bridge=%.3f MW / 20 MW | factory=%s line=%s input_J=%.0f output_J=%.0f feeder=%s planned=%.3fMW",
  id,r.mode,r.status or "unknown",r.last_mw or 0,
  tostring(valid(r.factory_port) and r.factory_port.electric_network_id or "-"),
  tostring(valid(r.line_port) and r.line_port.electric_network_id or "-"),
- valid(r.input) and r.input.energy or 0,valid(r.output) and r.output.energy or 0,tostring(s.feeders[id]))
+ valid(r.input) and r.input.energy or 0,valid(r.output) and r.output.energy or 0,tostring(s.feeders[id]),r.planned_mw or 0)
  player.print(msg);log(msg)
+ s.device_sample=nil;s.last_flow_log=nil
 end
 return M

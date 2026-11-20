@@ -1,27 +1,46 @@
 -- 059 pure dispatch, joules/tick. Never writes native accumulators or creates energy.
 local M={}
 local function positive(v) return math.max(0,v or 0) end
+local function parent_key(e)
+ local sub=e.electric_network
+ if not(sub and sub.valid and sub.parent_network and sub.parent_network.valid) then return nil end
+ local parent=sub.parent_network
+ local id=sub.id
+ for _,n in pairs(parent.sub_networks) do if n.valid and n.id<id then id=n.id end end
+ return id,parent
+end
+function M.network_key(e)
+ local ok,id=pcall(parent_key,e)
+ if ok then return id end
+end
 function M.read_network(e)
  local ok,id,flow=pcall(function()
-   local sub=e.electric_network
-   if not(sub and sub.valid and sub.parent_network and sub.parent_network.valid) then return nil end
-   local parent=sub.parent_network
-   local id=sub.id
-   for _,n in pairs(parent.sub_networks) do if n.valid and n.id<id then id=n.id end end
+   local id,parent=parent_key(e)
+   if not id then return nil end
    local f=parent.flow_last_tick
-   if not (f and type(f.primary_output)=="number" and type(f.secondary_demand)=="number" and type(f.tertiary_demand)=="number") then return nil end
+   if not (f and type(f.primary_output)=="number" and type(f.secondary_demand)=="number" and type(f.tertiary_demand)=="number") then return id,nil end
    return id,f
  end)
  if ok then return id,flow end
 end
-function M.balance(f,own)
- own=own or {}
- local production=positive((f.primary_output or 0)+(f.secondary_output or 0)+(f.solar_output or 0)-(own.offer or 0))
- local demand=positive((f.primary_demand or 0)+(f.secondary_demand or 0)-(own.demand or 0))
+-- J/tick except stored/capacity in J. Independent readings are not added twice.
+function M.balance(f,own,direct)
+ own=own or {};direct=direct or {}
+ local rawprod=positive((f.primary_output or 0)+(f.secondary_output or 0)+(f.solar_output or 0))
+ local rawdemand=positive((f.primary_demand or 0)+(f.secondary_demand or 0))
+ local stored=math.max(positive(f.accumulator_energy),positive(direct.stored))
+ local capacity=math.max(positive(f.accumulator_capacity),positive(direct.capacity))
+ if capacity==0 and positive(f.tertiary_output)==0 and positive(f.tertiary_demand)==0 then
+   rawprod=math.max(rawprod,positive(f.maximum_production))
+   rawdemand=math.max(rawdemand,positive(f.maximum_consumption))
+ end
+ local production=math.max(positive(rawprod-(own.offer or 0)),positive(direct.production))
+ local demand=math.max(positive(rawdemand-(own.demand or 0)),positive(direct.demand))
  local net=production-demand
  return {gen=positive(net),load=positive(-net),
-   battery=math.min(positive(f.tertiary_output),positive(f.accumulator_energy)),
-   charge=math.min(positive(f.tertiary_demand),positive((f.accumulator_capacity or 0)-(f.accumulator_energy or 0)))}
+   battery=math.min(stored,math.max(positive(f.tertiary_output),positive(direct.discharge))),
+   charge=math.min(positive(capacity-stored),math.max(positive(f.tertiary_demand),positive(direct.charge))),
+   production=production,demand=demand,stored=stored,capacity=capacity}
 end
 -- Greedy deterministic shortest paths. Each station has a shared directed capacity;
 -- no reverse edge on the same station, and no directed cycle (even long).

@@ -1,3 +1,9 @@
+# 0.1.60 cold-start recovery
+
+060 implementation: native 059 topology confirmed in game 44 vs factory 27/61, auto stayed idle. Independent bounded physical-device sampling for vanilla dynamic EEIs and accumulators, max aggregation without duplication, nonstorage maximum-flow fallback, own offer/request subtraction, native per-interface flow caps, raw and planned diagnostics. Exact engine cause not isolated. 060 CI/live pending; main unchanged.
+
+---
+
 # Current experimental power architecture 0.1.59
 
 See [059 research](research/25kv-auto-bidirectional-059.md). Preserve 058 two separate native networks, wire each visible mast only to its own hidden technical anchor. Automatic direction based on native production and requested load; regular generation serves ordinary loads first, then batteries help unmet load, spare generation charges native accumulators. No battery-to-battery routing. Per station 20MW combined, actual source-buffer accounting and loop protection. 059 game verification pending.

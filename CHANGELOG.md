@@ -1,3 +1,9 @@
+## 0.1.60 (test candidate)
+
+- Preserve live-confirmed 059 mast and substation isolation.
+- Recover automatic dispatch from zero native-flow observations; independent editor EEI and accumulator samples, own-flow exclusion and raw diagnostics.
+- Actual joule conservation and 20 MW cap retained. Game test pending.
+
 ## 0.1.59 (test candidate)
 
 - Connect real visible masts to their own hidden electrical anchors; preserve the visual contact-line topology and zero ordinary-wire reach.
