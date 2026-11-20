@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/25kv-power-bridge-058
   feature_version: "0.1.58" # experimental
-  feature_status: 058_axis_ci_gate_fixed_pending
+  feature_status: 058_ci_pass_user_game_test_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -1267,4 +1267,8 @@ power_bridge_058:
   port_isolation: dedicated_lab_surface
   locomotive_consumption: not_implemented
   game_status: pending
-  ci_status: pending
+  ci_status: passed
+  ci_run: 44750917384
+  artifact_id: 14635601471
+  ci_source: e5de8a8bd425d716ff9d7d61dbfccf6cf843e10e
+  inner_zip_sha256: 5fe82a166920dfac99c0541f3e334f3e3195322f26c07fe0cb2f3ce16c400341
