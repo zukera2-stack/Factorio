@@ -1,3 +1,5 @@
+> Windows updater QA PASS: run 44774421856 / artifact 14649231054 / source 911d6f95015fd1f7c1508a6f8e69acaf7655ce02. Native Windows PowerShell 5.1 and real Git: 129 reused, 0 fetched converting exact 060 ZIP; verify passed; deliberate one-file change detected and repaired (128 reused, 1 fetched); two rollbacks restored modified folder and original ZIP byte-exactly; duplicate installation refused; sentinel other mod and mod-list untouched. Earlier Git path and rollback variable defects fixed. Owner PC test pending. Approved ref remains ea9366a9798cd78efec4b675c81d086c09170c28; main unchanged.
+
 > Windows QA 44774196359 confirmed exact ZIP conversion (129 reused, 0 fetched), integrity check, deliberate modification detection and one-blob repair (128 reused, 1 fetched). Rollback caught case-insensitive PowerShell variable shadowing of the backup root. Renamed root variable to DisplacedRoot; rerun complete test before shipping.
 
 > Updater Windows QA run 44773898757 caught multiple installed git.exe paths; selecting first executable instead of treating all paths as one command. Retest pending; no mod payload change.
