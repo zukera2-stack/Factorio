@@ -68,3 +68,6 @@ Main 0.1.56 is the only active baseline. See [branch register](docs/history/BRAN
 
 ## Owner-approved incremental test distribution (2026-11-20)
 The Windows Git updater is an opt-in alternative to install ZIP delivery, only for unpacked test mods. Publish `test/updater-approved` at the exact source commit of a successful packaging CI with verified frozen assets and relevant regression/native checks; explicitly update the ref after review, never automatically follow feature HEAD. Keep CI provenance in project docs. The existing CI-only install ZIP rule remains unchanged. No updater, cache, manifest or backup belongs inside the mod payload. Never modify player saves or mod-list.json.
+
+### Accepted test continuation (20 Nov 2026)
+For the next 0.1.61 experimental electrical work, continue from the frozen-artwork/updater test lineage (`feature/git-updater-060`), not the older visual-only main; this is a test-branch continuation, not a release promotion. Keep `main` untouched until explicit approval. Updater 1.1 is confirmed by owner installation; preserve its TEMP-only service storage and explicit verified-ref distribution. Do not automatically promote unfinished commits. Retain CI-only full ZIP fallback.

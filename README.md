@@ -1,3 +1,9 @@
+# Current experimental test branch — 0.1.60 (20 Nov 2026)
+
+The owner confirmed installation via **Updater 1.1** and restored automatic power transfer with explicit editor EEI source/consumer modes. 20 MW per station; real native isolated 25 kV corridor. Train traction is still unimplemented. All 83 runtime PNGs are tracked. [Updater download](https://github.com/zukera2-stack/Factorio/actions/runs/44783774432/artifacts/14650879317) · [Scoped owner confirmation](docs/tests/updater-1.1-and-power-0.1.60-owner-confirmation.md). Next: 0.1.61 compatibility and substation GUI. Stable main remains 0.1.56; historical descriptions below refer to their respective versions.
+
+---
+
 # Electrified Mainline 0.1.56 — stable main visual milestone (19 Nov 2026)
 
 Merged via [PR #30](https://github.com/zukera2-stack/Factorio/pull/30) with owner approval.
@@ -12,7 +18,7 @@ A **Factorio 2.1** mod for high-speed railway infrastructure and 25 kV overhead-
 
 **Historical previous stable `main` version: 0.1.24**, user-tested with **Factorio 2.1.20 build 87512** on the `ВСМ` save. The promotion was merged in [PR #8](https://github.com/zukera2-stack/Factorio/pull/8). The C catenary-mast graphics show a native visible shaft in the placement cursor, eight rail-facing cantilevers, translucent ghosts, native robot construction/Undo, the SOUTH-based item icon and subdued circular placement hints. [Scoped game-test evidence](docs/tests/catenary-mast-0.1.24-user-accepted-2026-11-15.md) · [0.1.24 GitHub Actions ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/43748406702/artifacts/14175755233).
 
-**The rendered overhead wires are cosmetic.** Actual traction transfer remains `transfer_MW=0`, so this is a **visual milestone**, not a complete electrification system.
+**Historical 0.1.24–0.1.56:** the rendered overhead wires are cosmetic. Actual traction transfer remains `transfer_MW=0`, so this is a **visual milestone**, not a complete electrification system.
 
 The prior **0.1.8 ZIP** remains the historical rollback baseline and preserves game evidence for native Upgrade Planner + Undo/Redo on straight and curved-A/B rails. Those full rail regressions have **not** all been rerun in 0.1.24. [0.1.8 test details](docs/tests/undo-0.1.8-2026-11-12.md).
 
@@ -23,7 +29,7 @@ The prior **0.1.8 ZIP** remains the historical rollback baseline and preserves g
 - Placement, ghost creation, copying, robots and Undo/Redo remain engine-native, not proxy signal entities.
 - All active source graphics and PNG QA live in this branch; the obsolete 012/024 frames were removed and remain available only from Git history or the stable main branch.
 
-Next: separately research actual MW energy exchange; preserve the accepted visual graph. [Status](docs/STATUS.md) · [Architecture](docs/ARCHITECTURE.md) · [AI handoff](docs/AI_CONTEXT.md).
+Historical next step: research actual MW energy exchange; implemented experimentally in 0.1.58–0.1.60. [Status](docs/STATUS.md) · [Architecture](docs/ARCHITECTURE.md) · [AI handoff](docs/AI_CONTEXT.md).
 
 ## History
 
