@@ -1,0 +1,50 @@
+name: Freeze verified 060 runtime artwork
+on:
+  push:
+    branches: ['feature/frozen-runtime-assets-060']
+    paths: ['.github/workflows/freeze-runtime-artwork-060.yml']
+permissions:
+  contents: write
+  actions: read
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download exact verified CI artifact inside runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh run download 44762226699 --repo zukera2-stack/Factorio -n ElectrifiedMainline-test-build -D "$RUNNER_TEMP/em060"
+          test -f "$RUNNER_TEMP/em060/ElectrifiedMainline_0.1.60.zip"
+      - name: Freeze actual runtime bytes and verify package boundary
+        run: |
+          set -euo pipefail
+          python docs/development/asset-freeze/freeze_060.py "$RUNNER_TEMP/em060/ElectrifiedMainline_0.1.60.zip"
+          python scripts/verify_runtime_artwork.py
+          python -m unittest discover -s tests -p 'test_package_mod.py' -v
+          python scripts/package_mod.py
+          python - <<'PY'
+          import os, zipfile
+          from pathlib import Path
+          a=Path(os.environ["RUNNER_TEMP"])/"em060/ElectrifiedMainline_0.1.60.zip"
+          b=Path("build/package/ElectrifiedMainline_0.1.60.zip")
+          with zipfile.ZipFile(a) as x, zipfile.ZipFile(b) as y:
+              assert set(x.namelist())==set(y.namelist())
+              assert all(x.read(n)==y.read(n) for n in x.namelist())
+          print("EXACT PAYLOAD PASS: all 129 files byte-identical")
+          PY
+      - name: Commit frozen PNGs, manifest and CI fast path
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add ElectrifiedMainline/graphics .gitignore docs/builds/runtime-artwork.json .github/workflows/build-mod.yml
+          git diff --cached --stat
+          git commit -m 'Freeze 83 accepted runtime PNGs and skip routine art regeneration'
+          git push origin HEAD:refs/heads/feature/frozen-runtime-assets-060
+          git rev-parse HEAD

@@ -3,9 +3,9 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/25kv-dispatch-recovery-060
+  active_test_branch: feature/frozen-runtime-assets-060
   current_baseline_branch: main
-  active_feature_branch: feature/25kv-dispatch-recovery-060
+  active_feature_branch: feature/frozen-runtime-assets-060
   feature_version: "0.1.60" # experimental
   feature_status: 060_native_pass_owner_test_pending
   last_validated_test_branch: feature/release-056-accepted
@@ -1311,3 +1311,11 @@ headless_probe_060:
   run: 44762226742
   tested_package_run: 44762226699
   logs_artifact: 14642681077
+
+asset_freeze_060:
+  source_branch: feature/25kv-dispatch-recovery-060
+  source_run: 44762226699
+  source_artifact: 14642176934
+  status: pending
+  graphics_expected: 83
+  runtime_files_expected: 129
