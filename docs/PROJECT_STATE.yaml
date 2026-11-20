@@ -1326,7 +1326,7 @@ asset_freeze_060:
   runtime_files_expected: 129
 
 git_updater:
-  status: updater_1_1_negotiation_fix_pending
+  status: updater_1_1_windows_pass_owner_pending
   windows_run: 44774421856
   updater_artifact: 14649231054
   updater_source: 911d6f95015fd1f7c1508a6f8e69acaf7655ce02
@@ -1345,4 +1345,7 @@ updater_1_1:
   storage: Windows_TEMP
   backup_durability: temporary_best_effort
   russian_menu: true
-  qa_status: pending
+  qa_status: windows_pass_owner_pending
+  windows_run: 44783774432
+  artifact: 14650879317
+  source: e834a839fee5982e7ec7409945017ce1cd2321db
