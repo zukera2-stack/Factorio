@@ -1326,7 +1326,7 @@ asset_freeze_060:
   runtime_files_expected: 129
 
 git_updater:
-  status: implementation_pending_windows_test
+  status: windows_git_path_fix_pending
   branch: feature/git-updater-060
   approved_ref: test/updater-approved
   approved_commit: ea9366a9798cd78efec4b675c81d086c09170c28

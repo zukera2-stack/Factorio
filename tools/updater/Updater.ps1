@@ -8,7 +8,7 @@ $ErrorActionPreference = 'Stop'
 $Repo = 'https://github.com/zukera2-stack/Factorio.git'
 $ApprovedRef = 'refs/heads/test/updater-approved'
 $ModName = 'ElectrifiedMainline'
-$Git = (Get-Command git.exe -CommandType Application -ErrorAction Stop).Source
+$Git = (Get-Command git.exe -CommandType Application -ErrorAction Stop | Select-Object -First 1).Source
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 function Run-Git {
