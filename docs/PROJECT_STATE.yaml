@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/25kv-dispatch-recovery-060
   feature_version: "0.1.60" # experimental
-  feature_status: 060_implemented_ci_pending
+  feature_status: 060_full_regression_ci_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30

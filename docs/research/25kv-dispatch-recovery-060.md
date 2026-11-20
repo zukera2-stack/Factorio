@@ -12,3 +12,5 @@ Two isolated ordinary grids and line 44, 058-style test EEIs in both modes -> >=
 
 ## Implementation
 060 implementation: native 059 topology confirmed in game 44 vs factory 27/61, auto stayed idle. Independent bounded physical-device sampling for vanilla dynamic EEIs and accumulators, max aggregation without duplication, nonstorage maximum-flow fallback, own offer/request subtraction, native per-interface flow caps, raw and planned diagnostics. Exact engine cause not isolated. 060 CI/live pending; main unchanged.
+
+060 CI audit: restored 057 prototype and 058 manual bridge regression gates, which were omitted for later versions by historical hard-coded version lists. No gameplay change.

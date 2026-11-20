@@ -112,10 +112,10 @@ jobs:
           if grep -Eq '"version": "0\.1\.(53|54|55|56|57|58|59|60)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/hsr_concrete_053.lua
           fi
-          if grep -Eq '"version": "0\.1\.(57|58)"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(57|58|59|60)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/prototypes_057.lua
           fi
-          if grep -Eq '"version": "0\.1\.(58|59)"' ElectrifiedMainline/info.json; then
+          if grep -Eq '"version": "0\.1\.(58|59|60)"' ElectrifiedMainline/info.json; then
             lua5.2 tests/power_bridge_058.lua
             lua5.2 tests/power_bridge_integration_058.lua
           fi

@@ -1,3 +1,5 @@
+> 060 CI audit: restored 057 prototype and 058 manual bridge regression gates, which were omitted for later versions by historical hard-coded version lists. No gameplay change.
+
 > 060 implementation: native 059 topology confirmed in game 44 vs factory 27/61, auto stayed idle. Independent bounded physical-device sampling for vanilla dynamic EEIs and accumulators, max aggregation without duplication, nonstorage maximum-flow fallback, own offer/request subtraction, native per-interface flow caps, raw and planned diagnostics. Exact engine cause not isolated. 060 CI/live pending; main unchanged.
 
 > 060 research: owner 059 live log proves native corridor 44, separate ordinary 27/61, visible/hidden mast IDs equal, script links verified; automatic status remained idle. No raw flow fields or EEI modes were logged, so exact engine-flow cause not isolated. Preserve topology. Inspect explicit dynamic EEI configuration (native 2.1.24), actual accumulator energy and rates, aggregate maximum/priority flow readings; correct request-vs-offer feedback and test idle start. Main unchanged.
