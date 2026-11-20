@@ -20,3 +20,5 @@ Change only inventory camera from 96 to 160 for 057, generate two original 64px 
 
 ## 7. Implementation
 Bootstrap prototype changes, locale cleanup, JSON migration, conditional icon render and original procedural 64px rail/replacement icons generated after old asset QA; version-specific CI predicates extended including axis 056 tests. Data-stage mock checks effective cloned locomotive, native wagon preservation, icons, technology unlocks. CI package and live tests pending.
+
+057 initial CI 44710491163: all Lua syntax passed, ghost 023 legacy fixture excluded new version and asserted obsolete 024 art. Extend its current-art condition to 057; preserve all assertions. No runtime changes. Rebuild pending.
