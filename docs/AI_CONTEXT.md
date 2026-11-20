@@ -1,3 +1,5 @@
+> 060 native test run 44761644008 exact Factorio 2.1.24/87808 compiled package: cold start 78,666,667 J received, four accumulators charged 7,100,000 J, reverse FAILED (0 J recipient, 7,020,000 J remaining). Auto direction flaps idle within a few ticks. Do not deliver this intermediate artifact as a fixed build. Added per-tick engine observation to isolate feedback. Native probe logs artifact 14642005570.
+
 > 060 added separate exact-build headless QA workflow with test-only mod. Downloads CI artifact 44761190848 inside runner; installs official 2.1.24, creates test surface, real HSR, masts, substations, vanilla EEIs and accumulators, measures native delivery/reversal; no test code in game distribution. Download or native test may fail; result pending.
 
 > 060 CI audit: restored 057 prototype and 058 manual bridge regression gates, which were omitted for later versions by historical hard-coded version lists. No gameplay change.

@@ -63,6 +63,14 @@ script.on_event(defines.events.on_tick,function(ev)
    e.electric_interface_mode=defines.electric_interface_mode.secondary_input
    e.power_production=0;e.power_usage=0;e.electric_buffer_size=200000000;e.input_flow_limit=L;e.output_flow_limit=0;e.energy=0
  end
+ if (dt>=598 and dt<=615) or (dt>=658 and dt<=670) then
+   local rows={}
+   local lab=game.surfaces["em-25kv-isolated-bridge-058"]
+   if lab then for _,e in pairs(lab.find_entities_filtered{type="electric-energy-interface"}) do
+     rows[#rows+1]=e.name.."@"..tostring(e.electric_network_id).." en="..e.energy.." cap="..e.electric_buffer_size.." in="..e.input_flow_limit.." out="..e.output_flow_limit
+   end end
+   log("[EM060 TRACE] dt="..dt.." source "..network(f.source).." battery "..network(f.batteries[1]).." line "..network(f.a).." device="..f.source.electric_interface_mode.."/"..f.source.power_production.."/"..f.source.power_usage.." buffers={"..table.concat(rows,";").."}")
+ end
  if dt==900 then
    local after=total(f)
    log("[EM060 NATIVE] reverse sink_J="..f.source.energy.." battery_after_J="..after)

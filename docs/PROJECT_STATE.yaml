@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/25kv-dispatch-recovery-060
   feature_version: "0.1.60" # experimental
-  feature_status: 060_full_regression_ci_pending
+  feature_status: 060_native_reverse_failed_under_investigation
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -1303,4 +1303,4 @@ headless_probe_060:
   workflow: .github/workflows/headless-power-060.yml
   target_game: 2.1.24
   tested_package_run: 44761190848
-  status: pending
+  status: reverse_failed
