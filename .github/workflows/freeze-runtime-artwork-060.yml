@@ -38,13 +38,13 @@ jobs:
               assert all(x.read(n)==y.read(n) for n in x.namelist())
           print("EXACT PAYLOAD PASS: all 129 files byte-identical")
           PY
-      - name: Commit frozen PNGs, manifest and CI fast path
+      - name: Commit frozen PNGs and manifest only
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add ElectrifiedMainline/graphics .gitignore docs/builds/runtime-artwork.json .github/workflows/build-mod.yml
+          git add ElectrifiedMainline/graphics .gitignore docs/builds/runtime-artwork.json
           git diff --cached --stat
-          git commit -m 'Freeze 83 accepted runtime PNGs and skip routine art regeneration'
+          git commit -m 'Freeze 83 accepted runtime PNGs from native-tested 060 archive'
           git push origin HEAD:refs/heads/feature/frozen-runtime-assets-060
           git rev-parse HEAD
