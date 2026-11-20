@@ -1,4 +1,4 @@
-$ErrorActionPreference='Stop'
+﻿$ErrorActionPreference='Stop'
 $mods=Join-Path $env:RUNNER_TEMP 'em updater QA\mods'
 $updater=Join-Path $PSScriptRoot 'Updater.ps1'
 $zip=Join-Path $mods 'ElectrifiedMainline_0.1.60.zip'
@@ -44,4 +44,17 @@ $failed=$false
 try { & $updater -Action Update -ModsPath $mods -Yes } catch { $failed=$true }
 Assert $failed 'Multiple copies accepted'
 Assert ((Get-FileHash $zip).Hash -eq $hash) 'Duplicate safety check altered ZIP'
+# Fresh-install test reproduces owner's empty mods scenario. The complete
+# download must use one bulk request, not 129 lazy fetches.
+Remove-Item -LiteralPath $root -Force
+Remove-Item -LiteralPath $zip -Force
+$fresh=Join-Path $env:RUNNER_TEMP 'em updater empty QA\mods'
+New-Item -ItemType Directory -Path $fresh -Force | Out-Null
+$log=& $updater -Action Update -ModsPath $fresh -Yes 6>&1
+$log | Out-Host
+Assert (($log | Out-String) -match 'reused 0; fetched 129') 'Fresh install failed'
+Assert (@($log | Where-Object { "$_" -match 'Пакетная загрузка:' }).Count -eq 1) 'Expected exactly one batch request'
+Assert (!(Test-Path (Join-Path (Split-Path $fresh) '.em-updater-mods'))) 'Legacy work folder created'
+Assert (Test-Path (Join-Path $fresh 'ElectrifiedMainline\info.json')) 'Fresh mod folder absent'
+& $updater -Action Verify -ModsPath $fresh -Yes
 Write-Host 'UPDATER WINDOWS PASS: actual Git approved ref, byte-exact initial conversion, one-blob repair, verify, two rollbacks, duplicate refusal and other mod untouched.'

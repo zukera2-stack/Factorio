@@ -1,18 +1,16 @@
-# Electrified Mainline Updater (Windows)
+﻿Electrified Mainline Updater 1.1 (Windows)
 
-1. Close Factorio.
-2. Extract these updater files into any folder **outside** Factorio/mods.
-3. Run Update.bat. Choose 1 (update), 2 (verify), 3 (rollback).
-4. Default mods directory is %APPDATA%\Factorio\mods. If not found, enter your actual mods directory.
-   For a custom path even when the default exists:
-   powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Updater.ps1 -Action Update -ModsPath "D:\Games\Factorio\mods"
-5. Confirm with y. Open Factorio after UPDATE OK.
+1. Полностью закрой Factorio.
+2. Распакуй патчер в любую папку за пределами mods, замени старые файлы патчера.
+3. Запусти Update.bat. 1 — установка/обновление, 2 — проверка, 3 — откат, 4 — выбор папки.
+4. Стандартный путь: %APPDATA%\Factorio\mods. Проверь его в меню. Для нестандартной установки выбери 4.
+5. Подтверди Y или Д. После UPDATE OK запускай Factorio.
 
-Git for Windows and Windows PowerShell 5.1 are required. No Python, admin rights or additional software required.
-Only approved test ref test/updater-approved in public zukera2-stack/Factorio is used.
-First run reads your current mod ZIP or folder and stages an unpacked mod. Later updates reuse matching local files and request changed Git blobs.
-Old mod backups and Git metadata are stored in .em-updater-mods (next to your mods directory).
-Rollback restores the most recent previous mod. It does NOT roll back saves. Always back up your test save before loading a changed mod.
-If multiple copies of ElectrifiedMainline appear, the updater refuses to choose.
-Verify is read-only for installed mod; it may download Git metadata and use a temporary directory.
-This tool is not a mod and must not be installed in mods.
+Нужны Git for Windows и Windows PowerShell 5.1. Python и права администратора не нужны.
+Патчер получает только проверенный ref test/updater-approved публичного zukera2-stack/Factorio.
+Измененные/недостающие Git-объекты запрашиваются одним пакетом, до трех попыток при сбое.
+Временные файлы, кэш и резервные копии располагаются в %TEMP%\ElectrifiedMainline-Updater.
+Windows может очистить TEMP. Откат возможен только пока резервная копия сохранилась.
+Старая папка .em-updater-mods больше не используется; ее можно удалить вручную, если нет нужных резервных копий.
+Сохранения и mod-list.json не изменяются. Перед тестом новой версии сделай отдельную копию карты.
+Папка mods должна содержать лишь одну копию ElectrifiedMainline.

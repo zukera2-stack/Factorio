@@ -26,7 +26,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Fixture download failed' }
           $zip=Join-Path $mods 'ElectrifiedMainline_0.1.60.zip'
           if ((Get-FileHash -Algorithm SHA256 $zip).Hash.ToLower() -ne '10b00013e66ed1d63ec901449fb166ab9a80fa391c2afb0d0f0c0910901fcbf9') { throw 'Bad fixture' }
-      - name: Test Windows updater (real Git, spaces, ZIP conversion, incremental repair, rollback)
+      - name: Test Windows updater (real Git, spaces, ZIP conversion, incremental repair, rollback, empty install, batch fetch)
         shell: powershell
         run: |
           $ErrorActionPreference='Stop'

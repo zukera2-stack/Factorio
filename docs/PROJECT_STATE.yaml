@@ -1326,7 +1326,7 @@ asset_freeze_060:
   runtime_files_expected: 129
 
 git_updater:
-  status: windows_ci_pass_owner_pending
+  status: updater_1_1_windows_pending
   windows_run: 44774421856
   updater_artifact: 14649231054
   updater_source: 911d6f95015fd1f7c1508a6f8e69acaf7655ce02
@@ -1337,3 +1337,12 @@ git_updater:
   approved_native_run: 44762226742
   installation: unpacked_test_mod_only
   saves_touched: false
+
+updater_1_1:
+  owner_failure: connection_failed_promisor_blob_first_install
+  batch_fetch: true
+  retry_count: 3
+  storage: Windows_TEMP
+  backup_durability: temporary_best_effort
+  russian_menu: true
+  qa_status: pending
