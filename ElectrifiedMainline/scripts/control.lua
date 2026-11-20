@@ -17,6 +17,7 @@ local art030 = require("scripts.catenary_art_030")
 local diag045 = require("scripts.catenary_diag_045")
 local technical046 = require("scripts.technical_network_046")
 local bridge058 = require("scripts.power_bridge_058")
+local mast059 = require("scripts.mast_network_059")
 local pantograph049 = require("scripts.pantograph_visual_049")
 -- Legacy wire managers are retained for cleanup only. 046 technical and visual graphs are independent.
 local function empty_native_graph() return {nodes={},edges={}} end
@@ -72,6 +73,7 @@ script.on_init(function()
     power019.rebuild_all()
     nativewire028.rebuild_all(empty_native_graph())
     technical046.rebuild_all(power019.graph())
+    mast059.sync(power019.graph())
     bridge058.rebuild(power019.graph())
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
@@ -83,6 +85,7 @@ script.on_configuration_changed(function()
     power019.rebuild_all()
     nativewire028.rebuild_all(empty_native_graph())
     technical046.rebuild_all(power019.graph())
+    mast059.sync(power019.graph())
     bridge058.rebuild(power019.graph())
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
@@ -572,6 +575,7 @@ local function on_tick(event)
         art030.mark_dirty()
         ghost_visual023.mark_dirty()
     end
+    mast059.on_tick(event.tick,graph)
     bridge058.on_tick(event.tick,graph)
     art030.on_tick(event.tick,graph)
     ghost_visual023.on_tick(event.tick)
@@ -722,7 +726,12 @@ commands.add_command("em-pantograph-status", "Read-only 049 diagnostics: select 
     if p and p.valid then pantograph049.status(p) end
 end)
 
-commands.add_command("em-25kv-mode", "Select traction substation; import, export, off, or status.", function(event)
+commands.add_command("em-25kv-mode", "Select traction substation; auto, import, export, off, or status; select a mast for network IDs.", function(event)
     local player = event.player_index and game.get_player(event.player_index)
     if player and player.valid then bridge058.command(player,event.parameter) end
+end)
+
+commands.add_command("em-25kv-network", "Inspect visible mast, hidden anchor, actual network and station terminals.", function(event)
+    local player=event.player_index and game.get_player(event.player_index)
+    if player and player.valid then mast059.status(player);bridge058.command(player,"status") end
 end)

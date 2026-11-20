@@ -1,5 +1,6 @@
 -- Native separate electrical networks; actual buffered joules, never generated.
 local technical=require("scripts.technical_network_046")
+local dispatch=require("scripts.bridge_dispatch_059")
 local M={LIMIT=20000000/60,SUB="em-35kv-traction-substation"}
 local PORT="em-25kv-bridge-port-058"
 local INPUT,OUTPUT="em-25kv-bridge-input-058","em-25kv-bridge-output-058"
@@ -96,7 +97,7 @@ local function sync_graph(s,graph)
  for id,n in pairs(graph.nodes) do
    if n.name==M.SUB and get(id) then
      current[id]=true
-     s.stations[id]=s.stations[id] or {mode="off",status="off"}
+     s.stations[id]=s.stations[id] or {mode="auto",status="waiting"}
    end
  end
  for id,r in pairs(s.stations) do if not current[id] then detach(r);s.stations[id]=nil end end
@@ -126,7 +127,12 @@ function M.on_removed(e)
 end
 function M.rebuild(graph)
  local s=state()
- for _,r in pairs(s.stations) do detach(r) end
+ for _,r in pairs(s.stations) do
+   detach(r)
+   if not s.auto_migrated and (r.mode=="import" or r.mode=="export") then r.mode="auto" end
+   r.direction=nil;r.interface_retry=nil;r.retry=nil
+ end
+ s.auto_migrated=true;s.last_auto={};s.sample_tick=nil
  local surface=s.surface_index and game.surfaces[s.surface_index]
  if surface and surface.valid and surface.name==LAB then
    for _,e in pairs(surface.find_entities_filtered{name={PORT,INPUT,OUTPUT}}) do destroy(e) end
@@ -171,12 +177,24 @@ function M.on_tick(tick,graph)
  local s=state()
  if s.dirty or tick%60==0 then sync_graph(s,graph) end
  local t=technical.ensure_storage()
- local candidates={}
+ local candidates,auto_edges,networks={},{},{}
+ local cache={}
+ local function observe(e)
+   local raw=e.electric_network_id
+   if not raw then return nil end
+   if cache[raw] then return cache[raw] end
+   local k,flow=dispatch.read_network(e)
+   if k and flow then
+     cache[raw]=k
+     networks[k]=networks[k] or dispatch.balance(flow,(s.sample_tick==tick-1 and s.last_auto or {})[k])
+     return k
+   end
+ end
  for id,r in pairs(s.stations) do
    local p=get(id)
    local a=get(t.helpers[s.feeders[id]])
    if r.mode=="off" then if r.factory_port or r.line_port or r.input or r.output then detach(r) end;r.status="off"
-   elseif not p or not a or p.force.name~=a.force.name or p.surface.index~=a.surface.index or (t.stats.audit_failed or 0)>0 then
+   elseif not p or not a or p.force.name~=a.force.name or p.surface.index~=a.surface.index or (t.stats.audit_failed or 0)>0 or (t.stats.mast_audit_failed or 0)>0 then
      detach(r);r.status="no-feeder-or-audit-failed"
    else
      if not (valid(r.factory_port) and valid(r.line_port) and r.anchor_id==a.unit_number and r.parent_force==p.force.name and r.parent_surface==p.surface.index
@@ -188,27 +206,50 @@ function M.on_tick(tick,graph)
          if not ok or not result then detach(r);log("[EM058] terminal creation/refused: "..tostring(result)) end
        end
        r.status="waiting-terminal"
-     elseif r.mode=="import" or r.mode=="export" then
+     elseif r.mode=="import" or r.mode=="export" or r.mode=="auto" then
        local f,l=r.factory_port.electric_network_id,r.line_port.electric_network_id
        if f and l and f==p.electric_network_id and l==a.electric_network_id then
-         local src,dst=r.factory_port,r.line_port
-         if r.mode=="export" then src,dst=dst,src end
-         candidates[#candidates+1]={id=id,source=src.electric_network_id,target=dst.electric_network_id,src=src,dst=dst}
+         local fk,lk=observe(r.factory_port),observe(r.line_port)
+         if r.mode=="auto" then
+           local mast=get(s.feeders[id])
+           if not (fk and lk and mast and mast.electric_network_id==l and t.mast_connected and t.mast_connected[s.feeders[id]]) then
+             reject(r,"auto-network-or-mast-unverified")
+           else auto_edges[#auto_edges+1]={id=id,a=fk,b=lk,raw_a=f,raw_b=l} end
+         else
+           local src,dst=r.factory_port,r.line_port
+           if r.mode=="export" then src,dst=dst,src end
+           local sk,dk=fk or f,lk or l
+           if r.mode=="export" then sk,dk=dk,sk end
+           candidates[#candidates+1]={id=id,source=sk,target=dk,raw_source=src.electric_network_id,raw_target=dst.electric_network_id,src=src,dst=dst,limit=M.LIMIT,direction=r.mode}
+         end
        else reject(r,"network-id-mismatch") end
      else reject(r,"invalid-mode") end
    end
  end
- if #candidates==0 then return end
+ -- Automatic allocation is coordinated across every connected ordinary/corridor network.
+ local plan=dispatch.plan(networks,auto_edges,M.LIMIT)
+ for _,edge in ipairs(auto_edges) do
+   local r=s.stations[edge.id]
+   local v=plan[edge.id] or 0
+   if math.abs(v)>1 then
+     local direction=v>0 and "import" or "export"
+     local src,dst=r.factory_port,r.line_port
+     local sk,dk=edge.a,edge.b
+     if v<0 then src,dst=dst,src;sk,dk=dk,sk end
+     candidates[#candidates+1]={id=edge.id,source=sk,target=dk,raw_source=src.electric_network_id,raw_target=dst.electric_network_id,src=src,dst=dst,limit=math.min(M.LIMIT,math.abs(v)),direction=direction,auto=true}
+   else reject(r,"auto-idle") end
+ end
+ s.last_auto={};s.sample_tick=tick
  -- Any factory terminal sharing a corridor network means actual isolation was lost.
  local corridor={}
  for _,aid in pairs(t.helpers) do
    local a=get(aid)
-   if valid(a) and a.electric_network_id then corridor[a.electric_network_id]=true end
+   if valid(a) and a.electric_network_id then corridor[observe(a) or a.electric_network_id]=true end
  end
  local safe,shorted={},{}
  for _,c in ipairs(candidates) do
    local r=s.stations[c.id]
-   local id=r.factory_port.electric_network_id
+   local id=observe(r.factory_port) or r.factory_port.electric_network_id
    if corridor[id] then shorted[id]=true end
  end
  for _,c in ipairs(candidates) do
@@ -221,6 +262,7 @@ function M.on_tick(tick,graph)
  for _,c in ipairs(safe) do
    if accepted[c.id] then
      local r=s.stations[c.id]
+     if r.direction~=c.direction then stop(r);r.direction=c.direction;r.interface_retry=nil end
      if not (valid(r.input) and valid(r.output)) then
        stop(r)
        if not r.interface_retry or tick>=r.interface_retry then
@@ -230,12 +272,24 @@ function M.on_tick(tick,graph)
        end
      end
      if valid(r.input) and valid(r.output) then
-       if r.input.electric_network_id~=c.source or r.output.electric_network_id~=c.target or c.source==c.target then
+       if r.input.electric_network_id~=c.raw_source or r.output.electric_network_id~=c.raw_target or c.source==c.target then
          reject(r,"interface-network-mismatch")
        else
-         local ei,eo,amount=M.transfer(r.input.energy,r.output.energy,r.output.electric_buffer_size)
-         r.input.energy=ei
+         local cap=math.min(c.limit, M.LIMIT)
+         local ei,eo,amount=M.transfer(math.min(r.input.energy,cap),r.output.energy,r.output.electric_buffer_size)
+         r.input.energy=r.input.energy-amount
          r.output.energy=eo
+         if c.auto then
+           -- Limit the native request for the next tick, never shrink below stored joules.
+           local desired=math.max(r.input.energy,cap)
+           if math.abs(r.input.electric_buffer_size-desired)>0.01 then r.input.electric_buffer_size=desired end
+           local demand=math.min(M.LIMIT,math.max(0,r.input.electric_buffer_size-r.input.energy))
+           local offer=math.min(M.LIMIT,r.output.energy)
+           local x=s.last_auto[c.source] or {demand=0,offer=0}
+           x.demand=x.demand+demand;s.last_auto[c.source]=x
+           local y=s.last_auto[c.target] or {demand=0,offer=0}
+           y.offer=y.offer+offer;s.last_auto[c.target]=y
+         end
          r.window_j=(r.window_j or 0)+amount;r.status="active"
          r.source_id=c.source;r.target_id=c.target
          if tick%60==0 then r.last_mw=r.window_j/1e6;r.window_j=0 end
@@ -243,18 +297,28 @@ function M.on_tick(tick,graph)
      end
    end
  end
+ -- Settled diagnostic: log status transitions and periodic actual IDs, not only command-time waiting.
+ for id,r in pairs(s.stations) do
+   local p=get(id);local m=get(s.feeders[id]);local anchor=get(t.helpers[s.feeders[id]])
+   local line=valid(r.line_port) and r.line_port.electric_network_id
+   local signature=table.concat({r.mode or "-",r.status or "-",r.direction or "-",tostring(p and p.electric_network_id),tostring(line),tostring(m and m.electric_network_id),tostring(anchor and anchor.electric_network_id)}, "/")
+   if signature~=r.last_signature or tick%600==0 then
+     log(string.format("[EM059] station=%d %s factory_port=%s feeder=%s measured=%.3fMW input=%.0fJ output=%.0fJ",id,signature,tostring(valid(r.factory_port) and r.factory_port.electric_network_id),tostring(s.feeders[id]),r.last_mw or 0,valid(r.input) and r.input.energy or 0,valid(r.output) and r.output.energy or 0))
+     r.last_signature=signature
+   end
+ end
 end
 function M.command(player,param)
  local e=player.selected
- if not (valid(e) and e.name==M.SUB and e.force==player.force) then player.print("[EM058] Select your 25 kV traction substation.");return end
+ if not (valid(e) and e.name==M.SUB and e.force==player.force) then player.print("[EM059] Select your 25 kV traction substation for mode; /em-25kv-network for mast.");return end
  local s=state();local id=e.unit_number
- local r=s.stations[id] or {mode="off",status="off"};s.stations[id]=r
+ local r=s.stations[id] or {mode="auto",status="waiting"};s.stations[id]=r
  param=(param or "status"):match("^%s*(.-)%s*$"):lower()
  if param=="" then param="status" end
- if param=="import" or param=="export" or param=="off" then
-   if r.mode~=param then detach(r);r.mode=param;r.retry=nil;r.interface_retry=nil;r.status="waiting";s.dirty=true end
- elseif param~="status" then player.print("[EM058] import | export | off | status");return end
- local msg=string.format("[EM058] station=%d mode=%s status=%s bridge=%.3f MW / 20 MW | factory=%s line=%s input_J=%.0f output_J=%.0f feeder=%s",
+ if param=="auto" or param=="import" or param=="export" or param=="off" then
+   if r.mode~=param then detach(r);r.mode=param;r.direction=nil;r.retry=nil;r.interface_retry=nil;r.status="waiting";s.dirty=true end
+ elseif param~="status" then player.print("[EM059] auto | import | export | off | status");return end
+ local msg=string.format("[EM059] station=%d mode=%s status=%s bridge=%.3f MW / 20 MW | factory=%s line=%s input_J=%.0f output_J=%.0f feeder=%s",
  id,r.mode,r.status or "unknown",r.last_mw or 0,
  tostring(valid(r.factory_port) and r.factory_port.electric_network_id or "-"),
  tostring(valid(r.line_port) and r.line_port.electric_network_id or "-"),

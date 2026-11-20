@@ -6,8 +6,8 @@ project:
   active_test_branch: feature/25kv-auto-bidirectional-059
   current_baseline_branch: main
   active_feature_branch: feature/25kv-auto-bidirectional-059
-  feature_version: "0.1.58" # experimental
-  feature_status: 059_research
+  feature_version: "0.1.59" # experimental
+  feature_status: 059_implemented_ci_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.58" # experimental
+  mod_version: "0.1.59" # experimental
   main_baseline_mod_version: "0.1.56" # merged PR #30
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -1272,3 +1272,16 @@ power_bridge_058:
   artifact_id: 14635601471
   ci_source: e5de8a8bd425d716ff9d7d61dbfccf6cf843e10e
   inner_zip_sha256: 5fe82a166920dfac99c0541f3e334f3e3195322f26c07fe0cb2f3ce16c400341
+
+power_bridge_059:
+  baseline: dc84724a0d5bd80421fac34f3e5d41f307a6e534
+  research: docs/research/25kv-auto-bidirectional-059.md
+  owner_058_evidence: manual_20MW_screenshots_and_empty_visible_mast
+  max_MW_per_station: 20
+  default_mode: auto
+  modes: [auto, import, export, off]
+  native_mast_link: own_hidden_anchor_only
+  allocator: regular_surplus_then_battery_for_load_then_regular_surplus_for_storage
+  actual_transfer: debit_EEI_before_credit
+  ci_status: pending
+  game_status: pending

@@ -110,7 +110,10 @@ local function audit(s)
           and s.bridge_ports[owner.unit_number]==h
           and owner.force.name==helper(h).force.name
           and link.origin==origin()
-        if target and target.valid and not (permitted_port or (other and s.edges[key(id,other)] and link.origin==origin())) then
+        local permitted_mast=owner and owner.valid and owner.unit_number==id and mast(owner.name)
+          and owner.surface.index==helper(h).surface.index and owner.force.name==helper(h).force.name
+          and link.origin==origin()
+        if target and target.valid and not (permitted_mast or permitted_port or (other and s.edges[key(id,other)] and link.origin==origin())) then
           reject[#reject+1]={target=target,origin=link.origin or defines.wire_origin.player}
         end
       end
@@ -218,6 +221,7 @@ function M.sync(graph)
   end
   s.stats={desired=desired,connected=connected,missed=missed,failures=failures,
     removed=removed,audit_failed=rejected}
+  s.sync_generation=(s.sync_generation or 0)+1
   s.dirty=false
   return M.refresh_components()
 end
@@ -264,7 +268,7 @@ function M.status(player)
   local e=player.selected
   if e and e.valid and mast(e.name) then
     local h=helper(s.helpers[e.unit_number]);local c=conn(h,false)
-    local detail="[EM048 tech] mast="..e.unit_number.." anchor="..tostring(h and h.unit_number).." network_id="..tostring(c and c.network_id).." verified_component="..tostring(s.components[e.unit_number])
+    local detail="[EM048 tech] mast="..e.unit_number.." anchor="..tostring(h and h.unit_number).." network_id="..tostring(c and c.network_id).." visible_network_id="..tostring(e.electric_network_id).." verified_component="..tostring(s.components[e.unit_number])
     player.print(detail);log(detail)
     if c then for _,link in pairs(c.real_connections) do
       local target=link.target and link.target.valid and link.target.owner
