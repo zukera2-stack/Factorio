@@ -175,7 +175,7 @@ function Roll-Back {
     if (!(Confirm-Action "Restore $($old[0].Name)? Saves are NOT rolled back.")) { return }
     $displaced = $null
     if ($null -ne $current) {
-        $d = New-BackupDir $Displaced
+        $d = New-BackupDir $DisplacedRoot
         $displaced = Join-Path $d $current.Name
         Move-Exact $current.FullName $displaced
     }
@@ -204,10 +204,10 @@ if ($Action -ne 'Verify') { Assert-Closed }
 $Work = Join-Path ([IO.Path]::GetDirectoryName($ModsPath)) ('.em-updater-'+[IO.Path]::GetFileName($ModsPath))
 $Cache = Join-Path $Work 'git-cache'
 $Backups = Join-Path $Work 'backups'
-$Displaced = Join-Path $Work 'rollback-displaced'
+$DisplacedRoot = Join-Path $Work 'rollback-displaced'
 Make-Directory $Work
 Make-Directory $Backups
-Make-Directory $Displaced
+Make-Directory $DisplacedRoot
 $lock = [IO.File]::Open((Join-Path $Work 'update.lock'),[IO.FileMode]::OpenOrCreate,[IO.FileAccess]::ReadWrite,[IO.FileShare]::None)
 $temp = $null
 try {
