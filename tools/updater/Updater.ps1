@@ -20,11 +20,10 @@ function Run-Git {
 function Fetch-WithRetry([string[]]$Arguments,[string[]]$Objects=@()) {
     for ($attempt=1; $attempt -le 3; $attempt++) {
         Write-Host "Git: попытка $attempt из 3"
-        if ($Objects.Count) {
-            $Objects | & $script:Git -C $script:Cache @Arguments | Out-Host
-        } else {
-            & $script:Git -C $script:Cache @Arguments | Out-Host
-        }
+        # PowerShell 5.1 pipelines can prepend a BOM / alter line endings.
+        # Pass validated hexadecimal object IDs directly as Git refspec arguments.
+        # Each batch is limited to 400 IDs, well below Windows command-line limits.
+        & $script:Git -C $script:Cache @Arguments @Objects | Out-Host
         if ($LASTEXITCODE -eq 0) { return }
         if ($attempt -lt 3) { Start-Sleep -Seconds (2*$attempt) }
     }
@@ -40,8 +39,14 @@ function Fetch-Blobs([string[]]$Hashes) {
     $missing = @(Missing-Blobs $Hashes)
     if (!$missing.Count) { return }
     Write-Host "Пакетная загрузка: $($missing.Count) Git-объектов"
-    # Same bulk request mechanism as upstream Git's promisor-remote.c.
-    Fetch-WithRetry @('fetch','--progress','--no-tags','--no-write-fetch-head','--recurse-submodules=no','--filter=blob:none','--stdin','origin') $missing
+    foreach ($oid in $missing) {
+        if ($oid -cnotmatch '^[a-f0-9]{40}$') { throw 'Invalid Git object ID.' }
+    }
+    for ($offset=0; $offset -lt $missing.Count; $offset+=400) {
+        $end=[Math]::Min($offset+399,$missing.Count-1)
+        $batch=@($missing[$offset..$end])
+        Fetch-WithRetry @('fetch','--progress','--no-tags','--no-write-fetch-head','--recurse-submodules=no','--filter=blob:none','origin') $batch
+    }
     if (@(Missing-Blobs $Hashes).Count) { throw 'GitHub не вернул все необходимые объекты.' }
 }
 function No-Reparse([string]$Path) {
