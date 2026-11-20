@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/25kv-auto-bidirectional-059
   feature_version: "0.1.59" # experimental
-  feature_status: 059_implemented_ci_pending
+  feature_status: 059_ci_pass_user_game_test_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -1283,5 +1283,9 @@ power_bridge_059:
   native_mast_link: own_hidden_anchor_only
   allocator: regular_surplus_then_battery_for_load_then_regular_surplus_for_storage
   actual_transfer: debit_EEI_before_credit
-  ci_status: pending
+  ci_status: passed
+  ci_run: 44757346136
+  artifact_id: 14639915542
+  ci_source: 45342457835276d2eaadf80ffc96ae82d9591714
+  inner_zip_sha256: d00f7625a92011ecb43c9977c3391a7c83da225c821f99185af81d30c0a593ce
   game_status: pending

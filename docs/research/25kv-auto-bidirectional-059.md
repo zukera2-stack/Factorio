@@ -12,3 +12,6 @@ Native bridge can use coordinated allocation of generation surplus and requested
 
 ## 6. Implementation
 Visible mast is joined to own anchor by hidden script copper with exact whitelist and separate audit; dispatcher uses native flow_last_tick, parent network grouping, source/target capacity in J/tick and no double allocation. Input buffer cap follows dispatch; output credit uses only actual source joules. Manual diagnostic mode retained. Initial CI and live verification pending.
+
+## 7. CI evidence and limits
+059 CI PASS: source 45342457835276d2eaadf80ffc96ae82d9591714, run 44757346136, install artifact 14639915542 https://github.com/zukera2-stack/Factorio/actions/runs/44757346136/artifacts/14639915542 . Inner ZIP SHA256 d00f7625a92011ecb43c9977c3391a7c83da225c821f99185af81d30c0a593ce ; 128 game files / 83 PNGs. All 058/059 Lua model/mock tests and existing visual regressions passed. Owner 058 log: 115 actual straight rail builds and 10 remaining masts, all at y=-125.5, max adjacent x-gap 31 tiles; two stations configured, 20MW GUI evidence. Settled 058 wire IDs not logged. 059 auto flow sampling, visible native mast wire, actual charging/discharging, save/rail break and performance still require live testing. Main unchanged.
