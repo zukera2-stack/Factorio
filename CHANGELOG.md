@@ -1,3 +1,9 @@
+## 0.1.58 (test candidate)
+
+- Native isolated 25 kV corridor and reversible 20 MW substations with explicit direction, conservative buffered energy transfer and loop rejection.
+- Preserve 056 visual topology; no train traction energy use yet.
+- Carry forward 057 icons, locomotive tuning and wagon migration; correct 057/058 pad-cleanup predicate.
+
 ## 0.1.57 (test candidate)
 
 - Vanilla-facing locomotive inventory thumbnail; distinct concrete HSR and replacement planner icons.
