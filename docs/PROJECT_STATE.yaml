@@ -1298,3 +1298,9 @@ power_bridge_060:
   max_MW: 20
   ci_status: pending
   game_status: pending
+
+headless_probe_060:
+  workflow: .github/workflows/headless-power-060.yml
+  target_game: 2.1.24
+  tested_package_run: 44761190848
+  status: pending

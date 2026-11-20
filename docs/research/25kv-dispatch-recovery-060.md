@@ -14,3 +14,6 @@ Two isolated ordinary grids and line 44, 058-style test EEIs in both modes -> >=
 060 implementation: native 059 topology confirmed in game 44 vs factory 27/61, auto stayed idle. Independent bounded physical-device sampling for vanilla dynamic EEIs and accumulators, max aggregation without duplication, nonstorage maximum-flow fallback, own offer/request subtraction, native per-interface flow caps, raw and planned diagnostics. Exact engine cause not isolated. 060 CI/live pending; main unchanged.
 
 060 CI audit: restored 057 prototype and 058 manual bridge regression gates, which were omitted for later versions by historical hard-coded version lists. No gameplay change.
+
+## Native-engine probe
+060 added separate exact-build headless QA workflow with test-only mod. Downloads CI artifact 44761190848 inside runner; installs official 2.1.24, creates test surface, real HSR, masts, substations, vanilla EEIs and accumulators, measures native delivery/reversal; no test code in game distribution. Download or native test may fail; result pending.
