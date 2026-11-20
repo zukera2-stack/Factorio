@@ -1316,7 +1316,10 @@ asset_freeze_060:
   source_branch: feature/25kv-dispatch-recovery-060
   source_run: 44762226699
   source_artifact: 14642176934
-  status: assets_verified_fast_ci_pending
+  status: passed_byte_identical
+  fast_ci_run: 44772684519
+  fast_ci_artifact: 14646859081
+  fast_ci_source: ea9366a9798cd78efec4b675c81d086c09170c28
   freeze_run: 44772563088
   asset_commit: 7b723f4feb65e366c9ae11c13a17864b3c435fbc
   graphics_expected: 83
