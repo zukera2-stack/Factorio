@@ -1,3 +1,5 @@
+> 0.1.57 owner-approved candidate: vanilla-facing icon, concrete rail icon and distinct replacement tool, 2 MW / max_speed 2 / brake 20, remove redundant cargo/fluid wagon variants with JSON item/entity migration. Research phase; no main changes. [Research](research/hsr-icons-balance-057.md).
+
 # Project status — stable visual baseline 0.1.56
 
 Main merged via [PR #30](https://github.com/zukera2-stack/Factorio/pull/30), original 056 accepted by owner. Main [CI 44614544575](https://github.com/zukera2-stack/Factorio/actions/runs/44614544575) and docs checks passed. [Install ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44614544575/artifacts/14572849193); same inner SHA256 as baseline `829af87f916f35743463b0ecd61029c88a444efd0c6becd724150ba80398f545`. No new runtime source changes during cleanup.

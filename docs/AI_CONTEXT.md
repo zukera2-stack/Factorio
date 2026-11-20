@@ -1,3 +1,5 @@
+> 0.1.57 owner-approved candidate: vanilla-facing icon, concrete rail icon and distinct replacement tool, 2 MW / max_speed 2 / brake 20, remove redundant cargo/fluid wagon variants with JSON item/entity migration. Research phase; no main changes. [Research](research/hsr-icons-balance-057.md).
+
 # Electrified Mainline — current handoff (0.1.56)
 
 **Source of truth:** main, original owner-accepted visual milestone, PR #30, merge `55cb71f8f3be8c68cbd2c26fa16fd775c6ba296d`. Main CI [44614544575](https://github.com/zukera2-stack/Factorio/actions/runs/44614544575) passed; [install ZIP](https://github.com/zukera2-stack/Factorio/actions/runs/44614544575/artifacts/14572849193), inner SHA256 `829af87f916f35743463b0ecd61029c88a444efd0c6becd724150ba80398f545`, 121 files, 81 PNGs; identical to accepted CI baseline 662389ad. [User acceptance](tests/catenary-0.1.56-user-acceptance.md). Factorio target 2.1, last known owner environment 2.1.24 build 87808; screenshot alone does not establish exact game revision.
