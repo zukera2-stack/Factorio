@@ -99,7 +99,7 @@ def generate(out,qa,chunk):
             comp=Image.alpha_composite(body,painted_mask(mask))
             for state in ("up","down"):
                 Image.alpha_composite(comp,images["pantograph-"+state]).save(qa/f"view-{i:03}-{state}.png")
-        if i==96:
+        if i==(160 if json.loads((Path(__file__).resolve().parents[2]/"ElectrifiedMainline/info.json").read_text())["version"]=="0.1.57" else 96):
             # Only inventory thumbnail includes modeled wheels: running art uses native wheels.
             wheel_parts=[m for n,m,mat,g in refined.model() if n in {f"body_{k:03}" for k in range(9,51)}]
             wheels=old.actor_for(tm.util.concatenate(wheel_parts),(70,74,77))

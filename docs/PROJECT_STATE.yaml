@@ -6,8 +6,8 @@ project:
   active_test_branch: feature/hsr-icons-balance-057
   current_baseline_branch: main
   active_feature_branch: feature/hsr-icons-balance-057
-  feature_version: "0.1.56" # owner-approved original visual graph
-  feature_status: 057_research_before_implementation
+  feature_version: "0.1.57" # experimental
+  feature_status: 057_implementation_ci_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.56" # accepted visual milestone
+  mod_version: "0.1.57" # experimental
   main_baseline_mod_version: "0.1.56" # merged PR #30
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -347,7 +347,7 @@ visual_development:
 user_decisions:
   rail_modernization: replace_vanilla_rails_with_high_speed_rails
   power_model: hybrid_overhead_supply_and_onboard_storage
-  rolling_stock: vanilla_and_custom_wagons_supported
+  rolling_stock: native_cargo_and_fluid_wagons_only_custom_locomotive
   regenerative_braking_priority:
     - shared_grid
     - onboard_storage_surplus
@@ -365,7 +365,7 @@ interoperability:
   vanilla_locomotive_on_custom_rails: supported_as_vanilla
   custom_locomotive_on_custom_rails: planned_grid_plus_storage
   custom_locomotive_on_vanilla_rails: planned_storage_only
-  vanilla_and_custom_wagons_mixed: required
+  vanilla_wagons_with_custom_locomotive: required
   unknown_third_party_rolling_stock: must_not_crash_or_be_controlled
 
 implementation:
@@ -408,7 +408,7 @@ implementation:
   separate_high_speed_power_grid: not_implemented
   custom_electric_pole: cloned_from_vanilla_ordinary_electric_network
   custom_locomotive_prototype: present_in_source
-  custom_wagon_prototypes: cloned_from_vanilla_no_capacity_changes
+  custom_wagon_prototypes: removed_057_native_json_migration
   custom_locomotive_energy_source: void_placeholder
   real_traction_energy: not_implemented
   real_battery_model: not_implemented
@@ -1241,3 +1241,15 @@ repository_cleanup_056:
   closed_superseded_issue: 7
   phase2_excluded: true
   source_changes: false
+
+icons_balance_057:
+  research: docs/research/hsr-icons-balance-057.md
+  icon_view_frame: 160
+  max_power_kW: 2000
+  max_speed_tiles_per_tick: 2.0
+  brake_force: 20
+  weight: 2000
+  removed_wagons_migration: ElectrifiedMainline/migrations/0.1.57.json
+  migration_live_verified: false
+  ci_status: pending
+  visual_network_unchanged: true

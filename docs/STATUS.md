@@ -1,4 +1,4 @@
-> 0.1.57 owner-approved candidate: vanilla-facing icon, concrete rail icon and distinct replacement tool, 2 MW / max_speed 2 / brake 20, remove redundant cargo/fluid wagon variants with JSON item/entity migration. Research phase; no main changes. [Research](research/hsr-icons-balance-057.md).
+> 0.1.57 test branch: implemented owner-approved icon direction and concrete rail/replacement icons, 2 MW / 2 tiles per tick / brake 20, native wagon migration. Main remains 056; CI and live tests pending. [Research](research/hsr-icons-balance-057.md).
 
 # Project status — stable visual baseline 0.1.56
 

@@ -1,3 +1,10 @@
+## 0.1.57 (test candidate)
+
+- Vanilla-facing locomotive inventory thumbnail; distinct concrete HSR and replacement planner icons.
+- Locomotive 2 MW, 2 tiles/tick nominal, braking force 20, weight 2000; void energy placeholder unchanged.
+- Remove redundant cargo and fluid wagon prototypes, recipes and unlocks; native JSON entity/item migration.
+- Preserve 056 catenary and rail geometry. CI and live validation pending.
+
 ## 0.1.56 — stable main, owner-approved visual milestone
 
 - Merged via [PR #30](https://github.com/zukera2-stack/Factorio/pull/30); exact original 056 runtime preserved.

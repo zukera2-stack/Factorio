@@ -1,0 +1,22 @@
+{
+  "entity": [
+    [
+      "em-high-speed-cargo-wagon",
+      "cargo-wagon"
+    ],
+    [
+      "em-high-speed-fluid-wagon",
+      "fluid-wagon"
+    ]
+  ],
+  "item": [
+    [
+      "em-high-speed-cargo-wagon",
+      "cargo-wagon"
+    ],
+    [
+      "em-high-speed-fluid-wagon",
+      "fluid-wagon"
+    ]
+  ]
+}

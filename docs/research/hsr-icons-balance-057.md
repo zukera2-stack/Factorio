@@ -17,3 +17,6 @@ Official https://lua-api.factorio.com/latest/prototypes/RollingStockPrototype.ht
 
 ## 6. Hypothesis
 Change only inventory camera from 96 to 160 for 057, generate two original 64px HSR icons after existing asset validators. Apply icon to item/entity/recipe/technology consistently, clear inherited icons. Effective cloned locomotive properties changed in bootstrap (including redundant initial prototype), preserve physical geometry, native wheels/masks, void placeholder and runtime untouched. Remove item/entity/recipe/unlock and RU/EN strings of redundant wagons; add native JSON migration. CI tests prototype and migration contract; no assertion that save migration works until live test. 056 rollback requires pre-upgrade save backup. Owner specifically approved numbers and scope; no new traction mechanics.
+
+## 7. Implementation
+Bootstrap prototype changes, locale cleanup, JSON migration, conditional icon render and original procedural 64px rail/replacement icons generated after old asset QA; version-specific CI predicates extended including axis 056 tests. Data-stage mock checks effective cloned locomotive, native wagon preservation, icons, technology unlocks. CI package and live tests pending.
