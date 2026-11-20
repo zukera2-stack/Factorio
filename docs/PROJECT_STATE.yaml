@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/25kv-dispatch-recovery-060
   feature_version: "0.1.60" # experimental
-  feature_status: 060_native_startup_feedback_fix_pending
+  feature_status: 060_native_pass_owner_test_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -1296,11 +1296,18 @@ power_bridge_060:
   topology_059_live: confirmed_network_44_factory_27_61
   auto_059_live: idle_zero_MW
   max_MW: 20
-  ci_status: pending
-  game_status: pending
+  ci_status: passed
+  ci_run: 44762226699
+  artifact_id: 14642176934
+  ci_source: 581724a99b129b2c3772b207ac358ca1c3b00e34
+  inner_zip_sha256: 10b00013e66ed1d63ec901449fb166ab9a80fa391c2afb0d0f0c0910901fcbf9
+  game_status: headless_2_1_24_pass_owner_pending
 
 headless_probe_060:
   workflow: .github/workflows/headless-power-060.yml
   target_game: 2.1.24
   previous_failed_package_run: 44761190848
-  status: retest_pending
+  status: passed
+  run: 44762226742
+  tested_package_run: 44762226699
+  logs_artifact: 14642681077
