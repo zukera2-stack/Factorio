@@ -20,3 +20,5 @@ Two hidden isolated ports per real station on dedicated lab surface, one connect
 
 ## 7. Implementation
 Added native hidden terminal poles and EEIs, one-tick buffer and 20 MW flow limits. Per-tick conservation and cycle policy tested by pure Lua; runtime lifecycle and exact link validation implemented. Manual game validation pending.
+
+058 initial CI 44750760503 failed at legacy 048 continuity fixture because inner axis-test gate omitted 058; corrected the gate, old assertions retained, no gameplay changes. Rebuild pending.

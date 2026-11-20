@@ -93,7 +93,7 @@ jobs:
             lua5.2 tests/25kv_visual_geometry_048.lua
             lua5.2 tests/25kv_technical_048.lua
             lua5.2 tests/25kv_policy_047.lua
-            if grep -Eq '"version": "0\.1\.(56|57)"' ElectrifiedMainline/info.json; then
+            if grep -Eq '"version": "0\.1\.(56|57|58)"' ElectrifiedMainline/info.json; then
               lua5.2 tests/25kv_axis_056.lua
               lua5.2 tests/25kv_axis_integration_056.lua
             else

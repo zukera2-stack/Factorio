@@ -7,7 +7,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: feature/25kv-power-bridge-058
   feature_version: "0.1.58" # experimental
-  feature_status: 058_bridge_implemented_ci_pending
+  feature_status: 058_axis_ci_gate_fixed_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
