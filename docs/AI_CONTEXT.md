@@ -1,3 +1,5 @@
+> 059 research: owner 058 screenshots show 20MW at station-side vanilla networks, empty visible-mast GUI; log confirms 2.1.24/87808, two mode commands and selected feeders, no settled network IDs. Owner requests automatic reversible bridge and remote vanilla accumulator charge/discharge. Preserve 058 artifact; new test branch, main unchanged.
+
 > 058 CI PASS (run 44750917384, source e5de8a8bd425d716ff9d7d61dbfccf6cf843e10e): 058 energy/loop/lifecycle Lua mock tests and 056 regressions passed, 126 game files / 83 PNGs. Install artifact 14635601471: https://github.com/zukera2-stack/Factorio/actions/runs/44750917384/artifacts/14635601471 . Inner ZIP SHA256 5fe82a166920dfac99c0541f3e334f3e3195322f26c07fe0cb2f3ce16c400341 . Live 25 kV network IDs, cross-surface wire attachment and actual engine energy transfer remain unverified. User test pending; main unchanged.
 
 > 058 initial CI 44750760503 failed at legacy 048 continuity fixture because inner axis-test gate omitted 058; corrected the gate, old assertions retained, no gameplay changes. Rebuild pending.

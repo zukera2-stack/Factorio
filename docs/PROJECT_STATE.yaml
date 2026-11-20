@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/25kv-power-bridge-058
+  active_test_branch: feature/25kv-auto-bidirectional-059
   current_baseline_branch: main
-  active_feature_branch: feature/25kv-power-bridge-058
+  active_feature_branch: feature/25kv-auto-bidirectional-059
   feature_version: "0.1.58" # experimental
-  feature_status: 058_ci_pass_user_game_test_pending
+  feature_status: 059_research
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
