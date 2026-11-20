@@ -3,9 +3,9 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/frozen-runtime-assets-060
+  active_test_branch: feature/git-updater-060
   current_baseline_branch: main
-  active_feature_branch: feature/frozen-runtime-assets-060
+  active_feature_branch: feature/git-updater-060
   feature_version: "0.1.60" # experimental
   feature_status: 060_native_pass_owner_test_pending
   last_validated_test_branch: feature/release-056-accepted
@@ -1324,3 +1324,13 @@ asset_freeze_060:
   asset_commit: 7b723f4feb65e366c9ae11c13a17864b3c435fbc
   graphics_expected: 83
   runtime_files_expected: 129
+
+git_updater:
+  status: implementation_pending_windows_test
+  branch: feature/git-updater-060
+  approved_ref: test/updater-approved
+  approved_commit: ea9366a9798cd78efec4b675c81d086c09170c28
+  approved_build_run: 44772684519
+  approved_native_run: 44762226742
+  installation: unpacked_test_mod_only
+  saves_touched: false

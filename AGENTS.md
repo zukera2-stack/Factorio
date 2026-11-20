@@ -65,3 +65,6 @@ Build every distributable install ZIP exclusively via the repository's GitHub Ac
 
 ## Current baseline and branches
 Main 0.1.56 is the only active baseline. See [branch register](docs/history/BRANCH_ARCHIVE_056.md). Preserve original visual algorithm unless a reproducible defect is observed. Never merge unapproved phase-2 experiment. New work branches from main; explicit owner approval required before promotion.
+
+## Owner-approved incremental test distribution (2026-11-20)
+The Windows Git updater is an opt-in alternative to install ZIP delivery, only for unpacked test mods. Publish `test/updater-approved` at the exact source commit of a successful packaging CI with verified frozen assets and relevant regression/native checks; explicitly update the ref after review, never automatically follow feature HEAD. Keep CI provenance in project docs. The existing CI-only install ZIP rule remains unchanged. No updater, cache, manifest or backup belongs inside the mod payload. Never modify player saves or mod-list.json.

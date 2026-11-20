@@ -1,0 +1,43 @@
+name: Windows Git updater QA
+on:
+  push:
+    branches: ['feature/git-updater-060']
+    paths: ['tools/updater/**', '.github/workflows/updater-windows.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch verified initial mod for test fixture
+        shell: powershell
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference='Stop'
+          $homePath=Join-Path $env:RUNNER_TEMP 'em updater QA'
+          $mods=Join-Path $homePath 'mods'
+          New-Item -ItemType Directory -Path $mods -Force | Out-Null
+          gh run download 44772684519 --repo zukera2-stack/Factorio -n ElectrifiedMainline-test-build -D "$mods"
+          if ($LASTEXITCODE -ne 0) { throw 'Fixture download failed' }
+          $zip=Join-Path $mods 'ElectrifiedMainline_0.1.60.zip'
+          if ((Get-FileHash -Algorithm SHA256 $zip).Hash.ToLower() -ne '10b00013e66ed1d63ec901449fb166ab9a80fa391c2afb0d0f0c0910901fcbf9') { throw 'Bad fixture' }
+      - name: Test Windows updater (real Git, spaces, ZIP conversion, incremental repair, rollback)
+        shell: powershell
+        run: |
+          $ErrorActionPreference='Stop'
+          & .\tools\updater\Test-Updater.ps1
+      - name: Upload standalone updater (not the mod)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ElectrifiedMainline-Updater-Windows
+          path: |
+            tools/updater/Updater.ps1
+            tools/updater/Update.bat
+            tools/updater/README.txt
+          if-no-files-found: error
+          retention-days: 30
