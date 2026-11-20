@@ -1,3 +1,10 @@
+## 0.1.59 (test candidate)
+
+- Connect real visible masts to their own hidden electrical anchors; preserve the visual contact-line topology and zero ordinary-wire reach.
+- Default automatic reversible substation mode, 20 MW combined limit; prioritize real loads, then charging native outpost accumulators from generation surplus. Use stored energy for shortages, not battery-to-battery charging.
+- Log settled native/visible/hidden network IDs and actual buffered transfer, clarify legacy ordinary-pole tooltip.
+- Target game validation pending; railway traction still not implemented.
+
 ## 0.1.58 (test candidate)
 
 - Native isolated 25 kV corridor and reversible 20 MW substations with explicit direction, conservative buffered energy transfer and loop rejection.
