@@ -6,8 +6,8 @@ project:
   active_test_branch: feature/25kv-power-bridge-058
   current_baseline_branch: main
   active_feature_branch: feature/25kv-power-bridge-058
-  feature_version: "0.1.57" # experimental
-  feature_status: 058_research_before_implementation
+  feature_version: "0.1.58" # experimental
+  feature_status: 058_bridge_implemented_ci_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.57" # experimental
+  mod_version: "0.1.58" # experimental
   main_baseline_mod_version: "0.1.56" # merged PR #30
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -405,14 +405,14 @@ implementation:
   blueprint_rail_undo_test_branch: diagnostic/blueprint-rail-undo
   persistent_storage_lazy_initialization: present_in_source
   legacy_save_pending_queue_nil_crash: previously_reproduced_fix_added_in_0_1_1
-  separate_high_speed_power_grid: not_implemented
+  separate_high_speed_power_grid: native_technical_anchors_with_058_bridge_game_unverified
   custom_electric_pole: cloned_from_vanilla_ordinary_electric_network
   custom_locomotive_prototype: present_in_source
   custom_wagon_prototypes: removed_057_native_json_migration
   custom_locomotive_energy_source: void_placeholder
   real_traction_energy: not_implemented
   real_battery_model: not_implemented
-  real_substation_transfer: not_implemented
+  real_substation_transfer: bridge_058_implemented_game_unverified
   real_regeneration: not_implemented
   real_train_mass_accounting: not_implemented
   overhead_line_power_delivery: not_implemented
@@ -1254,3 +1254,17 @@ icons_balance_057:
   ci_status: pending
   visual_network_unchanged: true
 
+
+power_bridge_058:
+  research: docs/research/25kv-power-bridge-058.md
+  max_MW_per_station: 20
+  efficiency: 1.0
+  default_mode: off
+  modes: [import, export, off]
+  cycle_policy: reject_directed_cycles_and_same_network
+  energy_transfer: debit_actual_input_buffer_credit_output_buffer
+  native_corridor: technical_046_verified_copper
+  port_isolation: dedicated_lab_surface
+  locomotive_consumption: not_implemented
+  game_status: pending
+  ci_status: pending

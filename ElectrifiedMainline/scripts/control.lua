@@ -16,6 +16,7 @@ local nativewire028 = require("scripts.native_wire_028")
 local art030 = require("scripts.catenary_art_030")
 local diag045 = require("scripts.catenary_diag_045")
 local technical046 = require("scripts.technical_network_046")
+local bridge058 = require("scripts.power_bridge_058")
 local pantograph049 = require("scripts.pantograph_visual_049")
 -- Legacy wire managers are retained for cleanup only. 046 technical and visual graphs are independent.
 local function empty_native_graph() return {nodes={},edges={}} end
@@ -71,6 +72,7 @@ script.on_init(function()
     power019.rebuild_all()
     nativewire028.rebuild_all(empty_native_graph())
     technical046.rebuild_all(power019.graph())
+    bridge058.rebuild(power019.graph())
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
     pantograph049.clear()
@@ -81,6 +83,7 @@ script.on_configuration_changed(function()
     power019.rebuild_all()
     nativewire028.rebuild_all(empty_native_graph())
     technical046.rebuild_all(power019.graph())
+    bridge058.rebuild(power019.graph())
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
     pantograph049.clear()
@@ -386,6 +389,7 @@ local function on_built(event)
     if not (entity and entity.valid) then return end
 
     power019.on_built(event)
+    bridge058.on_built(entity)
     if entity.name=="em-35kv-catenary-pole" or entity.name=="em-35kv-catenary-pole-north" then
         technical046.mark_dirty()
         art030.mark_dirty()
@@ -412,6 +416,7 @@ local function cleanup_train_for_entity(event)
 
     pantograph049.remove(entity)
     native_wire_probe026.on_mast_removed(entity)
+    bridge058.on_removed(entity)
     technical046.on_parent_removed(entity)
     if entity.name=="em-35kv-catenary-pole" or entity.name=="em-35kv-catenary-pole-north" then ghost_visual023.mark_dirty() end
     art030.on_parent_removed(entity)
@@ -556,15 +561,18 @@ local function on_tick(event)
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
     if power019.on_tick(event.tick) then
+        bridge058.mark_dirty()
         technical046.mark_dirty()
         ghost_visual023.mark_dirty()
         art030.mark_dirty()
     end
     local graph=power019.graph()
     if technical046.on_tick(event.tick,graph) then
+        bridge058.mark_dirty()
         art030.mark_dirty()
         ghost_visual023.mark_dirty()
     end
+    bridge058.on_tick(event.tick,graph)
     art030.on_tick(event.tick,graph)
     ghost_visual023.on_tick(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
@@ -646,7 +654,7 @@ script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_tick, on_tick)
 
 -- Read-only diagnostic for the unpowered 0.1.9 visual catenary graph.
-commands.add_command("em-35kv-status", "Show 35kV test graph; no MW transfer implemented.", function(event)
+commands.add_command("em-35kv-status", "Show visual graph; see /em-25kv-mode status for power.", function(event)
     local player = event.player_index and game.get_player(event.player_index)
     if player and player.valid then power019.status(player) end
 end)
@@ -712,4 +720,9 @@ end)
 commands.add_command("em-pantograph-status", "Read-only 049 diagnostics: select electric locomotive.", function(event)
     local p=event.player_index and game.get_player(event.player_index)
     if p and p.valid then pantograph049.status(p) end
+end)
+
+commands.add_command("em-25kv-mode", "Select traction substation; import, export, off, or status.", function(event)
+    local player = event.player_index and game.get_player(event.player_index)
+    if player and player.valid then bridge058.command(player,event.parameter) end
 end)

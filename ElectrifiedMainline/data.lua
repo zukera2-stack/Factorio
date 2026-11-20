@@ -20,3 +20,6 @@ require("prototypes.locomotive_visual_049")
 
 -- 053: concrete HSR appearance only; no rail geometry or runtime changes.
 require("prototypes.hsr_concrete_053")
+
+-- 058 isolated native power bridge.
+require("prototypes.power_bridge_058")

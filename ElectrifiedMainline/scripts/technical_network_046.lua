@@ -71,6 +71,7 @@ function M.ensure_storage()
   local s=storage.em.technical_046
   if not s then s={helpers={},edges={},stats={},dirty=true};storage.em.technical_046=s end
   s.components=s.components or {}
+  s.bridge_ports=s.bridge_ports or {}
   return s
 end
 local function destroy(id)
@@ -105,7 +106,11 @@ local function audit(s)
         local target=link.target
         local owner=target and target.valid and target.owner
         local other=owner and owner.valid and reverse[owner.unit_number]
-        if target and target.valid and not (other and s.edges[key(id,other)] and link.origin==origin()) then
+        local permitted_port=owner and owner.valid and owner.name=="em-25kv-bridge-port-058"
+          and s.bridge_ports[owner.unit_number]==h
+          and owner.force.name==helper(h).force.name
+          and link.origin==origin()
+        if target and target.valid and not (permitted_port or (other and s.edges[key(id,other)] and link.origin==origin())) then
           reject[#reject+1]={target=target,origin=link.origin or defines.wire_origin.player}
         end
       end
@@ -235,6 +240,7 @@ function M.on_tick(tick,graph)
   if s.dirty or tick%600==0 then return M.sync(graph)
   elseif tick%60==0 then
     local n,f=audit(s)
+    s.stats.audit_failed=f
     if n>0 or f>0 then log("[EM048 tech] unauthorized removed="..n.." failed="..f);s.dirty=true end
     return M.refresh_components()
   end
@@ -252,7 +258,7 @@ function M.status(player)
   local s=M.ensure_storage();local n=0
   for _ in pairs(s.helpers) do n=n+1 end
   local v=s.stats
-  local msg=string.format("[EM048 tech] anchors=%d desired=%d connected=%d missed=%d anchor_fail=%d removed=%d audit_failed=%d reach=40 HSR-continuous origin=script MW=0",
+  local msg=string.format("[EM048 tech] anchors=%d desired=%d connected=%d missed=%d anchor_fail=%d removed=%d audit_failed=%d reach=40 HSR-continuous origin=script; see /em-25kv-mode status",
     n,v.desired or 0,v.connected or 0,v.missed or 0,v.failures or 0,v.removed or 0,v.audit_failed or 0)
   player.print(msg);log(msg)
   local e=player.selected

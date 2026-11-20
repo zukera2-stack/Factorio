@@ -1,3 +1,9 @@
+# Current experimental power architecture 0.1.58
+
+See [058 research](research/25kv-power-bridge-058.md). Native corridor poles and normal station pole never directly wired: each station has two isolated lab-surface terminals linked only to their respective networks. Fixed direction input and output EEIs move actual source buffer energy. 20 MW per station, no steady self-drain, no energy creation. Explicit import/export/off, default off. Reject loops, same network and connector/network-ID mismatch. No train energy use yet. Live validation pending.
+
+---
+
 # Power architecture 0.1.9 — source prototype, unpowered
 
 Baseline main is ElectrifiedMainline 0.1.8. Work only on feature/35kv-catenary-019.
