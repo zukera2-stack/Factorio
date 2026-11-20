@@ -30,7 +30,7 @@ local p=assert(io.open("ElectrifiedMainline/prototypes/native_wire_auto_028.lua"
 assert(p:find('require("scripts.catenary_limits_029").WIRE_REACH',1,true))
 local script=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
 local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
-if not info:find('"version": "0.1.47"',1,true) and not info:find('"version": "0.1.48"',1,true) and not info:find('"version": "0.1.49"',1,true) and not info:find('"version": "0.1.50"',1,true) and not info:find('"version": "0.1.51"',1,true) and not info:find('"version": "0.1.52"',1,true) and not info:find('"version": "0.1.53"',1,true) and not info:find('"version": "0.1.54"',1,true) and not info:find('"version": "0.1.55"',1,true) and not info:find('"version": "0.1.56"',1,true) and not info:find('"version": "0.1.57"',1,true) and not info:find('"version": "0.1.58"',1,true) and not info:find('"version": "0.1.59"',1,true) then
+if not info:find('"version": "0.1.47"',1,true) and not info:find('"version": "0.1.48"',1,true) and not info:find('"version": "0.1.49"',1,true) and not info:find('"version": "0.1.50"',1,true) and not info:find('"version": "0.1.51"',1,true) and not info:find('"version": "0.1.52"',1,true) and not info:find('"version": "0.1.53"',1,true) and not info:find('"version": "0.1.54"',1,true) and not info:find('"version": "0.1.55"',1,true) and not info:find('"version": "0.1.56"',1,true) and not info:find('"version": "0.1.57"',1,true) and not info:find('"version": "0.1.58"',1,true) and not info:find('"version": "0.1.59"',1,true) and not info:find('"version": "0.1.60"',1,true) then
 for _,marker in ipairs({
  'local SPAN,CURVE_SPAN,RADIUS = limits.STRAIGHT,limits.CURVE,3',
  'position=e.position,radius=CURVE_SPAN,name=POLES',
@@ -42,7 +42,7 @@ for _,marker in ipairs({
 }) do assert(script:find(marker,1,true),marker) end
 else
  assert(script:find("limits.WIRE_REACH*1.5+4",1,true))
- if info:find('"version": "0.1.56"',1,true) or info:find('"version": "0.1.57"',1,true) or info:find('"version": "0.1.58"',1,true) or info:find('"version": "0.1.59"',1,true) then
+ if info:find('"version": "0.1.56"',1,true) or info:find('"version": "0.1.57"',1,true) or info:find('"version": "0.1.58"',1,true) or info:find('"version": "0.1.59"',1,true) or info:find('"version": "0.1.60"',1,true) then
   assert(script:find("axis056.plan(s.nodes)",1,true))
  else
   assert(script:find("visual047.plan(s.nodes)",1,true))
