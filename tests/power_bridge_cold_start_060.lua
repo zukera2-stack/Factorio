@@ -127,5 +127,12 @@ M.on_tick(123,graph)
 assert(a.status=="active" and b.status=="active" and a.output.energy==small)
 flow(20,0,0);flow(30,0,0)
 source.active=false;M.on_tick(181,graph)
-assert(a.status=="auto-idle" and b.status=="auto-idle")
-print("060 cold-start runtime mock PASS: zero counters, sustained actual buffered transfer 118 ticks, battery reverse and idle")
+-- Unlike 060, the 063 contract keeps already buffered native joules until
+-- the outgoing EEI has discharged; the mock must advance the native state.
+assert(a.status=="draining-buffer" and b.status=="draining-buffer")
+assert(a.output.energy==small and b.output.energy==small)
+assert(a.input.input_flow_limit==0 and b.input.input_flow_limit==0)
+a.output.energy=0;b.output.energy=0
+M.on_tick(182,graph)
+assert(a.status=="auto-idle" and b.status=="auto-idle" and not a.output and not b.output)
+print("060/063 cold-start runtime mock PASS: zero counters, sustained buffered transfer, battery reverse, drained idle cleanup")

@@ -174,6 +174,40 @@ end
 local function reject(r,why)
  stop(r);r.status=why
 end
+-- 063: Native EEI outputs still hold real joules at auto-idle transitions.
+-- Do not destroy these buffers before the game has discharged them. The station
+-- itself is still an electric pole (no persistent internal accumulator).
+local function idle_or_drain(r,raw_flows)
+ -- Factory generators still running? An ordinary factory brownout takes priority.
+ -- Never keep secondary bridge power attached in auto-idle while the source
+ -- factory has even partial native production; otherwise it steals factory MW.
+ if r.direction=="import" then
+   local f=raw_flows and raw_flows[r.source_id] or nil
+   local production=f and math.max(0,(f.primary_output or 0)+(f.secondary_output or 0)+(f.solar_output or 0)) or 0
+   if production>1 then reject(r,"auto-idle");return end
+ end
+ local src,dst=r.input,r.output
+ local src_port=r.direction=="import" and r.factory_port or r.line_port
+ local dst_port=r.direction=="import" and r.line_port or r.factory_port
+ if r.mode=="auto" and valid(src) and valid(dst) and valid(src_port) and valid(dst_port)
+   and src.electric_network_id==src_port.electric_network_id
+   and dst.electric_network_id==dst_port.electric_network_id
+   and (src.energy>1 or dst.energy>1) then
+   -- Stop importing *new* energy while unplanned; only use already captured J.
+   -- Setting an empty storage capacity on the EEI is not necessary or portable.
+   pcall(function()src.input_flow_limit=0 end)
+   if src.energy>0 then
+     local _,new_out,amount=M.transfer(math.min(src.energy,M.LIMIT),dst.energy,dst.electric_buffer_size)
+     if amount>0 then
+       src.energy=src.energy-amount;dst.energy=new_out
+       r.window_j=(r.window_j or 0)+amount
+     end
+   end
+   r.status="draining-buffer"
+   return
+ end
+ reject(r,"auto-idle")
+end
 function M.on_tick(tick,graph)
  local s=state()
  if s.dirty or tick%60==0 then sync_graph(s,graph) end
@@ -256,7 +290,7 @@ function M.on_tick(tick,graph)
      local sk,dk=edge.a,edge.b
      if v<0 then src,dst=dst,src;sk,dk=dk,sk end
      candidates[#candidates+1]={id=edge.id,source=sk,target=dk,raw_source=src.electric_network_id,raw_target=dst.electric_network_id,src=src,dst=dst,limit=math.min(M.LIMIT,math.abs(v)),direction=direction,auto=true}
-   else reject(r,"auto-idle") end
+   else idle_or_drain(r,raw_flows) end
  end
  s.last_auto={};s.sample_tick=tick
  -- Any factory terminal sharing a corridor network means actual isolation was lost.

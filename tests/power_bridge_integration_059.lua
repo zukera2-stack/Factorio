@@ -97,12 +97,20 @@ assert(a.output.energy==0 and b.output.energy==0)
 b.input.energy=100000;s.sample_tick=nil
 M.on_tick(4,graph)
 assert(b.input.energy==0 and b.output.energy==100000)
--- No demand, no generation, battery on one side: no self-driven transfer.
+-- No demand, no generation: source A idles. On B, the prior 100kJ relay
+-- output remains connected until native power usage empties it (063 behavior).
 flow(10,0,0,0,L,0,10*L);s.sample_tick=nil
 M.on_tick(5,graph)
-assert(a.status=="auto-idle" and b.status=="auto-idle" and not a.output and not b.output)
+assert(a.status=="auto-idle" and not a.output)
+assert(b.status=="draining-buffer" and b.output and b.output.valid and b.output.energy==100000)
+assert(b.input.input_flow_limit==0,"idle relay must stop requesting new input power")
+-- The mock has no native EEI energy solver: simulate the next engine tick
+-- that discharged the remaining 100kJ, then verify cleanup.
+b.output.energy=0;s.sample_tick=nil
+M.on_tick(6,graph)
+assert(b.status=="auto-idle" and not b.output)
 -- Rejected mast link blocks automatic transfer.
 t.mast_connected[11]=nil;flow(10,L,0);flow(20,0,L);s.sample_tick=nil
-M.on_tick(6,graph)
+M.on_tick(7,graph)
 assert(a.status=="auto-network-or-mast-unverified")
 print("059 runtime mock PASS: visible own-anchor link, foreign-wire audit, auto charge, reversed discharge, actual joules, idle and fail-closed")

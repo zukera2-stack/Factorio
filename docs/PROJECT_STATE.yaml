@@ -1504,3 +1504,64 @@ source_sink_buffer_native_063_2026_11_21:
   mod_runtime_changed: false
   approved_updater_ref_changed: false
   main_branch_changed: false
+
+buffer_flush_063_experiment_2026_11_21:
+  branch: experiment/buffer-flush-063
+  parent_test_branch: experiment/buffer-source-sink-063
+  original_runtime_version_still: "0.1.62"
+  runtime_file_modified: ElectrifiedMainline/scripts/power_bridge_058.lua
+  test_fixture_modified: tests/em063-buffer-probe.lua
+  exact_archive_sha_required_for_test: true
+  test_fixture_runner: tests/run_native_buffer_063.py
+  research: docs/research/25kv-buffer-flush-063.md
+  machine_report: docs/research/25kv-buffer-flush-063.json
+  actual_engine: Factorio_2_1_24_build_87808_linux_x86_64
+  baseline_optimized_zip_sha256: 18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040
+  native_tested_modified_local_zip_sha256: a0bd3030e6ccda2f2227e76ce4311afc2f3d9792fbb10d9e65ba796c1f1b0f2b
+  baseline_bridge_only_after_cutoff_j: 166667
+  patched_bridge_only_after_cutoff_j: 333333
+  hidden_buffer_empty_and_ports_destroyed_at_tick: 542
+  avoids_starving_partially_powered_factory: true
+  factory_deficit_local_gain_after_fix_j: 47946667
+  factory_deficit_remote_gain_after_fix_j: 266667
+  native_scenarios_passed: 11
+  native_scenarios_total: 11
+  native_game_ticks: 12200
+  native_bobs_power_tested: false
+  station_electric_pole_has_real_accumulator: false
+  persistent_station_buffer_implemented: false
+  original_artwork_pngs_preserved: 83
+  gameplay_release_version_bumped: false
+  safe_to_promote_without_new_version_and_approval: false
+  main_approved_branch_unchanged: true
+  updater_approved_061_unchanged: true
+
+buffer_flush_063_CI_exact_verification_2026_11_21:
+  branch: experiment/buffer-flush-063
+  build_commit: 04ab5f719b3a7ac09a8066e58614471565b70729
+  github_actions_run: 44892720155
+  build_workflow_result: success
+  artifact_id: 14702513298
+  exact_CI_inner_ZIP_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  native_engine: Factorio_2_1_24_build_87808_linux64
+  test_mod_version: "0.1.62"
+  extracted_game_files: 130
+  unchanged_png: 83
+  exact_local_game_contents_match_all_130: true
+  local_ZIP_container_byte_identical: false
+  different_reason: ZIP_compression_encoding
+  exact_CI_native_tests_passed: 11
+  exact_CI_native_tests_total: 11
+  exact_CI_native_game_ticks: 12200
+  source_sink_buffer_cases_passed: 4
+  prior_regressions_passed: 7
+  source_sink_bridge_only_energy_j: 333333
+  multi_source_32_stations_first_aggregate_timeout: true
+  multi_source_32_stations_separate_rerun_passed: true
+  proof_markdown: docs/research/25kv-buffer-flush-063-CI.md
+  proof_json: docs/research/25kv-buffer-flush-063-CI.json
+  persistent_station_accumulator_implemented: false
+  native_bobs_power_accumulators_tested: false
+  approved_test_ref_unchanged: true
+  stable_main_ref_unchanged: true
+  owner_promotion_approved: false
