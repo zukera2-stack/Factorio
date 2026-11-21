@@ -1,3 +1,5 @@
+> **Current project across branches:** Read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md) first. The contents below document the previous **stable 0.1.56 visual milestone**. **0.1.62 public beta** is prepared in PR #46 (native substation power, reversals and dynamic EEI, tested in Factorio 2.1.24). The installed Updater-approved channel stays on 0.1.61 until separately approved; PR #46 merge alone does not update it.
+
 # Electrified Mainline 0.1.56 — stable main visual milestone (19 Nov 2026)
 
 Merged via [PR #30](https://github.com/zukera2-stack/Factorio/pull/30) with owner approval.

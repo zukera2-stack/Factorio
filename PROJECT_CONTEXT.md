@@ -1,3 +1,5 @@
+> **Historical notebook (2026-11-09), not current handoff.** For a new session read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md), then `AGENTS.md` and the selected branch's state. Historically 0.1.60 approved update, Updater 1.1 and 0.1.61 research were separate; the current PR #46 public beta 0.1.62 must be checked by live refs. Keep the original historical sections below for provenance.
+
 # CONTINUATION INDEX (2026-11-09)
 
 For work in a new chat, use the current sequence in `AGENTS.md`: read `docs/AI_CONTEXT.md`, `docs/PROJECT_STATE.yaml`, `docs/RESEARCH_METHOD.md`, and `CONTRIBUTING.md`, then inspect live source. For non-trivial mechanics, complete `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` before coding. This file is a historical notebook only; verify current facts against source and maintained handoff documents. Its old continuation rules and next-task list (sections 8–9) describe the 2026-11-09 state and are superseded.

@@ -2,20 +2,32 @@
 
 ## First read
 
-1. `AGENTS.md` — these repository-wide contributor rules.
-2. `docs/AI_CONTEXT.md` — concise authoritative handoff for continuing work.
-3. `docs/PROJECT_STATE.yaml` — machine-readable project state and decisions.
-4. `docs/RESEARCH_METHOD.md` — mandatory research-first engineering workflow.
-5. `CONTRIBUTING.md` — practical change/review checklist.
-6. `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` — copy and complete it before non-trivial mechanic, compatibility, or workaround work.
-7. The exact source files relevant to the task.
-8. `PROJECT_CONTEXT.md` only when historical detail or longer technical rationale is needed.
+1. `AGENTS.md` — repository-wide contributor rules.
+2. **`docs/CURRENT_WORK.md` — cross-branch first-read index (stable main, approved test, updater software, current experiment). Re-fetch live refs.**
+3. `docs/AI_CONTEXT.md` — concise **branch-scoped** authoritative handoff for the checked-out branch.
+4. `docs/PROJECT_STATE.yaml` — machine-readable **branch-scoped** state and decisions.
+5. `docs/RESEARCH_METHOD.md` — mandatory research-first engineering workflow.
+6. `CONTRIBUTING.md` — practical change/review checklist.
+7. `docs/PROTOTYPE_RESEARCH_TEMPLATE.md` — copy and complete it before non-trivial mechanic, compatibility, or workaround work.
+8. The exact source files relevant to the task.
+9. `PROJECT_CONTEXT.md` only when historical detail or longer technical rationale is needed.
+
+## Cross-branch recovery and Agent Skills
+
+**Do not confuse a checked-out `main` with every development branch.** `main` is the accepted 0.1.56 visual baseline. The user-installed and updater-approved 0.1.60, Updater 1.1 source, and ongoing 0.1.61 research live on separate refs. Read [the current work map](docs/CURRENT_WORK.md), verify live SHA and then fetch handoff/source files on the **specific target branch**. The map is date-stamped and does not override actual code or Git history.
+
+Project skills (portable SKILL.md; Codex discovers `.agents/skills`, other assistants can read explicitly):
+- [`factorio-handoff`](.agents/skills/factorio-handoff/SKILL.md) — start a new chat, recover live branches and task state.
+- [`factorio-native-research`](.agents/skills/factorio-native-research/SKILL.md) — Factorio API/prototype, EEI priority and engine experiments.
+- [`factorio-updater-release`](.agents/skills/factorio-updater-release/SKILL.md) — QA, owner-approved test promotion, existing Windows patcher.
+
+A future new chat must not treat `PROJECT_CONTEXT.md` (2026-11-09 notebook), historical README paragraphs or scoped `main` status as the latest feature brief.
 
 ## Source of truth
 
 - Current source code is authoritative for implementation.
-- `docs/PROJECT_STATE.yaml` is authoritative for accepted decisions and current status labels.
-- `docs/AI_CONTEXT.md` is the handoff index and must be updated after material work.
+- `docs/PROJECT_STATE.yaml` is authoritative for accepted decisions and status **on the selected branch**; the `main` copy must keep `project.mod_version: 0.1.56` until an approved main release.
+- `docs/AI_CONTEXT.md` is the **branch-scoped** handoff and must be updated after material work; `docs/CURRENT_WORK.md` is the repo-wide navigation index. Neither is a substitute for checking live refs and source.
 - Historical notes and old logs are evidence, not proof that current code still behaves the same.
 - If documents disagree, inspect code and record the discrepancy; do not silently choose one.
 
@@ -64,4 +76,4 @@ Build every distributable install ZIP exclusively via the repository's GitHub Ac
 **Owner clarification (2026-11-19):** deliver install ZIPs only by direct GitHub Actions artifact links. Do not download, copy, extract, or duplicate distributable ZIPs into the ChatGPT Library or project files for delivery. Library is for technical material, source models, sketches, experiment outputs, and evidence. Record CI validation, source commit and artifact ID; obtain inner archive SHA256 from CI logs if emitted, not by copying the release into Library.
 
 ## Current baseline and branches
-Main 0.1.56 is the only active baseline. See [branch register](docs/history/BRANCH_ARCHIVE_056.md). Preserve original visual algorithm unless a reproducible defect is observed. Never merge unapproved phase-2 experiment. New work branches from main; explicit owner approval required before promotion.
+Main 0.1.56 is the only **merged owner-accepted baseline**. Other active tested and research branches exist: see [current cross-branch handoff](docs/CURRENT_WORK.md), then live branch HEADs. Preserve original visual algorithm unless a reproducible defect is observed. New standalone main-line features usually branch from `main`; continuation of the existing 060 electric bridge must retain the exact vetted 060 base or it loses the implementation. **Never merge unapproved experiment to main or move `test/updater-approved` without explicit owner permission.** Use the owner's already-installed Updater 1.1 for future approved gameplay test releases instead of repeated manual ZIP installation.
