@@ -1393,3 +1393,21 @@ fair_dispatch_062_experiment:
   owner_approved_updater_promotion: false
   main_merge_approved: false
   research: docs/research/25kv-fair-dispatch-062.md
+
+fair_dispatch_062_immutable_package_qa:
+  source_runtime_commit: 53d8b188ed18a4fb2d320aa374956a45af34962c
+  package_workflow_run: 44885075734
+  package_workflow_result: success
+  doc_workflow_run: 44885075699
+  doc_workflow_result: success
+  artifact_id: 14699501754
+  game_zip_sha256: 8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb
+  package_game_files: 130
+  package_pngs: 83
+  native_2_1_24_tested_exact_CI_zip: true
+  native_game_tests_passed: 3
+  native_game_tests_total: 3
+  native_game_ticks: 2030
+  native_recheck_on_official_package: completed
+  approved_updater_ref_changed: false
+  owner_manual_action_required: false
