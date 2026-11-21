@@ -1,3 +1,5 @@
+> **Branch-aware handoff:** read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md) before choosing a base. Stable `main` 0.1.56, test-distributed 0.1.60 and research-only 0.1.61 are different refs. Installed-game updates use existing Updater 1.1 only after explicit approval of the exact tested `test/updater-approved` commit.
+
 # Contributing to Electrified Mainline
 
 This project uses a **research-first, analogy-driven engineering method**. The goal is to understand how Factorio or a proven mod already solves a problem before adding custom Lua behavior.

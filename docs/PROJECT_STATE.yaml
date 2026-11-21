@@ -1241,3 +1241,46 @@ repository_cleanup_056:
   closed_superseded_issue: 7
   phase2_excluded: true
   source_changes: false
+
+# Cross-branch continuation index; does not change the stable main project.mod_version.
+# Snapshots must be checked against live GitHub refs before use.
+cross_branch_handoff_2026_11_21:
+  audit: docs/DOC_AUDIT_2026-11-21.md
+  start_here: docs/CURRENT_WORK.md
+  scope: main_documenting_separate_test_and_experiment_refs
+  verified_at_utc_date: "2026-11-21"
+  main:
+    branch: main
+    head_at_audit: 7849d192ba35823d9636abe9bc6d370beb41adfa
+    mod_version: "0.1.56"
+    status: merged_owner_accepted_visual_baseline
+    real_traction_megawatts: not_implemented
+  approved_test:
+    branch: test/updater-approved
+    head_at_audit: ea9366a9798cd78efec4b675c81d086c09170c28
+    mod_version: "0.1.60"
+    status: scoped_verified_power_bridge_owner_patch_installed
+    official_engine_run: 44762226742
+    frozen_package_run: 44772684519
+    owner_full_acceptance: false
+  updater:
+    source_branch: feature/git-updater-060
+    head_at_audit: 9bc032daf5910564db8622986c907b89b193db16
+    version: "1.1"
+    source_doc_branch_path: tools/updater/README.txt
+    windows_ci_run: 44783774432
+    owner_windows_install_confirmed_2026_11_20: true
+    approved_pointer: refs/heads/test/updater-approved
+    promotion_requires_explicit_owner_approval: true
+  priority_research:
+    branch: experiment/native-accumulator-gateway-061
+    head_at_audit: 96e5fdfced96677f8f2a0e635039e6e32d381a55
+    runtime_mod_version: "0.1.60"
+    status: separate_test_only_probe_not_native_priority_game_test
+    priority_matrix_P1_P7: planned_not_yet_implemented
+    native_accumulator_overlap: research_only_unverified_in_target_engine
+    gameplay_upgrade_approved: false
+  skills:
+    handoff: .agents/skills/factorio-handoff/SKILL.md
+    native_research: .agents/skills/factorio-native-research/SKILL.md
+    updater_release: .agents/skills/factorio-updater-release/SKILL.md
