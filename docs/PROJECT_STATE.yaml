@@ -1565,3 +1565,90 @@ buffer_flush_063_CI_exact_verification_2026_11_21:
   approved_test_ref_unchanged: true
   stable_main_ref_unchanged: true
   owner_promotion_approved: false
+
+topology_lifecycle_064_native_2026_11_21:
+  branch: experiment/topology-lifecycle-064
+  parent_branch: experiment/buffer-flush-063
+  parent_sha: 4c050e598e19d4bf9607d7670c7972373e4cdce9
+  mod_version_unchanged: "0.1.62"
+  exact_CI_mod_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  engine_version: "2.1.24"
+  engine_build: 87808
+  native_game_ticks_in_live_benchmark: 1350
+  live_reconfiguration_checks_passed: 10
+  live_reconfiguration_checks_total: 10
+  saved_with_actual_headless_server: true
+  independently_reloaded_disk_save: true
+  disk_reload_extra_consumer_j: 13333333
+  disk_reload_ticks: 200
+  mast_cut_rebuild: pass
+  hsr_rail_cut_rebuild: pass
+  destination_station_destroy_and_rebuild: pass
+  isolated_factory_grids_merge_and_split: pass
+  reload_script: pass
+  hidden_ports_cleaned_when_station_destroyed: true
+  transient_hidden_buffer_on_merged_factory_grids_j: 500001
+  zero_loss_across_network_merge_split_proven: false
+  energy_ledger_followup_required: true
+  standalone_runner: tests/run_native_topology_064.py
+  native_probe: tests/em064-topology-probe/control.lua
+  human_manual_gameplay_testing_needed_for_this_fixture: false
+  game_runtime_changed: false
+  approved_061_updater_ref_changed: false
+  main_056_ref_changed: false
+  research: docs/research/25kv-topology-lifecycle-064.md
+  machine_result: docs/research/25kv-topology-lifecycle-064.json
+
+topology_lifecycle_064_energy_ledger_2026_11_21:
+  branch: experiment/topology-lifecycle-064
+  upstream_game_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  engine: Factorio_2_1_24_build_87808_linux_x86_64
+  source_output_mw: 20
+  counted_energies: source_EEI_sink_EEI_all_hidden_bridge_EEIs
+  observed_game_ticks: 1250
+  measured_missing_energy_j: 1666667
+  measured_loss_events: 6
+  measured_unexpected_created_energy_j: 0
+  measured_energy_creation_events: 0
+  energy_zero_loss_release_gate: FAIL
+  source_sink_transmission_live: PASS
+  structural_reconfiguration_checkpoints: "10/10 PASS"
+  actual_disk_server_save_and_second_process_load: PASS
+  disk_reload_sink_additional_energy_j: 13333333
+  strict_test_flag: "--require-zero-loss"
+  default_runner_result: FUNCTIONAL_PASS_ENERGY_BALANCE_FAIL
+  evidence: docs/research/25kv-topology-lifecycle-064.md
+  machine_report: docs/research/25kv-topology-lifecycle-064.json
+  gameplay_runtime_changed_for_064: false
+  patcher_approved_061_unchanged: true
+  user_game_saves_untouched: true
+  release_blocked_pending_energy_policy_or_fix: true
+
+accepted_substation_demolition_energy_policy_064_2026_11_21:
+  decision_owner_approved: true
+  contract: energy_of_demolished_substation_hidden_EEIs_is_discarded
+  refund_to_factory_network: false
+  neighbor_station_energy_loss_allowed: false
+  external_accumulator_energy_loss_allowed: false
+  rail_or_mast_removal_automatically_exempt: false
+  factory_network_merge_split_automatically_exempt: false
+  branch: experiment/topology-lifecycle-064
+  research: docs/research/25kv-demolition-energy-policy-064.md
+  native_test_version: Factorio_2_1_24_build_87808
+  game_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  native_demolished_station_hidden_j: 166667
+  native_surviving_station_hidden_j: 166667
+  old_raw_total_ledger_deficit_j: 1666667
+  approved_demolition_buffer_discard_j: 166667
+  other_unexplained_ledger_deficit_j: 1500000
+  outside_demolition_tick_ledger_deficit_j_approx: 1166667
+  unexpected_energy_creation_j: 0
+  raw_expected_generation_is_setting_not_metered_actual_production: true
+  policy_aware_release_gate: "--require-no-unintended-loss"
+  release_gate_status: FAIL_unexplained_deficit
+  old_absolute_zero_loss_gate_retained_for_history: true
+  native_live_topology_checkpoints_passed: 10
+  real_server_save_reload_passed: true
+  user_mod_runtime_changed: false
+  approved_updater_branch_unchanged: true
+  stable_main_unchanged: true

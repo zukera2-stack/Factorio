@@ -1,0 +1,8 @@
+{
+  "name": "em064-topology",
+  "version": "0.0.1",
+  "title": "EM064 Native Topology Lifecycle QA",
+  "author": "QA",
+  "factorio_version": "2.1",
+  "dependencies": ["base >= 2.1.24", "ElectrifiedMainline = 0.1.62"]
+}
