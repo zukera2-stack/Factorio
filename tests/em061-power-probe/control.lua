@@ -81,6 +81,6 @@ script.on_event(defines.events.on_tick,function(ev)
    assert(f.source.energy>500000,"native storage reverse transfer failed")
    assert(after<f.before-500000,"native storage did not discharge")
    assert(f.source.energy<=f.before-after+1400000,"reverse energy exceeds storage plus bounded transient bridge buffers")
-   log("[EM060 NATIVE PASS] exact engine cold start, native isolated rail corridor, editor EEI delivery, real accumulator charge and reverse discharge")
+   log("[EM061 NATIVE PASS] exact engine cold start, native isolated rail corridor, editor EEI delivery, real accumulator charge and reverse discharge")
  end
 end)

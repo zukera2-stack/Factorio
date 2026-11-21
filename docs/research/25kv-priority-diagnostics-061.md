@@ -21,3 +21,7 @@
 
 ## Distribution gate
 `test/updater-approved` stays on 0.1.60 until build CI, native 2.1.24 evidence and owner approval. An experiment branch and an untested probe are **never** promoted simply to make Updater download files. After the exact approved commit promotion, the owner uses their existing Updater 1.1. No main merge required and no standalone updater download.
+
+## 061 pre-release native evidence
+
+Official Factorio 2.1.24 actually ran the candidate 061 code in [CI run 44875708000](https://github.com/zukera2-stack/Factorio/actions/runs/44875708000), with inherited 060 probe scenario. Game log at tick 900: reverse target received **5,940,000 J**, batteries retained **1,180,000 J**, and the 060 probe printed its native PASS. **CI result was FAIL** only because 061 runner looked for renamed marker not yet printed by the copied probe. This is scoped provisional native evidence, **not release approval**. Follow-up changes: fix probe marker to `[EM061 NATIVE PASS]`; use deterministic `scripts/package_mod.py` game ZIP for exact-packaged game QA instead of source folder. Re-check final ZIP SHA and all CI gates, then require owner permission before ref promotion.
