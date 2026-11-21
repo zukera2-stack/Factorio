@@ -5,7 +5,7 @@ project:
   default_branch: main
   active_test_branch: test/updater-approved
   current_baseline_branch: main
-  active_feature_branch: experiment/network-fair-share-062
+  active_feature_branch: experiment/network-fair-share-opt-062
   feature_version: "0.1.62" # separate unapproved fairness prototype # read-only diagnostic candidate, not installed
   feature_status: 062_native_3_of_3_pass_not_approved
   last_validated_test_branch: feature/release-056-accepted
@@ -1433,3 +1433,31 @@ long_mainline_stress_062_2026_11_21:
   test_findings: performance_regression_blocks_062_promotion
   owner_approved_upgrade_ref_unchanged: true
   gameplay_runtime_changed_in_this_commit: false
+
+optimized_dispatch_062_experiment_2026_11_21:
+  branch: experiment/network-fair-share-opt-062
+  parent_branch: experiment/network-fair-share-062
+  base_sha: 08b8b656983705619c4cc511e62f13e535baa79f
+  research: docs/research/25kv-dispatch-optimization-062.md
+  unit_regression: tests/bridge_dispatch_efficiency_062.lua
+  reproducible_benchmark: tests/benchmark_48_062.py
+  baseline_062_CI_zip_sha256: 8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb
+  tested_opt_local_zip_sha256: 18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040
+  engine: Factorio_2_1_24_build_87808_linux_x86_64
+  unchanged_mod_version: "0.1.62"
+  changed_runtime_files:
+    - ElectrifiedMainline/scripts/bridge_dispatch_059.lua
+  png_assets_unchanged: 83
+  native_scenarios_passed: 7
+  native_scenarios_total: 7
+  native_ticks: 6040
+  randomized_pure_lua_graphs_passed: 700
+  long48_baseline_min_tick_ms: 26.325
+  long48_opt_min_tick_ms: 1.928
+  long48_baseline_single_max_removed_mean_ms_heuristic: 29.041
+  long48_opt_single_max_removed_mean_ms_heuristic: 10.122
+  full_48_reroute_and_outage_passed: true
+  globally_guaranteed_60ups: false
+  native_bobs_power_tested: false
+  approved_updater_ref_changed: false
+  owner_approved_promotion: false

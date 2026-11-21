@@ -64,3 +64,6 @@ python3 tests/run_native_stress_062.py \
 ```
 
 Скрипт проверяет версию Factorio и mod ZIP, создаёт и удаляет только **временные стенды**, пишет игровые журналы и машинный JSON. Никакого ручного вмешательства игрока не требует.
+## Separate optimized-062 experiment (2026-11-21)
+
+Original-062 performance risk above applies to the **pre-optimization commit**. Branch `experiment/network-fair-share-opt-062` replaces repeated per-destination BFS with one route tree per source/pass plus residual/cycle validation. Same 48-site Factorio Headless 2.1.24 benchmark (960 ticks): minimum **26.325→1.928ms**, single-peak-removed mean heuristic **29.041→10.122ms**. **7/7 native scenarios PASS / 6040 ticks**, including 48-station reallocation and source outage. Details: [optimization research](25kv-dispatch-optimization-062.md). Not a universal UPS guarantee and **not authorized for updater promotion**.

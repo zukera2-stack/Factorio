@@ -67,34 +67,47 @@ function M.plan(input,edges,limit)
    end
    return false
  end
- local function path(src,dst)
+ -- Build a shortest-path tree once per source/pass, not once per destination.
+ -- On a 48-station network the prior version searched the same graph up to
+ -- 42 times *per source*, and each search recursively checked cycle safety.
+ -- A pass operates on a consistent snapshot; commitments are revalidated
+ -- against current residual capacity and newly directed arcs below.
+ local function shortest_tree(src)
    local q,seen,prev={src},{[src]=true},{}
    local i=1
    while i<=#q do
      local a=q[i];i=i+1
-     if a==dst then
-       local steps={}
-       while a~=src do local k=prev[a];steps[#steps+1]=k;a=k.from end
-       return steps
-     end
      for _,v in ipairs(adj[a] or {}) do
        local f=flows[v.edge.id] or 0
        if not seen[v.to] and f*v.sign>=0 and math.abs(f)<limit-1 and not reachable(v.to,a) then
-         seen[v.to]=true;prev[v.to]={from=a,to=v.to,edge=v.edge,sign=v.sign};q[#q+1]=v.to
+         seen[v.to]=true;prev[v.to]={from=a,to=v.to,edge=v.edge,sign=v.sign}
+         q[#q+1]=v.to
        end
      end
    end
+   return seen,prev
+ end
+ local function path_from_tree(src,dst,prev)
+   local steps={}
+   local at=dst
+   while at~=src do
+     local v=prev[at]
+     if not v then return nil end
+     steps[#steps+1]=v
+     at=v.from
+   end
+   return steps
  end
  local function route(supply,demand)
-   -- Fair-share every available source across all reachable same-tier sinks.
-   -- Previously the first destination by network ID could monopolize a 20MW
-   -- feeder indefinitely. Recompute after every pass when a link is full.
+   -- Each source gives all currently reachable same-tier destinations one
+   -- equal quota per pass. Rebuild the tree only after the pass changes flow.
    for _,src in ipairs(ids) do
      local a=n[src]
      while a[supply]>1 do
+       local seen,prev=shortest_tree(src)
        local destinations={}
        for _,dst in ipairs(ids) do
-         if src~=dst and n[dst][demand]>1 and path(src,dst) then
+         if dst~=src and n[dst][demand]>1 and seen[dst] then
            destinations[#destinations+1]=dst
          end
        end
@@ -103,14 +116,23 @@ function M.plan(input,edges,limit)
        local transferred=0
        for _,dst in ipairs(destinations) do
          local b=n[dst]
-         local steps=path(src,dst) -- previous allocations may saturate a path
+         local steps=path_from_tree(src,dst,prev)
          if steps then
            local amt=math.min(a[supply],b[demand],budget)
-           local extra={};local cycle=false
+           local extra={}
+           local cycle=false
            for _,v in ipairs(steps) do
-             if reachable(v.to,v.from,extra) then cycle=true;break end
-             extra[v.from]=v.to
-             amt=math.min(amt,limit-math.abs(flows[v.edge.id] or 0))
+             local f=flows[v.edge.id] or 0
+             if f*v.sign<0 or math.abs(f)>=limit-1 then
+               cycle=true;break -- another recipient saturated/reoriented the tree
+             end
+             -- Already directed arcs cannot introduce a cycle a second time.
+             -- New arcs must be checked with all arcs pending in this path.
+             if not (directed[v.from] and directed[v.from][v.to]) then
+               if reachable(v.to,v.from,extra) then cycle=true;break end
+               extra[v.from]=v.to
+             end
+             amt=math.min(amt,limit-math.abs(f))
            end
            if not cycle and amt>1 then
              a[supply]=a[supply]-amt;b[demand]=b[demand]-amt
