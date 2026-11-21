@@ -1,0 +1,67 @@
+{
+  "schema": "EM068-diagnostic-v1",
+  "date": "2026-11-21",
+  "repo": "zukera2-stack/Factorio",
+  "base_sha": "0215b599c2bc80fbd750190ea19095cc31328183",
+  "game_version": "0.1.62",
+  "engine": "2.1.24 build 87808",
+  "source_zip_sha256": "a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07",
+  "local_reconstructed_baseline_sha256": "15678834f3e23511e11c353ee9cbeb7b3a6639230e517af0e175864490b7b50d",
+  "local_diagnostic_zip_sha256": "b753866dd112a506b806aa3ed8fa461d9a041b966b184a239c304475de1ccccc",
+  "native": {
+    "ticks": 1350,
+    "save_reload_ticks": 200,
+    "topology_checkpoints": 10,
+    "ledger_loss_j": 1666667,
+    "allowed_demolition_j": 166667,
+    "unexplained_j": 1500000,
+    "created_j": 0,
+    "release_gate": "FAIL"
+  },
+  "disposals": [
+    {
+      "tick": 201,
+      "reason": "reject:auto-idle",
+      "input_j": 166666.667,
+      "output_j": 166666.667
+    },
+    {
+      "tick": 441,
+      "reason": "reject:auto-idle",
+      "input_j": 166666.667,
+      "output_j": 0
+    },
+    {
+      "tick": 670,
+      "reason": "substation-demolished",
+      "input_j": 0,
+      "output_j": 166666.667,
+      "allowed": true
+    },
+    {
+      "tick": 671,
+      "reason": "reject:auto-idle",
+      "input_j": 166666.667,
+      "output_j": 166666.667
+    },
+    {
+      "tick": 896,
+      "reason": "reject:auto-idle",
+      "input_j": 166666.667,
+      "output_j": 0
+    },
+    {
+      "tick": 900,
+      "reason": "reject:auto-idle",
+      "input_j": 166666.667,
+      "output_j": 166666
+    },
+    {
+      "tick": 1002,
+      "reason": "direction-change",
+      "input_j": 0,
+      "output_j": 166667.333
+    }
+  ],
+  "candidate_fix_status": "NOT_COMMITTED_TESTS_FAILED"
+}
