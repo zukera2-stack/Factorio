@@ -1461,3 +1461,17 @@ optimized_dispatch_062_experiment_2026_11_21:
   native_bobs_power_tested: false
   approved_updater_ref_changed: false
   owner_approved_promotion: false
+
+optimized_dispatch_062_exact_CI_2026_11_21:
+  ci_workflow_run: 44889429815
+  ci_result: success
+  documentation_workflow: 44889429737
+  documentation_result: success
+  ci_artifact_id: 14701577307
+  ci_inner_mod_zip_sha256: 18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040
+  byte_identical_to_game_tested_local_zip: true
+  total_game_files: 130
+  unchanged_png_count: 83
+  actual_native_tests_covered_by_exact_zip: true
+  approved_updater_ref_changed: false
+  stable_main_modified: false
