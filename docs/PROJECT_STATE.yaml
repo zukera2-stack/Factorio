@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/updater-approved
   current_baseline_branch: main
-  active_feature_branch: feature/updater-061-candidate
-  feature_version: "0.1.61" # read-only diagnostic candidate, not installed
-  feature_status: 061_test_distributed_via_updater_native_ci_pass
+  active_feature_branch: experiment/network-fair-share-062
+  feature_version: "0.1.62" # separate unapproved fairness prototype # read-only diagnostic candidate, not installed
+  feature_status: 062_native_3_of_3_pass_not_approved
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.61" # experimental
+  mod_version: "0.1.62" # experimental, NOT patcher-approved
   main_baseline_mod_version: "0.1.56" # merged PR #30
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -1363,3 +1363,73 @@ priority_diagnostics_061_candidate:
   frozen_png_count: 83
   main_merge_allowed: false
   owner_live_061_acceptance: pending
+
+fair_dispatch_062_experiment:
+  branch: experiment/network-fair-share-062
+  base_approved_061_sha: c8a1feddddfb3f160eae5f63cd1b0231e2136ce3
+  runtime_mod_version: "0.1.62"
+  approved_test_branch: test/updater-approved
+  approved_test_mod_version_unchanged: "0.1.61"
+  runtime_files_changed_from_061:
+    - ElectrifiedMainline/info.json
+    - ElectrifiedMainline/scripts/bridge_dispatch_059.lua
+  runtime_pngs_preserved: 83
+  max_per_station_mw: 20
+  fairness_policy: source_local_equal_allocation_within_same_priority
+  real_engine: Factorio_2.1.24_build_87808_x86_64
+  native_fixtures_pass: 3
+  native_fixtures_total: 3
+  native_game_ticks: 2030
+  baseline_061_starvation_reproduced: true
+  baseline_061_t240_network_b_j: 78666667
+  baseline_061_t240_network_c_j: 0
+  fixed_062_t240_network_b_j: 39333333
+  fixed_062_t240_network_c_j: 39333333
+  fixed_062_t600_network_c_j: 159000000
+  verified_no_energy_creation_in_fixture: true
+  pure_lua_randomized_graphs_passed: 700
+  real_bobs_power_native_in_062: false
+  full_global_fairness_for_all_graphs_proven: false
+  owner_approved_updater_promotion: false
+  main_merge_approved: false
+  research: docs/research/25kv-fair-dispatch-062.md
+
+fair_dispatch_062_immutable_package_qa:
+  source_runtime_commit: 53d8b188ed18a4fb2d320aa374956a45af34962c
+  package_workflow_run: 44885075734
+  package_workflow_result: success
+  doc_workflow_run: 44885075699
+  doc_workflow_result: success
+  artifact_id: 14699501754
+  game_zip_sha256: 8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb
+  package_game_files: 130
+  package_pngs: 83
+  native_2_1_24_tested_exact_CI_zip: true
+  native_game_tests_passed: 3
+  native_game_tests_total: 3
+  native_game_ticks: 2030
+  native_recheck_on_official_package: completed
+  approved_updater_ref_changed: false
+  owner_manual_action_required: false
+
+long_mainline_stress_062_2026_11_21:
+  branch: experiment/network-fair-share-062
+  test_source: tests/run_native_stress_062.py
+  report: docs/research/25kv-long-mainline-stress-062.md
+  report_machine: docs/research/25kv-long-mainline-stress-062.json
+  mod_zip_sha256: 8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb
+  engine: Factorio_2_1_24_build_87808_linux64
+  native_one_source_32_stations: pass_1050_ticks_31_sinks
+  native_four_sources_32_stations: pass_1050_ticks_28_sinks
+  native_factory_brownout: pass_950_ticks_20MW_to_8MW
+  factory_primary_priority: passed
+  native_six_sources_48_stations_initial_fairness: passed_to_tick_240
+  native_48_station_full_reroute_and_outage: not_confirmed
+  benchmark_48_station_min_tick_ms_061: 3.121
+  benchmark_48_station_min_tick_ms_062: 27.357
+  benchmark_48_station_average_including_setup_ms_061: 40.708
+  benchmark_48_station_average_including_setup_ms_062: 102.225
+  target_60_ups_budget_ms_per_tick: 16.667
+  test_findings: performance_regression_blocks_062_promotion
+  owner_approved_upgrade_ref_unchanged: true
+  gameplay_runtime_changed_in_this_commit: false
