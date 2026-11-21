@@ -1,0 +1,33 @@
+{
+  "engine": "2.1.24 build 87808",
+  "mod_zip_sha256": "a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07",
+  "scenarios": {
+    "live_reconfiguration": {
+      "passed": true,
+      "ticks": 1350,
+      "markers": [
+        "   1.340 Script @__em064-topology__/control.lua:84: [EM064 PASS] initial active source/sink on separate factory networks",
+        "   1.377 Script @__em064-topology__/control.lua:90: [EM064 PASS] mast_destroy corridor split hidden_count=0",
+        "   1.435 Script @__em064-topology__/control.lua:84: [EM064 PASS] mast_rebuilt active source/sink on separate factory networks",
+        "   1.477 Script @__em064-topology__/control.lua:90: [EM064 PASS] rail_cut corridor split hidden_count=0",
+        "   1.545 Script @__em064-topology__/control.lua:84: [EM064 PASS] rail_rebuilt active source/sink on separate factory networks",
+        "   1.574 Script @__em064-topology__/control.lua:133: [EM064 PASS] substation removed and hidden interfaces cleaned",
+        "   1.624 Script @__em064-topology__/control.lua:84: [EM064 PASS] substation_rebuilt active source/sink on separate factory networks",
+        "   1.664 Script @__em064-topology__/control.lua:152: [EM064 PASS] intentional factory merge suppresses same-network relay",
+        "   1.728 Script @__em064-topology__/control.lua:84: [EM064 PASS] factory_resplit active source/sink on separate factory networks",
+        "   1.786 Script @__em064-topology__/control.lua:84: [EM064 PASS] after_script_reload active source/sink on separate factory networks"
+      ]
+    }
+  },
+  "save_reload": {
+    "passed": true,
+    "save_bytes": 837643,
+    "extra_energy_j": 13333333,
+    "continued_ticks": 200
+  },
+  "transient_observations": [
+    "1.664 Script @__em064-topology__/control.lua:151: [EM064 OBSERVATION] factory merge retained transient bridge energy J=500000.66666667 (may be discarded on reconfiguration)",
+    "1.673 Script @__em064-topology__/control.lua:155: [EM064 OBSERVATION] split-at-t1002 hidden_energy_J=0 previous_merged_J=500000.66666667"
+  ],
+  "status": "PASS_WITH_ENERGY_RECONFIGURATION_CAVEAT"
+}

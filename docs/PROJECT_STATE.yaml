@@ -1565,3 +1565,36 @@ buffer_flush_063_CI_exact_verification_2026_11_21:
   approved_test_ref_unchanged: true
   stable_main_ref_unchanged: true
   owner_promotion_approved: false
+
+topology_lifecycle_064_native_2026_11_21:
+  branch: experiment/topology-lifecycle-064
+  parent_branch: experiment/buffer-flush-063
+  parent_sha: 4c050e598e19d4bf9607d7670c7972373e4cdce9
+  mod_version_unchanged: "0.1.62"
+  exact_CI_mod_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  engine_version: "2.1.24"
+  engine_build: 87808
+  native_game_ticks_in_live_benchmark: 1350
+  live_reconfiguration_checks_passed: 10
+  live_reconfiguration_checks_total: 10
+  saved_with_actual_headless_server: true
+  independently_reloaded_disk_save: true
+  disk_reload_extra_consumer_j: 13333333
+  disk_reload_ticks: 200
+  mast_cut_rebuild: pass
+  hsr_rail_cut_rebuild: pass
+  destination_station_destroy_and_rebuild: pass
+  isolated_factory_grids_merge_and_split: pass
+  reload_script: pass
+  hidden_ports_cleaned_when_station_destroyed: true
+  transient_hidden_buffer_on_merged_factory_grids_j: 500001
+  zero_loss_across_network_merge_split_proven: false
+  energy_ledger_followup_required: true
+  standalone_runner: tests/run_native_topology_064.py
+  native_probe: tests/em064-topology-probe/control.lua
+  human_manual_gameplay_testing_needed_for_this_fixture: false
+  game_runtime_changed: false
+  approved_061_updater_ref_changed: false
+  main_056_ref_changed: false
+  research: docs/research/25kv-topology-lifecycle-064.md
+  machine_result: docs/research/25kv-topology-lifecycle-064.json
