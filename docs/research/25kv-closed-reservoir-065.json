@@ -203,5 +203,6 @@
       "status": "FUNCTIONAL_PASS_NONDEMOLITION_LEDGER_UNRESOLVED",
       "runner_seconds": 11.91
     }
-  ]
+  ],
+  "external_accumulator_identity_check": "All 8 original unit_number values persisted across topology edits, Lua reload and physical SAVE→LOAD, independently from energy-rate limits; native rerun PASS."
 }

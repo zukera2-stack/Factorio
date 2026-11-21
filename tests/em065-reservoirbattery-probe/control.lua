@@ -26,6 +26,7 @@ local function battery_totals()
   assert(f.batteries and #f.batteries==8,'8 external batteries must exist')
   for i,v in ipairs(f.batteries) do
     assert(v.valid and v.name=='accumulator', 'external accumulator destroyed '..i)
+    assert(storage.em065_battery_unit_ids and v.unit_number==storage.em065_battery_unit_ids[i], 'external accumulator identity replaced '..i)
     if i<=4 then a=a+v.energy else b=b+v.energy end
     local input=v.get_electric_input_flow_limit()
     local output=v.get_electric_output_flow_limit()
@@ -92,6 +93,7 @@ local function hydrate()
   f.rails={};f.rails[-1]=find(s,'em-high-speed-straight-rail',-1,1)
   f.batteries={}
   for i,pos in ipairs(battery_positions) do f.batteries[i]=find(s,'accumulator',pos[1],pos[2]) end
+  assert(storage.em065_battery_unit_ids, 'saved battery identity record absent')
   log('[EM064] test fixture rehydrated after Lua reload')
 end
 local function details(t)
@@ -122,6 +124,8 @@ local function setup()
   for i,pos in ipairs(battery_positions) do
     local v=e(s,'accumulator',pos[1],pos[2]);v.energy=2000000;f.batteries[i]=v
   end
+  storage.em065_battery_unit_ids={}
+  for i,v in ipairs(f.batteries) do storage.em065_battery_unit_ids[i]=v.unit_number end
   assert(f.a.electric_network_id~=f.b.electric_network_id,'initial grids short')
   state(0,'start')
 end
