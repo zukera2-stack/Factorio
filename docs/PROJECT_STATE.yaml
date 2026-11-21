@@ -1,6 +1,6 @@
 release_candidate_062:
   type: main_source_development_checkpoint
-  status: user_authorized_main_source_merge_no_release
+  status: merged_into_main_source_only_no_release
   source_branch: experiment/native-dynamic-eei-070
   source_gameplay_verified_sha: 4c5e026bffdc1082925563d725c94751cd1acb73
   source_docs_sha: 5a2d7861e87eb4723ce461aff832bc98b5a422db
@@ -39,6 +39,11 @@ release_candidate_062:
   compatibility_after_source_merge: pending_future_release_decision
   release_label: not_released_mod_under_development
   merge_into_main_authorized: true
+  merge_into_main_completed: true
+  main_merge_sha: b06196a899f3d7ba3c262163ab445823455ee86b
+  main_merge_pr: 46
+  main_mod_source_version: "0.1.62"
+  no_release_actions_performed: true
   updater_promote_authorized: false
   github_release_authorized: false
   github_tag_authorized: false
@@ -155,7 +160,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: main # source merge into main, no release
   feature_version: "0.1.62" # source main checkpoint only, not installed
-  feature_status: 062_owner_authorized_main_checkpoint_not_release
+  feature_status: 062_merged_main_source_only_unfinished_mod_no_release
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -174,7 +179,7 @@ project:
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
   mod_version: "0.1.62" # source-only main checkpoint, NOT patcher-approved
-  main_baseline_mod_version: "0.1.62" # owner-authorized main source merge PR #46
+  main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
