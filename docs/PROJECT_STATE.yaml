@@ -2,7 +2,7 @@ em069_eei_buffer_lifecycle:
   branch: experiment/eei-buffer-lifecycle-069
   parent_sha: 064682e4acc4ccb557741dfae3cc206afe816c29
   mod_version: "0.1.62"
-  status: local_native_2_energy_and_48_dispatch_pass_ci_058_mock_repair_pending
+  status: blocked_official_native_060_reverse_0_j
   engine: "Factorio 2.1.24 build 87808"
   tested_local_zip_sha256: "92a78800b04e85ebcb6aa50635c6689c071b5faea65ed1618f612f9cb73c2adc"
   installed_ci_zip_exact_same_bytes: unverified
@@ -18,7 +18,14 @@ em069_eei_buffer_lifecycle:
   accumulator_ids_and_flow_limits: pass
   accumulator_b_end_j: 12760164
   game_changelog_mod_version_unchanged: true
-  manual_off_to_export_regression_mock: 058_059_pass_060_idle_safe_drain_ci_pending
+  manual_off_to_export_regression_mock: pass_lua_ci_44919510181
+  official_ci_build_run: 44919510181
+  official_ci_status: FAILED_native_reverse
+  official_ci_lua_and_package_preflight: pass
+  official_native_060_reverse_sink_j: 0
+  official_native_060_battery_after_j: 7533334
+  release_gate: BLOCKED
+  root_cause_hypothesis: role_swaps_of_fixed_priority_EEI_need_dynamic_prototype_engine_test
   long_soak_and_orphan_gc: pending
   bobs_multiplayer_undo: untested
   approved_updater_version: "0.1.61"
@@ -55,7 +62,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: experiment/eei-buffer-lifecycle-069
   feature_version: "0.1.62" # separate unapproved fairness prototype # read-only diagnostic candidate, not installed
-  feature_status: 069_local_native_energy_pass_ci_exact_and_owner_release_pending
+  feature_status: 069_blocked_official_native_060_reverse_regression
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
