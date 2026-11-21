@@ -1,0 +1,9 @@
+{
+  "name": "em061-native-probe",
+  "version": "0.0.1",
+  "title": "EM061 Native Accumulator Research Probe — NOT FOR DISTRIBUTION",
+  "author": "Electrified Mainline research",
+  "description": "Disposable Factorio 2.1.24 electrical solver test for shared accumulators; no ElectrifiedMainline runtime modifications.",
+  "factorio_version": "2.1",
+  "dependencies": ["base >= 2.1.0"]
+}

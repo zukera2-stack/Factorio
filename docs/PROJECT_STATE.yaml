@@ -1321,3 +1321,24 @@ asset_freeze_060:
   asset_commit: 7b723f4feb65e366c9ae11c13a17864b3c435fbc
   graphics_expected: 83
   runtime_files_expected: 129
+
+native_accumulator_gateway_061:
+  branch: experiment/native-accumulator-gateway-061
+  starting_commit: ea9366a9798cd78efec4b675c81d086c09170c28
+  baseline_mod_version: "0.1.60"
+  status: research_only_native_test_unverified
+  owner_060_protected: true
+  main_056_unchanged: true
+  game_runtime_changes: false
+  prototype_changes_in_distributable_mod: false
+  test_only_mod: tests/em061-native-probe/
+  research: docs/research/25kv-native-accumulator-gateway-061.md
+  target_factorio: 2.1.24_build_87808
+  hypothesis: overlapping_native_accumulator_shared_between_isolated_subnetworks
+  external_analogue: https://wiki.factorio.com/Accumulator
+  first_gate: two_networks_vanilla_accumulator_300kW
+  second_gate: two_networks_custom_accumulator_20MW_bidirectional
+  diagnostic_gates: battery_to_battery_and_three_network_hops
+  verified_native_engine: false
+  ci_result: pending
+  merge_allowed: false
