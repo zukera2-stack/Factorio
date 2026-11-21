@@ -1,3 +1,5 @@
+> **This layout describes `main` 0.1.56.** Current work across branches: [`CURRENT_WORK.md`](CURRENT_WORK.md). In the new docs-only continuation PR, `.agents/skills/` adds portable agent instructions; Updater 1.1 source `tools/updater/` lives **only** on `feature/git-updater-060` at the audit date, not in main's installable `ElectrifiedMainline/` tree.
+
 # Repository layout / структура репозитория
 
 **Current branch:** main 0.1.56, PR #30. Cleanup 048 is historical; packaging boundary remains unchanged. [Branch register](history/BRANCH_ARCHIVE_056.md).

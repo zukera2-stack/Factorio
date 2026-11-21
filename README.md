@@ -1,3 +1,5 @@
+> **Current project across branches:** Read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md) first. This README describes **stable `main` 0.1.56 only**. The separately tested 0.1.60 electrical bridge is installed via Updater 1.1 from `test/updater-approved`; 0.1.61 is unverified research, not a game update. Never confuse these branches.
+
 # Electrified Mainline 0.1.56 — stable main visual milestone (19 Nov 2026)
 
 Merged via [PR #30](https://github.com/zukera2-stack/Factorio/pull/30) with owner approval.

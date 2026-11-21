@@ -1,3 +1,5 @@
+> **Scope: stable `main` 0.1.56 only.** Cross-branch 0.1.60 electrical bridge and 0.1.61 EEI-priority research are separate; see [`CURRENT_WORK.md`](CURRENT_WORK.md). No power-bridge source is merged into the baseline described here.
+
 # Accepted 0.1.56 architecture
 
 - Native ground HSR prototypes; concrete slab with static thickness/wear, native backplates tinted 0.65, native metals and lower bed. Build-time art only.
