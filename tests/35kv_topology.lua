@@ -34,7 +34,8 @@ print("35 kV topology: all pure Lua assertions passed")
 -- This is only a CI runner; it does NOT substitute for Factorio native engine tests.
 local file=assert(io.open("ElectrifiedMainline/info.json","r"))
 local info=file:read("*a");file:close()
-if info:match('"version"%s*:%s*"0%.1%.61"') then
+local is062=info:match('"version"%s*:%s*"0%.1%.62"')~=nil
+if info:match('"version"%s*:%s*"0%.1%.61"') or is062 then
  local inherited={
   "25kv_visual_042","25kv_visual_geometry_048","25kv_technical_048",
   "25kv_policy_047","25kv_axis_056","25kv_axis_integration_056",
@@ -49,9 +50,13 @@ if info:match('"version"%s*:%s*"0%.1%.61"') then
    local ok,why,code=os.execute(command)
    assert(ok==true and why=="exit" and code==0,"061 inherited Lua regression failed: "..name)
  end
- print("061 PASS: full legacy 060 regression matrix and diagnostic regression")
+ print("061/062 PASS: full legacy 060 regression matrix and diagnostic regression")
+ if is062 then
+   local ok,why,code=os.execute("lua5.2 tests/bridge_fairness_062.lua")
+   assert(ok==true and why=="exit" and code==0,"062 fairness regression failed")
+ end
  if os.getenv("GITHUB_ACTIONS")=="true" then
-   local ok,why,code=os.execute("bash tests/run_headless_061.sh")
+   local ok,why,code=os.execute(is062 and "bash tests/run_headless_062.sh" or "bash tests/run_headless_061.sh")
    assert(ok==true and why=="exit" and code==0,"061 exact Factorio headless native regression failed")
  end
 end

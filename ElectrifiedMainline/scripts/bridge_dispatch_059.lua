@@ -86,29 +86,43 @@ function M.plan(input,edges,limit)
    end
  end
  local function route(supply,demand)
-   -- Each greedy path saturates a source, sink, or edge; bounded by graph size.
+   -- Fair-share every available source across all reachable same-tier sinks.
+   -- Previously the first destination by network ID could monopolize a 20MW
+   -- feeder indefinitely. Recompute after every pass when a link is full.
    for _,src in ipairs(ids) do
      local a=n[src]
-     for _,dst in ipairs(ids) do
-       local b=n[dst]
-       if src~=dst and a[supply]>1 and b[demand]>1 then
-         while a[supply]>1 and b[demand]>1 do
-           local steps=path(src,dst)
-           if not steps then break end
-           local amt=math.min(a[supply],b[demand]);local extra={};local cycle=false
-           -- Recheck the whole path as a set, not just each link in isolation.
+     while a[supply]>1 do
+       local destinations={}
+       for _,dst in ipairs(ids) do
+         if src~=dst and n[dst][demand]>1 and path(src,dst) then
+           destinations[#destinations+1]=dst
+         end
+       end
+       if #destinations==0 then break end
+       local budget=a[supply]/#destinations
+       local transferred=0
+       for _,dst in ipairs(destinations) do
+         local b=n[dst]
+         local steps=path(src,dst) -- previous allocations may saturate a path
+         if steps then
+           local amt=math.min(a[supply],b[demand],budget)
+           local extra={};local cycle=false
            for _,v in ipairs(steps) do
              if reachable(v.to,v.from,extra) then cycle=true;break end
-             extra[v.from]=v.to;amt=math.min(amt,limit-math.abs(flows[v.edge.id] or 0))
+             extra[v.from]=v.to
+             amt=math.min(amt,limit-math.abs(flows[v.edge.id] or 0))
            end
-           if cycle or amt<=1 then break end
-           a[supply]=a[supply]-amt;b[demand]=b[demand]-amt
-           for _,v in ipairs(steps) do
-             flows[v.edge.id]=(flows[v.edge.id] or 0)+v.sign*amt
-             directed[v.from]=directed[v.from] or {};directed[v.from][v.to]=v.to
+           if not cycle and amt>1 then
+             a[supply]=a[supply]-amt;b[demand]=b[demand]-amt
+             transferred=transferred+amt
+             for _,v in ipairs(steps) do
+               flows[v.edge.id]=(flows[v.edge.id] or 0)+v.sign*amt
+               directed[v.from]=directed[v.from] or {};directed[v.from][v.to]=v.to
+             end
            end
          end
        end
+       if transferred<=1 then break end
      end
    end
  end

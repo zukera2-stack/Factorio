@@ -5,9 +5,9 @@ project:
   default_branch: main
   active_test_branch: test/updater-approved
   current_baseline_branch: main
-  active_feature_branch: feature/updater-061-candidate
-  feature_version: "0.1.61" # read-only diagnostic candidate, not installed
-  feature_status: 061_test_distributed_via_updater_native_ci_pass
+  active_feature_branch: experiment/network-fair-share-062
+  feature_version: "0.1.62" # separate unapproved fairness prototype # read-only diagnostic candidate, not installed
+  feature_status: 062_native_3_of_3_pass_not_approved
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.61" # experimental
+  mod_version: "0.1.62" # experimental, NOT patcher-approved
   main_baseline_mod_version: "0.1.56" # merged PR #30
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -1363,3 +1363,33 @@ priority_diagnostics_061_candidate:
   frozen_png_count: 83
   main_merge_allowed: false
   owner_live_061_acceptance: pending
+
+fair_dispatch_062_experiment:
+  branch: experiment/network-fair-share-062
+  base_approved_061_sha: c8a1feddddfb3f160eae5f63cd1b0231e2136ce3
+  runtime_mod_version: "0.1.62"
+  approved_test_branch: test/updater-approved
+  approved_test_mod_version_unchanged: "0.1.61"
+  runtime_files_changed_from_061:
+    - ElectrifiedMainline/info.json
+    - ElectrifiedMainline/scripts/bridge_dispatch_059.lua
+  runtime_pngs_preserved: 83
+  max_per_station_mw: 20
+  fairness_policy: source_local_equal_allocation_within_same_priority
+  real_engine: Factorio_2.1.24_build_87808_x86_64
+  native_fixtures_pass: 3
+  native_fixtures_total: 3
+  native_game_ticks: 2030
+  baseline_061_starvation_reproduced: true
+  baseline_061_t240_network_b_j: 78666667
+  baseline_061_t240_network_c_j: 0
+  fixed_062_t240_network_b_j: 39333333
+  fixed_062_t240_network_c_j: 39333333
+  fixed_062_t600_network_c_j: 159000000
+  verified_no_energy_creation_in_fixture: true
+  pure_lua_randomized_graphs_passed: 700
+  real_bobs_power_native_in_062: false
+  full_global_fairness_for_all_graphs_proven: false
+  owner_approved_updater_promotion: false
+  main_merge_approved: false
+  research: docs/research/25kv-fair-dispatch-062.md
