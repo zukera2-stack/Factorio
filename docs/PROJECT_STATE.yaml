@@ -1284,3 +1284,22 @@ cross_branch_handoff_2026_11_21:
     handoff: .agents/skills/factorio-handoff/SKILL.md
     native_research: .agents/skills/factorio-native-research/SKILL.md
     updater_release: .agents/skills/factorio-updater-release/SKILL.md
+
+updater_distribution_061_2026_11_21:
+  approved_branch: test/updater-approved
+  approved_head_at_update: c8a1feddddfb3f160eae5f63cd1b0231e2136ce3
+  verified_runtime_commit: 55db63f6d3be6a2f64da005d6db28433e8c42d5d
+  approved_test_mod_version: "0.1.61"
+  main_mod_version_unchanged: "0.1.56"
+  official_game_2_1_24_and_zip_ci_run: 44875890182
+  official_ci_result: success
+  artifact_id: 14696041766
+  inner_zip_sha256: 3771b7241848ae98e74019659baeb03616ab9aa4fa5dfcb9e7acf02efbef754c
+  runtime_files: 130
+  frozen_pngs: 83
+  gameplay_bridge: inherited_verified_060_20MW
+  new_game_feature: read_only_priority_diagnostics
+  updater_version: "1.1"
+  owner_061_install_confirmed: false
+  accumulator_experiment_separate_and_unverified: true
+  main_merge_authorized: false
