@@ -1341,11 +1341,14 @@ priority_diagnostics_061_candidate:
   native_test_command: tests/run_headless_061.sh
   native_test_fixture: tests/em061-power-probe/
   native_test_gate: github_actions_lua_preflight
-  native_test_result: pending_after_probe_label_and_zip_fixture_fix
+  native_test_result: packaged_zip_native_2_1_24_pass_ci_still_pending_legacy_test_gates
   native_061_initial_run: 44875708000
   native_061_initial_runtime_pass: true
   native_061_initial_ci_result: failed_log_marker_mismatch
   native_061_rebuilt_uses_zip: true
+  packaged_zip_native_run: 44875796874
+  packaged_zip_native_pass: true
+  legacy_023_028_029_test_gates_extended_to_061: true
   first_build_run: 44875572533
   first_build_result: failed_historical_visual_test_version_gate
   inherited_test_gate_fix: tests/25kv_visual_geometry_048.lua
