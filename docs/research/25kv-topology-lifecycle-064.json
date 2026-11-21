@@ -6,28 +6,71 @@
       "passed": true,
       "ticks": 1350,
       "markers": [
-        "   1.340 Script @__em064-topology__/control.lua:84: [EM064 PASS] initial active source/sink on separate factory networks",
-        "   1.377 Script @__em064-topology__/control.lua:90: [EM064 PASS] mast_destroy corridor split hidden_count=0",
-        "   1.435 Script @__em064-topology__/control.lua:84: [EM064 PASS] mast_rebuilt active source/sink on separate factory networks",
-        "   1.477 Script @__em064-topology__/control.lua:90: [EM064 PASS] rail_cut corridor split hidden_count=0",
-        "   1.545 Script @__em064-topology__/control.lua:84: [EM064 PASS] rail_rebuilt active source/sink on separate factory networks",
-        "   1.574 Script @__em064-topology__/control.lua:133: [EM064 PASS] substation removed and hidden interfaces cleaned",
-        "   1.624 Script @__em064-topology__/control.lua:84: [EM064 PASS] substation_rebuilt active source/sink on separate factory networks",
-        "   1.664 Script @__em064-topology__/control.lua:152: [EM064 PASS] intentional factory merge suppresses same-network relay",
-        "   1.728 Script @__em064-topology__/control.lua:84: [EM064 PASS] factory_resplit active source/sink on separate factory networks",
-        "   1.786 Script @__em064-topology__/control.lua:84: [EM064 PASS] after_script_reload active source/sink on separate factory networks"
+        "   1.295 Script @__em064-topology__/control.lua:84: [EM064 PASS] initial active source/sink on separate factory networks",
+        "   1.350 Script @__em064-topology__/control.lua:90: [EM064 PASS] mast_destroy corridor split hidden_count=0",
+        "   1.417 Script @__em064-topology__/control.lua:84: [EM064 PASS] mast_rebuilt active source/sink on separate factory networks",
+        "   1.469 Script @__em064-topology__/control.lua:90: [EM064 PASS] rail_cut corridor split hidden_count=0",
+        "   1.539 Script @__em064-topology__/control.lua:84: [EM064 PASS] rail_rebuilt active source/sink on separate factory networks",
+        "   1.575 Script @__em064-topology__/control.lua:151: [EM064 PASS] substation removed and hidden interfaces cleaned",
+        "   1.639 Script @__em064-topology__/control.lua:84: [EM064 PASS] substation_rebuilt active source/sink on separate factory networks",
+        "   1.691 Script @__em064-topology__/control.lua:170: [EM064 PASS] intentional factory merge suppresses same-network relay",
+        "   1.772 Script @__em064-topology__/control.lua:84: [EM064 PASS] factory_resplit active source/sink on separate factory networks",
+        "   1.841 Script @__em064-topology__/control.lua:84: [EM064 PASS] after_script_reload active source/sink on separate factory networks"
       ]
     }
   },
   "save_reload": {
     "passed": true,
-    "save_bytes": 837643,
+    "save_bytes": 961070,
     "extra_energy_j": 13333333,
     "continued_ticks": 200
   },
   "transient_observations": [
-    "1.664 Script @__em064-topology__/control.lua:151: [EM064 OBSERVATION] factory merge retained transient bridge energy J=500000.66666667 (may be discarded on reconfiguration)",
-    "1.673 Script @__em064-topology__/control.lua:155: [EM064 OBSERVATION] split-at-t1002 hidden_energy_J=0 previous_merged_J=500000.66666667"
+    "1.691 Script @__em064-topology__/control.lua:169: [EM064 OBSERVATION] factory merge retained transient bridge energy J=500000.66666667 (may be discarded on reconfiguration)",
+    "1.703 Script @__em064-topology__/control.lua:173: [EM064 OBSERVATION] split-at-t1002 hidden_energy_J=0 previous_merged_J=500000.66666667"
   ],
-  "status": "PASS_WITH_ENERGY_RECONFIGURATION_CAVEAT"
+  "energy_ledger": {
+    "source_generation_mw": 20,
+    "period_ticks": 1250,
+    "loss_j": 1666667,
+    "loss_events": 6,
+    "created_j": 0,
+    "creation_events": 0,
+    "strict_zero_loss_pass": false,
+    "accepted_for_release": false,
+    "sampled_loss_events": [
+      {
+        "tick": 201,
+        "lost_j_rounded": 333333,
+        "hidden_j_rounded": 0
+      },
+      {
+        "tick": 441,
+        "lost_j_rounded": 166666,
+        "hidden_j_rounded": 166667
+      },
+      {
+        "tick": 671,
+        "lost_j_rounded": 500000,
+        "hidden_j_rounded": 0
+      },
+      {
+        "tick": 896,
+        "lost_j_rounded": 166666,
+        "hidden_j_rounded": 333333
+      },
+      {
+        "tick": 900,
+        "lost_j_rounded": 333332,
+        "hidden_j_rounded": 500001
+      },
+      {
+        "tick": 1002,
+        "lost_j_rounded": 166667,
+        "hidden_j_rounded": 0
+      }
+    ],
+    "note": "Whole-run ledger uses unrounded Lua double values; per-event sampled log integers can differ by a few rounding joules."
+  },
+  "status": "FUNCTIONAL_PASS_ENERGY_BALANCE_FAIL"
 }

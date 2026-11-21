@@ -1598,3 +1598,28 @@ topology_lifecycle_064_native_2026_11_21:
   main_056_ref_changed: false
   research: docs/research/25kv-topology-lifecycle-064.md
   machine_result: docs/research/25kv-topology-lifecycle-064.json
+
+topology_lifecycle_064_energy_ledger_2026_11_21:
+  branch: experiment/topology-lifecycle-064
+  upstream_game_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  engine: Factorio_2_1_24_build_87808_linux_x86_64
+  source_output_mw: 20
+  counted_energies: source_EEI_sink_EEI_all_hidden_bridge_EEIs
+  observed_game_ticks: 1250
+  measured_missing_energy_j: 1666667
+  measured_loss_events: 6
+  measured_unexpected_created_energy_j: 0
+  measured_energy_creation_events: 0
+  energy_zero_loss_release_gate: FAIL
+  source_sink_transmission_live: PASS
+  structural_reconfiguration_checkpoints: "10/10 PASS"
+  actual_disk_server_save_and_second_process_load: PASS
+  disk_reload_sink_additional_energy_j: 13333333
+  strict_test_flag: "--require-zero-loss"
+  default_runner_result: FUNCTIONAL_PASS_ENERGY_BALANCE_FAIL
+  evidence: docs/research/25kv-topology-lifecycle-064.md
+  machine_report: docs/research/25kv-topology-lifecycle-064.json
+  gameplay_runtime_changed_for_064: false
+  patcher_approved_061_unchanged: true
+  user_game_saves_untouched: true
+  release_blocked_pending_energy_policy_or_fix: true

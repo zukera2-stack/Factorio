@@ -21,6 +21,7 @@ def main():
     parser.add_argument('--game-zip',type=Path,required=True)
     parser.add_argument('--expected-sha256',required=True)
     parser.add_argument('--out',type=Path,default=HERE/'results')
+    parser.add_argument('--require-zero-loss',action='store_true',help='Fail the release gate if any joules disappear during reconfiguration')
     a=parser.parse_args()
     assert a.engine.is_file() and a.game_zip.is_file(), 'Missing engine/game ZIP'
     sha=hashlib.sha256(a.game_zip.read_bytes()).hexdigest()
@@ -55,7 +56,21 @@ def main():
         result['scenarios']['live_reconfiguration']={'passed':True,'ticks':1350,'markers':markers}
         obs=[l.strip() for l in native.splitlines() if '[EM064 OBSERVATION]' in l]
         result['transient_observations']=obs
-        print('[EM064] live topology PASS; '+str(len(markers))+' checkpoints',flush=True)
+        meter=re.search(r'\[EM064 LEDGER RESULT\] lost_J=(\d+) loss_events=(\d+) created_J=(\d+) creation_events=(\d+)',native)
+        assert meter, 'Per-tick energy ledger did not finish'
+        lost,loss_events,created,create_events=map(int,meter.groups())
+        event_rows=[]
+        for hit in re.finditer(r'\[EM064 LEDGER\] dt=(\d+) total_J=([\d.]+) delta_J=([-\d.]+) expected_generation_J=([\d.]+) bridge_J=([\d.]+)',native):
+            tick=int(hit.group(1))
+            expected=float(hit.group(4));delta=float(hit.group(3))
+            if expected-delta>4:
+                event_rows.append({'tick':tick,'lost_j_rounded':round(expected-delta),'hidden_j_rounded':round(float(hit.group(5)))})
+        result['energy_ledger']={'source_generation_mw':20,'period_ticks':1250,'loss_j':lost,'loss_events':loss_events,
+                                 'created_j':created,'creation_events':create_events,'strict_zero_loss_pass':lost<=4 and created<=4,
+                                 'accepted_for_release':False,'sampled_loss_events':event_rows,
+                                 'note':'Whole-run ledger uses unrounded Lua double values; per-event sampled log integers can differ by a few rounding joules.'}
+        assert created<=4, f'UNACCEPTABLE: unexplained created energy {created} J'
+        print(f'[EM064] live topology PASS ({len(markers)} checkpoints); ENERGY LEDGER loss={lost} J, created={created} J',flush=True)
         # Real save creation: run server until it emits checkpoint and passes,
         # then terminate gracefully to avoid running forever.
         server_source=source.replace('    -- EM064_SERVER_SAVE_HOOK (the test runner replaces this in server mode).',
@@ -99,8 +114,10 @@ def main():
         assert delta>5000000
         result['save_reload']={'passed':True,'save_bytes':checkpoint.stat().st_size,'extra_energy_j':delta,'continued_ticks':200}
         print('[EM064] disk SAVE→LOAD PASS: '+str(delta)+' J delivered after load',flush=True)
-    result['status']='PASS_WITH_ENERGY_RECONFIGURATION_CAVEAT'
+    result['status']='FUNCTIONAL_PASS_ENERGY_BALANCE_FAIL' if result['energy_ledger']['loss_j']>4 else 'FULL_PASS'
     (a.out/'report.json').write_text(json.dumps(result,indent=2,ensure_ascii=False),encoding='utf-8')
-    print('[EM064 RESULT] native live and persisted topology PASS; residual relay buffer reviewed separately',flush=True)
+    print('[EM064 RESULT] native lifecycle and real disk load PASS; strict energy conservation '+('FAIL' if result['energy_ledger']['loss_j']>4 else 'PASS'),flush=True)
+    if a.require_zero_loss and not result['energy_ledger']['strict_zero_loss_pass']:
+        raise SystemExit('ENERGY RELEASE GATE FAILED: '+str(result['energy_ledger']['loss_j'])+' J lost')
 
 if __name__=='__main__':main()

@@ -95,6 +95,24 @@ script.on_event(defines.events.on_tick,function(ev)
     else hydrate() end
   end
   local t=ev.tick-storage.em064_started
+  local _,bridge_j=hidden()
+  local total=f.source.energy+f.sink.energy+bridge_j
+  local prev=storage.em064_previous_total
+  if prev then
+    local deviation=20*W-(total-prev)
+    if deviation>4 then
+      storage.em064_loss_j=(storage.em064_loss_j or 0)+deviation
+      storage.em064_loss_count=(storage.em064_loss_count or 0)+1
+    elseif deviation < -4 then
+      storage.em064_created_j=(storage.em064_created_j or 0)-deviation
+      storage.em064_created_count=(storage.em064_created_count or 0)+1
+    end
+  end
+  if (t>=197 and t<=204) or (t>=438 and t<=446) or (t>=668 and t<=676)
+    or (t>=893 and t<=902) or (t>=998 and t<=1005) then
+    log(string.format('[EM064 LEDGER] dt=%d total_J=%.0f delta_J=%.0f expected_generation_J=%.0f bridge_J=%.0f',t,total,prev and total-prev or 0,20*W,bridge_j))
+  end
+  storage.em064_previous_total=total
   if t==180 then check_on(t,'initial');state(t,'initial') end
   if t==200 then
     storage.em064_before=f.sink.energy
@@ -167,6 +185,7 @@ script.on_event(defines.events.on_tick,function(ev)
       assert(delta>5000000, 'disk-load continuation did not deliver power: '..delta)
       log(string.format('[EM064 DISK PASS] restored_factory_ids=%s,%s sink_delta_J=%.0f',tostring(f.a.electric_network_id),tostring(f.b.electric_network_id),delta))
     end
+    log(string.format('[EM064 LEDGER RESULT] lost_J=%.0f loss_events=%d created_J=%.0f creation_events=%d',storage.em064_loss_j or 0,storage.em064_loss_count or 0,storage.em064_created_j or 0,storage.em064_created_count or 0))
     log('[EM064 NATIVE PASS] mast cut/restore, rail cut/restore, substation remove/restore, factory merge/split, reload_script')
   end
 end)
