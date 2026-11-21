@@ -29,6 +29,7 @@ local function degree(edges,id)
  return n
 end
 local edges=plan()
+if not (edges["1:2"] and edges["2:3"] and edges["2:4"]) then for key,e in pairs(edges) do print("[071 TRACE] edge="..key.." route="..tostring(e.axis_length)) end end
 assert(edges["1:2"] and edges["2:3"] and edges["2:4"],"actual 3-way switch must show three cosmetic spans")
 assert(degree(edges,2)==3,"central switch mast should have degree=3")
 assert(not edges["3:4"],"cannot shortcut through a closer intermediate switch mast")
