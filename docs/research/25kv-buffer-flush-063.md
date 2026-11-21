@@ -48,3 +48,8 @@ python3 tests/run_native_buffer_063.py \
 ```
 
 The runner in this branch has a stricter **bridge-only** acceptance: after the generator is fully off, the consumer must receive 300k–500k J, so the original build (167k J) fails as a useful regression indicator. For all large network fixtures use the existing native Factorio stress suite and the exact experimental candidate ZIP. This experiment does **not** test native Bob's accumulators, multiplayer, migrations, off-mode energy retention or arbitrary graph topology. **Do not promote** to `test/updater-approved` or stable `main` until explicitly approved, with a unique released version and further compatibility acceptance.
+## Alignment of the inherited 059 Lua runtime mock with the 063 buffer lifecycle
+
+The inherited `tests/power_bridge_integration_059.lua` originally asserted that **every** auto-idle station immediately deleted its EEI output, even when its output still held 100000 J. That was the *historical contract* which caused the confirmed native energy loss at cutoff. Once auto-idle explicitly enters `draining-buffer`, the old mock's line 103 must be revised: source A still stops immediately if empty, but receiver B retains its genuine 100000 J, stops requesting **new** input (`input_flow_limit=0`), and stays attached while discharging. A mock engine-step explicitly zeros the buffer and the next update confirms `auto-idle` cleanup. This is a changed assertion matching newly observed native engine behavior, not an arbitrary deletion/skip of test coverage.
+
+All real native tests were already run on the new behavior; the mock update only fixes a stale invariant in the earlier 059 regression, and adds a positive assertion for the new lifecycle.
