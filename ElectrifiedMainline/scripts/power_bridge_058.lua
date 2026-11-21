@@ -119,6 +119,7 @@ local function interface(port,name)
  local e=port.surface.create_entity{name=name,position=port.position,force=port.force,raise_built=false}
  if valid(e) then
    e.destructible=false;e.power_production=0;e.power_usage=0;e.energy=0
+    e.electric_interface_mode=(name==INPUT) and defines.electric_interface_mode.secondary_input or defines.electric_interface_mode.secondary_output
    return e
  end
 end

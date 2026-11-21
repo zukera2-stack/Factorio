@@ -1,3 +1,33 @@
+em070_native_dynamic_eei:
+  branch: experiment/native-dynamic-eei-070
+  parent_sha: 5c8f120b24b2a7d3382ac75156f217030c2b31f3
+  mod_version: "0.1.62"
+  status: experimental_local_native_8_priority_2_energy_48_dispatch_pass
+  engine: "Factorio 2.1.24 build 87808"
+  base_analogue: data/base/prototypes/entity/entities.lua
+  base_file_sha256: a6d0356285a56ad4af0b08d9acee669981c888dd5962cb0ee5d79d9b31294d1b
+  base_only_priority_8_native_tests: pass
+  fixed_input_reverse_output_j: 0
+  fixed_output_reverse_input_j: 0
+  dynamic_each_direction_transferred_j: 750000
+  baseline_per_pair_j: 2000000
+  local_test_zip_sha256: "96fb991c755b99630a186fcc2d4476f9a390c21bcfc9e8946fec3d1c651c6fd6"
+  gameplay_change: two_existing_prototype_usage_priority_dynamic_and_explicit_creation_mode
+  native_energy_reservoir: pass_1350_plus_200_disk_save_reload
+  native_energy_batteries: pass_1350_plus_200_disk_save_reload
+  unexplained_lost_j: 0
+  created_j: 0
+  authorized_demolition_no_battery_j: 166667
+  authorized_demolition_battery_j: 186667
+  native_48_station_960_ticks: pass
+  historical_native_060_reverse: ci_pending
+  official_ci_exact_zip_native: pending
+  owner_save_bobs_multiplayer_undo_long_soak: unverified
+  main_approved_version: "0.1.56"
+  updater_approved_version: "0.1.61"
+  release_authorization: false
+  research: docs/research/25kv-dynamic-eei-070.md
+
 em069_eei_buffer_lifecycle:
   branch: experiment/eei-buffer-lifecycle-069
   parent_sha: 064682e4acc4ccb557741dfae3cc206afe816c29
@@ -60,9 +90,9 @@ project:
   default_branch: main
   active_test_branch: test/updater-approved
   current_baseline_branch: main
-  active_feature_branch: experiment/eei-buffer-lifecycle-069
+  active_feature_branch: experiment/native-dynamic-eei-070
   feature_version: "0.1.62" # separate unapproved fairness prototype # read-only diagnostic candidate, not installed
-  feature_status: 069_blocked_official_native_060_reverse_regression
+  feature_status: 070_local_native_energy_and_48_pass_full_060_ci_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
