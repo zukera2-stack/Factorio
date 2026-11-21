@@ -18,19 +18,38 @@ local function state()
  return storage.em.bridge058
 end
 local function destroy(e) if valid(e) then e.destroy() end end
--- EM068: diagnostic-only. Measure native EEI energy BEFORE destruction.
+-- EM068: measure *before* engine entities are destroyed; no refund or energy mutation.
+local function freeze_bridge(r)
+  if valid(r.input) then
+    r.input.input_flow_limit=0
+    r.input.output_flow_limit=0
+  end
+  if valid(r.output) then
+    r.output.input_flow_limit=0
+    r.output.output_flow_limit=0
+  end
+end
 local function stop(r,why)
   local a=valid(r.input) and r.input.energy or 0
   local b=valid(r.output) and r.output.energy or 0
-  if a+b>0.5 then
+  if a+b>0.5 and (not r.holding or why=="substation-demolished") then
     local s=state()
     s.buffer_event_seq=(s.buffer_event_seq or 0)+1
-    log(string.format("[EM068 BUFFER DISPOSAL] event_id=%d tick=%d owner=%s reason=%s input_J=%.3f output_J=%.3f input_network=%s output_network=%s",
+    log(string.format("[EM069 BUFFER STOP] event_id=%d tick=%d owner=%s reason=%s input_J=%.3f output_J=%.3f input_network=%s output_network=%s",
       s.buffer_event_seq,game.tick,tostring(r.owner_id or "unknown"),tostring(why or "unknown"),
       a,b,tostring(valid(r.input) and r.input.electric_network_id),tostring(valid(r.output) and r.output.electric_network_id)))
   end
   if r.input or r.output then r.window_j=0;r.last_mw=0 end
+  -- EM069: electrically freeze live stored joules unless their owner is mined.
+  -- They remain in Factorio native EEI storage and cannot power a broken path.
+  if why~="substation-demolished"
+     and (a>0.5 or b>0.5) then
+    freeze_bridge(r)
+    r.holding=true
+    return
+  end
   destroy(r.input);destroy(r.output);r.input=nil;r.output=nil
+  r.holding=nil
 end
 local function detach(r,why)
   stop(r,why or "detach")
@@ -112,7 +131,18 @@ local function sync_graph(s,graph)
       s.stations[id].owner_id=id
    end
  end
- for id,r in pairs(s.stations) do if not current[id] then detach(r,"station-not-in-graph");s.stations[id]=nil end end
+ for id,r in pairs(s.stations) do
+   if not current[id] then
+     if get(id) then
+       -- Graph snapshot staleness is NOT permission to destroy a live station.
+       stop(r,"station-temporarily-absent-from-graph")
+       r.status="await-graph"
+     else
+       detach(r,"substation-demolished")
+       s.stations[id]=nil
+     end
+   end
+ end
  local feeders={}
  for _,edge in pairs(graph.edges) do
    if edge.kind=="feeder" then
@@ -140,16 +170,17 @@ end
 function M.rebuild(graph)
  local s=state()
   for _,r in pairs(s.stations) do
-    detach(r,"script-rebuild")
+   freeze_bridge(r)
    if not s.auto_migrated and (r.mode=="import" or r.mode=="export") then r.mode="auto" end
-   r.direction=nil;r.interface_retry=nil;r.retry=nil
+   r.interface_retry=nil;r.retry=nil;r.status="revalidating-after-rebuild"
  end
  s.auto_migrated=true;s.last_auto={};s.sample_tick=nil;s.device_sample=nil;s.last_flow_log=nil
- local surface=s.surface_index and game.surfaces[s.surface_index]
- if surface and surface.valid and surface.name==LAB then
-   for _,e in pairs(surface.find_entities_filtered{name={PORT,INPUT,OUTPUT}}) do destroy(e) end
+ -- Native EEIs already in the save retain their energy. Do not erase them
+ -- merely because a config update re-runs the Lua script.
+ local t=technical.ensure_storage();t.bridge_ports={}
+ for _,r in pairs(s.stations) do
+   if valid(r.line_port) and r.anchor_id and r.port_id then t.bridge_ports[r.port_id]=r.anchor_id end
  end
- technical.ensure_storage().bridge_ports={}
  sync_graph(s,graph)
 end
 -- Pure deterministic directed graph. Reject same-net links and edges closing any cycle.
@@ -188,7 +219,8 @@ end
 -- 063: Native EEI outputs still hold real joules at auto-idle transitions.
 -- Do not destroy these buffers before the game has discharged them. The station
 -- itself is still an electric pole (no persistent internal accumulator).
-local function idle_or_drain(r,raw_flows)
+local function idle_or_drain(r,raw_flows,route_open)
+  if not route_open then reject(r,"auto-idle-no-connected-peer");return end
  -- Factory generators still running? An ordinary factory brownout takes priority.
  -- Never keep secondary bridge power attached in auto-idle while the source
  -- factory has even partial native production; otherwise it steals factory MW.
@@ -204,13 +236,16 @@ local function idle_or_drain(r,raw_flows)
    and src.electric_network_id==src_port.electric_network_id
    and dst.electric_network_id==dst_port.electric_network_id
    and (src.energy>1 or dst.energy>1) then
-   -- Stop importing *new* energy while unplanned; only use already captured J.
-   -- Setting an empty storage capacity on the EEI is not necessary or portable.
-   pcall(function()src.input_flow_limit=0 end)
+   -- Stop new imports; old J can leave ONLY when a peer is connected.
+   src.input_flow_limit=0
+   src.output_flow_limit=0
+   dst.input_flow_limit=0
+   dst.output_flow_limit=math.min(M.LIMIT,dst.energy)
    if src.energy>0 then
      local _,new_out,amount=M.transfer(math.min(src.energy,M.LIMIT),dst.energy,dst.electric_buffer_size)
      if amount>0 then
        src.energy=src.energy-amount;dst.energy=new_out
+       dst.output_flow_limit=math.min(M.LIMIT,dst.energy)
        r.window_j=(r.window_j or 0)+amount
      end
    end
@@ -283,6 +318,8 @@ function M.on_tick(tick,graph)
  end
  -- Automatic allocation is coordinated across every connected ordinary/corridor network.
  local plan=dispatch.plan(networks,auto_edges,M.LIMIT)
+ local connected_peers={}
+ for _,edge in ipairs(auto_edges) do connected_peers[edge.b]=(connected_peers[edge.b] or 0)+1 end
  if tick%600==0 or not s.last_flow_log then
    s.last_flow_log=tick
    local ids={};for id in pairs(networks) do ids[#ids+1]=id end;table.sort(ids)
@@ -301,7 +338,7 @@ function M.on_tick(tick,graph)
      local sk,dk=edge.a,edge.b
      if v<0 then src,dst=dst,src;sk,dk=dk,sk end
      candidates[#candidates+1]={id=edge.id,source=sk,target=dk,raw_source=src.electric_network_id,raw_target=dst.electric_network_id,src=src,dst=dst,limit=math.min(M.LIMIT,math.abs(v)),direction=direction,auto=true}
-   else idle_or_drain(r,raw_flows) end
+    else idle_or_drain(r,raw_flows,(connected_peers[edge.b] or 0)>1) end
  end
  s.last_auto={};s.sample_tick=tick
  -- Any factory terminal sharing a corridor network means actual isolation was lost.
@@ -327,7 +364,23 @@ function M.on_tick(tick,graph)
    if accepted[c.id] then
      local r=s.stations[c.id]
      local created=false
-     if r.direction~=c.direction then stop(r,"direction-change");r.direction=c.direction;r.interface_retry=nil end
+     if r.direction~=c.direction then
+       if valid(r.input) and valid(r.output) and r.direction then
+         -- Exchange the physical port roles, not entities: no EEI is destroyed.
+         -- Both interfaces stay on their old electric networks; producer and
+         -- consumer roles swap, returning any buffered old-source joules locally.
+         freeze_bridge(r)
+         local old_input,old_output=r.input,r.output
+         old_input.electric_interface_mode=defines.electric_interface_mode.secondary_output
+         old_output.electric_interface_mode=defines.electric_interface_mode.secondary_input
+         r.input=old_output;r.output=old_input
+         r.holding=nil
+         log(string.format("[EM069 DIRECTION SWAP] tick=%d owner=%s from=%s to=%s input_J=%.0f output_J=%.0f",tick,tostring(r.owner_id),tostring(r.direction),tostring(c.direction),r.input.energy,r.output.energy))
+       else
+         stop(r,"direction-change")
+       end
+       r.direction=c.direction;r.interface_retry=nil
+     end
       if not (valid(r.input) and valid(r.output)) then
         stop(r,"interface-recreate")
        if not r.interface_retry or tick>=r.interface_retry then
@@ -340,6 +393,7 @@ function M.on_tick(tick,graph)
        if r.input.electric_network_id~=c.raw_source or r.output.electric_network_id~=c.raw_target or c.source==c.target then
          reject(r,"interface-network-mismatch")
        else
+         r.holding=nil
          local cap=math.min(c.limit, M.LIMIT)
          local old_size=r.input.electric_buffer_size
          local ok,old_in,old_out=pcall(function()return r.input.input_flow_limit,r.output.output_flow_limit end)
