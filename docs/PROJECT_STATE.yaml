@@ -1,3 +1,44 @@
+em072_a_native_finite_burner_proof:
+  status: native_Base_only_game_tested_not_integrated
+  branch: experiment/native-burner-traction-072a
+  parent_main_sha: cf75656fda374824944311f26bbd454bc90ad45b
+  mod_source_version: "0.1.62"
+  engine: "Factorio 2.1.24 build 87808"
+  dependencies: Base_only_no_DLC
+  experimental_only: true
+  fixture: tests/em072-native-traction-probe/
+  runner: tests/run_native_traction_072.py
+  report: docs/research/traction-burner-native-072a.md
+  engine_benchmark_ticks: 620
+  real_disk_checkpoint_tick: 3
+  real_disk_reload_ticks: 240
+  test_initial_fuel_j: 120000
+  test_locomotive_power_w: 2000000
+  direct_LuaBurner_traction: pass
+  physical_fuel_baseline: pass
+  empty_fuel_no_traction: pass
+  void_locomotive_infinite_traction: observed
+  native_burner_distance_tiles: 4.578125
+  physical_fuel_distance_tiles: 4.578125
+  empty_distance_tiles: 0.0
+  void_distance_tiles_track_end: 224.0
+  fuel_remaining_tick_3_j: 51111.111111111
+  fuel_remaining_tick_5_j: 0
+  script_writes_train_speed: false
+  real_disk_save_reload: pass
+  benchmark_log_sha256: fd4bbcad39a66432d2882fbf5bb5daf41e54d7eb3050f83cf9fec16954e2bf07
+  disk_reload_log_sha256: de79d4daaf2ab6ab377a293fff4e78c838d87633a496ab52249e2890fdf654b6
+  original_game_locomotive_still_void: true
+  EM070_network_J_debit: not_tested
+  five_hundred_kw_motor_wagon_traction: not_tested
+  regenerative_braking: not_tested
+  native_auto_schedule: not_tested
+  source_accounting_when_injected: not_implemented
+  game_mod_files_changed: false
+  release_authorized: false
+  merge_into_main_authorized: false
+  next_step: EM072_A2_EM070_finite_source_debit_and_burner_ledger
+
 em072_075_distributed_traction_plan:
   status: owner_design_approved_documented_only
   decision_date: "2026-11-21"

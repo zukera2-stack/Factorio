@@ -32,3 +32,7 @@
 - **Planned/Unverified:** моторные вагоны 500 кВт, штатное сложение мощности 2+0.5N, энергопитание движка, аккумулятор и рекуперация, save/migration, multiplayer.
 - **No examined same-type third-party implementation** of 500кВт native-driven `cargo-wagon`/`fluid-wagon` with conserved Joules; Base is an adjacent engine analogue only. No external source code/assets copied.
 - **Next:** native stand-alone A/B as in the plan; failure results preserved, no bypass through editing train speed.
+
+## EM072-A next actual native result (21.11.2026)
+
+`BurnerEnergySource` and `LuaBurner` hypothesis for physically finite driving is **CONFIRMED on 2.1.24 Base-only**: isolated 120 kJ direct `currently_burning` + `remaining_burning_fuel` and 120 kJ native inventory fuel both move exactly 4.578125 tiles; empty burner=0, void=224 on test track, real disk save/reload PASS. Details: [`traction-burner-native-072a.md`](traction-burner-native-072a.md). **The actual ElectrifiedMainline mod still uses `void` and draws 0 J. 500-kW per wagon and EM070 network-source energy debit not tested.**
