@@ -1,3 +1,45 @@
+em072a4_multitrain_native_auto_bridge_research:
+  status: isolated_native_two_trains_two_stations_and_disk_reload_PASS_not_integrated
+  branch: experiment/native-em070-multitrain-cache-072a4
+  parent_A3_sha: c8618aaf7ba419873350df21b1185e5493a72054
+  main_source_version: "0.1.62"
+  native_engine: "Factorio 2.1.24 build 87808"
+  starting_physical_energy_j: 50000000
+  actual_native_trains: 2
+  native_EM070_AUTO_stations: 2
+  nominal_power_w_each_locomotive: 2000000
+  native_delivered_train1_j: 6566667
+  native_delivered_train2_j: 6566667
+  native_burned_train1_j: 6566667
+  native_burned_train2_j: 6566667
+  native_energy_residual_j: 0
+  disconnected_HSR_received_j: 0
+  rail_cut_and_cache_invalidation: PASS
+  rail_restoration_and_power_recovery: PASS
+  station_failover: PASS
+  zero_train_request_zero_new_j: PASS
+  native_benchmark_ticks: 470
+  server_save_tick: 151
+  separate_reload_ticks: 320
+  save_reload_all_controls: PASS
+  recorded_cache_builds: 6
+  recorded_cache_hits: 2510
+  pure_allocator_maxmin_12_trains_20MW: PASS_algorithm_only
+  native_12_train_overload: NOT_TESTED
+  source_mod_energy_source: void_not_modified
+  no_script_train_speed_writes: true
+  tested_archive_sha256: bbb01798c7e52bee10aae26a847c0d61d90a99e7e6312ed33056bbe6fa23c959
+  native_benchmark_log_sha256: 192dda5adfeef69f6e2bf5fae24b63a1640a4ce0605fa1763fcfbae36b924ba3
+  native_disk_reload_log_sha256: 54dd805ee5e24ba66d17a8869bfe0373831a0e718e669e8aa7e6c585945cb090
+  full_native_fixture_checked_in_repo: false
+  reproducible_bundle_provided_in_chat: true
+  production_locomotive_game_files_changed: false
+  next_stage: EM072_A5_native_12_train_shortage_dynamic_ID_and_UPS
+  wagon_500kW_traction: not_implemented
+  main_merge_authorized: false
+  release_authorized: false
+  updater_authorized: false
+
 em072a3_native_EM070_auto_traction_verified_rail:
   status: isolated_native_GAME_TESTED_and_disk_SAVE_LOAD_PASS_not_production
   branch: experiment/native-em070-auto-demand-072a3
