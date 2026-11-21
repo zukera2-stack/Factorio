@@ -1,0 +1,208 @@
+{
+  "suite": "EM065",
+  "engine": "2.1.24 build 87808",
+  "game_zip_sha256": "a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07",
+  "tested_variants": 2,
+  "native_benchmark_ticks": 2700,
+  "disk_save_load_runs": 2,
+  "all_topology_functional_pass": true,
+  "external_battery_identity_and_flow_limit_pass": true,
+  "unintended_energy_loss_release_gate": "FAIL",
+  "cases": [
+    {
+      "variant": "reservoir",
+      "engine": "2.1.24 build 87808",
+      "mod_zip_sha256": "a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07",
+      "scenarios": {
+        "live_reconfiguration": {
+          "passed": true,
+          "ticks": 1350,
+          "markers": [
+            "   1.147 Script @__em065-reservoir-probe__/control.lua:112: [EM064 PASS] initial active source/sink on separate factory networks",
+            "   1.199 Script @__em065-reservoir-probe__/control.lua:118: [EM064 PASS] mast_destroy corridor split hidden_count=0",
+            "   1.277 Script @__em065-reservoir-probe__/control.lua:112: [EM064 PASS] mast_rebuilt active source/sink on separate factory networks",
+            "   1.329 Script @__em065-reservoir-probe__/control.lua:118: [EM064 PASS] rail_cut corridor split hidden_count=0",
+            "   1.397 Script @__em065-reservoir-probe__/control.lua:112: [EM064 PASS] rail_rebuilt active source/sink on separate factory networks",
+            "   1.433 Script @__em065-reservoir-probe__/control.lua:212: [EM064 PASS] substation removed and hidden interfaces cleaned",
+            "   1.495 Script @__em065-reservoir-probe__/control.lua:112: [EM064 PASS] substation_rebuilt active source/sink on separate factory networks",
+            "   1.542 Script @__em065-reservoir-probe__/control.lua:231: [EM064 PASS] intentional factory merge suppresses same-network relay",
+            "   1.620 Script @__em065-reservoir-probe__/control.lua:112: [EM064 PASS] factory_resplit active source/sink on separate factory networks",
+            "   1.683 Script @__em065-reservoir-probe__/control.lua:112: [EM064 PASS] after_script_reload active source/sink on separate factory networks"
+          ]
+        }
+      },
+      "save_reload": {
+        "passed": true,
+        "save_bytes": 743579,
+        "extra_energy_j": 13333333,
+        "continued_ticks": 200
+      },
+      "transient_observations": [
+        "1.542 Script @__em065-reservoir-probe__/control.lua:230: [EM064 OBSERVATION] factory merge retained transient bridge energy J=500000.66666667 (may be discarded on reconfiguration)",
+        "1.554 Script @__em065-reservoir-probe__/control.lua:234: [EM064 OBSERVATION] split-at-t1002 hidden_energy_J=0 previous_merged_J=500000.66666667"
+      ],
+      "energy_ledger": {
+        "source_generation_mw": 20,
+        "period_ticks": 1250,
+        "loss_j": 1666667,
+        "loss_events": 6,
+        "created_j": 0,
+        "creation_events": 0,
+        "strict_zero_loss_pass": false,
+        "accepted_for_release": false,
+        "sampled_loss_events": [
+          {
+            "tick": 201,
+            "lost_j_rounded": 333333,
+            "hidden_j_rounded": 0
+          },
+          {
+            "tick": 441,
+            "lost_j_rounded": 166667,
+            "hidden_j_rounded": 166667
+          },
+          {
+            "tick": 671,
+            "lost_j_rounded": 500000,
+            "hidden_j_rounded": 0
+          },
+          {
+            "tick": 896,
+            "lost_j_rounded": 166667,
+            "hidden_j_rounded": 333333
+          },
+          {
+            "tick": 900,
+            "lost_j_rounded": 333333,
+            "hidden_j_rounded": 500001
+          },
+          {
+            "tick": 1002,
+            "lost_j_rounded": 166667,
+            "hidden_j_rounded": 0
+          }
+        ],
+        "note": "Whole-run ledger uses unrounded Lua double values; per-event sampled log integers can differ by a few rounding joules.",
+        "policy": "destroyed_substation_own_hidden_EEI_energy_may_dissipate",
+        "demolished_station_buffer_j": 166667,
+        "surviving_station_buffer_j_at_demolition": 166667,
+        "approved_demolition_discard_j": 166667,
+        "remaining_unexplained_ledger_deficit_j": 1500000,
+        "no_unintended_loss_release_gate_pass": false,
+        "note_provenance": "Expected 20MW setting is not per-tick measured generation; remaining ledger deficit may include undelivered production. Must not call it all physical energy loss without precise source metering."
+      },
+      "source_reservoir": {
+        "production_setting_j_per_tick": 0,
+        "remaining_j": 540333333
+      },
+      "status": "FUNCTIONAL_PASS_NONDEMOLITION_LEDGER_UNRESOLVED",
+      "runner_seconds": 11.672
+    },
+    {
+      "variant": "reservoir-batteries",
+      "engine": "2.1.24 build 87808",
+      "mod_zip_sha256": "a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07",
+      "scenarios": {
+        "live_reconfiguration": {
+          "passed": true,
+          "ticks": 1350,
+          "markers": [
+            "   1.507 Script @__em065-reservoirbattery-probe__/control.lua:132: [EM064 PASS] initial active source/sink on separate factory networks",
+            "   1.553 Script @__em065-reservoirbattery-probe__/control.lua:138: [EM064 PASS] mast_destroy corridor split hidden_count=0",
+            "   1.632 Script @__em065-reservoirbattery-probe__/control.lua:132: [EM064 PASS] mast_rebuilt active source/sink on separate factory networks",
+            "   1.682 Script @__em065-reservoirbattery-probe__/control.lua:138: [EM064 PASS] rail_cut corridor split hidden_count=0",
+            "   1.757 Script @__em065-reservoirbattery-probe__/control.lua:132: [EM064 PASS] rail_rebuilt active source/sink on separate factory networks",
+            "   1.791 Script @__em065-reservoirbattery-probe__/control.lua:246: [EM064 PASS] substation removed and hidden interfaces cleaned",
+            "   1.853 Script @__em065-reservoirbattery-probe__/control.lua:132: [EM064 PASS] substation_rebuilt active source/sink on separate factory networks",
+            "   1.907 Script @__em065-reservoirbattery-probe__/control.lua:265: [EM064 PASS] intentional factory merge suppresses same-network relay",
+            "   2.000 Script @__em065-reservoirbattery-probe__/control.lua:132: [EM064 PASS] factory_resplit active source/sink on separate factory networks",
+            "   2.078 Script @__em065-reservoirbattery-probe__/control.lua:132: [EM064 PASS] after_script_reload active source/sink on separate factory networks"
+          ]
+        }
+      },
+      "save_reload": {
+        "passed": true,
+        "save_bytes": 847302,
+        "extra_energy_j": 13333333,
+        "continued_ticks": 200
+      },
+      "transient_observations": [
+        "1.907 Script @__em065-reservoirbattery-probe__/control.lua:264: [EM064 OBSERVATION] factory merge retained transient bridge energy J=520000.66666667 (may be discarded on reconfiguration)",
+        "1.922 Script @__em065-reservoirbattery-probe__/control.lua:268: [EM064 OBSERVATION] split-at-t1002 hidden_energy_J=0 previous_merged_J=520000.66666667"
+      ],
+      "energy_ledger": {
+        "source_generation_mw": 20,
+        "period_ticks": 1250,
+        "loss_j": 1724409,
+        "loss_events": 8,
+        "created_j": 0,
+        "creation_events": 0,
+        "strict_zero_loss_pass": false,
+        "accepted_for_release": false,
+        "sampled_loss_events": [
+          {
+            "tick": 201,
+            "lost_j_rounded": 373333,
+            "hidden_j_rounded": 0
+          },
+          {
+            "tick": 441,
+            "lost_j_rounded": 186667,
+            "hidden_j_rounded": 186667
+          },
+          {
+            "tick": 444,
+            "lost_j_rounded": 7742,
+            "hidden_j_rounded": 0
+          },
+          {
+            "tick": 671,
+            "lost_j_rounded": 560000,
+            "hidden_j_rounded": 0
+          },
+          {
+            "tick": 896,
+            "lost_j_rounded": 186667,
+            "hidden_j_rounded": 333333
+          },
+          {
+            "tick": 902,
+            "lost_j_rounded": 253333,
+            "hidden_j_rounded": 520001
+          },
+          {
+            "tick": 1002,
+            "lost_j_rounded": 146667,
+            "hidden_j_rounded": 0
+          },
+          {
+            "tick": 1003,
+            "lost_j_rounded": 10000,
+            "hidden_j_rounded": 20000
+          }
+        ],
+        "note": "Whole-run ledger uses unrounded Lua double values; per-event sampled log integers can differ by a few rounding joules.",
+        "policy": "destroyed_substation_own_hidden_EEI_energy_may_dissipate",
+        "demolished_station_buffer_j": 186667,
+        "surviving_station_buffer_j_at_demolition": 186667,
+        "approved_demolition_discard_j": 186667,
+        "remaining_unexplained_ledger_deficit_j": 1537742,
+        "no_unintended_loss_release_gate_pass": false,
+        "note_provenance": "Expected 20MW setting is not per-tick measured generation; remaining ledger deficit may include undelivered production. Must not call it all physical energy loss without precise source metering."
+      },
+      "source_reservoir": {
+        "production_setting_j_per_tick": 0,
+        "remaining_j": 511833333
+      },
+      "external_accumulators": {
+        "count": 8,
+        "source_total_end_j": 20000000,
+        "sink_total_end_j": 19980000,
+        "per_tick_flow_limits_respected": true
+      },
+      "status": "FUNCTIONAL_PASS_NONDEMOLITION_LEDGER_UNRESOLVED",
+      "runner_seconds": 11.91
+    }
+  ],
+  "external_accumulator_identity_check": "All 8 original unit_number values persisted across topology edits, Lua reload and physical SAVE→LOAD, independently from energy-rate limits; native rerun PASS."
+}

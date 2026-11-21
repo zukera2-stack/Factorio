@@ -1652,3 +1652,40 @@ accepted_substation_demolition_energy_policy_064_2026_11_21:
   user_mod_runtime_changed: false
   approved_updater_branch_unchanged: true
   stable_main_unchanged: true
+
+closed_reservoir_energy_065_2026_11_21:
+  branch: experiment/closed-energy-ledger-065
+  based_on: experiment/topology-lifecycle-064
+  base_commit: 305d0dd93d811dc714b6b1c20632a9f49782a73e
+  mod_runtime_changed: false
+  tested_game_version: "0.1.62"
+  immutable_CI_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  engine: Factorio_2_1_24_build_87808_linux_x86_64
+  local_test_runner: tests/run_native_energy_065.py
+  evidence: docs/research/25kv-closed-reservoir-065.md
+  machine_evidence: docs/research/25kv-closed-reservoir-065.json
+  fixture_cases_passed: 2
+  fixture_cases_total: 2
+  topology_checkpoints_per_case: 10
+  native_benchmark_ticks: 2700
+  additional_independent_disk_reload_tests: 2
+  additional_reload_ticks_per_case: 200
+  source_initial_joules: 700000000
+  source_new_generation_joules_per_tick: 0
+  reservoir_only_total_lost_joules: 1666667
+  reservoir_only_demolition_allowance_joules: 166667
+  reservoir_only_unapproved_disappearance_joules: 1500000
+  eight_batteries_total_lost_joules: 1724409
+  eight_batteries_demolition_allowance_joules: 186667
+  eight_batteries_unapproved_disappearance_joules: 1537742
+  external_accumulators_survived: 8
+  accumulator_each_initial_joules: 2000000
+  accumulator_per_side_flow_limits_checked: true
+  source_side_accumulator_final_joules: 20000000
+  sink_side_accumulator_final_joules: 19980000
+  accumulator_instances_preserved_after_disk_reload: true
+  unexplained_created_energy_joules: 0
+  owner_accepted_demolition_own_buffer_dissipation: true
+  approved_updater_061_ref_untouched: true
+  stable_main_056_ref_untouched: true
+  release_status: blocked_unapproved_bridge_buffer_disappearance
