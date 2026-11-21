@@ -1,3 +1,53 @@
+em072a3_native_EM070_auto_traction_verified_rail:
+  status: isolated_native_GAME_TESTED_and_disk_SAVE_LOAD_PASS_not_production
+  branch: experiment/native-em070-auto-demand-072a3
+  parent_em072a2_commit: 04e70e365d5d69d1d47ae47b1b8f26c864dbe4cf
+  source_mod_version: "0.1.62"
+  target_engine: "Factorio 2.1.24 build 87808"
+  source_initial_native_accumulators_j: 25000000
+  station_control_mode: auto
+  station_automatic_demand_request_w: 2000000
+  demand_source: test_only_explicit_registered_2MW_not_real_throttle
+  station_energy_bridge: original_EM070_native_EEI_buffers
+  request_net_key: bridge_dispatch_059_network_key_line_port
+  real_rail_proof: native_get_connected_rail_bounded_BFS_and_technical_046_component
+  max_experiment_BFS_rails: 512
+  wagon_direct_25kV: forbidden
+  native_locomotive_credited_j_tick_240: 4808334
+  native_locomotive_consumed_j_tick_240: 4783334
+  native_locomotive_remain_j_tick_240: 25000
+  unexplained_energy_j: 0
+  disconnected_neighbor_HSR_rail_j: 0
+  disconnected_neighbor_vanilla_rail_j: 0
+  actual_rail_cut_tick: 255
+  actual_rail_cut_no_new_j_verified_tick: 265
+  rail_rebuilt_tick: 280
+  rail_rejoin_traction_recovered_tick: 300
+  manual_train_demand_unregistered_tick: 335
+  zero_train_demand_zero_new_burner_j_verified_tick: 365
+  station_OFF_tick: 390
+  native_OFF_ledger_verified_tick: 410
+  native_benchmark_ticks: 490
+  server_save_tick: 151
+  independent_save_reload_ticks: 340
+  all_six_native_checks: PASS
+  checkpoint_bytes_reproduced: 830448
+  benchmark_log_sha256: 8c3af34e6f1dfbe81778490d98ed1a08a9df9afc7ac3bee8ca546c1d95712f60
+  native_reload_log_sha256: 9c3a362592dbd9c707528c43c98457ca10341583a17e929ba86f21c4ea3d4f8f
+  exact_fixture_root_hook_git_blob: ef7ba98b8194de22433222e13fe425e710af1d6e
+  exact_fixture_auto_dispatch_git_blob: 144c5067c60cb78647455ffc825fd2cbd8bed0d9
+  exact_fixture_probe_game_git_blob: d1fd6b26f4eb663831d6af99af546d0bbd0cd7b0
+  exact_fixture_runner_git_blob: ebdcb206fcfb9645a99750a664663cabe8c4ae4a
+  production_mod_game_code_changed: false
+  actual_500kW_motor_wagon_traction: NOT_IMPLEMENTED
+  production_multi_train_and_dispatch: NOT_TESTED
+  production_train_BFS_ups: NOT_MEASURED
+  native_real_train_throttle_request: NOT_IMPLEMENTED
+  next_required_stage: EM072_A4_multi_train_fairness_component_cache
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072a2_real_native_EM070_to_burner:
   status: native_engine_game_and_disk_SAVE_LOAD_PASS_isolated_research
   branch: experiment/native-em070-burner-debit-072a2
