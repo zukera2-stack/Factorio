@@ -1,3 +1,24 @@
+em071_turnout_cosmetic:
+  branch: experiment/catenary-turnout-cosmetic-071
+  main_base_sha: 56a19fa32d389fe79c9c78558436ec694648616b
+  game_version: "0.1.62"
+  target_engine: "Factorio 2.1.24 build 87808"
+  stage: hypothesis_before_implementation
+  user_observation: rail_turnout_cosmetic_wire_gap_screenshot
+  active_selector: ElectrifiedMainline/scripts/catenary_axis_056.lua
+  inactive_prior_policy: ElectrifiedMainline/scripts/catenary_visual_policy_047.lua
+  existing_max_degree_straight: 2
+  proposed_max_degree_confirmed_fork: 3
+  real_rail_topology_required: true
+  electrical_changes: false
+  prototype_changes: false
+  roadmap: docs/research/25kv-turnout-cosmetic-071.md
+  screenshot_specific_geometry_verified: false
+  official_engine_render_test: pending
+  main_modified: false
+  updater_modified: false
+  release_authorized: false
+
 release_candidate_062:
   type: main_source_development_checkpoint
   status: merged_into_main_source_only_no_release
