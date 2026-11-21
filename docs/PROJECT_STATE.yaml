@@ -1284,3 +1284,22 @@ cross_branch_handoff_2026_11_21:
     handoff: .agents/skills/factorio-handoff/SKILL.md
     native_research: .agents/skills/factorio-native-research/SKILL.md
     updater_release: .agents/skills/factorio-updater-release/SKILL.md
+
+local_qa_library_061_2026_11_21:
+  branch: feature/local-qa-library-061
+  toolkit: tools/local_qa/run_local_qa.py
+  toolkit_skill: .agents/skills/factorio-local-qa/SKILL.md
+  personal_library_snapshot: /Factorio/Local-QA/Factorio_Local_QA_0.1.61.zip
+  verified_zip_sha256: 3771b7241848ae98e74019659baeb03616ab9aa4fa5dfcb9e7acf02efbef754c
+  local_checks_passed: 11
+  local_checks_total: 11
+  deterministic_random_graphs: 700
+  runtime_lua_files: 43
+  runtime_png_files: 83
+  game_zip_files: 130
+  local_lua_backend: liblua_5_4_compatibility
+  native_factorio_engine_executed_locally: false
+  prior_owner_game_log_analysed: true
+  mod_runtime_changed: false
+  approved_updater_ref_changed: false
+  main_mod_version: "0.1.56"

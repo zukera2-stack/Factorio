@@ -1,5 +1,7 @@
 # Electrified Mainline — START HERE / текущая работа
 
+> **Local test toolkit, 2026-11-21:** `tools/local_qa/run_local_qa.py`, `.agents/skills/factorio-local-qa/SKILL.md`; 11 local checks PASS in 0.4s on verified 0.1.61 ZIP, 700 seeded graph tests, prior game log reviewed. **No native Factorio engine in this environment.** Personal file Library copy: `/Factorio/Local-QA/Factorio_Local_QA_0.1.61.zip`. Main game version stays 0.1.56; tool-only PR does not change the patcher or approved 061 runtime. Check live refs.
+
 > **Snapshot: 2026-11-21.** This is a cross-branch navigation index, **not** a claim that experimental code is present in `main`. Always re-fetch live branch HEADs before working. Russian quick summary: стабильная версия в `main` — **0.1.56**; патчер устанавливает проверенную тестовую **0.1.60**; исследование **0.1.61** не является игровым обновлением.
 
 ## Read this first in every new chat

@@ -1,3 +1,5 @@
+> **LOCAL QA LIBRARY HANDOFF (2026-11-21):** `feature/local-qa-library-061` adds a developer-only offline suite in `tools/local_qa` and `.agents/skills/factorio-local-qa/SKILL.md`; tests against exact 061 packaged artifact: 11/11 PASS, 700 randomized dispatch networks, Bob's mock, ZIP CRC, 43 Lua files, 83 PNGs and separate prior actual game log. Real Lua modules executed under Lua 5.4 library; **no native Factorio was run in the model's local container**. The kit is backed up in the user's personal Library `/Factorio/Local-QA/`. This is a tool change on stable main 0.1.56; no tested 061 game logic merged into main or updater pointer changed. More details: `docs/CURRENT_WORK.md`.
+
 > **Cross-branch state as of 2026-11-21:** This document describes **`main` only**. Start a new chat with [`CURRENT_WORK.md`](CURRENT_WORK.md) to find the exact current test-distribution (`test/updater-approved`, 0.1.60), separate Updater 1.1 source and research 0.1.61. This does **not** mean that 0.1.60 is merged into main. Verify live refs before acting.
 
 # Electrified Mainline — `main`-scoped handoff (0.1.56)
