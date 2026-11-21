@@ -5,7 +5,7 @@ local tech=require("scripts.technical_network_046")
 local mast=require("scripts.mast_network_059")
 local PORT,INPUT,OUTPUT="em-25kv-bridge-port-058","em-25kv-bridge-input-058","em-25kv-bridge-output-058"
 storage={};log=function() end
-defines={wire_origin={script=2,player=1},wire_connector_id={pole_copper=5}}
+defines={wire_origin={script=2,player=1},wire_connector_id={pole_copper=5},electric_interface_mode={secondary_input=1,secondary_output=2}}
 local entities,serial={},1000
 local networks={}
 local function net(id)
@@ -89,7 +89,8 @@ flow(10,0,L);flow(20,0,0,L,0,10*L,10*L)
 s.sample_tick=nil
 M.on_tick(3,graph)
 assert(a.direction=="export" and b.direction=="import")
-assert(not olda.valid and not oldb.valid)
+assert(olda.valid and oldb.valid,"charged native EEIs must be re-used across reversal")
+assert(a.input==olda and b.input==oldb,"reversal must swap the old EEI roles, not destroy and recreate")
 assert(a.input.electric_network_id==30 and a.output.electric_network_id==10)
 assert(b.input.electric_network_id==20 and b.output.electric_network_id==30)
 assert(a.output.energy==0 and b.output.energy==0)
