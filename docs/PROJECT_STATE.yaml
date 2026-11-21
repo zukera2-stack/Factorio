@@ -1,6 +1,6 @@
 release_candidate_062:
-  type: public_beta_integration
-  status: draft_PR_46_integration_ci_pass_merge_awaits_owner
+  type: main_source_development_checkpoint
+  status: user_authorized_main_source_merge_no_release
   source_branch: experiment/native-dynamic-eei-070
   source_gameplay_verified_sha: 4c5e026bffdc1082925563d725c94751cd1acb73
   source_docs_sha: 5a2d7861e87eb4723ce461aff832bc98b5a422db
@@ -9,7 +9,7 @@ release_candidate_062:
   target_branch: main
   main_prior_sha: ec7fd465beb13ae148589baae520675edc2cb3b5
   base_main_version: "0.1.56"
-  target_beta_mod_version: "0.1.62"
+  target_main_source_version: "0.1.62"
   installed_updater_branch: test/updater-approved
   installed_updater_version: "0.1.61"
   native_source_060_reverse_ci_run: 44920768721
@@ -36,10 +36,15 @@ release_candidate_062:
   runtime_prototypes_modified_during_integration: false
   runtime_scripts_modified_during_integration: false
   three_main_only_doc_commits_preserved_as_merge_parent: true
-  compatibility_after_public_beta: community_testing_requested
-  release_label: public_beta_not_full_backward_compatibility_guarantee
-  merge_into_main_authorized: false
+  compatibility_after_source_merge: pending_future_release_decision
+  release_label: not_released_mod_under_development
+  merge_into_main_authorized: true
   updater_promote_authorized: false
+  github_release_authorized: false
+  github_tag_authorized: false
+  factorio_mod_portal_publication_authorized: false
+  mod_complete: false
+  missing_game_mechanics: locomotive_void_to_real_traction_backup_and_regeneration
   release_notes: docs/research/25kv-dynamic-eei-070.md
 
 em070_native_dynamic_eei:
@@ -148,9 +153,9 @@ project:
   default_branch: main
   active_test_branch: test/updater-approved
   current_baseline_branch: main
-  active_feature_branch: release/0.1.62-main-integration
-  feature_version: "0.1.62" # EM070 isolated and unapproved; not installed
-  feature_status: 062_beta_main_merge_candidate_ci_pass_await_owner
+  active_feature_branch: main # source merge into main, no release
+  feature_version: "0.1.62" # source main checkpoint only, not installed
+  feature_status: 062_owner_authorized_main_checkpoint_not_release
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -158,7 +163,8 @@ project:
   previous_release_pull_request: 27
   previous_release_merge_commit: 7218360acb4fc5079e48cf4f38448fa086f1af96
   release_merge_approved_by_user: true
-  release_status: merged_into_main_2026_11_19
+  previously_approved_baseline: merged_into_main_2026_11_19
+  release_status: no_release_main_dev_checkpoint_2026_11_21
   next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.48"
   previous_main_handoff_archive: https://github.com/zukera2-stack/Factorio/blob/1a94fb8a7e6a860130b071da7cd8d556a4aec96c/docs/AI_CONTEXT.md
@@ -167,8 +173,8 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.62" # experimental, NOT patcher-approved
-  main_baseline_mod_version: "0.1.56" # merged PR #30
+  mod_version: "0.1.62" # source-only main checkpoint, NOT patcher-approved
+  main_baseline_mod_version: "0.1.62" # owner-authorized main source merge PR #46
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"

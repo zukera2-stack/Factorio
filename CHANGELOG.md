@@ -1,10 +1,10 @@
-## 0.1.62 (public beta candidate — PR #46, NOT RELEASED)
+## 0.1.62 (main development checkpoint — source merge only, NOT RELEASED)
 
 - Native bidirectional 25 kV substation power transfer with 20 MW per-station limit; use Factorio's own `electric-energy-interface` `dynamic` electrical priority instead of emulating reverse power priorities in Lua. Fixed previous prototype reverse-discharge failure.
 - Preserve measured joules in bounded native EEI buffers during temporary corridor reconfiguration, while permitting demolition of only the removed substation's own reserved energy; no manual refund to unrelated factory accumulators.
 - Automatic fair sharing, factory brownout protection, dispatcher differential parity; no gameplay behavior change from final tested EM070 during main integration.
 - Verified in official Factorio 2.1.24 headless CI [44920768721](https://github.com/zukera2-stack/Factorio/actions/runs/44920768721): real source-to-sink and battery reverse delivery 3/3 native cases, 2030 ticks, visual QA and package PASS. Closed reservoir and 48/32/multisource/factory limits were independently verified on a local non-distributable test assembly.
-- **BETA caveat:** existing owner saves upgraded from 0.1.61, Bob's Power, multiplayer, Undo edge cases and prolonged orphan EEI cleanup remain community acceptance targets. Back up saves. Main merge does not alter `test/updater-approved`/Updater channel.
+- **Not a release:** the locomotive remains powered by `void` and actual traction, battery backup and regenerative braking are unfinished. Save upgrades, Bob's, multiplayer and Undo edge cases are unverified. Do not publish or advance `test/updater-approved` on main merge.
 
 ## 0.1.60 (test candidate)
 

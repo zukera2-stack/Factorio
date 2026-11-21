@@ -1,3 +1,5 @@
+> **Owner directive 2026-11-21:** promote tested 0.1.62 EM070 code to `main` only as a development baseline (PR #46). The overall mod is unfinished; NO release/tag/Mod Portal/Updater promotion is authorized. The previous 0.1.56 main-only handoff and beta proposal text below are historical.
+
 # Instructions for AI contributors
 
 ## First read

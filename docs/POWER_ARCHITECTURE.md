@@ -1,3 +1,5 @@
+> **Current development source 0.1.62 (no release):** EM070 native dynamic EEI 20MW bidirectional bridge is verified by Factorio 2.1.24 native headless CI and closed-energy test. The locomotive is still `void`-powered, so none of this yet implements traction, battery backup or regenerative braking. Read [EM070 evidence](research/25kv-dynamic-eei-070.md). The 060/059/058 descriptions below are historical.
+
 # 0.1.60 cold-start recovery
 
 060 implementation: native 059 topology confirmed in game 44 vs factory 27/61, auto stayed idle. Independent bounded physical-device sampling for vanilla dynamic EEIs and accumulators, max aggregation without duplication, nonstorage maximum-flow fallback, own offer/request subtraction, native per-interface flow caps, raw and planned diagnostics. Exact engine cause not isolated. 060 CI/live pending; main unchanged.

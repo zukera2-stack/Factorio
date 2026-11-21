@@ -1,3 +1,5 @@
+> **Actual main development state after 0.1.62 source merge:** EM070 Base-native `dynamic` EEI enables 20MW reversible transfer between factory and isolated catenary networks. It does NOT power the locomotive, which retains `void` energy. Traction power draw, battery fallback and regen are future features. This is NOT a released version. Historical 0.1.56 design follows.
+
 > **Scope of the historical section: previous accepted visual baseline 0.1.56. Public beta 0.1.62 adds native 25kV energy bridges (EM070); see research/25kv-dynamic-eei-070.md.** Cross-branch 0.1.60 electrical bridge and 0.1.61 EEI-priority research are separate; see [`CURRENT_WORK.md`](CURRENT_WORK.md). No power-bridge source is merged into the baseline described here.
 
 # Accepted 0.1.56 architecture
