@@ -1,3 +1,23 @@
+em068_eei_disposal_diagnostics:
+  branch: experiment/eei-disposal-diagnostics-068
+  parent_sha: 0215b599c2bc80fbd750190ea19095cc31328183
+  mod_version: "0.1.62"
+  status: diagnostic_game_tested_fix_not_implemented
+  official_game_build: "2.1.24 build 87808"
+  local_reconstruction_not_exact_ci_zip: true
+  native_topology_ticks: 1350
+  native_disk_save_reload_ticks: 200
+  baseline_lost_j: 1666667
+  legal_demolition_buffer_j: 166667
+  unresolved_loss_j: 1500000
+  created_j: 0
+  runtime_change: disposal_logging_only
+  experiment_fix: fail_accumulator_availability_and_regression
+  release_gate: blocked
+  research: docs/research/25kv-eei-disposal-068.md
+  upstream_test_version: "0.1.61"
+  upstream_main_version: "0.1.56"
+
 schema_version: 1
 project:
   name: Electrified Mainline
@@ -5,9 +25,9 @@ project:
   default_branch: main
   active_test_branch: test/updater-approved
   current_baseline_branch: main
-  active_feature_branch: experiment/network-fair-share-opt-062
+  active_feature_branch: experiment/eei-disposal-diagnostics-068
   feature_version: "0.1.62" # separate unapproved fairness prototype # read-only diagnostic candidate, not installed
-  feature_status: 062_native_3_of_3_pass_not_approved
+  feature_status: 068_native_loss_traced_fix_blocked_no_release
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -29,7 +49,7 @@ project:
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
-  last_state_update: "2026-11-20"
+  last_state_update: "2026-11-21"
   documentation_audit: 056_repository_cleanup
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md

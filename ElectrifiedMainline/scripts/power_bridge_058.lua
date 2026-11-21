@@ -18,12 +18,22 @@ local function state()
  return storage.em.bridge058
 end
 local function destroy(e) if valid(e) then e.destroy() end end
-local function stop(r)
- if r.input or r.output then r.window_j=0;r.last_mw=0 end
- destroy(r.input);destroy(r.output);r.input=nil;r.output=nil
+-- EM068: diagnostic-only. Measure native EEI energy BEFORE destruction.
+local function stop(r,why)
+  local a=valid(r.input) and r.input.energy or 0
+  local b=valid(r.output) and r.output.energy or 0
+  if a+b>0.5 then
+    local s=state()
+    s.buffer_event_seq=(s.buffer_event_seq or 0)+1
+    log(string.format("[EM068 BUFFER DISPOSAL] event_id=%d tick=%d owner=%s reason=%s input_J=%.3f output_J=%.3f input_network=%s output_network=%s",
+      s.buffer_event_seq,game.tick,tostring(r.owner_id or "unknown"),tostring(why or "unknown"),
+      a,b,tostring(valid(r.input) and r.input.electric_network_id),tostring(valid(r.output) and r.output.electric_network_id)))
+  end
+  if r.input or r.output then r.window_j=0;r.last_mw=0 end
+  destroy(r.input);destroy(r.output);r.input=nil;r.output=nil
 end
-local function detach(r)
- stop(r)
+local function detach(r,why)
+  stop(r,why or "detach")
  local t=technical.ensure_storage()
  if r.port_id then t.bridge_ports[r.port_id]=nil end
  destroy(r.factory_port);destroy(r.line_port)
@@ -99,9 +109,10 @@ local function sync_graph(s,graph)
    if n.name==M.SUB and get(id) then
      current[id]=true
      s.stations[id]=s.stations[id] or {mode="auto",status="waiting"}
+      s.stations[id].owner_id=id
    end
  end
- for id,r in pairs(s.stations) do if not current[id] then detach(r);s.stations[id]=nil end end
+ for id,r in pairs(s.stations) do if not current[id] then detach(r,"station-not-in-graph");s.stations[id]=nil end end
  local feeders={}
  for _,edge in pairs(graph.edges) do
    if edge.kind=="feeder" then
@@ -119,17 +130,17 @@ end
 function M.on_removed(e)
  local s=state()
  if e.name==M.SUB then
-   local r=s.stations[e.unit_number];if r then detach(r);s.stations[e.unit_number]=nil end
+   local r=s.stations[e.unit_number];if r then detach(r,"substation-demolished");s.stations[e.unit_number]=nil end
    s.dirty=true
  elseif e.name=="em-35kv-catenary-pole" or e.name=="em-35kv-catenary-pole-north" then
-   for id,r in pairs(s.stations) do if s.feeders[id]==e.unit_number then detach(r) end end
+   for id,r in pairs(s.stations) do if s.feeders[id]==e.unit_number then detach(r,"feeder-mast-removed") end end
    s.dirty=true
  end
 end
 function M.rebuild(graph)
  local s=state()
- for _,r in pairs(s.stations) do
-   detach(r)
+  for _,r in pairs(s.stations) do
+    detach(r,"script-rebuild")
    if not s.auto_migrated and (r.mode=="import" or r.mode=="export") then r.mode="auto" end
    r.direction=nil;r.interface_retry=nil;r.retry=nil
  end
@@ -172,7 +183,7 @@ function M.transfer(input,output,capacity)
  return input-amount,output+amount,amount
 end
 local function reject(r,why)
- stop(r);r.status=why
+  stop(r,"reject:"..tostring(why));r.status=why
 end
 -- 063: Native EEI outputs still hold real joules at auto-idle transitions.
 -- Do not destroy these buffers before the game has discharged them. The station
@@ -237,17 +248,17 @@ function M.on_tick(tick,graph)
  for id,r in pairs(s.stations) do
    local p=get(id)
    local a=get(t.helpers[s.feeders[id]])
-   if r.mode=="off" then if r.factory_port or r.line_port or r.input or r.output then detach(r) end;r.status="off"
+   if r.mode=="off" then if r.factory_port or r.line_port or r.input or r.output then detach(r,"mode-off") end;r.status="off"
    elseif not p or not a or p.force.name~=a.force.name or p.surface.index~=a.surface.index or (t.stats.audit_failed or 0)>0 or (t.stats.mast_audit_failed or 0)>0 then
-     detach(r);r.status="no-feeder-or-audit-failed"
+      detach(r,"no-feeder-or-audit-failed");r.status="no-feeder-or-audit-failed"
    else
      if not (valid(r.factory_port) and valid(r.line_port) and r.anchor_id==a.unit_number and r.parent_force==p.force.name and r.parent_surface==p.surface.index
        and sole_link(r.factory_port,p) and sole_link(r.line_port,a)) then
-       detach(r)
-       if not r.retry or tick>=r.retry then
+        detach(r,"terminal-repair")
+        if not r.retry or tick>=r.retry then
          r.retry=tick+60
          local ok,result=pcall(create_ports,s,r,p,a)
-         if not ok or not result then detach(r);log("[EM058] terminal creation/refused: "..tostring(result)) end
+         if not ok or not result then detach(r,"terminal-create-failed");log("[EM058] terminal creation/refused: "..tostring(result)) end
        end
        r.status="waiting-terminal"
      elseif r.mode=="import" or r.mode=="export" or r.mode=="auto" then
@@ -316,9 +327,9 @@ function M.on_tick(tick,graph)
    if accepted[c.id] then
      local r=s.stations[c.id]
      local created=false
-     if r.direction~=c.direction then stop(r);r.direction=c.direction;r.interface_retry=nil end
-     if not (valid(r.input) and valid(r.output)) then
-       stop(r)
+     if r.direction~=c.direction then stop(r,"direction-change");r.direction=c.direction;r.interface_retry=nil end
+      if not (valid(r.input) and valid(r.output)) then
+        stop(r,"interface-recreate")
        if not r.interface_retry or tick>=r.interface_retry then
          r.interface_retry=tick+60
          local ok,result=pcall(function() r.input=interface(c.src,INPUT);r.output=interface(c.dst,OUTPUT) end)
@@ -388,7 +399,7 @@ function M.command(player,param)
  param=(param or "status"):match("^%s*(.-)%s*$"):lower()
  if param=="" then param="status" end
  if param=="auto" or param=="import" or param=="export" or param=="off" then
-   if r.mode~=param then detach(r);r.mode=param;r.direction=nil;r.retry=nil;r.interface_retry=nil;r.status="waiting";s.dirty=true end
+   if r.mode~=param then detach(r,"manual-mode-change");r.mode=param;r.direction=nil;r.retry=nil;r.interface_retry=nil;r.status="waiting";s.dirty=true end
  elseif param~="status" then player.print("[EM059] auto | import | export | off | status");return end
  local msg=string.format("[EM060] station=%d mode=%s status=%s bridge=%.3f MW / 20 MW | factory=%s line=%s input_J=%.0f output_J=%.0f feeder=%s planned=%.3fMW",
  id,r.mode,r.status or "unknown",r.last_mw or 0,
