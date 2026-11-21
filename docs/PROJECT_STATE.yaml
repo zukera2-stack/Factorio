@@ -1,3 +1,34 @@
+release_candidate_062:
+  type: public_beta_integration
+  status: draft_PR_46_integration_ci_pending_main_unchanged
+  source_branch: experiment/native-dynamic-eei-070
+  source_gameplay_verified_sha: 4c5e026bffdc1082925563d725c94751cd1acb73
+  source_docs_sha: 5a2d7861e87eb4723ce461aff832bc98b5a422db
+  integration_branch: release/0.1.62-main-integration
+  integration_pr: 46
+  target_branch: main
+  main_prior_sha: ec7fd465beb13ae148589baae520675edc2cb3b5
+  base_main_version: "0.1.56"
+  target_beta_mod_version: "0.1.62"
+  installed_updater_branch: test/updater-approved
+  installed_updater_version: "0.1.61"
+  native_source_060_reverse_ci_run: 44920768721
+  native_source_060_reverse_ci_status: pass
+  native_source_power_cases: 3
+  native_source_power_ticks: 2030
+  native_em065_two_closed_reservoirs_local: pass_0_unexplained_0_created_j
+  native_48_station_local: pass_960_ticks
+  native_32_multi_factory_local: pass_3050_ticks
+  official_source_ci_zip_sha256: "391e8d3df756f048996fd4794a3b0b695d74f13475f2da3dca582252709f19cb"
+  runtime_prototypes_modified_during_integration: false
+  runtime_scripts_modified_during_integration: false
+  three_main_only_doc_commits_preserved_as_merge_parent: true
+  compatibility_after_public_beta: community_testing_requested
+  release_label: public_beta_not_full_backward_compatibility_guarantee
+  merge_into_main_authorized: false
+  updater_promote_authorized: false
+  release_notes: docs/research/25kv-dynamic-eei-070.md
+
 em070_native_dynamic_eei:
   branch: experiment/native-dynamic-eei-070
   parent_sha: 5c8f120b24b2a7d3382ac75156f217030c2b31f3
@@ -104,9 +135,9 @@ project:
   default_branch: main
   active_test_branch: test/updater-approved
   current_baseline_branch: main
-  active_feature_branch: experiment/native-dynamic-eei-070
+  active_feature_branch: release/0.1.62-main-integration
   feature_version: "0.1.62" # EM070 isolated and unapproved; not installed
-  feature_status: 070_official_native_ci_pass_owner_release_pending
+  feature_status: 062_beta_main_merge_candidate_ci_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
