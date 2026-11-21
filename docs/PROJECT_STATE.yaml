@@ -1,6 +1,6 @@
 release_candidate_062:
   type: public_beta_integration
-  status: draft_PR_46_integration_ci_pending_main_unchanged
+  status: draft_PR_46_integration_ci_pass_merge_awaits_owner
   source_branch: experiment/native-dynamic-eei-070
   source_gameplay_verified_sha: 4c5e026bffdc1082925563d725c94751cd1acb73
   source_docs_sha: 5a2d7861e87eb4723ce461aff832bc98b5a422db
@@ -16,6 +16,19 @@ release_candidate_062:
   native_source_060_reverse_ci_status: pass
   native_source_power_cases: 3
   native_source_power_ticks: 2030
+  integration_ci_run: 44922029418
+  integration_ci_result: success
+  integration_native_power_cases: 3_of_3_pass
+  integration_native_power_ticks: 2030
+  integration_lua_dispatch_cache_parity_cases: 1675
+  integration_docs_ci_run: 44922029387
+  integration_sprites_ci_run: 44922029384
+  integration_package_file_count: 130
+  integration_package_original_png_count: 83
+  integration_ci_artifact_id: 14714291612
+  integration_inner_zip_sha256: "391e8d3df756f048996fd4794a3b0b695d74f13475f2da3dca582252709f19cb"
+  integration_sha256_equals_verified_em070_source_ci: true
+  integration_git_mergeable: true
   native_em065_two_closed_reservoirs_local: pass_0_unexplained_0_created_j
   native_48_station_local: pass_960_ticks
   native_32_multi_factory_local: pass_3050_ticks
@@ -137,7 +150,7 @@ project:
   current_baseline_branch: main
   active_feature_branch: release/0.1.62-main-integration
   feature_version: "0.1.62" # EM070 isolated and unapproved; not installed
-  feature_status: 062_beta_main_merge_candidate_ci_pending
+  feature_status: 062_beta_main_merge_candidate_ci_pass_await_owner
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
