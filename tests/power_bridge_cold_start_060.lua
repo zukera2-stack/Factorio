@@ -157,7 +157,13 @@ source.active=false;M.on_tick(181,graph)
 -- Unlike 060, the 063 contract keeps already buffered native joules until
 -- the outgoing EEI has discharged; the mock must advance the native state.
 assert(a.status=="draining-buffer" and b.status=="draining-buffer")
-assert(a.output.energy==small and b.output.energy==small)
+-- Reused outputs may already contain energy from the previous direction;
+-- the mock does not advance native electric delivery between these actions.
+assert(a.output.energy>=small and b.output.energy>=small,
+  "relay lost the already measured outbound 20kJ in idle drain")
+assert(a.output.energy<=a.output.electric_buffer_size
+  and b.output.energy<=b.output.electric_buffer_size,
+  "relay overflowed native EEI buffers")
 assert(a.input.input_flow_limit==0 and b.input.input_flow_limit==0)
 a.output.energy=0;b.output.energy=0
 M.on_tick(182,graph)
