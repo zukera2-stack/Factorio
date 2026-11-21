@@ -4,7 +4,7 @@ local M=require("scripts.power_bridge_058")
 local tech=require("scripts.technical_network_046")
 local PORT,INPUT,OUTPUT="em-25kv-bridge-port-058","em-25kv-bridge-input-058","em-25kv-bridge-output-058"
 storage={};log=function() end
-defines={wire_origin={script=2,player=1},wire_connector_id={pole_copper=5}}
+defines={wire_origin={script=2,player=1},wire_connector_id={pole_copper=5},electric_interface_mode={secondary_input=1,secondary_output=2}}
 local entities,serial={},1000
 local force={name="player",set_surface_hidden=function()end}
 local surface={index=1,name="nauvis",valid=true}
@@ -66,23 +66,34 @@ assert(r1.input.energy==0 and r1.output.energy==M.LIMIT and r2.output.energy==0)
 -- Only simulated engine delivery plus actual transferred input can charge export.
 r2.input.energy=100000
 M.on_tick(4,graph);assert(r2.output.energy==100000 and r2.input.energy==0)
--- A change to the native network makes a loop; old output destroyed before any credit.
+-- A loop MUST block native I/O, but may not destroy already-metered Joules.
 sub2.electric_network_id=10;r2.factory_port.electric_network_id=10
-M.on_tick(5,graph);assert(r2.status=="cycle-or-same-network" and r2.output==nil and r1.status=="active")
--- Missing feeder means both terminals, interfaces, whitelist entry removed.
+M.on_tick(5,graph)
+assert(r2.status=="cycle-or-same-network" and r1.status=="active")
+assert(r2.output and r2.output.valid and r2.output.energy==100000)
+assert(r2.input.input_flow_limit==0 and r2.output.output_flow_limit==0)
+-- Missing feeder removes terminals and whitelist; charged EEIs remain passive.
 graph.edges.b=nil;M.mark_dirty();local pid=r2.port_id
-M.on_tick(6,graph);assert(r2.status=="no-feeder-or-audit-failed" and r2.line_port==nil and t.bridge_ports[pid]==nil)
--- Off discards residual buffers, never creates energy. Role reversal allocates new zeroed interfaces.
+M.on_tick(6,graph)
+assert(r2.status=="no-feeder-or-audit-failed" and r2.line_port==nil and t.bridge_ports[pid]==nil)
+assert(r2.output and r2.output.valid and r2.output.energy==100000 and r2.output.output_flow_limit==0)
+-- OFF freezes rather than destroying, and an explicit reversal reuses the pair.
 player.selected=sub1;M.command(player,"off")
-assert(r1.input==nil and r1.output==nil and r1.line_port==nil)
+assert(r1.input and r1.input.valid and r1.output and r1.output.valid and r1.line_port==nil)
+assert(r1.input.input_flow_limit==0 and r1.output.output_flow_limit==0)
 M.command(player,"export")
 M.on_tick(7,graph);M.on_tick(8,graph)
 assert(r1.status=="active" and r1.input.electric_network_id==30 and r1.output.electric_network_id==10)
-assert(r1.input.energy==0 and r1.output.energy==0)
--- No hidden orphan after removing parent.
+assert(r1.input.electric_interface_mode==defines.electric_interface_mode.secondary_input)
+assert(r1.output.electric_interface_mode==defines.electric_interface_mode.secondary_output)
+assert(math.abs(r1.input.energy+r1.output.energy-M.LIMIT)<0.001,"manual reversal lost preexisting native Joules")
+-- Demolition destroys only the mined station's own EEIs; remote frozen J stays.
 local p=r1.port_id
+local former_input,former_output=r1.input,r1.output
 M.on_removed(sub1);sub1.destroy();graph.nodes[1]=nil
 M.on_tick(9,graph)
 assert(s.stations[1]==nil and t.bridge_ports[p]==nil)
-assert(not next(lab.find_entities_filtered{}))
-print("058 runtime mock PASS: real registration, modes, exact terminals, energy credit, cycle rejection, feeder loss and removal cleanup")
+assert(not former_input.valid and not former_output.valid)
+assert(r2.input and r2.input.valid and r2.output and r2.output.valid)
+assert(r2.output.energy==100000 and r2.output.output_flow_limit==0)
+print("069 runtime mock PASS: registered native ports, bounded transfers, conservation on reject/off/reverse, demolition ownership")
