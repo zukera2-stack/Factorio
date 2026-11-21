@@ -1,3 +1,5 @@
+> **Latest updater channel (2026-11-21):** `test/updater-approved` is now **0.1.61**, HEAD `c8a1feddddfb3f160eae5f63cd1b0231e2136ce3` (runtime `55db63f6d3be6a2f64da005d6db28433e8c42d5d` verified by real Factorio 2.1.24 and packaging [CI 44875890182](https://github.com/zukera2-stack/Factorio/actions/runs/44875890182)). User has existing Updater 1.1: run old `Update.bat` option 1 and then 2; local owner game validation remains pending. This 061 version adds only read-only `/em-25kv-priority` diagnostics and keeps 060's 20 MW bridge. **main still 0.1.56**. Independent native-accumulator 061 experiment is NOT this approved game build. Any old 0.1.60 pointer below is historical and superseded; always check live refs.
+
 > **Cross-branch state as of 2026-11-21:** This document describes **`main` only**. Start a new chat with [`CURRENT_WORK.md`](CURRENT_WORK.md) to find the exact current test-distribution (`test/updater-approved`, 0.1.60), separate Updater 1.1 source and research 0.1.61. This does **not** mean that 0.1.60 is merged into main. Verify live refs before acting.
 
 # Electrified Mainline — `main`-scoped handoff (0.1.56)
