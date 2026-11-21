@@ -1,3 +1,73 @@
+em072a5_b3_native_zero_charge_terminal_research:
+  date: "2026-11-21"
+  branch: experiment/em072a5-native-recharge-b3
+  parent_b1_sha: 8531bf0eb726de98ecdfa534b1d48233ef6b3d3d
+  status: native_engine_and_independent_real_disk_SAVE_LOAD_PASS_lab_only
+  source_mod: "ElectrifiedMainline 0.1.62"
+  source_exact_ci_run_id: 44925677432
+  source_exact_ci_artifact_id: 14714614745
+  source_inner_zip_sha256: 91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575
+  factorio: "2.1.24 build 87808 linux headless"
+  source_gameplay_code_changed: false
+  source_catenary_mast_supply_radius_unchanged_zero: true
+  test_only_outpost_terminal_supply_radius_tiles: 24
+  test_only_registered_script_copper_to_hidden_technical_anchor: true
+  test_only_technical_audit_whitelist_patch: true
+  test_only_player_buildable_controller_item_recipe_prototype: true
+  actual_player_placement_mining_blueprint_undo_tested: false
+  full_controller_terminal_lifecycle_rebuild_tested: false
+  real_native_accumulator_count: 24
+  outpost_initial_j: 0
+  outpost_total_capacity_j: 120000000
+  outpost_native_max_discharge_and_charge_w: 7200000
+  factory_native_accumulator_count: 84
+  factory_initial_j: 420000000
+  native_real_solar_panels_built: 346
+  native_solar_connected_to_factory: 270
+  native_outpost_j_at_tick_200: 15720000
+  native_solar_removed_at_tick: 225
+  closed_finite_energy_ledger_starts_tick: 231
+  closed_finite_energy_baseline_j: 439853333.33333
+  native_distinct_locomotive_train_ids: 12
+  fixed_test_demand_w_per_locomotive: 2000000
+  native_EM070_count: 1
+  EM070_max_import_power_w: 20000000
+  native_train_peak_sum_power_w: 24000000
+  station_OFF_tick: 300
+  native_paid_burner_j_after_OFF_control: 10200000
+  native_outpost_j_just_before_OFF: 14800000
+  native_outpost_j_at_tick_390: 4053333.333
+  minimum_native_train_movement_after_OFF_tiles: 86.699
+  factory_accumulator_energy_change_after_settled_OFF_j: 0
+  native_outpost_empty_at_tick: 445
+  no_more_native_burner_credit_after_empty: PASS_tick_451
+  total_native_burner_j_received: 39533333
+  total_native_burner_j_spent: 39533333
+  min_and_max_native_j_per_train: 3294444.444
+  min_all_train_movement_tiles: 178.4531
+  post_solar_finite_energy_ledger_residual_j: -0.000002
+  native_HSR_cache_builds: 1
+  native_benchmark_ticks: 460
+  native_server_SAVE_tick: 151
+  separate_native_disk_LOAD_ticks: 309
+  checkpoint_bytes: 956607
+  native_log_sha256: f91ef954969fae9a633e15be9ab776acf77d0da1c4cf7796539cdfbecdfd0ca0
+  native_reload_log_sha256: 937fe1f7a6c3154bcec8f50d8f4c05b74c7cbdc72513566edf5fd238054d1432
+  naive_factory_accumulator_only_trial_stalled_after_native_charge_j: 240000
+  naive_trial_error_reason: auto_idle_no_connected_peer
+  native_invalid_force_and_wrong_feeder_rejected: PASS
+  source_probe: tests/em072a5-b3-probe/
+  strict_native_runner: tests/run_native_recharge_072a5b3.py
+  report: docs/research/native-zero-charge-terminal-b3-072a5.md
+  report_machine: docs/research/native-zero-charge-terminal-b3-072a5.json
+  next_gate: EM072_A5_B4_native_terminal_lifecycle_rail_cut_rejoin_component_ownership
+  actual_500kW_motor_wagon_gameplay: NOT_IMPLEMENTED
+  native_dynamic_throttle: NOT_IMPLEMENTED
+  factory_brownout_and_multiplayer: NOT_TESTED
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072a5_b1_native_corridor_buffer_lab:
   status: native_engine_and_independent_disk_SAVE_LOAD_PASS_laboratory_only
   date: "2026-11-21"
