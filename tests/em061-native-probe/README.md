@@ -22,3 +22,8 @@ Probe phases (ticks since setup):
 - 1250–1550: separate A→B→C shared gateways (diagnostic)
 
 Source: `docs/research/25kv-native-accumulator-gateway-061.md`.
+
+## Priority correction / scope clarification
+The existing one-accumulator A/B overlap remains an **experimental sanity check**, not a promise to replace the 060 bridge. User identified `primary-*`, `secondary-*`, `tertiary-*` EEI priorities as critical. Ordinary accumulators **cannot be wired using two independent copper inputs**; a shared accumulator is only in overlapping supply areas. Official wiki confirms that special overlap, but it does not guarantee battery-to-battery charging or multi-hop energy transfer.
+
+For all further architecture decisions first execute the priority matrix P1–P7 specified in `docs/research/25kv-native-accumulator-gateway-061.md` (2026-11-21 section 11). No such test was run in current 061 CI. Existing 060 input/output prototypes are fixed `secondary-input`/`secondary-output`; dynamic EEI modes need a test-only dynamic prototype before considering any 060 runtime change.

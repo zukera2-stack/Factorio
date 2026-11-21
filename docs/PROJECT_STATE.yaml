@@ -1352,3 +1352,10 @@ native_accumulator_gateway_061:
   uploader_061_enabled: false
   promotion_gate: exact_game_ci_and_owner_approval
   merge_allowed: false
+  priority_research: official_factorio_primary_secondary_tertiary_EEI_modes
+  priority_risk: tertiary_shared_gateway_cannot_be_assumed_to_charge_tertiary_native_accumulators
+  revised_architecture: keep_060_Lua_buffer_transfer_until_native_priority_matrix_proven
+  highest_priority_test: EEI_secondary_input_vs_tertiary_input_battery_source
+  sink_priority_test: EEI_secondary_output_vs_tertiary_output_native_accumulator_sink
+  mode_matrix_engine_verified: false
+  owner_change_request: research_modes_not_060_replacement

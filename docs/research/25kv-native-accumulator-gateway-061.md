@@ -85,3 +85,54 @@ Do **not** tell the owner to download and manually replace a gameplay mod ZIP ev
 - Only approved source `refs/heads/test/updater-approved` is fetched, currently **0.1.60 / ea9366a9798cd78efec4b675c81d086c09170c28** (verified 2026-11-21). The updater does not track `experiment/native-accumulator-gateway-061`, cannot install the separate test-only mod, and must not be redirected to arbitrary feature branches.
 - A future **gameplay 0.1.61** (not this research-only probe) must first pass static/CI, actual Factorio 2.1.24 headless and owner-defined game QA, then receive explicit owner approval for promotion of an **exact reviewed commit** to `test/updater-approved`. Only after that, tell owner: close Factorio → `Update.bat` → **1** → confirm; optionally **2** for verification. Backups under `%TEMP%\ElectrifiedMainline-Updater` may be cleaned by Windows; keep an independent save backup.
 - Do not move approved ref just to run the Base-only research probe. Run it on a disposable isolated map/CI instead; preserve current 060 and user's saves.
+
+## 11. Architecture correction: priority levels are more important than an accumulator alone
+
+User challenge on 2026-11-21: you cannot attach an ordinary accumulator via two independent copper terminals. This is **correct** about explicit electrical connectors: accumulators have no two independent wire ports. The official [Accumulator isolation section](https://wiki.factorio.com/Accumulator#Isolation_of_Power_Networks) shows a distinct special case: two **unconnected electric-pole grids with overlapping supply areas** may both serve the same accumulator. [Factorio LuaEntity.electric_networks](https://lua-api.factorio.com/latest/classes/LuaEntity.html) is explicitly documented to enumerate multiple networks for an energy entity. A native overlap is real, but it is **tertiary-priority**, not a voltage transformer.
+
+### The Factorio electrical scheduler, not physical voltage
+[ElectricUsagePriority](https://lua-api.factorio.com/latest/types/ElectricUsagePriority.html) and [ElectricEnergySource](https://lua-api.factorio.com/latest/types/ElectricEnergySource.html) provide priorities:
+- **solar output**: highest production priority.
+- **primary-output**: primary source (editor/dynamic EEI when so configured).
+- **secondary-output**: ordinary steam generators and existing 060 output EEI.
+- **tertiary-output / tertiary**: stored-energy-style lower priority source (verify exact dynamic EEI behavior).
+- **primary-input**: urgent consumers such as laser turrets.
+- **secondary-input**: ordinary consumers and existing 060 bridge collector.
+- **tertiary-input**: low-priority surplus collector (verify accumulator source interaction).
+- **tertiary_input_output** and **accumulator** dynamic EEI modes exist in Factorio 2.1.x; subtle differences and mixed-network behavior must be **tested**, not guessed.
+
+These are supply/demand *dispatch priorities*, **not** primary/secondary/tertiary physical voltage rails and **not** the ability of one EEI to have two independently wired electrical ports. The 25 kV in our mod is nominal/cosmetic; engine networks do not model voltage drop or 25 kV conversion.
+
+The 2.1.7 [official scripting changelog](https://forums.factorio.com/134095) introduced dynamic priority, `LuaEntity.electric_interface_mode` and per-entity `input_flow_limit`/`output_flow_limit`. To exercise dynamic modes safely, the EEI prototype itself must support `usage_priority = "dynamic"`. Our shipped 060 prototype `prototypes/power_bridge_058.lua` instead has **fixed** `secondary-input` and `secondary-output` prototypes. Do not assume a runtime property can turn those into fully dynamic devices without a data-stage migration and exact engine proof.
+
+### Why a single native accumulator probably cannot replace 060
+1. A shared ordinary accumulator is *tertiary* on **both** sides. It accepts only surplus and discharges only to unmet demand at lower/higher production priorities; cannot guarantee stored-energy-to-stored-energy relay.
+2. A bank of charged vanilla accumulators on A and an empty vanilla accumulator on B are also tertiary. **Do not assert** that they exchange energy through an extra tertiary shared accumulator: in particular, native batteries generally do not charge each other directly. A route A→B→C may stall. Verify exact 2.1.24 semantics before a conclusion.
+3. We need supply from native ordinary generators, Bob's devices and native accumulator banks, with regular consumer priority; we also need charge on the far side at up to 20MW. An output-side **secondary-output** interface can offer energy to ordinary storage with the engine regulating within that local network, unlike an all-tertiary chain.
+4. Two isolated factory/corridor grids cannot be interconnected just by assigning EEI priorities. The 060 Lua bridge transfers actual accounted J between physically isolated EEIs with 20MW caps and cycle guards. A **native power switch**, in contrast, merges networks when closed and provides no native 20MW throughput cap. Neither is a drop-in replacement for the other.
+
+### Revised falsifiable first experiment: a 2.1.24 priority matrix
+**Do not alter the working 060 bridge.** Build a separate Base-only test fixture with `electric-energy-interface` set to each mode (or a test-only dynamic prototype), a vanilla accumulator, a **real secondary-input load** (radar or other native device), an explicit primary-input priority device where feasible, and source/sink profiles. For each case log native net id(s), EEI mode/limits, J before-after, `parent_network.flow_last_tick`, and transferred J/tick. No scripted energy teleportation.
+
+| Case | Source in network A | Bridge input priority | Bridge output priority in network B | B loads | What must be learned |
+|---|---|---|---|---|---|
+| P1 | 10MW primary-output EEI | secondary-input (060 control) | secondary-output | native sink + accumulator | Baseline buffer accounting, real A→B transfer only if using controlled 060 Lua bridge |
+| P2 | 10MW primary-output EEI | tertiary-input | secondary-output | native sink + accumulator | Does surplus-only extraction work? |
+| P3 | charged vanilla accumulators only | secondary-input | secondary-output | native sink + empty accumulators | Can bridge draw from source batteries? Identify no-generator behavior |
+| P4 | charged vanilla accumulators only | tertiary-input | secondary-output | native sink + empty accumulators | Does tertiary-to-tertiary charge fail? |
+| P5 | 10MW primary-output EEI | secondary-input | tertiary-output | empty vanilla accumulators only | Does tertiary output actually charge tertiary storage? |
+| P6 | primary-output source + native loads | primary-input vs secondary-input | secondary-output | ordinary loads | Does bridge starve critical/ordinary consumers? |
+| P7 | arbitrary source | dynamic accumulator vs tertiary_input_output | dynamic as supported | multiple nets | Distinguish modes; do NOT claim bidirectionality or cross-net transfer without native evidence |
+
+**Attention:** P1–P6 require a *paired* isolated A/B interface plus a controlled (existing) accounted Joule transfer to evaluate bridged delivery. Their primary objective is to isolate **input and output priority semantics** on each side. The shared-accumulator no-Lua experiment remains a separate P8 sanity test for overlap/isolation, then P9 battery-only and P10 A→B→C. Do not mix experiments or infer native across-grid behavior from the existing Lua bridge.
+
+### Direction policy hypothesis (not adopted)
+- **Default surplus-only source**: tertiary-input EEI may collect only generated excess, preserving ordinary consumers, but likely will not discharge native battery banks; this is an operational policy choice, not automatic superiority.
+- **Reserve-supported source**: secondary-input EEI may request energy even from stored batteries as a real consumer. Its 20MW limit alone does **not** guarantee protection of critical ordinary loads; add measured reserve guard.
+- **Destination**: secondary-output EEI offers real buffered J to the local network and should be preferred over tertiary-output **if the goal includes charging native accumulators**; engine test required.
+- **Primary-input/output**: never use merely to solve an idle bug, since it can override priorities of user factory devices.
+
+Design decision: **keep the verified 060 bridge and test priorities as a focused optimization path**. Only consider replacing it if shared-native alternatives prove 20MW, battery bank charge/discharge, bidirectional 2-grid and 3-grid, no energy creation and full topology audit.
+
+### Source provenance and uncertainty
+Direct source: official Factorio Wiki Accumulator "Isolation of Power Networks"; official 2.1.x prototype/runtime docs and 2.1.7 changelog; 060 repository fixed EEI prototypes and headless test logs. Historical Factorio staff statement that tertiary EEI behaves as a battery: https://forums.factorio.com/viewtopic.php?t=73078 (older version: source **context**, not 2.1.24 acceptance). The 061 source is only **research code**; current CI PASS did not run a native engine. All mode-specific behavioral predictions above are marked for exact game tests.
