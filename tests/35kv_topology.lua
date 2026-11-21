@@ -56,6 +56,8 @@ if info:match('"version"%s*:%s*"0%.1%.61"') or is062 then
    assert(ok==true and why=="exit" and code==0,"062 fairness regression failed")
    local opt_ok,opt_why,opt_code=os.execute("lua5.2 tests/bridge_dispatch_efficiency_062.lua")
    assert(opt_ok==true and opt_why=="exit" and opt_code==0,"062 48-station optimized dispatch regression failed")
+   local turnout_ok,turnout_why,turnout_code=os.execute("lua5.2 tests/25kv_turnout_cosmetic_071.lua")
+   assert(turnout_ok==true and turnout_why=="exit" and turnout_code==0,"071 real rail turnout cosmetic 3-span regression failed")
    local cache_ok,cache_why,cache_code=os.execute("lua5.2 tests/bridge_dispatch_cache_067.lua")
    assert(cache_ok==true and cache_why=="exit" and cache_code==0,"067 dispatcher cache parity test failed")
 

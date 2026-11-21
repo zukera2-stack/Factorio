@@ -3,7 +3,7 @@ em071_turnout_cosmetic:
   main_base_sha: 56a19fa32d389fe79c9c78558436ec694648616b
   game_version: "0.1.62"
   target_engine: "Factorio 2.1.24 build 87808"
-  stage: hypothesis_before_implementation
+  stage: implemented_CI_pending_native_game_unverified
   user_observation: rail_turnout_cosmetic_wire_gap_screenshot
   active_selector: ElectrifiedMainline/scripts/catenary_axis_056.lua
   inactive_prior_policy: ElectrifiedMainline/scripts/catenary_visual_policy_047.lua
@@ -15,6 +15,11 @@ em071_turnout_cosmetic:
   roadmap: docs/research/25kv-turnout-cosmetic-071.md
   screenshot_specific_geometry_verified: false
   official_engine_render_test: pending
+  code_changed: ElectrifiedMainline/scripts/catenary_axis_056.lua
+  new_test: tests/25kv_turnout_cosmetic_071.lua
+  existing_test_runner_updated: tests/35kv_topology.lua
+  native_power_code_changed: false
+  same_track_rail_end_required: true
   main_modified: false
   updater_modified: false
   release_authorized: false

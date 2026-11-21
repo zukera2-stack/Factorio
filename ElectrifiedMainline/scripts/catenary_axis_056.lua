@@ -48,7 +48,7 @@ end
 -- Pure planner. Adapter: rails(id) -> {length, links(sign), stations}.
 -- Walk from each mast in BOTH directions, only through actual connected ends.
 -- Stop at first mast on each route; no skipping a nearer mast to join a remote one.
--- At a branch, nearest first mast wins; reciprocal selection limits degree to two.
+-- At a true rail fork, nearest mast on each branch may join; never more than three.
 function M.select(placements,rail)
  local byrail={}
  for id,p in pairs(placements) do
@@ -56,13 +56,13 @@ function M.select(placements,rail)
  end
  for _,t in pairs(byrail) do table.sort(t,function(a,b) if a.s~=b.s then return a.s<b.s end;return a.id<b.id end) end
  local function walk(id,p,sign)
-  local queue={{rid=p.rail,sign=sign,at=p.s,cost=0}}
-  local seen={}
+  local queue={{rid=p.rail,sign=sign,at=p.s,cost=0,fork=false}}
+  local seen,found={},{}
   local best,visits=nil,0
   while #queue>0 and visits<192 do
    table.sort(queue,function(a,b) if a.cost~=b.cost then return a.cost<b.cost end;if a.rid~=b.rid then return a.rid<b.rid end;return a.sign<b.sign end)
    local cur=table.remove(queue,1);visits=visits+1
-   if cur.cost>M.REACH or (best and cur.cost>best.cost+EPS) then break end
+   if cur.cost>M.REACH then break end
    local r=rail(cur.rid)
    if r then
     local key=cur.rid..":"..cur.sign
@@ -77,41 +77,66 @@ function M.select(placements,rail)
       end
      end
      if nearest then
-      if nearest.cost<=M.REACH and nearest.cost>EPS and (not best or nearest.cost<best.cost-EPS or (math.abs(nearest.cost-best.cost)<=EPS and nearest.id<best.id)) then best=nearest end
+      if nearest.cost<=M.REACH and nearest.cost>EPS then
+       if not best or nearest.cost<best.cost-EPS or (math.abs(nearest.cost-best.cost)<=EPS and nearest.id<best.id) then best=nearest end
+       -- A real rail fork permits one second nearest-first route, not a
+       -- geometric shortcut toward an unrelated adjacent track.
+       if cur.fork and (not found[nearest.id] or nearest.cost<found[nearest.id].cost) then found[nearest.id]=nearest end
+      end
      else
       local cost=cur.cost+(cur.sign==1 and r.length-cur.at or cur.at)
       if cost<=M.REACH then
-       for _,link in ipairs(r.links(cur.sign)) do
+       local links=r.links(cur.sign)
+       local fork=cur.fork or #links>1
+       for _,link in ipairs(links) do
         local next=rail(link.id)
-        if next then queue[#queue+1]={rid=link.id,sign=link.sign,at=link.sign==1 and 0 or next.length,cost=cost} end
+        if next then queue[#queue+1]={rid=link.id,sign=link.sign,at=link.sign==1 and 0 or next.length,cost=cost,fork=fork} end
        end
       end
      end
     end
    end
   end
-  return best
+  local result={}
+  if best then result[best.id]={cost=best.cost,fork=found[best.id]~=nil} end
+  local extras={}
+  for other,q in pairs(found) do if not best or other~=best.id then extras[#extras+1]=q end end
+  table.sort(extras,function(a,b) if a.cost~=b.cost then return a.cost<b.cost end;return a.id<b.id end)
+  if extras[1] then result[extras[1].id]={cost=extras[1].cost,fork=true} end
+  return result
  end
  local choices={}
  for id,p in pairs(placements) do
   choices[id]={}
   for _,sign in ipairs({-1,1}) do
-   local q=walk(id,p,sign)
-   if q then choices[id][q.id]=q.cost end
+   for other,q in pairs(walk(id,p,sign)) do choices[id][other]=q end
   end
  end
- local edges={}
+ local candidates={}
  for a,targets in pairs(choices) do
-  for b,length in pairs(targets) do
+  for b,q in pairs(targets) do
    if a<b and choices[b] and choices[b][a] then
     local pa,pb=placements[a],placements[b]
-    -- Reject looping shortcuts. A real taut chord may cross inside a curve,
-    -- but must not jump to a nearby parallel line via a remote switch.
     local chord=math.sqrt(d2(pa,pb))
-    if chord>EPS and length<=chord*1.35+1.5 then
-     edges[edgekey(a,b)]={a=a,b=b,kind="contact",corner=false,axis=true,axis_length=length}
+    if chord>EPS and q.cost<=chord*1.35+1.5 then
+     candidates[#candidates+1]={a=a,b=b,cost=q.cost,fork=q.fork or choices[b][a].fork}
     end
    end
+  end
+ end
+ table.sort(candidates,function(a,b)
+  if a.cost~=b.cost then return a.cost<b.cost end
+  if a.a~=b.a then return a.a<b.a end
+  return a.b<b.b
+ end)
+ local edges,degree={},{}
+ for _,c in ipairs(candidates) do
+  local da,db=degree[c.a] or 0,degree[c.b] or 0
+  -- Keep ordinary masts at two spans. A third is allowed only after
+  -- native get_connected_rail exposed a fork along this very route.
+  if da<3 and db<3 and ((da<2 and db<2) or c.fork) then
+   edges[edgekey(c.a,c.b)]={a=c.a,b=c.b,kind="contact",corner=false,axis=true,axis_length=c.cost}
+   degree[c.a]=da+1;degree[c.b]=db+1
   end
  end
  return edges
