@@ -1,3 +1,42 @@
+em072a5_buffer_outpost_design:
+  introduced_by_owner: "2026-11-21"
+  status: design_only_not_implemented_or_native_tested
+  branch: experiment/em072a5-buffer-outpost-design
+  parent_EM072_A4_SHA: e200614daddb70915193071b65476b3fd5c554c1
+  docs_plan: docs/plans/BUFFER_OUTPOST_072A5.md
+  docs_api_research: docs/research/buffer-outpost-api-072a5.md
+  infrastructure_type: stationary_25kv_corridor_side_accumulator_buffer
+  factory_network_direct_connection: forbidden
+  catenary_connection_must_be_verified_and_script_owned: true
+  pilot_accumulator_type: vanilla_accumulator
+  pilot_accumulator_count: 24
+  capacity_j_per_accumulator: 5000000
+  input_power_w_per_accumulator: 300000
+  output_power_w_per_accumulator: 300000
+  nominal_ideal_capacity_j: 120000000
+  nominal_ideal_max_charge_power_w: 7200000
+  nominal_ideal_max_discharge_power_w: 7200000
+  example_substation_limit_w: 20000000
+  example_12_locomotives_power_w: 24000000
+  example_deficit_power_w: 4000000
+  ideal_duration_seconds_at_4MW: 30
+  physical_outpost_actual_engine_tested: false
+  native_traction_meter_from_corridor: hypothesis_requires_native_proof
+  auto_dispatch_native_accumulator_priority: unverified
+  potential_bridge_double_accounting: mandatory_negative_test
+  12_real_native_train_overload: not_tested
+  station_OFF_with_charged_outpost: not_tested
+  real_save_reload_charge_preservation: not_tested
+  outpost_placed_player_entity: not_implemented
+  locomotive_energy_source_current_main: void
+  wagon_motor_wheels_500kw: still_planned_no_direct_25kv
+  game_code_files_changed: false
+  version_bump: false
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+  next_stage: EM072_A5_Power_and_Buffer_native_Factorio_proofs
+
 em072a4_multitrain_native_auto_bridge_research:
   status: isolated_native_two_trains_two_stations_and_disk_reload_PASS_not_integrated
   branch: experiment/native-em070-multitrain-cache-072a4
