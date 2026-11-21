@@ -1,3 +1,60 @@
+em072a5_b1_native_corridor_buffer_lab:
+  status: native_engine_and_independent_disk_SAVE_LOAD_PASS_laboratory_only
+  date: "2026-11-21"
+  branch: experiment/em072a5-native-buffer-b1
+  parent_b0_sha: ba19d1a53ac7d99ed23aed0e021eb7c484f68f76
+  source_mod_version: "0.1.62"
+  source_ci_run: 44925677432
+  source_ci_artifact: 14714614745
+  exact_game_inner_zip_sha256: 91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575
+  game_code_files_changed: false
+  native_factorio: "2.1.24 build 87808 linux headless"
+  locomotives: 12
+  distinct_lua_train_ids: 12
+  fixed_demand_per_locomotive_w: 2000000
+  native_EM070_AUTO_count: 1
+  native_EM070_limit_w: 20000000
+  factory_native_accumulator_count: 84
+  factory_initial_j: 420000000
+  native_corridor_accumulator_count: 24
+  corridor_initial_j: 120000000
+  corridor_max_discharge_w: 7200000
+  test_only_north_pole_supply_radius_tiles: 30
+  actual_main_north_pole_supply_radius_tiles: 0
+  actual_player_outpost_terminal: not_implemented
+  native_traction_meter: disposable_dynamic_EEI_secondary_input
+  native_meter_production_w: 0
+  actual_total_native_burner_received_j: 71280000
+  actual_total_native_burner_spent_j: 71280000
+  peak_total_train_power_w: 24000000
+  station_off_at_tick: 235
+  station_off_native_transfer_j: 8400000
+  outpost_at_station_off_j: 110186667.333
+  outpost_at_tick_310_j: 101240000.667
+  min_all_twelve_off_movement_tiles: 134.406
+  factory_settled_off_energy_delta_j: 0
+  unexplained_energy_j: -0.000003
+  unique_native_hsr_cache_builds: 1
+  real_native_benchmark_ticks: 365
+  real_server_SAVE_tick: 151
+  independent_disk_LOAD_ticks: 214
+  native_benchmark_log_sha256: 98022e4d132a1ce6ed71aa134080a9efa468f649a14dae7d441301ef3da70661
+  native_disk_reload_log_sha256: e5fb6c5da0e3239c604182b63a8ecd53980a1ba26c5457b91511d404b68996f8
+  strict_runner: tests/run_native_buffer_072a5b1.py
+  disposable_probe: tests/em072a5-b1-probe/
+  measured_report: docs/research/native-corridor-buffer-b1-072a5.md
+  machine_report: docs/research/native-corridor-buffer-b1-072a5.json
+  b3_zero_initial_charge_and_native_recharge: not_tested
+  permanent_script_owned_outpost_terminal: not_tested
+  full_30_second_sustained_overload: not_tested
+  rail_break_rejoin_and_force_surface: not_tested
+  dynamic_throttle_demand: not_implemented
+  multi_station_brownout_and_UPS: not_tested
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+  next_stage: EM072_A5_B3_real_zero_charge_native_recharge_and_verified_player_terminal
+
 em072a5_b0_native_overload_proof:
   date: "2026-11-21"
   branch: experiment/em072a5-native-overload-b0
@@ -70,7 +127,7 @@ em072a5_buffer_outpost_design:
   auto_dispatch_native_accumulator_priority: unverified
   potential_bridge_double_accounting: mandatory_negative_test
   12_real_native_train_overload: B0_native_PASS_12_real_trains_20MW_limit_fixed_test_demand
-  station_OFF_with_charged_outpost: not_tested
+  station_OFF_with_charged_outpost: native_B1_lab_PASS_test_modified_mast_not_player_outpost
   real_save_reload_charge_preservation: not_tested
   outpost_placed_player_entity: not_implemented
   locomotive_energy_source_current_main: void
