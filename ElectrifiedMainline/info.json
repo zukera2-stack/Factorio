@@ -1,11 +1,11 @@
 {
   "name": "ElectrifiedMainline",
-  "version": "0.1.60",
+  "version": "0.1.61",
   "title": "Electrified Mainline",
   "author": "Bionic Assistant",
   "contact": "",
   "homepage": "",
-  "description": "Adds high-speed electrified railway infrastructure to Factorio. 25 kV nominal overhead line poles and high-speed electric locomotive visual prototype; 20 MW automatic reversible substation power bridge; real electric traction and storage planned.",
+  "description": "Adds high-speed electrified railway infrastructure to Factorio. 25 kV nominal overhead line poles and high-speed electric locomotive visual prototype; 20 MW automatic reversible substation power bridge with read-only 061 priority diagnostics; real electric traction and storage planned.",
   "factorio_version": "2.1",
   "dependencies": [
     "base >= 2.1.0"

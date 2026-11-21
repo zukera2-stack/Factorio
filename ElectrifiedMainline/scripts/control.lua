@@ -735,3 +735,17 @@ commands.add_command("em-25kv-network", "Inspect visible mast, hidden anchor, ac
     local player=event.player_index and game.get_player(event.player_index)
     if player and player.valid then mast059.status(player);bridge058.command(player,"status") end
 end)
+
+-- 0.1.61: read-only inspection of native electric interface priority, energy and rates.
+-- Does not reconfigure EEIs, alter the native solver, or transfer buffered joules.
+local priority_diag061 = require("scripts.priority_diagnostics_061")
+commands.add_command("em-25kv-priority", "Select an electric interface, accumulator, or traction substation to inspect native priorities and energy limits.", function(event)
+    local player=event.player_index and game.get_player(event.player_index)
+    if player and player.valid then
+        local entity=player.selected
+        if entity and entity.valid and entity.name=="em-35kv-traction-substation" then
+            bridge058.command(player,"status")
+        end
+        player.print(priority_diag061.report(entity))
+    end
+end)

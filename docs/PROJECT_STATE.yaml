@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/frozen-runtime-assets-060
+  active_test_branch: feature/updater-061-candidate
   current_baseline_branch: main
-  active_feature_branch: feature/frozen-runtime-assets-060
-  feature_version: "0.1.60" # experimental
-  feature_status: 060_native_pass_owner_test_pending
+  active_feature_branch: feature/updater-061-candidate
+  feature_version: "0.1.61" # read-only diagnostic candidate, not installed
+  feature_status: 061_patcher_candidate_unapproved_native_test_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -24,7 +24,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.60" # experimental
+  mod_version: "0.1.61" # experimental
   main_baseline_mod_version: "0.1.56" # merged PR #30
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -1321,3 +1321,22 @@ asset_freeze_060:
   asset_commit: 7b723f4feb65e366c9ae11c13a17864b3c435fbc
   graphics_expected: 83
   runtime_files_expected: 129
+
+priority_diagnostics_061_candidate:
+  branch: feature/updater-061-candidate
+  starting_commit: ea9366a9798cd78efec4b675c81d086c09170c28
+  mod_version: "0.1.61"
+  status: built_in_isolated_branch_qa_pending_not_promoted
+  versioned_changes: info_json_and_read_only_priority_inspection_command
+  no_energy_algorithm_changes: true
+  no_bridge_prototype_changes: true
+  no_approved_artwork_changes: true
+  priority_modes_read_only: true
+  owner_updater: "1.1"
+  updater_pointer: test/updater-approved
+  approved_pointer_at_start: ea9366a9798cd78efec4b675c81d086c09170c28
+  approved_mod_version_at_start: "0.1.60"
+  old_060_tests_included_via_bootstrap: true
+  exact_native_engine_2_1_24_verified: false
+  explicit_promotion_approval: pending
+  research_doc: docs/research/25kv-priority-diagnostics-061.md
