@@ -2,7 +2,7 @@ em069_eei_buffer_lifecycle:
   branch: experiment/eei-buffer-lifecycle-069
   parent_sha: 064682e4acc4ccb557741dfae3cc206afe816c29
   mod_version: "0.1.62"
-  status: local_native_2_energy_and_48_dispatch_pass_not_released
+  status: local_native_2_energy_and_48_dispatch_pass_ci_058_mock_repair_pending
   engine: "Factorio 2.1.24 build 87808"
   tested_local_zip_sha256: "92a78800b04e85ebcb6aa50635c6689c071b5faea65ed1618f612f9cb73c2adc"
   installed_ci_zip_exact_same_bytes: unverified
@@ -18,6 +18,7 @@ em069_eei_buffer_lifecycle:
   accumulator_ids_and_flow_limits: pass
   accumulator_b_end_j: 12760164
   game_changelog_mod_version_unchanged: true
+  manual_off_to_export_regression_mock: fixed_ci_pending
   long_soak_and_orphan_gc: pending
   bobs_multiplayer_undo: untested
   approved_updater_version: "0.1.61"

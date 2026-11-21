@@ -453,7 +453,15 @@ function M.command(player,param)
  param=(param or "status"):match("^%s*(.-)%s*$"):lower()
  if param=="" then param="status" end
  if param=="auto" or param=="import" or param=="export" or param=="off" then
-   if r.mode~=param then detach(r,"manual-mode-change");r.mode=param;r.direction=nil;r.retry=nil;r.interface_retry=nil;r.status="waiting";s.dirty=true end
+   if r.mode~=param then
+      local previous_direction=r.direction
+      detach(r,"manual-mode-change")
+      r.mode=param
+      -- A buffered bridge retains its physical old direction across OFF/MANUAL
+      -- so the next opposite command can swap roles without discarding Joules.
+      r.direction=(valid(r.input) and valid(r.output)) and previous_direction or nil
+      r.retry=nil;r.interface_retry=nil;r.status="waiting";s.dirty=true
+    end
  elseif param~="status" then player.print("[EM059] auto | import | export | off | status");return end
  local msg=string.format("[EM060] station=%d mode=%s status=%s bridge=%.3f MW / 20 MW | factory=%s line=%s input_J=%.0f output_J=%.0f feeder=%s planned=%.3fMW",
  id,r.mode,r.status or "unknown",r.last_mw or 0,
