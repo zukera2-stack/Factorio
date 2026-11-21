@@ -3,11 +3,11 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: feature/updater-061-candidate
+  active_test_branch: test/updater-approved
   current_baseline_branch: main
   active_feature_branch: feature/updater-061-candidate
   feature_version: "0.1.61" # read-only diagnostic candidate, not installed
-  feature_status: 061_patcher_candidate_unapproved_native_test_pending
+  feature_status: 061_test_distributed_via_updater_native_ci_pass
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -1326,7 +1326,7 @@ priority_diagnostics_061_candidate:
   branch: feature/updater-061-candidate
   starting_commit: ea9366a9798cd78efec4b675c81d086c09170c28
   mod_version: "0.1.61"
-  status: built_in_isolated_branch_qa_pending_not_promoted
+  status: approved_test_updater_distributed
   versioned_changes: info_json_and_read_only_priority_inspection_command
   no_energy_algorithm_changes: true
   no_bridge_prototype_changes: true
@@ -1337,11 +1337,11 @@ priority_diagnostics_061_candidate:
   approved_pointer_at_start: ea9366a9798cd78efec4b675c81d086c09170c28
   approved_mod_version_at_start: "0.1.60"
   old_060_tests_included_via_bootstrap: true
-  exact_native_engine_2_1_24_verified: false
+  exact_native_engine_2_1_24_verified: true
   native_test_command: tests/run_headless_061.sh
   native_test_fixture: tests/em061-power-probe/
   native_test_gate: github_actions_lua_preflight
-  native_test_result: packaged_zip_native_2_1_24_pass_ci_still_pending_legacy_test_gates
+  native_test_result: packaged_zip_native_and_full_qa_pass_44875890182
   native_061_initial_run: 44875708000
   native_061_initial_runtime_pass: true
   native_061_initial_ci_result: failed_log_marker_mismatch
@@ -1352,5 +1352,14 @@ priority_diagnostics_061_candidate:
   first_build_run: 44875572533
   first_build_result: failed_historical_visual_test_version_gate
   inherited_test_gate_fix: tests/25kv_visual_geometry_048.lua
-  explicit_promotion_approval: pending
+  explicit_promotion_approval: owner_requested_prepare_061_for_patcher_2026_11_21
   research_doc: docs/research/25kv-priority-diagnostics-061.md
+  promoted_runtime_commit: 55db63f6d3be6a2f64da005d6db28433e8c42d5d
+  full_061_ci_run: 44875890182
+  full_061_ci_result: success
+  full_061_ci_artifact: 14696041766
+  inner_zip_sha256: 3771b7241848ae98e74019659baeb03616ab9aa4fa5dfcb9e7acf02efbef754c
+  runtime_file_count: 130
+  frozen_png_count: 83
+  main_merge_allowed: false
+  owner_live_061_acceptance: pending

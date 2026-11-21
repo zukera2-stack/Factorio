@@ -25,3 +25,11 @@
 ## 061 pre-release native evidence
 
 Official Factorio 2.1.24 actually ran the candidate 061 code in [CI run 44875708000](https://github.com/zukera2-stack/Factorio/actions/runs/44875708000), with inherited 060 probe scenario. Game log at tick 900: reverse target received **5,940,000 J**, batteries retained **1,180,000 J**, and the 060 probe printed its native PASS. **CI result was FAIL** only because 061 runner looked for renamed marker not yet printed by the copied probe. This is scoped provisional native evidence, **not release approval**. Follow-up changes: fix probe marker to `[EM061 NATIVE PASS]`; use deterministic `scripts/package_mod.py` game ZIP for exact-packaged game QA instead of source folder. Re-check final ZIP SHA and all CI gates, then require owner permission before ref promotion.
+
+## Distribution evidence — after all gates
+
+The owner asked to prepare 061 for existing Updater 1.1. The exact gameplay code in source `55db63f6d3be6a2f64da005d6db28433e8c42d5d` passed [native and packaging CI 44875890182](https://github.com/zukera2-stack/Factorio/actions/runs/44875890182). Official Factorio **2.1.24** loaded the **deterministic 0.1.61 install ZIP** and logged `[EM061 NATIVE PASS]`; the inherited 20MW and battery charge/reverse scenario worked. Runtime: **130 files, 83 unchanged PNGs**, inner ZIP **SHA256 3771b7241848ae98e74019659baeb03616ab9aa4fa5dfcb9e7acf02efbef754c**, official artifact [14696041766](https://github.com/zukera2-stack/Factorio/actions/runs/44875890182/artifacts/14696041766). Documentation CI [44875890179](https://github.com/zukera2-stack/Factorio/actions/runs/44875890179) passed.
+
+**Promotion:** exact tested 061 runtime commit was fast-forwarded to `test/updater-approved` on 2026-11-21 after owner request to prepare the update. Main is not merged. These documentation-only amendments do **not** change any game file; recheck approved HEAD and artifact provenance after applying them.
+
+**Owner action:** do not download a ZIP. Close Factorio; run existing `Update.bat` (Updater 1.1), choose menu option **1**, then **2** to verify. Existing 060 installation should reuse 127 identical files and fetch 3 altered/new runtime files, subject to user's actual local state and Git cache. The user's own 061 save test remains outstanding; no guarantee for Bob's or arbitrary EEI mode compatibility.
