@@ -54,6 +54,8 @@ if info:match('"version"%s*:%s*"0%.1%.61"') or is062 then
  if is062 then
    local ok,why,code=os.execute("lua5.2 tests/bridge_fairness_062.lua")
    assert(ok==true and why=="exit" and code==0,"062 fairness regression failed")
+   local opt_ok,opt_why,opt_code=os.execute("lua5.2 tests/bridge_dispatch_efficiency_062.lua")
+   assert(opt_ok==true and opt_why=="exit" and opt_code==0,"062 48-station optimized dispatch regression failed")
  end
  if os.getenv("GITHUB_ACTIONS")=="true" then
    local ok,why,code=os.execute(is062 and "bash tests/run_headless_062.sh" or "bash tests/run_headless_061.sh")

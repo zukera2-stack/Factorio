@@ -1,0 +1,95 @@
+{
+  "feature_branch": "experiment/network-fair-share-opt-062",
+  "base_branch": "experiment/network-fair-share-062",
+  "baseline_062_zip_sha256": "8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb",
+  "optimized_062_local_zip_sha256": "18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040",
+  "engine": "Factorio Headless 2.1.24 build 87808 linux x86-64",
+  "native_benchmarks": {
+    "baseline48": {
+      "ticks": 960,
+      "total_ms": 32967.767,
+      "average_ms_including_setup": 34.341,
+      "min_ms": 26.325,
+      "max_ms": 5117.775,
+      "one_peak_removed_mean_ms_heuristic": 29.041,
+      "native_full_48_marker": false
+    },
+    "optimized48": {
+      "ticks": 960,
+      "total_ms": 14825.229,
+      "average_ms_including_setup": 15.443,
+      "min_ms": 1.928,
+      "max_ms": 5118.708,
+      "one_peak_removed_mean_ms_heuristic": 10.122,
+      "native_full_48_marker": true
+    },
+    "single32": {
+      "ticks": 1050,
+      "total_ms": 6499.333,
+      "average_ms_including_setup": 6.19,
+      "min_ms": 1.244,
+      "max_ms": 1977.553,
+      "one_peak_removed_mean_ms_heuristic": 4.311,
+      "native_full_48_marker": null
+    },
+    "multi32": {
+      "ticks": 1050,
+      "total_ms": 6967.706,
+      "average_ms_including_setup": 6.636,
+      "min_ms": 1.283,
+      "max_ms": 2173.494,
+      "one_peak_removed_mean_ms_heuristic": 4.57,
+      "native_full_48_marker": null
+    },
+    "factory2": {
+      "ticks": 950,
+      "total_ms": 390.81,
+      "average_ms_including_setup": 0.411,
+      "min_ms": 0.182,
+      "max_ms": 27.365,
+      "one_peak_removed_mean_ms_heuristic": 0.383,
+      "native_full_48_marker": null
+    },
+    "bridge": {
+      "ticks": 1050,
+      "total_ms": 503.987,
+      "average_ms_including_setup": 0.48,
+      "min_ms": 0.157,
+      "max_ms": 27.369,
+      "one_peak_removed_mean_ms_heuristic": 0.454,
+      "native_full_48_marker": null
+    },
+    "priority": {
+      "ticks": 300,
+      "total_ms": 87.165,
+      "average_ms_including_setup": 0.291,
+      "min_ms": 0.088,
+      "max_ms": 29.922,
+      "one_peak_removed_mean_ms_heuristic": 0.191,
+      "native_full_48_marker": null
+    },
+    "fair3": {
+      "ticks": 680,
+      "total_ms": 335.503,
+      "average_ms_including_setup": 0.493,
+      "min_ms": 0.213,
+      "max_ms": 34.388,
+      "one_peak_removed_mean_ms_heuristic": 0.443,
+      "native_full_48_marker": null
+    }
+  },
+  "optimized_native_test_suite": {
+    "passed": 7,
+    "total": 7,
+    "game_ticks": 6040,
+    "failed": 0,
+    "long_48_full_pass": true
+  },
+  "local_dispatch_fuzz_graphs": 700,
+  "unit_48_longline_pass": true,
+  "runtime_files_changed_from_current_062": [
+    "ElectrifiedMainline/scripts/bridge_dispatch_059.lua"
+  ],
+  "unchanged_png_count": 83,
+  "reproducibility_notes": "The 960-tick original fair 062 performance baseline passed 240-tick phase 1 but did not log the final 48-stage PASS marker; optimized 960-tick run logged both stages. Same headless host, same map geometry, same tick count; single-peak-removed mean remains a heuristic and is not a universal UPS claim."
+}
