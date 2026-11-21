@@ -1303,3 +1303,33 @@ local_qa_library_061_2026_11_21:
   mod_runtime_changed: false
   approved_updater_ref_changed: false
   main_mod_version: "0.1.56"
+
+native_local_qa_061_2026_11_21:
+  branch: feature/local-qa-library-061
+  runner: tools/local_qa/run_native_qa.py
+  fixtures:
+    - tools/local_qa/native_fixtures/em061-power-probe
+    - tools/local_qa/native_fixtures/em061-priority-probe
+  evidence: docs/research/eei-native-priority-061-qa.md
+  engine_version: "2.1.24"
+  engine_build: 87808
+  engine_platform_used: linux_x86_64_headless
+  engine_arm64_archive_received_but_not_executed: true
+  engine_archives_library_private_path: /Factorio/Local-QA/engines/
+  approved_test_mod_version: "0.1.61"
+  installed_mod_zip_sha256: 3771b7241848ae98e74019659baeb03616ab9aa4fa5dfcb9e7acf02efbef754c
+  native_scenarios_passed: 2
+  native_scenarios_total: 2
+  native_ticks_total: 1350
+  official_factorio_engine_executed_locally: true
+  cold_start_20mw_battery_reverse: pass
+  priority_matrix_networks: 6
+  accumulator_to_secondary_input_joules: 1200000
+  accumulator_to_tertiary_input_joules: 0
+  secondary_output_to_accumulator_joules: 1200000
+  tertiary_output_to_accumulator_joules: 0
+  primary_input_vs_secondary_input_2MW: primary_wins
+  bob_power_native_engine_tested: false
+  source_runtime_modified: false
+  approved_updater_ref_changed: false
+  binary_committed_to_repository: false

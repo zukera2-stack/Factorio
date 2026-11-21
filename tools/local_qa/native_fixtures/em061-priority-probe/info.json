@@ -1,0 +1,1 @@
+{"name":"em061-priority-probe","version":"0.0.1","title":"EM061 Priority Native Research","author":"QA","factorio_version":"2.1","dependencies":["base >= 2.1.24","ElectrifiedMainline = 0.1.61"]}
