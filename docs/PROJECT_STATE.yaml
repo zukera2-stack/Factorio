@@ -1,3 +1,48 @@
+em072a5_b0_native_overload_proof:
+  date: "2026-11-21"
+  branch: experiment/em072a5-native-overload-b0
+  status: native_benchmark_and_independent_disk_reload_PASS_research_only
+  based_on: experiment/em072a5-buffer-outpost-design
+  game_version: "0.1.62"
+  game_code_changed: false
+  source_CI_run: 44925677432
+  source_CI_artifact: 14714614745
+  source_exact_inner_zip_sha256: 91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575
+  engine: "Factorio 2.1.24 build 87808 Linux headless"
+  native_locomotive_count: 12
+  native_distinct_train_ids: 12
+  electric_station_count: 1
+  factory_side_native_accumulators: 84
+  factory_start_energy_j: 420000000
+  factory_native_discharge_max_w: 25200000
+  station_native_power_limit_w: 20000000
+  test_fixed_total_train_request_w: 24000000
+  max_measured_station_power_w: 20000000
+  native_benchmark_ticks: 365
+  native_funded_ticks: 250
+  actual_native_output_to_burner_j: 83333333
+  actual_native_burner_consumption_j: 82698712
+  min_each_train_j: 6944444.444
+  max_each_train_j: 6944444.444
+  min_native_movement_tiles: 156
+  unexplained_energy_j: -0.000003
+  native_hsr_cache_builds: 1
+  native_server_save_tick: 151
+  independent_disk_reload_ticks: 214
+  native_benchmark_sha256: 4753b00472df82f408503bd889ed8bd58345e643f14b6b576e2427aaec2352a3
+  independent_reload_sha256: aa185d968a7c7305f18bd56a62d75b330bf335b332f862ea2743173b0f668328
+  fixture: tests/em072a5-b0-probe/
+  native_runner: tests/run_native_overload_072a5b0.py
+  report: docs/research/native-overload-b0-072a5.md
+  machine_report: docs/research/native-overload-b0-072a5.json
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+  b1_outpost_24_native_accumulators: not_tested
+  native_dynamic_throttle_demand: not_implemented
+  b5_station_OFF_outpost_power: not_tested
+  next_stage: EM072_A5_B1_native_corridor_buffer_meter_and_station_off
+
 em072a5_buffer_outpost_design:
   introduced_by_owner: "2026-11-21"
   status: design_only_not_implemented_or_native_tested
@@ -24,7 +69,7 @@ em072a5_buffer_outpost_design:
   native_traction_meter_from_corridor: hypothesis_requires_native_proof
   auto_dispatch_native_accumulator_priority: unverified
   potential_bridge_double_accounting: mandatory_negative_test
-  12_real_native_train_overload: not_tested
+  12_real_native_train_overload: B0_native_PASS_12_real_trains_20MW_limit_fixed_test_demand
   station_OFF_with_charged_outpost: not_tested
   real_save_reload_charge_preservation: not_tested
   outpost_placed_player_entity: not_implemented

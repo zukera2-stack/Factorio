@@ -1,0 +1,43 @@
+{
+  "status": "NATIVE_B0_PASS_ONLY",
+  "source_mod": "ElectrifiedMainline 0.1.62",
+  "source_ci_run": "https://github.com/zukera2-stack/Factorio/actions/runs/44925677432",
+  "source_inner_zip_sha256": "91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575",
+  "game_code_changed_in_repository": false,
+  "research_only": true,
+  "factorio": "2.1.24 build 87808 linux headless",
+  "native_benchmark_ticks": 365,
+  "real_server_save_tick": 151,
+  "independent_reload_ticks": 214,
+  "checkpoint_bytes": 737808,
+  "native_result": {
+    "actual_j": 83333333.0,
+    "native_burned_j": 82698712.0,
+    "per_train_min_j": 6944444.444,
+    "per_train_max_j": 6944444.444,
+    "native_peak_mw": 20.0,
+    "min_travel_tiles": 156.0,
+    "ledger_residual_j": -3e-06,
+    "funded_ticks": 250,
+    "hsr_cache_builds": 1
+  },
+  "reload_result": {
+    "actual_j": 83333333.0,
+    "native_burned_j": 82698712.0,
+    "per_train_min_j": 6944444.444,
+    "per_train_max_j": 6944444.444,
+    "native_peak_mw": 20.0,
+    "min_travel_tiles": 156.0,
+    "ledger_residual_j": -3e-06,
+    "funded_ticks": 250,
+    "hsr_cache_builds": 1
+  },
+  "native_log_sha256": "4753b00472df82f408503bd889ed8bd58345e643f14b6b576e2427aaec2352a3",
+  "reload_log_sha256": "aa185d968a7c7305f18bd56a62d75b330bf335b332f862ea2743173b0f668328",
+  "limitations": [
+    "Fixed 2MW/tick demand per live test-driven locomotive; no dynamic throttle model",
+    "Native B0 overload only; no corridor accumulator outpost",
+    "No brownout, multi-component, rail cuts, split/merge or multiplayer",
+    "Test hooks apply only to disposable extracted CI ZIP"
+  ]
+}
