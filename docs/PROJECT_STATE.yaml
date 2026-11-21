@@ -1338,5 +1338,9 @@ priority_diagnostics_061_candidate:
   approved_mod_version_at_start: "0.1.60"
   old_060_tests_included_via_bootstrap: true
   exact_native_engine_2_1_24_verified: false
+  native_test_command: tests/run_headless_061.sh
+  native_test_fixture: tests/em061-power-probe/
+  native_test_gate: github_actions_lua_preflight
+  native_test_result: pending
   explicit_promotion_approval: pending
   research_doc: docs/research/25kv-priority-diagnostics-061.md

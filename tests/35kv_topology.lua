@@ -50,4 +50,8 @@ if info:match('"version"%s*:%s*"0%.1%.61"') then
    assert(ok==true and why=="exit" and code==0,"061 inherited Lua regression failed: "..name)
  end
  print("061 PASS: full legacy 060 regression matrix and diagnostic regression")
+ if os.getenv("GITHUB_ACTIONS")=="true" then
+   local ok,why,code=os.execute("bash tests/run_headless_061.sh")
+   assert(ok==true and why=="exit" and code==0,"061 exact Factorio headless native regression failed")
+ end
 end
