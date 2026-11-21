@@ -92,7 +92,9 @@ script.on_event(defines.events.on_tick,function(ev)
   if HAVE_B then assert(db>100000,'receiver batteries did not supply local network') end
   if HAVE_A or HAVE_B then assert(delivered>100000,'consumer not supplied by batteries') end
   assert(delivered<=da+db+1000000,'energy balance violation after generator loss')
-  if not HAVE_A and not HAVE_B then assert(delivered<1000000,'transient port energy was treated as long-term battery') end
+  if not HAVE_A and not HAVE_B then
+   assert(delivered>300000 and delivered<500000, 'unflushed or excessive transient EEI energy after generator cutoff')
+  end
  end
  if t==1200 then storage.last=f.sink.energy end
  if t==1480 then

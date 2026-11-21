@@ -32,7 +32,7 @@ def main():
     p.add_argument('--engine',type=Path,required=True)
     p.add_argument('--game-zip',type=Path,required=True)
     p.add_argument('--output',type=Path,default=Path('build/native-buffer-063'))
-    p.add_argument('--expected-sha256',default='18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040')
+    p.add_argument('--expected-sha256',required=True,help='Exact immutable game ZIP SHA256 (must be explicitly supplied)')
     a=p.parse_args()
     if not a.engine.is_file():p.error('Headless Factorio binary not found')
     if not a.game_zip.is_file():p.error('Installable Factorio game ZIP not found')

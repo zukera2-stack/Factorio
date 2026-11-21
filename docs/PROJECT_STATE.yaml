@@ -1504,3 +1504,34 @@ source_sink_buffer_native_063_2026_11_21:
   mod_runtime_changed: false
   approved_updater_ref_changed: false
   main_branch_changed: false
+
+buffer_flush_063_experiment_2026_11_21:
+  branch: experiment/buffer-flush-063
+  parent_test_branch: experiment/buffer-source-sink-063
+  original_runtime_version_still: "0.1.62"
+  runtime_file_modified: ElectrifiedMainline/scripts/power_bridge_058.lua
+  test_fixture_modified: tests/em063-buffer-probe.lua
+  exact_archive_sha_required_for_test: true
+  test_fixture_runner: tests/run_native_buffer_063.py
+  research: docs/research/25kv-buffer-flush-063.md
+  machine_report: docs/research/25kv-buffer-flush-063.json
+  actual_engine: Factorio_2_1_24_build_87808_linux_x86_64
+  baseline_optimized_zip_sha256: 18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040
+  native_tested_modified_local_zip_sha256: a0bd3030e6ccda2f2227e76ce4311afc2f3d9792fbb10d9e65ba796c1f1b0f2b
+  baseline_bridge_only_after_cutoff_j: 166667
+  patched_bridge_only_after_cutoff_j: 333333
+  hidden_buffer_empty_and_ports_destroyed_at_tick: 542
+  avoids_starving_partially_powered_factory: true
+  factory_deficit_local_gain_after_fix_j: 47946667
+  factory_deficit_remote_gain_after_fix_j: 266667
+  native_scenarios_passed: 11
+  native_scenarios_total: 11
+  native_game_ticks: 12200
+  native_bobs_power_tested: false
+  station_electric_pole_has_real_accumulator: false
+  persistent_station_buffer_implemented: false
+  original_artwork_pngs_preserved: 83
+  gameplay_release_version_bumped: false
+  safe_to_promote_without_new_version_and_approval: false
+  main_approved_branch_unchanged: true
+  updater_approved_061_unchanged: true
