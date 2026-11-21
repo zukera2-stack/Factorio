@@ -80,9 +80,16 @@ def engine_binary(args, temp):
     status(f"[NATIVE] Extracting user-provided headless archive {archive.name}")
     with tarfile.open(archive, "r:xz") as fd:
         fd.extractall(temp, filter="data")
-    binary = temp / "factorio" / "bin" / "x64" / "factorio"
+    machine = platform.machine().lower()
+    if machine in {"x86_64", "amd64"}:
+        arch = "x64"
+    elif machine in {"aarch64", "arm64"}:
+        arch = "arm64"
+    else:
+        raise ValueError(f"Unsupported local Linux CPU architecture: {machine}")
+    binary = temp / "factorio" / "bin" / arch / "factorio"
     if not binary.is_file():
-        raise ValueError("This archive does not contain Linux x64 Factorio. Match archive architecture to the host (" + platform.machine() + ")")
+        raise ValueError(f"Archive doesn't contain a Factorio {arch} binary matching host {machine}")
     binary.chmod(binary.stat().st_mode | 0o111)
     return binary
 
