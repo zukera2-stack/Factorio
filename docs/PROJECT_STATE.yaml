@@ -1,3 +1,19 @@
+updater_retirement_2026_11_21:
+  owner_decision: failed_patchers_permanently_discontinued
+  branch: feature/git-updater-060
+  former_head_sha: 9bc032daf5910564db8622986c907b89b193db16
+  deleted_executable_source:
+    - tools/updater/Update.bat
+    - tools/updater/Updater.ps1
+    - tools/updater/Test-Updater.ps1
+  historical_source_remains_in_git_history: true
+  active_updater_supported: false
+  owner_windows_files_removed: false
+  owner_windows_files_need_manual_cleanup: true
+  test_updater_approved_branch_changed: false
+  main_branch_changed: false
+  game_mod_release_performed: false
+
 schema_version: 1
 project:
   name: Electrified Mainline
