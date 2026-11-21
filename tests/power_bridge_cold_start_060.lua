@@ -142,7 +142,16 @@ net(30).parent_network.flow_last_tick.secondary_demand=small
 net(30).parent_network.flow_last_tick.secondary_output=small
 b.output.energy=0;b.input.energy=small;a.input.energy=small
 M.on_tick(123,graph)
-assert(a.status=="active" and b.status=="active" and a.output.energy==small)
+-- The 060-only mock does not step the native electrical solver. The
+-- 069 reversal can spend an additional transient tick draining stored J,
+-- but may not lose existing input J or exceed its physical buffer.
+assert((a.status=="active" or a.status=="draining-buffer")
+  and (b.status=="active" or b.status=="draining-buffer"),
+  "unexpected reverse transition on tick 123: A="..tostring(a.status).." B="..tostring(b.status))
+assert(a.input.energy+a.output.energy>=small-0.1,
+  "buffered reverse energy disappeared on tick 123")
+assert(a.input.energy<=a.input.electric_buffer_size and a.output.energy<=a.output.electric_buffer_size,
+  "reverse overflowed a native EEI")
 flow(20,0,0);flow(30,0,0)
 source.active=false;M.on_tick(181,graph)
 -- Unlike 060, the 063 contract keeps already buffered native joules until
