@@ -44,6 +44,16 @@ A future new chat must not treat `PROJECT_CONTEXT.md` (2026-11-09 notebook), his
 - Never claim a feature is engine-unsupported based solely on a failed experiment. Cross-check a same-type working example first.
 - Full protocol: [`docs/RESEARCH_METHOD.md`](docs/RESEARCH_METHOD.md); copyable worksheet: [`docs/PROTOTYPE_RESEARCH_TEMPLATE.md`](docs/PROTOTYPE_RESEARCH_TEMPLATE.md); completed rail case: [`docs/research/rail-native-upgrade-0.1.7.md`](docs/research/rail-native-upgrade-0.1.7.md).
 
+
+## Local offline QA — test fast before GitHub Actions
+
+For Electrified Mainline use `tools/local_qa/run_local_qa.py` and the accompanying `.agents/skills/factorio-local-qa/SKILL.md`. The runner accepts the actual installed-game ZIP, checks SHA256, ZIP contents, Lua syntax, 700 seeded randomized graphs through real pure dispatch code, Bob's accumulator API mocks, energy diagnostics and catenary topology. It streams PASS/FAIL and writes JSON. It does not need GitHub Actions or ask the owner to place test rigs. **The pure Lua QA runner uses Lua 5.4 compatibility only. Separately, `run_native_qa.py` executes the actual owner-supplied Factorio 2.1.24 engine if the corresponding archive is available in the current session.** A supplied user's game log may be analysed as prior evidence, not replayed. Preserve the exact Factorio native headless QA as a separate gate. Do not move `test/updater-approved` to install tools; never package test tools in the game mod.
+
+
+## Actual Factorio headless QA — local game engine
+
+Owner supplied official `factorio-headless_linux_2.1.24.tar.xz` (x86-64) and ARM64 variant. On matching x86-64, run `python3 tools/local_qa/run_native_qa.py --headless-archive <owner-private-x64-tar.xz> --mod <exact-061-game-zip> --expected-sha256 3771b7241848ae98e74019659baeb03616ab9aa4fa5dfcb9e7acf02efbef754c --output build/native-qa-061`. The runner creates disposable saves, runs the **actual Factorio 2.1.24 build 87808 engine**, and streams concise PASS/FAIL for two autonomous test mods. Owner-private headless archives are saved in **personal Library** `/Factorio/Local-QA/engines/` and never belong in the public repository. New chats must retrieve archive from Library; a local binary is **not guaranteed to be mounted**. Local native results 2026-11-21: 2/2 PASS, 1350 ticks; [precise evidence](docs/research/eei-native-priority-061-qa.md). The pure Lua runner remains useful but is NOT a native test. Do not merge any 061 game logic or move the approved updater ref from this tooling update.
+
 ## Change discipline
 
 - Do not implement speculative mechanics as if they were verified.
