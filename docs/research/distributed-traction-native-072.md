@@ -36,3 +36,6 @@
 ## EM072-A next actual native result (21.11.2026)
 
 `BurnerEnergySource` and `LuaBurner` hypothesis for physically finite driving is **CONFIRMED on 2.1.24 Base-only**: isolated 120 kJ direct `currently_burning` + `remaining_burning_fuel` and 120 kJ native inventory fuel both move exactly 4.578125 tiles; empty burner=0, void=224 on test track, real disk save/reload PASS. Details: [`traction-burner-native-072a.md`](traction-burner-native-072a.md). **The actual ElectrifiedMainline mod still uses `void` and draws 0 J. 500-kW per wagon and EM070 network-source energy debit not tested.**
+\n## EM072-A2 actual finite EM070 bridge → native traction, 2026-11-21
+
+**NATIVE Factorio 2.1.24 PASS in isolated scratch only:** 25 MJ from five actual accumulators via existing native EM070 manual-import input/output buffers, exact native output J debit to LuaBurner, **5,116,668J credited / 5,091,668J burned / ~0J unexplained residual** at tick240. Ordinary-rail negative control 0J, EM070 OFF 0 new J, native SAVE tick151 → LOAD +210 ticks PASS. [Full evidence](traction-em070-native-debit-072a2.md); [reproducer](../../tests/run_native_bridge_debit_072a2.py). **Manual import + fixed station association** do NOT prove auto EM070 demand or actual powered HSR component. Next EM072-A3. 500kW motor cargo/fluid wagons and regen still untouched; no game source release.\n

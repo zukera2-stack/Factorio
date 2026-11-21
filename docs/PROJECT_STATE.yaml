@@ -1,3 +1,46 @@
+em072a2_real_native_EM070_to_burner:
+  status: native_engine_game_and_disk_SAVE_LOAD_PASS_isolated_research
+  branch: experiment/native-em070-burner-debit-072a2
+  parent_em072a_sha: 10859a93571d816762964113e84af3d87996ab07
+  starting_main_sha: cf75656fda374824944311f26bbd454bc90ad45b
+  source_mod_version: "0.1.62"
+  native_factorio_build: "2.1.24 build 87808"
+  source: five_real_vanilla_accumulators_without_generators
+  starting_real_joules: 25000000
+  station_mode: manual_import_test_only
+  native_factory_network_id: 4
+  native_line_network_id: 5
+  locomotive_max_power_w: 2000000
+  transferred_into_burner_j_at_tick_240: 5116668
+  native_burner_consumed_j_at_tick_240: 5091668
+  remaining_native_burner_j_at_tick_240: 25000
+  unexplained_energy_j_at_tick_240: 0
+  vanilla_rail_control_loco_received_j: 0
+  station_OFF_tick: 270
+  no_extra_J_after_OFF_verified_tick: 330
+  real_native_benchmark_ticks: 380
+  true_disk_SAVE_tick: 151
+  independent_disk_reload_ticks: 210
+  checkpoint_bytes: 534714
+  native_log_sha256: f15fb2d63f38646558f83c568d003711c63945ad76e9d7d90f630c44fbb6601a
+  native_reload_log_sha256: 2caf429ae02bd0e55b6e15f9279e588168d0c39c87ccdbca29470dd4e9d6e74f
+  core_em070_git_blob_sha1: 4a4084e5cf71d57cc057aa15bc524ac68ff6268b
+  tested_code: tests/em072a2-grid-debit-probe/
+  tested_runner: tests/run_native_bridge_debit_072a2.py
+  real_gameplay_mod_code_changed: false
+  separate_test_hook_only_disposable_scratch_copy: true
+  production_traction_in_current_mod: false
+  locomotive_auto_demand_in_EM070: NOT_PROVEN
+  verified_real_HSR_power_component_path: NOT_PROVEN
+  unrelated_disconnected_HSR_control: NOT_TESTED
+  next_stage: EM072_A3_auto_demand_and_native_HSR_component_match
+  motor_wagon_500kW: NOT_IMPLEMENTED
+  regen: NOT_IMPLEMENTED
+  no_script_speed_writes: true
+  authorized_main_merge: false
+  authorized_public_release: false
+  authorized_new_updater: false
+
 em072_a_native_finite_burner_proof:
   status: native_Base_only_game_tested_not_integrated
   branch: experiment/native-burner-traction-072a
