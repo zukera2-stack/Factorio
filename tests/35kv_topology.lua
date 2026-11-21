@@ -56,6 +56,9 @@ if info:match('"version"%s*:%s*"0%.1%.61"') or is062 then
    assert(ok==true and why=="exit" and code==0,"062 fairness regression failed")
    local opt_ok,opt_why,opt_code=os.execute("lua5.2 tests/bridge_dispatch_efficiency_062.lua")
    assert(opt_ok==true and opt_why=="exit" and opt_code==0,"062 48-station optimized dispatch regression failed")
+   local cache_ok,cache_why,cache_code=os.execute("lua5.2 tests/bridge_dispatch_cache_067.lua")
+   assert(cache_ok==true and cache_why=="exit" and cache_code==0,"067 dispatcher cache parity test failed")
+
    local policy_ok,policy_why,policy_code=os.execute("python3 tests/switching_dissipation_contract_066.py --self-test")
    assert(policy_ok==true and policy_why=="exit" and policy_code==0,"066 switching energy policy regression failed")
  end

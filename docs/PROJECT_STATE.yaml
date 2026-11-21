@@ -1715,3 +1715,76 @@ switching_dissipation_policy_066_2026_11_21:
   native_new_engine_run_this_policy_only_branch: false
   approved_updater_ref_untouched: true
   stable_main_ref_untouched: true
+
+dispatch_cache_performance_067_2026_11_21:
+  branch: experiment/dispatch-cache-067
+  base_branch: experiment/switching-dissipation-policy-066
+  base_commit: 9042dd6b3e7c56ad05a4f37f6f4ca1f611306136
+  mod_version_kept_for_testing: "0.1.62"
+  only_gameplay_file_changed: ElectrifiedMainline/scripts/bridge_dispatch_059.lua
+  same_png_count: 83
+  original_game_file_count: 130
+  baseline_CI_mod_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  local_candidate_mod_sha256: 2eac182f472de4a83805bb99dd87d428455ce5f69c0c9abd49917177bc3666a8
+  native_engine: Factorio_2_1_24_build_87808
+  differential_graphs_passed: 1675
+  duplicate_return_plan_isolation: true
+  invalidation_on_any_numeric_input_change: true
+  invalidation_on_edge_endpoint_change: true
+  temporary_cache_does_not_hold_LuaEntity_or_network: true
+  native_48_stations_960_ticks_passed: true
+  sources_48: 6
+  receivers_48: 42
+  total_recipients_after_reroute: 18
+  native_EM065_cases_passed: 2
+  native_EM065_cumulative_benchmark_ticks: 2700
+  native_EM065_save_reload_runs_passed: 2
+  native_EM065_energy_loss_unchanged: true
+  native_EM065_release_energy_gate: FAIL
+  lua53_200_nodes_constant_inputs_ms_before: 17.6840
+  lua53_200_nodes_constant_inputs_ms_after: 1.4278
+  lua53_200_nodes_changing_inputs_ms_before: 19.0055
+  lua53_200_nodes_changing_inputs_ms_after: 14.1901
+  native_48_script_update_ms_baseline_ticks_180_239: 8.0330
+  native_48_script_update_ms_candidate_ticks_180_239: 4.6962
+  whole_game_960_avg_ms_baseline_including_setup: 20.037
+  whole_game_960_avg_ms_candidate_including_setup: 20.235
+  isolated_steady_UPS_improvement_proven: false
+  benchmark_caveat: separate_runs_no_multisample_CPU_control
+  report: docs/research/25kv-dispatch-cache-067.md
+  metrics: docs/research/25kv-dispatch-cache-067.json
+  runtime_test: tests/bridge_dispatch_cache_067.lua
+  native_test: tests/run_native_dispatch_067.py
+  benchmark_lua53: tests/benchmark_dispatch_067.lua
+  actual_CI_mod_zip_post_commit_verification_needed: true
+  approved_updater_061_touched: false
+  stable_main_056_touched: false
+  merge_authorized: false
+
+dispatch_cache_067_exact_CI_2026_11_21:
+  branch: experiment/dispatch-cache-067
+  tested_gameplay_source_commit: 75a0dd7f48ced388e1cfafecfccd93516b9f8570
+  build_workflow_run: 44909988683
+  build_workflow_status: success
+  artifact_id: 14709273433
+  ci_mod_inner_zip_sha256: a4da43775fa530e94dad5055736dc2af7570275be33921ab433d77b92e851448
+  previous_local_zip_sha256: 2eac182f472de4a83805bb99dd87d428455ce5f69c0c9abd49917177bc3666a8
+  unpacked_game_files_byte_identical_to_local: 130
+  unchanged_png: 83
+  native_engine: Factorio_2_1_24_build_87808
+  native_48_substations_960_ticks_pass: true
+  native_48_reroute_and_outage_pass: true
+  native_48_engine_avg_ms_with_heavy_initialization: 21.049
+  native_EM065_reservoir_1350_ticks_pass: true
+  native_EM065_batteries_1350_ticks_pass: true
+  native_disk_save_load_two_runs_200_ticks_each_pass: true
+  native_total_ticks_with_disk_reload: 4060
+  unexpected_created_energy_j: 0
+  old_reservoir_loss_j: 1666667
+  old_battery_case_loss_j: 1724409
+  release_energy_acceptance_gate: FAIL
+  approved_updater_branch_changed: false
+  main_branch_changed: false
+  user_release_permission: false
+  human_report: docs/research/25kv-dispatch-cache-067-CI.md
+  machine_report: docs/research/25kv-dispatch-cache-067-CI.json
