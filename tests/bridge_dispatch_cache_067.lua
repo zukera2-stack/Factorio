@@ -67,3 +67,4 @@ assert_same(i2,e2,20000000/60,'topology-hit')
 local after=enhanced.cache_stats()
 assert(after.hits>before.hits and after.misses>before.misses)
 print('EM067 differential PASS cases='..cases..' seed='..seed..' cache_hits='..stats.hits..' cache_misses='..stats.misses)
+
