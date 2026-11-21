@@ -75,3 +75,13 @@ Only test-only independent source under `tests/em061-native-probe/` and research
 
 ## 9. Decision gate
 For now retain Lua bridge. Only consider native integration if Factorio 2.1.24 evidence proves all required cases including isolated 20 MW, 40 MW aggregate, native accumulators, mixed ordinary loads, live rail removal, and no bypass/cycle. Otherwise a hybrid bridge may be necessary. Update `docs/AI_CONTEXT.md` and `docs/PROJECT_STATE.yaml` atomically with every material change.
+
+## 10. Existing Windows patcher — required distribution route (2026-11-21 clarification)
+Do **not** tell the owner to download and manually replace a gameplay mod ZIP every time: **Electrified Mainline Updater 1.1** already exists and was confirmed working by the owner on Windows on 2026-11-20. The updater itself is stored in `feature/git-updater-060/tools/updater/`:
+- `README.txt` — owner instructions.
+- `Update.bat` → `Updater.ps1` — Russian UI: **1 install/update**, **2 verify**, **3 rollback**, **4 select mods folder**.
+- Windows QA run [44783774432](https://github.com/zukera2-stack/Factorio/actions/runs/44783774432), updater artifact [14650879317](https://github.com/zukera2-stack/Factorio/actions/runs/44783774432/artifacts/14650879317). QA included Windows clean install, ZIP conversion, incremental one-file repair, rollback, duplicate refusal; owner independently reported successful install.
+- Git for Windows, PowerShell 5.1 are prerequisites; Python and administrator rights are not.
+- Only approved source `refs/heads/test/updater-approved` is fetched, currently **0.1.60 / ea9366a9798cd78efec4b675c81d086c09170c28** (verified 2026-11-21). The updater does not track `experiment/native-accumulator-gateway-061`, cannot install the separate test-only mod, and must not be redirected to arbitrary feature branches.
+- A future **gameplay 0.1.61** (not this research-only probe) must first pass static/CI, actual Factorio 2.1.24 headless and owner-defined game QA, then receive explicit owner approval for promotion of an **exact reviewed commit** to `test/updater-approved`. Only after that, tell owner: close Factorio → `Update.bat` → **1** → confirm; optionally **2** for verification. Backups under `%TEMP%\ElectrifiedMainline-Updater` may be cleaned by Windows; keep an independent save backup.
+- Do not move approved ref just to run the Base-only research probe. Run it on a disposable isolated map/CI instead; preserve current 060 and user's saves.

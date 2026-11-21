@@ -1340,5 +1340,15 @@ native_accumulator_gateway_061:
   second_gate: two_networks_custom_accumulator_20MW_bidirectional
   diagnostic_gates: battery_to_battery_and_three_network_hops
   verified_native_engine: false
-  ci_result: pending
+  ci_result: passed_build_and_docs_44869633734_44869633749
+  approved_updater_branch: test/updater-approved
+  approved_updater_ref_commit: ea9366a9798cd78efec4b675c81d086c09170c28
+  approved_updater_mod_version: "0.1.60"
+  updater_version: "1.1"
+  updater_source_branch: feature/git-updater-060
+  updater_doc: tools/updater/README.txt
+  updater_windows_qa: 44783774432
+  updater_windows_artifact: 14650879317
+  uploader_061_enabled: false
+  promotion_gate: exact_game_ci_and_owner_approval
   merge_allowed: false

@@ -2,6 +2,8 @@
 
 **Do not install on the owner's production save. Do not include in ElectrifiedMainline ZIP.** Branch: `experiment/native-accumulator-gateway-061`.
 
+The **owner already has Updater 1.1**, which fetches only the reviewed production-test ref `test/updater-approved` and currently installs **ElectrifiedMainline 0.1.60**. This Base-only probe is a **different test mod** and is not an updater release: do **not** move that ref or ask the owner to run Updater for EM061. After successful game QA and explicit approval of a future `ElectrifiedMainline` gameplay build, use the normal updater pathway (`Update.bat` → option 1, option 2 to verify). See the [research distribution gate](../../docs/research/25kv-native-accumulator-gateway-061.md#10-existing-windows-patcher--required-distribution-route-2026-11-21-clarification) and `feature/git-updater-060/tools/updater/README.txt`.
+
 A standalone Factorio 2.1.24 Base-only test. It does **not** patch ElectrifiedMainline and does **not** script any power transfer.
 
 Run on a disposable map with this directory installed as `em061-native-probe_0.0.1`. Under a 2.1.24 headless executable:
