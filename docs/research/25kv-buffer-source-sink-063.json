@@ -1,0 +1,200 @@
+{
+  "engine": "Version: 2.1.24 (build 87808, linux64, headless)",
+  "zip_sha256": "18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040",
+  "cases": [
+    {
+      "case": "both",
+      "passed": true,
+      "create_s": 3.606,
+      "benchmark_s": 2.247,
+      "ticks": 1540,
+      "source_battery_used_j": 9600000,
+      "receiver_battery_used_j": 9560000,
+      "sink_after_off_j": 19493333,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 373333.0
+        },
+        {
+          "tick": 300,
+          "joules": 373333.0
+        },
+        {
+          "tick": 540,
+          "joules": 373333.0
+        },
+        {
+          "tick": 600,
+          "joules": 40000.0
+        },
+        {
+          "tick": 660,
+          "joules": 40000.0
+        },
+        {
+          "tick": 840,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1020,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    },
+    {
+      "case": "source",
+      "passed": true,
+      "create_s": 2.689,
+      "benchmark_s": 2.033,
+      "ticks": 1540,
+      "source_battery_used_j": 9600000,
+      "receiver_battery_used_j": 0,
+      "sink_after_off_j": 9893333,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 333333.0
+        },
+        {
+          "tick": 300,
+          "joules": 333333.0
+        },
+        {
+          "tick": 540,
+          "joules": 333333.0
+        },
+        {
+          "tick": 600,
+          "joules": 40000.0
+        },
+        {
+          "tick": 660,
+          "joules": 40000.0
+        },
+        {
+          "tick": 840,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1020,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    },
+    {
+      "case": "receiver",
+      "passed": true,
+      "create_s": 2.633,
+      "benchmark_s": 2.214,
+      "ticks": 1540,
+      "source_battery_used_j": 0,
+      "receiver_battery_used_j": 9560000,
+      "sink_after_off_j": 9746667,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 373333.0
+        },
+        {
+          "tick": 300,
+          "joules": 373333.0
+        },
+        {
+          "tick": 540,
+          "joules": 373333.0
+        },
+        {
+          "tick": 600,
+          "joules": 0.0
+        },
+        {
+          "tick": 660,
+          "joules": 0.0
+        },
+        {
+          "tick": 840,
+          "joules": 0.0
+        },
+        {
+          "tick": 1020,
+          "joules": 0.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    },
+    {
+      "case": "bridge",
+      "passed": true,
+      "create_s": 2.873,
+      "benchmark_s": 1.889,
+      "ticks": 1540,
+      "source_battery_used_j": 0,
+      "receiver_battery_used_j": 0,
+      "sink_after_off_j": 166667,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 333333.0
+        },
+        {
+          "tick": 300,
+          "joules": 333333.0
+        },
+        {
+          "tick": 540,
+          "joules": 333333.0
+        },
+        {
+          "tick": 600,
+          "joules": 0.0
+        },
+        {
+          "tick": 660,
+          "joules": 0.0
+        },
+        {
+          "tick": 840,
+          "joules": 0.0
+        },
+        {
+          "tick": 1020,
+          "joules": 0.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    }
+  ],
+  "status": "PASS",
+  "total_ticks": 6160
+}
