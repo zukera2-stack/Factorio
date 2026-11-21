@@ -1,3 +1,47 @@
+em070_native_dynamic_eei:
+  branch: experiment/native-dynamic-eei-070
+  parent_sha: 5c8f120b24b2a7d3382ac75156f217030c2b31f3
+  mod_version: "0.1.62"
+  status: native_ci_3_scenarios_and_local_2_energy_48_stress_pass_unreleased
+  engine: "Factorio 2.1.24 build 87808"
+  base_analogue: data/base/prototypes/entity/entities.lua
+  base_file_sha256: a6d0356285a56ad4af0b08d9acee669981c888dd5962cb0ee5d79d9b31294d1b
+  base_only_priority_8_native_tests: pass
+  fixed_input_reverse_output_j: 0
+  fixed_output_reverse_input_j: 0
+  dynamic_each_direction_transferred_j: 750000
+  baseline_per_pair_j: 2000000
+  local_test_zip_sha256: "96fb991c755b99630a186fcc2d4476f9a390c21bcfc9e8946fec3d1c651c6fd6"
+  gameplay_change: two_existing_prototype_usage_priority_dynamic_and_explicit_creation_mode
+  native_energy_reservoir: pass_1350_plus_200_disk_save_reload
+  native_energy_batteries: pass_1350_plus_200_disk_save_reload
+  unexplained_lost_j: 0
+  created_j: 0
+  authorized_demolition_no_battery_j: 166667
+  authorized_demolition_battery_j: 186667
+  native_48_station_960_ticks: pass
+  native_32_station_stress_1050_ticks: pass
+  native_multisource_1050_ticks: pass
+  native_factory_deficit_950_ticks: pass
+  official_ci_run: 44920768721
+  official_ci_conclusion: success
+  official_ci_native_power_scenarios: 3_of_3_pass
+  official_ci_native_power_ticks: 2030
+  official_ci_priority_matrix: pass
+  official_ci_artifact_id: 14713602030
+  official_ci_inner_zip_sha256: "391e8d3df756f048996fd4794a3b0b695d74f13475f2da3dca582252709f19cb"
+  exact_ci_artifact_native_energy_save_reload: pending
+  local_stress_native_pass: 3_of_3
+  legacy_em066_historical_deficit_classifier: pass_historical_data_not_current_runtime
+  next_release_gate: migration_from_owner_approved_061_and_ci_exact_zip_native_qa
+  historical_native_060_reverse: pass_official_Factorio_2_1_24_CI_44920768721
+  official_ci_exact_zip_native: not_rerun_native_from_exact_artifact
+  owner_save_bobs_multiplayer_undo_long_soak: unverified
+  main_approved_version: "0.1.56"
+  updater_approved_version: "0.1.61"
+  release_authorization: false
+  research: docs/research/25kv-dynamic-eei-070.md
+
 em069_eei_buffer_lifecycle:
   branch: experiment/eei-buffer-lifecycle-069
   parent_sha: 064682e4acc4ccb557741dfae3cc206afe816c29
@@ -60,9 +104,9 @@ project:
   default_branch: main
   active_test_branch: test/updater-approved
   current_baseline_branch: main
-  active_feature_branch: experiment/eei-buffer-lifecycle-069
-  feature_version: "0.1.62" # separate unapproved fairness prototype # read-only diagnostic candidate, not installed
-  feature_status: 069_blocked_official_native_060_reverse_regression
+  active_feature_branch: experiment/native-dynamic-eei-070
+  feature_version: "0.1.62" # EM070 isolated and unapproved; not installed
+  feature_status: 070_official_native_ci_pass_owner_release_pending
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
