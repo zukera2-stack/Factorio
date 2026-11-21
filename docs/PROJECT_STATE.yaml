@@ -1689,3 +1689,29 @@ closed_reservoir_energy_065_2026_11_21:
   approved_updater_061_ref_untouched: true
   stable_main_056_ref_untouched: true
   release_status: blocked_unapproved_bridge_buffer_disappearance
+
+switching_dissipation_policy_066_2026_11_21:
+  branch: experiment/switching-dissipation-policy-066
+  parent_branch: experiment/closed-energy-ledger-065
+  parent_sha: 8497f9a343412281a1160de2e8b3a7e5e921560d
+  gameplay_files_modified: false
+  contract_doc: docs/research/25kv-switching-dissipation-066.md
+  contract_machine_result: docs/research/25kv-switching-dissipation-066.json
+  unit_reconciliation: tests/switching_dissipation_contract_066.py
+  source_evidence: docs/research/25kv-closed-reservoir-065.json
+  field_energy_separate_from_transient_eei: true
+  modeled_line_field_storage_exists_now: false
+  physical_arc_heat_currently_metered: false
+  real_line_capacitance_inductance_measured: false
+  modeled_field_example_is_illustrative: true
+  owner_existing_allowed_demolished_station_own_EEI_loss: true
+  permitted_loss_without_batteries_j: 166667
+  unexplained_loss_without_batteries_j: 1500000
+  permitted_loss_with_eight_batteries_j: 186667
+  unexplained_loss_with_eight_batteries_j: 1537742
+  policy_self_test: PASS
+  runtime_unexplained_loss_gate: FAIL
+  exact_Factorio_engine_used_in_source_evidence: "2.1.24 build 87808"
+  native_new_engine_run_this_policy_only_branch: false
+  approved_updater_ref_untouched: true
+  stable_main_ref_untouched: true
