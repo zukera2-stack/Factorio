@@ -22,6 +22,7 @@ def main():
     parser.add_argument('--expected-sha256',required=True)
     parser.add_argument('--out',type=Path,default=HERE/'results')
     parser.add_argument('--require-zero-loss',action='store_true',help='Fail the release gate if any joules disappear during reconfiguration')
+    parser.add_argument('--require-no-unintended-loss',action='store_true',help='Release gate: ignore only owner-measured buffers of explicitly dismantled substation')
     a=parser.parse_args()
     assert a.engine.is_file() and a.game_zip.is_file(), 'Missing engine/game ZIP'
     sha=hashlib.sha256(a.game_zip.read_bytes()).hexdigest()
@@ -59,6 +60,16 @@ def main():
         meter=re.search(r'\[EM064 LEDGER RESULT\] lost_J=(\d+) loss_events=(\d+) created_J=(\d+) creation_events=(\d+)',native)
         assert meter, 'Per-tick energy ledger did not finish'
         lost,loss_events,created,create_events=map(int,meter.groups())
+        policy=re.search(r'\[EM064 POLICY RESULT\] allowed_demolition_J=(\d+) unexplained_deficit_J=(\d+) created_J=(\d+)',native)
+        assert policy, 'Substation-owner-specific policy ledger missing'
+        allowed,unexplained,created_policy=map(int,policy.groups())
+        assert abs((allowed+unexplained)-lost)<=3 and created_policy==created, 'Policy bucket mismatch'
+        owned=re.search(r'\[EM064 DEMOLITION INVENTORY\] dt=(\d+) removed_station_J=(\d+) surviving_station_J=(\d+)',native)
+        assert owned and int(owned.group(1))==670, 'Demolished substation inventory was not measured'
+        measured_owner,measured_survivor=map(int,owned.groups()[1:])
+        assert 0<=allowed<=measured_owner<=666668, 'Demolition allowance exceeds removed entity energy'
+        assert measured_survivor>=0, 'Invalid surviving station energy inventory'
+
         event_rows=[]
         for hit in re.finditer(r'\[EM064 LEDGER\] dt=(\d+) total_J=([\d.]+) delta_J=([-\d.]+) expected_generation_J=([\d.]+) bridge_J=([\d.]+)',native):
             tick=int(hit.group(1))
@@ -69,6 +80,14 @@ def main():
                                  'created_j':created,'creation_events':create_events,'strict_zero_loss_pass':lost<=4 and created<=4,
                                  'accepted_for_release':False,'sampled_loss_events':event_rows,
                                  'note':'Whole-run ledger uses unrounded Lua double values; per-event sampled log integers can differ by a few rounding joules.'}
+        result['energy_ledger'].update({
+            'policy':'destroyed_substation_own_hidden_EEI_energy_may_dissipate',
+            'demolished_station_buffer_j':measured_owner,
+            'surviving_station_buffer_j_at_demolition':measured_survivor,
+            'approved_demolition_discard_j':allowed,
+            'remaining_unexplained_ledger_deficit_j':unexplained,
+            'no_unintended_loss_release_gate_pass':unexplained<=4 and created<=4,
+            'note_provenance':'Expected 20MW setting is not per-tick measured generation; remaining ledger deficit may include undelivered production. Must not call it all physical energy loss without precise source metering.'})
         assert created<=4, f'UNACCEPTABLE: unexplained created energy {created} J'
         print(f'[EM064] live topology PASS ({len(markers)} checkpoints); ENERGY LEDGER loss={lost} J, created={created} J',flush=True)
         # Real save creation: run server until it emits checkpoint and passes,
@@ -114,9 +133,11 @@ def main():
         assert delta>5000000
         result['save_reload']={'passed':True,'save_bytes':checkpoint.stat().st_size,'extra_energy_j':delta,'continued_ticks':200}
         print('[EM064] disk SAVE→LOAD PASS: '+str(delta)+' J delivered after load',flush=True)
-    result['status']='FUNCTIONAL_PASS_ENERGY_BALANCE_FAIL' if result['energy_ledger']['loss_j']>4 else 'FULL_PASS'
+    result['status']='FUNCTIONAL_PASS_NONDEMOLITION_LEDGER_UNRESOLVED' if not result['energy_ledger']['no_unintended_loss_release_gate_pass'] else 'FUNCTIONAL_AND_POLICY_ENERGY_PASS'
     (a.out/'report.json').write_text(json.dumps(result,indent=2,ensure_ascii=False),encoding='utf-8')
-    print('[EM064 RESULT] native lifecycle and real disk load PASS; strict energy conservation '+('FAIL' if result['energy_ledger']['loss_j']>4 else 'PASS'),flush=True)
+    print('[EM064 RESULT] native lifecycle and disk load PASS; policy-adjusted energy ledger '+('PASS' if result['energy_ledger']['no_unintended_loss_release_gate_pass'] else 'UNRESOLVED'),flush=True)
+    if a.require_no_unintended_loss and not result['energy_ledger']['no_unintended_loss_release_gate_pass']:
+        raise SystemExit('NONDEMOLITION ENERGY RELEASE GATE FAILED: '+str(result['energy_ledger']['remaining_unexplained_ledger_deficit_j'])+' J unresolved')
     if a.require_zero_loss and not result['energy_ledger']['strict_zero_loss_pass']:
         raise SystemExit('ENERGY RELEASE GATE FAILED: '+str(result['energy_ledger']['loss_j'])+' J lost')
 

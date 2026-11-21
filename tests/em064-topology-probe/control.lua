@@ -33,6 +33,32 @@ local function state(t,label)
   local n,j=hidden()
   log(string.format('[EM064 STAGE] %s dt=%d srcJ=%.0f sinkJ=%.0f lineA=%s lineB=%s facA=%s facB=%s hidden_count=%d hidden_j=%.0f',label,t,f.source.energy,f.sink.energy,tostring(f.m1.valid and f.m1.electric_network_id or '-'),tostring(f.m2.valid and f.m2.electric_network_id or '-'),tostring(f.a.valid and f.a.electric_network_id or '-'),tostring(f.b.valid and f.b.electric_network_id or '-'),n,j))
 end
+-- The dismantled station owns two hidden EEIs at the factory-port slot x
+-- and its paired line-port slot x+3. The other station's buffer is NOT
+-- authorized for dissipation by demolition of this station.
+local function owned_hidden_buffer(factory_net)
+  local lab=game.surfaces['em-25kv-isolated-bridge-058']
+  assert(lab and factory_net, 'station buffer owner unavailable')
+  local entities=lab.find_entities_filtered{type='electric-energy-interface'}
+  local slot_x=nil
+  for _,v in pairs(entities) do
+    local x=v.position.x
+    if v.electric_network_id==factory_net and (x-1)%8==0 then
+      assert(not slot_x or slot_x==x, 'ambiguous factory-side hidden EEI owner')
+      slot_x=x
+    end
+  end
+  assert(slot_x, 'missing hidden EEI owned by removed station')
+  local n,j=0,0
+  for _,v in pairs(entities) do
+    if v.position.x==slot_x or v.position.x==slot_x+3 then
+      n=n+1
+      j=j+v.energy
+    end
+  end
+  assert(n==2 and j>=0 and j<=666668, 'unexpected demolished station buffer inventory')
+  return j,n
+end
 local function find(s,name,x,y)
   local list=s.find_entities_filtered{name=name,position={x,y},radius=0.3}
   for _,entity in pairs(list) do
@@ -103,6 +129,18 @@ script.on_event(defines.events.on_tick,function(ev)
     if deviation>4 then
       storage.em064_loss_j=(storage.em064_loss_j or 0)+deviation
       storage.em064_loss_count=(storage.em064_loss_count or 0)+1
+      -- Explicit owner policy: only the hidden EEIs belonging to a demolished
+      -- substation can be discarded. Do not whitelist the whole tick's gap:
+      -- that also includes surviving-station buffer and source scheduling.
+      local authorized=0
+      if storage.em064_demolition_tick and t==storage.em064_demolition_tick+1 then
+        authorized=math.min(deviation,storage.em064_approved_demolition_capacity_j or 0)
+      end
+      storage.em064_allowed_demolition_j=(storage.em064_allowed_demolition_j or 0)+authorized
+      storage.em064_unexplained_deficit_j=(storage.em064_unexplained_deficit_j or 0)+(deviation-authorized)
+      if authorized>0 then
+        log(string.format('[EM064 POLICY DEMOLITION] dt=%d allowed_J=%.0f non_owner_deficit_J=%.0f',t,authorized,deviation-authorized))
+      end
     elseif deviation < -4 then
       storage.em064_created_j=(storage.em064_created_j or 0)-deviation
       storage.em064_created_count=(storage.em064_created_count or 0)+1
@@ -141,6 +179,11 @@ script.on_event(defines.events.on_tick,function(ev)
   if t==670 then
     storage.em064_b_id=f.b.unit_number
     storage.em064_before=f.sink.energy
+    local receiver_j=owned_hidden_buffer(f.b.electric_network_id)
+    local _,all_hidden_j=hidden()
+    storage.em064_approved_demolition_capacity_j=receiver_j
+    storage.em064_demolition_tick=t
+    log(string.format('[EM064 DEMOLITION INVENTORY] dt=%d removed_station_J=%.0f surviving_station_J=%.0f',t,receiver_j,all_hidden_j-receiver_j))
     f.b.destroy{raise_destroy=true};state(t,'substation_destroy')
   end
   if t==735 then
@@ -186,6 +229,10 @@ script.on_event(defines.events.on_tick,function(ev)
       log(string.format('[EM064 DISK PASS] restored_factory_ids=%s,%s sink_delta_J=%.0f',tostring(f.a.electric_network_id),tostring(f.b.electric_network_id),delta))
     end
     log(string.format('[EM064 LEDGER RESULT] lost_J=%.0f loss_events=%d created_J=%.0f creation_events=%d',storage.em064_loss_j or 0,storage.em064_loss_count or 0,storage.em064_created_j or 0,storage.em064_created_count or 0))
+    local allowed=storage.em064_allowed_demolition_j or 0
+    local unexplained=storage.em064_unexplained_deficit_j or 0
+    assert(math.abs((allowed+unexplained)-(storage.em064_loss_j or 0))<4, 'energy ledger categories mismatch')
+    log(string.format('[EM064 POLICY RESULT] allowed_demolition_J=%.0f unexplained_deficit_J=%.0f created_J=%.0f',allowed,unexplained,storage.em064_created_j or 0))
     log('[EM064 NATIVE PASS] mast cut/restore, rail cut/restore, substation remove/restore, factory merge/split, reload_script')
   end
 end)

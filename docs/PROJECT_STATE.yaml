@@ -1623,3 +1623,32 @@ topology_lifecycle_064_energy_ledger_2026_11_21:
   patcher_approved_061_unchanged: true
   user_game_saves_untouched: true
   release_blocked_pending_energy_policy_or_fix: true
+
+accepted_substation_demolition_energy_policy_064_2026_11_21:
+  decision_owner_approved: true
+  contract: energy_of_demolished_substation_hidden_EEIs_is_discarded
+  refund_to_factory_network: false
+  neighbor_station_energy_loss_allowed: false
+  external_accumulator_energy_loss_allowed: false
+  rail_or_mast_removal_automatically_exempt: false
+  factory_network_merge_split_automatically_exempt: false
+  branch: experiment/topology-lifecycle-064
+  research: docs/research/25kv-demolition-energy-policy-064.md
+  native_test_version: Factorio_2_1_24_build_87808
+  game_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  native_demolished_station_hidden_j: 166667
+  native_surviving_station_hidden_j: 166667
+  old_raw_total_ledger_deficit_j: 1666667
+  approved_demolition_buffer_discard_j: 166667
+  other_unexplained_ledger_deficit_j: 1500000
+  outside_demolition_tick_ledger_deficit_j_approx: 1166667
+  unexpected_energy_creation_j: 0
+  raw_expected_generation_is_setting_not_metered_actual_production: true
+  policy_aware_release_gate: "--require-no-unintended-loss"
+  release_gate_status: FAIL_unexplained_deficit
+  old_absolute_zero_loss_gate_retained_for_history: true
+  native_live_topology_checkpoints_passed: 10
+  real_server_save_reload_passed: true
+  user_mod_runtime_changed: false
+  approved_updater_branch_unchanged: true
+  stable_main_unchanged: true
