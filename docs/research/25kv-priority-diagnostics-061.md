@@ -1,0 +1,35 @@
+# 0.1.61 — read-only native EEI priorities, patcher candidate
+
+## Provenance
+- Source branch: `feature/updater-061-candidate` from frozen approved 060 `ea9366a9798cd78efec4b675c81d086c09170c28`.
+- Target game: Factorio **2.1.24 build 87808**. Actual 061 native-game QA is **pending**.
+- Context and separate non-distributable native accumulator experiment: [prior 061 research](https://github.com/zukera2-stack/Factorio/blob/experiment/native-accumulator-gateway-061/docs/research/25kv-native-accumulator-gateway-061.md).
+- Official runtime API: [2.1.24 LuaEntity](https://lua-api.factorio.com/2.1.24/classes/LuaEntity.html), fields `electric_interface_mode`, `input_flow_limit`, `output_flow_limit`, `energy`, `electric_network_id`. Input/output limits and production/usage values are **J/tick**; convert to MW by multiplying by 60/1e6.
+- Existing 060 prototypes have **fixed** `secondary-input` and `secondary-output`. The new diagnostic reports configured modes for selected accessible EEIs; **does not change** prototype configuration or transfer joules.
+
+## User-visible change (minimal falsifiable scope)
+1. Bump installable `ElectrifiedMainline/info.json` to `0.1.61` so Updater 1.1 can display it **after approval and promotion**.
+2. Add read-only `/em-25kv-priority`: select an ordinary electric-energy-interface and inspect native network ID, actual `electric_interface_mode`, energy, buffer capacity, current configured input/output rates, production/consumption. Selecting vanilla accumulator prints tertiary storage context and native rate limits. Selecting the mod traction substation prints existing 060 bridge status and static source/target priorities.
+3. No game-mechanic alterations: no custom voltage system, no dynamic EEI priority change, no new entity, no change to power bridge, measured 060 20MW cap, frozen visuals, rail tools, Undo ownership, or saves.
+
+## 061 acceptance and negative scenarios
+- **Static Lua:** syntax for all shipped and test-only Lua; 060 inherited regressions and new `tests/priority_diagnostics_061.lua`. Historical CI version gates only cover 060; isolated subprocess runner is in always-run `tests/35kv_topology.lua` for 061.
+- **CI package:** exactly source SHA, 83 frozen runtime PNG manifest and generated `ElectrifiedMainline_0.1.61.zip` (not a local manually repacked user ZIP); verify game payload list, metadata and SHA when available.
+- **Native Factorio 2.1.24:** create disposable test save; verify mod loads, selected editor EEI mode readout matches mode; verify accumulator readout and station status, verify auto transfer still 20MW under prior 060 scenario and reverse after battery use. **Not established by Lua CI.**
+- **Owner testing:** on separate save after approval, run existing Windows `Update.bat` option 1, then verify option 2, test selected entity command. Do not touch user's saves.
+- **Negative:** selected nil, non-electric entity, invalid entity should print helpful message and never error or mutate state.
+
+## Distribution gate
+`test/updater-approved` stays on 0.1.60 until build CI, native 2.1.24 evidence and owner approval. An experiment branch and an untested probe are **never** promoted simply to make Updater download files. After the exact approved commit promotion, the owner uses their existing Updater 1.1. No main merge required and no standalone updater download.
+
+## 061 pre-release native evidence
+
+Official Factorio 2.1.24 actually ran the candidate 061 code in [CI run 44875708000](https://github.com/zukera2-stack/Factorio/actions/runs/44875708000), with inherited 060 probe scenario. Game log at tick 900: reverse target received **5,940,000 J**, batteries retained **1,180,000 J**, and the 060 probe printed its native PASS. **CI result was FAIL** only because 061 runner looked for renamed marker not yet printed by the copied probe. This is scoped provisional native evidence, **not release approval**. Follow-up changes: fix probe marker to `[EM061 NATIVE PASS]`; use deterministic `scripts/package_mod.py` game ZIP for exact-packaged game QA instead of source folder. Re-check final ZIP SHA and all CI gates, then require owner permission before ref promotion.
+
+## Distribution evidence — after all gates
+
+The owner asked to prepare 061 for existing Updater 1.1. The exact gameplay code in source `55db63f6d3be6a2f64da005d6db28433e8c42d5d` passed [native and packaging CI 44875890182](https://github.com/zukera2-stack/Factorio/actions/runs/44875890182). Official Factorio **2.1.24** loaded the **deterministic 0.1.61 install ZIP** and logged `[EM061 NATIVE PASS]`; the inherited 20MW and battery charge/reverse scenario worked. Runtime: **130 files, 83 unchanged PNGs**, inner ZIP **SHA256 3771b7241848ae98e74019659baeb03616ab9aa4fa5dfcb9e7acf02efbef754c**, official artifact [14696041766](https://github.com/zukera2-stack/Factorio/actions/runs/44875890182/artifacts/14696041766). Documentation CI [44875890179](https://github.com/zukera2-stack/Factorio/actions/runs/44875890179) passed.
+
+**Promotion:** exact tested 061 runtime commit was fast-forwarded to `test/updater-approved` on 2026-11-21 after owner request to prepare the update. Main is not merged. These documentation-only amendments do **not** change any game file; recheck approved HEAD and artifact provenance after applying them.
+
+**Owner action:** do not download a ZIP. Close Factorio; run existing `Update.bat` (Updater 1.1), choose menu option **1**, then **2** to verify. Existing 060 installation should reuse 127 identical files and fetch 3 altered/new runtime files, subject to user's actual local state and Git cache. The user's own 061 save test remains outstanding; no guarantee for Bob's or arbitrary EEI mode compatibility.

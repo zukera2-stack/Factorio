@@ -1,0 +1,53 @@
+{
+  "schema": "EM069-experimental-native-v1",
+  "date": "2026-11-21",
+  "parent_branch": "experiment/eei-disposal-diagnostics-068",
+  "parent_sha": "064682e4acc4ccb557741dfae3cc206afe816c29",
+  "game_version": "0.1.62",
+  "engine": "Factorio Headless 2.1.24 build 87808",
+  "local_only_zip_sha256": "92a78800b04e85ebcb6aa50635c6689c071b5faea65ed1618f612f9cb73c2adc",
+  "local_only": true,
+  "checks": {
+    "reservoir": {
+      "ticks": 1350,
+      "save_reload_ticks": 200,
+      "topology_pass": 10,
+      "unexplained_j": 0,
+      "created_j": 0,
+      "approved_demolition_j": 166667
+    },
+    "reservoir_batteries": {
+      "ticks": 1350,
+      "save_reload_ticks": 200,
+      "topology_pass": 10,
+      "battery_identities": 8,
+      "battery_limits": true,
+      "battery_a_final_j": 20000000,
+      "battery_b_final_j": 12760164,
+      "unexplained_j": 0,
+      "created_j": 0,
+      "approved_demolition_j": 186667
+    },
+    "48_station": {
+      "ticks": 960,
+      "pass": true,
+      "engine_avg_ms_per_tick_including_init": 13.746,
+      "reroute": true
+    },
+    "prior_candidate_legacy_stress": {
+      "32_station_ticks": 1050,
+      "multisource_ticks": 1050,
+      "factory_brownout_ticks": 950,
+      "all_pass": true,
+      "not_repeated_on_final_guard_patch": true
+    }
+  },
+  "status": "GAME_TESTED_EXPERIMENT_NOT_APPROVED",
+  "limitations": [
+    "native exact CI ZIP recheck pending",
+    "no owner-game acceptance",
+    "long soak orphan EEI recovery not checked",
+    "full Bob’s/multiplayer/Undo not checked",
+    "no guarantee 60 UPS"
+  ]
+}

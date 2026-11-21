@@ -1,0 +1,159 @@
+{
+  "policy_version": "EM066-1",
+  "source": "EM065 native finite-reservoir evidence",
+  "model": "explicit_metered_lifecycle_events_only",
+  "no_physical_line_field_in_game_ledger": true,
+  "no_automatic_waiver_for_cable_or_merge_loss": true,
+  "real_engine_evidence": true,
+  "model_introduction_does_not_fix_runtime": true,
+  "hypothetical_physical_field_example": {
+    "electric_field_average_j": 3.125,
+    "magnetic_field_average_j": 320.0,
+    "combined_field_average_j": 323.125,
+    "parameters": {
+      "c_nf_per_km": 10,
+      "l_mh_per_km": 1,
+      "distance_km": 1,
+      "voltage_v_rms": 25000,
+      "current_a_rms": 800
+    },
+    "is_game_line_field_model": false
+  },
+  "cases": [
+    {
+      "variant": "reservoir",
+      "observed_total_loss_j": 1666667,
+      "approved_demolition_station_own_eei_j": 166667,
+      "other_stations_own_eei_at_demolition_j": 166667,
+      "unaccounted_bridge_or_network_loss_j": 1500000,
+      "unexplained_created_energy_j": 0,
+      "energy_gate": "FAIL",
+      "events": [
+        {
+          "tick": 201,
+          "event": "mast_removed",
+          "kind": "intentional_network_disconnection",
+          "lost_j": 333333,
+          "approved_j": 0,
+          "unaccounted_j": 333333
+        },
+        {
+          "tick": 441,
+          "event": "rail_removed",
+          "kind": "intentional_network_disconnection",
+          "lost_j": 166667,
+          "approved_j": 0,
+          "unaccounted_j": 166667
+        },
+        {
+          "tick": 671,
+          "event": "receiving_substation_demolished",
+          "kind": "demolition",
+          "lost_j": 500000,
+          "approved_j": 166667,
+          "unaccounted_j": 333333
+        },
+        {
+          "tick": 896,
+          "event": "factory_grids_merged",
+          "kind": "reconfiguration",
+          "lost_j": 166667,
+          "approved_j": 0,
+          "unaccounted_j": 166667
+        },
+        {
+          "tick": 900,
+          "event": "factory_merge_settling",
+          "kind": "post_switching",
+          "lost_j": 333333,
+          "approved_j": 0,
+          "unaccounted_j": 333333
+        },
+        {
+          "tick": 1002,
+          "event": "factory_grids_split",
+          "kind": "reconfiguration",
+          "lost_j": 166667,
+          "approved_j": 0,
+          "unaccounted_j": 166667
+        }
+      ]
+    },
+    {
+      "variant": "reservoir-batteries",
+      "observed_total_loss_j": 1724409,
+      "approved_demolition_station_own_eei_j": 186667,
+      "other_stations_own_eei_at_demolition_j": 186667,
+      "unaccounted_bridge_or_network_loss_j": 1537742,
+      "unexplained_created_energy_j": 0,
+      "energy_gate": "FAIL",
+      "events": [
+        {
+          "tick": 201,
+          "event": "mast_removed",
+          "kind": "intentional_network_disconnection",
+          "lost_j": 373333,
+          "approved_j": 0,
+          "unaccounted_j": 373333
+        },
+        {
+          "tick": 441,
+          "event": "rail_removed",
+          "kind": "intentional_network_disconnection",
+          "lost_j": 186667,
+          "approved_j": 0,
+          "unaccounted_j": 186667
+        },
+        {
+          "tick": 444,
+          "event": "rail_settling",
+          "kind": "post_switching",
+          "lost_j": 7742,
+          "approved_j": 0,
+          "unaccounted_j": 7742
+        },
+        {
+          "tick": 671,
+          "event": "receiving_substation_demolished",
+          "kind": "demolition",
+          "lost_j": 560000,
+          "approved_j": 186667,
+          "unaccounted_j": 373333
+        },
+        {
+          "tick": 896,
+          "event": "factory_grids_merged",
+          "kind": "reconfiguration",
+          "lost_j": 186667,
+          "approved_j": 0,
+          "unaccounted_j": 186667
+        },
+        {
+          "tick": 902,
+          "event": "factory_merge_settling",
+          "kind": "post_switching",
+          "lost_j": 253333,
+          "approved_j": 0,
+          "unaccounted_j": 253333
+        },
+        {
+          "tick": 1002,
+          "event": "factory_grids_split",
+          "kind": "reconfiguration",
+          "lost_j": 146667,
+          "approved_j": 0,
+          "unaccounted_j": 146667
+        },
+        {
+          "tick": 1003,
+          "event": "factory_split_settling",
+          "kind": "post_switching",
+          "lost_j": 10000,
+          "approved_j": 0,
+          "unaccounted_j": 10000
+        }
+      ]
+    }
+  ],
+  "overall_energy_gate": "FAIL"
+}

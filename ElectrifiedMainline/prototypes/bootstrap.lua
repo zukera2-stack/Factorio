@@ -77,8 +77,6 @@ data:extend({
             { type = "unlock-recipe", recipe = "em-traction-motor" },
             { type = "unlock-recipe", recipe = "em-battery-bank" },
             { type = "unlock-recipe", recipe = "em-electric-locomotive" },
-            { type = "unlock-recipe", recipe = "em-high-speed-cargo-wagon" },
-            { type = "unlock-recipe", recipe = "em-high-speed-fluid-wagon" },
         },
         prerequisites = { "em-electrified-railways", "production-science-pack" },
         unit = { count = 2000, time = 60, ingredients = { { "automation-science-pack", 2 }, { "production-science-pack", 1 }, { "chemical-science-pack", 1 } } },
@@ -142,7 +140,9 @@ data:extend({
 -- Start from the vanilla planner to retain its version-specific item fields.
 local em_high_speed_rail_planner = table.deepcopy(data.raw["rail-planner"]["rail"])
 em_high_speed_rail_planner.name = "em-high-speed-rail"
-em_high_speed_rail_planner.icon = "__base__/graphics/icons/rail.png"
+em_high_speed_rail_planner.icons = nil
+em_high_speed_rail_planner.icon = "__ElectrifiedMainline__/graphics/icons/hsr-057.png"
+em_high_speed_rail_planner.icon_size = 64
 em_high_speed_rail_planner.localised_name = {"item-name.em-high-speed-rail"}
 em_high_speed_rail_planner.subgroup = "train-transport"
 em_high_speed_rail_planner.order = "a[rail]-b[high-speed-rail]"
@@ -163,7 +163,8 @@ local em_rail_replacement_planner = table.deepcopy(data.raw["selection-tool"]["s
 em_rail_replacement_planner.name = "em-rail-replacement-planner"
 em_rail_replacement_planner.localised_name = {"item-name.em-rail-replacement-planner"}
 em_rail_replacement_planner.localised_description = {"item-description.em-rail-replacement-planner"}
-em_rail_replacement_planner.icon = "__base__/graphics/icons/rail.png"
+em_rail_replacement_planner.icons = nil
+em_rail_replacement_planner.icon = "__ElectrifiedMainline__/graphics/icons/hsr-replacement-057.png"
 em_rail_replacement_planner.icon_size = 64
 em_rail_replacement_planner.subgroup = "train-transport"
 em_rail_replacement_planner.order = "a[rail]-c[rail-replacement-planner]"
@@ -204,10 +205,10 @@ data:extend({
         selection_box = {{ -1.5, -2.5 }, { 1.5, 2.5 }},
         resistances = {{ type = "physical", decrease = 80, percent = 80 }, { type = "fire", decrease = 50, percent = 50 }},
         energy_source = { type = "void" },
-        max_power = "600kW",
-        max_speed = 1.5,
+        max_power = "2MW",
+        max_speed = 2.0,
         reversing_power_modifier = 0.6,
-        braking_force = 10,
+        braking_force = 20,
         friction_force = 0.50,
         energy_per_hit_point = 5,
         pictures = data.raw["locomotive"]["locomotive"].pictures,
@@ -236,47 +237,9 @@ data:extend({
         categories = { "crafting" },
     },
 
-    {
-        type = "item",
-        name = "em-high-speed-cargo-wagon",
-        icon = "__base__/graphics/icons/cargo-wagon.png",
-        icon_size = 64,
-        subgroup = "train-transport",
-        order = "c[wagon]-f[high-speed-cargo]",
-        stack_size = 10,
-        weight = 25,
-    },
 
-    {
-        type = "item",
-        name = "em-high-speed-fluid-wagon",
-        icon = "__base__/graphics/icons/fluid-wagon.png",
-        icon_size = 64,
-        subgroup = "train-transport",
-        order = "c[wagon]-f[high-speed-fluid]",
-        stack_size = 10,
-        weight = 25,
-    },
 
-    {
-        type = "recipe",
-        name = "em-high-speed-cargo-wagon",
-        enabled = false,
-        ingredients = { { type = "item", name = "steel-plate", amount = 30 }, { type = "item", name = "copper-cable", amount = 50 }, { type = "item", name = "em-heavy-copper-cable", amount = 10 } },
-        results = {{ type = "item", name = "em-high-speed-cargo-wagon", amount = 1 }},
-        energy_required = 10,
-        categories = { "crafting" },
-    },
 
-    {
-        type = "recipe",
-        name = "em-high-speed-fluid-wagon",
-        enabled = false,
-        ingredients = { { type = "item", name = "steel-plate", amount = 30 }, { type = "item", name = "copper-cable", amount = 50 }, { type = "item", name = "em-heavy-copper-cable", amount = 10 } },
-        results = {{ type = "item", name = "em-high-speed-fluid-wagon", amount = 1 }},
-        energy_required = 10,
-        categories = { "crafting" },
-    },
 })
 
 data:extend({
@@ -395,6 +358,19 @@ clone_placeable_entity("half-diagonal-rail", "half-diagonal-rail",
 -- default placement result on the straight rail.
 data.raw["rail-planner"]["em-high-speed-rail"].place_result = "em-high-speed-straight-rail"
 
+-- Match inventory, recipe, technology and all four HSR entity icons.
+local function hsr_icon(p, replacement)
+    p.icons = nil
+    p.icon = "__ElectrifiedMainline__/graphics/icons/" .. (replacement and "hsr-replacement-057.png" or "hsr-057.png")
+    p.icon_size = 64
+end
+for _, pair in ipairs({{"straight-rail","em-high-speed-straight-rail"},{"curved-rail-a","em-curved-high-speed-rail"},{"curved-rail-b","em-curved-high-speed-rail-b"},{"half-diagonal-rail","em-half-diagonal-high-speed-rail"}}) do
+    hsr_icon(data.raw[pair[1]][pair[2]])
+end
+hsr_icon(data.raw.recipe["em-high-speed-rail"])
+hsr_icon(data.raw.recipe["em-rail-replacement-planner"], true)
+hsr_icon(data.raw.technology["em-high-speed-rails"])
+
 -- A real small electric pole, not an item-only visual marker.
 clone_placeable_entity("electric-pole", "small-electric-pole",
     "em-electric-pole", "em-electric-pole")
@@ -406,10 +382,10 @@ local electric_locomotive = table.deepcopy(data.raw.locomotive.locomotive)
 electric_locomotive.name = "em-electric-locomotive"
 electric_locomotive.weight = 2000
 electric_locomotive.energy_source = { type = "void" }
-electric_locomotive.max_power = "600kW"
-electric_locomotive.max_speed = 1.5
+electric_locomotive.max_power = "2MW"
+electric_locomotive.max_speed = 2.0
 electric_locomotive.reversing_power_modifier = 0.6
-electric_locomotive.braking_force = 10
+electric_locomotive.braking_force = 20
 electric_locomotive.friction_force = 0.50
 electric_locomotive.minable = { mining_time = 0.5, result = "em-electric-locomotive" }
 electric_locomotive.placeable_by = { item = "em-electric-locomotive", count = 1 }
@@ -417,12 +393,7 @@ electric_locomotive.next_upgrade = nil
 data.raw.locomotive["em-electric-locomotive"] = electric_locomotive
 data.raw.item["em-electric-locomotive"].place_result = "em-electric-locomotive"
 
--- The custom wagons now have actual rolling-stock entities. Their capacities
--- intentionally remain at vanilla values until the balancing pass.
-clone_placeable_entity("cargo-wagon", "cargo-wagon",
-    "em-high-speed-cargo-wagon", "em-high-speed-cargo-wagon")
-clone_placeable_entity("fluid-wagon", "fluid-wagon",
-    "em-high-speed-fluid-wagon", "em-high-speed-fluid-wagon")
+-- 057: use native cargo and fluid wagons only; JSON migration preserves legacy names.
 
 -- This recipe already existed, but its result item prototype was missing.
 data:extend({

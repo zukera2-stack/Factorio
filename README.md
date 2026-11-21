@@ -1,4 +1,6 @@
-> **Current project across branches:** Read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md) first. This README describes **stable `main` 0.1.56 only**. The separately tested 0.1.60 electrical bridge is installed via Updater 1.1 from `test/updater-approved`; 0.1.61 is unverified research, not a game update. Never confuse these branches.
+> **Development main checkpoint 0.1.62 — NOT A RELEASE.** EM070 tested substation power and existing HSR visuals are merged to the source baseline via [PR #46](https://github.com/zukera2-stack/Factorio/pull/46). The mod remains unfinished: locomotives are still powered by a `void` placeholder, without real contact-line traction, onboard battery backup or regeneration. Updater-approved stays at 0.1.61. No GitHub Release, tag or Mod Portal upload. See [historical rolling-stock/rail plan](docs/plans/HSR_VISUAL_049.md) and [current work](docs/CURRENT_WORK.md).
+
+> **Current project across branches:** Read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md) first. The contents below document the previous **stable 0.1.56 visual milestone**. **0.1.62 public beta** is prepared in PR #46 (native substation power, reversals and dynamic EEI, tested in Factorio 2.1.24). The installed Updater-approved channel stays on 0.1.61 until separately approved; PR #46 merge alone does not update it.
 
 # Electrified Mainline 0.1.56 — stable main visual milestone (19 Nov 2026)
 

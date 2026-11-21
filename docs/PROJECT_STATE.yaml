@@ -1,13 +1,161 @@
+release_candidate_062:
+  type: main_source_development_checkpoint
+  status: user_authorized_main_source_merge_no_release
+  source_branch: experiment/native-dynamic-eei-070
+  source_gameplay_verified_sha: 4c5e026bffdc1082925563d725c94751cd1acb73
+  source_docs_sha: 5a2d7861e87eb4723ce461aff832bc98b5a422db
+  integration_branch: release/0.1.62-main-integration
+  integration_pr: 46
+  target_branch: main
+  main_prior_sha: ec7fd465beb13ae148589baae520675edc2cb3b5
+  base_main_version: "0.1.56"
+  target_main_source_version: "0.1.62"
+  installed_updater_branch: test/updater-approved
+  installed_updater_version: "0.1.61"
+  native_source_060_reverse_ci_run: 44920768721
+  native_source_060_reverse_ci_status: pass
+  native_source_power_cases: 3
+  native_source_power_ticks: 2030
+  integration_ci_run: 44922029418
+  integration_ci_result: success
+  integration_native_power_cases: 3_of_3_pass
+  integration_native_power_ticks: 2030
+  integration_lua_dispatch_cache_parity_cases: 1675
+  integration_docs_ci_run: 44922029387
+  integration_sprites_ci_run: 44922029384
+  integration_package_file_count: 130
+  integration_package_original_png_count: 83
+  integration_ci_artifact_id: 14714291612
+  integration_inner_zip_sha256: "391e8d3df756f048996fd4794a3b0b695d74f13475f2da3dca582252709f19cb"
+  integration_sha256_equals_verified_em070_source_ci: true
+  integration_git_mergeable: true
+  native_em065_two_closed_reservoirs_local: pass_0_unexplained_0_created_j
+  native_48_station_local: pass_960_ticks
+  native_32_multi_factory_local: pass_3050_ticks
+  official_source_ci_zip_sha256: "391e8d3df756f048996fd4794a3b0b695d74f13475f2da3dca582252709f19cb"
+  runtime_prototypes_modified_during_integration: false
+  runtime_scripts_modified_during_integration: false
+  three_main_only_doc_commits_preserved_as_merge_parent: true
+  compatibility_after_source_merge: pending_future_release_decision
+  release_label: not_released_mod_under_development
+  merge_into_main_authorized: true
+  updater_promote_authorized: false
+  github_release_authorized: false
+  github_tag_authorized: false
+  factorio_mod_portal_publication_authorized: false
+  mod_complete: false
+  missing_game_mechanics: locomotive_void_to_real_traction_backup_and_regeneration
+  release_notes: docs/research/25kv-dynamic-eei-070.md
+
+em070_native_dynamic_eei:
+  branch: experiment/native-dynamic-eei-070
+  parent_sha: 5c8f120b24b2a7d3382ac75156f217030c2b31f3
+  mod_version: "0.1.62"
+  status: native_ci_3_scenarios_and_local_2_energy_48_stress_pass_unreleased
+  engine: "Factorio 2.1.24 build 87808"
+  base_analogue: data/base/prototypes/entity/entities.lua
+  base_file_sha256: a6d0356285a56ad4af0b08d9acee669981c888dd5962cb0ee5d79d9b31294d1b
+  base_only_priority_8_native_tests: pass
+  fixed_input_reverse_output_j: 0
+  fixed_output_reverse_input_j: 0
+  dynamic_each_direction_transferred_j: 750000
+  baseline_per_pair_j: 2000000
+  local_test_zip_sha256: "96fb991c755b99630a186fcc2d4476f9a390c21bcfc9e8946fec3d1c651c6fd6"
+  gameplay_change: two_existing_prototype_usage_priority_dynamic_and_explicit_creation_mode
+  native_energy_reservoir: pass_1350_plus_200_disk_save_reload
+  native_energy_batteries: pass_1350_plus_200_disk_save_reload
+  unexplained_lost_j: 0
+  created_j: 0
+  authorized_demolition_no_battery_j: 166667
+  authorized_demolition_battery_j: 186667
+  native_48_station_960_ticks: pass
+  native_32_station_stress_1050_ticks: pass
+  native_multisource_1050_ticks: pass
+  native_factory_deficit_950_ticks: pass
+  official_ci_run: 44920768721
+  official_ci_conclusion: success
+  official_ci_native_power_scenarios: 3_of_3_pass
+  official_ci_native_power_ticks: 2030
+  official_ci_priority_matrix: pass
+  official_ci_artifact_id: 14713602030
+  official_ci_inner_zip_sha256: "391e8d3df756f048996fd4794a3b0b695d74f13475f2da3dca582252709f19cb"
+  exact_ci_artifact_native_energy_save_reload: pending
+  local_stress_native_pass: 3_of_3
+  legacy_em066_historical_deficit_classifier: pass_historical_data_not_current_runtime
+  next_release_gate: migration_from_owner_approved_061_and_ci_exact_zip_native_qa
+  historical_native_060_reverse: pass_official_Factorio_2_1_24_CI_44920768721
+  official_ci_exact_zip_native: not_rerun_native_from_exact_artifact
+  owner_save_bobs_multiplayer_undo_long_soak: unverified
+  main_approved_version: "0.1.56"
+  updater_approved_version: "0.1.61"
+  release_authorization: false
+  research: docs/research/25kv-dynamic-eei-070.md
+
+em069_eei_buffer_lifecycle:
+  branch: experiment/eei-buffer-lifecycle-069
+  parent_sha: 064682e4acc4ccb557741dfae3cc206afe816c29
+  mod_version: "0.1.62"
+  status: blocked_official_native_060_reverse_0_j
+  engine: "Factorio 2.1.24 build 87808"
+  tested_local_zip_sha256: "92a78800b04e85ebcb6aa50635c6689c071b5faea65ed1618f612f9cb73c2adc"
+  installed_ci_zip_exact_same_bytes: unverified
+  reservoir_1350_ticks: pass
+  reservoir_battery_1350_ticks: pass
+  disk_save_reload_each_200_ticks: pass
+  reservoir_discard_legal_j: 166667
+  reservoir_battery_discard_legal_j: 186667
+  unexplained_loss_j: 0
+  created_j: 0
+  native_48_stations_960_ticks: pass
+  native_32_multisource_factory_previous_candidate: pass_not_repeated_on_final_guard
+  accumulator_ids_and_flow_limits: pass
+  accumulator_b_end_j: 12760164
+  game_changelog_mod_version_unchanged: true
+  manual_off_to_export_regression_mock: pass_lua_ci_44919510181
+  official_ci_build_run: 44919510181
+  official_ci_status: FAILED_native_reverse
+  official_ci_lua_and_package_preflight: pass
+  official_native_060_reverse_sink_j: 0
+  official_native_060_battery_after_j: 7533334
+  release_gate: BLOCKED
+  root_cause_hypothesis: role_swaps_of_fixed_priority_EEI_need_dynamic_prototype_engine_test
+  long_soak_and_orphan_gc: pending
+  bobs_multiplayer_undo: untested
+  approved_updater_version: "0.1.61"
+  main_stable_version: "0.1.56"
+  release_authorization: false
+  research: docs/research/25kv-eei-buffer-lifecycle-069.md
+
+em068_eei_disposal_diagnostics:
+  branch: experiment/eei-disposal-diagnostics-068
+  parent_sha: 0215b599c2bc80fbd750190ea19095cc31328183
+  mod_version: "0.1.62"
+  status: diagnostic_game_tested_fix_not_implemented
+  official_game_build: "2.1.24 build 87808"
+  local_reconstruction_not_exact_ci_zip: true
+  native_topology_ticks: 1350
+  native_disk_save_reload_ticks: 200
+  baseline_lost_j: 1666667
+  legal_demolition_buffer_j: 166667
+  unresolved_loss_j: 1500000
+  created_j: 0
+  runtime_change: disposal_logging_only
+  experiment_fix: fail_accumulator_availability_and_regression
+  release_gate: blocked
+  research: docs/research/25kv-eei-disposal-068.md
+  upstream_test_version: "0.1.61"
+  upstream_main_version: "0.1.56"
+
 schema_version: 1
 project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: main
+  active_test_branch: test/updater-approved
   current_baseline_branch: main
-  active_feature_branch: main
-  feature_version: "0.1.56" # owner-approved original visual graph
-  feature_status: 056_merged_main_visual_baseline
+  active_feature_branch: main # source merge into main, no release
+  feature_version: "0.1.62" # source main checkpoint only, not installed
+  feature_status: 062_owner_authorized_main_checkpoint_not_release
   last_validated_test_branch: feature/release-056-accepted
   release_target_branch: main
   release_pull_request: 30
@@ -15,7 +163,8 @@ project:
   previous_release_pull_request: 27
   previous_release_merge_commit: 7218360acb4fc5079e48cf4f38448fa086f1af96
   release_merge_approved_by_user: true
-  release_status: merged_into_main_2026_11_19
+  previously_approved_baseline: merged_into_main_2026_11_19
+  release_status: no_release_main_dev_checkpoint_2026_11_21
   next_feature_branch_policy: branch_from_main
   previous_main_baseline: "0.1.48"
   previous_main_handoff_archive: https://github.com/zukera2-stack/Factorio/blob/1a94fb8a7e6a860130b071da7cd8d556a4aec96c/docs/AI_CONTEXT.md
@@ -24,12 +173,12 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.56" # accepted visual milestone
-  main_baseline_mod_version: "0.1.56" # merged PR #30
+  mod_version: "0.1.62" # source-only main checkpoint, NOT patcher-approved
+  main_baseline_mod_version: "0.1.62" # owner-authorized main source merge PR #46
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
-  last_state_update: "2026-11-19"
+  last_state_update: "2026-11-21"
   documentation_audit: 056_repository_cleanup
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md
@@ -347,7 +496,7 @@ visual_development:
 user_decisions:
   rail_modernization: replace_vanilla_rails_with_high_speed_rails
   power_model: hybrid_overhead_supply_and_onboard_storage
-  rolling_stock: vanilla_and_custom_wagons_supported
+  rolling_stock: native_cargo_and_fluid_wagons_only_custom_locomotive
   regenerative_braking_priority:
     - shared_grid
     - onboard_storage_surplus
@@ -365,7 +514,7 @@ interoperability:
   vanilla_locomotive_on_custom_rails: supported_as_vanilla
   custom_locomotive_on_custom_rails: planned_grid_plus_storage
   custom_locomotive_on_vanilla_rails: planned_storage_only
-  vanilla_and_custom_wagons_mixed: required
+  vanilla_wagons_with_custom_locomotive: required
   unknown_third_party_rolling_stock: must_not_crash_or_be_controlled
 
 implementation:
@@ -405,14 +554,14 @@ implementation:
   blueprint_rail_undo_test_branch: diagnostic/blueprint-rail-undo
   persistent_storage_lazy_initialization: present_in_source
   legacy_save_pending_queue_nil_crash: previously_reproduced_fix_added_in_0_1_1
-  separate_high_speed_power_grid: not_implemented
+  separate_high_speed_power_grid: native_technical_anchors_with_058_bridge_game_unverified
   custom_electric_pole: cloned_from_vanilla_ordinary_electric_network
   custom_locomotive_prototype: present_in_source
-  custom_wagon_prototypes: cloned_from_vanilla_no_capacity_changes
+  custom_wagon_prototypes: removed_057_native_json_migration
   custom_locomotive_energy_source: void_placeholder
   real_traction_energy: not_implemented
   real_battery_model: not_implemented
-  real_substation_transfer: not_implemented
+  real_substation_transfer: bridge_058_implemented_game_unverified
   real_regeneration: not_implemented
   real_train_mass_accounting: not_implemented
   overhead_line_power_delivery: not_implemented
@@ -1242,45 +1391,549 @@ repository_cleanup_056:
   phase2_excluded: true
   source_changes: false
 
-# Cross-branch continuation index; does not change the stable main project.mod_version.
-# Snapshots must be checked against live GitHub refs before use.
-cross_branch_handoff_2026_11_21:
-  audit: docs/DOC_AUDIT_2026-11-21.md
-  start_here: docs/CURRENT_WORK.md
-  scope: main_documenting_separate_test_and_experiment_refs
-  verified_at_utc_date: "2026-11-21"
-  main:
-    branch: main
-    head_at_audit: 7849d192ba35823d9636abe9bc6d370beb41adfa
-    mod_version: "0.1.56"
-    status: merged_owner_accepted_visual_baseline
-    real_traction_megawatts: not_implemented
-  approved_test:
-    branch: test/updater-approved
-    head_at_audit: ea9366a9798cd78efec4b675c81d086c09170c28
-    mod_version: "0.1.60"
-    status: scoped_verified_power_bridge_owner_patch_installed
-    official_engine_run: 44762226742
-    frozen_package_run: 44772684519
-    owner_full_acceptance: false
-  updater:
-    source_branch: feature/git-updater-060
-    head_at_audit: 9bc032daf5910564db8622986c907b89b193db16
-    version: "1.1"
-    source_doc_branch_path: tools/updater/README.txt
-    windows_ci_run: 44783774432
-    owner_windows_install_confirmed_2026_11_20: true
-    approved_pointer: refs/heads/test/updater-approved
-    promotion_requires_explicit_owner_approval: true
-  priority_research:
-    branch: experiment/native-accumulator-gateway-061
-    head_at_audit: 96e5fdfced96677f8f2a0e635039e6e32d381a55
-    runtime_mod_version: "0.1.60"
-    status: separate_test_only_probe_not_native_priority_game_test
-    priority_matrix_P1_P7: planned_not_yet_implemented
-    native_accumulator_overlap: research_only_unverified_in_target_engine
-    gameplay_upgrade_approved: false
-  skills:
-    handoff: .agents/skills/factorio-handoff/SKILL.md
-    native_research: .agents/skills/factorio-native-research/SKILL.md
-    updater_release: .agents/skills/factorio-updater-release/SKILL.md
+icons_balance_057:
+  research: docs/research/hsr-icons-balance-057.md
+  icon_view_frame: 160
+  max_power_kW: 2000
+  max_speed_tiles_per_tick: 2.0
+  brake_force: 20
+  weight: 2000
+  removed_wagons_migration: ElectrifiedMainline/migrations/0.1.57.json
+  migration_live_verified: false
+  ci_status: pending
+  visual_network_unchanged: true
+
+
+power_bridge_058:
+  research: docs/research/25kv-power-bridge-058.md
+  max_MW_per_station: 20
+  efficiency: 1.0
+  default_mode: off
+  modes: [import, export, off]
+  cycle_policy: reject_directed_cycles_and_same_network
+  energy_transfer: debit_actual_input_buffer_credit_output_buffer
+  native_corridor: technical_046_verified_copper
+  port_isolation: dedicated_lab_surface
+  locomotive_consumption: not_implemented
+  game_status: pending
+  ci_status: passed
+  ci_run: 44750917384
+  artifact_id: 14635601471
+  ci_source: e5de8a8bd425d716ff9d7d61dbfccf6cf843e10e
+  inner_zip_sha256: 5fe82a166920dfac99c0541f3e334f3e3195322f26c07fe0cb2f3ce16c400341
+
+power_bridge_059:
+  baseline: dc84724a0d5bd80421fac34f3e5d41f307a6e534
+  research: docs/research/25kv-auto-bidirectional-059.md
+  owner_058_evidence: manual_20MW_screenshots_and_empty_visible_mast
+  max_MW_per_station: 20
+  default_mode: auto
+  modes: [auto, import, export, off]
+  native_mast_link: own_hidden_anchor_only
+  allocator: regular_surplus_then_battery_for_load_then_regular_surplus_for_storage
+  actual_transfer: debit_EEI_before_credit
+  ci_status: passed
+  ci_run: 44757346136
+  artifact_id: 14639915542
+  ci_source: 45342457835276d2eaadf80ffc96ae82d9591714
+  inner_zip_sha256: d00f7625a92011ecb43c9977c3391a7c83da225c821f99185af81d30c0a593ce
+  game_status: pending
+
+power_bridge_060:
+  base: f523decc8828e0d7f1e51e8db2b73002fce86346
+  research: docs/research/25kv-dispatch-recovery-060.md
+  topology_059_live: confirmed_network_44_factory_27_61
+  auto_059_live: idle_zero_MW
+  max_MW: 20
+  ci_status: passed
+  ci_run: 44762226699
+  artifact_id: 14642176934
+  ci_source: 581724a99b129b2c3772b207ac358ca1c3b00e34
+  inner_zip_sha256: 10b00013e66ed1d63ec901449fb166ab9a80fa391c2afb0d0f0c0910901fcbf9
+  game_status: headless_2_1_24_pass_owner_pending
+
+headless_probe_060:
+  workflow: .github/workflows/headless-power-060.yml
+  target_game: 2.1.24
+  previous_failed_package_run: 44761190848
+  status: passed
+  run: 44762226742
+  tested_package_run: 44762226699
+  logs_artifact: 14642681077
+
+asset_freeze_060:
+  source_branch: feature/25kv-dispatch-recovery-060
+  source_run: 44762226699
+  source_artifact: 14642176934
+  status: assets_verified_fast_ci_pending
+  freeze_run: 44772563088
+  asset_commit: 7b723f4feb65e366c9ae11c13a17864b3c435fbc
+  graphics_expected: 83
+  runtime_files_expected: 129
+
+priority_diagnostics_061_candidate:
+  branch: feature/updater-061-candidate
+  starting_commit: ea9366a9798cd78efec4b675c81d086c09170c28
+  mod_version: "0.1.61"
+  status: approved_test_updater_distributed
+  versioned_changes: info_json_and_read_only_priority_inspection_command
+  no_energy_algorithm_changes: true
+  no_bridge_prototype_changes: true
+  no_approved_artwork_changes: true
+  priority_modes_read_only: true
+  owner_updater: "1.1"
+  updater_pointer: test/updater-approved
+  approved_pointer_at_start: ea9366a9798cd78efec4b675c81d086c09170c28
+  approved_mod_version_at_start: "0.1.60"
+  old_060_tests_included_via_bootstrap: true
+  exact_native_engine_2_1_24_verified: true
+  native_test_command: tests/run_headless_061.sh
+  native_test_fixture: tests/em061-power-probe/
+  native_test_gate: github_actions_lua_preflight
+  native_test_result: packaged_zip_native_and_full_qa_pass_44875890182
+  native_061_initial_run: 44875708000
+  native_061_initial_runtime_pass: true
+  native_061_initial_ci_result: failed_log_marker_mismatch
+  native_061_rebuilt_uses_zip: true
+  packaged_zip_native_run: 44875796874
+  packaged_zip_native_pass: true
+  legacy_023_028_029_test_gates_extended_to_061: true
+  first_build_run: 44875572533
+  first_build_result: failed_historical_visual_test_version_gate
+  inherited_test_gate_fix: tests/25kv_visual_geometry_048.lua
+  explicit_promotion_approval: owner_requested_prepare_061_for_patcher_2026_11_21
+  research_doc: docs/research/25kv-priority-diagnostics-061.md
+  promoted_runtime_commit: 55db63f6d3be6a2f64da005d6db28433e8c42d5d
+  full_061_ci_run: 44875890182
+  full_061_ci_result: success
+  full_061_ci_artifact: 14696041766
+  inner_zip_sha256: 3771b7241848ae98e74019659baeb03616ab9aa4fa5dfcb9e7acf02efbef754c
+  runtime_file_count: 130
+  frozen_png_count: 83
+  main_merge_allowed: false
+  owner_live_061_acceptance: pending
+
+fair_dispatch_062_experiment:
+  branch: experiment/network-fair-share-062
+  base_approved_061_sha: c8a1feddddfb3f160eae5f63cd1b0231e2136ce3
+  runtime_mod_version: "0.1.62"
+  approved_test_branch: test/updater-approved
+  approved_test_mod_version_unchanged: "0.1.61"
+  runtime_files_changed_from_061:
+    - ElectrifiedMainline/info.json
+    - ElectrifiedMainline/scripts/bridge_dispatch_059.lua
+  runtime_pngs_preserved: 83
+  max_per_station_mw: 20
+  fairness_policy: source_local_equal_allocation_within_same_priority
+  real_engine: Factorio_2.1.24_build_87808_x86_64
+  native_fixtures_pass: 3
+  native_fixtures_total: 3
+  native_game_ticks: 2030
+  baseline_061_starvation_reproduced: true
+  baseline_061_t240_network_b_j: 78666667
+  baseline_061_t240_network_c_j: 0
+  fixed_062_t240_network_b_j: 39333333
+  fixed_062_t240_network_c_j: 39333333
+  fixed_062_t600_network_c_j: 159000000
+  verified_no_energy_creation_in_fixture: true
+  pure_lua_randomized_graphs_passed: 700
+  real_bobs_power_native_in_062: false
+  full_global_fairness_for_all_graphs_proven: false
+  owner_approved_updater_promotion: false
+  main_merge_approved: false
+  research: docs/research/25kv-fair-dispatch-062.md
+
+fair_dispatch_062_immutable_package_qa:
+  source_runtime_commit: 53d8b188ed18a4fb2d320aa374956a45af34962c
+  package_workflow_run: 44885075734
+  package_workflow_result: success
+  doc_workflow_run: 44885075699
+  doc_workflow_result: success
+  artifact_id: 14699501754
+  game_zip_sha256: 8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb
+  package_game_files: 130
+  package_pngs: 83
+  native_2_1_24_tested_exact_CI_zip: true
+  native_game_tests_passed: 3
+  native_game_tests_total: 3
+  native_game_ticks: 2030
+  native_recheck_on_official_package: completed
+  approved_updater_ref_changed: false
+  owner_manual_action_required: false
+
+long_mainline_stress_062_2026_11_21:
+  branch: experiment/network-fair-share-062
+  test_source: tests/run_native_stress_062.py
+  report: docs/research/25kv-long-mainline-stress-062.md
+  report_machine: docs/research/25kv-long-mainline-stress-062.json
+  mod_zip_sha256: 8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb
+  engine: Factorio_2_1_24_build_87808_linux64
+  native_one_source_32_stations: pass_1050_ticks_31_sinks
+  native_four_sources_32_stations: pass_1050_ticks_28_sinks
+  native_factory_brownout: pass_950_ticks_20MW_to_8MW
+  factory_primary_priority: passed
+  native_six_sources_48_stations_initial_fairness: passed_to_tick_240
+  native_48_station_full_reroute_and_outage: not_confirmed
+  benchmark_48_station_min_tick_ms_061: 3.121
+  benchmark_48_station_min_tick_ms_062: 27.357
+  benchmark_48_station_average_including_setup_ms_061: 40.708
+  benchmark_48_station_average_including_setup_ms_062: 102.225
+  target_60_ups_budget_ms_per_tick: 16.667
+  test_findings: performance_regression_blocks_062_promotion
+  owner_approved_upgrade_ref_unchanged: true
+  gameplay_runtime_changed_in_this_commit: false
+
+optimized_dispatch_062_experiment_2026_11_21:
+  branch: experiment/network-fair-share-opt-062
+  parent_branch: experiment/network-fair-share-062
+  base_sha: 08b8b656983705619c4cc511e62f13e535baa79f
+  research: docs/research/25kv-dispatch-optimization-062.md
+  unit_regression: tests/bridge_dispatch_efficiency_062.lua
+  reproducible_benchmark: tests/benchmark_48_062.py
+  baseline_062_CI_zip_sha256: 8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb
+  tested_opt_local_zip_sha256: 18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040
+  engine: Factorio_2_1_24_build_87808_linux_x86_64
+  unchanged_mod_version: "0.1.62"
+  changed_runtime_files:
+    - ElectrifiedMainline/scripts/bridge_dispatch_059.lua
+  png_assets_unchanged: 83
+  native_scenarios_passed: 7
+  native_scenarios_total: 7
+  native_ticks: 6040
+  randomized_pure_lua_graphs_passed: 700
+  long48_baseline_min_tick_ms: 26.325
+  long48_opt_min_tick_ms: 1.928
+  long48_baseline_single_max_removed_mean_ms_heuristic: 29.041
+  long48_opt_single_max_removed_mean_ms_heuristic: 10.122
+  full_48_reroute_and_outage_passed: true
+  globally_guaranteed_60ups: false
+  native_bobs_power_tested: false
+  approved_updater_ref_changed: false
+  owner_approved_promotion: false
+
+optimized_dispatch_062_exact_CI_2026_11_21:
+  ci_workflow_run: 44889429815
+  ci_result: success
+  documentation_workflow: 44889429737
+  documentation_result: success
+  ci_artifact_id: 14701577307
+  ci_inner_mod_zip_sha256: 18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040
+  byte_identical_to_game_tested_local_zip: true
+  total_game_files: 130
+  unchanged_png_count: 83
+  actual_native_tests_covered_by_exact_zip: true
+  approved_updater_ref_changed: false
+  stable_main_modified: false
+
+source_sink_buffer_native_063_2026_11_21:
+  test_branch: experiment/buffer-source-sink-063
+  parent_branch: experiment/network-fair-share-opt-062
+  tested_mod_version_unchanged: "0.1.62"
+  exact_zip_sha256: 18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040
+  game_engine: Factorio_2_1_24_build_87808_linux_x86_64
+  probe: tests/em063-buffer-probe.lua
+  runner: tests/run_native_buffer_063.py
+  report: docs/research/25kv-buffer-source-sink-063.md
+  machine_report: docs/research/25kv-buffer-source-sink-063.json
+  native_scenarios_passed: 4
+  native_scenarios_total: 4
+  native_ticks: 6160
+  generator_source_substation_mw: 20
+  receiving_substation_consumer_mw: 10
+  buffer_source_and_receiver_delivery_after_outage_j: 19493333
+  source_side_only_delivery_after_outage_j: 9893333
+  receiver_side_only_delivery_after_outage_j: 9746667
+  bridge_transient_only_after_outage_j: 166667
+  confirmed_fully_depleted_at_tick: 1200
+  extra_energy_received_between_ticks_1200_and_1480_j: 0
+  station_pole_contains_native_accumulator: false
+  hidden_bridge_eei_transient_buffer_j: 333334
+  persistent_station_storage_implemented: false
+  native_bobs_battery_tested: false
+  mod_runtime_changed: false
+  approved_updater_ref_changed: false
+  main_branch_changed: false
+
+buffer_flush_063_experiment_2026_11_21:
+  branch: experiment/buffer-flush-063
+  parent_test_branch: experiment/buffer-source-sink-063
+  original_runtime_version_still: "0.1.62"
+  runtime_file_modified: ElectrifiedMainline/scripts/power_bridge_058.lua
+  test_fixture_modified: tests/em063-buffer-probe.lua
+  exact_archive_sha_required_for_test: true
+  test_fixture_runner: tests/run_native_buffer_063.py
+  research: docs/research/25kv-buffer-flush-063.md
+  machine_report: docs/research/25kv-buffer-flush-063.json
+  actual_engine: Factorio_2_1_24_build_87808_linux_x86_64
+  baseline_optimized_zip_sha256: 18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040
+  native_tested_modified_local_zip_sha256: a0bd3030e6ccda2f2227e76ce4311afc2f3d9792fbb10d9e65ba796c1f1b0f2b
+  baseline_bridge_only_after_cutoff_j: 166667
+  patched_bridge_only_after_cutoff_j: 333333
+  hidden_buffer_empty_and_ports_destroyed_at_tick: 542
+  avoids_starving_partially_powered_factory: true
+  factory_deficit_local_gain_after_fix_j: 47946667
+  factory_deficit_remote_gain_after_fix_j: 266667
+  native_scenarios_passed: 11
+  native_scenarios_total: 11
+  native_game_ticks: 12200
+  native_bobs_power_tested: false
+  station_electric_pole_has_real_accumulator: false
+  persistent_station_buffer_implemented: false
+  original_artwork_pngs_preserved: 83
+  gameplay_release_version_bumped: false
+  safe_to_promote_without_new_version_and_approval: false
+  main_approved_branch_unchanged: true
+  updater_approved_061_unchanged: true
+
+buffer_flush_063_CI_exact_verification_2026_11_21:
+  branch: experiment/buffer-flush-063
+  build_commit: 04ab5f719b3a7ac09a8066e58614471565b70729
+  github_actions_run: 44892720155
+  build_workflow_result: success
+  artifact_id: 14702513298
+  exact_CI_inner_ZIP_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  native_engine: Factorio_2_1_24_build_87808_linux64
+  test_mod_version: "0.1.62"
+  extracted_game_files: 130
+  unchanged_png: 83
+  exact_local_game_contents_match_all_130: true
+  local_ZIP_container_byte_identical: false
+  different_reason: ZIP_compression_encoding
+  exact_CI_native_tests_passed: 11
+  exact_CI_native_tests_total: 11
+  exact_CI_native_game_ticks: 12200
+  source_sink_buffer_cases_passed: 4
+  prior_regressions_passed: 7
+  source_sink_bridge_only_energy_j: 333333
+  multi_source_32_stations_first_aggregate_timeout: true
+  multi_source_32_stations_separate_rerun_passed: true
+  proof_markdown: docs/research/25kv-buffer-flush-063-CI.md
+  proof_json: docs/research/25kv-buffer-flush-063-CI.json
+  persistent_station_accumulator_implemented: false
+  native_bobs_power_accumulators_tested: false
+  approved_test_ref_unchanged: true
+  stable_main_ref_unchanged: true
+  owner_promotion_approved: false
+
+topology_lifecycle_064_native_2026_11_21:
+  branch: experiment/topology-lifecycle-064
+  parent_branch: experiment/buffer-flush-063
+  parent_sha: 4c050e598e19d4bf9607d7670c7972373e4cdce9
+  mod_version_unchanged: "0.1.62"
+  exact_CI_mod_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  engine_version: "2.1.24"
+  engine_build: 87808
+  native_game_ticks_in_live_benchmark: 1350
+  live_reconfiguration_checks_passed: 10
+  live_reconfiguration_checks_total: 10
+  saved_with_actual_headless_server: true
+  independently_reloaded_disk_save: true
+  disk_reload_extra_consumer_j: 13333333
+  disk_reload_ticks: 200
+  mast_cut_rebuild: pass
+  hsr_rail_cut_rebuild: pass
+  destination_station_destroy_and_rebuild: pass
+  isolated_factory_grids_merge_and_split: pass
+  reload_script: pass
+  hidden_ports_cleaned_when_station_destroyed: true
+  transient_hidden_buffer_on_merged_factory_grids_j: 500001
+  zero_loss_across_network_merge_split_proven: false
+  energy_ledger_followup_required: true
+  standalone_runner: tests/run_native_topology_064.py
+  native_probe: tests/em064-topology-probe/control.lua
+  human_manual_gameplay_testing_needed_for_this_fixture: false
+  game_runtime_changed: false
+  approved_061_updater_ref_changed: false
+  main_056_ref_changed: false
+  research: docs/research/25kv-topology-lifecycle-064.md
+  machine_result: docs/research/25kv-topology-lifecycle-064.json
+
+topology_lifecycle_064_energy_ledger_2026_11_21:
+  branch: experiment/topology-lifecycle-064
+  upstream_game_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  engine: Factorio_2_1_24_build_87808_linux_x86_64
+  source_output_mw: 20
+  counted_energies: source_EEI_sink_EEI_all_hidden_bridge_EEIs
+  observed_game_ticks: 1250
+  measured_missing_energy_j: 1666667
+  measured_loss_events: 6
+  measured_unexpected_created_energy_j: 0
+  measured_energy_creation_events: 0
+  energy_zero_loss_release_gate: FAIL
+  source_sink_transmission_live: PASS
+  structural_reconfiguration_checkpoints: "10/10 PASS"
+  actual_disk_server_save_and_second_process_load: PASS
+  disk_reload_sink_additional_energy_j: 13333333
+  strict_test_flag: "--require-zero-loss"
+  default_runner_result: FUNCTIONAL_PASS_ENERGY_BALANCE_FAIL
+  evidence: docs/research/25kv-topology-lifecycle-064.md
+  machine_report: docs/research/25kv-topology-lifecycle-064.json
+  gameplay_runtime_changed_for_064: false
+  patcher_approved_061_unchanged: true
+  user_game_saves_untouched: true
+  release_blocked_pending_energy_policy_or_fix: true
+
+accepted_substation_demolition_energy_policy_064_2026_11_21:
+  decision_owner_approved: true
+  contract: energy_of_demolished_substation_hidden_EEIs_is_discarded
+  refund_to_factory_network: false
+  neighbor_station_energy_loss_allowed: false
+  external_accumulator_energy_loss_allowed: false
+  rail_or_mast_removal_automatically_exempt: false
+  factory_network_merge_split_automatically_exempt: false
+  branch: experiment/topology-lifecycle-064
+  research: docs/research/25kv-demolition-energy-policy-064.md
+  native_test_version: Factorio_2_1_24_build_87808
+  game_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  native_demolished_station_hidden_j: 166667
+  native_surviving_station_hidden_j: 166667
+  old_raw_total_ledger_deficit_j: 1666667
+  approved_demolition_buffer_discard_j: 166667
+  other_unexplained_ledger_deficit_j: 1500000
+  outside_demolition_tick_ledger_deficit_j_approx: 1166667
+  unexpected_energy_creation_j: 0
+  raw_expected_generation_is_setting_not_metered_actual_production: true
+  policy_aware_release_gate: "--require-no-unintended-loss"
+  release_gate_status: FAIL_unexplained_deficit
+  old_absolute_zero_loss_gate_retained_for_history: true
+  native_live_topology_checkpoints_passed: 10
+  real_server_save_reload_passed: true
+  user_mod_runtime_changed: false
+  approved_updater_branch_unchanged: true
+  stable_main_unchanged: true
+
+closed_reservoir_energy_065_2026_11_21:
+  branch: experiment/closed-energy-ledger-065
+  based_on: experiment/topology-lifecycle-064
+  base_commit: 305d0dd93d811dc714b6b1c20632a9f49782a73e
+  mod_runtime_changed: false
+  tested_game_version: "0.1.62"
+  immutable_CI_zip_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  engine: Factorio_2_1_24_build_87808_linux_x86_64
+  local_test_runner: tests/run_native_energy_065.py
+  evidence: docs/research/25kv-closed-reservoir-065.md
+  machine_evidence: docs/research/25kv-closed-reservoir-065.json
+  fixture_cases_passed: 2
+  fixture_cases_total: 2
+  topology_checkpoints_per_case: 10
+  native_benchmark_ticks: 2700
+  additional_independent_disk_reload_tests: 2
+  additional_reload_ticks_per_case: 200
+  source_initial_joules: 700000000
+  source_new_generation_joules_per_tick: 0
+  reservoir_only_total_lost_joules: 1666667
+  reservoir_only_demolition_allowance_joules: 166667
+  reservoir_only_unapproved_disappearance_joules: 1500000
+  eight_batteries_total_lost_joules: 1724409
+  eight_batteries_demolition_allowance_joules: 186667
+  eight_batteries_unapproved_disappearance_joules: 1537742
+  external_accumulators_survived: 8
+  accumulator_each_initial_joules: 2000000
+  accumulator_per_side_flow_limits_checked: true
+  source_side_accumulator_final_joules: 20000000
+  sink_side_accumulator_final_joules: 19980000
+  accumulator_instances_preserved_after_disk_reload: true
+  unexplained_created_energy_joules: 0
+  owner_accepted_demolition_own_buffer_dissipation: true
+  approved_updater_061_ref_untouched: true
+  stable_main_056_ref_untouched: true
+  release_status: blocked_unapproved_bridge_buffer_disappearance
+
+switching_dissipation_policy_066_2026_11_21:
+  branch: experiment/switching-dissipation-policy-066
+  parent_branch: experiment/closed-energy-ledger-065
+  parent_sha: 8497f9a343412281a1160de2e8b3a7e5e921560d
+  gameplay_files_modified: false
+  contract_doc: docs/research/25kv-switching-dissipation-066.md
+  contract_machine_result: docs/research/25kv-switching-dissipation-066.json
+  unit_reconciliation: tests/switching_dissipation_contract_066.py
+  source_evidence: docs/research/25kv-closed-reservoir-065.json
+  field_energy_separate_from_transient_eei: true
+  modeled_line_field_storage_exists_now: false
+  physical_arc_heat_currently_metered: false
+  real_line_capacitance_inductance_measured: false
+  modeled_field_example_is_illustrative: true
+  owner_existing_allowed_demolished_station_own_EEI_loss: true
+  permitted_loss_without_batteries_j: 166667
+  unexplained_loss_without_batteries_j: 1500000
+  permitted_loss_with_eight_batteries_j: 186667
+  unexplained_loss_with_eight_batteries_j: 1537742
+  policy_self_test: PASS
+  runtime_unexplained_loss_gate: FAIL
+  exact_Factorio_engine_used_in_source_evidence: "2.1.24 build 87808"
+  native_new_engine_run_this_policy_only_branch: false
+  approved_updater_ref_untouched: true
+  stable_main_ref_untouched: true
+
+dispatch_cache_performance_067_2026_11_21:
+  branch: experiment/dispatch-cache-067
+  base_branch: experiment/switching-dissipation-policy-066
+  base_commit: 9042dd6b3e7c56ad05a4f37f6f4ca1f611306136
+  mod_version_kept_for_testing: "0.1.62"
+  only_gameplay_file_changed: ElectrifiedMainline/scripts/bridge_dispatch_059.lua
+  same_png_count: 83
+  original_game_file_count: 130
+  baseline_CI_mod_sha256: a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07
+  local_candidate_mod_sha256: 2eac182f472de4a83805bb99dd87d428455ce5f69c0c9abd49917177bc3666a8
+  native_engine: Factorio_2_1_24_build_87808
+  differential_graphs_passed: 1675
+  duplicate_return_plan_isolation: true
+  invalidation_on_any_numeric_input_change: true
+  invalidation_on_edge_endpoint_change: true
+  temporary_cache_does_not_hold_LuaEntity_or_network: true
+  native_48_stations_960_ticks_passed: true
+  sources_48: 6
+  receivers_48: 42
+  total_recipients_after_reroute: 18
+  native_EM065_cases_passed: 2
+  native_EM065_cumulative_benchmark_ticks: 2700
+  native_EM065_save_reload_runs_passed: 2
+  native_EM065_energy_loss_unchanged: true
+  native_EM065_release_energy_gate: FAIL
+  lua53_200_nodes_constant_inputs_ms_before: 17.6840
+  lua53_200_nodes_constant_inputs_ms_after: 1.4278
+  lua53_200_nodes_changing_inputs_ms_before: 19.0055
+  lua53_200_nodes_changing_inputs_ms_after: 14.1901
+  native_48_script_update_ms_baseline_ticks_180_239: 8.0330
+  native_48_script_update_ms_candidate_ticks_180_239: 4.6962
+  whole_game_960_avg_ms_baseline_including_setup: 20.037
+  whole_game_960_avg_ms_candidate_including_setup: 20.235
+  isolated_steady_UPS_improvement_proven: false
+  benchmark_caveat: separate_runs_no_multisample_CPU_control
+  report: docs/research/25kv-dispatch-cache-067.md
+  metrics: docs/research/25kv-dispatch-cache-067.json
+  runtime_test: tests/bridge_dispatch_cache_067.lua
+  native_test: tests/run_native_dispatch_067.py
+  benchmark_lua53: tests/benchmark_dispatch_067.lua
+  actual_CI_mod_zip_post_commit_verification_needed: true
+  approved_updater_061_touched: false
+  stable_main_056_touched: false
+  merge_authorized: false
+
+dispatch_cache_067_exact_CI_2026_11_21:
+  branch: experiment/dispatch-cache-067
+  tested_gameplay_source_commit: 75a0dd7f48ced388e1cfafecfccd93516b9f8570
+  build_workflow_run: 44909988683
+  build_workflow_status: success
+  artifact_id: 14709273433
+  ci_mod_inner_zip_sha256: a4da43775fa530e94dad5055736dc2af7570275be33921ab433d77b92e851448
+  previous_local_zip_sha256: 2eac182f472de4a83805bb99dd87d428455ce5f69c0c9abd49917177bc3666a8
+  unpacked_game_files_byte_identical_to_local: 130
+  unchanged_png: 83
+  native_engine: Factorio_2_1_24_build_87808
+  native_48_substations_960_ticks_pass: true
+  native_48_reroute_and_outage_pass: true
+  native_48_engine_avg_ms_with_heavy_initialization: 21.049
+  native_EM065_reservoir_1350_ticks_pass: true
+  native_EM065_batteries_1350_ticks_pass: true
+  native_disk_save_load_two_runs_200_ticks_each_pass: true
+  native_total_ticks_with_disk_reload: 4060
+  unexpected_created_energy_j: 0
+  old_reservoir_loss_j: 1666667
+  old_battery_case_loss_j: 1724409
+  release_energy_acceptance_gate: FAIL
+  approved_updater_branch_changed: false
+  main_branch_changed: false
+  user_release_permission: false
+  human_report: docs/research/25kv-dispatch-cache-067-CI.md
+  machine_report: docs/research/25kv-dispatch-cache-067-CI.json

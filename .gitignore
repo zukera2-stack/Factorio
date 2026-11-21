@@ -33,5 +33,4 @@ __pycache__/
 # 049 game sprites are generated from tracked source by CI, never manual QA art.
 /ElectrifiedMainline/graphics/entity/locomotive-049/
 
-# Full 052 locomotive sheets produced by GitHub Actions, not distributed from Library.
-/ElectrifiedMainline/graphics/entity/locomotive-052/
+# Approved 052 runtime sheets are tracked; temporary render outputs stay under build/.

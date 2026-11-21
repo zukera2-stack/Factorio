@@ -1,3 +1,37 @@
+## 0.1.62 (main development checkpoint — source merge only, NOT RELEASED)
+
+- Native bidirectional 25 kV substation power transfer with 20 MW per-station limit; use Factorio's own `electric-energy-interface` `dynamic` electrical priority instead of emulating reverse power priorities in Lua. Fixed previous prototype reverse-discharge failure.
+- Preserve measured joules in bounded native EEI buffers during temporary corridor reconfiguration, while permitting demolition of only the removed substation's own reserved energy; no manual refund to unrelated factory accumulators.
+- Automatic fair sharing, factory brownout protection, dispatcher differential parity; no gameplay behavior change from final tested EM070 during main integration.
+- Verified in official Factorio 2.1.24 headless CI [44920768721](https://github.com/zukera2-stack/Factorio/actions/runs/44920768721): real source-to-sink and battery reverse delivery 3/3 native cases, 2030 ticks, visual QA and package PASS. Closed reservoir and 48/32/multisource/factory limits were independently verified on a local non-distributable test assembly.
+- **Not a release:** the locomotive remains powered by `void` and actual traction, battery backup and regenerative braking are unfinished. Save upgrades, Bob's, multiplayer and Undo edge cases are unverified. Do not publish or advance `test/updater-approved` on main merge.
+
+## 0.1.60 (test candidate)
+
+- Preserve live-confirmed 059 mast and substation isolation.
+- Recover automatic dispatch from zero native-flow observations; independent editor EEI and accumulator samples, own-flow exclusion and raw diagnostics.
+- Actual joule conservation and 20 MW cap retained. Game test pending.
+
+## 0.1.59 (test candidate)
+
+- Connect real visible masts to their own hidden electrical anchors; preserve the visual contact-line topology and zero ordinary-wire reach.
+- Default automatic reversible substation mode, 20 MW combined limit; prioritize real loads, then charging native outpost accumulators from generation surplus. Use stored energy for shortages, not battery-to-battery charging.
+- Log settled native/visible/hidden network IDs and actual buffered transfer, clarify legacy ordinary-pole tooltip.
+- Target game validation pending; railway traction still not implemented.
+
+## 0.1.58 (test candidate)
+
+- Native isolated 25 kV corridor and reversible 20 MW substations with explicit direction, conservative buffered energy transfer and loop rejection.
+- Preserve 056 visual topology; no train traction energy use yet.
+- Carry forward 057 icons, locomotive tuning and wagon migration; correct 057/058 pad-cleanup predicate.
+
+## 0.1.57 (test candidate)
+
+- Vanilla-facing locomotive inventory thumbnail; distinct concrete HSR and replacement planner icons.
+- Locomotive 2 MW, 2 tiles/tick nominal, braking force 20, weight 2000; void energy placeholder unchanged.
+- Remove redundant cargo and fluid wagon prototypes, recipes and unlocks; native JSON entity/item migration.
+- Preserve 056 catenary and rail geometry. CI and live validation pending.
+
 ## 0.1.56 — stable main, owner-approved visual milestone
 
 - Merged via [PR #30](https://github.com/zukera2-stack/Factorio/pull/30); exact original 056 runtime preserved.

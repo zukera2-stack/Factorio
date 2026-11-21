@@ -1,0 +1,260 @@
+{
+  "date": "2026-11-21",
+  "branch": "experiment/buffer-flush-063",
+  "version": "0.1.62 (separate experimental patch only)",
+  "engine": "Factorio Headless 2.1.24 build 87808 Linux x86-64",
+  "baseline_zip_sha256": "18bfdd184f901aefa5c7cbf8e266359aa9ebd7a9e4036361b8ea1abda1629040",
+  "experimental_local_zip_sha256": "a0bd3030e6ccda2f2227e76ce4311afc2f3d9792fbb10d9e65ba796c1f1b0f2b",
+  "buffer_only_delivery_before_fix_j": 166667,
+  "buffer_only_delivery_after_fix_j": 333333,
+  "source_sink_scenarios": [
+    {
+      "case": "both",
+      "passed": true,
+      "create_s": 3.615,
+      "benchmark_s": 1.797,
+      "ticks": 1540,
+      "source_battery_used_j": 9600000,
+      "receiver_battery_used_j": 9560000,
+      "sink_after_off_j": 19493333,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 373333.0
+        },
+        {
+          "tick": 300,
+          "joules": 373333.0
+        },
+        {
+          "tick": 540,
+          "joules": 373333.0
+        },
+        {
+          "tick": 600,
+          "joules": 40000.0
+        },
+        {
+          "tick": 660,
+          "joules": 40000.0
+        },
+        {
+          "tick": 840,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1020,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    },
+    {
+      "case": "source",
+      "passed": true,
+      "create_s": 2.638,
+      "benchmark_s": 1.934,
+      "ticks": 1540,
+      "source_battery_used_j": 9600000,
+      "receiver_battery_used_j": 0,
+      "sink_after_off_j": 9893333,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 333333.0
+        },
+        {
+          "tick": 300,
+          "joules": 333333.0
+        },
+        {
+          "tick": 540,
+          "joules": 333333.0
+        },
+        {
+          "tick": 600,
+          "joules": 40000.0
+        },
+        {
+          "tick": 660,
+          "joules": 40000.0
+        },
+        {
+          "tick": 840,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1020,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    },
+    {
+      "case": "receiver",
+      "passed": true,
+      "create_s": 2.694,
+      "benchmark_s": 2.108,
+      "ticks": 1540,
+      "source_battery_used_j": 0,
+      "receiver_battery_used_j": 9520000,
+      "sink_after_off_j": 9885591,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 373333.0
+        },
+        {
+          "tick": 300,
+          "joules": 373333.0
+        },
+        {
+          "tick": 540,
+          "joules": 373333.0
+        },
+        {
+          "tick": 600,
+          "joules": 0.0
+        },
+        {
+          "tick": 660,
+          "joules": 0.0
+        },
+        {
+          "tick": 840,
+          "joules": 0.0
+        },
+        {
+          "tick": 1020,
+          "joules": 0.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    },
+    {
+      "case": "bridge",
+      "passed": true,
+      "create_s": 2.811,
+      "benchmark_s": 1.911,
+      "ticks": 1540,
+      "source_battery_used_j": 0,
+      "receiver_battery_used_j": 0,
+      "sink_after_off_j": 333333,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 333333.0
+        },
+        {
+          "tick": 300,
+          "joules": 333333.0
+        },
+        {
+          "tick": 540,
+          "joules": 333333.0
+        },
+        {
+          "tick": 600,
+          "joules": 0.0
+        },
+        {
+          "tick": 660,
+          "joules": 0.0
+        },
+        {
+          "tick": 840,
+          "joules": 0.0
+        },
+        {
+          "tick": 1020,
+          "joules": 0.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    }
+  ],
+  "prior_native_regression_scenarios": [
+    {
+      "name": "em062-power-probe",
+      "ticks": 1050,
+      "pass": true,
+      "min_tick_ms": 0.219,
+      "raw_mean_tick_ms_including_setup": 0.493
+    },
+    {
+      "name": "em062-priority-probe",
+      "ticks": 300,
+      "pass": true,
+      "min_tick_ms": 0.125,
+      "raw_mean_tick_ms_including_setup": 0.304
+    },
+    {
+      "name": "em062-fairness-probe",
+      "ticks": 680,
+      "pass": true,
+      "min_tick_ms": 0.221,
+      "raw_mean_tick_ms_including_setup": 0.506
+    },
+    {
+      "name": "em062-stress-probe",
+      "ticks": 1050,
+      "pass": true,
+      "min_tick_ms": 1.213,
+      "raw_mean_tick_ms_including_setup": 6.244
+    },
+    {
+      "name": "em062-multisource-probe",
+      "ticks": 1050,
+      "pass": true,
+      "min_tick_ms": 1.244,
+      "raw_mean_tick_ms_including_setup": 6.35
+    },
+    {
+      "name": "em062-factory-reserve-probe",
+      "ticks": 950,
+      "pass": true,
+      "min_tick_ms": 0.199,
+      "raw_mean_tick_ms_including_setup": 0.527
+    },
+    {
+      "name": "em062-48sub-probe",
+      "ticks": 960,
+      "pass": true,
+      "min_tick_ms": 1.859,
+      "raw_mean_tick_ms_including_setup": 13.906
+    }
+  ],
+  "native_total_passed": 11,
+  "native_total_ticks": 12200,
+  "native_bobs_battery_tested": false,
+  "gameplay_version_promotion_approved": false,
+  "approved_updater_ref_changed": false
+}

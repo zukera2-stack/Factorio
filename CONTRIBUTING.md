@@ -1,4 +1,4 @@
-> **Branch-aware handoff:** read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md) before choosing a base. Stable `main` 0.1.56, test-distributed 0.1.60 and research-only 0.1.61 are different refs. Installed-game updates use existing Updater 1.1 only after explicit approval of the exact tested `test/updater-approved` commit.
+> **Branch-aware handoff:** read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md) before choosing a base. Stable `main` 0.1.56, installed Updater-approved `test/updater-approved` 0.1.61, and proposed public beta 0.1.62 in PR #46 are distinct refs until merged. Installed-game updates use existing Updater 1.1 only after explicit approval of the exact tested `test/updater-approved` commit.
 
 # Contributing to Electrified Mainline
 

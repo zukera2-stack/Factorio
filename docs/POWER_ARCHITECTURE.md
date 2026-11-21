@@ -1,3 +1,23 @@
+> **Current development source 0.1.62 (no release):** EM070 native dynamic EEI 20MW bidirectional bridge is verified by Factorio 2.1.24 native headless CI and closed-energy test. The locomotive is still `void`-powered, so none of this yet implements traction, battery backup or regenerative braking. Read [EM070 evidence](research/25kv-dynamic-eei-070.md). The 060/059/058 descriptions below are historical.
+
+# 0.1.60 cold-start recovery
+
+060 implementation: native 059 topology confirmed in game 44 vs factory 27/61, auto stayed idle. Independent bounded physical-device sampling for vanilla dynamic EEIs and accumulators, max aggregation without duplication, nonstorage maximum-flow fallback, own offer/request subtraction, native per-interface flow caps, raw and planned diagnostics. Exact engine cause not isolated. 060 CI/live pending; main unchanged.
+
+---
+
+# Current experimental power architecture 0.1.59
+
+See [059 research](research/25kv-auto-bidirectional-059.md). Preserve 058 two separate native networks, wire each visible mast only to its own hidden technical anchor. Automatic direction based on native production and requested load; regular generation serves ordinary loads first, then batteries help unmet load, spare generation charges native accumulators. No battery-to-battery routing. Per station 20MW combined, actual source-buffer accounting and loop protection. 059 game verification pending.
+
+---
+
+# Current experimental power architecture 0.1.58
+
+See [058 research](research/25kv-power-bridge-058.md). Native corridor poles and normal station pole never directly wired: each station has two isolated lab-surface terminals linked only to their respective networks. Fixed direction input and output EEIs move actual source buffer energy. 20 MW per station, no steady self-drain, no energy creation. Explicit import/export/off, default off. Reject loops, same network and connector/network-ID mismatch. No train energy use yet. Live validation pending.
+
+---
+
 # Power architecture 0.1.9 — source prototype, unpowered
 
 Baseline main is ElectrifiedMainline 0.1.8. Work only on feature/35kv-catenary-019.

@@ -1,0 +1,61 @@
+{
+  "engine": "2.1.24 build 87808",
+  "mod_zip_sha256": "a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07",
+  "status": "FUNCTIONAL_PASS_NONDEMOLITION_LEDGER_UNRESOLVED",
+  "energy_ledger": {
+    "source_generation_mw": 20,
+    "period_ticks": 1250,
+    "loss_j": 1666667,
+    "loss_events": 6,
+    "created_j": 0,
+    "creation_events": 0,
+    "strict_zero_loss_pass": false,
+    "accepted_for_release": false,
+    "sampled_loss_events": [
+      {
+        "tick": 201,
+        "lost_j_rounded": 333333,
+        "hidden_j_rounded": 0
+      },
+      {
+        "tick": 441,
+        "lost_j_rounded": 166666,
+        "hidden_j_rounded": 166667
+      },
+      {
+        "tick": 671,
+        "lost_j_rounded": 500000,
+        "hidden_j_rounded": 0
+      },
+      {
+        "tick": 896,
+        "lost_j_rounded": 166666,
+        "hidden_j_rounded": 333333
+      },
+      {
+        "tick": 900,
+        "lost_j_rounded": 333332,
+        "hidden_j_rounded": 500001
+      },
+      {
+        "tick": 1002,
+        "lost_j_rounded": 166667,
+        "hidden_j_rounded": 0
+      }
+    ],
+    "note": "Whole-run ledger uses unrounded Lua double values; per-event sampled log integers can differ by a few rounding joules.",
+    "policy": "destroyed_substation_own_hidden_EEI_energy_may_dissipate",
+    "demolished_station_buffer_j": 166667,
+    "surviving_station_buffer_j_at_demolition": 166667,
+    "approved_demolition_discard_j": 166667,
+    "remaining_unexplained_ledger_deficit_j": 1500000,
+    "no_unintended_loss_release_gate_pass": false,
+    "note_provenance": "Expected 20MW setting is not per-tick measured generation; remaining ledger deficit may include undelivered production. Must not call it all physical energy loss without precise source metering."
+  },
+  "save_reload": {
+    "passed": true,
+    "save_bytes": 1069458,
+    "extra_energy_j": 13333333,
+    "continued_ticks": 200
+  }
+}

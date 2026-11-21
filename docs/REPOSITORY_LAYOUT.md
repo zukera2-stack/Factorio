@@ -1,4 +1,4 @@
-> **This layout describes `main` 0.1.56.** Current work across branches: [`CURRENT_WORK.md`](CURRENT_WORK.md). In the new docs-only continuation PR, `.agents/skills/` adds portable agent instructions; Updater 1.1 source `tools/updater/` lives **only** on `feature/git-updater-060` at the audit date, not in main's installable `ElectrifiedMainline/` tree.
+> **This layout section was originally documented for stable 0.1.56; proposed public beta 0.1.62 is in PR #46, using the same packaging boundaries.** Current work across branches: [`CURRENT_WORK.md`](CURRENT_WORK.md). In the new docs-only continuation PR, `.agents/skills/` adds portable agent instructions; Updater 1.1 source `tools/updater/` lives **only** on `feature/git-updater-060` at the audit date, not in main's installable `ElectrifiedMainline/` tree.
 
 # Repository layout / структура репозитория
 

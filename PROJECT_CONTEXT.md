@@ -1,4 +1,4 @@
-> **Historical notebook (2026-11-09), not current handoff.** For a new session read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md), then `AGENTS.md` and the selected branch's state. 0.1.60 approved update, Updater 1.1 and 0.1.61 research are separate branches described there. Keep the original historical sections below for provenance.
+> **Historical notebook (2026-11-09), not current handoff.** For a new session read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md), then `AGENTS.md` and the selected branch's state. Historically 0.1.60 approved update, Updater 1.1 and 0.1.61 research were separate; the current PR #46 public beta 0.1.62 must be checked by live refs. Keep the original historical sections below for provenance.
 
 # CONTINUATION INDEX (2026-11-09)
 

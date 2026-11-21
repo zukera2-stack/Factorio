@@ -1,0 +1,59 @@
+{
+  "experiment": "EM067",
+  "date": "2026-11-21",
+  "branch": "experiment/dispatch-cache-067",
+  "parent_branch": "experiment/switching-dissipation-policy-066",
+  "game_version_unchanged": "0.1.62",
+  "native_engine": "Factorio 2.1.24 build 87808 linux64 headless",
+  "baseline_CI_ZIP_SHA256": "a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07",
+  "tested_candidate_local_ZIP_SHA256": "2eac182f472de4a83805bb99dd87d428455ce5f69c0c9abd49917177bc3666a8",
+  "changed_game_files": ["ElectrifiedMainline/scripts/bridge_dispatch_059.lua"],
+  "total_game_files": 130,
+  "unchanged_artwork_png": 83,
+  "differential_lua_cases": 1675,
+  "differential_lua_cases_passed": 1675,
+  "differential_random_seed": 20261121,
+  "differential_equal_tolerance_j": 1e-8,
+  "cache_keys": ["normalized_gen", "normalized_load", "normalized_battery", "normalized_charge", "sorted_id_a_b", "limit"],
+  "cache_discard_when_any_input_changes": true,
+  "cached_plan_mutation_isolation_verified": true,
+  "microbench_ms_per_plan_Lua53": {
+    "10": {"stable_baseline": 0.1059, "stable_candidate": 0.0103, "changing_baseline": 0.1140, "changing_candidate": 0.1158},
+    "48": {"stable_baseline": 1.2428, "stable_candidate": 0.0555, "changing_baseline": 1.4045, "changing_candidate": 1.0392},
+    "100": {"stable_baseline": 4.9749, "stable_candidate": 0.4006, "changing_baseline": 5.1330, "changing_candidate": 3.7924},
+    "200": {"stable_baseline": 17.6840, "stable_candidate": 1.4278, "changing_baseline": 19.0055, "changing_candidate": 14.1901}
+  },
+  "native_48_substation": {
+    "baseline": {"ticks": 960, "native_PASS": true, "avg_tick_ms_includes_map_init": 20.037},
+    "candidate": {"ticks": 960, "native_PASS": true, "avg_tick_ms_includes_map_init": 20.235},
+    "source_count": 6,
+    "source_MW_each": 20,
+    "sink_count": 42,
+    "stage1_equal_recipient_j": 11238095,
+    "stage2_sink_count": 18,
+    "stage2_equal_delta_j": 39832612,
+    "outage_bounded": true,
+    "true_full_timing_speedup_proven": false
+  },
+  "native_48_verbose_profile_180_239_ticks_average_ms": {
+    "baseline": {"scriptUpdate": 8.0330, "electricNetworkUpdate": 0.1047, "wholeUpdate": 8.7345},
+    "candidate": {"scriptUpdate": 4.6962, "electricNetworkUpdate": 0.0407, "wholeUpdate": 5.0406},
+    "source": "two separate sequential 300-tick Factorio --benchmark-verbose all runs",
+    "caveat": "Not isolated CPU frequency, scriptUpdate also includes fixture code, no repeat distribution"
+  },
+  "EM065_unchanged_regressions": {
+    "cases_passed": 2,
+    "benchmark_ticks": 2700,
+    "real_save_reload_runs": 2,
+    "real_save_reload_additional_ticks_per_run": 200,
+    "no_accumulator_loss_j": 1666667,
+    "no_accumulator_demolition_exempt_j": 166667,
+    "with_eight_accumulator_loss_j": 1724409,
+    "with_eight_accumulator_demolition_exempt_j": 186667,
+    "unexpected_created_j": 0,
+    "unchanged_energy_ledger_release_gate": "FAIL"
+  },
+  "approved_061_updater_touched": false,
+  "main_056_touched": false,
+  "game_release_approved": false
+}

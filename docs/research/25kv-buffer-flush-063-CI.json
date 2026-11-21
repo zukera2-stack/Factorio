@@ -1,0 +1,276 @@
+{
+  "verified_date": "2026-11-21",
+  "native_engine": "Factorio 2.1.24 build 87808 Linux64",
+  "github_actions_run_id": 44892720155,
+  "github_artifact_id": 14702513298,
+  "branch_commit": "04ab5f719b3a7ac09a8066e58614471565b70729",
+  "ci_installable_zip_sha256": "a869c7fb5b76aa49ae38f50af8f1c74b9e8dcd9254e4e354b127e3698d966a07",
+  "tested_local_installable_sha256": "a0bd3030e6ccda2f2227e76ce4311afc2f3d9792fbb10d9e65ba796c1f1b0f2b",
+  "identical_zip_bytes": false,
+  "all_game_entries_byte_identical": true,
+  "game_entries": 130,
+  "png_entries": 83,
+  "buffer_cases": [
+    {
+      "case": "both",
+      "passed": true,
+      "create_s": 3.579,
+      "benchmark_s": 1.77,
+      "ticks": 1540,
+      "source_battery_used_j": 9600000,
+      "receiver_battery_used_j": 9560000,
+      "sink_after_off_j": 19493333,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 373333.0
+        },
+        {
+          "tick": 300,
+          "joules": 373333.0
+        },
+        {
+          "tick": 540,
+          "joules": 373333.0
+        },
+        {
+          "tick": 600,
+          "joules": 40000.0
+        },
+        {
+          "tick": 660,
+          "joules": 40000.0
+        },
+        {
+          "tick": 840,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1020,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    },
+    {
+      "case": "source",
+      "passed": true,
+      "create_s": 2.542,
+      "benchmark_s": 2.121,
+      "ticks": 1540,
+      "source_battery_used_j": 9600000,
+      "receiver_battery_used_j": 0,
+      "sink_after_off_j": 9893333,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 333333.0
+        },
+        {
+          "tick": 300,
+          "joules": 333333.0
+        },
+        {
+          "tick": 540,
+          "joules": 333333.0
+        },
+        {
+          "tick": 600,
+          "joules": 40000.0
+        },
+        {
+          "tick": 660,
+          "joules": 40000.0
+        },
+        {
+          "tick": 840,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1020,
+          "joules": 40000.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    },
+    {
+      "case": "receiver",
+      "passed": true,
+      "create_s": 3.057,
+      "benchmark_s": 1.77,
+      "ticks": 1540,
+      "source_battery_used_j": 0,
+      "receiver_battery_used_j": 9520000,
+      "sink_after_off_j": 9885591,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 373333.0
+        },
+        {
+          "tick": 300,
+          "joules": 373333.0
+        },
+        {
+          "tick": 540,
+          "joules": 373333.0
+        },
+        {
+          "tick": 600,
+          "joules": 0.0
+        },
+        {
+          "tick": 660,
+          "joules": 0.0
+        },
+        {
+          "tick": 840,
+          "joules": 0.0
+        },
+        {
+          "tick": 1020,
+          "joules": 0.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    },
+    {
+      "case": "bridge",
+      "passed": true,
+      "create_s": 2.596,
+      "benchmark_s": 1.723,
+      "ticks": 1540,
+      "source_battery_used_j": 0,
+      "receiver_battery_used_j": 0,
+      "sink_after_off_j": 333333,
+      "hidden_output_samples_j": [
+        {
+          "tick": 120,
+          "joules": 333333.0
+        },
+        {
+          "tick": 300,
+          "joules": 333333.0
+        },
+        {
+          "tick": 540,
+          "joules": 333333.0
+        },
+        {
+          "tick": 600,
+          "joules": 0.0
+        },
+        {
+          "tick": 660,
+          "joules": 0.0
+        },
+        {
+          "tick": 840,
+          "joules": 0.0
+        },
+        {
+          "tick": 1020,
+          "joules": 0.0
+        },
+        {
+          "tick": 1200,
+          "joules": 0.0
+        },
+        {
+          "tick": 1480,
+          "joules": 0.0
+        }
+      ]
+    }
+  ],
+  "regression_cases": [
+    {
+      "scenario": "em062-power-probe",
+      "ticks": 1050,
+      "result": "PASS",
+      "game_marker": "[EM061 NATIVE PASS]",
+      "min_ms": 0.22,
+      "log": "/mnt/data/factorio_buffer_063/ci_exact_full_regression/em062-power-probe/test.log"
+    },
+    {
+      "scenario": "em062-priority-probe",
+      "ticks": 300,
+      "result": "PASS",
+      "game_marker": "[EM061 MATRIX PASS]",
+      "min_ms": 0.095,
+      "log": "/mnt/data/factorio_buffer_063/ci_exact_full_regression/em062-priority-probe/test.log"
+    },
+    {
+      "scenario": "em062-fairness-probe",
+      "ticks": 680,
+      "result": "PASS",
+      "game_marker": "[EM062 NATIVE PASS]",
+      "min_ms": 0.291,
+      "log": "/mnt/data/factorio_buffer_063/ci_exact_full_regression/em062-fairness-probe/test.log"
+    },
+    {
+      "scenario": "em062-stress-probe",
+      "ticks": 1050,
+      "result": "PASS",
+      "game_marker": "[EM062 STRESS PASS]",
+      "min_ms": 1.232,
+      "log": "/mnt/data/factorio_buffer_063/ci_exact_full_regression/em062-stress-probe/test.log"
+    },
+    {
+      "scenario": "em062-multisource-probe",
+      "ticks": 1050,
+      "result": "PASS",
+      "game_marker": "[EM062 MULTI PASS]",
+      "min_ms": 1.273,
+      "log": "/mnt/data/factorio_buffer_063/ci_exact_full_regression/em062-multisource-probe/retry35.log"
+    },
+    {
+      "scenario": "em062-factory-reserve-probe",
+      "ticks": 950,
+      "result": "PASS",
+      "game_marker": "[EM062 DEFICIT PASS]",
+      "min_ms": 0.159,
+      "log": "/mnt/data/factorio_buffer_063/ci_exact_full_regression/em062-factory-reserve-probe/test.log"
+    },
+    {
+      "scenario": "em062-48sub-probe",
+      "ticks": 960,
+      "result": "PASS",
+      "game_marker": "[EM062 STRESS PASS]",
+      "min_ms": 1.954,
+      "log": "/mnt/data/factorio_buffer_063/ci_exact_full_regression/em062-48sub-probe/test.log"
+    }
+  ],
+  "native_scenarios_passed": 11,
+  "native_ticks_total": 12200,
+  "first_multisource_full_suite_timeout": true,
+  "multisource_separate_retry_passed": true,
+  "limitations": [
+    "native Bob's accumulators not tested",
+    "multiplayer and migration not tested",
+    "no persistent station accumulator",
+    "relative CI ZIP bitstreams differ due to ZIP compression, contents identical",
+    "first multisource repeat timed out (cause unconfirmed), separate retry PASS"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "em070-native-eei-priority-probe",
+  "version": "0.0.1",
+  "title": "EM070 native fixed vs dynamic EEI",
+  "author": "QA",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24"
+  ]
+}

@@ -1,0 +1,66 @@
+name: Headless 2.1.24 electrical bridge probe
+on:
+  push:
+    branches: ['feature/25kv-dispatch-recovery-060']
+    paths:
+      - '.github/workflows/headless-power-060.yml'
+      - 'docs/tests/manual/em060-native-probe/**'
+      - 'ElectrifiedMainline/**'
+      - 'tests/**'
+      - '.github/workflows/build-mod.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - name: Obtain exact official Factorio headless build
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/em060-engine"
+          curl -fL --retry 1 --max-time 90 "https://factorio.com/get-download/2.1.24/headless/linux64" -o "$RUNNER_TEMP/em060-engine.tar.xz"
+          tar -xJf "$RUNNER_TEMP/em060-engine.tar.xz" -C "$RUNNER_TEMP/em060-engine"
+          "$RUNNER_TEMP/em060-engine/factorio/bin/x64/factorio" --version | tee "$RUNNER_TEMP/em060-engine/version.txt"
+          grep -F '2.1.24' "$RUNNER_TEMP/em060-engine/version.txt"
+      - name: Retrieve exact CI game ZIP (runner only)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          run=""
+          for i in $(seq 1 24); do
+            run=$(gh run list --repo zukera2-stack/Factorio --workflow build-mod.yml --branch "$GITHUB_REF_NAME" --commit "$GITHUB_SHA" --limit 5 --json databaseId --jq '.[0].databaseId // empty')
+            if [[ -n "$run" ]]; then break; fi
+            sleep 5
+          done
+          test -n "$run"
+          echo "Native QA package run=$run source=$GITHUB_SHA"
+          timeout 240 gh run watch "$run" --repo zukera2-stack/Factorio --exit-status --interval 5
+          mkdir -p "$RUNNER_TEMP/em060-mods"
+          gh run download "$run" --repo zukera2-stack/Factorio -n ElectrifiedMainline-test-build -D "$RUNNER_TEMP/em060-mods"
+          test -f "$RUNNER_TEMP/em060-mods/ElectrifiedMainline_0.1.60.zip"
+          cp -a docs/tests/manual/em060-native-probe "$RUNNER_TEMP/em060-mods/em060-native-probe_0.0.1"
+          printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em060-native-probe","enabled":true}]}' > "$RUNNER_TEMP/em060-mods/mod-list.json"
+      - name: Run real electrical solver with packaged mod and probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/em060-engine/factorio/bin/x64/factorio"
+          "$bin" --mod-directory "$RUNNER_TEMP/em060-mods" --create "$RUNNER_TEMP/em060-map.zip" | tee "$RUNNER_TEMP/em060-create.log"
+          "$bin" --mod-directory "$RUNNER_TEMP/em060-mods" --benchmark "$RUNNER_TEMP/em060-map.zip" --benchmark-ticks 1050 --benchmark-runs 1 | tee "$RUNNER_TEMP/em060-benchmark.log"
+          grep -F '[EM060 NATIVE PASS]' "$RUNNER_TEMP/em060-benchmark.log"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: em060-native-probe-logs
+          path: |
+            ${{ runner.temp }}/em060-create.log
+            ${{ runner.temp }}/em060-benchmark.log
+            ${{ runner.temp }}/em060-engine/version.txt
+          if-no-files-found: warn

@@ -1,0 +1,297 @@
+-- Disposable native topology/teardown lifecycle probe, Factorio 2.1.24.
+-- Exercises real script_raised_destroy and script_raised_built events.
+local W = 1000000/60
+local f={}
+local battery_positions={{-34,13},{-32,13},{-28,13},{-26,13},{26,13},{28,13},{32,13},{34,13}}
+local function e(s,n,x,y,ex)
+  local p={name=n,position={x,y},force='player',raise_built=true}
+  for k,v in pairs(ex or {}) do p[k]=v end
+  local r=s.create_entity(p)
+  assert(r and r.valid, 'create failed: '..n..' '..x..','..y)
+  return r
+end
+local function eei(s,x,mode,power)
+  local a=e(s,'electric-energy-interface',x,13)
+  a.electric_interface_mode=defines.electric_interface_mode[mode]
+  a.electric_buffer_size=1000000000
+  a.power_production=mode=='primary_output' and power*W or 0
+  a.power_usage=0
+  a.input_flow_limit=mode=='secondary_input' and power*W or 0
+  a.output_flow_limit=mode=='primary_output' and power*W or 0
+  a.energy=0
+  return a
+end
+local function battery_totals()
+  local a,b,limA,limB=0,0,0,0
+  assert(f.batteries and #f.batteries==8,'8 external batteries must exist')
+  for i,v in ipairs(f.batteries) do
+    assert(v.valid and v.name=='accumulator', 'external accumulator destroyed '..i)
+    assert(storage.em065_battery_unit_ids and v.unit_number==storage.em065_battery_unit_ids[i], 'external accumulator identity replaced '..i)
+    if i<=4 then a=a+v.energy else b=b+v.energy end
+    local input=v.get_electric_input_flow_limit()
+    local output=v.get_electric_output_flow_limit()
+    assert(type(input)=='number' and type(output)=='number', 'accumulator flow limit missing')
+    if i<=4 then limA=limA+math.max(input,output) else limB=limB+math.max(input,output) end
+  end
+  return a,b,limA,limB
+end
+local function hidden()
+  local s=game.surfaces['em-25kv-isolated-bridge-058']
+  if not s then return 0,0 end
+  local n,j=0,0
+  for _,v in pairs(s.find_entities_filtered{type='electric-energy-interface'}) do
+    n=n+1;j=j+v.energy
+  end
+  return n,j
+end
+local function state(t,label)
+  local n,j=hidden()
+  log(string.format('[EM064 STAGE] %s dt=%d srcJ=%.0f sinkJ=%.0f lineA=%s lineB=%s facA=%s facB=%s hidden_count=%d hidden_j=%.0f',label,t,f.source.energy,f.sink.energy,tostring(f.m1.valid and f.m1.electric_network_id or '-'),tostring(f.m2.valid and f.m2.electric_network_id or '-'),tostring(f.a.valid and f.a.electric_network_id or '-'),tostring(f.b.valid and f.b.electric_network_id or '-'),n,j))
+end
+-- The dismantled station owns two hidden EEIs at the factory-port slot x
+-- and its paired line-port slot x+3. The other station's buffer is NOT
+-- authorized for dissipation by demolition of this station.
+local function owned_hidden_buffer(factory_net)
+  local lab=game.surfaces['em-25kv-isolated-bridge-058']
+  assert(lab and factory_net, 'station buffer owner unavailable')
+  local entities=lab.find_entities_filtered{type='electric-energy-interface'}
+  local slot_x=nil
+  for _,v in pairs(entities) do
+    local x=v.position.x
+    if v.electric_network_id==factory_net and (x-1)%8==0 then
+      assert(not slot_x or slot_x==x, 'ambiguous factory-side hidden EEI owner')
+      slot_x=x
+    end
+  end
+  assert(slot_x, 'missing hidden EEI owned by removed station')
+  local n,j=0,0
+  for _,v in pairs(entities) do
+    if v.position.x==slot_x or v.position.x==slot_x+3 then
+      n=n+1
+      j=j+v.energy
+    end
+  end
+  assert(n==2 and j>=0 and j<=666668, 'unexpected demolished station buffer inventory')
+  return j,n
+end
+local function find(s,name,x,y)
+  local list=s.find_entities_filtered{name=name,position={x,y},radius=0.3}
+  for _,entity in pairs(list) do
+    if entity.name==name and math.abs(entity.position.x-x)<0.1 and math.abs(entity.position.y-y)<0.1 then return entity end
+  end
+  error('Cannot rehydrate '..name..' at '..x..','..y)
+end
+local function hydrate()
+  local s=game.surfaces['em064-topology'];assert(s,'saved test surface missing')
+  f.s=s;f.m1=find(s,'em-35kv-catenary-pole',-31.5,2.5)
+  f.mid=find(s,'em-35kv-catenary-pole',-1.5,2.5)
+  f.m2=find(s,'em-35kv-catenary-pole',28.5,2.5)
+  f.a=find(s,'em-35kv-traction-substation',-30,9)
+  f.b=find(s,'em-35kv-traction-substation',30,9)
+  f.source=find(s,'electric-energy-interface',-30,13)
+  f.sink=find(s,'electric-energy-interface',30,13)
+  f.rails={};f.rails[-1]=find(s,'em-high-speed-straight-rail',-1,1)
+  f.batteries={}
+  for i,pos in ipairs(battery_positions) do f.batteries[i]=find(s,'accumulator',pos[1],pos[2]) end
+  assert(storage.em065_battery_unit_ids, 'saved battery identity record absent')
+  log('[EM064] test fixture rehydrated after Lua reload')
+end
+local function details(t)
+  local lab=game.surfaces['em-25kv-isolated-bridge-058']
+  if not lab then return end
+  local items={}
+  for _,v in pairs(lab.find_entities_filtered{type='electric-energy-interface'}) do
+    items[#items+1]=string.format('%s@%s energy=%.0f in=%.0f out=%.0f',v.name,tostring(v.electric_network_id),v.energy,v.input_flow_limit or 0,v.output_flow_limit or 0)
+  end
+  table.sort(items)
+  log('[EM064 PORTS] dt='..t..' '..table.concat(items,' | '))
+end
+local function setup()
+  local s=game.create_surface('em064-topology',{width=256,height=128});s.generate_with_lab_tiles=true
+  s.request_to_generate_chunks({0,0},2);s.force_generate_chunk_requests()
+  f.s=s
+  for x=-33,33,2 do f.rails=f.rails or {};f.rails[x]=e(s,'em-high-speed-straight-rail',x,1,{direction=defines.direction.east}) end
+  f.m1=e(s,'em-35kv-catenary-pole',-31.5,2.5)
+  f.mid=e(s,'em-35kv-catenary-pole',-1.5,2.5)
+  f.m2=e(s,'em-35kv-catenary-pole',28.5,2.5)
+  f.a=e(s,'em-35kv-traction-substation',-30,9)
+  f.b=e(s,'em-35kv-traction-substation',30,9)
+  f.source=eei(s,-30,'primary_output',20)
+  f.source.power_production=0
+  f.source.energy=700000000
+  f.sink=eei(s,30,'secondary_input',10)
+  f.batteries={}
+  for i,pos in ipairs(battery_positions) do
+    local v=e(s,'accumulator',pos[1],pos[2]);v.energy=2000000;f.batteries[i]=v
+  end
+  storage.em065_battery_unit_ids={}
+  for i,v in ipairs(f.batteries) do storage.em065_battery_unit_ids[i]=v.unit_number end
+  assert(f.a.electric_network_id~=f.b.electric_network_id,'initial grids short')
+  state(0,'start')
+end
+local function check_on(t,where)
+  assert(f.m1.electric_network_id==f.m2.electric_network_id,where..': corridor disconnected')
+  assert(f.a.electric_network_id~=f.b.electric_network_id,where..': factory grids shorted')
+  local n=hidden();assert(n>=4,where..': hidden interfaces absent '..n)
+  log('[EM064 PASS] '..where..' active source/sink on separate factory networks')
+end
+local function check_off(t,where,cap)
+  assert(f.m1.electric_network_id~=f.m2.electric_network_id,where..': corridor did not split')
+  local n=hidden()
+  assert(n<4,where..': bridge still retains full active interface pair '..n)
+  log('[EM064 PASS] '..where..' corridor split hidden_count='..n)
+end
+script.on_event(defines.events.on_tick,function(ev)
+  if not f.s then
+    if not storage.em064_started then storage.em064_started=ev.tick;setup()
+    else hydrate() end
+  end
+  local t=ev.tick-storage.em064_started
+  local _,bridge_j=hidden()
+  local bat_a,bat_b,bat_limit_a,bat_limit_b=battery_totals()
+  local total=f.source.energy+f.sink.energy+bridge_j+bat_a+bat_b
+  if storage.em065_battery_previous then
+    local a0,b0=storage.em065_battery_previous[1],storage.em065_battery_previous[2]
+    assert(math.abs(bat_a-a0)<=bat_limit_a+8,'source-side external battery changed faster than native API limit')
+    assert(math.abs(bat_b-b0)<=bat_limit_b+8,'sink-side external battery changed faster than native API limit')
+  end
+  storage.em065_battery_previous={bat_a,bat_b}
+  if (t>=197 and t<=203) or (t>=438 and t<=443) or (t>=668 and t<=674)
+      or (t>=893 and t<=903) or (t>=998 and t<=1004) then
+    log(string.format('[EM065 BATTERY] dt=%d external_A_J=%.0f external_B_J=%.0f source_limit_J=%.0f sink_limit_J=%.0f',t,bat_a,bat_b,bat_limit_a,bat_limit_b))
+  end
+  local sn=f.source.electric_network
+  local parent=sn and sn.parent_network
+  local stats=parent and parent.flow_last_tick
+  local generated=stats and (stats.primary_output or 0) or 0
+  local secondary=stats and (stats.secondary_output or 0) or 0
+  local solar=stats and (stats.solar_output or 0) or 0
+  local native_produced=generated+secondary+solar
+  if t>10 and t<1251 then
+    storage.em065_actual_gener_j=(storage.em065_actual_gener_j or 0)+generated
+    storage.em065_primary_flow_bad=(storage.em065_primary_flow_bad or 0)+(math.abs(generated-20*W)>3 and 1 or 0)
+  end
+  local prev=storage.em064_previous_total
+  if prev then
+    local deviation=-(total-prev)
+    if deviation>4 then
+      storage.em064_loss_j=(storage.em064_loss_j or 0)+deviation
+      storage.em064_loss_count=(storage.em064_loss_count or 0)+1
+      -- Explicit owner policy: only the hidden EEIs belonging to a demolished
+      -- substation can be discarded. Do not whitelist the whole tick's gap:
+      -- that also includes surviving-station buffer and source scheduling.
+      local authorized=0
+      if storage.em064_demolition_tick and t==storage.em064_demolition_tick+1 then
+        authorized=math.min(deviation,storage.em064_approved_demolition_capacity_j or 0)
+      end
+      storage.em064_allowed_demolition_j=(storage.em064_allowed_demolition_j or 0)+authorized
+      storage.em064_unexplained_deficit_j=(storage.em064_unexplained_deficit_j or 0)+(deviation-authorized)
+      if authorized>0 then
+        log(string.format('[EM064 POLICY DEMOLITION] dt=%d allowed_J=%.0f non_owner_deficit_J=%.0f',t,authorized,deviation-authorized))
+      end
+    elseif deviation < -4 then
+      storage.em064_created_j=(storage.em064_created_j or 0)-deviation
+      storage.em064_created_count=(storage.em064_created_count or 0)+1
+    end
+  end
+  if (t>=197 and t<=204) or (t>=438 and t<=446) or (t>=668 and t<=676)
+    or (t>=893 and t<=902) or (t>=998 and t<=1005) then
+    log(string.format('[EM064 LEDGER] dt=%d total_J=%.0f delta_J=%.0f expected_generation_J=%.0f bridge_J=%.0f',t,total,prev and total-prev or 0,0,bridge_j))
+  end
+  storage.em064_previous_total=total
+  if (t>=197 and t<=205) or (t>=438 and t<=445) or (t>=668 and t<=675)
+    or (t>=893 and t<=903) or (t>=998 and t<=1005) then
+    log(string.format('[EM065 POWER] dt=%d measured_primary_J=%.3f secondary_J=%.3f source_net=%s setting_J=%.3f total_J=%.3f bridge_J=%.3f',
+      t,generated,secondary,tostring(f.source.electric_network_id), f.source.power_production,total,bridge_j))
+  end
+  if t==180 then check_on(t,'initial');state(t,'initial') end
+  if t==200 then
+    storage.em064_before=f.sink.energy
+    storage.em065_pre_bat_b=bat_b
+    f.mid.destroy{raise_destroy=true};state(t,'remove_middle_mast')
+  end
+  if t==290 then
+    state(t,'mast_before_split_check');check_off(t,'mast_destroy')
+    local gain=f.sink.energy-storage.em064_before
+    assert(gain<=storage.em065_pre_bat_b-bat_b+1500000,'mast_destroy: sustained power from disconnected corridor '..gain)
+    state(t,'mast_split_stable')
+  end
+  if t==310 then f.mid=e(f.s,'em-35kv-catenary-pole',-1.5,2.5);state(t,'restore_middle_mast') end
+  if t==420 then check_on(t,'mast_rebuilt');state(t,'mast_rebuilt') end
+  if t==440 then
+    storage.em064_before=f.sink.energy
+    storage.em065_pre_bat_b=bat_b
+    f.rails[-1].destroy{raise_destroy=true};state(t,'rail_remove')
+  end
+  if t==520 then
+    check_off(t,'rail_cut')
+    local gain=f.sink.energy-storage.em064_before
+    assert(gain<=storage.em065_pre_bat_b-bat_b+1500000,'rail_cut: residual power not explained by native battery discharge '..gain)
+    state(t,'rail_split_stable')
+  end
+  if t==540 then f.rails[-1]=e(f.s,'em-high-speed-straight-rail',-1,1,{direction=defines.direction.east});state(t,'rail_restore') end
+  if t==650 then check_on(t,'rail_rebuilt');state(t,'rail_rebuilt') end
+  if t==670 then
+    storage.em064_b_id=f.b.unit_number
+    storage.em064_before=f.sink.energy
+    storage.em065_pre_bat_b=bat_b
+    local receiver_j=owned_hidden_buffer(f.b.electric_network_id)
+    local _,all_hidden_j=hidden()
+    storage.em064_approved_demolition_capacity_j=receiver_j
+    storage.em064_demolition_tick=t
+    log(string.format('[EM064 DEMOLITION INVENTORY] dt=%d removed_station_J=%.0f surviving_station_J=%.0f',t,receiver_j,all_hidden_j-receiver_j))
+    f.b.destroy{raise_destroy=true};state(t,'substation_destroy')
+  end
+  if t==735 then
+    local n=hidden()
+    assert(n<=2,'deleted substation retained hidden EEI '..n)
+    local gain=f.sink.energy-storage.em064_before
+    assert(gain<=storage.em065_pre_bat_b-bat_b+1500000,'deleted substation still powers consumer beyond battery drain '..gain)
+    log('[EM064 PASS] substation removed and hidden interfaces cleaned')
+  end
+  if t==750 then f.b=e(f.s,'em-35kv-traction-substation',30,9);state(t,'substation_restore') end
+  if t==865 then check_on(t,'substation_rebuilt');state(t,'substation_rebuilt') end
+  if t==895 then
+    f.cross1=e(f.s,'big-electric-pole',-22,18)
+    f.cross2=e(f.s,'big-electric-pole',0,18)
+    f.cross3=e(f.s,'big-electric-pole',22,18)
+    state(t,'factory_copper_merge')
+  end
+  if t==975 then
+    assert(f.a.electric_network_id==f.b.electric_network_id,'factory merge did not merge factory grids')
+    local n=hidden()
+    assert(n<4,'factory merge retained two full active bridge interface pairs: '..n)
+    state(t,'factory_merge_stable');
+    local _,stranded=hidden()
+    assert(stranded<=666668,'unbounded transient bridge energy after factory merge: '..stranded)
+    storage.em064_merged_remainder=stranded
+    log('[EM064 OBSERVATION] factory merge retained transient bridge energy J='..stranded..' (may be discarded on reconfiguration)')
+    log('[EM064 PASS] intentional factory merge suppresses same-network relay')
+  end
+  if t==975 or t==999 or t==1000 or t==1001 or t==1002 or t==1003 or t==1020 then details(t) end
+  if t==1002 then local _,j=hidden();log('[EM064 OBSERVATION] split-at-t1002 hidden_energy_J='..j..' previous_merged_J='..tostring(storage.em064_merged_remainder)) end
+  if t==1000 then f.cross1.destroy{raise_destroy=true};f.cross2.destroy{raise_destroy=true};f.cross3.destroy{raise_destroy=true};state(t,'factory_split') end
+  if t==1150 then check_on(t,'factory_resplit');state(t,'factory_resplit') end
+  if t==1170 then
+    -- EM064_SERVER_SAVE_HOOK (the test runner replaces this in server mode).
+    game.reload_script()
+    log('[EM064] invoked game.reload_script at dt1170')
+  end
+  if t==1250 then
+    check_on(t,'after_script_reload');state(t,'after_script_reload')
+    if storage.em064_checkpoint_sink then
+      local delta=f.sink.energy-storage.em064_checkpoint_sink
+      assert(delta>5000000, 'disk-load continuation did not deliver power: '..delta)
+      log(string.format('[EM064 DISK PASS] restored_factory_ids=%s,%s sink_delta_J=%.0f',tostring(f.a.electric_network_id),tostring(f.b.electric_network_id),delta))
+    end
+    log(string.format('[EM064 LEDGER RESULT] lost_J=%.0f loss_events=%d created_J=%.0f creation_events=%d',storage.em064_loss_j or 0,storage.em064_loss_count or 0,storage.em064_created_j or 0,storage.em064_created_count or 0))
+    local allowed=storage.em064_allowed_demolition_j or 0
+    local unexplained=storage.em064_unexplained_deficit_j or 0
+    assert(math.abs((allowed+unexplained)-(storage.em064_loss_j or 0))<4, 'energy ledger categories mismatch')
+    log(string.format('[EM064 POLICY RESULT] allowed_demolition_J=%.0f unexplained_deficit_J=%.0f created_J=%.0f',allowed,unexplained,storage.em064_created_j or 0))
+    log(string.format('[EM065 BATTERY RESULT] A_J=%.0f B_J=%.0f count=8 limits_held=true',bat_a,bat_b))
+    log(string.format('[EM065 SOURCE RESERVOIR] remaining_J=%.0f production_setting_J=%.0f',f.source.energy,f.source.power_production))
+    log(string.format('[EM065 GENERATION] observed_primary_J=%.3f under_setting_tick_count=%d',storage.em065_actual_gener_j or 0,storage.em065_primary_flow_bad or 0))
+    log('[EM064 NATIVE PASS] mast cut/restore, rail cut/restore, substation remove/restore, factory merge/split, reload_script')
+  end
+end)
