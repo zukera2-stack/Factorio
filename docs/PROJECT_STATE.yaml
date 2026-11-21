@@ -1342,5 +1342,8 @@ priority_diagnostics_061_candidate:
   native_test_fixture: tests/em061-power-probe/
   native_test_gate: github_actions_lua_preflight
   native_test_result: pending
+  first_build_run: 44875572533
+  first_build_result: failed_historical_visual_test_version_gate
+  inherited_test_gate_fix: tests/25kv_visual_geometry_048.lua
   explicit_promotion_approval: pending
   research_doc: docs/research/25kv-priority-diagnostics-061.md
