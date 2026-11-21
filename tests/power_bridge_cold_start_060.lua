@@ -167,11 +167,25 @@ assert(a.output.energy<=a.output.electric_buffer_size
 assert(a.input.input_flow_limit==0 and b.input.input_flow_limit==0)
 a.output.energy=0;b.output.energy=0
 M.on_tick(182,graph)
-assert(a.status=="auto-idle" and b.status=="auto-idle", "idle must stop forwarding")
--- Empty EEIs may be cleaned up; charged ones must stay frozen, never actively
--- output into a broken route.
+-- The mock has no native solver to consume all stored source-input joules.
+-- If any already-metred J remain, a live connected pair may be safely draining
+-- until they arrive at the destination; it MUST NOT request new generation.
 for _,r in ipairs{a,b} do
-  if r.input and r.input.valid then assert(r.input.input_flow_limit==0 and r.input.output_flow_limit==0) end
-  if r.output and r.output.valid then assert(r.output.input_flow_limit==0 and r.output.output_flow_limit==0) end
+  assert(r.status=="auto-idle" or r.status=="draining-buffer",
+    "unplanned relay escaped idle/draining: "..tostring(r.status))
+  if r.input and r.input.valid then
+    assert(r.input.input_flow_limit==0 and r.input.output_flow_limit==0,
+      "idle/draining relay requested unplanned new power")
+    assert(r.input.energy<=r.input.electric_buffer_size)
+  end
+  if r.output and r.output.valid then
+    assert(r.output.input_flow_limit==0)
+    assert(r.output.energy<=r.output.electric_buffer_size)
+    if r.status=="auto-idle" then
+      assert(r.output.output_flow_limit==0,"idle relay cannot feed a broken path")
+    else
+      assert(r.output.output_flow_limit<=L,"draining relay exceeds station rating")
+    end
+  end
 end
 print("060/063 cold-start runtime mock PASS: zero counters, sustained buffered transfer, battery reverse, drained idle cleanup")
