@@ -1,3 +1,43 @@
+em072_075_distributed_traction_plan:
+  status: owner_design_approved_documented_only
+  decision_date: "2026-11-21"
+  target_mod_source_version: "0.1.62"
+  target_engine: "Factorio 2.1.24 build 87808"
+  main_source_start_sha: fef938c503a07826b1cc75b90ed0c164d4a5d9a5
+  plan_document: docs/plans/DISTRIBUTED_TRACTION_072.md
+  api_research_document: docs/research/distributed-traction-native-072.md
+  prototype_locomotive: em-electric-locomotive
+  locomotive_nominal_power_w: 2000000
+  motor_cargo_proposed_id: em-motor-cargo-wagon
+  motor_fluid_proposed_id: em-motor-fluid-wagon
+  motor_wagon_nominal_traction_w: 500000
+  motor_wagon_regeneration_limit_w: 500000
+  motor_wagons_direct_25kv_connection: forbidden
+  motor_wagons_have_pantographs: false
+  energy_exchange: locomotive_train_internal_logical_bus
+  network_only_pickup_entities: real_electric_locomotives
+  regen_priority: locomotive_to_25kv_then_onboard_battery_then_losses
+  default_cargo_and_fluid_wagons_modified: false
+  owner_confirmed_500MW: false
+  target_traction_nominal_formula: 2MW_times_locomotives_plus_0_5MW_times_motor_wagons
+  native_wagon_tractive_power_api: not_available_directly
+  native_fuel_multiplier_for_500kw: hypothesis_requires_engine_proof
+  direct_LuaTrain_speed_writes: forbidden
+  engine_native_burner_proof: pending_EM072_A
+  motor_wagon_data_stage: pending_EM072_B
+  native_extra_500kw_equivalence: pending_EM072_C
+  EM070_closed_network_traction_bridge: pending_EM072_D
+  onboard_battery: pending_EM073_capacity_selection
+  measured_regenerative_braking: pending_EM074_brake_signal_proof
+  full_integration_regressions: pending_EM075
+  implementation_started: false
+  game_code_changed: false
+  mod_version_changed: false
+  main_merge_for_gameplay_authorized: false
+  release_authorized: false
+  updater_recreation_authorized: false
+  next_action: isolated_Base_only_native_engine_traction_proof
+
 windows_updater_retirement:
   date: "2026-11-21"
   decision: owner_discontinued_all_failed_windows_patchers
