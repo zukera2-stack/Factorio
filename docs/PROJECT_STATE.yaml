@@ -1760,3 +1760,31 @@ dispatch_cache_performance_067_2026_11_21:
   approved_updater_061_touched: false
   stable_main_056_touched: false
   merge_authorized: false
+
+dispatch_cache_067_exact_CI_2026_11_21:
+  branch: experiment/dispatch-cache-067
+  tested_gameplay_source_commit: 75a0dd7f48ced388e1cfafecfccd93516b9f8570
+  build_workflow_run: 44909988683
+  build_workflow_status: success
+  artifact_id: 14709273433
+  ci_mod_inner_zip_sha256: a4da43775fa530e94dad5055736dc2af7570275be33921ab433d77b92e851448
+  previous_local_zip_sha256: 2eac182f472de4a83805bb99dd87d428455ce5f69c0c9abd49917177bc3666a8
+  unpacked_game_files_byte_identical_to_local: 130
+  unchanged_png: 83
+  native_engine: Factorio_2_1_24_build_87808
+  native_48_substations_960_ticks_pass: true
+  native_48_reroute_and_outage_pass: true
+  native_48_engine_avg_ms_with_heavy_initialization: 21.049
+  native_EM065_reservoir_1350_ticks_pass: true
+  native_EM065_batteries_1350_ticks_pass: true
+  native_disk_save_load_two_runs_200_ticks_each_pass: true
+  native_total_ticks_with_disk_reload: 4060
+  unexpected_created_energy_j: 0
+  old_reservoir_loss_j: 1666667
+  old_battery_case_loss_j: 1724409
+  release_energy_acceptance_gate: FAIL
+  approved_updater_branch_changed: false
+  main_branch_changed: false
+  user_release_permission: false
+  human_report: docs/research/25kv-dispatch-cache-067-CI.md
+  machine_report: docs/research/25kv-dispatch-cache-067-CI.json

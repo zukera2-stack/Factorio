@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-21",
+  "experiment": "EM067",
+  "status": "CI_EXACT_NATIVE_QA_PASS_WITH_EM065_ENERGY_RELEASE_BLOCKER",
+  "github_repository": "zukera2-stack/Factorio",
+  "pull_request": 42,
+  "branch": "experiment/dispatch-cache-067",
+  "ci_game_code_commit": "75a0dd7f48ced388e1cfafecfccd93516b9f8570",
+  "ci_actions_run": 44909988683,
+  "ci_workflow": "Build Factorio mod ZIP",
+  "ci_workflow_conclusion": "success",
+  "ci_artifact_id": 14709273433,
+  "ci_zip_sha256": "a4da43775fa530e94dad5055736dc2af7570275be33921ab433d77b92e851448",
+  "local_tested_zip_sha256": "2eac182f472de4a83805bb99dd87d428455ce5f69c0c9abd49917177bc3666a8",
+  "unpacked_game_files": 130,
+  "all_unpacked_files_match_local_candidate": true,
+  "unchanged_png_count": 83,
+  "game_file_delta_vs_baseline": [
+    "ElectrifiedMainline/scripts/bridge_dispatch_059.lua"
+  ],
+  "native_engine": "Factorio 2.1.24 build 87808 linux64",
+  "CI_native_48": {
+    "engine": "Factorio 2.1.24 headless",
+    "zip_sha256": "a4da43775fa530e94dad5055736dc2af7570275be33921ab433d77b92e851448",
+    "native_48_pass": true,
+    "checks": [
+      "[EM067 48 STAGE1 PASS]",
+      "[EM067 48 REROUTE PASS]",
+      "[EM067 48 PASS]"
+    ],
+    "engine_updates": 960,
+    "wall_seconds": 22.206,
+    "game_engine_updates_ms": 20207.433,
+    "game_engine_avg_ms_per_tick": 21.049,
+    "game_engine_min_ms_per_tick": 2.318,
+    "game_engine_max_ms_per_tick": 7399.172,
+    "profiling_verbose_enabled": false,
+    "remark": "Includes map setup in tick 1; do not treat as steady-state UPS guarantee."
+  },
+  "CI_native_EM065": {
+    "reservoir": {
+      "topology_pass": true,
+      "topology_ticks": 1350,
+      "save_reload": {
+        "passed": true,
+        "save_bytes": 695536,
+        "extra_energy_j": 13333333,
+        "continued_ticks": 200
+      },
+      "energy_ledger": {
+        "missing_j": 1666667,
+        "allowed_demolition_j": 166667,
+        "remaining_unexplained_j": 1500000,
+        "created_j": 0
+      },
+      "external_accumulators": null
+    },
+    "reservoir-batteries": {
+      "topology_pass": true,
+      "topology_ticks": 1350,
+      "save_reload": {
+        "passed": true,
+        "save_bytes": 727688,
+        "extra_energy_j": 13333333,
+        "continued_ticks": 200
+      },
+      "energy_ledger": {
+        "missing_j": 1724409,
+        "allowed_demolition_j": 186667,
+        "remaining_unexplained_j": 1537742,
+        "created_j": 0
+      },
+      "external_accumulators": {
+        "count": 8,
+        "source_total_end_j": 20000000,
+        "sink_total_end_j": 19980000,
+        "per_tick_flow_limits_respected": true
+      }
+    }
+  },
+  "native_benchmark_ticks": 3660,
+  "native_saved_reload_extra_ticks": 400,
+  "benchmark_and_save_native_total_ticks": 4060,
+  "prior_cache_differential_lua_cases_passed": 1675,
+  "energy_loss_known_from_baseline_unchanged": true,
+  "approved_user_updater_changed": false,
+  "main_changed": false,
+  "owner_release_approved": false
+}
