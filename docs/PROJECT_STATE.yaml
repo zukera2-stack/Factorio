@@ -1,9 +1,30 @@
+windows_updater_retirement:
+  date: "2026-11-21"
+  decision: owner_discontinued_all_failed_windows_patchers
+  former_source_branch: feature/git-updater-060
+  original_source_sha: 9bc032daf5910564db8622986c907b89b193db16
+  retired_head_sha: da7e1417086c9a3626fbc5c9801207a41be3dbe3
+  removed_executable_source:
+    - tools/updater/Update.bat
+    - tools/updater/Updater.ps1
+    - tools/updater/Test-Updater.ps1
+  deleted_main_agent_skill: true
+  historical_approved_mod_branch: test/updater-approved
+  historical_approved_mod_version: "0.1.61"
+  historical_mod_branch_modified: false
+  active_update_channel: none
+  windows_copies_removed_by_chatgpt: false
+  player_must_manually_delete_existing_windows_installer_files: true
+  mod_source_main_version: "0.1.62"
+  new_release_published: false
+  new_patcher_created: false
+
 em071_turnout_cosmetic:
   branch: experiment/catenary-turnout-cosmetic-071
   main_base_sha: 56a19fa32d389fe79c9c78558436ec694648616b
   game_version: "0.1.62"
   target_engine: "Factorio 2.1.24 build 87808"
-  stage: implementation_Lua_Y_switch_PASS_game_native_power_regressions_PASS_turnout_visual_unverified
+  stage: owner_screenshot_accepted_merged_main_071_no_release
   user_observation: rail_turnout_cosmetic_wire_gap_screenshot
   active_selector: ElectrifiedMainline/scripts/catenary_axis_056.lua
   inactive_prior_policy: ElectrifiedMainline/scripts/catenary_visual_policy_047.lua
@@ -13,8 +34,8 @@ em071_turnout_cosmetic:
   electrical_changes: false
   prototype_changes: false
   roadmap: docs/research/25kv-turnout-cosmetic-071.md
-  screenshot_specific_geometry_verified: false
-  official_engine_render_test: pending_user_save_real_turnout
+  screenshot_specific_geometry_verified: accepted_by_owner_visual_screenshot
+  official_engine_render_test: owner_visual_screenshot_pass_no_unit_number_dump
   pure_Lua_071_Y_fork_3_spans: pass
   inherited_056_axis: pass
   inherited_056_integration: pass
@@ -27,15 +48,24 @@ em071_turnout_cosmetic:
   official_ci_artifact: 14714614745
   official_inner_zip_sha256: "91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575"
   research_complete: true
-  release_gate: owner_native_turnout_screenshot_and_topology_verification
+  release_gate: not_released_mod_in_development
   code_changed: ElectrifiedMainline/scripts/catenary_axis_056.lua
   new_test: tests/25kv_turnout_cosmetic_071.lua
   existing_test_runner_updated: tests/35kv_topology.lua
   native_power_code_changed: false
   same_track_rail_end_required: true
-  main_modified: false
+  main_modified: true
   updater_modified: false
   release_authorized: false
+  owner_visual_accepted: true
+  screenshot_file_name: image(20261121-165502).png
+  screenshot_dimensions: 1921x1080
+  screenshot_sha256: dbbe2ed5ae5106f4d44e80af3a1b96a78e4eb89a92e7804acea731604e267031
+  screenshot_source: user_provided_in_chat
+  screenshot_proves: visual_turnout_acceptance_only
+  main_merge_pr: 47
+  main_merge_sha: 1b45398bda11ba5a4c41ac292817a1d6e71b3c12
+  electrical_module_changed: false
 
 release_candidate_062:
   type: main_source_development_checkpoint

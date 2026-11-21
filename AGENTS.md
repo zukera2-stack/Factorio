@@ -1,3 +1,5 @@
+> **2026-11-21:** Current source baseline is main 0.1.62 with EM071 accepted on screenshot and merged via PR #47. Windows Updater 1.1 is discontinued by owner and its executable source removed from the historical feature branch. Do not recreate a patcher; do not publish release. Older main=0.1.56 / active updater statements below are historical unless explicitly updated.
+
 > **Owner directive 2026-11-21:** promote tested 0.1.62 EM070 code to `main` only as a development baseline (PR #46). The overall mod is unfinished; NO release/tag/Mod Portal/Updater promotion is authorized. The previous 0.1.56 main-only handoff and beta proposal text below are historical.
 
 # Instructions for AI contributors
@@ -16,19 +18,19 @@
 
 ## Cross-branch recovery and Agent Skills
 
-**Do not confuse a checked-out `main` with every development branch.** `main` is the accepted 0.1.56 visual baseline. The user-installed and updater-approved 0.1.60, Updater 1.1 source, and ongoing 0.1.61 research live on separate refs. Read [the current work map](docs/CURRENT_WORK.md), verify live SHA and then fetch handoff/source files on the **specific target branch**. The map is date-stamped and does not override actual code or Git history.
+**Do not confuse a checked-out `main` with every development branch.** `main` is the accepted 0.1.56 visual baseline. The former Updater 1.1 and old test/updater-approved 0.1.61 are preserved only as historical refs; main source is 0.1.62 after accepted EM071. Read [the current work map](docs/CURRENT_WORK.md), verify live SHA and then fetch handoff/source files on the **specific target branch**. The map is date-stamped and does not override actual code or Git history.
 
 Project skills (portable SKILL.md; Codex discovers `.agents/skills`, other assistants can read explicitly):
 - [`factorio-handoff`](.agents/skills/factorio-handoff/SKILL.md) — start a new chat, recover live branches and task state.
 - [`factorio-native-research`](.agents/skills/factorio-native-research/SKILL.md) — Factorio API/prototype, EEI priority and engine experiments.
-- [`factorio-updater-release`](.agents/skills/factorio-updater-release/SKILL.md) — QA, owner-approved test promotion, existing Windows patcher.
+- The Windows Git Updater skill was **retired on 2026-11-21** together with executable patcher sources. Do not use or suggest this install workflow.
 
 A future new chat must not treat `PROJECT_CONTEXT.md` (2026-11-09 notebook), historical README paragraphs or scoped `main` status as the latest feature brief.
 
 ## Source of truth
 
 - Current source code is authoritative for implementation.
-- `docs/PROJECT_STATE.yaml` is authoritative for accepted decisions and status **on the selected branch**; the `main` copy must keep `project.mod_version: 0.1.56` until an approved main release.
+- `docs/PROJECT_STATE.yaml` is authoritative for accepted decisions and status **on the selected branch**; the `main` copy must reflect its current source version 0.1.62 without claiming it is a published release.
 - `docs/AI_CONTEXT.md` is the **branch-scoped** handoff and must be updated after material work; `docs/CURRENT_WORK.md` is the repo-wide navigation index. Neither is a substitute for checking live refs and source.
 - Historical notes and old logs are evidence, not proof that current code still behaves the same.
 - If documents disagree, inspect code and record the discrepancy; do not silently choose one.
@@ -78,4 +80,4 @@ Build every distributable install ZIP exclusively via the repository's GitHub Ac
 **Owner clarification (2026-11-19):** deliver install ZIPs only by direct GitHub Actions artifact links. Do not download, copy, extract, or duplicate distributable ZIPs into the ChatGPT Library or project files for delivery. Library is for technical material, source models, sketches, experiment outputs, and evidence. Record CI validation, source commit and artifact ID; obtain inner archive SHA256 from CI logs if emitted, not by copying the release into Library.
 
 ## Current baseline and branches
-Main 0.1.56 is the only **merged owner-accepted baseline**. Other active tested and research branches exist: see [current cross-branch handoff](docs/CURRENT_WORK.md), then live branch HEADs. Preserve original visual algorithm unless a reproducible defect is observed. New standalone main-line features usually branch from `main`; continuation of the existing 060 electric bridge must retain the exact vetted 060 base or it loses the implementation. **Never merge unapproved experiment to main or move `test/updater-approved` without explicit owner permission.** Use the owner's already-installed Updater 1.1 for future approved gameplay test releases instead of repeated manual ZIP installation.
+Main 0.1.62 is the **owner-accepted source baseline**, including the EM071 cosmetic rail fork. The mod is not finished or released. Other active tested and research branches exist: see [current cross-branch handoff](docs/CURRENT_WORK.md), then live branch HEADs. Preserve original visual algorithm unless a reproducible defect is observed. New standalone main-line features usually branch from `main`; continuation of the existing 060 electric bridge must retain the exact vetted 060 base or it loses the implementation. **Never merge unapproved experiment to main or move `test/updater-approved` without explicit owner permission.** Do not invoke the retired Windows Updater or invent a replacement patcher. Future installation approaches require explicit owner authorization.

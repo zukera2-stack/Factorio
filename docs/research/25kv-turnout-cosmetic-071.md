@@ -36,3 +36,9 @@ Changed only `scripts/catenary_axis_056.lua` active cosmetics. The bounded walk 
 **НЕ ПРОВЕРЕНО:** реальная игровая Y-стрелка на предоставленном скриншоте — снимок показывает лишь косметический зазор, без unit_number/rail end topology. В native CI проверялось сохранение физики/энергии на других сценариях, а не native turnout rendering. Отдельно потребуются: такой же поворот, проверка 2/3 спанов в GUI, изменение/удаление рельса, save/load, ghost preview, Undo/Redo, отсутствие лишней линии поперёк соседнего пути. Не давать пользователю ложную гарантию исправления конкретного снимка до игрового теста.
 
 **Статус:** implemented/Lua-verified/energy-native-regression-PASS, **turnout screenshot unverified**, PR #47 DRAFT. После owner screenshot pass можно отдельно обсуждать merge в main.
+
+## 9. Owner gameplay screenshot accepted — merged in main (2026-11-21)
+
+Владелец предоставил игровой скриншот **`image(20261121-165502).png`**, 1921×1080, SHA256 **`dbbe2ed5ae5106f4d44e80af3a1b96a78e4eb89a92e7804acea731604e267031`**, явно написал «**тест пройден сливай в майн**». Это **ручная визуальная приёмка EM071** на пользовательской карте; не подменять её доказательствами неданных unit_number, Undo/Redo, MP или всех иных стрелок. [PR #47](https://github.com/zukera2-stack/Factorio/pull/47) **MERGED** to main, merge commit `1b45398bda11ba5a4c41ac292817a1d6e71b3c12`. Технические и энергетические регрессии [CI 44925849547](https://github.com/zukera2-stack/Factorio/actions/runs/44925849547) SUCCESS; работа с живой контактной подвеской подтверждена владельцем. Версия исходников 0.1.62, без публичного релиза.
+
+Windows Git Updater 1.1/тестовые патчеры по прямому решению владельца признаны неудавшимся направлением и сняты с использования; исполняемые скрипты удалены из рабочей вершины исторической ветки (`da7e1417086c9a3626fbc5c9801207a41be3dbe3`). Это не влияет на игровую механику.

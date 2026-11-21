@@ -1,5 +1,7 @@
-## 0.1.62 (main development checkpoint — source merge only, NOT RELEASED)
+## 0.1.62 (main development checkpoint + owner-accepted EM071 — NOT RELEASED)
 
+- EM071: third cosmetic wire only on a native-confirmed turnout. User accepted visual screenshot; PR #47 merged, no electrical logic change.
+- Windows Updater 1.1 retired and executable scripts deleted from its historical source branch. No updater or release is being published.
 - Native bidirectional 25 kV substation power transfer with 20 MW per-station limit; use Factorio's own `electric-energy-interface` `dynamic` electrical priority instead of emulating reverse power priorities in Lua. Fixed previous prototype reverse-discharge failure.
 - Preserve measured joules in bounded native EEI buffers during temporary corridor reconfiguration, while permitting demolition of only the removed substation's own reserved energy; no manual refund to unrelated factory accumulators.
 - Automatic fair sharing, factory brownout protection, dispatcher differential parity; no gameplay behavior change from final tested EM070 during main integration.
