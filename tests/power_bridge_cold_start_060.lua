@@ -108,10 +108,18 @@ battery.get_electric_input_flow_limit=function()return small end;battery.get_ele
 physical_acc={battery};sink.active=false
 M.on_tick(121,graph)
 assert(a.direction=="export" and b.direction=="import")
-assert(a.input.electric_buffer_size==small and b.input.electric_buffer_size==small)
--- Measured in real 2.1.24 trace dt=602: newly created EEIs report old
--- prototype request L despite programmed small flow cap. Model that tick.
-assert(s.last_auto[20].demand==L and s.last_auto[30].demand==L)
+-- Reused native outputs become input interfaces on reversal. A buffer already
+-- holding J cannot be forcibly shrunk to the new 20kJ cap without losing J.
+assert(a.input.input_flow_limit==small and b.input.input_flow_limit==small,
+  "reverse must apply actual native 20kJ/tick charging limit")
+assert(a.input.electric_buffer_size>=a.input.energy and b.input.electric_buffer_size>=b.input.energy,
+  "reverse must retain native existing J in sufficient physical storage")
+-- Historical 060 allocated NEW interfaces, which transiently advertised
+-- old L demand. EM069 reuses physical EEIs; never demand more than 20 MW.
+assert(s.last_auto[20] and s.last_auto[30], "both reverse sites must be accounted")
+assert(s.last_auto[20].demand>=0 and s.last_auto[20].demand<=L
+  and s.last_auto[30].demand>=0 and s.last_auto[30].demand<=L,
+  "reverse must not request unbounded native energy")
 flow(20,0,0,small,small,10*L,10*L)
 net(20).parent_network.flow_last_tick.secondary_demand=L
 net(30).parent_network.flow_last_tick.secondary_demand=L
@@ -134,5 +142,11 @@ assert(a.output.energy==small and b.output.energy==small)
 assert(a.input.input_flow_limit==0 and b.input.input_flow_limit==0)
 a.output.energy=0;b.output.energy=0
 M.on_tick(182,graph)
-assert(a.status=="auto-idle" and b.status=="auto-idle" and not a.output and not b.output)
+assert(a.status=="auto-idle" and b.status=="auto-idle", "idle must stop forwarding")
+-- Empty EEIs may be cleaned up; charged ones must stay frozen, never actively
+-- output into a broken route.
+for _,r in ipairs{a,b} do
+  if r.input and r.input.valid then assert(r.input.input_flow_limit==0 and r.input.output_flow_limit==0) end
+  if r.output and r.output.valid then assert(r.output.input_flow_limit==0 and r.output.output_flow_limit==0) end
+end
 print("060/063 cold-start runtime mock PASS: zero counters, sustained buffered transfer, battery reverse, drained idle cleanup")
