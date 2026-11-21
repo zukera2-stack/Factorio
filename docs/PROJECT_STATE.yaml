@@ -1411,3 +1411,25 @@ fair_dispatch_062_immutable_package_qa:
   native_recheck_on_official_package: completed
   approved_updater_ref_changed: false
   owner_manual_action_required: false
+
+long_mainline_stress_062_2026_11_21:
+  branch: experiment/network-fair-share-062
+  test_source: tests/run_native_stress_062.py
+  report: docs/research/25kv-long-mainline-stress-062.md
+  report_machine: docs/research/25kv-long-mainline-stress-062.json
+  mod_zip_sha256: 8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb
+  engine: Factorio_2_1_24_build_87808_linux64
+  native_one_source_32_stations: pass_1050_ticks_31_sinks
+  native_four_sources_32_stations: pass_1050_ticks_28_sinks
+  native_factory_brownout: pass_950_ticks_20MW_to_8MW
+  factory_primary_priority: passed
+  native_six_sources_48_stations_initial_fairness: passed_to_tick_240
+  native_48_station_full_reroute_and_outage: not_confirmed
+  benchmark_48_station_min_tick_ms_061: 3.121
+  benchmark_48_station_min_tick_ms_062: 27.357
+  benchmark_48_station_average_including_setup_ms_061: 40.708
+  benchmark_48_station_average_including_setup_ms_062: 102.225
+  target_60_ups_budget_ms_per_tick: 16.667
+  test_findings: performance_regression_blocks_062_promotion
+  owner_approved_upgrade_ref_unchanged: true
+  gameplay_runtime_changed_in_this_commit: false

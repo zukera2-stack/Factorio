@@ -1,0 +1,97 @@
+{
+  "tested_game_sha256": "8b3a22c6270afd676d7f451943feb61b2e5ba01060f4867628251098c8a977bb",
+  "factorio_version": "2.1.24 build 87808",
+  "engine": "real headless Linux x86-64",
+  "passed_full_scenarios": [
+    "run_stress",
+    "run_multi",
+    "run_deficit"
+  ],
+  "passed_partial_scenarios": [
+    "run_48: tick 240 fair allocation"
+  ],
+  "performance_gate": "BLOCKED: 48-site min native tick time 27.357 ms exceeds 16.667 ms 60 UPS budget",
+  "results": [
+    {
+      "fixture": "run_stress",
+      "source_log": "/mnt/data/factorio_network_062/stress_test/run_stress/benchmark.log",
+      "metrics_ms": {
+        "avg": 8.232,
+        "min": 1.243,
+        "max": 2214.46
+      },
+      "evidence": [
+        "7.026 Script @__em062-stress-probe__/control.lua:69: [EM062 STRESS] dt=90 receiving=31 energy_J=28666667 min_J=924731 max_J=924731 source_J=666667",
+        "8.171 Script @__em062-stress-probe__/control.lua:69: [EM062 STRESS] dt=240 receiving=31 energy_J=78666667 min_J=2537634 max_J=2537634 source_J=666667",
+        "9.825 Script @__em062-stress-probe__/control.lua:69: [EM062 STRESS] dt=600 receiving=15 energy_J=157720430 min_J=10514695 max_J=10514695 source_J=666667",
+        "10.459 Script @__em062-stress-probe__/control.lua:69: [EM062 STRESS] dt=900 receiving=15 energy_J=158053763 min_J=10536918 max_J=10536918 source_J=666667",
+        "10.459 Script @__em062-stress-probe__/control.lua:118: [EM062 STRESS PASS] 32 factory grids isolated, long corridor connected, 31-way fair share, 16-way reroute, bounded outage"
+      ],
+      "note": null
+    },
+    {
+      "fixture": "run_multi",
+      "source_log": "/mnt/data/factorio_network_062/stress_test/run_multi/benchmark.log",
+      "metrics_ms": {
+        "avg": 13.198,
+        "min": 1.275,
+        "max": 2073.549
+      },
+      "evidence": [
+        "8.081 Script @__em062-multisource-probe__/control.lua:71: [EM062 MULTI] dt=90 receiving=28 energy_J=114666667 min_J=4095238 max_J=4095238 source_J=0",
+        "11.219 Script @__em062-multisource-probe__/control.lua:71: [EM062 MULTI] dt=240 receiving=28 energy_J=314666667 min_J=11238095 max_J=11238095 source_J=0",
+        "14.862 Script @__em062-multisource-probe__/control.lua:71: [EM062 MULTI] dt=600 receiving=12 energy_J=613333333 min_J=51111111 max_J=51111111 source_J=0",
+        "15.540 Script @__em062-multisource-probe__/control.lua:71: [EM062 MULTI] dt=900 receiving=12 energy_J=614666667 min_J=51222222 max_J=51222222 source_J=0",
+        "15.540 Script @__em062-multisource-probe__/control.lua:121: [EM062 STRESS PASS] 32 factory grids isolated, 4x20MW sources, 28-way fair share, 14-way reroute, bounded outage"
+      ],
+      "note": null
+    },
+    {
+      "fixture": "run_deficit",
+      "source_log": "/mnt/data/factorio_network_062/stress_test/run_deficit/benchmark.log",
+      "metrics_ms": {
+        "avg": 0.461,
+        "min": 0.179,
+        "max": 28.587
+      },
+      "evidence": [
+        "1.468 Script @__em062-factory-reserve-probe__/control.lua:37: [EM062 DEFICIT] dt=120 local_J=24000000 remote_J=15466667 source_J=266667 src_capacity_MW=20.0 net_local=4 net_remote=5",
+        "1.517 Script @__em062-factory-reserve-probe__/control.lua:37: [EM062 DEFICIT] dt=240 local_J=48000000 remote_J=31466667 source_J=266667 src_capacity_MW=20.0 net_local=4 net_remote=5",
+        "1.589 Script @__em062-factory-reserve-probe__/control.lua:37: [EM062 DEFICIT] dt=420 local_J=71946667 remote_J=31600000 source_J=266667 src_capacity_MW=8.0 net_local=4 net_remote=5",
+        "1.662 Script @__em062-factory-reserve-probe__/control.lua:37: [EM062 DEFICIT] dt=600 local_J=95946667 remote_J=31600000 source_J=266667 src_capacity_MW=8.0 net_local=4 net_remote=5",
+        "1.754 Script @__em062-factory-reserve-probe__/control.lua:37: [EM062 DEFICIT] dt=840 local_J=127946667 remote_J=31600000 source_J=266667 src_capacity_MW=8.0 net_local=4 net_remote=5",
+        "1.754 Script @__em062-factory-reserve-probe__/control.lua:70: [EM062 DEFICIT PASS] factory ordinary 12MW protected at surplus, factory protected under 8MW deficit, primary priority respected"
+      ],
+      "note": null
+    },
+    {
+      "fixture": "run_48",
+      "source_log": "/mnt/data/factorio_network_062/stress_test/run_48/phase1.log",
+      "metrics_ms": {
+        "avg": 102.225,
+        "min": 27.357,
+        "max": 4960.964
+      },
+      "evidence": [
+        "18.318 Script @__em062-48sub-probe__/control.lua:71: [EM062 MULTI] dt=90 receiving=42 energy_J=172000000 min_J=4095238 max_J=4095238 source_J=0",
+        "28.713 Script @__em062-48sub-probe__/control.lua:71: [EM062 MULTI] dt=240 receiving=42 energy_J=472000000 min_J=11238095 max_J=11238095 source_J=0",
+        "28.713 Script @__em062-48sub-probe__/control.lua:85: [EM062 48 STAGE1 PASS] 48 isolated factory grids, six 20MW generators, 42 equal consumers, source budget and fairness checked at tick 240"
+      ],
+      "note": "48-site functional result: fairness only through tick 240"
+    },
+    {
+      "fixture": "run_061perf48",
+      "source_log": "/mnt/data/factorio_network_062/stress_test/run_061perf48/benchmark.log",
+      "metrics_ms": {
+        "avg": 40.708,
+        "min": 3.121,
+        "max": 4985.824
+      },
+      "evidence": [
+        "11.233 Script @__em061-perf48-probe__/control.lua:71: [EM061 PERF] dt=90 receiving=42 energy_J=172000000 min_J=0 max_J=28666667 source_J=0",
+        "11.883 Script @__em061-perf48-probe__/control.lua:71: [EM061 PERF] dt=240 receiving=42 energy_J=472000000 min_J=0 max_J=78666667 source_J=0"
+      ],
+      "note": null
+    }
+  ]
+}
