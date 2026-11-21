@@ -125,6 +125,10 @@ function M.select(placements,rail)
   end
  end
  table.sort(candidates,function(a,b)
+  -- Existing through-wire takes precedence over optional fork spans.
+  -- Otherwise both shorter branch legs can consume the two ordinary
+  -- ports before the straight approach has been considered.
+  if a.fork~=b.fork then return not a.fork end
   if a.cost~=b.cost then return a.cost<b.cost end
   if a.a~=b.a then return a.a<b.a end
   return a.b<b.b
