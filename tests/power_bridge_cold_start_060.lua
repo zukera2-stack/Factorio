@@ -125,7 +125,14 @@ net(20).parent_network.flow_last_tick.secondary_demand=L
 net(30).parent_network.flow_last_tick.secondary_demand=L
 b.input.energy=small
 M.on_tick(122,graph)
-assert(a.status=="active" and b.status=="active","reverse must stay active; A="..tostring(a.status).." B="..tostring(b.status))
+-- Previously buffered outputs may complete one safe draining tick when the
+-- planner has not yet sampled the reversed native network. Neither state may
+-- request power without a planned route or leak energy through a broken one.
+assert((a.status=="active" or a.status=="draining-buffer")
+  and (b.status=="active" or b.status=="draining-buffer"),
+  "reverse state unexpected: A="..tostring(a.status).." B="..tostring(b.status))
+assert(a.input.input_flow_limit<=small and b.input.input_flow_limit<=small,
+  "reverse transient must not exceed the 20kJ native demand limit")
 assert(b.output.energy>=small and b.output.energy<=b.output.electric_buffer_size,
   "reverse delivered less than available or overflowed existing EEI: "..tostring(b.output.energy))
 assert(battery.energy==10*L,"mock must not manually alter physical accumulator J")

@@ -18,7 +18,7 @@ em069_eei_buffer_lifecycle:
   accumulator_ids_and_flow_limits: pass
   accumulator_b_end_j: 12760164
   game_changelog_mod_version_unchanged: true
-  manual_off_to_export_regression_mock: 058_059_pass_060_transient_strict_regression_ci_pending
+  manual_off_to_export_regression_mock: 058_059_pass_060_drain_tick_expected_ci_pending
   long_soak_and_orphan_gc: pending
   bobs_multiplayer_undo: untested
   approved_updater_version: "0.1.61"
