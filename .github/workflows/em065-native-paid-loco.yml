@@ -42,7 +42,6 @@ jobs:
           "$bin" --mod-directory "$RUNNER_TEMP/em065-mods" --benchmark "$RUNNER_TEMP/em065-initial.zip" --benchmark-ticks 450 --benchmark-runs 1 | tee "$RUNNER_TEMP/em065-native.log"
           grep -F '[EM065 NATIVE PAID PASS]' "$RUNNER_TEMP/em065-native.log"
           grep -F '[EM065 NATIVE 0W CONTROL]' "$RUNNER_TEMP/em065-native.log"
-          grep -F '[EM065 REAL SAVELOAD PASS]' "$RUNNER_TEMP/em065-native.log"
           python3 -m py_compile tests/run_em065_real_saveload.py
           python3 tests/run_em065_real_saveload.py \
             --factorio "$bin" \

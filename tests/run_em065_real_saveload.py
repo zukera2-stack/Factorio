@@ -93,8 +93,8 @@ def main():
     # Ledger belongs to ElectrifiedMainline's isolated mod storage. Read
     # its OWN native log line, not another mod's inaccessible storage table.
     ledgers=re.findall(
-        r"\\[EM065 PAID LEDGER\\] tick=(\\d+) locos=(\\d+) "
-        r"debited_J=([\\d.]+) credited_J=([\\d.]+)",
+        r"\[EM065 PAID LEDGER\] tick=(\d+) locos=(\d+) "
+        r"debited_J=([\d.]+) credited_J=([\d.]+)",
         newprocess)
     if not ledgers or not any(int(t)>=420 for t,_,_,_ in ledgers):
         raise AssertionError("Native full-mod source ledger absent after separate LOAD")

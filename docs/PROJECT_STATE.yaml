@@ -2238,3 +2238,8 @@ em065_native_real_locomotive_traction_research:
   corrected_SAVE_harness_private_native_loco_J_and_UID: true
   corrected_SAVE_harness_read_full_mod_LEDGER_from_native_log: true
   SAVE_load_real_engine_after_correction: PENDING
+  save_load_previously_failed_CI: 45041057012
+  save_load_failure_reason: benchmark_ticks_450_runs_only_0_to_449_and_wrong_marker_expectation
+  native_SAVELOAD_marker_checked_only_independent_reload: true
+  native_ledger_regex_fixed: true
+  SAVELOAD_result_after_correction: PENDING
