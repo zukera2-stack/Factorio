@@ -1,3 +1,69 @@
+em072_c3_native_zero_visible_span_500kW_phantom_locomotives:
+  date: "2026-11-22"
+  branch: experiment/em072-c3-native-zero-length-phantom
+  parent_C2_SHA: 6fa82b49e07df9285f2937e3f1132fb340a6eaa0
+  native_engine: "Factorio 2.1.24 build 87808 Linux Headless Base only"
+  status: THREE_ENGINE_BENCHMARKS_245_TICKS_AND_THREE_INDEPENDENT_REAL_DISK_SAVE_LOAD_PASS
+  actual_visible_train_stock: 3
+  actual_natively_coupled_with_helper_stock: 5
+  native_original_visible_unit_number_preserved: true
+  native_original_visible_centers_y: [0, 7, 14]
+  native_hidden_500kW_helper_centers_y: [3.5, 10.5]
+  native_visible_span_tiles_control: 14
+  native_visible_span_tiles_with_helpers: 14
+  hidden_helper_joint_distance_tiles: 0.1
+  hidden_helper_connection_distance_tiles: -0.1
+  hidden_helper_power_each_W: 500000
+  nominal_2MW_plus_two_500kW: 3000000
+  native_2MW_control_t100_tiles: 29.570313
+  native_2MW_plus_two_void_helpers_t100_tiles: 44.105469
+  native_2MW_control_t240_tiles: 173.90625
+  native_2MW_plus_two_void_helpers_t240_tiles: 209.425781
+  true_native_no_assembly_length_growth: true
+  actual_native_carriage_count_increased: true
+  raw_create_in_occupied_coupler: FAIL_REJECTED
+  stationary_native_decouple_then_insert_then_recouple: PASS
+  native_reversed_remove_two_helper_then_recouple: PASS
+  native_original_cargo_fluid_loco_unit_number_changed: false
+  native_void_phantom_can_disable_via_disabled_by_script: false
+  native_void_phantom_can_disable_via_active_property: false
+  void_unpaid_energy_allowed_in_gameplay: false
+  research_native_finite_hidden_BurnerEnergySource_used: true
+  research_hidden_internal_energy_item_used: true
+  author_approved_internal_hidden_burner: PENDING_EXPLICIT_APPROVAL
+  laboratory_seeded_finite_native_burner_J: 400000
+  laboratory_native_burner_J_remaining_at_tick30: 98888.889
+  laboratory_native_burner_J_remaining_at_tick40: 0
+  this_test_native_EM070_energy_debit: NOT_PERFORMED
+  three_distinct_native_engine_benchmark_ticks_each: 245
+  geometry_real_disk_SAVE_tick: 120
+  geometry_independent_native_LOAD_ticks: 125
+  geometry_checkpoint_bytes: 1722217
+  geometry_native_SHA256: 4c7f31e56ba3cd9e35a544c178bb4e741c1ddbef362e27aa0abb5b68acfc6e38
+  geometry_reloaded_SHA256: 4fbc08ef01560236634d6412b447c714e30681c35f287b92c66b1ce071fa480e
+  dynamic_real_disk_SAVE_tick: 120
+  dynamic_independent_native_LOAD_ticks: 125
+  dynamic_checkpoint_bytes: 1601273
+  dynamic_native_SHA256: 8e8008493b1686f0d1220ec77031f071358dd59d780a6946aa7849bb3fb4dd19
+  dynamic_reloaded_SHA256: a61c9b7974090d0b14af2ebaf40edc6ade0e97b9117024d85e53168202c1c059
+  finite_real_disk_SAVE_tick: 25
+  finite_independent_native_LOAD_ticks: 220
+  finite_checkpoint_bytes: 1707280
+  finite_native_SHA256: 66e593dcba6d7a332f38eda03a52caa139e7967c5daf9e3ab275655c8e89cccb
+  finite_reloaded_SHA256: b69dd10b5afafc41a1ea9bac8c7f1587bbcb43d9a89977bde5819c27a2312c84
+  full_native_research_report: docs/research/native-zero-length-helper-loco-072c3.md
+  matrix: docs/research/native-zero-length-helper-loco-072c3-tests.md
+  machine_results: docs/research/native-zero-length-helper-loco-072c3.json
+  author_choice_pending: docs/decisions/EM072_C3_HIDDEN_ENERGY_ADAPTER_PENDING_2026-11-22.md
+  bundled_sources_logs_and_saves_library: /Factorio/Network-062/EM072-C3-compact-phantom-20261122/
+  main_production_mod_code_modified: false
+  curves_diagonals_elevated_signals_stations_player_undo_mp_UPS: NOT_TESTED
+  no_hidden_burner_assumed_approved: true
+  author_original_wagons_native_cargo_fluid_without_batteries: PRESERVED
+  author_EM070_AUTO_policy_B: PRESERVED
+  merge_main_authorized: false
+  release_authorized: false
+
 em072_c2_runtime_max_power_api_check:
   date: '2026-11-22'
   owner_choice_motor_wagon_traction: A_KEEP_NATIVE_CARGO_AND_FLUID_WAGONS

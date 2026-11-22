@@ -1,0 +1,1000 @@
+{
+  "date": "2026-11-22",
+  "factorio": "2.1.24 build87808 linux64 Base-only",
+  "branch_target": "experiment/em072-c3-native-invisible-helper-loco",
+  "geometry": {
+    "engine": "Factorio 2.1.24 build87808 Linux Headless Base-only",
+    "result": "ZERO LENGTH GROWTH BETWEEN CARGO/FLUID CENTERS WITH TWO NATIVE 500KW INTEGRATED PHANTOM LOCOMOTIVES",
+    "physical_unchanged_wagon_main_span_tiles": 14,
+    "negative_connection_distance": -0.1,
+    "minimum_phantom_joint_distance": 0.1,
+    "control_train_carriages": 3,
+    "phantom_train_carriages": 5,
+    "native_total_static_nameplate_power_main_w": 2000000,
+    "native_total_static_nameplate_power_augmented_w": 3000000,
+    "phantom_sprite_asset": "__core__/graphics/empty.png",
+    "control_speed_change_successful": false,
+    "disable_property_ignored": true,
+    "active_property_set_rejected": true,
+    "energy_source": "void (MECHANICAL TEST ONLY; UNLIMITED FREE J; NOT GAMEPLAY ACCEPTABLE)",
+    "true_native_245_tick_benchmark": true,
+    "real_server_SAVE_tick": 120,
+    "independent_test_save_ticks": 125,
+    "native_checkpoint_bytes": 1722217,
+    "baseline": {
+      "100": {
+        "control": {
+          "position_y": -29.570313,
+          "speed": 0.646539,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "two_hidden": {
+          "position_y": -44.105469,
+          "speed": 0.964353,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 13.999999999999996
+        },
+        "disabled": {
+          "position_y": -44.105469,
+          "speed": 0.964353,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 13.999999999999996
+        },
+        "offtrain": {
+          "position_y": -29.570313,
+          "speed": 0.646539,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "overlay": {
+          "position_y": -29.570313,
+          "speed": 0.646539,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        }
+      },
+      "160": {
+        "control": {
+          "position_y": -80.265625,
+          "speed": 1.029745,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "two_hidden": {
+          "position_y": -113.425781,
+          "speed": 1.2,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "disabled": {
+          "position_y": -113.425781,
+          "speed": 1.2,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "offtrain": {
+          "position_y": -80.265625,
+          "speed": 1.029745,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "overlay": {
+          "position_y": -80.265625,
+          "speed": 1.029745,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        }
+      },
+      "240": {
+        "control": {
+          "position_y": -173.90625,
+          "speed": 1.2,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "two_hidden": {
+          "position_y": -209.425781,
+          "speed": 1.2,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "disabled": {
+          "position_y": -209.425781,
+          "speed": 1.2,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "offtrain": {
+          "position_y": -173.90625,
+          "speed": 1.2,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "overlay": {
+          "position_y": -173.90625,
+          "speed": 1.2,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        }
+      }
+    },
+    "independent_reload": {
+      "160": {
+        "control": {
+          "position_y": -80.265625,
+          "speed": 1.029745,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "two_hidden": {
+          "position_y": -113.425781,
+          "speed": 1.2,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "disabled": {
+          "position_y": -113.425781,
+          "speed": 1.2,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "offtrain": {
+          "position_y": -80.265625,
+          "speed": 1.029745,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "overlay": {
+          "position_y": -80.265625,
+          "speed": 1.029745,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        }
+      },
+      "240": {
+        "control": {
+          "position_y": -173.90625,
+          "speed": 1.2,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "two_hidden": {
+          "position_y": -209.425781,
+          "speed": 1.2,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "disabled": {
+          "position_y": -209.425781,
+          "speed": 1.2,
+          "carriages": 5,
+          "stock_names": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "offtrain": {
+          "position_y": -173.90625,
+          "speed": 1.2,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        },
+        "overlay": {
+          "position_y": -173.90625,
+          "speed": 1.2,
+          "carriages": 3,
+          "stock_names": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ],
+          "span": 14.0
+        }
+      }
+    },
+    "benchmark_log_sha256": "4c7f31e56ba3cd9e35a544c178bb4e741c1ddbef362e27aa0abb5b68acfc6e38",
+    "reload_log_sha256": "4fbc08ef01560236634d6412b447c714e30681c35f287b92c66b1ce071fa480e",
+    "native_player_blueprint_undo_mining_and_curves_tested": false,
+    "production_mod_files_modified": false
+  },
+  "dynamic": {
+    "native_factorio": "2.1.24 build87808 Linux Headless Base only",
+    "result": "DYNAMIC PHANTOM 500KW MOTORS CAN BE INSERTED INTO ALREADY COUPLED TRAIN WITH ZERO VISIBLE CENTER-LENGTH GROWTH AFTER SAFE DISCONNECT, RESTORE ALSO WORKS",
+    "no_direct_insertion_into_occupied_joint": true,
+    "genuine_dynamically_inserted_two_hidden_engines": 2,
+    "physical_original_locomotive_cargo_fluid_span_tiles": 14.0,
+    "main_original_stock_unit_numbers_preserved_in_test": true,
+    "actual_native_train_ids_change_on_split_join": true,
+    "native_train_carriages_before": 3,
+    "native_carriages_after_two_hidden": 5,
+    "native_carriages_after_removed_and_restored": 3,
+    "benchmark_ticks": 245,
+    "real_server_save_tick": 120,
+    "independent_reload_ticks": 125,
+    "checkpoint_bytes": 1601273,
+    "native_log_sha256": "8e8008493b1686f0d1220ec77031f071358dd59d780a6946aa7849bb3fb4dd19",
+    "reload_log_sha256": "a61c9b7974090d0b14af2ebaf40edc6ade0e97b9117024d85e53168202c1c059",
+    "mechanics_source": "void infinite power, strictly isolated physics, NOT approved energy accounting",
+    "curved_tracks_and_mining_UI_MP": "not tested",
+    "benchmark": {
+      "100": {
+        "baseline": {
+          "y": -27.648438,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "hot": {
+          "y": -27.648438,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached": {
+          "y": -34.449219,
+          "n": 4,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached_both": {
+          "y": -41.242188,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        },
+        "restore": {
+          "y": -27.648438,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "prebuilt": {
+          "y": -41.242188,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        }
+      },
+      "160": {
+        "baseline": {
+          "y": -77.195313,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "hot": {
+          "y": -77.195313,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached": {
+          "y": -95.902344,
+          "n": 4,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached_both": {
+          "y": -109.828125,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        },
+        "restore": {
+          "y": -77.195313,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "prebuilt": {
+          "y": -109.828125,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        }
+      },
+      "240": {
+        "baseline": {
+          "y": -170.304688,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "hot": {
+          "y": -170.304688,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached": {
+          "y": -191.902344,
+          "n": 4,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached_both": {
+          "y": -205.828125,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        },
+        "restore": {
+          "y": -170.304688,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "prebuilt": {
+          "y": -205.828125,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        }
+      }
+    },
+    "reload": {
+      "160": {
+        "baseline": {
+          "y": -77.195313,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "hot": {
+          "y": -77.195313,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached": {
+          "y": -95.902344,
+          "n": 4,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached_both": {
+          "y": -109.828125,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        },
+        "restore": {
+          "y": -77.195313,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "prebuilt": {
+          "y": -109.828125,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        }
+      },
+      "240": {
+        "baseline": {
+          "y": -170.304688,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "hot": {
+          "y": -170.304688,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached": {
+          "y": -191.902344,
+          "n": 4,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "detached_both": {
+          "y": -205.828125,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        },
+        "restore": {
+          "y": -170.304688,
+          "n": 3,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "cargo-wagon",
+            "fluid-wagon"
+          ]
+        },
+        "prebuilt": {
+          "y": -205.828125,
+          "n": 5,
+          "span": 14.0,
+          "stock": [
+            "em-traction-real-main",
+            "em-invisible-motor-500kw",
+            "cargo-wagon",
+            "em-invisible-motor-500kw",
+            "fluid-wagon"
+          ]
+        }
+      }
+    }
+  },
+  "finite_internal_adapter_RESEARCH_ONLY": {
+    "native_engine": "Factorio 2.1.24 build 87808 Linux Headless Base-only",
+    "status": "RESEARCH FINITE-HIDDEN-BURNER API CAN POWER GEOMETRY-NON-GROWING 500kW PHANTOMS AND STOPS ON ZERO J",
+    "user_no_fuels_policy_respected_in_gameplay": "no gameplay changes; research uses internally hidden fuel token ONLY, requires separate owner decision",
+    "original_visible_carriage_geometry_unchanged_tiles": 14.0,
+    "native_carriage_count_augmented": 5,
+    "phantom_power_each_w": 500000,
+    "phantom_initial_j_each": 200000,
+    "real_native_phantom_total_burned_j": 400000,
+    "phantom_paid_energy_J_remaining_at_tick30": 98888.889,
+    "phantom_paid_energy_J_remaining_at_tick40": 0,
+    "phantom_void_energy_free": true,
+    "disabled_by_script_ignored": true,
+    "genuine_server_SAVE_tick": 25,
+    "independent_real_LOAD_ticks": 220,
+    "checkpoint_bytes": 1707280,
+    "native_log_sha256": "66e593dcba6d7a332f38eda03a52caa139e7967c5daf9e3ab275655c8e89cccb",
+    "independent_log_sha256": "b69dd10b5afafc41a1ea9bac8c7f1587bbcb43d9a89977bde5819c27a2312c84",
+    "tests_with_EM070_actual_grid": false,
+    "production_mod_changed": false,
+    "benchmark": {
+      "20": {
+        "control": {
+          "y": -0.289063,
+          "speed": 0.0636254,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -0.429688,
+          "speed": 0.0949567,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -0.398438,
+          "speed": 0.0908465,
+          "n": 5,
+          "J_remaining": 265555.556
+        },
+        "empty": {
+          "y": -0.28125,
+          "speed": 0.0618578,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      },
+      "30": {
+        "control": {
+          "y": -1.351563,
+          "speed": 0.1413646,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -2.019531,
+          "speed": 0.2108984,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -1.945313,
+          "speed": 0.2068645,
+          "n": 5,
+          "J_remaining": 98888.889
+        },
+        "empty": {
+          "y": -1.316406,
+          "speed": 0.1371182,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      },
+      "40": {
+        "control": {
+          "y": -3.1875,
+          "speed": 0.2176585,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -4.757813,
+          "speed": 0.3246855,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -4.617188,
+          "speed": 0.3082562,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "empty": {
+          "y": -3.09375,
+          "speed": 0.21098,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      },
+      "60": {
+        "control": {
+          "y": -9.109375,
+          "speed": 0.366017,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -13.585938,
+          "speed": 0.5459553,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -12.261719,
+          "speed": 0.4483057,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "empty": {
+          "y": -8.828125,
+          "speed": 0.3546113,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      },
+      "100": {
+        "control": {
+          "y": -29.570313,
+          "speed": 0.6465391,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -44.105469,
+          "speed": 0.9643526,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -35.6875,
+          "speed": 0.713124,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "empty": {
+          "y": -28.648438,
+          "speed": 0.6262025,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      },
+      "180": {
+        "control": {
+          "y": -102.109375,
+          "speed": 1.1481869,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -137.425781,
+          "speed": 1.2,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -112.394531,
+          "speed": 1.1867157,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "empty": {
+          "y": -98.902344,
+          "speed": 1.1119065,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      },
+      "240": {
+        "control": {
+          "y": -173.90625,
+          "speed": 1.2,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -209.425781,
+          "speed": 1.2,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -184.382813,
+          "speed": 1.2,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "empty": {
+          "y": -170.25,
+          "speed": 1.2,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      }
+    },
+    "reload": {
+      "30": {
+        "control": {
+          "y": -1.351563,
+          "speed": 0.1413646,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -2.019531,
+          "speed": 0.2108984,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -1.945313,
+          "speed": 0.2068645,
+          "n": 5,
+          "J_remaining": 98888.889
+        },
+        "empty": {
+          "y": -1.316406,
+          "speed": 0.1371182,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      },
+      "40": {
+        "control": {
+          "y": -3.1875,
+          "speed": 0.2176585,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -4.757813,
+          "speed": 0.3246855,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -4.617188,
+          "speed": 0.3082562,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "empty": {
+          "y": -3.09375,
+          "speed": 0.21098,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      },
+      "60": {
+        "control": {
+          "y": -9.109375,
+          "speed": 0.366017,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -13.585938,
+          "speed": 0.5459553,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -12.261719,
+          "speed": 0.4483057,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "empty": {
+          "y": -8.828125,
+          "speed": 0.3546113,
+          "n": 5,
+          "J_remaining": 0.0
+        }
+      },
+      "100": {
+        "control": {
+          "y": -29.570313,
+          "speed": 0.6465391,
+          "n": 3,
+          "J_remaining": 0.0
+        },
+        "void": {
+          "y": -44.105469,
+          "speed": 0.9643526,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "paid": {
+          "y": -35.6875,
+          "speed": 0.713124,
+          "n": 5,
+          "J_remaining": 0.0
+        },
+        "empty": {
+          "y": -28.648438,
