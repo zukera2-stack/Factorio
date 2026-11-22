@@ -348,7 +348,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-c5_disposable_client_test_artifact:
+  c5_disposable_client_test_artifact:
     name: EM072-C5 research-only client test mods
     if: github.event_name == 'push' && github.ref == 'refs/heads/experiment/em072-c5-client-gui-observer'
     runs-on: ubuntu-latest
