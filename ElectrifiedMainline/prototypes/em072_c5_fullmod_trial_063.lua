@@ -47,7 +47,8 @@ data:extend({
 
 local empty="__core__/graphics/empty.png"
 -- Exact +500 kW increments through 256 motor wagons (128 MW nameplate).
--- One hidden engine per TRAIN, never 256 hidden engines for 256 wagons.
+-- One hidden engine per REAL EM heading (at most two opposite directions),
+-- never 256 helpers for 256 wagons. Same-heading real EMs share one helper.
 -- Experimental 0.1.72 bridge lab can carry up to 120MW from a genuine grid; burner is
 -- credited only by already paid 25kV Joules, not by changing speed.
 for motor_count=1,256 do

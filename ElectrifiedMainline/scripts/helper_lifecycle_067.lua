@@ -1,4 +1,5 @@
--- EM072/071 EXPERIMENT: one native, finite-J motor booster per REAL train.
+-- EM072/073 EXPERIMENT: one source-paid finite-J helper per REAL EM heading.
+-- Factorio itself chooses which opposing locomotive provides native traction.
 -- Its energy comes exclusively from EM070 native traction sink via 065.
 -- The visible cargo/fluid wagons stay native; owner is a real EM loco unit ID.
 -- Dismantling dissipates already-paid helper burner J by owner's explicit policy.
@@ -57,6 +58,30 @@ local function real_list(train)
   table.sort(r,function(a,b)return a.unit_number<b.unit_number end)
   return r
 end
+
+-- The native train engine classifies physical headings. Only real EM
+-- locomotives may authorize helpers; same-heading EMs count ONCE.
+-- Do not group by LuaEntity.direction: that is 0 on native rolling stock.
+local function directional_owners(train)
+  local groups=train and train.valid and train.locomotives
+  if not groups then return {} end
+  local out={}
+  for _,heading in ipairs({'front_movers','back_movers'}) do
+    local best=nil
+    for _,e in ipairs(groups[heading] or {}) do
+      if e.valid and e.name==EM and e.unit_number and
+          (not best or e.unit_number<best.unit_number) then best=e end
+    end
+    if best then out[#out+1]=best end
+  end
+  table.sort(out,function(a,b)return a.unit_number<b.unit_number end)
+  return out
+end
+local function authorised_owners(train)
+  local ids={}
+  for _,e in ipairs(directional_owners(train)) do ids[e.unit_number]=true end
+  return ids
+end
 local function fuel(e)
   return e and e.valid and e.burner and math.max(0,e.burner.remaining_burning_fuel or 0) or 0
 end
@@ -94,11 +119,13 @@ function M.targets()
     if h and o and power(h.name) and o.name==EM
       and h.force==o.force and h.surface==o.surface
       and h.train and h.train.valid and o.train and o.train.valid
-      and h.train.id==o.train.id and not seen[h.train.id] then
+      and h.train.id==o.train.id and not seen[o.unit_number] then
+      local allowed=authorised_owners(h.train)
       local n=n_motors(h.train)
-      if n>=1 and n<=MAX_MOTORS and power(h.name)==n*500000 then
+      if allowed[o.unit_number] and n>=1 and n<=MAX_MOTORS
+         and power(h.name)==n*500000 then
         results[#results+1]={helper=h,owner=o,watts=n*500000,motors=n}
-        seen[h.train.id]=true
+        seen[o.unit_number]=true
       end
     end
   end
@@ -114,23 +141,20 @@ local function dir_to_neighbor(owner,neighbor)
   local dot=dx*forward_x+dy*forward_y
   return dot>0 and defines.rail_direction.front or defines.rail_direction.back
 end
-local function candidate(train)
-  local cars=train.carriages
-  local locos=real_list(train)
-  -- Choose a real EM locomotive with an adjacent *real* rolling stock car.
-  -- Stable by unit_number, prefer the native locomotive's rear joint.
+local function candidate(train,owner)
+  -- The owner has already been chosen from native front_movers/back_movers.
+  -- Prefer a native visible joint at the rear of this particular EM head.
   local found={}
-  for _,owner in ipairs(locos) do
-    for _,near in ipairs(cars) do
-      if near.valid and near.unit_number~=owner.unit_number and not power(near.name) then
-        local dx=near.position.x-owner.position.x
-        local dy=near.position.y-owner.position.y
-        local dist=math.sqrt(dx*dx+dy*dy)
-        if math.abs(dist-7)<0.20 then
-          local side=dir_to_neighbor(owner,near)
-          found[#found+1]={owner=owner,neighbor=near,side=side,
-            priority=(side==defines.rail_direction.back and 0 or 1),id=owner.unit_number}
-        end
+  for _,near in ipairs(train.carriages) do
+    if near.valid and near.unit_number~=owner.unit_number and not power(near.name) then
+      local dx=near.position.x-owner.position.x
+      local dy=near.position.y-owner.position.y
+      local dist=math.sqrt(dx*dx+dy*dy)
+      if math.abs(dist-7)<0.20 then
+        local side=dir_to_neighbor(owner,near)
+        found[#found+1]={owner=owner,neighbor=near,side=side,
+          priority=(side==defines.rail_direction.back and 0 or 1),
+          id=near.unit_number}
       end
     end
   end
@@ -151,9 +175,9 @@ local function verify_visible(train,visible)
   end
   return true
 end
-local function mount(train,n)
+local function mount(train,n,chosen_owner)
   if not (train and train.valid and train.speed==0 and n>0 and n<=MAX_MOTORS) then return false end
-  local spot=candidate(train)
+  local spot=candidate(train,chosen_owner)
   if not spot then
     log('[EM072 MOUNT BLOCKED] tick='..game.tick..' train='..train.id..' reason=no_native_7_tile_joint')
     state().failed=state().failed+1
@@ -199,7 +223,7 @@ local function mount(train,n)
   if schedule then owner.train.schedule=schedule end
   if auto then owner.train.manual_mode=false end
   s.created=s.created+1
-  log(string.format('[EM072 AUTO MOUNT] tick=%d train=%d owner=%d helper=%d motors=%d nameplate_W=%d visible=%d mode=%s',
+  log(string.format('[EM072 DIRECTIONAL AUTO MOUNT] tick=%d train=%d owner=%d helper=%d motors=%d nameplate_W=%d visible=%d mode=%s',
     game.tick,owner.train.id,owner.unit_number,h.unit_number,n,500000*n,#visible,
     auto and 'AUTO' or 'MANUAL'))
   return true
@@ -211,9 +235,12 @@ local function scan_real_trains()
     if t.valid and not tracked[t.id] then
       tracked[t.id]=true
       local n=n_motors(t)
+      local owners=directional_owners(t)
+      local desired={}
+      for _,o in ipairs(owners) do desired[o.unit_number]=o end
       local helpers=helper_list(t)
-      -- Authenticate legacy test/save helpers only when there is exactly one
-      -- actual EM locomotive adjacent to the already-existing helper.
+      -- Existing 0.1.71 helpers can be adopted on SAVE/LOAD. Never assume
+      -- a helper is paid simply because it is physically in a real train.
       for _,h in ipairs(helpers) do
         if not state().owners[h.unit_number] then
           local near,best=nil,math.huge
@@ -226,25 +253,32 @@ local function scan_real_trains()
           if near then state().owners[h.unit_number]=near.unit_number end
         end
       end
-      if #helpers>1 then
-        for i=2,#helpers do retire(helpers[i],'duplicate-train-helper') end
-        helpers=helper_list(t)
-      end
-      if #helpers==1 then
-        local h=helpers[1]
-        if n==0 or (n<=MAX_MOTORS and power(h.name)~=n*500000) then
-          if t.speed==0 or n==0 then
-            retire(h,'consist-changed')
-            helpers={}
-          end
+      -- One helper per allowed REAL heading (not one per visible loco),
+      -- and always 500kW x native motor wagons per heading, not double J.
+      local found={}
+      for _,h in ipairs(helpers) do
+        local owner=state().owners[h.unit_number]
+        if not owner or not desired[owner] or found[owner] or n<1
+          or n>MAX_MOTORS or power(h.name)~=500000*n then
+          if h.valid then retire(h,'invalid-or-duplicate-direction-helper') end
+        else
+          found[owner]=true
         end
       end
-      if #helpers==0 and n>0 then
-        if n>MAX_MOTORS then
-          state().failed=state().failed+1
-          log('[EM072 LIMIT] train='..t.id..' motor_wagons='..n..' maximum='..MAX_MOTORS..' no_claim_of_full_traction')
-        elseif t.speed==0 then mount(t,n)
-        else state().deferred=state().deferred+1 end
+      if n>MAX_MOTORS then
+        state().failed=state().failed+1
+        log('[EM072 LIMIT] train='..t.id..' motor_wagons='..n..' maximum='..MAX_MOTORS..' no_claim_of_full_traction')
+      elseif n>0 then
+        -- Each mount invalidates the old LuaTrain. Re-query from the live
+        -- owner's entity before the next insertion; preserve native schedule.
+        for _,o in ipairs(owners) do
+          if o.valid and not found[o.unit_number] then
+            local tr=o.train
+            if tr and tr.valid and tr.speed==0 then
+              if mount(tr,n,o) then found[o.unit_number]=true end
+            else state().deferred=state().deferred+1 end
+          end
+        end
       end
     end
   end
@@ -300,8 +334,10 @@ function M.on_tick(tick)
       retire(h,'owner-or-train-disconnected')
     else
       local n=n_motors(h.train)
-      if n==0 or power(h.name)>n*500000 then
-        retire(h,'missing-or-decreased-motors')
+      local authorised=authorised_owners(h.train)
+      if n==0 or n>MAX_MOTORS or power(h.name)~=n*500000
+          or not authorised[o.unit_number] then
+        retire(h,'motor-count-or-heading-changed')
       end
     end
   end

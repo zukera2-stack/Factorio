@@ -1,3 +1,34 @@
+em073_native_directional_heads_local:
+  date: "2026-11-23"
+  branch: experiment/em073-native-directional-heads-20261123
+  base_experiment_head: aa0240ba77962b14295ce5c9dbbe4ad71b634d49
+  experimental_mod_version: "0.1.73"
+  native_engine: Factorio_2_1_24_build87808
+  real_em_headings_grouping: LuaTrain_locomotives_front_movers_back_movers
+  lua_manual_direction_switch: false
+  native_wagon_booster_power_per_heading_for_200_wagons_W: 100000000
+  native_wagon_booster_num_for_opposite_heads: 2
+  native_wagon_booster_num_for_two_same_heading_em: 1
+  native_test_source_w: 120000000
+  local_native_scenarios_pass: 12
+  local_native_scenarios_total: 12
+  native_auto_real_two_stops_arrival_tick: [355,802]
+  native_200_motor_pushpull_distance_forward_tiles_tick300: -109.859
+  native_200_motor_pushpull_distance_reverse_tiles_tick300: 109.859
+  native_opposite_idle_helper_J_tick300: 966666.667
+  native_200_no_em_helper_count: 0
+  native_200_no_em_motor_paid_J: 0
+  native_200_no_em_distance_tiles: 0
+  native_zero_w_and_offgrid: pass
+  native_owner_demolition_loss_J: 16666.667
+  native_two_process_disk_save_tick125_to_tick300: pass_exact
+  original_approved_png_unchanged: 83
+  original_full_game_files: 139
+  exact_official_073_zip: pending
+  main_modified: false
+  release_authorized: false
+  research: docs/research/EM073_NATIVE_BIDIRECTIONAL_OWNER_ENGINE_TEST_2026-11-23.md
+
 em072_120mw_official_native_072:
   date: "2026-11-23"
   official_build_run: 45079778110
@@ -647,7 +678,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.72" # experimental 120MW real native power bridge only, NOT release
+  mod_version: "0.1.73" # experimental native engine directional boosters; research, no release
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"

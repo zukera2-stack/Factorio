@@ -1,7 +1,8 @@
 -- EM065 research P0: finite, source-paid native locomotive traction.
 -- ALL charge comes from live native EM070 output buffer on same real 25kV network.
 -- No speed writes or fabricated energy. One authenticated native booster per
--- train gets a fair allocation from the SAME actual paid native 25kV sink.
+-- REAL locomotive heading (up to two) shares the SAME actual paid 25kV sink.
+-- Native Factorio alone decides which of the opposite locomotives moves.
 local M={MAX_PER_TICK=2000000/60,BUFFER_CAP=2000000}
 local FUEL="em-c5-test-internal-joule-063"
 local motor067=require("scripts.helper_lifecycle_067")
