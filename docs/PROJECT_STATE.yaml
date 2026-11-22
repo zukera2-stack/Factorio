@@ -1,3 +1,26 @@
+em069_local_native_recovery:
+  source_parent_commit: 147ac491e28da741e27585bc1e6326ee34d7d794
+  target_branch: experiment/em069-local-native-recovery-20261122
+  source_version: "0.1.69"
+  source_scope: experimental_only_no_main_merge_or_release
+  engine_native: "Factorio 2.1.24 build87808 Linux headless"
+  original_full_ci_068_sha256: e92d82373c1207ed5083bf29b8f9962aa0e9a90e55c6a9dbf3a2e2a212159bb3
+  local_test_only_069_zip_sha256: 685ecbe037832d36c2facd2febe25ee0efec1e2221248288167b897497ddf93c
+  complete_game_files: 139
+  original_png_unmodified: 83
+  local_positive_scenarios: 20
+  local_source_outage_and_paid_sink_rejoin: pass
+  local_orphan_native_buffer_rejoined_paid_j: 33333.333
+  local_zero_source_closed_energy_balance_j: 0
+  original068_to_new069_local_saved_game_migration: pass_own_disposable_save_only
+  lowpower_1W_60W_boundary: fail_open_0J_with_nonzero_real_source
+  lowpower_61W_boundary: pass_2_eligible_locomotives
+  release_gate: blocked
+  github_actions_069_zip_provenance: pending
+  windows_gui_blueprint_undo_multiplayer_old_player_save: not_tested
+  motor_wagon_500kW_and_regeneration: not_implemented
+  evidence_record: docs/research/em069-native-paid-recovery-local-20261122.md
+
 em072_075_distributed_traction_plan:
   status: owner_design_approved_documented_only
   decision_date: "2026-11-21"
@@ -287,7 +310,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.68" # EXPERIMENT real native 25kV EEI consumer and exact native sink-funded locomotive
+  mod_version: "0.1.69" # EXPERIMENT local native sink bootstrap and paid-buffer recovery, unreleased
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"

@@ -61,7 +61,9 @@ local function native_state()
   storage.em=storage.em or {}
   storage.em.traction_native_068=storage.em.traction_native_068 or
     {sinks={},metered_native_J=0,discarded_J=0,created=0}
-  return storage.em.traction_native_068
+  local n=storage.em.traction_native_068
+  n.sinks_meta=n.sinks_meta or {}
+  return n
 end
 local function sink_for_output(source)
   local id=source.output.unit_number
@@ -72,6 +74,52 @@ local function sink_for_output(source)
   if not (port and port.valid and port.electric_network_id and source.output
     and source.output.valid and source.output.electric_network_id==
       port.electric_network_id) then return nil end
+  -- Reuse paid native-J buffers after a same-feeder station is rebuilt.
+  -- Demolishing a bridge station removes its old port: the native sink may
+  -- survive at 0-connection with real credited Joules but no grid. We may
+  -- reattach ONLY to the exact original physical feeder and original native
+  -- network ID, with equal surface/force and confirmed old output removal.
+  -- Native same-surface EEI teleport reconnects wires while preserving J.
+  -- No cross-grid refund, no deletion of positive energy, no double credit.
+  local bridge=storage.em and storage.em.bridge058
+  local feeder=bridge and bridge.feeders and bridge.feeders[source.owner_id]
+  -- Populate provenance for sinks created by the older 0.1.68 runtime, too.
+  -- Otherwise an old save retains paid native sinks with no recovery metadata.
+  if sink and feeder and not state.sinks_meta[id]
+      and sink.electric_network_id==port.electric_network_id then
+    state.sinks_meta[id]={feeder=feeder,network=port.electric_network_id}
+  end
+  if not sink and feeder then
+    local ids={}
+    for old_id in pairs(state.sinks) do ids[#ids+1]=old_id end
+    table.sort(ids)
+    for _,old_id in ipairs(ids) do
+      local old=state.sinks[old_id]
+      local meta=state.sinks_meta[old_id]
+      if old_id~=id and old and old.valid and meta
+         and meta.feeder==feeder and meta.network==port.electric_network_id
+         and not entity(old_id) and not old.electric_network_id
+         and old.force==port.force and old.surface==port.surface then
+        local before=old.energy
+        local pos=old.position
+        old.input_flow_limit=0; old.output_flow_limit=0
+        local ok=old.teleport(port.position)
+        if ok and old.electric_network_id==port.electric_network_id
+           and math.abs(old.energy-before)<0.05 then
+          state.sinks[old_id]=nil;state.sinks_meta[old_id]=nil
+          state.sinks[id]=old;state.sinks_meta[id]=meta
+          sink=old
+          log(string.format("[EM069 NATIVE PAID SINK REJOIN] former_output=%d new_output=%d sink=%d feeder=%d paid_J=%.3f native_net=%d",
+              old_id,id,sink.unit_number,feeder,before,port.electric_network_id))
+          break
+        end
+        if ok then old.teleport(pos) end
+        -- A disputed topology stays isolated with all real J unchanged.
+        log("[EM069 NATIVE REJOIN DENIED] old_output="..old_id..
+          " new_output="..id.." native sink retained isolated")
+      end
+    end
+  end
   if sink then
     if sink.electric_network_id~=port.electric_network_id or
       sink.force~=port.force then
@@ -99,6 +147,7 @@ local function sink_for_output(source)
     error("[EM068 NATIVE FAIL] sink not on ACTUAL native 25kv network "..id)
   end
   state.sinks[id]=sink
+  state.sinks_meta[id]={feeder=feeder,network=port.electric_network_id}
   state.created=state.created+1
   log(string.format("[EM068 NATIVE EEI CREATED] sink=%d port=%d native_line_net=%d source_output=%d buffer_cap_J=2000000",
     sink.unit_number,port.unit_number,sink.electric_network_id,id))
@@ -286,7 +335,16 @@ function M.requests(art,pantograph,dispatch)
                     and sink.force==e.force then has_native=true;break end
               end
             end
-            if not has_native then
+            -- A native sink can outlive a contact outage. Once the bridge
+            -- goes auto-idle, it cannot reactivate from sink demand alone:
+            -- fair_charge only enables that sink after donor() is active.
+            -- Restore the finite virtual BOOTSTRAP request while the donor
+            -- is inactive, even if a valid native sink already exists.
+            -- The request does not grant Joules; only the engine-paid sink
+            -- can credit the real burner. Once donor() is active, native
+            -- demand takes over without double-advertising the same train.
+            local active_donor=donor(net,e.force)
+            if not has_native or not active_donor then
               requests[key]=(requests[key] or 0)+
                 math.min(M.MAX_PER_TICK,left)
             end

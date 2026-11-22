@@ -1,11 +1,11 @@
 {
   "name": "ElectrifiedMainline",
-  "version": "0.1.68",
+  "version": "0.1.69",
   "title": "Electrified Mainline",
   "author": "Bionic Assistant",
   "contact": "",
   "homepage": "",
-  "description": "Adds high-speed electrified railway infrastructure to Factorio. 25 kV nominal overhead line poles and high-speed electric locomotive visual prototype; 20 MW automatic reversible substation power bridge with read-only 061 priority diagnostics; 0.1.68 EXPERIMENT ONLY: native real 2MW EM locomotive with finite source-paid reserve, max-min fair source-buffer charging under scarcity. real native 25kV EEI consumer test and no-double-debit source-paid locomotive charging under validation; 0-J helper cleanup native tested; +500kW motor wagon traction, regeneration, multiplayer and old-save migration NOT complete. NOT a release.",
+  "description": "Adds high-speed electrified railway infrastructure to Factorio. 25 kV nominal overhead line poles and high-speed electric locomotive visual prototype; 20 MW automatic reversible substation power bridge with read-only 061 priority diagnostics; 0.1.68 EXPERIMENT ONLY: native real 2MW EM locomotive with finite source-paid reserve, max-min fair source-buffer charging under scarcity. real native 25kV EEI consumer test and no-double-debit source-paid locomotive charging under validation; 0-J helper cleanup native tested; +500kW motor wagon traction, regeneration, multiplayer and old-save migration NOT complete. NOT a release. LOCAL TEST ONLY 0.1.69: bridge native-traction sink bootstrap recovery experiment.",
   "factorio_version": "2.1",
   "dependencies": [
     "base >= 2.1.0"
