@@ -98,11 +98,9 @@ local function charge(e,art,pantograph,stats)
     error("[EM065 PAID FAIL] burner gained free energy")
   end
 end
-function M.on_tick(tick,art,pantograph)
-  local stats=ensure()
-  local trains=game.train_manager.get_trains{stock="em-electric-locomotive"}
+local function all_real_locomotives()
   local owners={}
-  for _,t in pairs(trains) do
+  for _,t in pairs(game.train_manager.get_trains{stock="em-electric-locomotive"}) do
     if t.valid then
       for _,e in ipairs(t.carriages) do
         if e.valid and e.name=="em-electric-locomotive" then
@@ -112,6 +110,44 @@ function M.on_tick(tick,art,pantograph)
     end
   end
   table.sort(owners,function(a,b)return a.unit_number<b.unit_number end)
+  return owners
+end
+
+function M.requests(art,pantograph,dispatch)
+  -- The native EM070 planner otherwise sees zero factory-grid/line demand:
+  -- a Lua locomotive has no native electrical energy source. Advertise only
+  -- finite, verified pending train demand on that REAL anchor network.
+  local requests={}
+  for _,e in ipairs(all_real_locomotives()) do
+    local burner=e.burner
+    if burner then
+      local left=M.BUFFER_CAP-(burner.remaining_burning_fuel or 0)
+      if left>1 then
+        local net=network_for_contact(e,art,pantograph)
+        if net then
+          local anchor=nil
+          local tech=storage.em and storage.em.technical_046
+          -- Same exact IDs as those already verified in network_for_contact.
+          local h=pantograph.head_offset(pantograph.frame(e.orientation))
+          local contact=art.contact_at(e.surface.index,e.force.name,
+            {x=e.position.x+h.x,y=e.position.y+h.y})
+          local a=contact and tonumber(contact.key:match("^(%d+):"))
+          if a and tech then anchor=entity(tech.helpers[a]) end
+          local key=anchor and dispatch.network_key(anchor)
+          if key then
+            requests[key]=(requests[key] or 0)+
+              math.min(M.MAX_PER_TICK,left)
+          end
+        end
+      end
+    end
+  end
+  return requests
+end
+
+function M.on_tick(tick,art,pantograph)
+  local stats=ensure()
+  local owners=all_real_locomotives()
   for _,e in ipairs(owners) do charge(e,art,pantograph,stats) end
   if tick%60==0 then
     log(string.format("[EM065 PAID LEDGER] tick=%d locos=%d debited_J=%.1f credited_J=%.1f charged_ticks=%d no_contact=%d no_supply=%d",

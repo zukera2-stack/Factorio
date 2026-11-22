@@ -1,6 +1,9 @@
 -- Native separate electrical networks; actual buffered joules, never generated.
 local technical=require("scripts.technical_network_046")
 local dispatch=require("scripts.bridge_dispatch_059")
+local traction065=require("scripts.traction_paid_065")
+local art030=require("scripts.catenary_art_030")
+local pantograph049=require("scripts.pantograph_visual_049")
 local devices=require("scripts.bridge_devices_060")
 local M={LIMIT=20000000/60,SUB="em-35kv-traction-substation"}
 local PORT="em-25kv-bridge-port-058"
@@ -318,6 +321,14 @@ function M.on_tick(tick,graph)
    end
  end
  -- Automatic allocation is coordinated across every connected ordinary/corridor network.
+ -- EM065 test branch: a native locomotive is NOT itself an electric network
+ -- consumer. Register only its finite, authenticated pending 2MW demand in the
+ -- existing native EM070 dispatch planner; every delivered joule is still
+ -- physically debited later from the native charged 25kV output EEI.
+ local traction_demand=traction065.requests(art030,pantograph049,dispatch)
+ for id,j in pairs(traction_demand) do
+   if networks[id] then networks[id].load=networks[id].load+j end
+ end
  local plan=dispatch.plan(networks,auto_edges,M.LIMIT)
  local connected_peers={}
  for _,edge in ipairs(auto_edges) do connected_peers[edge.b]=(connected_peers[edge.b] or 0)+1 end

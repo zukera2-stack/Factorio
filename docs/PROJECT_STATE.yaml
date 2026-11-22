@@ -2209,3 +2209,8 @@ em065_native_real_locomotive_traction_research:
   actual_drive_game_result: NOT_YET_RUN
   existing_500kW_motor_helper_fuel: 0
   no_main_or_user_063_changes: true
+
+  dispatch_virtual_locomotive_demand_implemented: true
+  native_network_load_requires_real_mast_connected_contact: true
+  source_EEI_credit_after_real_payment_only: true
+  source_paid_native_engine_validated: false
