@@ -1,0 +1,26 @@
+# EM072-A5-B10 — research preflight: native composition, train-bus and solo maneuver reserve
+
+**Date:** 2026-11-22. **Source:** user-requested architecture for multiple electric locomotives and future motor wagons. **Branch base:** `experiment/em072a5-native-loco-battery-b9`, SHA `f1e6b5ee65cb43f638ad5558b8e88cc8b6007c9c`. **Game:** actual native Factorio 2.1.24 build 87808 Linux headless; **research-only Base disposable probe**. This is NOT a playable main mod release. Baseline `ElectrifiedMainline 0.1.62` has `em-electric-locomotive.energy_source={type="void"}`; a real integrated battery still DOES NOT EXIST.
+
+## Research question and falsifiable hypothesis
+
+- Factorio trains are assembled from native `LuaTrain.carriages`. Native `defines.events.on_train_created` is fired on coupling, decoupling and stock placement; `old_train_id_1/2` identify old train IDs but new IDs can change. Docs: https://lua-api.factorio.com/latest/classes/LuaTrain.html , https://lua-api.factorio.com/latest/events.html . Current API documentation may be 2.1.25, hence this test checks ACTUAL 2.1.24.
+- Verified source-prototype analogue: original Factorio Base native `locomotive` and `cargo-wagon`, test-only clone using native burner category; native `LuaEntity.connect_rolling_stock` and `disconnect_rolling_stock` in https://lua-api.factorio.com/latest/classes/LuaEntity.html . Our B9 `tests/em072a5-b9-probe` proved 16 separate locomotive battery accounts only, not connected-train sharing.
+- Production `ElectrifiedMainline/scripts/control.lua` already has `on_train_created` handler that keeps a per-train diagnostic (`storage.em.trains[train.id]`) and `get_custom_locomotives`, **but has no train power bus or real per-locomotive battery**. Do not replace the existing handler as if this were production code.
+- Hypothesis: storing energy **per rolling-stock `unit_number`** and rebuilding a TRANSIENT bus from native `train.carriages` makes 3-stock coupling/splitting energy-conserving. A coupled car may donate only J above its protected autonomous reserve, bounded by its own max discharge; an isolated locomotive may use its own entire charge. There is no implicit charging or averaging on coupling.
+
+## Strict test and reject conditions
+
+1. Real Base-only native Factorio: 2 genuine connected native locomotive prototype clones + 1 genuinely coupled native cargo-wagon clone (future motor-wagon energy DONOR ONLY); one genuine independent solo locomotive on different section of same rails. FOUR separate physical objects.
+2. Initial finite balances (LAB parameters only): A/B 600kJ each with **200kJ protected**; wagon 400kJ with **100kJ protected**; solo D 300kJ with **150kJ nominal reserve**. Total **1.9MJ**. These values are not approved gameplay specs.
+3. Confirm genuine native `LuaEntity.disconnect_rolling_stock()` splits 3-unit train into 3 different valid native train IDs; confirm native `on_train_created events and reconnect the same 3 units. **Zero J changed** by these operations.
+4. Between t41 and t84 inject precisely 1.5MW/60 per native tick from BUS into a REAL native `LuaBurner`. Total **1.1MJ** drawn; every donor stops exactly at its own reserve. Specifically the cargo-wagon clone can DONATE J into a locomotive native burner, but this does NOT give the wagon independent propulsion.
+5. Starting t85 drive the REJOINED consist on its already-paid, finite native burner fuel, and independently drive a previously independent SOLO locomotive with no rail electric supply using ONLY its per-unit own finite charge. Solo can spend below its nominal shared reserve; connected donors must not. Neither train's `speed` may be directly written by Lua.
+6. By t156 the solo locomotive has spent its whole **300kJ**, the group has donated **1.1MJ**, protected group remains exactly **0.5MJ**, both true native locomotive trains have travelled >0.5 tile, and native burner physical spending equals **1.4MJ**. Full total `per-unit battery + native burner remaining + real native spent` must remain 1.9MJ within 0.01J.
+7. True headless server SAVE at t75 (during shared-bus draw), then separate process LOAD through tick181, identical measured outcomes. A log marker without a real engine save does NOT pass.
+
+## Explicitly outside acceptance
+
+- The solo control locomotive **begins independent**; a just-detached group participant using its own reserve on departure will be a distinct test gate. Current test native split/rejoin DOES prove exact entity charge retention during coupling operations.
+- Charging from the real 25kV contact network, production `void` locomotive conversion to burner/energy-meter, real motor power contribution from a cargo-wagon prototype, actual idle/auxiliary drain, remote client multiplayer, item tags on mining / Blueprint / Undo and dynamic performance 60 UPS are NOT established.
+- Existing owner-approved AUTO policy **Б (factory rescue at traction deficit)** stays intact; train grid-first deficit compensation is separate from still-open stationary corridor outpost factory-first vs battery-first decision.

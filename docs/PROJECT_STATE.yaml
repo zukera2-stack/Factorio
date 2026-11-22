@@ -1,3 +1,63 @@
+em072a5_b10_native_train_bus_solo_reserve_research:
+  date: "2026-11-22"
+  branch: experiment/em072a5-native-train-bus-b10
+  parent_B9_head: f1e6b5ee65cb43f638ad5558b8e88cc8b6007c9c
+  author_requested_architecture: separate_physical_battery_per_unit_number_and_temporary_train_scoped_shared_power_bus
+  shared_bus_gameplay_implemented: false
+  owner_approved_gameplay_battery_capacity_or_reserve_j: false
+  status: real_Factorio_native_181tick_BENCHMARK_and_independent_true_server_SAVE_LOAD_PASS_laboratory_only
+  engine: "Factorio 2.1.24 build 87808 linux64 headless"
+  original_gameplay_source: "ElectrifiedMainline 0.1.62 remains void-powered"
+  game_source_changed: false
+  test_mod: em072a5-b10-probe_0.0.1
+  native_base_only: true
+  native_connected_locomotives: 2
+  native_cargo_wagon_energy_donor_without_real_motor: 1
+  independent_solo_locomotive: 1
+  real_on_train_created_event_count_after_split_rejoin: 6
+  real_split_into_singletons: true
+  real_reconnect_to_three_carriages: true
+  per_unit_number_charge_unchanged_during_couple_split: true
+  initial_all_units_j: 1900000
+  initial_three_connected_j: 1600000
+  initial_solo_j: 300000
+  test_connected_reserve_locomotives_each_j: 200000
+  test_connected_reserve_wagon_j: 100000
+  test_connected_total_protected_j: 500000
+  test_connected_shared_to_native_burner_j: 1100000
+  independent_solo_test_nominal_reserve_j: 150000
+  solo_own_battery_native_burner_j: 300000
+  solo_final_battery_j: 0
+  real_native_burner_j_consumed: 1400000
+  coupled_real_native_distance_tiles: 10.5625
+  solo_real_native_distance_tiles: 4.9063
+  full_finite_energy_ledger_residual_j: 0
+  native_benchmark_ticks: 181
+  real_native_server_SAVE_tick: 75
+  independent_native_disk_LOAD_ticks: 106
+  physical_checkpoint_bytes: 816050
+  native_benchmark_log_sha256: d0e7f2aeba7bfbb1fb34304e76a92950e636cd169cd62a747e484f14c8b1410a
+  native_independent_LOAD_log_sha256: 218a3519c88b972eba2de23d37cb2f929e7e50722fb9189000a8e1ae7defcc93
+  strict_runner: tests/run_native_bus_072a5b10.py
+  native_fixture: tests/em072a5-b10-probe/
+  architecture_doc: docs/architecture/EM072_MULTI_UNIT_TRAIN_BUS.md
+  preflight: docs/research/native-consist-energy-b10-preflight.md
+  report: docs/research/native-consist-energy-b10-results.md
+  result_json: docs/research/native-consist-energy-b10-result.json
+  logs_library: /Factorio/Network-062/consist-072a5b10/
+  actual_prev_group_member_solo_maneuver_after_split: NOT_TESTED
+  real_25kV_train_charge_and_overhead_loss: NOT_TESTED
+  real_motorized_cargo_wagon_native_traction: NOT_IMPLEMENTED
+  real_stationary_idle_auxiliary_drain: NOT_IMPLEMENTED
+  actual_player_mining_BLUEPRINT_UNDO_replacement: NOT_TESTED
+  source_game_electric_loco_still_VOID: true
+  AUTO_factory_rescue_policy_B_author_approved_unchanged: true
+  static_outpost_buffer_dispatch_policy: STILL_OPEN
+  next_gate: B11_actual_detached_member_solo_recharge_and_train_bus_grid_precedence
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072_owner_approved_policy_B_factory_rescue:
   decision_date: "2026-11-22"
   status: approved_by_owner

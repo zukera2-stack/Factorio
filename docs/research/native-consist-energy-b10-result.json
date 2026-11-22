@@ -1,0 +1,32 @@
+{
+  "engine": "Factorio 2.1.24 build 87808",
+  "source": "base 2.1.24 + disposable native research prototype; GAMEPLAY MOD UNCHANGED",
+  "benchmark_native_ticks": 181,
+  "benchmark": {
+    "split_merge_events": 6.0,
+    "consist_real_movement_tiles": 10.5625,
+    "solo_real_movement_tiles": 4.9063,
+    "train_bus_credited_j": 1100000.0,
+    "solo_native_burner_credited_j": 300000.0,
+    "all_coupled_protected_reserve_j": 500000.0,
+    "solo_final_j": 0.0,
+    "native_spent_j": 1400000.0,
+    "finite_ledger_residual_j": -0.0
+  },
+  "benchmark_log_sha256": "d0e7f2aeba7bfbb1fb34304e76a92950e636cd169cd62a747e484f14c8b1410a",
+  "reload": {
+    "split_merge_events": 6.0,
+    "consist_real_movement_tiles": 10.5625,
+    "solo_real_movement_tiles": 4.9063,
+    "train_bus_credited_j": 1100000.0,
+    "solo_native_burner_credited_j": 300000.0,
+    "all_coupled_protected_reserve_j": 500000.0,
+    "solo_final_j": 0.0,
+    "native_spent_j": 1400000.0,
+    "finite_ledger_residual_j": -0.0
+  },
+  "server_SAVE_tick": 75,
+  "independent_LOAD_ticks": 106,
+  "checkpoint_bytes": 816050,
+  "reload_log_sha256": "218a3519c88b972eba2de23d37cb2f929e7e50722fb9189000a8e1ae7defcc93"
+}
