@@ -1,0 +1,11 @@
+{
+  "name": "em065-native-paid-locomotive-probe",
+  "version": "0.0.1",
+  "title": "EM065 actual 25kV-funded 2MW train test, not ship",
+  "author": "EM Research",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "ElectrifiedMainline >= 0.1.65"
+  ]
+}

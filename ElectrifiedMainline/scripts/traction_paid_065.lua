@@ -67,6 +67,7 @@ local function charge(e,art,pantograph,stats)
   local network,why=network_for_contact(e,art,pantograph)
   if not network then
     stats.miss_contact=stats.miss_contact+1
+    stats.last_contact_reason=why
     return
   end
   local source=donor(network,e.force)
@@ -153,6 +154,7 @@ function M.on_tick(tick,art,pantograph)
     log(string.format("[EM065 PAID LEDGER] tick=%d locos=%d debited_J=%.1f credited_J=%.1f charged_ticks=%d no_contact=%d no_supply=%d",
       tick,#owners,stats.debited_J,stats.credited_J,stats.charged_ticks,
       stats.miss_contact,stats.miss_supply))
+    log("[EM065 CONTACT] last_reason="..tostring(stats.last_contact_reason))
   end
 end
 return M
