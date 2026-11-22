@@ -2402,3 +2402,9 @@ em067_hidden_C5_helper_lifecycle_preflight:
   source_paid_hidden_energy_J: 0
   charged_helper_auto_destroy: false
   full_native_0_1_67_verified: false
+  em067_full_native_parallel_workflow: .github/workflows/em066-autonomous-fullmod-native.yml
+  em067_fullmod_SHA_from_same_packaged_GHA_artifact: true
+  em067_native_1MW_dual_train_fair_charge_60tick: RE_TEST_PENDING
+  em067_native_hidden_helper_orphan_80tick: RE_TEST_PENDING
+  em067_native_20MW_true_fault_disk_SAVELOAD: RE_TEST_PENDING
+  em067_real_25kv_demand_issue_77: UNRESOLVED

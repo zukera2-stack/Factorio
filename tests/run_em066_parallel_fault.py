@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Real dual-process Factorio 2.1.24 fault runner: benchmark is NOT disk SAVE.
 
-Runs exact original FULL 0.1.66 ZIP + separate test probe in a private server,
+Runs exact original FULL 0.1.67 ZIP + separate test probe in a private server,
 waits for actual disk save, shuts down server, and --test-save in another process.
 Exit nonzero on any violated native assertion. Original mod bytes are not changed.
 """
@@ -74,7 +74,7 @@ def main():
     (private / "saves").mkdir(parents=True, exist_ok=True)
     binary = args.factorio.resolve()
     mods = args.mods.resolve()
-    z = mods / "ElectrifiedMainline_0.1.66.zip"
+    z = mods / "ElectrifiedMainline_0.1.67.zip"
     report = {
         "lane": lane,
         "fullmod_source_sha256_expected": SHA,
@@ -86,7 +86,7 @@ def main():
     try:
         report["fullmod_source_sha256_observed"] = sha(z)
         if report["fullmod_source_sha256_observed"] != SHA:
-            raise ValueError("Not the exact experimental FULL 0.1.66 ZIP; refusing test")
+            raise ValueError("Not the exact experimental FULL 0.1.67 ZIP; refusing test")
         if not (mods / (spec["probe"] + "_0.0.1") / "control.lua").is_file():
             raise ValueError("Missing separate test-only probe")
         versions = subprocess.run([str(binary), "--version"], capture_output=True,

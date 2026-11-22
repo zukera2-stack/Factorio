@@ -1,7 +1,7 @@
 package.path='./ElectrifiedMainline/?.lua;'..package.path
 local info_file=assert(io.open('ElectrifiedMainline/info.json'))
 local version_text=info_file:read('*a')
-local axis_version=version_text:find('"version": "0.1.56"',1,true)~=nil or version_text:find('"version": "0.1.57"',1,true)~=nil or version_text:find('"version": "0.1.58"',1,true)~=nil or version_text:find('"version": "0.1.59"',1,true)~=nil or version_text:find('"version": "0.1.60"',1,true)~=nil or version_text:find('"version": "0.1.61"',1,true)~=nil or version_text:find('"version": "0.1.62"',1,true)~=nil or version_text:find('"version": "0.1.63"',1,true)~=nil or version_text:find('"version": "0.1.64"',1,true)~=nil or (version_text:find('"version": "0.1.65"',1,true)~=nil or version_text:find('"version": "0.1.66"',1,true)~=nil)
+local axis_version=version_text:find('"version": "0.1.56"',1,true)~=nil or version_text:find('"version": "0.1.57"',1,true)~=nil or version_text:find('"version": "0.1.58"',1,true)~=nil or version_text:find('"version": "0.1.59"',1,true)~=nil or version_text:find('"version": "0.1.60"',1,true)~=nil or version_text:find('"version": "0.1.61"',1,true)~=nil or version_text:find('"version": "0.1.62"',1,true)~=nil or version_text:find('"version": "0.1.63"',1,true)~=nil or version_text:find('"version": "0.1.64"',1,true)~=nil or (version_text:find('"version": "0.1.65"',1,true)~=nil or (version_text:find('"version": "0.1.66"',1,true)~=nil or version_text:find('"version": "0.1.67"',1,true)~=nil))
 info_file:close()
 local geo=require('scripts.catenary_visual_geometry_045')
 local art=require('scripts.catenary_art_030')

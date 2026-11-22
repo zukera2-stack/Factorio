@@ -32,6 +32,7 @@ class FullModTrialTest(unittest.TestCase):
         self.assertNotIn("remaining_burning_fuel=",p)
         self.assertNotIn("train.speed =",p)
         self.assertIn('"em-high-speed-straight-rail"',p)
+        self.assertTrue((MOD/'scripts/helper_lifecycle_067.lua').is_file() or meta['version']!='0.1.67')
         self.assertIn('"em-electric-locomotive"',p)
         self.assertIn('"em-35kv-traction-substation"',p)
     def test_real_motor_wagons_and_0j_hidden_helper(self):
