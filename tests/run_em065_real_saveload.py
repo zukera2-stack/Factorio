@@ -7,6 +7,7 @@ Tests are disposable; never access user saves. Fails closed on all native errors
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import socket
 import subprocess
@@ -89,7 +90,21 @@ def main():
         if marker not in newprocess:
             raise AssertionError("Separate-process LOAD missing "+marker+
                                  "\n"+newprocess[-3700:])
-    print("NATIVE 2MW REAL SAVELOAD PASS",digest,flush=True)
+    # Ledger belongs to ElectrifiedMainline's isolated mod storage. Read
+    # its OWN native log line, not another mod's inaccessible storage table.
+    ledgers=re.findall(
+        r"\\[EM065 PAID LEDGER\\] tick=(\\d+) locos=(\\d+) "
+        r"debited_J=([\\d.]+) credited_J=([\\d.]+)",
+        newprocess)
+    if not ledgers or not any(int(t)>=420 for t,_,_,_ in ledgers):
+        raise AssertionError("Native full-mod source ledger absent after separate LOAD")
+    for t,n,debit,credit in ledgers:
+        if abs(float(debit)-float(credit))>0.05:
+            raise AssertionError(f"Native source paid ledger imbalance at tick{t}: {debit} != {credit}")
+    if float(ledgers[-1][2])<1800000:
+        raise AssertionError("Native source paid ledger lost on SAVE/LOAD")
+    print("NATIVE 2MW REAL SAVELOAD PASS",digest,
+          "last_ledger_J",ledgers[-1][2],flush=True)
 
 if __name__=="__main__":
     main()

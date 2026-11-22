@@ -2233,3 +2233,8 @@ em065_native_real_locomotive_traction_research:
   native_loco_unit_number_persistence_required: true
   native_burner_credit_debit_equality_required: true
   native_no_contact_second_loco_after_load_J: 0
+  failed_first_SAVE_harness_run: 45040943403
+  first_SAVE_harness_failure: separate_mod_storage_access_not_allowed
+  corrected_SAVE_harness_private_native_loco_J_and_UID: true
+  corrected_SAVE_harness_read_full_mod_LEDGER_from_native_log: true
+  SAVE_load_real_engine_after_correction: PENDING

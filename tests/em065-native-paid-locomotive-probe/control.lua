@@ -81,17 +81,18 @@ script.on_event(defines.events.on_tick,function(e)
   if e.tick==125 then
     -- True server save writes a physical file only in actual server mode.
     -- Benchmarks also execute this but cannot persist a disk checkpoint.
-    local paid=storage.em.traction_paid_065
-    assert(paid and math.abs(paid.debited_J-paid.credited_J)<0.05,
-      "EM065 positive-grid ledger diverged before disk SAVE")
+    -- Each mod has its OWN isolated storage! Never read ElectrifiedMainline
+    -- storage.em from this separate probe. Verify its ledger from native logs.
     assert(s.positive.valid and s.positive.unit_number==s.positive_unit)
     assert(s.negative.valid and s.negative.unit_number==s.negative_unit)
     s.checkpoint_tick=125
-    s.checkpoint_ledger_J=paid.debited_J
+    s.checkpoint_burner_J=s.positive.burner.remaining_burning_fuel
+    assert(s.checkpoint_burner_J>100000 and s.checkpoint_burner_J<=2000000,
+      "native charged locomotive absent at real SAVE tick125")
     local ok,result=pcall(function() game.server_save("em065-paid-checkpoint") end)
     assert(ok,"True Factorio server checkpoint failed: "..tostring(result))
     log("[EM065 DISK CHECKPOINT] tick=125|request_ok="..tostring(ok)..
-      "|paid_J="..paid.debited_J.."|positive_unit="..s.positive_unit..
+      "|loco_burner_J="..s.checkpoint_burner_J.."|positive_unit="..s.positive_unit..
       "|negative_unit="..s.negative_unit)
   end
   if e.tick==180 then
@@ -124,22 +125,18 @@ script.on_event(defines.events.on_tick,function(e)
     log("[EM065 NATIVE 0W CONTROL] offline_loco_J=0|source_W=0|no_fake_positive")
   end
   if e.tick==450 then
-    local paid=assert(storage.em.traction_paid_065)
-    assert(s.checkpoint_tick==125 and s.checkpoint_ledger_J>100000,
+    assert(s.checkpoint_tick==125 and s.checkpoint_burner_J>100000,
       "EM065 actual disk SAVE checkpoint state missing")
     assert(s.positive.valid and s.positive.unit_number==s.positive_unit,
       "Original paid locomotive identity disappeared on actual LOAD")
     assert(s.negative.valid and s.negative.unit_number==s.negative_unit and
            s.negative.burner.remaining_burning_fuel==0,
       "Unpowered negative locomotive gained free energy across SAVE/LOAD")
-    assert(math.abs(paid.debited_J-paid.credited_J)<0.05,
-      "Source debit/credited Joule ledger mismatch after SAVE/LOAD")
     assert(s.distance_by_180 and s.distance_by_180>=24,
       "Native paid train's actual movement disappeared after LOAD")
     log("[EM065 REAL SAVELOAD PASS] checkpoint_tick="..s.checkpoint_tick..
       "|native_paid_motion_tiles="..s.distance_by_180..
-      "|paid_debit_J="..paid.debited_J..
-      "|paid_credit_J="..paid.credited_J..
+      "|original_checkpoint_burner_J="..s.checkpoint_burner_J..
       "|unpowered_negative_J=0|original_unit_numbers=true")
   end
 end)
