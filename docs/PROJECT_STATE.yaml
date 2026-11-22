@@ -2145,8 +2145,16 @@ em063_parallel_fullmod_fault_matrix:
   owner_native_GUI: UNVERIFIED
   owner_Undo_and_robots: UNVERIFIED
   source_paid_wagon_500kW: NOT_IMPLEMENTED
-  CI_rail_stock_lane: PENDING
-  CI_power_fault_lane: PENDING
+  CI_rail_stock_lane: FIRST_CI_TEST_HARNESS_FAIL_BENCHMARK_SAVE_NO_FILE
+  CI_power_fault_lane: FIRST_CI_TEST_HARNESS_FAIL_BENCHMARK_SAVE_NO_FILE
+  initial_parallel_run_id: 45036063598
+  initial_parallel_both_jobs_started: true
+  initial_rail_native_items_geometry_stock_cargo_pass: true
+  initial_energy_native_baseline_two_sinks_39MJ_each_at_240: true
+  initial_energy_after_B_outage_C_J_at_480: 118333333.33333
+  initial_save_error: benchmark_accepted_game.server_save_but_no_file_on_disk
+  corrected_real_save_method: separate_native_server_start_then_separate_test_save_process
+  corrected_runner: tests/run_em063_parallel_fault.py
   matrix_workflow: .github/workflows/em063-parallel-fault-matrix.yml
   railstock_probe: tests/em063-fault-rail-stock
   electrical_probe: tests/em063-fault-electrical

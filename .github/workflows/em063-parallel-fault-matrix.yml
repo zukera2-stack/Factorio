@@ -4,6 +4,7 @@ on:
     branches: ['experiment/em063-fault-matrix-parallel-20261122']
     paths:
       - 'tests/em063-fault-*/**'
+      - 'tests/run_em063_parallel_fault.py'
       - '.github/workflows/em063-parallel-fault-matrix.yml'
   workflow_dispatch:
 
@@ -54,28 +55,16 @@ jobs:
           tar -xJf "$RUNNER_TEMP/em063-engine.tar.xz" -C "$RUNNER_TEMP/em063-engine"
           "$RUNNER_TEMP/em063-engine/factorio/bin/x64/factorio" --version | tee "$RUNNER_TEMP/em063-fault/logs/version.txt"
           grep -F '2.1.24' "$RUNNER_TEMP/em063-fault/logs/version.txt"
-      - name: Fresh disposable game and first real process with checkpoint
+      - name: REAL native benchmark, private server disk SAVE, and second-process --test-save
         shell: bash
         run: |
           set -euo pipefail
-          bin="$RUNNER_TEMP/em063-engine/factorio/bin/x64/factorio"
-          mods="$RUNNER_TEMP/em063-fault/mods"
-          "$bin" --mod-directory "$mods" --create "$RUNNER_TEMP/em063-fault/initial.zip" 2>&1 | tee "$RUNNER_TEMP/em063-fault/logs/create.log"
-          "$bin" --mod-directory "$mods" --benchmark "$RUNNER_TEMP/em063-fault/initial.zip" --benchmark-ticks ${{ matrix.first_ticks }} --benchmark-runs 1 2>&1 | tee "$RUNNER_TEMP/em063-fault/logs/first-process.log"
-          grep -F 'disk_checkpoint' "$RUNNER_TEMP/em063-fault/logs/first-process.log"
-          checkpoint=$(find "$RUNNER_TEMP" -type f -name "${{ matrix.checkpoint }}.zip" -print -quit)
-          test -n "$checkpoint" && test -s "$checkpoint" || { echo "NO REAL DISK CHECKPOINT: ${{ matrix.checkpoint }}"; exit 1; }
-          echo "$checkpoint" > "$RUNNER_TEMP/em063-fault/checkpoint-path.txt"
-          sha256sum "$checkpoint" > "$RUNNER_TEMP/em063-fault/logs/checkpoint-sha256.txt"
-      - name: Independently resume saved state in new Factorio process and enforce all fault gates
-        shell: bash
-        run: |
-          set -euo pipefail
-          bin="$RUNNER_TEMP/em063-engine/factorio/bin/x64/factorio"
-          mods="$RUNNER_TEMP/em063-fault/mods"
-          checkpoint=$(cat "$RUNNER_TEMP/em063-fault/checkpoint-path.txt")
-          "$bin" --mod-directory "$mods" --benchmark "$checkpoint" --benchmark-ticks ${{ matrix.second_ticks }} --benchmark-runs 1 2>&1 | tee "$RUNNER_TEMP/em063-fault/logs/resume-process.log"
-          grep -F "${{ matrix.marker }}" "$RUNNER_TEMP/em063-fault/logs/resume-process.log"
+          python3 -m py_compile tests/run_em063_parallel_fault.py
+          python3 tests/run_em063_parallel_fault.py \
+            --factorio "$RUNNER_TEMP/em063-engine/factorio/bin/x64/factorio" \
+            --mods "$RUNNER_TEMP/em063-fault/mods" \
+            --work-dir "$RUNNER_TEMP/em063-fault" \
+            --lane "${{ matrix.lane }}" 2>&1 | tee "$RUNNER_TEMP/em063-fault/logs/runner.log"
       - name: Upload lane logs and real SAVE SHA even on native failure
         if: always()
         uses: actions/upload-artifact@v4
