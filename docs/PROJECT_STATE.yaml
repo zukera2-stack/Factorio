@@ -2426,3 +2426,8 @@ em068_true_native_25kv_consumer_probe_20261122:
   status: RESEARCH_PREFLIGHT_ONLY
   main_modified: false
   research: docs/research/em068-actual-native-line-consumer-feasibility-20261122.md
+  test_only_native_EEI_probe: tests/em068-native-demand-feasibility
+  test_only_native_EEI_probe_workflow: .github/workflows/em068-native-demand-feasibility.yml
+  authentic_full_0_1_67_ZIP_verification: SHA256_f496066e0c6c677616daf050435c47ab60196c8f9f6bece5db79b835f6b1a462
+  standalone_native_25kv_demand_feasibility: PENDING
+  test_only_buffer_loco_source_paid_integration: NOT_ATTEMPTED

@@ -1,0 +1,12 @@
+{
+  "name": "em068-native-demand-feasibility",
+  "version": "0.0.1",
+  "title": "EM068 native 25kV EEI demand feasibility",
+  "author": "Independent EM 25kV research",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "ElectrifiedMainline >= 0.1.67",
+    "em065-audit-native-probe = 0.0.1"
+  ]
+}

@@ -1,0 +1,61 @@
+name: EM068 real native 25kV electric consumer feasibility on FULL 0.1.67
+on:
+  push:
+    branches: ['experiment/em068-native-25kv-consumer-probe-20261122']
+    paths:
+      - 'tests/em068-native-demand-feasibility/**'
+      - '.github/workflows/em068-native-demand-feasibility.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native_25kv:
+    runs-on: ubuntu-latest
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify byte-identical original full 0.1.67 mod
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_full_mod_063.py' -v
+          python3 scripts/package_mod.py --output "$RUNNER_TEMP/em068-full"
+          zip="$RUNNER_TEMP/em068-full/ElectrifiedMainline_0.1.67.zip"
+          echo "f496066e0c6c677616daf050435c47ab60196c8f9f6bece5db79b835f6b1a462  $zip" | sha256sum -c -
+          unzip -t "$zip" > "$RUNNER_TEMP/em068-archive.txt"
+          sha256sum "$zip" > "$RUNNER_TEMP/em068-sha.txt"
+          mkdir -p "$RUNNER_TEMP/em068-mods"
+          cp "$zip" "$RUNNER_TEMP/em068-mods/"
+          cp -a tests/em065-audit-native-probe "$RUNNER_TEMP/em068-mods/em065-audit-native-probe_0.0.1"
+          cp -a tests/em068-native-demand-feasibility "$RUNNER_TEMP/em068-mods/em068-native-demand-feasibility_0.0.1"
+          printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em065-audit-native-probe","enabled":true},{"name":"em068-native-demand-feasibility","enabled":true}]}' > "$RUNNER_TEMP/em068-mods/mod-list.json"
+      - name: Official actual Factorio 2.1.24 build87808
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/em068-engine"
+          curl -fL --retry 2 --max-time 150 https://factorio.com/get-download/2.1.24/headless/linux64 -o "$RUNNER_TEMP/em068-engine.tar.xz"
+          tar -xJf "$RUNNER_TEMP/em068-engine.tar.xz" -C "$RUNNER_TEMP/em068-engine"
+          "$RUNNER_TEMP/em068-engine/factorio/bin/x64/factorio" --version | tee "$RUNNER_TEMP/em068-version.txt"
+          grep -F "2.1.24" "$RUNNER_TEMP/em068-version.txt"
+          grep -F "87808" "$RUNNER_TEMP/em068-version.txt"
+      - name: Actual 25kV native EEI consumer A/B with native demand vs separate 0W
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/em068-engine/factorio/bin/x64/factorio"
+          "$bin" --mod-directory "$RUNNER_TEMP/em068-mods" --create "$RUNNER_TEMP/em068-initial.zip" | tee "$RUNNER_TEMP/em068-create.log"
+          "$bin" --mod-directory "$RUNNER_TEMP/em068-mods" --benchmark "$RUNNER_TEMP/em068-initial.zip" --benchmark-ticks 130 --benchmark-runs 1 | tee "$RUNNER_TEMP/em068-native.log"
+          grep -F "[EM068 NATIVE CONSUMER FEASIBILITY PASS]" "$RUNNER_TEMP/em068-native.log"
+          grep -F "[AUDIT EM065 NO POWER AUTO PASS]" "$RUNNER_TEMP/em068-native.log" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EM068-native-25kv-consumer-actual-fullmod-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/em068-sha.txt
+            ${{ runner.temp }}/em068-archive.txt
+            ${{ runner.temp }}/em068-version.txt
+            ${{ runner.temp }}/em068-create.log
+            ${{ runner.temp }}/em068-native.log
+          if-no-files-found: warn

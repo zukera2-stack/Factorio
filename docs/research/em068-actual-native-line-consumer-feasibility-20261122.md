@@ -18,3 +18,6 @@ Proven original #78 fairness and #73 orphan fixes stay retained in 0.1.67; sourc
 
 ## 4. Test status
 PREFLIGHT ONLY; actual native official CI outcome PENDING.
+
+## Test-only native research code implementation
+Fixture uses **unchanged original full 0.1.67** (not Base-only), native 1MW TWO real loco surface from original independent true audit, authenticated mast+technical helper same native network as original EM070 line port on `em-25kv-isolated-bridge-058`. A separate test-only native `em068-native-line-consumer-test` authentic ElectricEnergyInterfacePrototype `secondary_input` is placed at exact physical position of that original native bridge port, using 100kJ native empty buffer and a 2MW input limit; a clone on unpowered separate surface is the 0J negative control. Test demands native `flow_last_tick.primary_demand+secondary_demand>0` while actual sink buffer genuinely fills. Native result PENDING. The test-only sink energy is intentionally NOT granted to locomotive: this is feasibility, not a fixed production energy ledger.
