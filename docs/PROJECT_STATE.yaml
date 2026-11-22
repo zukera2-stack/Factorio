@@ -3173,3 +3173,22 @@ dispatch_cache_067_exact_CI_2026_11_21:
   user_release_permission: false
   human_report: docs/research/25kv-dispatch-cache-067-CI.md
   machine_report: docs/research/25kv-dispatch-cache-067-CI.json
+
+em072_c5_client_gui_observer:
+  date: "2026-11-22"
+  branch: experiment/em072-c5-client-gui-observer
+  source_parent_c4_sha: 6e71496bb7972efc989f8b7d9398591335a43f97
+  scope: read_only_test_addon_on_disposable_C4_fixture
+  source_created: true
+  experimental_main_code_changed: false
+  graphical_client_run: NOT_TESTED
+  vanilla_train_gui_extra_locomotive_visibility: UNVERIFIED
+  installed_player_world_tested: false
+  helper_native_LuaTrain_locomotives_counts_extra: C4_NATIVE_PROVEN
+  c5_observer_reports_counts_not_pixels: true
+  native_Factorio_2_1_24_C5_test: NOT_RUN
+  static_python_parser_test: PENDING_LOCAL_CHECK
+  next_gate: native_client_GUI_screenshots_and_open_event_log_then_owner_decision_if_extra_slot_visible
+  main_merge_authorized: false
+  public_release_authorized: false
+  user_save_modified: false

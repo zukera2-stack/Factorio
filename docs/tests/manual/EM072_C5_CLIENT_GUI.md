@@ -1,0 +1,12 @@
+# EM072-C5 — client GUI trial (disposable game ONLY)
+
+**Not a production mod, NOT a downloadable release.** Base-only test on Factorio 2.1.24 build 87808; report exact client version if different. This test answers **only** whether the *real* hidden helper surfaces in the built-in train UI.
+
+1. Use a **fresh disposable save** with the C4 lab mod `tests/em-c4-loco-mounted-probe` and the C5 companion `tests/em-c5-client-gui-observer` enabled. Do not enable C4/C5 on your existing worlds. The C4 lab creates multiple test tracks when the game reaches tick 2 and uses seeded experimental energy that is not electrically sourced.
+2. Let the scene reach at least tick 350 for station arrivals; from the chat console enter `/em-c5-case em2`. The observer teleports only your character to the chosen lane; it never alters a train. Alternate `/em-c5-case change`, `/em-c5-case em0`, `/em-c5-case vanilla`, `/em-c5-case solo`.
+3. Select a real visible locomotive/wagon and run `/em-c5-inspect`. Open its **ordinary built-in train interface**. Photograph its full train lineup, locomotive portraits/slots, train schedule and wagon cargo. If the UI offers different tabs or a separate train window, take distinct screenshots.
+4. Collect `factorio-current.log` (search for `EMC5|gui_open|` and `EMC5|manual_inspect|`). Run `python tests/verify_c5_gui.py --log path/to/factorio-current.log --output c5-gui-observation.json`. This checks **presence of events**, not GUI pixels.
+5. Compare screenshot with `native_carriages`, `real_locomotives`, `native_locomotives`, `technical_helpers`. Example C4 em2 before removal: three visible real entities, four native rolling-stock entities; one real EM locomotive plus one technical helper counted as two native locomotives. Whether the extra locomotive appears on the screen is the **question**, not a known result.
+6. Record case, tick, client version, mod list, screenshot filenames/hash, whether the phantom is visible/clickable via train GUI, and any unexpected stock/cargo/schedule changes. Mark PASS/FAIL per panel; never infer blueprint/Undo, different rails, multiplayer, performance, or source-backed Joules from this GUI check.
+
+**Stop/escalate:** If the technical helper is visible as a separate item/locomotive in the native train GUI, that fails the current UX requirement. Do not work around it by changing `main`, rewriting cargo/fluid wagon types, or patching native GUI without an owner architecture decision. No automated test can substitute for client screenshots here.
