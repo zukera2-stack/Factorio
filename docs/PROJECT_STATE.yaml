@@ -1,3 +1,61 @@
+em072_current_state_correction_2026_11_22:
+  date: "2026-11-22"
+  base_branch: experiment/em072a5-native-loco-battery-b9
+  documentation_branch: docs/em072-train-bus-current-state-20261122
+  main_source_version: "0.1.62"
+  main_release_authorized: false
+  main_locomotive_actual_energy_source: void
+  native_research_stage_summary: docs/research/EM072_CURRENT_STATE_2026-11-22.md
+  source_of_approved_train_bus: docs/architecture/EM072_TRAIN_ENERGY_BUS.md
+  source_of_original_motor_wagon_spec: docs/plans/DISTRIBUTED_TRACTION_072.md
+  owner_motor_wagon_battery_policy: FORBIDDEN_NO_BATTERIES
+  owner_motor_cargo_wagon_max_extra_power_w: 500000
+  owner_motor_fluid_wagon_max_extra_power_w: 500000
+  motor_wagon_native_tractive_500kW_verified: false
+  motor_wagon_native_regen_verified: false
+  motor_wagon_direct_25kV_pickup_allowed: false
+  motor_wagon_direct_line_energy_storage_allowed: false
+  motor_wagon_regen_destination: shared_train_bus_then_locomotive_to_catenary_or_loco_battery
+  train_bus_membership_from: LuaTrain.carriages
+  per_locomotive_battery_owner: rolling_stock_unit_number_not_train_id
+  every_electric_locomotive_owns_battery: planned_not_implemented_in_gameplay
+  multi_locomotive_common_energy_bus: AUTHOR_APPROVED_CONCEPT_NOT_YET_PRODUCTION
+  train_bus_total_nameplate_w_formula: 2000000_locomotive_count_plus_500000_motor_wagon_count
+  loco_standalone_maneuver_reserve: AUTHOR_REQUESTED_CONCEPT
+  loco_idle_auxiliary_consumption_w: NOT_MEASURED
+  loco_solo_reserve_j_and_duration: NOT_APPROVED
+  loco_battery_capacity_and_max_discharge_w: NOT_APPROVED
+  wagon_regen_priority: physically_measured_braking_J_via_loco_line_first_then_loco_battery
+  author_EM070_AUTO_factory_rescue_policy_B: APPROVED_preserve_even_when_traction_underpowered
+  AUTO_policy_decision_doc: docs/decisions/EM072_AUTO_POLICY_B_2026-11-22.md
+  stationary_corridor_buffer_factory_first_vs_buffer_first: OWNER_CHOICE_OPEN
+  B9_native_loco_battery_lab: VERIFIED_FINITE_SCRIPT_STORAGE_NOT_GAMEPLAY
+  B9_test_capacity_per_loco_j: 2000000
+  B9_test_peak_discharge_per_loco_w: 1000000
+  B9_test_parameters_product_approved: false
+  B10_preclarification_native_engine: "Factorio 2.1.24 build 87808 Base only"
+  B10_native_181tick_SAVE_LOAD_split_rejoin_event_subtest: PASS_IN_LAB_ONLY
+  B10_native_on_train_created_event_count: 6
+  B10_unit_number_energy_preservation: GAME_TESTED_ONE_TOPOLOGY
+  B10_standalone_independent_loco_movetiles: 4.9063
+  B10_native_server_SAVE_tick: 75
+  B10_independent_LOAD_ticks: 106
+  B10_early_cargo_wagon_battery_j: 400000
+  B10_cargo_wagon_battery_case: REJECTED_CONFLICTS_WITH_APPROVED_DESIGN
+  B10_correct_wagon_without_battery_native_test: NOT_PERFORMED
+  B10_previous_member_solo_after_split: NOT_TESTED
+  B10_early_test_source_archive: /Factorio/Network-062/B10-preclarification-archive/
+  B10_audit_document: docs/research/native-consist-b10-scope-audit-2026-11-22.md
+  actual_wagon_500kW_traction: NOT_IMPLEMENTED
+  locomotive_25kV_recharge_and_regen: NOT_IMPLEMENTED
+  actual_player_build_blueprint_undo_mining_battery_persistence: NOT_TESTED
+  multiplayer_60UPS: NOT_TESTED
+  next_gate: compliant_B10R_multi_loco_no_motor_wagon_batteries_then_EM072C_500kW_traction_EM073_charge_EM074_regen
+  production_runtime_files_modified_in_this_branch: false
+  merge_to_main_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072_owner_approved_policy_B_factory_rescue:
   decision_date: "2026-11-22"
   status: approved_by_owner
