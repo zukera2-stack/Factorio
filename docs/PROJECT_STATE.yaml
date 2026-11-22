@@ -1,3 +1,41 @@
+em072_real_native_integrated_071_official_final:
+  date: "2026-11-23"
+  branch: experiment/em072-integrated-071-native-giant-dual-20261123
+  tested_gameplay_commit: a04b5f51998525a13293468d4a8a67970973397c
+  official_ci_run: 45072992463
+  official_ci_result: success
+  official_artifact_id: 14774151350
+  official_inner_zip_sha256: 46dd835ab1aadb46f32a4c6de73683b12b2efe191a052018b66688bb998edb7c
+  exact_fullmod_native_forward_and_ownership_tests: 18
+  exact_fullmod_native_forward_and_ownership_pass: 18
+  source_paid_hidden_motors_created_by_game_not_qa: true
+  engine: Factorio_2_1_24_build87808_linux_headless
+  64_motor_tiles_tick1200: 1690.234
+  64_passive_tiles_tick1200: 7.465
+  64_push_pull_one_way_tiles_tick1200: 1679.234
+  128_motor_tiles_tick1200: 1152.000
+  200_motor_tiles_tick1200: 651.277
+  200_motor_dual_em_same_head_tiles_tick1200: 644.793
+  256_motor_tiles_tick1200: 451.281
+  owner_loss_and_split_real_j_dissipation: pass
+  genuine_25kv_offgrid_0w_1mw_brownout: pass
+  auto_station_native_train_route: pass
+  new_tick0_independent_server_disk_save_tick125_reload_tick300_exact: pass
+  critical_reverse_boost_feature: fail
+  reverse_cab_motor_tiles_tick300: 68.973
+  reverse_cab_passive_tiles_tick300: 70.086
+  reverse_motor_native_burner_J_tick300: 16666.667
+  reverse_user_acceptance_blocked: true
+  reverse_reproduction: tests/run_em072_reverse_boundary.sh
+  game_files_total: 139
+  approved_png_unchanged: 83
+  hidden_max_motor_wagons_supported: 256
+  gui_blueprint_undo_mp_ups_user_real_saves: untested
+  main_modified: false
+  release_authorized: false
+  main_merge_authorized: false
+  report: docs/research/EM072_NATIVE_071_INTEGRATED_MOTOR_TRAIN_2026-11-23.md
+
 em072_real_native_integrated_motor_071:
   date: "2026-11-23"
   branch: experiment/em072-integrated-071-native-giant-dual-20261123
