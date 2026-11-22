@@ -3210,3 +3210,22 @@ em072_c5_client_gui_observer:
   main_merge_authorized: false
   public_release_authorized: false
   user_save_modified: false
+
+em072_c5_compact_human_fixture:
+  date: "2026-11-22"
+  complaint: old_13_lane_long_track_C4_benchmark_unusable_for_human_client_GUI
+  fix_branch: experiment/em072-c5-client-gui-observer
+  C4_lab_unchanged_when_C5_absent: true
+  C4_tick_and_train_created_handler_suppressed_when_C5_active: true
+  C5_compact_rail_tiles: 29
+  C5_compact_track_center_x: 12
+  C5_visible_rolling_stock: [em-c4-real-electric, em-c4-motor-cargo, em-c4-motor-fluid]
+  C5_native_hidden_helper: em-c4-technical-booster-1000
+  C5_hidden_helper_J: 0
+  source_paid_J_claim: false
+  creates_one_scene_near_player: true
+  needs_commands: false
+  actual_factorio_client: NOT_RUN
+  next_step: CI_build_new_2innerZIP_then_user_1_screenshot
+  old_C5_actions_run_45032105889: OBSOLETE_HUGE_HUMAN_STAND
+  main_modified: false

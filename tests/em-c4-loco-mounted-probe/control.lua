@@ -135,6 +135,8 @@ local function build(c)
  return true
 end
 script.on_event(defines.events.on_train_created,function(ev)
+ -- C5 GUI companion owns its own compact fixture; preserve C4 benchmark when C5 absent.
+ if script.active_mods["em-c5-client-gui-observer"] then return end
  local t=ev.train
  local nr,nh=0,0
  if t and t.valid then nr=count_real(t);nh=count_helper(t) end
@@ -145,6 +147,8 @@ script.on_event(defines.events.on_train_created,function(ev)
  out('train_created','tick='..game.tick..'|id='..(t and t.valid and t.id or -1)..'|old1='..tostring(ev.old_train_id_1)..'|old2='..tostring(ev.old_train_id_2)..'|real='..tostring(nr))
 end)
 script.on_event(defines.events.on_tick,function(ev)
+ -- Do not create 13x720-tile C4 benchmark lanes in a HUMAN C5 GUI session.
+ if script.active_mods["em-c5-client-gui-observer"] then return end
  local tick=ev.tick
  if tick==2 then setup() end
  if tick==6 then

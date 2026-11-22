@@ -365,6 +365,7 @@ jobs:
           luac5.2 -p tests/em-c4-loco-mounted-probe/control.lua
           luac5.2 -p tests/em-c5-client-gui-observer/control.lua
           python3 -m unittest discover -s tests -p 'test_c5_gui_parser.py' -v
+          python3 -m unittest discover -s tests -p 'test_c5_compact.py' -v
       - name: Package and verify exactly two experimental Factorio mod ZIPs
         run: |
           set -euo pipefail

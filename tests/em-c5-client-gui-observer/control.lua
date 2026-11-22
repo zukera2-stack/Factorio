@@ -1,33 +1,26 @@
--- EM072-C5 research companion to em-c4-loco-mounted-probe.
--- Only observes native GUI openings / train composition. Not a production mod.
--- Does not modify rolling stock, schedule, energy, or engine state.
-local lanes={solo=0,vanilla=40,em0=80,em1=120,em2=160,em4=200,remove=240,change=280,multi=320,zero=360,em2drive=400,multi_owner_removed=440,late=480}
-local function rolling(e)
-  if not (e and e.valid) then return false end
-  return e.type=="locomotive" or e.type=="cargo-wagon" or e.type=="fluid-wagon"
+-- EM072-C5 COMPACT HUMAN GUI fixture, not the 13-lane C4 robot benchmark.
+-- Separate C5 companion enabled => C4 automatically suppresses its large setup.
+-- Disposable map only. No real EM070 Joules, no production electric traction.
+local X=12
+local function is_rolling(e)
+  return e and e.valid and (e.type=="locomotive" or e.type=="cargo-wagon" or e.type=="fluid-wagon")
 end
-local function case_at(x)
-  for label,lane_x in pairs(lanes) do
-    if math.abs(x-lane_x)<3 then return label end
-  end
-  return "unknown"
-end
-local function snapshot(entity)
-  if not rolling(entity) then return "entity=none|train_id=none" end
-  local t=entity.train
-  if not (t and t.valid) then return "entity="..entity.name.."|train_id=none" end
+local function snapshot(e)
+  if not is_rolling(e) then return "entity=none|train_id=none" end
+  local t=e.train
+  if not (t and t.valid) then return "entity="..e.name.."|train_id=none" end
   local helpers,locos,motors,real,stock=0,0,0,0,{}
-  for _,e in ipairs(t.carriages) do
-    local is_helper=e.name:find("^em%-c4%-technical%-booster%-")~=nil
-    if is_helper then helpers=helpers+1 end
-    if e.type=="locomotive" and not is_helper then real=real+1 end
-    if e.name=="em-c4-motor-cargo" or e.name=="em-c4-motor-fluid" then motors=motors+1 end
-    stock[#stock+1]=e.name
+  for _,v in ipairs(t.carriages) do
+    local hidden=v.name:find("^em%-c4%-technical%-booster%-")~=nil
+    if hidden then helpers=helpers+1 end
+    if v.type=="locomotive" and not hidden then real=real+1 end
+    if v.name=="em-c4-motor-cargo" or v.name=="em-c4-motor-fluid" then motors=motors+1 end
+    stock[#stock+1]=v.name
   end
   locos=#t.locomotives.front_movers+#t.locomotives.back_movers
-  return "entity="..entity.name..
-    "|unit="..tostring(entity.unit_number)..
-    "|case="..case_at(entity.position.x)..
+  return "entity="..e.name..
+    "|unit="..tostring(e.unit_number)..
+    "|case=compact"..
     "|train_id="..t.id..
     "|native_carriages="..#t.carriages..
     "|real_locomotives="..real..
@@ -36,60 +29,86 @@ local function snapshot(entity)
     "|motor_wagons="..motors..
     "|native_stock="..table.concat(stock,",")
 end
-local function observe(kind,player,entity,gui_type)
+local function observe(kind,player,entity,gui)
   log("EMC5|"..kind.."|tick="..game.tick..
       "|player="..player.index..
-      "|gui_type="..tostring(gui_type).."|"..snapshot(entity))
+      "|gui_type="..tostring(gui).."|"..snapshot(entity))
 end
-script.on_event(defines.events.on_gui_opened,function(event)
-  local p=game.get_player(event.player_index)
-  if p then observe("gui_open",p,event.entity,event.gui_type) end
+script.on_event(defines.events.on_gui_opened,function(ev)
+  local p=game.get_player(ev.player_index)
+  if p then observe("gui_open",p,ev.entity,ev.gui_type) end
 end)
-script.on_event(defines.events.on_gui_closed,function(event)
-  local p=game.get_player(event.player_index)
-  if p then observe("gui_close",p,event.entity,event.gui_type) end
+script.on_event(defines.events.on_gui_closed,function(ev)
+  local p=game.get_player(ev.player_index)
+  if p then observe("gui_close",p,ev.entity,ev.gui_type) end
 end)
-commands.add_command("em-c5-inspect","Log selected rolling stock without changing the train",function(cmd)
+commands.add_command("em-c5-inspect","Log selected C5 train composition",function(cmd)
   if not cmd.player_index then return end
   local p=game.get_player(cmd.player_index)
   if not p then return end
-  local e=p.selected
-  if not rolling(e) then
-    p.print("EMC5: select a visible locomotive or wagon first.")
+  if not is_rolling(p.selected) then
+    p.print("C5: choose a real visible locomotive or wagon first.")
     return
   end
-  observe("manual_inspect",p,e,"selected")
-  p.print("EMC5: train composition logged to factorio-current.log. This does NOT prove native GUI invisibility.")
+  observe("manual_inspect",p,p.selected,"selected")
+  p.print("C5: train composition recorded in factorio-current.log; screenshot of GUI still needed.")
 end)
-commands.add_command("em-c5-case","Teleport the player to a C4 test lane: em2, change, vanilla, solo, etc.",function(cmd)
-  if not cmd.player_index then return end
-  local p=game.get_player(cmd.player_index)
-  if not p then return end
-  local x=lanes[cmd.parameter or ""]
-  if not x then
-    p.print("EMC5: unknown lane. Choose em2, change, vanilla, solo, multi, late, etc.")
-    return
+local function make_scene()
+  local surface=game.surfaces[1]
+  surface.request_to_generate_chunks({X,0},2)
+  surface.force_generate_chunk_requests()
+  local n=0
+  -- Just 29 straight rail pieces, one train and zero automatic drive.
+  for y=-24,32,2 do
+    local rail=surface.create_entity{
+      name="straight-rail",position={x=X,y=y},
+      force="player",direction=defines.direction.north}
+    assert(rail and rail.valid,"C5 failed to build short rail at y="..y)
+    n=n+1
   end
-  -- Teleport affects the player only; never changes rolling stock or trains.
-  local list=p.surface.find_entities_filtered{
-    area={{x-2,-360},{x+2,360}},
-    name={"em-c4-real-electric","em-c4-motor-cargo","em-c4-motor-fluid","locomotive"}
-  }
-  table.sort(list,function(a,b)
-    if a.name=="em-c4-real-electric" and b.name~="em-c4-real-electric" then return true end
-    if b.name=="em-c4-real-electric" and a.name~="em-c4-real-electric" then return false end
-    return a.position.y<b.position.y
-  end)
-  local found=list[1]
-  if not found then
-    p.print("EMC5: no test stock in lane; open a fresh disposable C4 save and allow setup to finish.")
-    return
+  local loco=surface.create_entity{name="em-c4-real-electric",position={x=X,y=0},force="player",direction=defines.direction.north}
+  local cargo=surface.create_entity{name="em-c4-motor-cargo",position={x=X,y=7},force="player",direction=defines.direction.north}
+  local fluid=surface.create_entity{name="em-c4-motor-fluid",position={x=X,y=14},force="player",direction=defines.direction.north}
+  assert(loco and cargo and fluid,"C5 compact visible train creation failed")
+  storage.c5_compact={loco=loco,cargo=cargo,fluid=fluid}
+  log("EMC5|compact_created|rails="..n.."|x="..X.."|visible=3|span=14|train_id="..loco.train.id)
+end
+local function mount()
+  local s=storage.c5_compact
+  assert(s and s.loco and s.loco.valid and s.cargo and s.fluid,"C5 visible train missing")
+  local t=s.loco.train
+  assert(t and t.valid and t.speed==0,"C5 must mount only at full stop")
+  local detached=s.loco.disconnect_rolling_stock(defines.rail_direction.back)
+  assert(detached,"C5 could not temporarily decouple the stopped loco")
+  local helper=s.loco.surface.create_entity{
+    name="em-c4-technical-booster-1000",
+    position={x=X,y=3.5},force="player",direction=defines.direction.north}
+  assert(helper and helper.valid,"C5 technical module placement failed")
+  helper.minable_flag=false
+  helper.destructible=false
+  -- Deliberately ZERO J. This tests native GUI composition, NOT electric traction.
+  -- C4 lab's artificial 10 MJ fuel is never seeded in this human UI case.
+  local same=helper.train and s.loco.train and helper.train.id==s.loco.train.id
+  assert(same,"C5 native helper did not join visible train")
+  local full=s.loco.train
+  local helpers,real,motors=0,0,0
+  for _,e in ipairs(full.carriages) do
+    if e.name=="em-c4-technical-booster-1000" then helpers=helpers+1 end
+    if e.name=="em-c4-real-electric" then real=real+1 end
+    if e.name=="em-c4-motor-cargo" or e.name=="em-c4-motor-fluid" then motors=motors+1 end
   end
-  local pos=p.surface.find_non_colliding_position("character",{x=found.position.x+4,y=found.position.y},10,0.5)
-  if pos and p.teleport(pos,found.surface) then
-    p.print("EMC5: at "..(cmd.parameter or "").."; select visible train, open native GUI, capture screenshot.")
-    observe("case_jump",p,found,"teleport")
-  else
-    p.print("EMC5: safe player teleport was not possible; no train changed.")
+  assert(#full.carriages==4 and helpers==1 and real==1 and motors==2,"C5 compact train composition mismatch")
+  log("EMC5|compact_ready|tick="..game.tick.."|"..snapshot(s.loco)..
+      "|helper_remaining_J="..tostring(helper.burner.remaining_burning_fuel))
+  for _,p in pairs(game.connected_players) do
+    if p.character and p.character.valid then
+      local pos=p.surface.find_non_colliding_position("character",{X+5,0},10,0.5)
+      if pos then p.teleport(pos,s.loco.surface) end
+    end
+    p.print("C5: one train is just next to you. Click the REAL locomotive, open its normal train GUI, take a screenshot. No commands required.")
   end
+end
+script.on_event(defines.events.on_tick,function(ev)
+  if ev.tick==2 then make_scene() end
+  if ev.tick==3 then mount() end
 end)
