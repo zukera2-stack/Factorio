@@ -1,3 +1,28 @@
+em072_120mw_adequate_native_source:
+  date: "2026-11-23"
+  branch: experiment/em072-120mw-native-test-feeder-20261123
+  parent_commit: 2cdbc63697aa529a3a7538750f1b60692113d605
+  experimental_mod_version: "0.1.72"
+  factory_qa_source_w: 120000000
+  native_25kv_bridge_limit_w: 120000000
+  native_secondary_input_sink_limit_w: 120000000
+  200_motor_extra_nameplate_w: 100000000
+  single_em_nominal_w: 2000000
+  native_sink_request_w_tick300: 102000000
+  native_120mw_motor_paid_J_tick300: 283333333.333
+  native_120mw_distance_tiles_tick300: 113.559
+  native_20mw_motor_paid_J_tick300: 51300000
+  native_20mw_distance_tiles_tick300: 16.824
+  upgraded_bridge_at_20mw_source_same_baseline: true
+  native_0w_offgrid_negative: pass
+  real_engine: Factorio_2_1_24_build87808
+  official_072_GHA_zip_confirmed: false
+  120mw_normal_player_source_or_substation_approved: false
+  original_20mw_main_modified: false
+  reversed_two_head_additional_traction: still_fail_071
+  no_main_merge_or_release: true
+  research_file: docs/research/EM072_120MW_NATIVE_POWER_SOURCE_2026-11-23.md
+
 em072_owner_directional_logical_boosters_20261123:
   owner_clarification_date: "2026-11-23"
   status: accepted_design_not_implemented
@@ -599,7 +624,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.71" # EXPERIMENT native 25kV source-paid 500kW motor wagons; 139 files, no public release
+  mod_version: "0.1.72" # experimental 120MW real native power bridge only, NOT release
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"

@@ -58,7 +58,7 @@ local function donor(network,force)
 end
 
 local SINK="em-25kv-native-traction-consumer-068"
-local MAX_SOURCE_PER_TICK=20000000/60
+local MAX_SOURCE_PER_TICK=120000000/60
 local function native_state()
   storage.em=storage.em or {}
   storage.em.traction_native_068=storage.em.traction_native_068 or

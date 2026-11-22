@@ -3,11 +3,11 @@
 -- em-c5-technical-booster-* or EEI native traction sinks, NEVER credits burners,
 -- NEVER sets LuaTrain.speed. This is intentionally stronger than the old probes.
 local CASE=script.test_arg or 'single'
-local BIG={long64=64,long64dual=64,long64passive=64,long64pushpull=64,long128=128,long128dual=128,long128passive=128,long200=200,long200dual=200,long200passive=200,long256=256}
+local BIG={long64=64,long64dual=64,long64passive=64,long64pushpull=64,long128=128,long128dual=128,long128passive=128,long200=200,long200high=200,long200highdual=200,long200high20=200,long200highzero=200,long200highoffgrid=200,long200highpassive=200,long200dual=200,long200passive=200,long256=256}
 local N=BIG[CASE] or 2
 local DOUBLE=CASE=='double_same' or CASE=='double_opposite' or CASE=='long64pushpull' or CASE:find('dual$')~=nil
-local GRID=(CASE~='zero' and CASE~='offgrid')
-local SUPPLY_W=(CASE=='brownout' and 1000000 or CASE=='zero' and 0 or 20000000)
+local GRID=(CASE~='zero' and CASE~='offgrid' and not CASE:find('highzero$') and not CASE:find('highoffgrid$'))
+local SUPPLY_W=(CASE=='brownout' and 1000000 or CASE=='zero' and 0 or CASE:find('highzero$') and 0 or CASE:find('high20$') and 20000000 or CASE:find('high') and 120000000 or 20000000)
 local MOTOR=(CASE~='nonmotor' and CASE:find('passive$')==nil)
 local REAL=(CASE~='vanilla')
 local function say(k,t)log('[EM072 INT QA] '..CASE..'|'..k..'|'..t)end
@@ -34,7 +34,7 @@ local function setup()
  for x=xmin,xmax,128 do s.request_to_generate_chunks({x=x,y=0},2) end
  s.force_generate_chunk_requests()
  for x=xmin,xmax,2 do spawn(s,'em-high-speed-straight-rail',x,1,defines.direction.east)end
- if CASE~='offgrid' then
+ if CASE~='offgrid' and not CASE:find('highoffgrid$') then
   for x=xmin+18.5,xmax-2,20 do
    spawn(s,'em-35kv-catenary-pole',x,2.5,defines.direction.east)
   end
@@ -241,6 +241,14 @@ script.on_event(defines.events.on_tick,function(e)
     ck(math.abs(st.loco.position.x-st.start_x)<0.5,'train moved for free with no authentic grid')
    end
   else ck(#hs==0,'non-em or nonmotor train generated helper') end
-  if (not BIG[CASE] or N>=200) and CASE~='auto' then say('PASS','real integrated full-mod native scenario; long200/256 limited to first 300 ticks') end
+  if CASE=='long200high' then
+     ck(SUPPLY_W==120000000,'actual factory primary-output must provide 120MW')
+     ck((paid.motor_paid_J or 0)>200000000,'120MW source did not exceed prior 20MW ledger ceiling')
+     ck(math.abs(st.loco.position.x-st.start_x)>80,'200 motor wagons did not really accelerate with 120MW')
+   elseif CASE=='long200high20' then
+     ck(SUPPLY_W==20000000 and (paid.motor_paid_J or 0)<70000000,
+       '20MW original source must still limit paid motor Joules')
+   end
+   if (not BIG[CASE] or N>=200) and CASE~='auto' then say('PASS','real integrated full-mod native scenario; long200/256 limited to first 300 ticks') end
  end
 end)

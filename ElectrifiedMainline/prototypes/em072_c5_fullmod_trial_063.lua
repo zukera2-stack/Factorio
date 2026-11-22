@@ -48,7 +48,7 @@ data:extend({
 local empty="__core__/graphics/empty.png"
 -- Exact +500 kW increments through 256 motor wagons (128 MW nameplate).
 -- One hidden engine per TRAIN, never 256 hidden engines for 256 wagons.
--- Physical 25kV substation remains limited to real 20MW; native burner is
+-- Experimental 0.1.72 bridge lab can carry up to 120MW from a genuine grid; burner is
 -- credited only by already paid 25kV Joules, not by changing speed.
 for motor_count=1,256 do
   local kilowatts=500*motor_count
