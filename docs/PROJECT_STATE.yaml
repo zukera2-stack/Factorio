@@ -2306,3 +2306,14 @@ em066_autonomous_fullmod_campaign_20261122:
   main_062_unchanged: true
   docs: docs/research/em066-autonomous-fullmod-native-boundary-20261122.md
   project_release_authorized: false
+  native_workflow_full_zip_parallel_original_065: .github/workflows/em066-autonomous-fullmod-native.yml
+  native_fullmod_game_package_hash_enforced: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  native_both_lanes_download_same_GHA_artifact: true
+  native_fault_injection_lanes: [electrical, rail_stock]
+  native_electrical_additional_scarcity_probe: tests/em065-audit-native-probe
+  native_fault_real_disk_save_runner: tests/run_em066_parallel_fault.py
+  test_source_has_no_gameplay_modifications: true
+  expected_preexisting_issue_73: FAIL_TO_DETECT
+  expected_preexisting_issue_77: FAIL_TO_DETECT
+  expected_preexisting_issue_78: FAIL_TO_DETECT
+  current_result: CI_PENDING

@@ -1,0 +1,143 @@
+name: EM066 autonomous FULLMOD 2-lane boundary (original 0.1.65 baseline)
+
+on:
+  push:
+    branches: ['experiment/em066-autonomous-fullmod-boundaries-20261122']
+    paths:
+      - 'tests/em063-fault-*/**'
+      - 'tests/em065-audit-native-probe/**'
+      - 'tests/run_em066_parallel_fault.py'
+      - '.github/workflows/em066-autonomous-fullmod-native.yml'
+      - 'ElectrifiedMainline/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full_package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    outputs:
+      mod_sha: ${{ steps.archive.outputs.mod_sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify current entire real mod code and create ONE official full ZIP
+        id: archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_full_mod_063.py' -v
+          python3 -m unittest discover -s tests -p 'test_package_mod.py' -v
+          python3 scripts/package_mod.py --output "$RUNNER_TEMP/em066-full"
+          zip="$RUNNER_TEMP/em066-full/ElectrifiedMainline_0.1.65.zip"
+          test -s "$zip"
+          unzip -t "$zip"
+          # No gameplay files changed since source baseline, original complete
+          # official game archive must remain byte-identical to proven build.
+          echo "a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e  $zip" | sha256sum -c -
+          sha256sum "$zip" | tee "$RUNNER_TEMP/em066-full/sha256.txt"
+          printf 'mod_sha=%s\n' "$(sha256sum "$zip" | cut -d ' ' -f1)" >> "$GITHUB_OUTPUT"
+          unzip -Z1 "$zip" > "$RUNNER_TEMP/em066-full/manifest.txt"
+          grep -F 'ElectrifiedMainline_0.1.65/control.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
+          grep -F 'ElectrifiedMainline_0.1.65/prototypes/em072_c5_fullmod_trial_063.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
+          grep -F 'ElectrifiedMainline_0.1.65/scripts/traction_paid_065.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
+          printf 'FULL_REAL_GAME_ARCHIVE VERIFIED_SHA256=%s\n' "$(sha256sum "$zip" | cut -d ' ' -f1)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: EM066-exact-fullmod-065-original-game
+          path: ${{ runner.temp }}/em066-full/*
+          if-no-files-found: error
+          retention-days: 30
+
+  full_mod_native:
+    name: Native fullmod / ${{ matrix.lane }}
+    needs: full_package
+    strategy:
+      fail-fast: false
+      matrix:
+        lane: [electrical, rail_stock]
+    runs-on: ubuntu-latest
+    timeout-minutes: 19
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: EM066-exact-fullmod-065-original-game
+          path: ${{ runner.temp }}/em066-exact
+      - name: Verify same immutable complete game ZIP in BOTH independent jobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/em066-native/mods" "$RUNNER_TEMP/em066-native/logs"
+          test -s "$RUNNER_TEMP/em066-exact/ElectrifiedMainline_0.1.65.zip"
+          test "${{ needs.full_package.outputs.mod_sha }}" = "a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e"
+          cp "$RUNNER_TEMP/em066-exact/ElectrifiedMainline_0.1.65.zip" "$RUNNER_TEMP/em066-native/mods/"
+          sha256sum "$RUNNER_TEMP/em066-native/mods/ElectrifiedMainline_0.1.65.zip" | tee "$RUNNER_TEMP/em066-native/logs/fullmod-sha256.txt"
+          echo "a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e  $RUNNER_TEMP/em066-native/mods/ElectrifiedMainline_0.1.65.zip" | sha256sum -c -
+          cp -a "tests/em063-fault-${{ matrix.lane == 'electrical' && 'electrical' || 'rail-stock' }}" "$RUNNER_TEMP/em066-native/mods/em063-fault-${{ matrix.lane == 'electrical' && 'electrical' || 'rail-stock' }}_0.0.1"
+          printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em063-fault-${{ matrix.lane == 'electrical' && 'electrical' || 'rail-stock' }}","enabled":true}]}' > "$RUNNER_TEMP/em066-native/mods/mod-list.json"
+      - name: Download exact official Factorio 2.1.24 build 87808
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/em066-engine"
+          curl -fL --retry 2 --max-time 150 https://factorio.com/get-download/2.1.24/headless/linux64 -o "$RUNNER_TEMP/em066-game.tar.xz"
+          tar -xJf "$RUNNER_TEMP/em066-game.tar.xz" -C "$RUNNER_TEMP/em066-engine"
+          "$RUNNER_TEMP/em066-engine/factorio/bin/x64/factorio" --version | tee "$RUNNER_TEMP/em066-native/logs/version.txt"
+          grep -F '2.1.24' "$RUNNER_TEMP/em066-native/logs/version.txt"
+          grep -F '87808' "$RUNNER_TEMP/em066-native/logs/version.txt"
+      - name: Native real 20MW EEI failure matrix or full catalog owner-orphan with true SAVE LOAD
+        shell: bash
+        run: |
+          set +e
+          python3 tests/run_em066_parallel_fault.py \
+            --factorio "$RUNNER_TEMP/em066-engine/factorio/bin/x64/factorio" \
+            --mods "$RUNNER_TEMP/em066-native/mods" \
+            --work-dir "$RUNNER_TEMP/em066-native" \
+            --lane "${{ matrix.lane }}" > "$RUNNER_TEMP/em066-native/logs/native-runner.log" 2>&1
+          code=$?
+          set -e
+          cat "$RUNNER_TEMP/em066-native/logs/native-runner.log"
+          echo "$code" > "$RUNNER_TEMP/em066-native/logs/native-runner-exit.txt"
+          # Collect diagnostics in both cases even when product is known FAIL.
+          if test "${{ matrix.lane }}" = electrical; then
+            set -euo pipefail
+            mkdir -p "$RUNNER_TEMP/em066-audit/mods"
+            cp "$RUNNER_TEMP/em066-exact/ElectrifiedMainline_0.1.65.zip" "$RUNNER_TEMP/em066-audit/mods/"
+            cp -a tests/em065-audit-native-probe "$RUNNER_TEMP/em066-audit/mods/em065-audit-native-probe_0.0.1"
+            printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em065-audit-native-probe","enabled":true}]}' > "$RUNNER_TEMP/em066-audit/mods/mod-list.json"
+            bin="$RUNNER_TEMP/em066-engine/factorio/bin/x64/factorio"
+            "$bin" --mod-directory "$RUNNER_TEMP/em066-audit/mods" --create "$RUNNER_TEMP/em066-audit-start.zip" > "$RUNNER_TEMP/em066-native/logs/audit-create.log" 2>&1
+            "$bin" --mod-directory "$RUNNER_TEMP/em066-audit/mods" --benchmark "$RUNNER_TEMP/em066-audit-start.zip" --benchmark-ticks 330 --benchmark-runs 1 > "$RUNNER_TEMP/em066-native/logs/audit-native.log" 2>&1
+            grep -F '[AUDIT EM065 25KV NATIVE FLOW]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
+            grep -F '[AUDIT EM065 NO POWER AUTO PASS]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
+            grep -F '[AUDIT EM065 MULTITRAIN RESULT]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
+            if grep -Fq '[AUDIT EM065 FAIRNESS DEFECT REPRODUCED]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"; then
+              echo "FEATURE_FAIL: issue #78 first-come-first-served train starvation" | tee "$RUNNER_TEMP/em066-native/logs/feature-failures.txt"
+            fi
+            if grep -Eq 'native_primary_demand_J_tick=0\.000 native_secondary_demand_J_tick=0\.000' "$RUNNER_TEMP/em066-native/logs/audit-native.log"; then
+              echo "FEATURE_FAIL: issue #77 native 25kV consumer demand zero" | tee -a "$RUNNER_TEMP/em066-native/logs/feature-failures.txt"
+            fi
+          fi
+          if test "${{ matrix.lane }}" = rail_stock && test "$code" -ne 0; then
+            if grep -Rq 'PERSISTENT_ORPHAN_HIDDEN_LOCOMOTIVE' "$RUNNER_TEMP/em066-native/logs"; then
+              echo "FEATURE_FAIL: issue #73 orphan hidden locomotive after real owner destroyed" | tee "$RUNNER_TEMP/em066-native/logs/feature-failures.txt"
+            fi
+          fi
+          echo "NATIVE_RUNNER_EXIT=$code" >> "$RUNNER_TEMP/em066-native/logs/feature-failures.txt"
+          if test "$code" -ne 0 || grep -q '^FEATURE_FAIL' "$RUNNER_TEMP/em066-native/logs/feature-failures.txt"; then
+            echo "::error::Complete real mod native features have reproducible failures; see artifact logs"
+            exit 1
+          fi
+          echo "FULLMOD_NATIVE_FEATURE_GATES PASS"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EM066-fullmod-native-${{ matrix.lane }}-${{ github.sha }}
+          path: ${{ runner.temp }}/em066-native/logs/**
+          if-no-files-found: warn
+          retention-days: 30

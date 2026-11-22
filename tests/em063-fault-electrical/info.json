@@ -1,0 +1,11 @@
+{
+  "name": "em063-fault-electrical",
+  "version": "0.0.1",
+  "title": "EM063 native fullmod fault: electrical loss and recovery",
+  "author": "EM 063 Native Fault QA",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "ElectrifiedMainline = 0.1.63"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "em063-fault-rail-stock",
+  "version": "0.0.1",
+  "title": "EM063 native fullmod fault: real rails and rolling stock",
+  "author": "EM 063 Native Fault QA",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "ElectrifiedMainline = 0.1.63"
+  ]
+}
