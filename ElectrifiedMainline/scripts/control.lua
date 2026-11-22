@@ -585,9 +585,10 @@ local function on_tick(event)
     art030.on_tick(event.tick,graph)
     ghost_visual023.on_tick(event.tick)
     -- After real EM070 native bridge settlement and exact confirmed contact geometry.
-    paidTraction065.on_tick(event.tick,art030,pantograph049)
-    -- Native C5 zero-J stock GC runs even when train diagnostics are throttled.
+    -- Reconcile actual native consists BEFORE charging: never grant an
+    -- orphaned/mismatched booster J from this tick's native 25kV sink.
     helper067.on_tick(event.tick)
+    paidTraction065.on_tick(event.tick,art030,pantograph049)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
@@ -761,3 +762,21 @@ end)
 
 -- 0.1.63 TEST BRANCH ONLY: opt-in single scene with genuine main mod objects.
 require("scripts.em072_c5_fullmod_trial_063")
+-- EM072 experimental read-only QA API. Exposes only numeric IDs and Joules;
+-- no helper spawning, no arbitrary credit, no gameplay execution hook.
+remote.add_interface('em072_native_qa_071',{
+    snapshot=function(helper_id)
+        local h=helper_id and game.get_entity_by_unit_number(helper_id)
+        local hs=storage.em and storage.em.helper067 or {}
+        local p=storage.em and storage.em.traction_paid_065 or {}
+        local n=storage.em and storage.em.traction_native_068 or {}
+        return {
+            owner=h and hs.owners and hs.owners[helper_id] or nil,
+            created=hs.created or 0,removed=hs.orphan_helpers_removed or 0,
+            lost_J=hs.removed_loss_J or 0,external_J=hs.external_loss_J or 0,
+            paid_J=p.debited_J or 0,motor_paid_J=p.motor_paid_J or 0,
+            motor_grants=p.motor_grants or 0,
+            native_sink_paid_J=n.metered_native_J or 0,
+        }
+    end
+})

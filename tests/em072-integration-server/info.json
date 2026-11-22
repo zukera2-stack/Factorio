@@ -1,0 +1,11 @@
+{
+  "name": "em072-integration-server",
+  "version": "0.0.1",
+  "title": "EM072 native integration real server disk save test",
+  "author": "local QA",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0",
+    "ElectrifiedMainline = 0.1.71"
+  ]
+}

@@ -1,3 +1,36 @@
+em072_real_native_integrated_motor_071:
+  date: "2026-11-23"
+  branch: experiment/em072-integrated-071-native-giant-dual-20261123
+  base_experimental_commit: 9bb32364dbd2ec3c18cddc6c2d9da42c661daee3
+  version: "0.1.71"
+  factorio_native_engine: "2.1.24 build87808 linux headless"
+  full_mod_game_files: 139
+  original_approved_png_unchanged: 83
+  gameplay_changes: [info.json, prototypes/em072_c5_fullmod_trial_063.lua, scripts/helper_lifecycle_067.lua, scripts/traction_paid_065.lua, scripts/control.lua]
+  native_energy_bus_real_25kv_sink_paid: pass_local_source
+  qa_overlay_creates_helper_or_credits_j: false
+  max_native_motor_wagons_supported: 256
+  extra_native_hidden_engines_per_train: 1
+  native_long_64_motor_tiles_t1200: 1690.234
+  native_long_64_passive_tiles_t1200: 7.465
+  native_long_64_pushpull_two_head_tiles_t1200: 1679.234
+  native_long_128_motor_tiles_t1200: 1152.000
+  native_long_200_motor_tiles_t300: 16.824
+  native_long_200_two_head_tiles_t300: 16.816
+  native_long_256_motor_tiles_t300: 11.836
+  native_auto_hsr_station: pass_t500
+  native_offgrid_and_0w_free_traction: pass_negative
+  native_1mw_source_scarcity: pass
+  paid_j_loss_on_split_and_owner_dismantle: pass
+  real_independent_server_save_reload_identical_tick300: pass
+  original_full_071_official_ci_zip: not_yet_built
+  official_071_exact_artifact_native_retets: pending
+  200_and_256_full_route: not_yet_verified
+  gui_undo_blueprint_mp_user_saves: not_tested
+  release_authorized: false
+  main_merge_authorized: false
+  report: docs/research/EM072_NATIVE_071_INTEGRATED_MOTOR_TRAIN_2026-11-23.md
+
 em072_lossy_dismantling_final_official_070:
   date: "2026-11-22"
   test_gameplay_commit: c8dcc3c495498cccff680ec219e9a7728e1c068c
@@ -505,7 +538,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.70" # EXPERIMENT approved paid-helper dismantle loss and charged orphan removal, unreleased
+  mod_version: "0.1.71" # EXPERIMENT native 25kV source-paid 500kW motor wagons; 139 files, no public release
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"

@@ -46,11 +46,16 @@ data:extend({
 })
 
 local empty="__core__/graphics/empty.png"
-for _,kilowatts in ipairs({500,1000,2000}) do
+-- Exact +500 kW increments through 256 motor wagons (128 MW nameplate).
+-- One hidden engine per TRAIN, never 256 hidden engines for 256 wagons.
+-- Physical 25kV substation remains limited to real 20MW; native burner is
+-- credited only by already paid 25kV Joules, not by changing speed.
+for motor_count=1,256 do
+  local kilowatts=500*motor_count
   local p=table.deepcopy(assert(data.raw.locomotive.locomotive))
   p.name="em-c5-technical-booster-"..kilowatts
   p.max_power=kilowatts.."kW"
-  p.max_speed=1.2
+  p.max_speed=2 -- do not cap a 2 tiles/tick HSR locomotive to 1.2
   p.weight=1
   p.energy_source={
     type="burner", fuel_categories={"em-c5-test-internal-energy-063"},
@@ -78,4 +83,4 @@ for _,kilowatts in ipairs({500,1000,2000}) do
     "not-deconstructable","not-on-map"}
   data:extend({p})
 end
-log("[EM C5 FULL 0.1.63] Real cargo/fluid wagons + zero-J technical helpers declared; no EM070-paid traction implementation")
+log("[EM072 0.1.71] 256 exact-power finite-J technical booster prototypes; shared native energy allocation only")

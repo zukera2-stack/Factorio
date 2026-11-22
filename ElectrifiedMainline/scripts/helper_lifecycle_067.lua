@@ -1,18 +1,19 @@
--- EM072 owner-scoped hidden traction helper lifecycle (EXPERIMENT ONLY).
--- The engine drives the real train. Owner destruction / decoupling retires the
--- hidden locomotive; its already paid, finite burner remainder is a physical
--- dismantling loss. Never refund to grid or mint an escrow. No train.speed writes.
+-- EM072/071 EXPERIMENT: one native, finite-J motor booster per REAL train.
+-- Its energy comes exclusively from EM070 native traction sink via 065.
+-- The visible cargo/fluid wagons stay native; owner is a real EM loco unit ID.
+-- Dismantling dissipates already-paid helper burner J by owner's explicit policy.
 local M={}
-local EM="em-electric-locomotive"
-local MOTOR={ ["em-motor-cargo-wagon"]=true,["em-motor-fluid-wagon"]=true }
-local PREFIX="em-c5-technical-booster-"
-local INTERVAL=10
-local POWER={
- ["em-c5-technical-booster-500"]=500000,
- ["em-c5-technical-booster-1000"]=1000000,
- ["em-c5-technical-booster-2000"]=2000000,
-}
-local function live(id)
+local EM='em-electric-locomotive'
+local MOTOR={['em-motor-cargo-wagon']=true,['em-motor-fluid-wagon']=true}
+local MAX_MOTORS=256
+local PERIOD=10
+local function power(name)
+  if type(name)~='string' then return nil end
+  local kw=tonumber(name:match('^em%-c5%-technical%-booster%-(%d+)$'))
+  if kw and kw>=500 and kw<=MAX_MOTORS*500 and kw%500==0 then return kw*1000 end
+  return nil
+end
+local function entity(id)
   local e=id and game.get_entity_by_unit_number(id)
   return e and e.valid and e or nil
 end
@@ -20,170 +21,298 @@ local function state()
   storage.em=storage.em or {}
   storage.em.helper067=storage.em.helper067 or {}
   local s=storage.em.helper067
-  s.owners=s.owners or {} -- helper unit_number -> exact EM locomotive unit_number
+  s.owners=s.owners or {}
   s.removed_loss_J=s.removed_loss_J or 0
   s.external_loss_J=s.external_loss_J or 0
   s.external_unobserved=s.external_unobserved or 0
   s.orphan_helpers_removed=s.orphan_helpers_removed or 0
   s.cleanup_events=s.cleanup_events or 0
+  s.created=s.created or 0
+  s.failed=s.failed or 0
+  s.deferred=s.deferred or 0
   s.dirty=s.dirty or false
   return s
 end
-local function associated(helper)
-  local train=helper.train
-  if not (train and train.valid) then return nil,0,0 end
-  local closest,best,alternate=nil,math.huge,math.huge
-  local n_motor,sum_w=0,0
-  for _,car in ipairs(train.carriages) do
-    if car.valid then
-      if MOTOR[car.name] then n_motor=n_motor+1 end
-      sum_w=sum_w+(POWER[car.name] or 0)
-      if car.name==EM and car.unit_number then
-        local dx=car.position.x-helper.position.x
-        local dy=car.position.y-helper.position.y
-        local d=dx*dx+dy*dy
-        if d<best then alternate=best;best=d;closest=car
-        elseif d<alternate then alternate=d end
-      end
-    end
+local function n_motors(train)
+  if not (train and train.valid) then return 0 end
+  local n=0
+  for _,e in ipairs(train.carriages) do
+    if e.valid and MOTOR[e.name] then n=n+1 end
   end
-  -- With no established owner mapping, the physically adjacent true EM may
-  -- be inferred ONLY if it is unique and within 4.5 tiles of its helper.
-  if best>4.5*4.5 or math.abs(alternate-best)<0.01 then closest=nil end
-  return closest,n_motor,sum_w
+  return n
 end
-local function fuel_J(helper)
-  local burner=helper and helper.valid and helper.burner
-  if not burner then return 0 end
-  return math.max(0,burner.remaining_burning_fuel or 0)
+local function helper_list(train)
+  local r={}
+  for _,e in ipairs(train.carriages) do
+    if e.valid and power(e.name) then r[#r+1]=e end
+  end
+  table.sort(r,function(a,b) return a.unit_number<b.unit_number end)
+  return r
 end
-local function retire(helper,why)
-  if not (helper and helper.valid and POWER[helper.name]) then return false end
+local function real_list(train)
+  local r={}
+  for _,e in ipairs(train.carriages) do
+    if e.valid and e.name==EM and e.unit_number then r[#r+1]=e end
+  end
+  table.sort(r,function(a,b)return a.unit_number<b.unit_number end)
+  return r
+end
+local function fuel(e)
+  return e and e.valid and e.burner and math.max(0,e.burner.remaining_burning_fuel or 0) or 0
+end
+local function retire(helper,reason)
+  if not (helper and helper.valid and power(helper.name)) then return false end
   local s=state()
   local id=helper.unit_number
   local owner=s.owners[id]
+  local j=fuel(helper)
   local train=helper.train
-  if train and train.valid then
-    local real=false
-    for _,e in ipairs(train.carriages) do if e.valid and e.name==EM then real=true;break end end
-    if not real then train.manual_mode=true end
-  end
-  local waste=fuel_J(helper)
-  -- Do not copy this energy into another burner, EEI, or Lua storage reserve.
-  -- It was paid for before dismantling; only the loss meter retains a number.
-  s.owners[id]=nil -- Remove before raised callback; do not count as external loss twice.
+  if train and train.valid and #real_list(train)==0 then train.manual_mode=true end
+  s.owners[id]=nil -- before destruction (including raised callback)
   local ok=helper.destroy{raise_destroy=true}
   if not ok or helper.valid then
     s.owners[id]=owner
-    error("[EM072 RETIRE FAIL] native hidden booster refused removal unit="..id)
+    error('[EM072 RETIRE FAIL] helper='..tostring(id))
   end
   s.orphan_helpers_removed=s.orphan_helpers_removed+1
-  s.removed_loss_J=s.removed_loss_J+waste
-  log(string.format("[EM072 DISMANTLE LOSS] tick=%d helper=%d owner=%s lost_J=%.3f sum_lost_J=%.3f reason=%s",
-    game.tick,id,tostring(owner),waste,s.removed_loss_J,tostring(why)))
+  s.removed_loss_J=s.removed_loss_J+j
+  log(string.format('[EM072 DISMANTLE LOSS] tick=%d helper=%d owner=%s lost_J=%.3f sum_lost_J=%.3f reason=%s',
+    game.tick,id,tostring(owner),j,s.removed_loss_J,tostring(reason)))
   return true
 end
-local function monitor(helper,why)
+-- A helper is never allowed to charge simply by sitting under overhead wires.
+-- It must be physically attached to exactly its registered genuine owner and
+-- correspond to exactly the current native consist's MOTOR wagon count.
+function M.targets()
   local s=state()
-  local id=helper.unit_number
-  local owner=s.owners[id]
-  local nearest,n_motor,sum_w=associated(helper)
-  if not owner and nearest then
-    owner=nearest.unit_number
-    s.owners[id]=owner
-  end
-  local real=live(owner)
-  if (owner and not real) or (real and (not helper.train or not real.train or
-        not helper.train.valid or not real.train.valid or helper.train.id~=real.train.id))
-        or not nearest and not real or n_motor==0 or sum_w>n_motor*500000 then
-    retire(helper,why)
-  end
-end
-local function snapshot_helpers()
-  local helpers,seen={},{}
-  if not (game.train_manager and game.train_manager.get_trains) then return helpers end
-  for _,name in ipairs({"em-c5-technical-booster-500","em-c5-technical-booster-1000","em-c5-technical-booster-2000"}) do
-    for _,train in pairs(game.train_manager.get_trains{stock=name}) do
-      if train.valid then
-        for _,car in ipairs(train.carriages) do
-          if car.valid and POWER[car.name] and car.unit_number and not seen[car.unit_number] then
-            seen[car.unit_number]=true
-            helpers[#helpers+1]=car
-          end
-        end
-      end
-    end
-  end
-  table.sort(helpers,function(a,b)return a.unit_number<b.unit_number end)
-  return helpers
-end
-function M.on_built(entity)
-  if entity and entity.valid and POWER[entity.name] then
-    local s=state()
-    local nearest=associated(entity)
-    if nearest then s.owners[entity.unit_number]=nearest.unit_number end
-    s.dirty=true
-  end
-end
-function M.on_train_created()
-  state().dirty=true
-end
-function M.on_removed(entity)
-  if not (entity and entity.valid) then return end
-  local s=state()
-  if POWER[entity.name] then
-    -- Script/user destruction may give a pre-destruction event. Count actual
-    -- measured native paid buffer as authorised loss; do not refund.
-    local id=entity.unit_number
-    if s.owners[id] then
-      local lost=fuel_J(entity)
-      s.external_loss_J=s.external_loss_J+lost
-      s.owners[id]=nil
-      log(string.format("[EM072 EXTERNAL HELPER LOSS] tick=%d helper=%d lost_J=%.3f",game.tick,id,lost))
-    end
-    return
-  end
-  if entity.name~=EM or not entity.unit_number then return end
-  local id=entity.unit_number
-  -- Native event fires while the removed true locomotive still exists.
-  -- Retire only helpers that are explicitly mapped to this owner or those
-  -- whose physically closest owner is this exact unit.
-  local all=snapshot_helpers()
-  for _,h in ipairs(all) do
-    if h.valid and (s.owners[h.unit_number]==id or
-      (not s.owners[h.unit_number] and (function()
-        local nearest=associated(h)
-        return nearest and nearest.unit_number==id
-      end)())) then retire(h,"owner-removed-event") end
-  end
-  s.dirty=true
-end
-function M.on_tick(tick)
-  local s=state()
-  -- Fast, O(number of registered helpers), guards against native destruction
-  -- with raise_destroy=false (no event) without scanning all world trains.
+  local results,seen={},{ }
   local ids={}
   for id in pairs(s.owners) do ids[#ids+1]=id end
   table.sort(ids)
   for _,id in ipairs(ids) do
-    local h=live(id)
-    if h then monitor(h,"registered-owner-check")
-    else
-      -- External no-event destroy: remaining J no longer observable.
-      -- Never invent a refund or pretend an exact loss amount was measured.
-      s.external_unobserved=s.external_unobserved+1
-      s.owners[id]=nil
-      log("[EM072 UNOBSERVED LOSS] tick="..tick.." helper="..id.." no native energy snapshot")
+    local h=entity(id); local o=entity(s.owners[id])
+    if h and o and power(h.name) and o.name==EM
+      and h.force==o.force and h.surface==o.surface
+      and h.train and h.train.valid and o.train and o.train.valid
+      and h.train.id==o.train.id and not seen[h.train.id] then
+      local n=n_motors(h.train)
+      if n>=1 and n<=MAX_MOTORS and power(h.name)==n*500000 then
+        results[#results+1]={helper=h,owner=o,watts=n*500000,motors=n}
+        seen[h.train.id]=true
+      end
     end
   end
-  if tick%INTERVAL~=0 and not s.dirty then return end
-  s.dirty=false
-  for _,h in ipairs(snapshot_helpers()) do
-    if h.valid then monitor(h,"native-train-reconciliation") end
+  return results
+end
+local function dir_to_neighbor(owner,neighbor)
+  -- Native 2.1 rolling-stock front/back is relative to locomotive orientation.
+  local f=owner.orientation*2*math.pi
+  local forward_x=math.sin(f)
+  local forward_y=-math.cos(f)
+  local dx=neighbor.position.x-owner.position.x
+  local dy=neighbor.position.y-owner.position.y
+  local dot=dx*forward_x+dy*forward_y
+  return dot>0 and defines.rail_direction.front or defines.rail_direction.back
+end
+local function candidate(train)
+  local cars=train.carriages
+  local locos=real_list(train)
+  -- Choose a real EM locomotive with an adjacent *real* rolling stock car.
+  -- Stable by unit_number, prefer the native locomotive's rear joint.
+  local found={}
+  for _,owner in ipairs(locos) do
+    for _,near in ipairs(cars) do
+      if near.valid and near.unit_number~=owner.unit_number and not power(near.name) then
+        local dx=near.position.x-owner.position.x
+        local dy=near.position.y-owner.position.y
+        local dist=math.sqrt(dx*dx+dy*dy)
+        if math.abs(dist-7)<0.20 then
+          local side=dir_to_neighbor(owner,near)
+          found[#found+1]={owner=owner,neighbor=near,side=side,
+            priority=(side==defines.rail_direction.back and 0 or 1),id=owner.unit_number}
+        end
+      end
+    end
   end
-  if tick%60==0 then
-    log(string.format("[EM072 LOSS LEDGER] tick=%d removed=%d dismantle_J=%.3f external_J=%.3f unobserved=%d",
-      tick,s.orphan_helpers_removed,s.removed_loss_J,s.external_loss_J,s.external_unobserved))
+  table.sort(found,function(a,b)
+    if a.priority~=b.priority then return a.priority<b.priority end
+    return a.id<b.id
+  end)
+  return found[1]
+end
+local function verify_visible(train,visible)
+  if not (train and train.valid) then return false end
+  local seen={}
+  for _,c in ipairs(train.carriages) do if c.valid then seen[c.unit_number]=true end end
+  for _,rec in ipairs(visible) do
+    if not rec.entity.valid or not seen[rec.id] or
+      math.abs(rec.x-rec.entity.position.x)>0.001 or
+      math.abs(rec.y-rec.entity.position.y)>0.001 then return false end
+  end
+  return true
+end
+local function mount(train,n)
+  if not (train and train.valid and train.speed==0 and n>0 and n<=MAX_MOTORS) then return false end
+  local spot=candidate(train)
+  if not spot then
+    log('[EM072 MOUNT BLOCKED] tick='..game.tick..' train='..train.id..' reason=no_native_7_tile_joint')
+    state().failed=state().failed+1
+    return false
+  end
+  local owner,near=spot.owner,spot.neighbor
+  local auto=not train.manual_mode
+  local schedule=train.schedule
+  local visible={}
+  for _,e in ipairs(train.carriages) do
+    if e.valid and not power(e.name) then visible[#visible+1]={entity=e,id=e.unit_number,x=e.position.x,y=e.position.y} end
+  end
+  local s=state()
+  s.inserting=true
+  local disconnected=owner.disconnect_rolling_stock(spot.side)
+  if not disconnected then
+    s.inserting=nil;s.failed=s.failed+1
+    log('[EM072 MOUNT BLOCKED] train='..train.id..' reason=disconnect_refused')
+    return false
+  end
+  local pos={x=(owner.position.x+near.position.x)/2,y=(owner.position.y+near.position.y)/2}
+  local h=owner.surface.create_entity{name='em-c5-technical-booster-'..(500*n),
+    -- LuaEntity.direction is 0 for rolling stock on rails in 2.1.24;
+    -- actual engine heading is LuaEntity.orientation (0.75=west).
+    position=pos,orientation=owner.orientation,force=owner.force,
+    raise_built=false,create_build_effect_smoke=false}
+  s.inserting=nil
+  if not (h and h.valid and h.train and owner.valid and owner.train and
+    h.train.valid and owner.train.valid and h.train.id==owner.train.id and
+    n_motors(h.train)==n and verify_visible(h.train,visible)) then
+    if h and h.valid then h.destroy() end
+    if owner.valid and near.valid then owner.connect_rolling_stock(spot.side) end
+    s.failed=s.failed+1
+    log('[EM072 MOUNT FAIL] tick='..game.tick..' owner='..owner.unit_number..' motors='..n..' reconnected_original=true')
+    return false
+  end
+  s.owners[h.unit_number]=owner.unit_number
+  h.minable_flag=false;h.destructible=false
+  if not (h.burner and fuel(h)==0) then
+    retire(h,'initial-nonzero-j')
+    error('[EM072 MOUNT FAIL] unpaid hidden burner starts with J')
+  end
+  if schedule then owner.train.schedule=schedule end
+  if auto then owner.train.manual_mode=false end
+  s.created=s.created+1
+  log(string.format('[EM072 AUTO MOUNT] tick=%d train=%d owner=%d helper=%d motors=%d nameplate_W=%d visible=%d mode=%s',
+    game.tick,owner.train.id,owner.unit_number,h.unit_number,n,500000*n,#visible,
+    auto and 'AUTO' or 'MANUAL'))
+  return true
+end
+local function scan_real_trains()
+  local trains=game.train_manager.get_trains{stock=EM}
+  local tracked={}
+  for _,t in pairs(trains) do
+    if t.valid and not tracked[t.id] then
+      tracked[t.id]=true
+      local n=n_motors(t)
+      local helpers=helper_list(t)
+      -- Authenticate legacy test/save helpers only when there is exactly one
+      -- actual EM locomotive adjacent to the already-existing helper.
+      for _,h in ipairs(helpers) do
+        if not state().owners[h.unit_number] then
+          local near,best=nil,math.huge
+          for _,o in ipairs(real_list(t)) do
+            local dx=o.position.x-h.position.x
+            local dy=o.position.y-h.position.y
+            local d=math.sqrt(dx*dx+dy*dy)
+            if d<4.5 and d<best then near=o;best=d end
+          end
+          if near then state().owners[h.unit_number]=near.unit_number end
+        end
+      end
+      if #helpers>1 then
+        for i=2,#helpers do retire(helpers[i],'duplicate-train-helper') end
+        helpers=helper_list(t)
+      end
+      if #helpers==1 then
+        local h=helpers[1]
+        if n==0 or (n<=MAX_MOTORS and power(h.name)~=n*500000) then
+          if t.speed==0 or n==0 then
+            retire(h,'consist-changed')
+            helpers={}
+          end
+        end
+      end
+      if #helpers==0 and n>0 then
+        if n>MAX_MOTORS then
+          state().failed=state().failed+1
+          log('[EM072 LIMIT] train='..t.id..' motor_wagons='..n..' maximum='..MAX_MOTORS..' no_claim_of_full_traction')
+        elseif t.speed==0 then mount(t,n)
+        else state().deferred=state().deferred+1 end
+      end
+    end
+  end
+end
+function M.on_built(e)
+  if e and e.valid and (e.name==EM or MOTOR[e.name] or power(e.name)) then
+    state().dirty=true
+  end
+end
+function M.on_train_created(_)
+  if not state().inserting then state().dirty=true end
+end
+function M.on_removed(e)
+  if not (e and e.valid) then return end
+  local s=state()
+  if power(e.name) then
+    local id=e.unit_number
+    if s.owners[id] then
+      local j=fuel(e)
+      s.owners[id]=nil
+      s.external_loss_J=s.external_loss_J+j
+      log(string.format('[EM072 EXTERNAL HELPER LOSS] tick=%d helper=%d lost_J=%.3f',game.tick,id,j))
+    end
+    s.dirty=true
+    return
+  end
+  if e.name==EM and e.unit_number then
+    local owner=e.unit_number
+    local ids={}
+    for helper,id in pairs(s.owners) do if id==owner then ids[#ids+1]=helper end end
+    table.sort(ids)
+    for _,id in ipairs(ids) do
+      local h=entity(id)
+      if h then retire(h,'owner-removed-event') end
+    end
+  end
+  if e.name==EM or MOTOR[e.name] then s.dirty=true end
+end
+function M.on_tick(tick)
+  local s=state()
+  local ids={}
+  for id in pairs(s.owners) do ids[#ids+1]=id end
+  table.sort(ids)
+  for _,id in ipairs(ids) do
+    local h=entity(id)
+    local o=entity(s.owners[id])
+    if not h then
+      s.owners[id]=nil
+      s.external_unobserved=s.external_unobserved+1
+      log('[EM072 UNOBSERVED LOSS] tick='..tick..' helper='..id..' native J unavailable')
+    elseif not o or o.name~=EM or not h.train or not o.train or
+        not h.train.valid or not o.train.valid or h.train.id~=o.train.id then
+      retire(h,'owner-or-train-disconnected')
+    else
+      local n=n_motors(h.train)
+      if n==0 or power(h.name)>n*500000 then
+        retire(h,'missing-or-decreased-motors')
+      end
+    end
+  end
+  if tick%PERIOD==0 or s.dirty then
+    s.dirty=false
+    scan_real_trains()
+  end
+  if tick%600==0 then
+    log(string.format('[EM072 MOTOR STATE] tick=%d created=%d retired=%d dismantle_J=%.3f external_J=%.3f unknown=%d fails=%d deferred=%d registered=%d',
+      tick,s.created,s.orphan_helpers_removed,s.removed_loss_J,s.external_loss_J,
+      s.external_unobserved,s.failed,s.deferred,#M.targets()))
   end
 end
 return M

@@ -1,8 +1,10 @@
 -- EM065 research P0: finite, source-paid native locomotive traction.
 -- ALL charge comes from live native EM070 output buffer on same real 25kV network.
--- No speed writes, no fabricated energy, and NO wagon helper charge.
+-- No speed writes or fabricated energy. One authenticated native booster per
+-- train gets a fair allocation from the SAME actual paid native 25kV sink.
 local M={MAX_PER_TICK=2000000/60,BUFFER_CAP=2000000}
 local FUEL="em-c5-test-internal-joule-063"
+local motor067=require("scripts.helper_lifecycle_067")
 local function entity(id)
   if not id then return nil end
   local e=game.get_entity_by_unit_number(id)
@@ -157,32 +159,39 @@ end
 -- Source-paid Joules are allocated per actual native EM070 output buffer.
 -- Two equal-need real locomotives can never be charged greedily by unit_number.
 -- No train.speed writes; no extra fuel; only the real EM locomotive has a reserve.
-local function eligible(e,art,pantograph,stats)
-  if not (e and e.valid and e.name=="em-electric-locomotive"
-    and e.unit_number and e.burner) then return nil end
+local function eligible(e,art,pantograph,stats,target)
+  local contact_owner=target and target.owner or e
+  if not (e and e.valid and e.unit_number and e.burner and
+      contact_owner and contact_owner.valid and
+      contact_owner.name=="em-electric-locomotive") then return nil end
+  if target then
+    if e.name:match('^em%-c5%-technical%-booster%-%d+$')==nil or
+      e.train.id~=contact_owner.train.id or e.force~=contact_owner.force or
+      e.surface~=contact_owner.surface then return nil end
+  elseif e.name~="em-electric-locomotive" then return nil end
+  local limit=target and target.watts/60 or M.MAX_PER_TICK
+  local cap=target and limit or M.BUFFER_CAP
   local burner=e.burner
   local old=math.max(0,burner.remaining_burning_fuel or 0)
-  if old>M.BUFFER_CAP+1 then
-    error("[EM066 PAID FAIL] locomotive exceeded finite 2MJ reserve; unit="..
-      e.unit_number.." J="..old)
+  if old>cap+1 then
+    error('[EM072 PAID FAIL] finite native burner exceeded cap unit='..e.unit_number..' J='..old..' cap='..cap)
   end
-  -- Preserve original cap/near-cap policy: don't create a tiny extra grant
-  -- after the train is already within half a maximum native input tick.
-  if old>=M.BUFFER_CAP-M.MAX_PER_TICK/2 then return nil end
-  local net,why=network_for_contact(e,art,pantograph)
+  -- Keep one native-tick reserve in the hidden engine; real EM retains 2 MJ.
+  if old>=cap-limit/2 then return nil end
+  local net,why=network_for_contact(contact_owner,art,pantograph)
   if not net then
     stats.miss_contact=stats.miss_contact+1
     stats.last_contact_reason=why
     return nil
   end
-  local source=donor(net,e.force)
+  local source=donor(net,contact_owner.force)
   if not source then
     stats.miss_supply=stats.miss_supply+1
     return nil
   end
-  local want=math.max(0,math.min(M.MAX_PER_TICK,M.BUFFER_CAP-old))
+  local want=math.max(0,math.min(limit,cap-old))
   if want<=0 then return nil end
-  return {e=e,burner=burner,source=source,want=want,grant=0}
+  return {e=e,burner=burner,source=source,want=want,grant=0,limit=limit,cap=cap,kind=target and "motor" or "loco"}
 end
 
 local function credit_paid(req,stats)
@@ -196,7 +205,7 @@ local function credit_paid(req,stats)
   end
   local burner=req.burner
   local old=math.max(0,burner.remaining_burning_fuel or 0)
-  amount=math.max(0,math.min(amount,M.MAX_PER_TICK,M.BUFFER_CAP-old,
+  amount=math.max(0,math.min(amount,req.limit,req.cap-old,
                             output.energy))
   if amount<=0 then return end
   if not burner.currently_burning then
@@ -224,6 +233,10 @@ local function credit_paid(req,stats)
   native_state().metered_native_J=native_state().metered_native_J+amount
   stats.credited_J=stats.credited_J+amount
   stats.charged_ticks=stats.charged_ticks+1
+  if req.kind=="motor" then
+    stats.motor_paid_J=(stats.motor_paid_J or 0)+amount
+    stats.motor_grants=(stats.motor_grants or 0)+1
+  end
 end
 
 local function fair_charge(owners,art,pantograph,stats)
@@ -237,6 +250,17 @@ local function fair_charge(owners,art,pantograph,stats)
         groups[id]={source=req.source,requests={}}
         ids[#ids+1]=id
       end
+      groups[id].requests[#groups[id].requests+1]=req
+    end
+  end
+  -- Source topology, contact and donor authorization belong ONLY to an EM
+  -- locomotive. Helpers cannot touch a mast directly and never get a second
+  -- independent reservoir or second direct EEI sink.
+  for _,target in ipairs(motor067.targets()) do
+    local req=eligible(target.helper,art,pantograph,stats,target)
+    if req then
+      local id=req.source.output.unit_number
+      if not groups[id] then groups[id]={source=req.source,requests={}};ids[#ids+1]=id end
       groups[id].requests[#groups[id].requests+1]=req
     end
   end
@@ -303,6 +327,13 @@ local function all_real_locomotives()
 end
 
 function M.requests(art,pantograph,dispatch)
+  local helpers={}
+  for _,target in ipairs(motor067.targets()) do
+    local old=target.helper.burner and (target.helper.burner.remaining_burning_fuel or 0) or 0
+    local cap=target.watts/60
+    local left=math.max(0,math.min(cap,cap-old))
+    helpers[target.owner.unit_number]=(helpers[target.owner.unit_number] or 0)+left
+  end
   -- The native EM070 planner otherwise sees zero factory-grid/line demand:
   -- a Lua locomotive has no native electrical energy source. Advertise only
   -- finite, verified pending train demand on that REAL anchor network.
@@ -310,7 +341,7 @@ function M.requests(art,pantograph,dispatch)
   for _,e in ipairs(all_real_locomotives()) do
     local burner=e.burner
     if burner then
-      local left=M.BUFFER_CAP-(burner.remaining_burning_fuel or 0)
+      local left=math.min(M.MAX_PER_TICK,math.max(0,M.BUFFER_CAP-(burner.remaining_burning_fuel or 0)))+(helpers[e.unit_number] or 0)
       if left>1 then
         local net=network_for_contact(e,art,pantograph)
         if net then
@@ -346,7 +377,7 @@ function M.requests(art,pantograph,dispatch)
             local active_donor=donor(net,e.force)
             if not has_native or not active_donor then
               requests[key]=(requests[key] or 0)+
-                math.min(M.MAX_PER_TICK,left)
+                left
             end
           end
         end
@@ -382,8 +413,9 @@ function M.on_tick(tick,art,pantograph)
       tick,nSinks,nativeDemand,total,n.metered_native_J))
   end
   if tick%60==0 then
-    log(string.format("[EM065 PAID LEDGER] tick=%d locos=%d debited_J=%.1f credited_J=%.1f charged_ticks=%d no_contact=%d no_supply=%d",
-      tick,#owners,stats.debited_J,stats.credited_J,stats.charged_ticks,
+    log(string.format('[EM072 PAID LEDGER] tick=%d locos=%d helpers=%d debited_J=%.1f credited_J=%.1f motor_paid_J=%.1f motor_grants=%d charged_ticks=%d no_contact=%d no_supply=%d',
+      tick,#owners,#motor067.targets(),stats.debited_J,stats.credited_J,
+      stats.motor_paid_J or 0,stats.motor_grants or 0,stats.charged_ticks,
       stats.miss_contact,stats.miss_supply))
     log("[EM065 CONTACT] last_reason="..tostring(stats.last_contact_reason))
   end
