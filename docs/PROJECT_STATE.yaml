@@ -3189,7 +3189,17 @@ em072_c5_client_gui_observer:
   native_Factorio_2_1_24_C5_test: NOT_RUN
   c5_CI_test_zip_job: c5_disposable_client_test_artifact
   ci_test_distribution: GitHub_Actions_artifact_only_two_inner_mod_ZIPs
-  c5_CI_zip_status: PENDING_RESULT
+  c5_CI_zip_status: PASS_ACTIONS_SOURCE_28154591c46cddd783c9f9f009bccaf88648fed2
+  c5_CI_run_id: 45032105889
+  c5_CI_run_result: success
+  c5_CI_artifact_id: 14758161154
+  c5_CI_artifact_size_bytes: 7920
+  c5_CI_artifact_link: https://github.com/zukera2-stack/Factorio/actions/runs/45032105889/artifacts/14758161154
+  c5_CI_artifact_expiry: "2026-12-22"
+  c5_CI_inner_C4_sha256: fcc731eb289564b27146a3e58cfe7e976120275340035d006b54f10b99ddff7b
+  c5_CI_inner_C5_sha256: d98e0b5c0a92977daa8700d01cd66818b0dd7478cd5066372ad563a85d3fc3d0
+  c5_CI_lua_5_2_syntax_and_python_parser: PASS
+  c5_CI_native_client_GUI_test: NOT_RUN
   c5_test_mods: [em-c4-loco-mounted-probe_0.0.1.zip, em-c5-client-gui-observer_0.0.1.zip]
   static_python_parser_test: PASS_2_OF_2_OFFLINE_BYTE_EXACT_GITHUB_SOURCE
   python_py_compile: PASS

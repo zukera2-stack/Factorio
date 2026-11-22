@@ -47,6 +47,8 @@ No same-type public mod claiming **native GUI suppression of a real hidden locom
 ## 7b. Installation artifact provenance / packaging gate
 The dedicated **GitHub Actions** `c5_disposable_client_test_artifact` job in existing `.github/workflows/build-mod.yml` runs only on the C5 experiment branch. It runs Lua 5.2 syntax and C5 parser tests, strictly whitelists C4 and C5 mod files, verifies archive contents byte-for-byte, and uploads exactly the two versioned mod ZIPs as ONE GitHub Actions artifact. The wrapper ZIP downloaded from Actions is **not** a Factorio mod: extract it, then copy both inner ZIPs into `mods/` unchanged. No production ElectrifiedMainline mod or user save is in the research package. A CI PASS would establish syntax/package checks only, not game GUI behaviour. The test ZIP must not be called an approved release.
 
+**Actual CI result (2026-11-22):** [Build workflow run #45032105889](https://github.com/zukera2-stack/Factorio/actions/runs/45032105889) **SUCCESS** for source commit `28154591c46cddd783c9f9f009bccaf88648fed2`, C5 dedicated job **PASS**, `luac5.2 -p` for 3 Lua files PASS, C5 Python parser tests 2/2 PASS, contents verified and archived. [Download the exact two-inner-ZIP research artifact](https://github.com/zukera2-stack/Factorio/actions/runs/45032105889/artifacts/14758161154), ID `14758161154`, outer 7920 bytes. C4 inner archive SHA256 `fcc731eb289564b27146a3e58cfe7e976120275340035d006b54f10b99ddff7b`; C5 inner archive SHA256 `d98e0b5c0a92977daa8700d01cd66818b0dd7478cd5066372ad563a85d3fc3d0`. Artifact retention through 2026-12-22. **No graphical client test; hidden locomotive GUI visibility remains UNVERIFIED.**
+
 ## 8–9. Experiment result and next gate
 | Case | Status | Needed evidence |
 |---|---|---|
