@@ -1,3 +1,19 @@
+em069_lua_regression_gate_correction:
+  date: "2026-11-22"
+  experiment_version: "0.1.69"
+  first_official_build_run: 45057859427
+  first_official_build_result: lua_preflight_failed
+  cause: legacy_068_only_test_geometry_guards
+  test_files_updated:
+    - tests/35kv_topology.lua
+    - tests/25kv_auto_wire_028.lua
+    - tests/25kv_span_029.lua
+    - tests/25kv_visual_geometry_048.lua
+  runtime_game_files_changed_again: false
+  actual_069_native_local_results: unchanged_20_positive
+  official_build_recheck: pending
+  release_authorized: false
+
 em069_local_native_recovery:
   source_parent_commit: 147ac491e28da741e27585bc1e6326ee34d7d794
   target_branch: experiment/em069-local-native-recovery-20261122
