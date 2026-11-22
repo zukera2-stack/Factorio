@@ -481,7 +481,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.69" # EXPERIMENT local native sink bootstrap and paid-buffer recovery, unreleased
+  mod_version: "0.1.70" # EXPERIMENT approved paid-helper dismantle loss and charged orphan removal, unreleased
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
