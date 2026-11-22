@@ -2129,3 +2129,25 @@ em072_fullmod_063_verified_delivery:
   sourcebacked_motor_wagon_traction: NOT_IMPLEMENTED
   no_main_merge: true
   public_release: false
+
+em063_owner_no_load_legacy_pole_audit_20261122:
+  date: "2026-11-22"
+  branch: experiment/em063-source-traction-audit-legacy-pole-20261122
+  source_fullmod_063_sha: 2650d44b3caccc63189d6516b14bcd11d4800b8d
+  input_video_duration_seconds: 59.117
+  screenshot_normal_ordinary_pole_recipe: CONFIRMED
+  screenshot_actual_25kv_train_load: NO_DRAW_OBSERVED
+  source_em_loco_native_energy_source: void
+  source_em_loco_max_power_W: 2000000
+  source_EM070_to_em_loco_joule_link: NOT_IMPLEMENTED
+  legacy_mod_item: em-electric-pole
+  legacy_item_is_ordinary_native_pole: true
+  regular_pole_needed_for_25kv: false
+  native_main_apparel_or_visual_changes_authorized: false
+  planned_legacy_retirement_migration: retain_ID_hide_recipe_and_item
+  native_safe_retirement_test: PENDING
+  source_paid_traction_research: PENDING
+  train_hidden_helper_orphan_issue: https://github.com/zukera2-stack/Factorio/issues/73
+  main_merge_authorized: false
+  public_release_authorized: false
+  research: docs/research/em063-owner-no-load-redundant-pole-20261122.md
