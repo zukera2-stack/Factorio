@@ -101,10 +101,40 @@ script.on_event(defines.events.on_tick,function(e)
       "|speed="..s.positive.train.speed.."|remaining_J="..
       s.positive.burner.remaining_burning_fuel)
   end
+  -- This independent observer reads the **actual Factorio native catenary
+  -- electric network demand** from the genuine paid sink, never its own Lua
+  -- virtual network flow. It is intentionally NOT part of fullmod source.
+  if e.tick>=5 and e.tick<=240 then
+    local lab=game.surfaces["em-25kv-isolated-bridge-058"]
+    if lab then
+      storage.em068_native_meter=storage.em068_native_meter or
+        {peak_native_demand=0,peak_native_sink=0,seen_sinks=0}
+      local m=storage.em068_native_meter
+      for _,consumer in ipairs(lab.find_entities_filtered{name="em-25kv-native-traction-consumer-068"}) do
+        if consumer.valid then
+          m.seen_sinks=math.max(m.seen_sinks,1)
+          m.peak_native_sink=math.max(m.peak_native_sink,consumer.energy)
+          local net=consumer.electric_network
+          local parent=net and net.parent_network
+          local f=parent and parent.flow_last_tick
+          if f then
+            m.peak_native_demand=math.max(m.peak_native_demand,
+              (f.primary_demand or 0)+(f.secondary_demand or 0))
+          end
+        end
+      end
+    end
+  end
   if e.tick==240 then
     local paid=s.positive.burner.remaining_burning_fuel
     local unpowered=s.negative.burner.remaining_burning_fuel
     assert(unpowered==0,"negative off-line loco received unpaid J: "..unpowered)
+    local nativeMeter=storage.em068_native_meter
+    assert(nativeMeter and nativeMeter.seen_sinks>0 and
+      nativeMeter.peak_native_demand>1,
+      "EM068 P0 FAIL: genuine catenary native network saw NO train electrical demand")
+    log("[EM068 REAL 25KV POWER DEMAND PASS] native_max_network_demand_J_tick="..
+      nativeMeter.peak_native_demand.."|source_paid_native_sink=true|no_manual_output_second_debit")
     assert(s.before_motion_J>100000,"source never paid 2MW locomotive")
     assert(s.distance_by_180 and s.distance_by_180>2,
       "native true EM locomotive did not move >2 tiles with paid J")

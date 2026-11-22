@@ -1,8 +1,8 @@
-name: EM067 autonomous FULLMOD 2-lane boundary (real 0J helper cleanup 0.1.67)
+name: EM068 autonomous FULLMOD 2-lane boundary (real native 25kV drivetrain 0.1.68)
 
 on:
   push:
-    branches: ['experiment/em067-helper-orphan-native-fullmod-20261122']
+    branches: ['experiment/em068-native-25kv-traction-source-paid-fullmod']
     paths:
       - 'tests/em063-fault-*/**'
       - 'tests/em065-audit-native-probe/**'
@@ -33,14 +33,14 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_full_mod_063.py' -v
           python3 -m unittest discover -s tests -p 'test_package_mod.py' -v
           python3 scripts/package_mod.py --output "$RUNNER_TEMP/em066-full"
-          zip="$RUNNER_TEMP/em066-full/ElectrifiedMainline_0.1.67.zip"
+          zip="$RUNNER_TEMP/em066-full/ElectrifiedMainline_0.1.68.zip"
           test -s "$zip"
           unzip -t "$zip"
           # No gameplay files changed since source baseline, original complete
           # official game archive must remain byte-identical to proven build.
           # Rebuild independently from SAME gameplay source and compare byte for byte.
           python3 scripts/package_mod.py --output "$RUNNER_TEMP/em066-full-second"
-          cmp -s "$zip" "$RUNNER_TEMP/em066-full-second/ElectrifiedMainline_0.1.67.zip"
+          cmp -s "$zip" "$RUNNER_TEMP/em066-full-second/ElectrifiedMainline_0.1.68.zip"
           echo "[EM066 PACKAGE] complete mod deterministic on source HEAD"
           sha256sum "$zip" | tee "$RUNNER_TEMP/em066-full/sha256.txt"
           printf 'mod_sha=%s\n' "$(sha256sum "$zip" | cut -d ' ' -f1)" >> "$GITHUB_OUTPUT"
@@ -49,10 +49,11 @@ jobs:
           grep -F 'ElectrifiedMainline/prototypes/em072_c5_fullmod_trial_063.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
           grep -F 'ElectrifiedMainline/scripts/traction_paid_065.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
           grep -F 'ElectrifiedMainline/scripts/helper_lifecycle_067.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
+          grep -F 'ElectrifiedMainline/prototypes/traction_native_consumer_068.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
           printf 'FULL_REAL_GAME_ARCHIVE VERIFIED_SHA256=%s\n' "$(sha256sum "$zip" | cut -d ' ' -f1)"
       - uses: actions/upload-artifact@v4
         with:
-          name: EM067-exact-fullmod-067-zeroJ-helper-source-game
+          name: EM068-exact-fullmod-068-real-native-25kv-traction
           path: ${{ runner.temp }}/em066-full/*
           if-no-files-found: error
           retention-days: 30
@@ -70,19 +71,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: EM067-exact-fullmod-067-zeroJ-helper-source-game
+          name: EM068-exact-fullmod-068-real-native-25kv-traction
           path: ${{ runner.temp }}/em066-exact
       - name: Verify same immutable complete game ZIP in BOTH independent jobs
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/em066-native/mods" "$RUNNER_TEMP/em066-native/logs"
-          test -s "$RUNNER_TEMP/em066-exact/ElectrifiedMainline_0.1.67.zip"
+          test -s "$RUNNER_TEMP/em066-exact/ElectrifiedMainline_0.1.68.zip"
           expected="${{ needs.full_package.outputs.mod_sha }}"
           test "${#expected}" -eq 64
-          cp "$RUNNER_TEMP/em066-exact/ElectrifiedMainline_0.1.67.zip" "$RUNNER_TEMP/em066-native/mods/"
-          sha256sum "$RUNNER_TEMP/em066-native/mods/ElectrifiedMainline_0.1.67.zip" | tee "$RUNNER_TEMP/em066-native/logs/fullmod-sha256.txt"
-          echo "${{ needs.full_package.outputs.mod_sha }}  $RUNNER_TEMP/em066-native/mods/ElectrifiedMainline_0.1.67.zip" | sha256sum -c -
+          cp "$RUNNER_TEMP/em066-exact/ElectrifiedMainline_0.1.68.zip" "$RUNNER_TEMP/em066-native/mods/"
+          sha256sum "$RUNNER_TEMP/em066-native/mods/ElectrifiedMainline_0.1.68.zip" | tee "$RUNNER_TEMP/em066-native/logs/fullmod-sha256.txt"
+          echo "${{ needs.full_package.outputs.mod_sha }}  $RUNNER_TEMP/em066-native/mods/ElectrifiedMainline_0.1.68.zip" | sha256sum -c -
           cp -a "tests/em063-fault-${{ matrix.lane == 'electrical' && 'electrical' || 'rail-stock' }}" "$RUNNER_TEMP/em066-native/mods/em063-fault-${{ matrix.lane == 'electrical' && 'electrical' || 'rail-stock' }}_0.0.1"
           printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em063-fault-${{ matrix.lane == 'electrical' && 'electrical' || 'rail-stock' }}","enabled":true}]}' > "$RUNNER_TEMP/em066-native/mods/mod-list.json"
       - name: Download exact official Factorio 2.1.24 build 87808
@@ -114,7 +115,7 @@ jobs:
           if test "${{ matrix.lane }}" = electrical; then
             set -euo pipefail
             mkdir -p "$RUNNER_TEMP/em066-audit/mods"
-            cp "$RUNNER_TEMP/em066-exact/ElectrifiedMainline_0.1.67.zip" "$RUNNER_TEMP/em066-audit/mods/"
+            cp "$RUNNER_TEMP/em066-exact/ElectrifiedMainline_0.1.68.zip" "$RUNNER_TEMP/em066-audit/mods/"
             cp -a tests/em065-audit-native-probe "$RUNNER_TEMP/em066-audit/mods/em065-audit-native-probe_0.0.1"
             printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em065-audit-native-probe","enabled":true}]}' > "$RUNNER_TEMP/em066-audit/mods/mod-list.json"
             bin="$RUNNER_TEMP/em066-engine/factorio/bin/x64/factorio"
@@ -131,8 +132,12 @@ jobs:
             if grep -Fq '[AUDIT EM065 FAIRNESS DEFECT REPRODUCED]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"; then
               echo "FEATURE_FAIL: issue #78 first-come-first-served train starvation" | tee "$RUNNER_TEMP/em066-native/logs/feature-failures.txt"
             fi
-            if grep -Eq 'native_primary_demand_J_tick=0\.000 native_secondary_demand_J_tick=0\.000' "$RUNNER_TEMP/em066-native/logs/audit-native.log"; then
-              echo "FEATURE_FAIL: issue #77 native 25kV consumer demand zero" | tee -a "$RUNNER_TEMP/em066-native/logs/feature-failures.txt"
+            native_line_demand=$(awk -F'native_secondary_demand_J_tick=' '/AUDIT EM065 25KV NATIVE FLOW.*tick=60 / {split($2,a," ");print a[1]}' "$RUNNER_TEMP/em066-native/logs/audit-native.log" | tail -n 1)
+            test -n "$native_line_demand"
+            if awk -v v="$native_line_demand" 'BEGIN {exit !(v<1)}'; then
+              echo "FEATURE_FAIL: issue #77 native 25kV demand ZERO at real charging tick60" | tee -a "$RUNNER_TEMP/em066-native/logs/feature-failures.txt"
+            else
+              echo "[EM068 REAL 25KV NETWORK DEMAND PASS] tick60_native_secondary_demand_J=$native_line_demand" | tee "$RUNNER_TEMP/em066-native/logs/real-native-demand.txt"
             fi
           fi
           if test "${{ matrix.lane }}" = rail_stock && test "$code" -ne 0; then

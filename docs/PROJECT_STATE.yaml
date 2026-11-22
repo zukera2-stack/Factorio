@@ -2436,3 +2436,13 @@ em068_integrated_native_25kv_traction_research_20261122:
   virtual_traction_load_suppressed_with_live_real_sink: true
   old_paid_J_held_if_line_disconnects: true
   actual_fullmod_0_1_68_native_result: PENDING
+  two_independent_fullmod_native_0_1_68_workflow: .github/workflows/em066-autonomous-fullmod-native.yml
+  one_actual_native_2MW_loco_SAVE_LOAD_workflow: .github/workflows/em068-real-25kv-native-loco.yml
+  full_real_ZIP_double_deterministic_build: true
+  both_fullmod_parallel_lanes_same_actual_SHA256: true
+  true_native_25kv_demand_measured_while_positive_loco_motion: REQUIRED
+  real_1MW_2native_loco_fair_60tick_both_gt_1000J: REQUIRED
+  native_owner_orphan_80ticks: REQUIRED_ABSENT
+  no_output_EEI_double_debit_source_runtime: true
+  standard_full_docs_QA: PENDING
+  full_native_factorio_2_1_24: PENDING
