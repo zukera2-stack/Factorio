@@ -1,0 +1,36 @@
+{
+  "engine": "Factorio 2.1.24 build 87808",
+  "source": "Base-only native B10R compliant locomotive battery-only bus; GAMEPLAY MOD UNCHANGED",
+  "benchmark_native_ticks": 241,
+  "benchmark": {
+    "split_events": 10.0,
+    "group_moved_tiles": 10.8359,
+    "independent_solo_moved_tiles": 9.7578,
+    "former_member_solo_moved_tiles": 4.5898,
+    "pooled_battery_j": 800000.0,
+    "original_solo_battery_j": 300000.0,
+    "former_member_solo_battery_j": 200000.0,
+    "remaining_loco_a_j": 200000.0,
+    "motor_wagon_storage_j": 0.0,
+    "burner_spent_j": 1300000.0,
+    "energy_residual_j": 0.0
+  },
+  "benchmark_log_sha256": "257802cdbfdf2e31c5253baa3bab0abbbad1daf841abccc81ef6e68d490dcafa",
+  "reload": {
+    "split_events": 10.0,
+    "group_moved_tiles": 10.8359,
+    "independent_solo_moved_tiles": 9.7578,
+    "former_member_solo_moved_tiles": 4.5898,
+    "pooled_battery_j": 800000.0,
+    "original_solo_battery_j": 300000.0,
+    "former_member_solo_battery_j": 200000.0,
+    "remaining_loco_a_j": 200000.0,
+    "motor_wagon_storage_j": 0.0,
+    "burner_spent_j": 1300000.0,
+    "energy_residual_j": 0.0
+  },
+  "server_SAVE_tick": 100,
+  "independent_LOAD_ticks": 141,
+  "checkpoint_bytes": 627009,
+  "reload_log_sha256": "da635a1d6b8f592642fdb3a0dc5dd54c15b406cbf0182021d3e8692d381105dd"
+}

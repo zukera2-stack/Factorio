@@ -1,3 +1,43 @@
+em072_b10r_compliant_locomotive_only_battery:
+  date: '2026-11-22'
+  branch: experiment/em072-b10r-compliant-loco-bus
+  base_commit: 7c9e98acbc0ddb7b17e4e7cd4667aa36b1b4cefb
+  native_factorio: '2.1.24 build 87808 Linux Headless Base only'
+  native_241_tick_benchmark: PASS
+  real_server_disk_SAVE_tick: 100
+  independent_engine_LOAD_ticks: 141
+  checkpoint_bytes: 627009
+  genuine_split_merge_events: 10
+  real_loco_battery_owners: 3
+  motor_cargo_wagon_battery_J: 0
+  motor_fluid_wagon_battery_J: 0
+  forged_battery_records_rejected: [motor_cargo, motor_fluid]
+  pooled_loco_battery_to_native_burner_J: 800000
+  independent_solo_loco_to_native_burner_J: 300000
+  formerly_coupled_loco_solo_to_native_burner_J: 200000
+  formerly_coupled_loco_solo_real_movement_tiles: 4.5898
+  original_coupled_train_real_movement_tiles: 10.8359
+  original_independent_solo_real_movement_tiles: 9.7578
+  finite_all_loco_battery_initial_J: 1500000
+  final_loco_A_protected_J: 200000
+  native_burner_energy_spent_J: 1300000
+  native_global_energy_residual_J: 0
+  native_benchmark_log_sha256: 257802cdbfdf2e31c5253baa3bab0abbbad1daf841abccc81ef6e68d490dcafa
+  independent_reload_log_sha256: da635a1d6b8f592642fdb3a0dc5dd54c15b406cbf0182021d3e8692d381105dd
+  results_doc: docs/research/native-b10r-no-wagon-battery-results.md
+  negative_test_doc: docs/research/native-b10r-no-wagon-battery-preflight.md
+  runner: tests/run_native_bus_072a5b10r.py
+  native_fixture: tests/em072a5-b10r-probe/
+  library_logs: /Factorio/Network-062/B10R-compliant-20261122/
+  actual_extra_motor_wagon_500kW: NOT_PROVEN
+  production_battery_and_train_bus: NOT_IMPLEMENTED
+  EM070_25kV_present_in_this_test: false
+  author_AUTO_factory_rescue_B: PRESERVED
+  next_gate: EM072_C_actual_500kW_cargo_fluid_propulsion
+  main_modified: false
+  merge_authorized: false
+  release_authorized: false
+
 em072_current_state_correction_2026_11_22:
   date: "2026-11-22"
   base_branch: experiment/em072a5-native-loco-battery-b9
