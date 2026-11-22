@@ -2226,3 +2226,10 @@ em065_native_real_locomotive_traction_research:
   full_inherited_standard_CI: PASS
   hidden_helper_owner_cleanup_issue: https://github.com/zukera2-stack/Factorio/issues/73
   production_release_authorized: false
+  native_REAL_private_server_checkpoint_tick: 125
+  native_separate_process_test_save_ticks: 365
+  native_REAL_save_load_script: tests/run_em065_real_saveload.py
+  native_REAL_save_load_status: PENDING
+  native_loco_unit_number_persistence_required: true
+  native_burner_credit_debit_equality_required: true
+  native_no_contact_second_loco_after_load_J: 0

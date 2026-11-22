@@ -5,6 +5,7 @@ on:
     paths:
       - 'ElectrifiedMainline/**'
       - 'tests/em065-native-paid-locomotive-probe/**'
+      - 'tests/run_em065_real_saveload.py'
       - 'tests/run_headless_062.sh'
       - '.github/workflows/em065-native-paid-loco.yml'
   workflow_dispatch:
@@ -41,6 +42,13 @@ jobs:
           "$bin" --mod-directory "$RUNNER_TEMP/em065-mods" --benchmark "$RUNNER_TEMP/em065-initial.zip" --benchmark-ticks 450 --benchmark-runs 1 | tee "$RUNNER_TEMP/em065-native.log"
           grep -F '[EM065 NATIVE PAID PASS]' "$RUNNER_TEMP/em065-native.log"
           grep -F '[EM065 NATIVE 0W CONTROL]' "$RUNNER_TEMP/em065-native.log"
+          grep -F '[EM065 REAL SAVELOAD PASS]' "$RUNNER_TEMP/em065-native.log"
+          python3 -m py_compile tests/run_em065_real_saveload.py
+          python3 tests/run_em065_real_saveload.py \
+            --factorio "$bin" \
+            --mods "$RUNNER_TEMP/em065-mods" \
+            --initial "$RUNNER_TEMP/em065-initial.zip" \
+            --output "$RUNNER_TEMP/em065-save-load"
           sha256sum build/package/ElectrifiedMainline_0.1.65.zip | tee "$RUNNER_TEMP/em065-source-sha256.txt"
       - uses: actions/upload-artifact@v4
         if: always()
@@ -51,4 +59,7 @@ jobs:
             ${{ runner.temp }}/em065-native.log
             ${{ runner.temp }}/em065-version.txt
             ${{ runner.temp }}/em065-source-sha256.txt
+            ${{ runner.temp }}/em065-save-load/em065-real-save-load-server.log
+            ${{ runner.temp }}/em065-save-load/em065-real-save-load-reload.log
+            ${{ runner.temp }}/em065-save-load/em065-real-save-load-checkpoint.sha256
           if-no-files-found: warn
