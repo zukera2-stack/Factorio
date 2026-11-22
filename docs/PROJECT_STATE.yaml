@@ -2419,11 +2419,11 @@ em068_true_native_25kv_consumer_probe_20261122:
   intended_real_sink_priority: secondary-input
   intended_real_sink_limit_W: 2000000
   intended_buffer_J: 100000
-  native_real_secondary_demand_observed: PENDING
-  native_real_consumer_buffer_charges: PENDING
+  native_real_secondary_demand_observed: PASS_TICK41_100_33333_333J_per_tick
+  native_real_consumer_buffer_charges: FAIL_ON_FIXED_1MW_TWO_LOCO_NO_SPARE_SUPPLY
   no_source_control_J: 0
   no_double_debit_locomotive_integration: NOT_IMPLEMENTED
-  status: RESEARCH_PREFLIGHT_ONLY
+  status: NATIVE_1MW_SOURCE_STARVED_NEXT_REAL_20MW_BOUNDARY
   main_modified: false
   research: docs/research/em068-actual-native-line-consumer-feasibility-20261122.md
   test_only_native_EEI_probe: tests/em068-native-demand-feasibility
@@ -2431,3 +2431,9 @@ em068_true_native_25kv_consumer_probe_20261122:
   authentic_full_0_1_67_ZIP_verification: SHA256_f496066e0c6c677616daf050435c47ab60196c8f9f6bece5db79b835f6b1a462
   standalone_native_25kv_demand_feasibility: PENDING
   test_only_buffer_loco_source_paid_integration: NOT_ATTEMPTED
+  first_real_native_25kv_consumption_probe_run: 45052158517
+  native_25kv_sink_and_mast_electric_network_id: 7
+  real_25kv_sink_demand_J_per_tick: 33333.333
+  native_sink_buffer_positive_1MW_case: false
+  next_supply_boundary_true_factory_W: 20000000
+  after_supply_boundary_native_sink_charge: PENDING

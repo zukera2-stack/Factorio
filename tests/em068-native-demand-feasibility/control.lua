@@ -15,6 +15,22 @@ local function setup()
   assert(#line>2,"Native fullmod authentic masts not built")
   local actual=line[2].electric_network_id
   assert(actual,"Authentic catenary mast native network ID absent")
+  -- Boundary B: the earlier source was only 1MW with TWO charging EM locos
+  -- already demanding a total of 4MW; its real line sink therefore had
+  -- demand=2MW but rightfully gained 0J. Raise the SAME REAL native test
+  -- factory EEI generator to 20MW, without touching the installed game mod.
+  local generators=surface.find_entities_filtered{name="electric-energy-interface",
+    position={x=-20,y=13},radius=1}
+  local gen
+  for _,e in ipairs(generators) do
+    if e.valid and e.electric_interface_mode==defines.electric_interface_mode.primary_output then
+      gen=e;break
+    end
+  end
+  assert(gen and gen.valid,"Fullmod audit native factory source not found")
+  gen.power_production=20000000/60
+  gen.output_flow_limit=20000000/60
+  log("[EM068 SOURCE BOUNDARY] original_1MW_native_demand_positive_but_empty|raised_factory_to_W=20000000|no_synthetic_buffer_J")
   local lab=game.surfaces["em-25kv-isolated-bridge-058"]
   assert(lab and lab.valid,"Real complete EM070 isolated bridge ports not created")
   local ports=lab.find_entities_filtered{name="em-25kv-bridge-port-058"}
