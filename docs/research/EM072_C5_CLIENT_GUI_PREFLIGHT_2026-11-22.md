@@ -44,6 +44,9 @@ No same-type public mod claiming **native GUI suppression of a real hidden locom
 - Independent host syntax check 2026-11-22: exact GitHub blob `tests/em-c5-client-gui-observer/control.lua` SHA `aecfd5c0e3b40628ab998472f35c5ad63eea5594` loaded with **Lua 5.4 `luaL_loadbufferx` return code 0**. This is HOST Lua syntax only, not Factorio modified Lua 5.2 or game API validation.
 - **Factorio data-stage, actual native runtime/client GUI, CI and gameplay NOT RUN**.
 
+## 7b. Installation artifact provenance / packaging gate
+The dedicated **GitHub Actions** `c5_disposable_client_test_artifact` job in existing `.github/workflows/build-mod.yml` runs only on the C5 experiment branch. It runs Lua 5.2 syntax and C5 parser tests, strictly whitelists C4 and C5 mod files, verifies archive contents byte-for-byte, and uploads exactly the two versioned mod ZIPs as ONE GitHub Actions artifact. The wrapper ZIP downloaded from Actions is **not** a Factorio mod: extract it, then copy both inner ZIPs into `mods/` unchanged. No production ElectrifiedMainline mod or user save is in the research package. A CI PASS would establish syntax/package checks only, not game GUI behaviour. The test ZIP must not be called an approved release.
+
 ## 8–9. Experiment result and next gate
 | Case | Status | Needed evidence |
 |---|---|---|

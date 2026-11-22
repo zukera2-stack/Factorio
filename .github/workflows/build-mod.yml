@@ -347,3 +347,70 @@ jobs:
           path: ${{ steps.package.outputs.archive }}
           if-no-files-found: error
           retention-days: 30
+
+c5_disposable_client_test_artifact:
+    name: EM072-C5 research-only client test mods
+    if: github.event_name == 'push' && github.ref == 'refs/heads/experiment/em072-c5-client-gui-observer'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate C4 and C5 Lua 5.2 syntax plus C5 observer Python tests
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.2
+          luac5.2 -p tests/em-c4-loco-mounted-probe/data.lua
+          luac5.2 -p tests/em-c4-loco-mounted-probe/control.lua
+          luac5.2 -p tests/em-c5-client-gui-observer/control.lua
+          python3 -m unittest discover -s tests -p 'test_c5_gui_parser.py' -v
+      - name: Package and verify exactly two experimental Factorio mod ZIPs
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json, pathlib, zipfile
+          root=pathlib.Path("tests")
+          out=pathlib.Path("build/c5-client-test")
+          out.mkdir(parents=True,exist_ok=True)
+          sources={
+              "em-c4-loco-mounted-probe":("info.json","data.lua","control.lua"),
+              "em-c5-client-gui-observer":("info.json","control.lua"),
+          }
+          for name, allowed in sources.items():
+              folder=root/name
+              assert folder.is_dir() and not folder.is_symlink(),name
+              actual={p.name for p in folder.iterdir()}
+              assert actual==set(allowed),(name,actual)
+              assert all((folder/n).is_file() and not (folder/n).is_symlink() for n in allowed)
+              info=json.loads((folder/"info.json").read_text(encoding="utf-8"))
+              assert info["name"]==name and info["version"]=="0.0.1"
+              assert info["factorio_version"]=="2.1"
+              if name=="em-c5-client-gui-observer":
+                  assert any(x.split(" ",1)[0]=="em-c4-loco-mounted-probe" for x in info["dependencies"])
+              zpath=out/(name+"_0.0.1.zip")
+              prefix=name+"_0.0.1/"
+              with zipfile.ZipFile(zpath,"w") as z:
+                  for n in allowed:
+                      meta=zipfile.ZipInfo(prefix+n,date_time=(2026,11,22,0,0,0))
+                      meta.compress_type=zipfile.ZIP_DEFLATED
+                      meta.create_system=3
+                      meta.external_attr=(0o100644 << 16)
+                      z.writestr(meta,(folder/n).read_bytes(),compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
+              with zipfile.ZipFile(zpath) as z:
+                  assert z.testzip() is None
+                  assert set(z.namelist())=={prefix+n for n in allowed}
+                  for n in allowed: assert z.read(prefix+n)==(folder/n).read_bytes()
+              print("C5 TEST MOD",zpath.name,"SHA256",hashlib.sha256(zpath.read_bytes()).hexdigest())
+          assert len(list(out.iterdir()))==2
+          print("RESEARCH ONLY; NOT PRODUCTION MOD, NOT A GAME TEST")
+          PY
+          sha256sum build/c5-client-test/*.zip
+      - name: Upload C4+C5 game ZIPs only (separate from production/QA artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: EM072-C5-client-test-${{ github.sha }}
+          path: build/c5-client-test/*.zip
+          if-no-files-found: error
+          retention-days: 30
+

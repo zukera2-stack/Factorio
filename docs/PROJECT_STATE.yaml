@@ -3187,6 +3187,10 @@ em072_c5_client_gui_observer:
   helper_native_LuaTrain_locomotives_counts_extra: C4_NATIVE_PROVEN
   c5_observer_reports_counts_not_pixels: true
   native_Factorio_2_1_24_C5_test: NOT_RUN
+  c5_CI_test_zip_job: c5_disposable_client_test_artifact
+  ci_test_distribution: GitHub_Actions_artifact_only_two_inner_mod_ZIPs
+  c5_CI_zip_status: PENDING_RESULT
+  c5_test_mods: [em-c4-loco-mounted-probe_0.0.1.zip, em-c5-client-gui-observer_0.0.1.zip]
   static_python_parser_test: PASS_2_OF_2_OFFLINE_BYTE_EXACT_GITHUB_SOURCE
   python_py_compile: PASS
   host_lua_5_4_loadbuffer_syntax: PASS_EXACT_GITHUB_BLOB_aecfd5c0e3b40628ab998472f35c5ad63eea5594
