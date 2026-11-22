@@ -1,0 +1,8 @@
+{
+  "name": "em072-paidproof",
+  "version": "0.0.1",
+  "title": "EM072 paid 500kW native fullmod traction proof",
+  "author": "QA only",
+  "factorio_version": "2.1",
+  "dependencies": ["base >= 2.1.0", "ElectrifiedMainline = 0.1.69"]
+}

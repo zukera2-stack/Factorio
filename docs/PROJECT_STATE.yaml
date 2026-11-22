@@ -1,3 +1,30 @@
+em072_source_paid_500kw_fullmod_proof:
+  date: "2026-11-22"
+  status: native_implementation_feasibility_proved_production_blocked
+  experimental_branch: experiment/em072-source-paid-500kw-fullmod-native-20261122
+  parent_ref: 3941669ab5b8db3e6cd61cd08ad21b84c33f507a
+  parent_gameplay_source_commit: 48fb34df72bbed0fa73105c1acef77a830808428
+  official_fullmod_zip_sha256: 2915cf0a89670d12de9db4289aa7b9043467e8b9705b547bb4e21aa526edaa54
+  game_version: "0.1.69"
+  factorio_native_engine: "2.1.24 build87808 Linux headless"
+  source_mod_runtime_changed: false
+  approved_art_modified: false
+  actual_500kw_cargo_and_fluid_acceleration: pass_test_only
+  actual_1000kw_two_motor_acceleration: pass_test_only
+  actual_2000kw_four_motor_acceleration: pass_test_only
+  true_25kv_native_paid_eei_positive_demand: pass_test_only
+  zeroJ_helper_no_free_traction: pass
+  offgrid_negative: pass
+  source_loss_while_moving: pass
+  active_helper_real_server_disk_save_reload: pass
+  owner_delete_paid_helper_lifecycle: fail_reproduced
+  test_only_orphan_escrow_conservation_delta_J: 0
+  production_shared_traction_bus: not_implemented
+  gui_undo_multiplayer_real_owner_save: not_tested
+  main_merge_authorized: false
+  release_authorized: false
+  research: docs/research/EM072_SOURCE_PAID_500KW_FULLMOD_NATIVE_20261122.md
+
 em069_owner_lowpower_policy:
   decision_date: "2026-11-22"
   owner_decision: accept_lowpower_deadband_do_not_pursue_mathematical_exactness
