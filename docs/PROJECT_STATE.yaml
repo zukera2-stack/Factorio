@@ -1,3 +1,30 @@
+em069_final_official_native_validation:
+  date: "2026-11-22"
+  branch: experiment/em069-local-native-recovery-20261122
+  tested_gameplay_commit: 48fb34df72bbed0fa73105c1acef77a830808428
+  actions_build_run_id: 45058171776
+  actions_build_conclusion: success
+  official_ci_artifact_id: 14768556556
+  official_inner_zip: ElectrifiedMainline_0.1.69.zip
+  official_inner_zip_sha256: 2915cf0a89670d12de9db4289aa7b9043467e8b9705b547bb4e21aa526edaa54
+  fullmod_files: 139
+  original_art_png_files_unchanged: 83
+  exact_engine: Factorio_2.1.24_build87808_linux_x64
+  all_official_zip_local_positive_scenarios: 21
+  official_zip_native_fairness_scarcity_1MW_2_4_8_16: pass
+  official_zip_native_paid_20MW_train_motion: pass
+  official_zip_substation_three_break_rejoin_same_sink_unit_number: pass
+  official_zip_closed_reservoir_rejoin_drift_J: 0
+  official_zip_real_disk_save_separate_process_load: pass
+  original_068_to_official_069_disposable_save_migration: pass
+  lowpower_1W_at_300ticks_native_source_J: 4.966667
+  lowpower_1W_train_received_J: 0
+  lowpower_60W_at_tick60_train_received_J: 0
+  lowpower_61W_at_tick60_both_locomotives: pass
+  status: experimental_native_pass_with_lowpower_open_and_gui_not_tested
+  release_authorized: false
+  main_modified: false
+
 em069_ci_full_native_regression_allowlist:
   date: "2026-11-22"
   after_failed_run: 45058035888
