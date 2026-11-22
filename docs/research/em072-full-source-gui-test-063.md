@@ -65,3 +65,6 @@ Only native public Factorio source prototype contracts and own prior C4 research
 
 ## 7e. Legacy tests version compatibility
 The normal ZIP pipeline originally **FAIL** in old, version-specific Lua tests: `35kv_ghost_023.lua`, then `25kv_auto_wire_028.lua` assumed a maximal version of 0.1.62. Updated their version selection, plus `25kv_span_029.lua` and `35kv_topology.lua`, to use the same accepted graphics and inherited 062 validation when version is 0.1.63. These are **test-only changes**, not production mechanics or new graphical assets. Full main CI must be rechecked; no attempt to bypass these tests.
+
+## 7f. Full inherited QA remains enabled
+The 0.1.63 branch now uses the same native 056 visual-axis contract in `tests/25kv_visual_geometry_048.lua` as 0.1.62. `tests/run_headless_062.sh` was fixed to read `info.json` and use actual versioned `ElectrifiedMainline_0.1.62.zip` or `ElectrifiedMainline_0.1.63.zip`. The three real 2.1.24 electrical bridge/priority/fairness scenarios remain obligatory; no skipping older tests or editing game runtime. Re-check exact CI logs before verdict.
