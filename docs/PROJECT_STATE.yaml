@@ -1,3 +1,26 @@
+em072_120mw_official_native_072:
+  date: "2026-11-23"
+  official_build_run: 45079778110
+  fullmod_source_commit: 916582ea2e24ee929964a5384b74056b6f472637
+  official_artifact_id: 14776198323
+  official_inner_zip_sha256: 67766bf58c390d3b644dd84f4b27e12a789a1cf4fd9b640f65ad7b6a758b2753
+  official_artifact_fullmod_files: 139
+  official_original_png_unchanged: 83
+  native_official_high_120mw_test: pass
+  native_official_high_120mw_200_motor_paid_J_tick300: 283333333.333
+  native_official_high_120mw_200_distance_tiles_tick300: 113.559
+  native_official_20mw_control_test: pass_same_51_3MJ_16_824tiles
+  native_official_0w_negative: pass_0J_0movement
+  native_official_offgrid_negative: pass_0J_0movement
+  native_official_single_small_consist: pass
+  exact_official_zip_native_scenarios: 5
+  local_two_real_em_same_head_200_motor: pass
+  main_changed: false
+  player_craftable_120mw_power_plant: not_implemented
+  ordinary_gameplay_20mw_station_still_approved: true
+  functional_reverse_two_head_motor: fail_unresolved
+  release_authorized: false
+
 em072_120mw_adequate_native_source:
   date: "2026-11-23"
   branch: experiment/em072-120mw-native-test-feeder-20261123
