@@ -2375,3 +2375,23 @@ em066_fair_share_preflight_20261122:
   native_EM070_20MW_real_disk_SAVELOAD_0_1_66: PASS
   native_25kv_demand_issue_77: FAIL
   native_owner_orphan_issue_73: FAIL
+em067_hidden_C5_helper_lifecycle_preflight:
+  date: "2026-11-22"
+  branch: experiment/em067-helper-orphan-native-fullmod-20261122
+  fork_sha: 29584d1b9dd76ad763a7727e4fd79787eba04526
+  status: RESEARCH_ONLY_PREIMPLEMENTATION
+  target_fullmod_version: "0.1.67"
+  current_true_hidden_helper_prototype: em-c5-technical-booster-1000
+  current_hidden_helper_energy_J: 0
+  current_native_orphan_tick_after_owner_destroy: 80
+  expected_cleanup_observed_no_later_than_ticks: 10
+  no_visible_motor_wagon_or_real_EM_destroy: true
+  no_charge_or_speed_change: true
+  charged_hidden_helper_refund_contract: BLOCKED_REQUIRES_FUTURE_OWNER_MAPPING
+  native_actual_catalog_37_iron_9000_water_SAVELOAD: REQUIRED
+  native_same_full_artifact_two_lanes: REQUIRED
+  inherited_issue_78_fair_1MW_expected: PASS
+  inherited_issue_77_native_load: FAIL_UNRESOLVED
+  native_0J_orphan_fix_result: PENDING
+  no_main_release_or_installed_user_063_changes: true
+  research: docs/research/em067-0j-helper-orphan-native-preflight-20261122.md
