@@ -1,3 +1,42 @@
+em073_exact_official_073_final_native:
+  report_date: "2026-11-23"
+  branch: experiment/em073-native-directional-heads-20261123
+  fullmod_gameplay_commit: acf3aa7a7de1c97c425977d8be57aba3c1f4c74d
+  docs_only_final_commit: pending
+  official_GHA_build_run: 45082646087
+  official_GHA_build_result: success
+  docs_GHA_validation_run: 45082646089
+  docs_GHA_validation_result: success
+  artifact_id: 14778316033
+  official_inner_fullmod_zip_sha256: 30ba63f788cafbcfcc8454e62759cb00017f7459739b9fb211a1e7fd52433276
+  full_game_members_exactly_local_equal: 139
+  accepted_approved_png_unchanged: 83
+  native_official_factorio: "2.1.24 build87808"
+  native_official_scenarios_passed: 12
+  native_official_scenarios_total: 12
+  direction_controller_lua: none
+  native_AUTO_HSR_real_stations_arrival_ticks: [355,802]
+  exact_official_native_200_opposite_2_EM_helpers: 2
+  exact_official_native_200_opposite_extra_nameplate_each_direction_w: 100000000
+  exact_official_native_200_opposite_forward_tiles_t300: -109.859
+  exact_official_native_200_opposite_reverse_tiles_t300: 109.859
+  exact_official_native_200_same_heading_2_EM_helpers: 1
+  exact_official_native_200_no_EM_helpers: 0
+  exact_official_native_200_no_EM_motor_J: 0
+  exact_official_native_200_no_EM_motion_tiles: 0
+  exact_official_native_0W_and_offgrid_negative: pass
+  genuine_native_25kv_motor_debit_J_t300: 282200000
+  genuine_native_25kv_demand_W_t300: 102000000
+  real_independent_server_save_tick125_reload_tick300: pass_exact_all_snapshot
+  real_official_072_to_official_073_test_save_migration: pass_one_to_two_helpers
+  real_user_saves_tested: false
+  manual_reverse_switching_deprioritized: true
+  complete_200_motor_AUTO_roundtrip_tested: false
+  GUI_blueprint_undo_mp_60UPS: untested
+  original_main_unchanged: true
+  release_authorized: false
+  report_path: docs/research/EM073_NATIVE_BIDIRECTIONAL_OWNER_ENGINE_TEST_2026-11-23.md
+
 em073_native_directional_heads_local:
   date: "2026-11-23"
   branch: experiment/em073-native-directional-heads-20261123
