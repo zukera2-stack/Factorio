@@ -3,6 +3,9 @@ name: factorio-native-research
 description: Research or alter Factorio 2.1 game mechanics (rails, catenary, electrical grids, EEI priorities, native accumulator behavior, Undo/Redo) through same-type precedents and exact engine tests before implementation. Use for debugging or designing Electrified Mainline.
 ---
 
+> **2026-11-22 FULL SYSTEM ACCEPTANCE RULE:** The Base-only disposable-mod experiments described for the old EM061 priority research below are valid **only for isolating a physical hypothesis**. They **never** certify the complete Electrified Mainline mod. For any autonomous integration, traction, or regression PASS, load the **latest complete GitHub Actions game ZIP** and test the actual production/research prototypes together on native Factorio with real boundary/negative cases. See [the full-mod boundary protocol](../../../docs/tests/AUTONOMOUS_FULLMOD_BOUNDARY_PROTOCOL.md) and [run template](../../../docs/tests/AUTONOMOUS_FULLMOD_RUN_TEMPLATE.yaml). No prototype trimming, invented Joules, silently skipped motors/Undo, or release on a green diagnostic run with known FAIL.
+
+
 # Factorio native-engine research and validation
 
 Mandatory for non-trivial code, new prototype, electric-distribution logic, compatibility workaround, rail changes or claim that a mechanic "cannot work".

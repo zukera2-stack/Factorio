@@ -2080,3 +2080,34 @@ cross_branch_em065_independent_audit_20261122:
   docs_cross_branch_current_work: docs/CURRENT_WORK.md
   docs_gated_recovery_plan: docs/plans/EM065_AUDIT_RECOVERY_20261122.md
   independent_audit_report: https://github.com/zukera2-stack/Factorio/blob/audit/em065-native-multitrain-20261122/docs/research/em065-independent-full-audit-20261122-FINAL.md
+autonomous_fullmod_boundary_test_protocol_20261122:
+  owner_requirement: latest_actual_fullmod_no_functional_simplification
+  active_since: "2026-11-22"
+  main_docs_only_branch: docs/em065-audit-20261122-cross-branch
+  canonical_protocol: docs/tests/AUTONOMOUS_FULLMOD_BOUNDARY_PROTOCOL.md
+  per_run_machine_template: docs/tests/AUTONOMOUS_FULLMOD_RUN_TEMPLATE.yaml
+  policy_applies_to: [all_AI_agents, native_automated_tests, two_parallel_lanes, integration_regression, end_to_end_gameplay]
+  latest_game_candidate_must_be_resolved_live_before_each_run: true
+  complete_official_GitHub_Actions_ZIP_required: true
+  sha256_identical_on_all_parallel_lanes: true
+  never_reuse_outdated_ZIP_after_game_source_change: true
+  user_fullmod_never_replaced_by_Base_only_probe: true
+  all_native_mod_prototypes_integration_coverage_required: true
+  actual_native_positive_and_active_negative_controls: true
+  test_zero_below_equal_above_real_boundary: true
+  test_native_factory_and_catenary_flow_separately: true
+  test_closed_J_accounting_with_independent_native_sources: true
+  true_independent_disk_SAVE_LOAD_required: true
+  entire_gameplay_legacy_and_owner_lifecycle_required: true
+  no_implicit_500kW_wagon_or_regen_PASS: true
+  missing_GUI_MP_compatibility_is_NOT_TESTED: true
+  status_CI_success_with_feature_FAIL: FAIL_NOT_PASS
+  original_main_mod_version: "0.1.62"
+  current_research_full_candidate_example: "0.1.65"
+  example_full_game_source_SHA: 19f4ce3a33932558bf12c435cdeeb6dc0b0845a1
+  example_full_zip_SHA256: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  example_official_CI_run_id: 45041147861
+  example_full_game_artifact_id: 14762080183
+  existing_audit_known_FAIL_issues: [73, 77, 78]
+  main_merge_or_release_authorized: false
+  only_documentation_changed_by_this_rule: true

@@ -3,6 +3,9 @@ name: factorio-handoff
 description: Recover active Electrified Mainline work from GitHub when starting a new chat, resuming a paused task, checking versions, status, branch differences, or past acceptance evidence. Prevent mixing accepted main, installed updater build and experiments.
 ---
 
+> **2026-11-22 ACTIVE OVERRIDE:** Historical references below to stable main 0.1.56, installed updater 0.1.60 or active research 061 are outdated. Consult live branch heads and [the current work index](../../../docs/CURRENT_WORK.md). Every autonomous acceptance or parallel game test must follow [the FULL MOD boundary protocol](../../../docs/tests/AUTONOMOUS_FULLMOD_BOUNDARY_PROTOCOL.md) and [run record](../../../docs/tests/AUTONOMOUS_FULLMOD_RUN_TEMPLATE.yaml). Test the latest full GitHub Actions mod ZIP on unchanged gameplay bytes, **never** a reduced probe as a substitute, and report known P0/P1 and unsupported GUI/migrations explicitly. No user save or main merge.
+
+
 # Factorio repository handoff
 
 Use this whenever the user asks to continue, says "новый чат", asks what to test next, references last session, or a branch/version appears ambiguous.

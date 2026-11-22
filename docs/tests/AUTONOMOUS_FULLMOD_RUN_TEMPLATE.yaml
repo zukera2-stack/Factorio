@@ -1,0 +1,104 @@
+# Copy per independent full-mod native experiment; NO values may be guessed.
+# Complete all required keys. Null means "not measured" and never PASS.
+schema_version: 1
+test_kind: autonomous_boundary_full_mod
+report_date_utc: null
+agent_or_runner: null
+goal: null
+status: NOT_TESTED                   # PASS|FAIL|BLOCKED|NOT_TESTED|NOT_IMPLEMENTED|INCONCLUSIVE
+release_gate: BLOCKED
+source:
+  repository: zukera2-stack/Factorio
+  selected_branch: null
+  exact_game_source_commit: null
+  latest_live_branch_check_utc: null
+  why_latest_complete_candidate: null
+  source_diff_since_packaged_head: null
+  source_manifest_sha256: null
+build:
+  mod_version: null
+  github_actions_run_id: null
+  github_actions_artifact_id: null
+  official_inner_zip_name: null
+  official_inner_zip_sha256: null
+  exact_zip_verified_in_every_runner: false
+  all_runtime_modules_and_assets_present: null
+  accepted_sprites_manifest_checked: null
+engine:
+  factorio_version_full: null
+  build_number: null
+  os: null
+  native_headless_or_gui: null
+  mod_list_with_versions: []
+  user_modpack_coverage: NOT_TESTED
+  save_seed: null
+  surface_name: null
+  isolated_write_data_path: null
+inventory:
+  native_item_names: []
+  native_entity_names: []
+  native_recipe_names: []
+  native_technology_names: []
+  hidden_internal_prototypes: []
+  user_facing_prototype_coverage: NOT_TESTED
+  all_hsr_geometry_coverage: NOT_TESTED
+  cargo_fluid_and_helper_lifecycle: NOT_TESTED
+fixture:
+  true_native_factory_source: null
+  source_power_W: null
+  source_internal_buffer_J: null
+  source_input_output_limits_J_per_tick: null
+  authentic_25kv_mast_and_substation_names: []
+  actual_native_factory_network_id: null
+  actual_native_25kv_network_id: null
+  real_connected_stations_and_AUTO_route: null
+  tested_real_locomotive_unit_numbers: []
+boundary:
+  dimension: null
+  measured_threshold_and_units: null
+  initial_state: null
+  chosen_lower_exact_upper_cases: []
+  event_sequence_and_tick_numbers: []
+  expected_result: null
+  numerical_tolerance_and_justification: null
+  actual_native_observations: []
+  negative_control_with_real_action: null
+accounting:
+  independent_generator_output_J: null
+  native_factory_demand_J: null
+  native_25kv_demand_J: null
+  source_and_sink_EEI_J_before_after: []
+  vanilla_accumulators_J_before_after: []
+  loco_burner_and_battery_J_before_after: []
+  cargo_and_fluid_before_after: []
+  physical_losses_J_and_reason: []
+  unexplained_residual_J: null
+  source_debit_equals_burner_credit_is_not_sufficient: true
+persistence:
+  true_private_server_disk_save: NOT_TESTED
+  save_sha256: null
+  save_byte_count: null
+  independent_process_test_save: NOT_TESTED
+  restored_loco_units_cargo_schedule_and_energy: NOT_TESTED
+  old_version_user_save_migration: NOT_TESTED
+client:
+  factorio_windows_gui: NOT_TESTED
+  native_25kv_electric_gui_load: NOT_TESTED
+  robot_blueprint_upgrade_undo_redo: NOT_TESTED
+  multiplayer_and_ups: NOT_TESTED
+evidence:
+  native_engine_ci_run: null
+  raw_native_log_artifact: null
+  exact_assertion_lines: []
+  known_issue_links: []
+  observed_failures: []
+  missing_or_skipped_cases: []
+conclusion:
+  tested_on_full_unmodified_mod: false
+  passed_boundary_assertions: []
+  failed_boundary_assertions: []
+  not_implemented_features: []
+  unresolved_P0_P1: []
+  owner_approval_needed_for: []
+  can_merge_into_main: false
+  can_release_to_players: false
