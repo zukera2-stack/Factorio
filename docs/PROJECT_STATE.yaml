@@ -3227,5 +3227,18 @@ em072_c5_compact_human_fixture:
   needs_commands: false
   actual_factorio_client: NOT_RUN
   next_step: CI_build_new_2innerZIP_then_user_1_screenshot
+  new_compact_CI_source_sha: e49bf01e0d88d4ccefb695824ff0d98a78f646f9
+  new_compact_CI_run_id: 45033425830
+  new_compact_CI_workflow_status: success
+  new_compact_CI_job_status: success
+  new_compact_CI_artifact_id: 14758132988
+  new_compact_CI_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/45033425830/artifacts/14758132988
+  new_compact_CI_artifact_bytes: 8517
+  new_compact_CI_C4_inner_sha256: 8ef307f6924fdc793ef0b590a5acedd8ee84ae708627dfa87486c5303e3c86cd
+  new_compact_CI_C5_inner_sha256: da51ba684aafaf197bfbf7b298c4d98bbf360735e77874f50c157263a6fe8d3b
+  new_compact_CI_lua52_syntax: PASS
+  new_compact_CI_parser_tests: PASS_2
+  new_compact_CI_source_contract_tests: PASS_3
+  new_compact_client_GUI_and_gameplay: NOT_TESTED
   old_C5_actions_run_45032105889: OBSOLETE_HUGE_HUMAN_STAND
   main_modified: false
