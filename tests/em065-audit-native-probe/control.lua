@@ -34,8 +34,9 @@ local function setup()
   s.request_to_generate_chunks({0,0},2)
   s.force_generate_chunk_requests()
   rails(s)
+  local masts={}
   for _,x in ipairs({-21.5,-1.5,18.5,38.5}) do
-    create(s,"em-35kv-catenary-pole",x,2.5)
+    masts[#masts+1]=create(s,"em-35kv-catenary-pole",x,2.5)
   end
   create(s,"em-35kv-traction-substation",-20,9)
   create(s,"em-35kv-traction-substation",20,9)
@@ -62,6 +63,7 @@ local function setup()
   local neg=create(no,"em-electric-locomotive",0,1)
   goal(no)
   storage.audit={source=gen,a=a,b=b,neg=neg,neg_x=neg.position.x,
+    mast=masts[2],
     charge60={},charge120={},charge240={},charge300={}}
   log("[AUDIT EM065 SETUP] two native 2MW locos on ONE verified 25kV circuit; native EEI source 1MW; unrelated offgrid EM locomotive will get AUTO destination")
 end
@@ -74,6 +76,19 @@ local function snap(t)
   local produced=flow and flow.primary_output or -1
   local row={a=ja,b=jb,negative=n,produced=produced}
   f["charge"..t]=row
+  -- Native grid stats, not the EM065 Lua dispatch's synthetic demand:
+  -- this answers the owner's complaint that the 25kV electricity UI shows
+  -- no consumer despite train motion. Never read other mod's private storage.
+  local ln=f.mast and f.mast.valid and f.mast.electric_network
+  local lpn=ln and ln.parent_network
+  local lf=lpn and lpn.flow_last_tick
+  local linePrimaryDemand=lf and lf.primary_demand or -1
+  local lineSecondaryDemand=lf and lf.secondary_demand or -1
+  local linePrimaryOutput=lf and lf.primary_output or -1
+  local lineSecondaryOutput=lf and lf.secondary_output or -1
+  log(string.format("[AUDIT EM065 25KV NATIVE FLOW] tick=%d mast_network=%s native_primary_demand_J_tick=%.3f native_secondary_demand_J_tick=%.3f native_primary_output_J_tick=%.3f native_secondary_output_J_tick=%.3f native_total_train_battery_J=%.3f",
+    t,tostring(f.mast.electric_network_id),linePrimaryDemand,
+    lineSecondaryDemand,linePrimaryOutput,lineSecondaryOutput,ja+jb))
   log(string.format("[AUDIT EM065 SHARED] tick=%d A_J=%.3f B_J=%.3f sum_J=%.3f negative_AUTO_J=%.3f source_last_primary_J_tick=%.3f A_train=%d B_train=%d",
     t,ja,jb,ja+jb,n,produced,f.a.train.id,f.b.train.id))
 end

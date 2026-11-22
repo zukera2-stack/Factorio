@@ -40,6 +40,7 @@ jobs:
           "$bin" --mod-directory "$RUNNER_TEMP/em065-audit-mods" --benchmark "$RUNNER_TEMP/em065-audit-base.zip" --benchmark-ticks 330 --benchmark-runs 1 | tee "$RUNNER_TEMP/em065-audit-native.log"
           grep -F '[AUDIT EM065 MULTITRAIN RESULT]' "$RUNNER_TEMP/em065-audit-native.log"
           grep -F '[AUDIT EM065 NO POWER AUTO PASS]' "$RUNNER_TEMP/em065-audit-native.log"
+          grep -F '[AUDIT EM065 25KV NATIVE FLOW]' "$RUNNER_TEMP/em065-audit-native.log"
           sha256sum build/package/ElectrifiedMainline_0.1.65.zip | tee "$RUNNER_TEMP/em065-audit-inner-sha256.txt"
       - uses: actions/upload-artifact@v4
         if: always()

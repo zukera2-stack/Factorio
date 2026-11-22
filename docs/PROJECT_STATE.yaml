@@ -2297,6 +2297,20 @@ em065_independent_full_traction_audit_20261122:
   zero_source_train_given_native_AUTO_schedule: true
   negative_auto_expected_J: 0
   starvation_requires_both_later_proven_on_grid: true
-  outcome: PENDING
+  outcome: FAIRNESS_FAIL_GENUINE_AUTO_NEGATIVE_PASS
+  initial_native_run_id: 45042971982
+  initial_native_run_conclusion: success_as_diagnostic
+  tested_gameplay_inner_ZIP_sha256: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  initial_native_engine_artifact_id: 14762317389
+  second_train_J_at_tick60: 0
+  first_train_J_at_tick60: 933333.333
+  second_train_J_at_tick120: 0
+  first_train_J_at_tick120: 1933333.333
+  second_train_J_at_tick240: 1950000
+  first_train_J_at_tick240: 1983333.333
+  both_locomotives_later_grid_contact: confirmed
+  total_actual_factory_native_supply_J_per_tick: 16666.667
+  native_offgrid_AUTO_station_control: PASS_zeroJ_zero_motion
+  actual_25kv_native_grid_flow_test: PENDING
   native_evidence: PENDING
   no_release_or_merge: true
