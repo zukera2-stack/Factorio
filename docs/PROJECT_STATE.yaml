@@ -287,7 +287,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.67" # isolated fair-share+zeroJ C5 helper lifecycle experiment; main unchanged
+  mod_version: "0.1.68" # EXPERIMENT real native 25kV EEI consumer and exact native sink-funded locomotive
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -2416,7 +2416,7 @@ em068_integrated_native_25kv_traction_research_20261122:
   native_25kv_2MW_demand_measured_J_tick: 33333.333
   native_20MW_factory_real_EEI_buffer_received_J: 100000
   native_separate_offgrid_EEI_received_J: 0
-  source_integrated_loco_native_sink_from_real_25kv: PENDING
+  source_integrated_loco_native_sink_from_real_25kv: CODE_IMPLEMENTED_NATIVE_PENDING
   direct_old_source_output_debit_to_loco_must_be_removed: true
   double_count_prevention_required: true
   true_1MW_two_train_fair_battery_J: RETEST_PENDING
@@ -2426,3 +2426,13 @@ em068_integrated_native_25kv_traction_research_20261122:
   source_global_J_conservation_closed_reservoir: RETEST_PENDING
   main_user_saves_release_unchanged: true
   preflight: docs/research/em068-full-native-traction-consumer-preflight-20261122.md
+
+  full_source_0_1_68_info_and_real_EEI_prototype: true
+  native_EEI_sink_per_EM070_output_existing_verified_port: true
+  sink_has_real_25kv_secondary_input_native_priority: true
+  max_native_20MW_input_per_sink_J_tick: 333333.3333333333
+  debit_real_sink_buffer_before_burner_grant: true
+  no_lua_source_output_energy_second_debit: true
+  virtual_traction_load_suppressed_with_live_real_sink: true
+  old_paid_J_held_if_line_disconnects: true
+  actual_fullmod_0_1_68_native_result: PENDING

@@ -32,3 +32,6 @@ require("prototypes.em063_retire_ordinary_pole_064")
 
 -- EM065 research: finite paid native locomotive burner, NO free void power.
 require("prototypes.traction_paid_065")
+
+-- EM068: actual native 25 kV electric consumer; no Lua-only simulated load.
+require("prototypes.traction_native_consumer_068")

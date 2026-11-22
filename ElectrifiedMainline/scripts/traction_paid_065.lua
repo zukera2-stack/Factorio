@@ -46,7 +46,7 @@ local function donor(network,force)
       and r.line_port and r.line_port.valid
       and output.electric_network_id==network
       and r.line_port.electric_network_id==network
-      and output.force==force and output.energy>0
+      and output.force==force
       and entity(id) then
       list[#list+1]={id=id,r=r}
     end
@@ -54,6 +54,57 @@ local function donor(network,force)
   table.sort(list,function(a,b)return a.id<b.id end)
   return list[1] and list[1].r or nil
 end
+
+local SINK="em-25kv-native-traction-consumer-068"
+local MAX_SOURCE_PER_TICK=20000000/60
+local function native_state()
+  storage.em=storage.em or {}
+  storage.em.traction_native_068=storage.em.traction_native_068 or
+    {sinks={},metered_native_J=0,discarded_J=0,created=0}
+  return storage.em.traction_native_068
+end
+local function sink_for_output(source)
+  local id=source.output.unit_number
+  local state=native_state()
+  local sink=state.sinks[id]
+  if sink and not sink.valid then state.sinks[id]=nil;sink=nil end
+  local port=source.line_port
+  if not (port and port.valid and port.electric_network_id and source.output
+    and source.output.valid and source.output.electric_network_id==
+      port.electric_network_id) then return nil end
+  if sink then
+    if sink.electric_network_id~=port.electric_network_id or
+      sink.force~=port.force then
+      -- Do not destroy a native sink holding paid Joules when a network splits.
+      sink.input_flow_limit=0
+      log("[EM068 NATIVE SINK ISOLATED] id="..id..
+        " saved_J="..sink.energy.." disconnected; no free refund")
+      return nil
+    end
+    return sink
+  end
+  sink=port.surface.create_entity{name=SINK,position=port.position,
+    force=port.force,raise_built=false,create_build_effect_smoke=false}
+  if not (sink and sink.valid and sink.unit_number) then
+    error("[EM068 NATIVE FAIL] real EEI sink creation refused")
+  end
+  sink.electric_interface_mode=defines.electric_interface_mode.secondary_input
+  sink.electric_buffer_size=2000000
+  sink.input_flow_limit=0
+  sink.output_flow_limit=0
+  sink.power_production=0
+  sink.power_usage=0
+  sink.energy=0
+  if sink.electric_network_id~=port.electric_network_id then
+    error("[EM068 NATIVE FAIL] sink not on ACTUAL native 25kv network "..id)
+  end
+  state.sinks[id]=sink
+  state.created=state.created+1
+  log(string.format("[EM068 NATIVE EEI CREATED] sink=%d port=%d native_line_net=%d source_output=%d buffer_cap_J=2000000",
+    sink.unit_number,port.unit_number,sink.electric_network_id,id))
+  return sink
+end
+
 -- Source-paid Joules are allocated per actual native EM070 output buffer.
 -- Two equal-need real locomotives can never be charged greedily by unit_number.
 -- No train.speed writes; no extra fuel; only the real EM locomotive has a reserve.
@@ -88,9 +139,11 @@ end
 local function credit_paid(req,stats)
   local amount=req.grant
   if amount<=0 then return end
-  local output=req.source.output
-  if not (output and output.valid and req.e.valid) then
-    error("[EM066 PAID FAIL] donor or real locomotive invalid during credit")
+  local output=req.native_sink
+  if not (output and output.valid and req.e.valid and req.source.output
+    and req.source.output.valid and req.source.line_port.valid
+    and output.electric_network_id==req.source.line_port.electric_network_id) then
+    error("[EM068 NATIVE FAIL] paid native sink or true locomotive invalid")
   end
   local burner=req.burner
   local old=math.max(0,burner.remaining_burning_fuel or 0)
@@ -105,8 +158,10 @@ local function credit_paid(req,stats)
     old=0
   end
   local before=output.energy
-  -- Every credit is preceded by exact debit from a previously charged
-  -- native 25kV EM070 EEI. Source priority/real bridge remains untouched.
+  -- This is now an ACTUAL engine-charged 25kV SECONDARY INPUT consumer.
+  -- Factorio's native solver already deducted source EEI energy to fill it.
+  -- Debit ONLY this native sink before credit to locomotive burner.
+  -- DO NOT subtract source.output.energy again (no double charge).
   output.energy=before-amount
   local after=output.energy
   if after< -0.0001 or math.abs((before-after)-amount)>0.05 then
@@ -117,6 +172,7 @@ local function credit_paid(req,stats)
     error("[EM066 PAID FAIL] native burner credit mismatch")
   end
   stats.debited_J=stats.debited_J+amount
+  native_state().metered_native_J=native_state().metered_native_J+amount
   stats.credited_J=stats.credited_J+amount
   stats.charged_ticks=stats.charged_ticks+1
 end
@@ -138,7 +194,16 @@ local function fair_charge(owners,art,pantograph,stats)
   table.sort(ids)
   for _,id in ipairs(ids) do
     local group=groups[id]
-    local output=group.source.output
+    local output=sink_for_output(group.source)
+    if output then
+      local requested=0
+      for _,req in ipairs(group.requests) do
+        requested=requested+req.want
+        req.native_sink=output
+      end
+      -- Genuine 25kV native input power demand, never a virtual Lua consumer.
+      output.input_flow_limit=math.min(MAX_SOURCE_PER_TICK,requested)
+    end
     local available=output and output.valid and
       math.max(0,output.energy) or 0
     -- Finite max-min water-fill: an underfilled equal-priority locomotive
@@ -210,8 +275,21 @@ function M.requests(art,pantograph,dispatch)
           if a and tech then anchor=entity(tech.helpers[a]) end
           local key=anchor and dispatch.network_key(anchor)
           if key then
-            requests[key]=(requests[key] or 0)+
-              math.min(M.MAX_PER_TICK,left)
+            -- Keep ONLY cold-start bootstrap virtual demand. Once an actual
+            -- native 25kV consumer is installed and connected, native
+            -- flow_last_tick.secondary_demand is the real EM070 input signal.
+            local n=storage.em and storage.em.traction_native_068
+            local has_native=false
+            if n and n.sinks then
+              for _,sink in pairs(n.sinks) do
+                if sink.valid and sink.electric_network_id==net
+                    and sink.force==e.force then has_native=true;break end
+              end
+            end
+            if not has_native then
+              requests[key]=(requests[key] or 0)+
+                math.min(M.MAX_PER_TICK,left)
+            end
           end
         end
       end
@@ -222,8 +300,29 @@ end
 
 function M.on_tick(tick,art,pantograph)
   local stats=ensure()
+  local n=native_state()
+  -- Disabled default for every old sink. Only current live authenticated
+  -- real-loco contact permits native 25kV current input this tick.
+  for _,sink in pairs(n.sinks) do
+    if sink.valid then sink.input_flow_limit=0 end
+  end
   local owners=all_real_locomotives()
   fair_charge(owners,art,pantograph,stats)
+  if tick%60==0 then
+    local nSinks,total,nativeDemand=0,0,0
+    for _,sink in pairs(n.sinks) do
+      if sink.valid then
+        nSinks=nSinks+1
+        total=total+sink.energy
+        local parent=sink.electric_network and sink.electric_network.parent_network
+        local f=parent and parent.flow_last_tick
+        if f then nativeDemand=math.max(nativeDemand,(f.primary_demand or 0)+
+          (f.secondary_demand or 0)) end
+      end
+    end
+    log(string.format("[EM068 ACTUAL NATIVE TRAIN LOAD] tick=%d genuine_25kv_sinks=%d native_25kv_demand_J_tick=%.3f native_sink_stored_J=%.3f cumulative_paid_sink_to_real_burner_J=%.3f",
+      tick,nSinks,nativeDemand,total,n.metered_native_J))
+  end
   if tick%60==0 then
     log(string.format("[EM065 PAID LEDGER] tick=%d locos=%d debited_J=%.1f credited_J=%.1f charged_ticks=%d no_contact=%d no_supply=%d",
       tick,#owners,stats.debited_J,stats.credited_J,stats.charged_ticks,
