@@ -134,6 +134,10 @@ jobs:
             lua5.2 tests/power_bridge_cold_start_060.lua
           fi
 
+      - name: Full 0.1.63 genuine-object source contract tests
+        if: needs.detect.outputs.version == '0.1.63'
+        run: python3 -m unittest discover -s tests -p 'test_full_mod_063.py' -v
+
   render052:
     needs: [detect, lua_qa]
     if: needs.detect.outputs.frozen != 'true' && ((needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60'))

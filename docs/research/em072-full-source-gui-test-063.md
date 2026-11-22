@@ -42,7 +42,10 @@ Implemented in research-only `ElectrifiedMainline_0.1.63`: original 0.1.62 files
 ## 7b. Human-scale test and original items
 `/em-test-kit` grants actual named items from original mod: `em-high-speed-rail`, two authentic catenary masts, `em-35kv-traction-substation`, `em-electric-locomotive`, standard `em-electric-pole` and native railway replacement planner, plus newly added cargo/fluid motor wagon items. `/em-test-scene` is **opt-in** only and limited to 29 genuine HSR rail pieces with real vehicle and only two masts and one substation; no 13-lane 720-tile benchmark. Original production 0.1.62 runtime still processes native building and network/Undo events. This scene tests GUI/coupling and physical placement only: hidden adapter 0J; the EM loco's existing void source is unchanged. Exact game results await user/CI.
 
-## 7c. Native startup and screenshots pending
+## 7c. Test infrastructure committed; outcomes pending
+- Main test branch full game ZIP: existing **Build Factorio mod ZIP** workflow with 5 additional source-level checks, adding no second install package.
+- Exact native engine experiment: `.github/workflows/em072-fullmod-063-native.yml` downloads official Factorio 2.1.24 Linux headless, loads **actual full game ZIP**, and runs a separate disposable `tests/em063-native-fullmod-probe` to assert real native item prototypes and entity creation, HSR, 2 masts/substation, same train native coupling (4 carriages/2 native locomotives/0J), and visible 14-tile span. Does NOT prove GUI hide, any paid EM070 J, Undo, or user-client results.
+- **At writing** Actions status pending; native engine result must be confirmed via exact run/log ID before marking PASS.
 Exact code, ZIP/CI, headless client and owner screenshots to be appended after evidence, not invented.
 
 ## 8. Actual game results — NOT TESTED

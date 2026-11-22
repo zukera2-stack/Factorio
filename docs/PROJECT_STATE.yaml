@@ -2085,5 +2085,9 @@ em072_full_mod_player_test_063:
   auto_spawns_on_normal_load: false
   permanent_main_logic_changes: false
   CI_package_status: PENDING
+  CI_full_source_static_tests: PENDING
+  native_2_1_24_full_source_gate_workflow: .github/workflows/em072-fullmod-063-native.yml
+  official_native_real_items_probe: tests/em063-native-fullmod-probe
+  official_native_game_test: PENDING
   native_Factorio_2_1_24_data_stage: NOT_RUN
   owner_client_real_full_mod_test: NOT_RUN
