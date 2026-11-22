@@ -18,7 +18,7 @@ fi
 grep -F '2.1.24' "$work/version.txt"
 python3 scripts/package_mod.py --output "$work/package"
 mod_version=$(python3 -c 'import json; print(json.load(open("ElectrifiedMainline/info.json"))["version"])')
-case "$mod_version" in 0.1.62|0.1.63|0.1.64|0.1.65|0.1.66|0.1.67|0.1.68|0.1.69) ;; *) echo "Unsupported EM062 native regression mod version: $mod_version"; exit 1 ;; esac
+case "$mod_version" in 0.1.62|0.1.63|0.1.64|0.1.65|0.1.66|0.1.67|0.1.68|0.1.69|0.1.70) ;; *) echo "Unsupported EM062 native regression mod version: $mod_version"; exit 1 ;; esac
 test -f "$work/package/ElectrifiedMainline_${mod_version}.zip"
 sha256sum "$work/package/ElectrifiedMainline_${mod_version}.zip"
 for spec in \

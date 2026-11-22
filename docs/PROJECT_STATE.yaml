@@ -1,3 +1,31 @@
+em072_lossy_dismantling_native_070:
+  decision_date: "2026-11-22"
+  owner_approved: paid_hidden_motor_residual_is_dismantling_loss
+  branch: experiment/em072-lossy-dismantling-fullmod-20261122
+  parent_sha: 16980fff7ffb968d09a36ebdc46804e228299f71
+  experimental_mod_version: "0.1.70"
+  main_mod_version: "0.1.62"
+  engine: Factorio_2.1.24_build87808_linux_headless
+  original_official_069_zip_sha256: 2915cf0a89670d12de9db4289aa7b9043467e8b9705b547bb4e21aa526edaa54
+  changed_gameplay_files: [info.json, scripts/control.lua, scripts/helper_lifecycle_067.lua]
+  original_png_unchanged: 83
+  local_positive_loss_scenarios: 10
+  repeated_paid_traction_scenarios: 9
+  distinct_server_save_and_load: pass_identical_tick170
+  old_069_save_to_new_070_load: pass
+  native_500kw_dismantle_loss_J: 8333.333
+  native_1000kw_dismantle_loss_J: 16666.667
+  native_2000kw_dismantle_loss_J: 33333.333
+  native_1MW_source_lowpower_dismantle_loss_J: 3333.333
+  credits_to_25kv_on_hidden_demolition_J: 0
+  refunded_escrow_J: 0
+  no_event_thirdparty_destruction: unknown_actual_J_logged_without_fabricating_refund
+  automatic_motor_placement_and_shared_energy_bus: not_implemented
+  official_branch_ci_zip: pending
+  production_release: blocked
+  main_merge_authorized: false
+  research: docs/research/EM072_LOSSY_DEMOLITION_NATIVE_20261122.md
+
 em072_paid_owner_lifecycle_native_lab:
   date: "2026-11-22"
   branch: experiment/em072-paid-owner-lifecycle-native-20261122

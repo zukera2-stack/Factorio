@@ -393,6 +393,7 @@ local function on_built(event)
         or "on_built_entity", event, entity)
     if not (entity and entity.valid) then return end
 
+    helper067.on_built(entity)
     power019.on_built(event)
     bridge058.on_built(entity)
     if entity.name=="em-35kv-catenary-pole" or entity.name=="em-35kv-catenary-pole-north" then
@@ -419,6 +420,7 @@ local function cleanup_train_for_entity(event)
     diag_entity(diag_name, event, entity)
     if not (entity and entity.valid) then return end
 
+    helper067.on_removed(entity)
     pantograph049.remove(entity)
     native_wire_probe026.on_mast_removed(entity)
     bridge058.on_removed(entity)
@@ -558,6 +560,7 @@ local function on_train_created(event)
     end
 
     initialize_train_state(train, previous_state)
+    helper067.on_train_created(event)
 end
 
 local function on_tick(event)
