@@ -2408,3 +2408,21 @@ em067_hidden_C5_helper_lifecycle_preflight:
   em067_native_hidden_helper_orphan_80tick: RE_TEST_PENDING
   em067_native_20MW_true_fault_disk_SAVELOAD: RE_TEST_PENDING
   em067_real_25kv_demand_issue_77: UNRESOLVED
+em068_integrated_native_25kv_traction_research_20261122:
+  branch: experiment/em068-native-25kv-traction-source-paid-fullmod
+  fork_full_0_1_67_SHA: 3cc563677782f6705d23ca009d2641b6828f3300
+  target_experimental_version: "0.1.68"
+  native_actual_consumer_feasibility_run: 45052279629
+  native_25kv_2MW_demand_measured_J_tick: 33333.333
+  native_20MW_factory_real_EEI_buffer_received_J: 100000
+  native_separate_offgrid_EEI_received_J: 0
+  source_integrated_loco_native_sink_from_real_25kv: PENDING
+  direct_old_source_output_debit_to_loco_must_be_removed: true
+  double_count_prevention_required: true
+  true_1MW_two_train_fair_battery_J: RETEST_PENDING
+  full_native_20MW_real_fault_disk_SAVELOAD: RETEST_PENDING
+  full_native_cargo_fluid_helper_lifecycle_disk_SAVELOAD: RETEST_PENDING
+  physical_25kv_native_demand_while_loco_charges: RETEST_PENDING
+  source_global_J_conservation_closed_reservoir: RETEST_PENDING
+  main_user_saves_release_unchanged: true
+  preflight: docs/research/em068-full-native-traction-consumer-preflight-20261122.md
