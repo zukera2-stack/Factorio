@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Real dual-process Factorio 2.1.24 fault runner: benchmark is NOT disk SAVE.
 
-Runs exact original FULL 0.1.65 ZIP + separate test probe in a private server,
+Runs exact original FULL 0.1.66 ZIP + separate test probe in a private server,
 waits for actual disk save, shuts down server, and --test-save in another process.
 Exit nonzero on any violated native assertion. Original mod bytes are not changed.
 """
@@ -10,13 +10,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import socket
 import subprocess
 import sys
 import time
 
-SHA = "a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e"
+SHA = os.environ.get("EM066_FULLMOD_SHA256", "")
 CONFIG = {
     "rail_stock": {
         "probe": "em063-fault-rail-stock",
@@ -55,6 +56,8 @@ def run(cmd, log, timeout=180):
 
 
 def main():
+    if len(SHA)!=64 or any(ch not in "0123456789abcdef" for ch in SHA):
+        raise ValueError("Missing exact full game ZIP SHA256 from official full_package job")
     parser = argparse.ArgumentParser()
     parser.add_argument("--factorio", required=True, type=Path)
     parser.add_argument("--mods", required=True, type=Path)
@@ -71,7 +74,7 @@ def main():
     (private / "saves").mkdir(parents=True, exist_ok=True)
     binary = args.factorio.resolve()
     mods = args.mods.resolve()
-    z = mods / "ElectrifiedMainline_0.1.65.zip"
+    z = mods / "ElectrifiedMainline_0.1.66.zip"
     report = {
         "lane": lane,
         "fullmod_source_sha256_expected": SHA,
@@ -83,7 +86,7 @@ def main():
     try:
         report["fullmod_source_sha256_observed"] = sha(z)
         if report["fullmod_source_sha256_observed"] != SHA:
-            raise ValueError("Not the exact experimental FULL 0.1.65 ZIP; refusing test")
+            raise ValueError("Not the exact experimental FULL 0.1.66 ZIP; refusing test")
         if not (mods / (spec["probe"] + "_0.0.1") / "control.lua").is_file():
             raise ValueError("Missing separate test-only probe")
         versions = subprocess.run([str(binary), "--version"], capture_output=True,

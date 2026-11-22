@@ -34,7 +34,7 @@ print("35 kV topology: all pure Lua assertions passed")
 -- This is only a CI runner; it does NOT substitute for Factorio native engine tests.
 local file=assert(io.open("ElectrifiedMainline/info.json","r"))
 local info=file:read("*a");file:close()
-local is062=info:match('"version"%s*:%s*"0%.1%.62"')~=nil or info:match('"version"%s*:%s*"0%.1%.63"')~=nil or info:match('"version"%s*:%s*"0%.1%.64"')~=nil or info:match('"version"%s*:%s*"0%.1%.65"')~=nil
+local is062=info:match('"version"%s*:%s*"0%.1%.62"')~=nil or info:match('"version"%s*:%s*"0%.1%.63"')~=nil or info:match('"version"%s*:%s*"0%.1%.64"')~=nil or (info:match('"version"%s*:%s*"0%.1%.65"')~=nil or info:match('"version"%s*:%s*"0%.1%.66"')~=nil)
 if info:match('"version"%s*:%s*"0%.1%.61"') or is062 then
  local inherited={
   "25kv_visual_042","25kv_visual_geometry_048","25kv_technical_048",

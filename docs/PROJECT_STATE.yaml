@@ -2351,3 +2351,10 @@ em066_fair_share_preflight_20261122:
   original_83_approved_PNG_unchanged: true
   proper_native_1MW_first60_dual_real_loco: NOT_YET_TESTED
   preserved_EM065_real_one_loco_24_tiles_SAVE_LOAD: RE_TEST_PENDING
+  current_fair_share_full_ZIP_github_actions: PENDING_0_1_66
+  whole_game_ZIP_built_once_in_GHA_before_two_lanes: true
+  two_parallel_game_runners_same_exact_artifact_SHA256: true
+  double_deterministic_build_check: true
+  acceptance_native_both_trains_charge_within_tick60: threshold_minimum_1000J
+  native_retested_20MW_and_1MW_and_stock_and_disk_SAVE_LOAD: PENDING
+  original_unfixed_issue_77_and_73_not_ignored: true
