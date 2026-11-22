@@ -1,0 +1,212 @@
+{
+  "status": "PASS native Factorio 2.1.24 build87808 365-tick independent benchmark plus true disk server SAVE t125 and independent LOAD+240 ticks",
+  "initial_LuaTrain_carriage_count_of_three_visible_stocks": 3,
+  "one_owner_loco_two_motor_wagons_plus_hidden_helper_native_carriages": 4,
+  "hidden_technical_module_count_for_1_2_4_motor_wagons": 1,
+  "actual_W": {
+    "one_motor": 500000,
+    "two_motor": 1000000,
+    "four_motor": 2000000
+  },
+  "zero_growth_in_visible_stock_span_tiles": 0,
+  "zero_accumulator_for_both_motor_wagon_types": true,
+  "native_extra_acceleration_m": {
+    "baseline_t190_tiles": 110.308594,
+    "500kW_t190_tiles": 131.652344,
+    "1000kW_t190_tiles": 146.136719,
+    "zero_energy_t190_tiles": 108.578125
+  },
+  "standalone_motor_wagons_have_zero_engine_locomotives": true,
+  "vanilla_loco_not_authorized_to_spawn_helper": true,
+  "native_real_station_auto_arrival_before_save_and_after_reload": true,
+  "deferred_moving_train_helper_added_only_while_at_station": true,
+  "safe_true_owner_removal_even_if_second_real_loco_exists": true,
+  "native_cargo_inventory_and_fluid_contents_preserved_on_split_rejoin": true,
+  "native_train_locomotives_includes_hidden_helper": "YES. This CANNOT be hidden from LuaTrain.locomotives by prototype selectable flag alone",
+  "graphic_client_UI_actually_tested": false,
+  "real_EM070_or_actual_25kv_power_debited": false,
+  "original_electric_loco_void_power_in_this_test": true,
+  "native_burner_energy_source": "LAB-ONLY 10MJ seeded to helper; owner approved INTERNAL technical adapter, NO factory source debit here",
+  "unproven": [
+    "curve/diagonal/elevated",
+    "station GUI hidden engine rows",
+    "multiplayer/60UPS",
+    "player/robot mining and blueprint/Undo",
+    "genuine player placement UI",
+    "power flow from EM070",
+    "reverse or rear-end helper placement"
+  ],
+  "benchmark_ticks": 365,
+  "server_real_SAVE_tick": 125,
+  "independent_disk_LOAD_ticks": 240,
+  "checkpoint_bytes": 2105893,
+  "benchmark_log_sha256": "7508e8b29d9f151f13ae66dc535eb4ba267b79a35a1483e18d133052aca92d3f",
+  "reload_log_sha256": "be60c1eb2ae257c56a5886f5614a9b1625bdc8ee51b7c33de3e692f1ade1e21d",
+  "measurement": {
+    "motion_190": {
+      "vanilla": {
+        "tick": "190",
+        "case": "vanilla",
+        "tid": "9",
+        "carriages": "3",
+        "real": "0",
+        "motor": "2",
+        "helpers": "0",
+        "helperW": "0",
+        "engineLocos": "1",
+        "baseY": "0.000000",
+        "visibleSpan": "14.000000",
+        "stock": "locomotive,em-c4-motor-cargo,em-c4-motor-fluid"
+      },
+      "em0": {
+        "tick": "190",
+        "case": "em0",
+        "tid": "14",
+        "carriages": "3",
+        "real": "1",
+        "motor": "0",
+        "helpers": "0",
+        "helperW": "0",
+        "engineLocos": "1",
+        "baseY": "-110.308594",
+        "visibleSpan": "14.000000",
+        "stock": "em-c4-real-electric,cargo-wagon,fluid-wagon"
+      },
+      "em1": {
+        "tick": "190",
+        "case": "em1",
+        "tid": "82",
+        "carriages": "4",
+        "real": "1",
+        "motor": "1",
+        "helpers": "1",
+        "helperW": "500000",
+        "engineLocos": "2",
+        "baseY": "-131.652344",
+        "visibleSpan": "14.000000",
+        "stock": "em-c4-real-electric,em-c4-technical-booster-500,em-c4-motor-cargo,fluid-wagon"
+      },
+      "em2": {
+        "tick": "190",
+        "case": "em2",
+        "tid": "77",
+        "carriages": "4",
+        "real": "1",
+        "motor": "2",
+        "helpers": "1",
+        "helperW": "1000000",
+        "engineLocos": "2",
+        "baseY": "-93.472656",
+        "visibleSpan": "14.000000",
+        "stock": "em-c4-real-electric,em-c4-technical-booster-1000,em-c4-motor-cargo,em-c4-motor-fluid"
+      },
+      "em4": {
+        "tick": "190",
+        "case": "em4",
+        "tid": "87",
+        "carriages": "6",
+        "real": "1",
+        "motor": "4",
+        "helpers": "1",
+        "helperW": "2000000",
+        "engineLocos": "2",
+        "baseY": "-138.765625",
+        "visibleSpan": "28.000000",
+        "stock": "em-c4-real-electric,em-c4-technical-booster-2000,em-c4-motor-cargo,em-c4-motor-fluid,em-c4-motor-cargo,em-c4-motor-cargo"
+      },
+      "zero": {
+        "tick": "190",
+        "case": "zero",
+        "tid": "107",
+        "carriages": "4",
+        "real": "1",
+        "motor": "2",
+        "helpers": "1",
+        "helperW": "1000000",
+        "engineLocos": "2",
+        "baseY": "-108.578125",
+        "visibleSpan": "14.000000",
+        "stock": "em-c4-real-electric,em-c4-technical-booster-1000,em-c4-motor-cargo,em-c4-motor-fluid"
+      },
+      "em2drive": {
+        "tick": "190",
+        "case": "em2drive",
+        "tid": "112",
+        "carriages": "4",
+        "real": "1",
+        "motor": "2",
+        "helpers": "1",
+        "helperW": "1000000",
+        "engineLocos": "2",
+        "baseY": "-146.136719",
+        "visibleSpan": "14.000000",
+        "stock": "em-c4-real-electric,em-c4-technical-booster-1000,em-c4-motor-cargo,em-c4-motor-fluid"
+      }
+    },
+    "auto_stations": {
+      "190": {
+        "tick": "190",
+        "mode": "false",
+        "schedule": "EM_C4_STATION",
+        "at_station": "false",
+        "state": "5",
+        "distance": "-93.47265625"
+      },
+      "280": {
+        "tick": "280",
+        "mode": "false",
+        "schedule": "EM_C4_STATION",
+        "at_station": "true",
+        "state": "6",
+        "distance": "-96"
+      },
+      "350": {
+        "tick": "350",
+        "mode": "false",
+        "schedule": "EM_C4_STATION",
+        "at_station": "true",
+        "state": "6",
+        "distance": "-96"
+      }
+    },
+    "late_arrival": {
+      "190": {
+        "tick": "190",
+        "mode": "false",
+        "station": "false",
+        "speed": "0.35109091237268",
+        "helpers": "0",
+        "pos": "-81.91015625"
+      },
+      "280": {
+        "tick": "280",
+        "mode": "false",
+        "station": "true",
+        "speed": "0",
+        "helpers": "0",
+        "pos": "-96"
+      },
+      "350": {
+        "tick": "350",
+        "mode": "false",
+        "station": "true",
+        "speed": "0",
+        "helpers": "1",
+        "pos": "-96"
+      }
+    },
+    "technical_burner_remaining_J": {
+      "em1": 8772391.9055705,
+      "em2": 8632222.2222223,
+      "em4": 5603959.2505702,
+      "zero": 0.0,
+      "em2drive": 7914809.3043846
+    },
+    "cargo_final": {
+      "cargo_unit_same": "true",
+      "fluid_unit_same": "true",
+      "iron": "37",
+      "water": "9000"
+    }
+  }
+}

@@ -1,3 +1,61 @@
+em072_C4_aggregate_hidden_drive_attached_to_real_EM:
+  date: "2026-11-22"
+  research_branch: experiment/em072-c4-locomotive-mounted-booster
+  source_parent: 7b1f2f89fb0649bf0e65bbf7e3181a11ebf1251b
+  author_internal_BurnerEnergySource_technical_adapter: APPROVED_PAID_J_ONLY_WITH_NO_PLAYER_FUEL
+  author_motor_wagons_remain_real_cargo_fluid_no_batteries: APPROVED
+  native_Factorio: '2.1.24 build87808 Linux Headless Base-only'
+  native_benchmark_ticks: 365
+  true_dedicated_server_disk_SAVE_tick: 125
+  independent_real_LOAD_ticks: 240
+  exact_native_strict_one_run_result: PASS
+  benchmark_sha256: 7508e8b29d9f151f13ae66dc535eb4ba267b79a35a1483e18d133052aca92d3f
+  reload_sha256: be60c1eb2ae257c56a5886f5614a9b1625bdc8ee51b7c33de3e692f1ade1e21d
+  checkpoint_bytes: 2105893
+  architecture: ONE_HIDDEN_NATIVE_LOCOMOTIVE_PER_ELIGIBLE_EM_OWNER_POWER_TIER_AGGREGATES_ALL_MOTOR_WAGONS
+  wagon_count_to_extra_W: '0:0, 1:500000, 2:1000000, 4:2000000'
+  native_train_locomotives_includes_helper: true
+  genuine_graphical_player_GUI_helper_visibility: UNTESTED
+  helper_prototype_has_user_placeable_item: false
+  helper_selectable_in_world: false
+  helper_in_blueprints_or_deconstruction: false
+  passenger_motor_cargo_and_fluid_are_real_wagons: true
+  owner_real_EM_unit_number_keyed: true
+  vanilla_loco_plus_motor_wagons_spawns_helper: false
+  orphan_motor_wagons_have_native_locomotive: false
+  dynamic_stopped_rebuild_preserves_real_wagon_unit_numbers: true
+  actual_motor_cargo_inventory_iron_plates_preserved: 37
+  actual_motor_fluid_water_preserved: 9000
+  real_auto_route_station_arrival_verified: true
+  deferred_insert_when_train_moving_until_actual_stop: true
+  actual_owner_removed_helper_cleanup_next_tick: PASS
+  emergency_orphan_energy_zeroing: NOT_PROVEN_failed_one_negative_candidate
+  native_SAVE_LOAD_other_candidate_energy_diff_j: 24900
+  native_SAVE_LOAD_other_candidate_position_diff_tiles: 0.027343
+  native_SAVE_LOAD_full_deterministic_proven: false
+  genuine_EM070_source_J_debit_in_C4: NOT_TESTED
+  laboratory_helper_seeded_energy_J: 10000000
+  laboratory_helper_seeded_energy_approved_gameplay: false
+  native_365tick_power_2MW_base_two_wagons_t190_tiles: 110.308594
+  native_365tick_power_plus_500kW_t190_tiles: 131.652344
+  native_365tick_power_plus_1MW_t190_tiles: 146.136719
+  native_365tick_power_plus_1MW_but_zero_helper_J_t190_tiles: 108.578125
+  native_cargo_wagon_battery_storage_J: 0
+  native_fluid_wagon_battery_storage_J: 0
+  independent_real_gameplay_blueprint_undo_mp_performance_60ups: NOT_TESTED
+  real_Factorio_GUI_truly_hides_extra_native_locomotive: NOT_TESTED
+  origin_loco_prod_type: void
+  production_mod_changes_in_branch: false
+  decision_doc: docs/decisions/EM072_C4_OWNER_APPROVED_AGGREGATE_DRIVE_2026-11-22.md
+  full_report: docs/research/EM072_C4_LOCOMOTIVE_MOUNTED_BOOSTER_2026-11-22.md
+  test_matrix: docs/research/EM072_C4_GATES_2026-11-22.md
+  strict_native_json: docs/research/EM072_C4_NATIVE_RESULTS_2026-11-22.json
+  full_source_logs_and_real_save_library: /Factorio/Network-062/EM072-C4-locomotive-mounted-20261122/
+  next_gate: real_client_train_GUI_then_EM070_sourcebacked_J_plus_curves_player_operation_regressions
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072_c3_native_zero_visible_span_500kW_phantom_locomotives:
   date: "2026-11-22"
   branch: experiment/em072-c3-native-zero-length-phantom
