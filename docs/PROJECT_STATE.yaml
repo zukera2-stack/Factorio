@@ -2167,7 +2167,23 @@ em063_parallel_fullmod_fault_matrix:
   third_parallel_electrical_logs_artifact_id: 14759474459
   fullmod_native_catalog_enumeration_added: true
   mast_fuzz_8build_4destroy_4restore_added: true
-  catalog_mast_stress_repeat: PENDING
+  catalog_mast_stress_repeat: PASS_8_BUILT_4_REMOVED_4_REBUILT_VALID_POST_SAVE
+  latest_final_parallel_run_id: 45036921306
+  latest_final_parallel_source_sha: a4722cb44211b13d167f2795e01627d3b8cf3642
+  final_parallel_overall_result: FAIL_ONE_CONFIRMED_HELPER_ORPHAN
+  final_parallel_electrical_result: PASS
+  final_parallel_rail_stock_result: FAIL_PERSISTENT_ORPHAN_TICK240
+  rail_native_catalog_counts: {items: 15, entities: 21, recipes: 29, technologies: 4}
+  rail_all_HSR_geometry_entity_creations: PASS
+  rail_cargo_37_iron_and_fluid_9000_water_after_LOAD: PASS
+  rail_masts_cycle_8_created_4_destroyed_4_restored: PASS
+  native_electrical_20MW_fairness_and_fault_recovery: PASS
+  final_parallel_electric_artifact_id: 14758984753
+  final_parallel_rail_artifact_id: 14759877457
+  full_native_report: docs/research/em063-fullmod-parallel-fault-report-20261122.md
+  full_native_results_json: docs/research/em063-fullmod-fault-results-20261122.json
+  experimental_hidden_fuel_recycling_recipe_detected: true
+  experimental_hidden_fuel_recycling_recipe_exploit_proven: false
   initial_parallel_run_id: 45036063598
   initial_parallel_both_jobs_started: true
   initial_rail_native_items_geometry_stock_cargo_pass: true

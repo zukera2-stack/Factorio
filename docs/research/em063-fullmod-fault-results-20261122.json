@@ -1,0 +1,153 @@
+{
+  "report_date": "2026-11-22",
+  "scope": "Full original user game mod ZIP with two independent parallel Factorio 2.1.24 native clientless probes",
+  "fullmod_source_branch": "experiment/em072-fullmod-player-test-063",
+  "fullmod_source_ref_sha": "2650d44b3caccc63189d6516b14bcd11d4800b8d",
+  "exact_zip_sha256": "2b150cdc506dafdde8fd10358e8f4e31d62c3215469db2027ba2a56b4d47c2b6",
+  "fullmod_zip_name": "ElectrifiedMainline_0.1.63.zip",
+  "engine": "Factorio 2.1.24 build 87808 Linux headless",
+  "complete_parallel_run": 45036921306,
+  "runner_branch_head_before_report": "a4722cb44211b13d167f2795e01627d3b8cf3642",
+  "overall": "FAIL_WITH_1_PERSISTENT_EXPERIMENTAL_HELPER_LIFECYCLE_DEFECT",
+  "lanes": [
+    {
+      "name": "rail_stock",
+      "outcome": "FAIL",
+      "artifact_id": 14759877457,
+      "artifact_url": "https://github.com/zukera2-stack/Factorio/actions/runs/45036921306/artifacts/14759877457",
+      "real_server_disk_checkpoint_bytes": 1143041,
+      "real_server_disk_checkpoint_sha256": "e2d1775b52d1c692109856a851c5edba4ec7ba4cb44a7c5eddcead95bf4fdcdd",
+      "native_catalog": {
+        "items": 15,
+        "entities": 21,
+        "recipes": 29,
+        "technologies": 4,
+        "note": "Includes hidden internal technical fuel and technical entities, not all are player-placeable"
+      },
+      "checks": [
+        {
+          "id": "R1",
+          "status": "PASS",
+          "evidence": "All em-* native prototype classes registered and catalogued"
+        },
+        {
+          "id": "R2",
+          "status": "PASS",
+          "evidence": "29 real HSR straight rails plus 3 distinct curved/half-diagonal rail shapes created; train curves not tested"
+        },
+        {
+          "id": "R3",
+          "status": "PASS",
+          "evidence": "Real motor cargo kept 37 iron plates, motor fluid kept 9000 water across attach/detach/load"
+        },
+        {
+          "id": "R4",
+          "status": "PASS",
+          "evidence": "One true 1MW hidden native locomotive added, 4 carriages and 2 locomotives, 0 J"
+        },
+        {
+          "id": "R5",
+          "status": "PASS",
+          "evidence": "Hidden locomotive removed and reinserted, stock unit numbers/cargo retained"
+        },
+        {
+          "id": "R6",
+          "status": "FAIL",
+          "evidence": "Owner real EM locomotive destroyed at tick160; hidden native helper still valid at tick170 and tick240"
+        },
+        {
+          "id": "R7",
+          "status": "PASS",
+          "evidence": "Real server disk SAVE and separate new process --test-save LOAD"
+        },
+        {
+          "id": "R8",
+          "status": "PASS",
+          "evidence": "8 real contact masts built, 4 deleted, 4 rebuilt, all 8 valid at tick90 and tick140 after reload"
+        }
+      ]
+    },
+    {
+      "name": "electrical",
+      "outcome": "PASS",
+      "artifact_id": 14758984753,
+      "artifact_url": "https://github.com/zukera2-stack/Factorio/actions/runs/45036921306/artifacts/14758984753",
+      "real_server_disk_checkpoint_bytes": 1001759,
+      "real_server_disk_checkpoint_sha256": "1a7a0aa494d9da3cd8cd0b3daceafc35c3028f69a049a71164c37ebd48ca2e17",
+      "checks": [
+        {
+          "id": "E1",
+          "status": "PASS",
+          "evidence": "44 actual HSR, 5 real 25kV catenary poles, 3 traction substations, isolated native factory networks"
+        },
+        {
+          "id": "E2",
+          "status": "PASS",
+          "evidence": "20MW source two 39 MJ sinks at tick240, fair and energy-bounded"
+        },
+        {
+          "id": "E3",
+          "status": "PASS",
+          "evidence": "Consumer B disconnected tick240, consumer C 118.333333 MJ by tick480"
+        },
+        {
+          "id": "E4",
+          "status": "PASS",
+          "evidence": "Real server disk SAVE at tick500 and independent native process LOAD"
+        },
+        {
+          "id": "E5",
+          "status": "PASS",
+          "evidence": "Source substation destroyed tick600, sink C rises only 0.833333 MJ transient by tick750"
+        },
+        {
+          "id": "E6",
+          "status": "PASS",
+          "evidence": "Source substation rebuilt tick750, C gains 58.666666 MJ through tick930"
+        },
+        {
+          "id": "E7",
+          "status": "PASS",
+          "evidence": "Two masts destroyed tick930, C gains just 0.333333 MJ transient to tick1100"
+        },
+        {
+          "id": "E8",
+          "status": "PASS",
+          "evidence": "Generator set 0W tick1100, C has no further growth by tick1210"
+        },
+        {
+          "id": "E9",
+          "status": "PARTIAL",
+          "evidence": "One demolition/rebuild/cut cycle; repeated 100x loops and high UPS performance not tested"
+        }
+      ],
+      "measured_J": {
+        "tick600_sink_C": 158333333.33333,
+        "tick750_sink_C": 159166666.66667,
+        "tick930_sink_C": 217833333.33334,
+        "tick1100_sink_C": 218166666.66667,
+        "tick1210_sink_C": 218166666.66667
+      }
+    }
+  ],
+  "defect": {
+    "github_issue": "https://github.com/zukera2-stack/Factorio/issues/73",
+    "severity": "BLOCKER_FOR_HELPER_DISTRIBUTED_TRACTION_PRODUCTION_ONLY",
+    "observed_orphan_at_ticks": [
+      170,
+      240
+    ],
+    "real_owner_destroyed_tick": 160,
+    "owner_unit_number_is_not_preserved_for_helper_cleanup_in_063_trial": true
+  },
+  "nonclaims": [
+    "No user Windows graphical UI tested",
+    "No actual native green Upgrade Planner with robots + Ctrl+Z/Ctrl+Y tested on 0.1.63 by this campaign",
+    "No source-paid EM070 500kW motor wagon traction or brake regeneration implemented",
+    "No curved moving train/elevated rails/multiplayer stress or 60UPS proof",
+    "Catalog contains em-c5-test-internal-joule-063-recycling auto-generated recipe; exploit NOT demonstrated"
+  ],
+  "main_modified": false,
+  "owner_installed_0_1_63_zip_modified": false,
+  "public_release_authorized": false
+}
