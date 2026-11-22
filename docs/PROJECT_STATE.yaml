@@ -1,3 +1,68 @@
+em072a5_b4_native_rail_terminal_lifecycle:
+  date: "2026-11-22"
+  branch: experiment/em072a5-native-lifecycle-b4
+  parent_b3_sha: e2621ef94ae45f914273c86dd590b2934cc8321f
+  status: native_engine_and_independent_disk_SAVE_LOAD_PASS_isolated_research
+  source_mod: "ElectrifiedMainline 0.1.62"
+  exact_ci_run: 44925677432
+  exact_ci_source_sha256: 91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575
+  game_code_files_committed: false
+  native_engine: "Factorio 2.1.24 build 87808 Linux headless"
+  real_native_locomotives: 12
+  real_native_distinct_LuaTrain_ids: 12
+  test_fixed_demand_w_per_train: 2000000
+  real_EM070_count: 1
+  real_EM070_limit_w: 20000000
+  real_factory_accumulators: 84
+  real_corridor_accumulators: 24
+  real_corridor_capacity_j: 120000000
+  real_corridor_max_discharge_w: 7200000
+  real_native_solar_generation_precharge: true
+  all_stock_mast_supply_radii_unchanged: true
+  test_only_terminal_connected_by_wire_origin_script: true
+  real_HSR_cut_x: -115
+  real_HSR_cut_tick: 315
+  cut_native_rail_destroy_returned_true: true
+  cut_native_rail_valid_false: true
+  all_12_not_qualified_by_tick: 331
+  no_phantom_new_burner_j_after_rail_cut: PASS
+  real_HSR_rejoin_tick: 335
+  physical_rail_rebuild_native_travel_and_J_resume_by_tick: 354
+  test_controller_script_raised_destroy_tick: 355
+  controller_removed_owned_script_port_and_authorization: PASS
+  no_free_J_after_destroy: PASS_tick_365
+  disk_server_save_while_no_controller_tick: 385
+  disk_reload_disconnected_state_verified_tick: 390
+  native_new_controller_rebuilt_tick: 400
+  valid_new_script_wire_native_paid_J_resumed_tick: 420
+  native_benchmark_ticks: 500
+  independent_native_disk_LOAD_ticks: 115
+  native_checkpoint_size_bytes: 827135
+  native_burner_delivered_j: 39533333.333
+  native_burner_spent_j: 39533333.333
+  each_train_j: 3294444.444
+  min_real_train_travel_tiles: 194.172
+  native_finite_energy_ledger_residual_j: -0.000002
+  native_path_cache_builds: 3
+  native_log_sha256: cad4a33893e347d46f900d18d54eb8162b3b45cfc681508768994ccfeef5c0ec
+  independent_reload_log_sha256: 27f3da5cab988b4fb7c12bd52d901073925616fa2a01de46b9de616f4317cf63
+  exact_lab_files: tests/em072a5-b4-probe/
+  strict_runner: tests/run_native_lifecycle_072a5b4.py
+  report: docs/research/native-rail-terminal-lifecycle-b4-072a5.md
+  machine_result: docs/research/native-rail-terminal-lifecycle-b4-072a5.json
+  real_player_mining_blueprint_Undo: NOT_TESTED
+  real_configuration_change_migration: NOT_TESTED
+  physically_two_separated_corridor_components: NOT_TESTED
+  two_separate_outpost_terminals: NOT_TESTED
+  factory_brownout: NOT_TESTED
+  multiplayer_60ups_stress: NOT_TESTED
+  main_game_actual_void_locomotive_migration: NOT_IMPLEMENTED
+  wagon_motor_500kw: NOT_IMPLEMENTED
+  next_required_gate: EM072_A5_B5_multicomponent_owner_lifecycle_and_config_migration
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072a5_b3_native_zero_charge_terminal_research:
   date: "2026-11-21"
   branch: experiment/em072a5-native-recharge-b3

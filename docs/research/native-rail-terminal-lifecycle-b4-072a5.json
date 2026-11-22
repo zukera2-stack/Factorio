@@ -1,0 +1,42 @@
+{
+  "native_status": "PASS",
+  "branch": "research only",
+  "engine": "Factorio 2.1.24 build 87808",
+  "test_only": true,
+  "real_rail_cut_and_rejoin": true,
+  "test_controller_real_destroy_event_and_reattach": true,
+  "read_only_source_ci_sha256": "91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575",
+  "actual_native_trains": 12,
+  "station_limit_mw": 20,
+  "benchmark_ticks": 500,
+  "native_server_disk_save_tick": 385,
+  "independent_reload_ticks": 115,
+  "checkpoint_bytes": 827135,
+  "native": {
+    "delivered_j": 39533333.333,
+    "spent_j": 39533333.333,
+    "residual_j": -2e-06,
+    "train_min_j": 3294444.444,
+    "train_max_j": 3294444.444,
+    "travel_tiles": 194.172,
+    "cache_builds": 3.0
+  },
+  "reload": {
+    "delivered_j": 39533333.333,
+    "spent_j": 39533333.333,
+    "residual_j": -2e-06,
+    "train_min_j": 3294444.444,
+    "train_max_j": 3294444.444,
+    "travel_tiles": 194.172,
+    "cache_builds": 3.0
+  },
+  "native_log_sha256": "cad4a33893e347d46f900d18d54eb8162b3b45cfc681508768994ccfeef5c0ec",
+  "reload_log_sha256": "27f3da5cab988b4fb7c12bd52d901073925616fa2a01de46b9de616f4317cf63",
+  "not_tested": [
+    "real player cursor actions/Undo",
+    "on_configuration_changed migration",
+    "multiple physical line-components & 2 outposts",
+    "brownout",
+    "MP"
+  ]
+}
