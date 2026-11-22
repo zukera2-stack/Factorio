@@ -1,3 +1,40 @@
+em072c_native_motor_wagon_traction_blocker:
+  date: '2026-11-22'
+  branch: experiment/em072-c-motor-wagon-native-blocker
+  source_B10R_commit: 72b86a539dda638becf33591aa8cf39083f86457
+  state: native_factorio_mechanical_power_test_PASS_but_500kW_extra_wagon_traction_NOT_PROVEN
+  engine: '2.1.24 build87808 Base-only Linux headless'
+  motor_cargo_and_motor_fluid_wagon_batteries: FORBIDDEN_0J
+  three_true_equal_mass_native_trains: 3
+  native_locomotive_nameplate_w_each: 2000000
+  engine_traction_motor_wagon_name_only: zero_extra_physical_traction
+  measured_passive_240tick_tiles: 181.765625
+  measured_motor_named_240tick_tiles: 181.765625
+  measured_passive_and_motor_named_native_J_burned: 6995834.520
+  locomotive_fuel_acceleration_multiplier_test: 1.25
+  locomotive_fuel_multiplier_240tick_tiles: 206.203125
+  locomotive_fuel_multiplier_native_J_burned: 5799278.498
+  locomotive_fuel_multiplier_native_J_less_than_control: 1196556.022
+  fuel_acceleration_boost_without_extra_J_legal_wagon_500kW: false
+  native_equal_mass_241tick_benchmark: PASS
+  real_dedicated_server_SAVE_tick: 100
+  independent_native_process_LOAD_ticks: 141
+  save_checkpoint_bytes: 884068
+  benchmark_log_sha256: 93c8a7de8c6a63963fde4c55aff7c946d4d8a60082508c33a421a6edbce3d170
+  reload_log_sha256: 1c37254c6b565bdbf1a1c2a5b251d10e0dce2892557a49377f4a43fb88a0ab68
+  preflight: docs/research/native-motor-wagon-traction-c-preflight.md
+  results: docs/research/native-motor-wagon-traction-c-results.md
+  machine_result: docs/research/native-motor-wagon-traction-c-result.json
+  runner: tests/run_native_motor_force_072c.py
+  native_fixture: tests/em072-c-motor-force-probe/
+  logs_library: /Factorio/Network-062/EM072C-native-motor-wagon-20261122/
+  owner_conceptual_choice: OPEN_PAID_LOCO_PROXY_VS_NATIVE_INDEPENDENT_WAGON_MOTOR
+  original_B10R_locomotive_bus_native_result: PASS
+  EM070_AUTO_factory_rescue_policy_B: APPROVED_UNCHANGED
+  main_production_gameplay_modified: false
+  release_authorized: false
+  main_merge_authorized: false
+
 em072_b10r_compliant_locomotive_only_battery:
   date: '2026-11-22'
   branch: experiment/em072-b10r-compliant-loco-bus

@@ -1,0 +1,98 @@
+{
+  "engine": "Factorio 2.1.24 build87808 Base-only",
+  "status": "NOT A 500kW NATIVE WAGON TRACTION PROOF",
+  "config": "3 identical-mass trains with equal 2MW locomotive and cargo/fluid, motor wagon names differ only, third locomotive fuel acceleration multiplier 1.25",
+  "measurements": [
+    {
+      "tick": 60.0,
+      "passive_tiles": 13.015625,
+      "motor_label_tiles": 13.015625,
+      "loco_booster_tiles": 16.414063,
+      "passive_burned_j": 1968888.889,
+      "motor_label_burned_j": 1968888.889,
+      "loco_booster_burned_j": 1968888.889,
+      "booster_extra_tiles": 3.398438,
+      "booster_extra_burn_j": 0.0,
+      "remaining_total_j": 54093333.333
+    },
+    {
+      "tick": 120.0,
+      "passive_tiles": 50.84375,
+      "motor_label_tiles": 50.84375,
+      "loco_booster_tiles": 64.144531,
+      "passive_burned_j": 3968888.889,
+      "motor_label_burned_j": 3968888.889,
+      "loco_booster_burned_j": 3968888.889,
+      "booster_extra_tiles": 13.300781,
+      "booster_extra_burn_j": 0.0,
+      "remaining_total_j": 48093333.333
+    },
+    {
+      "tick": 180.0,
+      "passive_tiles": 110.039063,
+      "motor_label_tiles": 110.039063,
+      "loco_booster_tiles": 134.203125,
+      "passive_burned_j": 5968888.889,
+      "motor_label_burned_j": 5968888.889,
+      "loco_booster_burned_j": 5151458.498,
+      "booster_extra_tiles": 24.164063,
+      "booster_extra_burn_j": -817430.391,
+      "remaining_total_j": 42910763.724
+    },
+    {
+      "tick": 240.0,
+      "passive_tiles": 181.765625,
+      "motor_label_tiles": 181.765625,
+      "loco_booster_tiles": 206.203125,
+      "passive_burned_j": 6995834.52,
+      "motor_label_burned_j": 6995834.52,
+      "loco_booster_burned_j": 5799278.498,
+      "booster_extra_tiles": 24.4375,
+      "booster_extra_burn_j": -1196556.022,
+      "remaining_total_j": 40209052.462
+    }
+  ],
+  "log_sha256": "93c8a7de8c6a63963fde4c55aff7c946d4d8a60082508c33a421a6edbce3d170",
+  "real_server_SAVE_tick": 100,
+  "independent_native_LOAD_ticks": 141,
+  "checkpoint_bytes": 884068,
+  "reload_log_sha256": "1c37254c6b565bdbf1a1c2a5b251d10e0dce2892557a49377f4a43fb88a0ab68",
+  "reload_measurements": [
+    {
+      "tick": 120.0,
+      "passive_tiles": 50.84375,
+      "motor_label_tiles": 50.84375,
+      "loco_booster_tiles": 64.144531,
+      "passive_burned_j": 3968888.889,
+      "motor_label_burned_j": 3968888.889,
+      "loco_booster_burned_j": 3968888.889,
+      "booster_extra_tiles": 13.300781,
+      "booster_extra_burn_j": 0.0,
+      "remaining_total_j": 48093333.333
+    },
+    {
+      "tick": 180.0,
+      "passive_tiles": 110.039063,
+      "motor_label_tiles": 110.039063,
+      "loco_booster_tiles": 134.203125,
+      "passive_burned_j": 5968888.889,
+      "motor_label_burned_j": 5968888.889,
+      "loco_booster_burned_j": 5151458.498,
+      "booster_extra_tiles": 24.164063,
+      "booster_extra_burn_j": -817430.391,
+      "remaining_total_j": 42910763.724
+    },
+    {
+      "tick": 240.0,
+      "passive_tiles": 181.765625,
+      "motor_label_tiles": 181.765625,
+      "loco_booster_tiles": 206.203125,
+      "passive_burned_j": 6995834.52,
+      "motor_label_burned_j": 6995834.52,
+      "loco_booster_burned_j": 5799278.498,
+      "booster_extra_tiles": 24.4375,
+      "booster_extra_burn_j": -1196556.022,
+      "remaining_total_j": 40209052.462
+    }
+  ]
+}
