@@ -287,7 +287,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.66" # isolated fair-share source-paid native locomotive experiment; main unchanged
+  mod_version: "0.1.67" # isolated fair-share+zeroJ C5 helper lifecycle experiment; main unchanged
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -2379,7 +2379,7 @@ em067_hidden_C5_helper_lifecycle_preflight:
   date: "2026-11-22"
   branch: experiment/em067-helper-orphan-native-fullmod-20261122
   fork_sha: 29584d1b9dd76ad763a7727e4fd79787eba04526
-  status: RESEARCH_ONLY_PREIMPLEMENTATION
+  status: CODE_IMPLEMENTED_NATIVE_VALIDATION_PENDING
   target_fullmod_version: "0.1.67"
   current_true_hidden_helper_prototype: em-c5-technical-booster-1000
   current_hidden_helper_energy_J: 0
@@ -2392,6 +2392,13 @@ em067_hidden_C5_helper_lifecycle_preflight:
   native_same_full_artifact_two_lanes: REQUIRED
   inherited_issue_78_fair_1MW_expected: PASS
   inherited_issue_77_native_load: FAIL_UNRESOLVED
-  native_0J_orphan_fix_result: PENDING
+  native_0J_orphan_fix_result: PENDING_GAME
   no_main_release_or_installed_user_063_changes: true
   research: docs/research/em067-0j-helper-orphan-native-preflight-20261122.md
+  actual_0_1_67_mod_source_implemented: true
+  cleanup_module: ElectrifiedMainline/scripts/helper_lifecycle_067.lua
+  cleanup_scans_native_trains_with_exact_hidden_prototype_every_ticks: 10
+  preserves_real_EM_motor_cargo_fluid_and_vanilla_locos: true
+  source_paid_hidden_energy_J: 0
+  charged_helper_auto_destroy: false
+  full_native_0_1_67_verified: false

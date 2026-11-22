@@ -20,6 +20,7 @@ local bridge058 = require("scripts.power_bridge_058")
 local mast059 = require("scripts.mast_network_059")
 local pantograph049 = require("scripts.pantograph_visual_049")
 local paidTraction065 = require("scripts.traction_paid_065")
+local helper067 = require("scripts.helper_lifecycle_067")
 -- Legacy wire managers are retained for cleanup only. 046 technical and visual graphs are independent.
 local function empty_native_graph() return {nodes={},edges={}} end
 
@@ -582,6 +583,8 @@ local function on_tick(event)
     ghost_visual023.on_tick(event.tick)
     -- After real EM070 native bridge settlement and exact confirmed contact geometry.
     paidTraction065.on_tick(event.tick,art030,pantograph049)
+    -- Native C5 zero-J stock GC runs even when train diagnostics are throttled.
+    helper067.on_tick(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end

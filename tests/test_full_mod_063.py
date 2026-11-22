@@ -10,7 +10,7 @@ class FullModTrialTest(unittest.TestCase):
     def test_full_mod_not_two_base_only_labs(self):
         meta=json.loads((MOD/"info.json").read_text(encoding="utf-8"))
         self.assertEqual(meta["name"],"ElectrifiedMainline")
-        self.assertIn(meta["version"],("0.1.63","0.1.64","0.1.65","0.1.66"))
+        self.assertIn(meta["version"],("0.1.63","0.1.64","0.1.65","0.1.66","0.1.67"))
         self.assertEqual(meta["factorio_version"],"2.1")
         self.assertNotIn("em-c4-loco-mounted-probe",str(meta))
         self.assertNotIn("em-c5-client-gui-observer",str(meta))

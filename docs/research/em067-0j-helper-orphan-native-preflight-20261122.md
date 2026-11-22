@@ -23,3 +23,6 @@ After changing experimental source, increment `info.json` to **0.1.67**, package
 
 ## 6–10. Evidence status
 PREIMPLEMENTATION ONLY. Source code change, exact CI artifact and native results PENDING. All failed attempts are recorded, not hidden.
+
+## 7. Implementation record (Factorio engine result pending)
+Added one small runtime module `scripts/helper_lifecycle_067.lua` driven from **existing** consolidated `control.lua.on_tick` (no duplicate script.on_event). Every 10 ticks it obtains actual native trains with `stock="em-c5-technical-booster-1000"`, snapshots carriages, and native-destroys only the exact 0-J hidden locomotive if train has no genuine `em-electric-locomotive`. All original visible stock, cargo/fluid/Undo/custom rails/accepted sprites untouched. Nonzero helper energy >0.5J is explicitly blocked and logged for future actual owner refund design. Experimental version 0.1.67 with fullmod static test updated. **Native 2.1.24 outcome PENDING**.
