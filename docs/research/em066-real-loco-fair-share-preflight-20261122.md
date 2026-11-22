@@ -31,3 +31,6 @@ Actual real EM loco is native `locomotive` with finite `BurnerEnergySource` (2MW
 
 ## 7–9. Later record
 Status: PREIMPLEMENTATION. Native implementation and CI proof pending; original full mod 0.1.65 is the only last tested game source at this point. Do not upgrade beyond this proof.
+
+## 7. Actual implementation (2026-11-22, native outcomes pending)
+Changed **only** actual `ElectrifiedMainline/scripts/traction_paid_065.lua` charging loop: after identical real contact and active native donor verification, group by actual live EM070 output unit_number, water-fill finite native output.energy across all equivalent eligible locomotives capped at min(2MW/60J, 2MJ-old); then each credit exactly debits already-paid native output before adding equal LuaBurner J. All `M.requests` authenticated virtual load, original native bridge/HSR/accepted sprites, wagon types, Undos, user-visible test scene unchanged. Mod version `0.1.66` test-only, description states unresolved #77/#73 honestly. All results **UNVERIFIED UNTIL OFFICIAL ENGINE CI**. Rollback original 0.1.65 branch without modifying main.

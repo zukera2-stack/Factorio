@@ -2328,7 +2328,7 @@ em066_autonomous_fullmod_campaign_20261122:
   exact_working_full_game_065_unmodified: true
   new_native_retry: PENDING
 em066_fair_share_preflight_20261122:
-  status: RESEARCH_ONLY_NO_GAMEPLAY_YET
+  status: CODE_IMPLEMENTED_GAME_ENGINE_PENDING
   new_isolated_branch: experiment/em066-fair-share-fullmod-20261122
   forked_from_complete_fullmod_campaign: 3c69ed6cc30c29f429ff996eb9e349eb1aceda76
   prospective_fullmod_version: "0.1.66"
@@ -2337,9 +2337,17 @@ em066_fair_share_preflight_20261122:
   per_loco_native_reserve_cap_J: 2000000
   equal_priority_policy: max_min_equal_share_under_scarcity
   source_debit_BEFORE_native_burner_credit: true
-  native_1MW_2train_first60_positive: NOT_TESTED
+  native_1MW_2train_first60_positive: PENDING_NATIVE
   strict_underlying_fullmod_ZIP: REQUIRED
   unrelated_issue_77_native_load: FAIL_UNRESOLVED
   unrelated_issue_73_helper_orphan: FAIL_UNRESOLVED
   no_main_release_old_user_saves: true
   research: docs/research/em066-real-loco-fair-share-preflight-20261122.md
+
+  experimental_fullmod_info_version: "0.1.66"
+  source_real_loco_fair_max_min_waterfill: implemented
+  source_fair_allocation_grouped_by_native_EEI_unit_number: true
+  old_unmodified_native_bridge_source_power_limits: true
+  original_83_approved_PNG_unchanged: true
+  proper_native_1MW_first60_dual_real_loco: NOT_YET_TESTED
+  preserved_EM065_real_one_loco_24_tiles_SAVE_LOAD: RE_TEST_PENDING

@@ -54,51 +54,120 @@ local function donor(network,force)
   table.sort(list,function(a,b)return a.id<b.id end)
   return list[1] and list[1].r or nil
 end
-local function charge(e,art,pantograph,stats)
+-- Source-paid Joules are allocated per actual native EM070 output buffer.
+-- Two equal-need real locomotives can never be charged greedily by unit_number.
+-- No train.speed writes; no extra fuel; only the real EM locomotive has a reserve.
+local function eligible(e,art,pantograph,stats)
   if not (e and e.valid and e.name=="em-electric-locomotive"
-    and e.unit_number and e.burner) then return end
+    and e.unit_number and e.burner) then return nil end
   local burner=e.burner
   local old=math.max(0,burner.remaining_burning_fuel or 0)
   if old>M.BUFFER_CAP+1 then
-    error("[EM065 PAID FAIL] native locomotive battery exceeded finite 2MJ cap; unit="..
+    error("[EM066 PAID FAIL] locomotive exceeded finite 2MJ reserve; unit="..
       e.unit_number.." J="..old)
   end
-  if old>=M.BUFFER_CAP-M.MAX_PER_TICK/2 then return end
-  local network,why=network_for_contact(e,art,pantograph)
-  if not network then
+  -- Preserve original cap/near-cap policy: don't create a tiny extra grant
+  -- after the train is already within half a maximum native input tick.
+  if old>=M.BUFFER_CAP-M.MAX_PER_TICK/2 then return nil end
+  local net,why=network_for_contact(e,art,pantograph)
+  if not net then
     stats.miss_contact=stats.miss_contact+1
     stats.last_contact_reason=why
-    return
+    return nil
   end
-  local source=donor(network,e.force)
+  local source=donor(net,e.force)
   if not source then
     stats.miss_supply=stats.miss_supply+1
-    return
+    return nil
   end
-  local available=source.output.energy
-  local amount=math.max(0,math.min(M.MAX_PER_TICK,M.BUFFER_CAP-old,available))
+  local want=math.max(0,math.min(M.MAX_PER_TICK,M.BUFFER_CAP-old))
+  if want<=0 then return nil end
+  return {e=e,burner=burner,source=source,want=want,grant=0}
+end
+
+local function credit_paid(req,stats)
+  local amount=req.grant
   if amount<=0 then return end
-  -- Existing paid native EEI energy must be physically removed FIRST.
-  source.output.energy=available-amount
-  local next_J=source.output.energy
-  if next_J< -0.0001 or math.abs(available-next_J-amount)>0.05 then
-    error("[EM065 PAID FAIL] native source debit didn't match grant")
+  local output=req.source.output
+  if not (output and output.valid and req.e.valid) then
+    error("[EM066 PAID FAIL] donor or real locomotive invalid during credit")
   end
+  local burner=req.burner
+  local old=math.max(0,burner.remaining_burning_fuel or 0)
+  amount=math.max(0,math.min(amount,M.MAX_PER_TICK,M.BUFFER_CAP-old,
+                            output.energy))
+  if amount<=0 then return end
   if not burner.currently_burning then
-    -- The API may auto-fill a newly assigned fuel item; forcibly set ZERO
-    -- before crediting exactly the already-paid amount, no free 10MJ.
+    -- The native API initialises a new fuel item at full fuel_value.
+    -- Set its J to zero in the SAME synchronous tick before any paid credit.
     burner.currently_burning=prototypes.item[FUEL]
     burner.remaining_burning_fuel=0
     old=0
   end
+  local before=output.energy
+  -- Every credit is preceded by exact debit from a previously charged
+  -- native 25kV EM070 EEI. Source priority/real bridge remains untouched.
+  output.energy=before-amount
+  local after=output.energy
+  if after< -0.0001 or math.abs((before-after)-amount)>0.05 then
+    error("[EM066 PAID FAIL] real source debit mismatched native grant")
+  end
   burner.remaining_burning_fuel=old+amount
+  if math.abs(burner.remaining_burning_fuel-(old+amount))>0.05 then
+    error("[EM066 PAID FAIL] native burner credit mismatch")
+  end
   stats.debited_J=stats.debited_J+amount
   stats.credited_J=stats.credited_J+amount
   stats.charged_ticks=stats.charged_ticks+1
-  if burner.remaining_burning_fuel>old+amount+0.05 then
-    error("[EM065 PAID FAIL] burner gained free energy")
+end
+
+local function fair_charge(owners,art,pantograph,stats)
+  local groups,ids={},{}
+  for _,e in ipairs(owners) do
+    local req=eligible(e,art,pantograph,stats)
+    if req then
+      local id=req.source.output.unit_number
+      if not id then error("[EM066 PAID FAIL] donor EEI has no native unit_number") end
+      if not groups[id] then
+        groups[id]={source=req.source,requests={}}
+        ids[#ids+1]=id
+      end
+      groups[id].requests[#groups[id].requests+1]=req
+    end
+  end
+  table.sort(ids)
+  for _,id in ipairs(ids) do
+    local group=groups[id]
+    local output=group.source.output
+    local available=output and output.valid and
+      math.max(0,output.energy) or 0
+    -- Finite max-min water-fill: an underfilled equal-priority locomotive
+    -- receives its share before the first locomotive gets any second share.
+    local pending={}
+    for _,req in ipairs(group.requests) do
+      if req.want>0 then pending[#pending+1]=req end
+    end
+    while available>0.0001 and #pending>0 do
+      local share=available/#pending
+      local delivered=0
+      local next_pending={}
+      for _,req in ipairs(pending) do
+        local remaining=req.want-req.grant
+        local amount=math.max(0,math.min(share,remaining))
+        req.grant=req.grant+amount
+        delivered=delivered+amount
+        if remaining-amount>0.0001 then
+          next_pending[#next_pending+1]=req
+        end
+      end
+      if delivered<=0.0001 then break end
+      available=math.max(0,available-delivered)
+      pending=next_pending
+    end
+    for _,req in ipairs(group.requests) do credit_paid(req,stats) end
   end
 end
+
 local function all_real_locomotives()
   -- Static 0.1.62 legacy Lua mock tests intentionally lack the actual native
   -- train_manager. In real Factorio 2.1.24 this manager always exists.
@@ -154,7 +223,7 @@ end
 function M.on_tick(tick,art,pantograph)
   local stats=ensure()
   local owners=all_real_locomotives()
-  for _,e in ipairs(owners) do charge(e,art,pantograph,stats) end
+  fair_charge(owners,art,pantograph,stats)
   if tick%60==0 then
     log(string.format("[EM065 PAID LEDGER] tick=%d locos=%d debited_J=%.1f credited_J=%.1f charged_ticks=%d no_contact=%d no_supply=%d",
       tick,#owners,stats.debited_J,stats.credited_J,stats.charged_ticks,
