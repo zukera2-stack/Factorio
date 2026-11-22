@@ -1,3 +1,17 @@
+em069_owner_lowpower_policy:
+  decision_date: "2026-11-22"
+  owner_decision: accept_lowpower_deadband_do_not_pursue_mathematical_exactness
+  observed_not_charging_w: [1, 60]
+  observed_charging_w: 61
+  dispatcher_existing_cutoff_j_per_tick: 1
+  scope: deliberately_approximate_physical_model_not_explicit_parasitic_simulation
+  lowpower_is_release_blocker_by_itself: false
+  zero_source_and_offgrid_0j_negative_controls: mandatory
+  genuine_1MW_20MW_native_energy_accounting: mandatory
+  preservation_of_paid_positive_j_buffers: mandatory
+  release_authorized: false
+  main_merge_authorized: false
+
 em069_final_official_native_validation:
   date: "2026-11-22"
   branch: experiment/em069-local-native-recovery-20261122
