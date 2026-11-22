@@ -1,3 +1,26 @@
+em072_owner_directional_logical_boosters_20261123:
+  owner_clarification_date: "2026-11-23"
+  status: accepted_design_not_implemented
+  concept: source_paid_native_hidden_booster_attached_to_each_real_em_heading
+  motor_wagon_alone_requires_real_em_loco: true
+  motor_wagon_without_em_self_propulsion: forbidden
+  single_em_200_motor_wagons_extra_nominal_W: 100000000
+  single_em_own_nominal_W: 2000000
+  single_em_total_installed_nominal_W: 102000000
+  source_power_remains_independent_cap: true
+  bidirectional_two_opposite_em: one_hidden_booster_each_direction
+  activate_booster_for_current_direction_only: true
+  multiple_same_heading_em: no_duplicate_motor_wagon_power
+  paid_j_from_authorized_25kv_only: true
+  non_active_helper_free_reversing_traction: must_test_and_prevent
+  helper_demolition_residual_loss: owner_approved
+  motor_200_without_any_em_native_negative_test: NOT_TESTED
+  existing_071_reverse_functional_test: FAIL
+  actual_071_bidirectional_controller: not_implemented
+  main_modified: false
+  release_authorized: false
+  contract_doc: docs/research/EM072_DIRECTIONAL_MOTOR_BOOSTER_OWNER_CONTRACT_2026-11-23.md
+
 em072_real_native_integrated_071_official_final:
   date: "2026-11-23"
   branch: experiment/em072-integrated-071-native-giant-dual-20261123
