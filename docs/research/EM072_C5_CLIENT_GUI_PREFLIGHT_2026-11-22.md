@@ -41,7 +41,8 @@ No same-type public mod claiming **native GUI suppression of a real hidden locom
 - Logging schema: `EMC5|gui_open|tick=...|player=...|gui_type=...|case=...|train_id=...|native_carriages=...|real_locomotives=...|native_locomotives=...|technical_helpers=...|motor_wagons=...|native_stock=...`.
 - Python parser deliberately returns **COUNTS_OBSERVED_ONLY**, never `GUI PASS` without screenshot.
 - Local offline validation on 2026-11-22: `python -m unittest discover -s tests -p 'test_c5_gui_parser.py' -v` equivalent executed on exact byte-matching copies of both Python files: **2/2 PASS**; `python -m py_compile` **PASS**. Git blob SHA verify_c5_gui.py `e8bff90b538fb5b5e9f5cf36586594d2fca048d8`, test_c5_gui_parser.py `8e3db5ac46174bb417fa2807ce86eb1d3ab096d7`, both independently confirmed against GitHub.
-- This is a Python parser-only check. **Lua syntax, Factorio data-stage, Factorio native client GUI, CI and gameplay NOT RUN**.
+- Independent host syntax check 2026-11-22: exact GitHub blob `tests/em-c5-client-gui-observer/control.lua` SHA `aecfd5c0e3b40628ab998472f35c5ad63eea5594` loaded with **Lua 5.4 `luaL_loadbufferx` return code 0**. This is HOST Lua syntax only, not Factorio modified Lua 5.2 or game API validation.
+- **Factorio data-stage, actual native runtime/client GUI, CI and gameplay NOT RUN**.
 
 ## 8–9. Experiment result and next gate
 | Case | Status | Needed evidence |

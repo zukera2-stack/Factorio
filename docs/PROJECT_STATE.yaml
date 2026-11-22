@@ -3189,6 +3189,8 @@ em072_c5_client_gui_observer:
   native_Factorio_2_1_24_C5_test: NOT_RUN
   static_python_parser_test: PASS_2_OF_2_OFFLINE_BYTE_EXACT_GITHUB_SOURCE
   python_py_compile: PASS
+  host_lua_5_4_loadbuffer_syntax: PASS_EXACT_GITHUB_BLOB_aecfd5c0e3b40628ab998472f35c5ad63eea5594
+  actual_Factorio_Lua_5_2_runtime: NOT_RUN
   actual_Lua_data_stage_or_Client_CI: NOT_RUN
   next_gate: native_client_GUI_screenshots_and_open_event_log_then_owner_decision_if_extra_slot_visible
   main_merge_authorized: false
