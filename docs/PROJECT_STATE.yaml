@@ -2282,3 +2282,21 @@ em065_native_paid_full_2MW_test_evidence:
   existing_hidden_helper_owner_orphan_issue: https://github.com/zukera2-stack/Factorio/issues/73
   main_merge_authorized: false
   user_release_authorized: false
+em065_independent_full_traction_audit_20261122:
+  parent_source_branch: experiment/em065-source-paid-locomotive-drive-native
+  parent_verified_source_sha: 053fdd9d528b39db8f57eba5698aebfe9d79c506
+  audit_branch: audit/em065-native-multitrain-20261122
+  source_gameplay_files_modified: false
+  main_modified: false
+  original_owner_0_1_63_install_modified: false
+  official_engine: Factorio_2_1_24_build_87808
+  new_independent_native_probe: tests/em065-audit-native-probe
+  new_native_GHA_workflow: .github/workflows/em065-audit-multitrain.yml
+  real_locomotives_on_one_25kv_network: 2
+  limited_source_W: 1000000
+  zero_source_train_given_native_AUTO_schedule: true
+  negative_auto_expected_J: 0
+  starvation_requires_both_later_proven_on_grid: true
+  outcome: PENDING
+  native_evidence: PENDING
+  no_release_or_merge: true

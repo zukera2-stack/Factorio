@@ -1,0 +1,11 @@
+{
+  "name": "em065-audit-native-probe",
+  "version": "0.0.1",
+  "title": "EM065 audit: multiple trains and 0W AUTO control",
+  "author": "Independent Factorio audit",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "ElectrifiedMainline >= 0.1.65"
+  ]
+}

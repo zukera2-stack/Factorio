@@ -1,0 +1,53 @@
+name: EM065 independent native multitrain audit
+on:
+  push:
+    branches: ['audit/em065-native-multitrain-20261122']
+    paths:
+      - 'tests/em065-audit-native-probe/**'
+      - '.github/workflows/em065-audit-multitrain.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Official Factorio 2.1.24 native engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/em065-audit-game"
+          curl -fL --retry 2 --max-time 150 https://factorio.com/get-download/2.1.24/headless/linux64 -o "$RUNNER_TEMP/em065-audit-game.tar.xz"
+          tar -xJf "$RUNNER_TEMP/em065-audit-game.tar.xz" -C "$RUNNER_TEMP/em065-audit-game"
+          "$RUNNER_TEMP/em065-audit-game/factorio/bin/x64/factorio" --version | tee "$RUNNER_TEMP/audit-version.log"
+          grep -F '2.1.24' "$RUNNER_TEMP/audit-version.log"
+      - name: Native two real locomotives 1MW limited circuit and true offgrid AUTO
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/package_mod.py
+          test -s build/package/ElectrifiedMainline_0.1.65.zip
+          mkdir -p "$RUNNER_TEMP/em065-audit-mods"
+          cp build/package/ElectrifiedMainline_0.1.65.zip "$RUNNER_TEMP/em065-audit-mods/"
+          cp -a tests/em065-audit-native-probe "$RUNNER_TEMP/em065-audit-mods/em065-audit-native-probe_0.0.1"
+          printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em065-audit-native-probe","enabled":true}]}' > "$RUNNER_TEMP/em065-audit-mods/mod-list.json"
+          bin="$RUNNER_TEMP/em065-audit-game/factorio/bin/x64/factorio"
+          "$bin" --mod-directory "$RUNNER_TEMP/em065-audit-mods" --create "$RUNNER_TEMP/em065-audit-base.zip" | tee "$RUNNER_TEMP/em065-audit-create.log"
+          "$bin" --mod-directory "$RUNNER_TEMP/em065-audit-mods" --benchmark "$RUNNER_TEMP/em065-audit-base.zip" --benchmark-ticks 330 --benchmark-runs 1 | tee "$RUNNER_TEMP/em065-audit-native.log"
+          grep -F '[AUDIT EM065 MULTITRAIN RESULT]' "$RUNNER_TEMP/em065-audit-native.log"
+          grep -F '[AUDIT EM065 NO POWER AUTO PASS]' "$RUNNER_TEMP/em065-audit-native.log"
+          sha256sum build/package/ElectrifiedMainline_0.1.65.zip | tee "$RUNNER_TEMP/em065-audit-inner-sha256.txt"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EM065-independent-multitrain-audit-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/audit-version.log
+            ${{ runner.temp }}/em065-audit-create.log
+            ${{ runner.temp }}/em065-audit-native.log
+            ${{ runner.temp }}/em065-audit-inner-sha256.txt
+          if-no-files-found: warn
