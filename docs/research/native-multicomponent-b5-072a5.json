@@ -1,0 +1,90 @@
+{
+  "native_status": "PASS",
+  "branch": "research only",
+  "engine": "Factorio 2.1.24 build 87808",
+  "test_only": true,
+  "real_rail_cut_and_rejoin": true,
+  "test_controller_real_destroy_event_and_reattach": true,
+  "read_only_source_ci_sha256": "91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575",
+  "actual_native_trains": 16,
+  "distinct_native_HSR_components": 2,
+  "outpost_banks": 2,
+  "second_initial_native_cell_j": 120000000,
+  "second_test_precharged_j": 120000000,
+  "station_limit_mw": 20,
+  "benchmark_ticks": 500,
+  "native_server_disk_save_tick": 385,
+  "independent_reload_ticks": 115,
+  "checkpoint_bytes": 889377,
+  "native": {
+    "delivered_j": 39533333.333,
+    "spent_j": 39533333.333,
+    "residual_j": -2e-06,
+    "train_min_j": 3294444.444,
+    "train_max_j": 3294444.444,
+    "travel_tiles": 194.172,
+    "cache_builds": 3.0
+  },
+  "reload": {
+    "delivered_j": 39533333.333,
+    "spent_j": 39533333.333,
+    "residual_j": -2e-06,
+    "train_min_j": 3294444.444,
+    "train_max_j": 3294444.444,
+    "travel_tiles": 194.172,
+    "cache_builds": 3.0
+  },
+  "native_second": {
+    "second_count": 4.0,
+    "second_delivered_j": 30080000.0,
+    "second_native_spent_j": 26940699.766,
+    "second_burner_remaining_j": 3139300.234,
+    "second_residual_j": 0.0,
+    "second_train_min_j": 7520000.0,
+    "second_train_max_j": 7520000.0,
+    "second_travel_tiles": 344.844,
+    "second_cache_builds": 4.0
+  },
+  "reload_second": {
+    "second_count": 4.0,
+    "second_delivered_j": 30080000.0,
+    "second_native_spent_j": 26940699.766,
+    "second_burner_remaining_j": 3139300.234,
+    "second_residual_j": 0.0,
+    "second_train_min_j": 7520000.0,
+    "second_train_max_j": 7520000.0,
+    "second_travel_tiles": 344.844,
+    "second_cache_builds": 4.0
+  },
+  "migrated_probe_version": "0.0.1 -> 0.0.2",
+  "native_config_upgrade_primary": {
+    "delivered_j": 39533333.333,
+    "spent_j": 39533333.333,
+    "residual_j": -2e-06,
+    "train_min_j": 3294444.444,
+    "train_max_j": 3294444.444,
+    "travel_tiles": 194.172,
+    "cache_builds": 3.0
+  },
+  "native_config_upgrade_second": {
+    "second_count": 4.0,
+    "second_delivered_j": 28400000.0,
+    "second_native_spent_j": 26606011.613,
+    "second_burner_remaining_j": 1793988.387,
+    "second_residual_j": 0.0,
+    "second_train_min_j": 7100000.0,
+    "second_train_max_j": 7100000.0,
+    "second_travel_tiles": 333.648,
+    "second_cache_builds": 5.0
+  },
+  "native_log_sha256": "68b62ce2795f5358a8676319651c1829930b3c3f00c8a7e44e2a1fb1ca5426dc",
+  "reload_log_sha256": "91b44c2ed4f1d861cbb7ea7866a93218bfcd8ffaf4b8bdbeef97dae52d4aed01",
+  "config_upgrade_log_sha256": "a29ed8c786b202a2d2f00237a664f0f2db906efda40853b3f2c2e65f46682a5a",
+  "not_tested": [
+    "real player cursor actions/Undo",
+    "production on_configuration_changed with established gameplay outposts",
+    "two EM070 substation dispatchers on separate components",
+    "brownout",
+    "MP"
+  ]
+}

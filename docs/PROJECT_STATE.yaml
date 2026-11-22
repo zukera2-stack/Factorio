@@ -1,3 +1,83 @@
+em072a5_b5_native_dual_component_research:
+  date: "2026-11-22"
+  branch: experiment/em072a5-native-dualcomponent-b5
+  parent_b4_sha: 75e8878dc9f2ff3fb0b7d8aa91d409cd7a07f2fb
+  status: native_factorio_B5_benchmark_disk_SAVE_LOAD_and_probe_config_CHANGE_PASS_lab_only
+  source_mod: "ElectrifiedMainline 0.1.62"
+  exact_original_CI_run: 44925677432
+  exact_original_CI_artifact: 14714614745
+  source_CI_inner_zip_sha256: 91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575
+  native_factorio: "2.1.24 build 87808 Linux headless"
+  source_gameplay_files_changed: false
+  native_HSR_components_isolated: 2
+  physical_native_outpost_banks: 2
+  real_distinct_native_train_ids: 16
+  corridor_A_real_locomotives: 12
+  corridor_B_real_locomotives: 4
+  native_EM070_count: 1
+  native_EM070_power_limit_w: 20000000
+  native_demand_w_per_train_fixed_test: 2000000
+  native_factory_accumulators_A: 84
+  native_factory_A_initial_j: 420000000
+  native_outpost_A_accumulators: 24
+  outpost_A_start_j: 0
+  native_outpost_A_recharge_source: genuine_solar_through_EM070
+  native_outpost_B_accumulators: 24
+  outpost_B_initial_j: 120000000
+  outpost_B_initial_charge_method: test_only_setup_seed_NOT_production_recharge
+  outpost_B_native_max_discharge_w: 7200000
+  second_real_EM070_tested: false
+  cross_HSR_qualifies_A_to_B: false
+  cross_HSR_qualifies_B_to_A: false
+  cross_component_phantom_native_burner_j: 0
+  cut_HSR_A_B_still_native_powered: PASS
+  owner_A_removed_B_still_native_powered: PASS
+  owner_B_removed_B_zero_new_J: PASS
+  owner_B_rebuilt_B_native_energy_restored: PASS
+  native_benchmark_ticks: 500
+  actual_native_server_SAVE_tick: 385
+  independent_native_disk_LOAD_ticks: 115
+  true_checkpoint_bytes: 889377
+  native_component_A_burner_credited_j: 39533333.333
+  native_component_A_burner_spent_j: 39533333.333
+  native_component_A_residual_j: -0.000002
+  native_component_B_burner_credited_j: 30080000
+  native_component_B_burner_spent_j: 26940699.766
+  native_component_B_burner_remaining_j: 3139300.234
+  native_component_B_residual_j: 0
+  component_B_native_reachable_cache_builds: 4
+  separate_native_normal_LOAD_all_metrics_equal: true
+  actual_probe_mod_configuration_change: "0.0.1 -> 0.0.2"
+  probe_mod_on_configuration_changed_called_in_engine: true
+  migration_stale_port_revoked_via_main_mod_remote_call: true
+  migration_fail_closed_no_unauthorized_j: PASS
+  migration_explicit_script_owned_reattach_tick: 400
+  migration_native_power_return_tick: 420
+  migrated_component_B_burner_credited_j: 28400000
+  migrated_component_B_burner_spent_j: 26606011.613
+  migrated_component_B_burner_remaining_j: 1793988.387
+  migrated_component_B_residual_j: 0
+  migrated_component_A_burner_credited_j: 39533333.333
+  migrated_component_A_residual_j: -0.000002
+  native_log_sha256: 68b62ce2795f5358a8676319651c1829930b3c3f00c8a7e44e2a1fb1ca5426dc
+  independent_reload_sha256: 91b44c2ed4f1d861cbb7ea7866a93218bfcd8ffaf4b8bdbeef97dae52d4aed01
+  actual_config_reload_sha256: a29ed8c786b202a2d2f00237a664f0f2db906efda40853b3f2c2e65f46682a5a
+  native_runner: tests/run_native_dual_072a5b5.py
+  test_only_probe: tests/em072a5-b5-probe/
+  research_report: docs/research/native-multicomponent-b5-072a5.md
+  research_preflight: docs/research/native-multicomponent-preflight-b5-072a5.md
+  machine_report: docs/research/native-multicomponent-b5-072a5.json
+  source_library: /Factorio/Network-062/multicomponent-072a5b5/
+  actual_player_robot_mining_BLUEPRINT_UNDO: NOT_TESTED
+  actual_2_station_EM070_native_dispatch: NOT_TESTED
+  production_user_outpost_configuration_migration: NOT_IMPLEMENTED
+  factory_brownout_and_mp_or_large_UPS: NOT_TESTED
+  dynamic_throttle_and_motor_wagons_500kw: NOT_IMPLEMENTED
+  next_gate: EM072_A5_B6_native_two_EM070_factory_brownout_then_playthrough_UI_and_UPS
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072a5_b4_native_rail_terminal_lifecycle:
   date: "2026-11-22"
   branch: experiment/em072a5-native-lifecycle-b4
