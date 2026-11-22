@@ -2084,8 +2084,8 @@ em072_full_mod_player_test_063:
   native_train_gui_log_command: /em-test-train
   auto_spawns_on_normal_load: false
   permanent_main_logic_changes: false
-  CI_package_status: PENDING
-  CI_full_source_static_tests: PENDING
+  CI_package_status: PASS_FULL_ZIP_45034991114
+  CI_full_source_static_tests: PASS_5
   native_2_1_24_full_source_gate_workflow: .github/workflows/em072-fullmod-063-native.yml
   official_native_real_items_probe: tests/em063-native-fullmod-probe
   official_native_game_test: PASS_SCOPED_REAL_ENGINE_45034430942
@@ -2107,3 +2107,25 @@ em072_full_mod_player_test_063:
   CI_test_guards_only_not_runtime_changes: true
   native_Factorio_2_1_24_data_stage: NOT_RUN
   owner_client_real_full_mod_test: NOT_RUN
+
+em072_fullmod_063_verified_delivery:
+  date: "2026-11-22"
+  head_tested_source_commit: ac7f032785cdfad162b0ad49e4731b77a81bb13b
+  game_archive: ElectrifiedMainline_0.1.63.zip
+  CI_workflow_run_id: 45034991114
+  CI_conclusion: success
+  CI_artifact_id: 14759242115
+  CI_artifact_size_bytes: 18156592
+  CI_artifact_expiration: "2026-12-22"
+  CI_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/45034991114/artifacts/14759242115
+  CI_exact_inner_ZIP_SHA256: 2b150cdc506dafdde8fd10358e8f4e31d62c3215469db2027ba2a56b4d47c2b6
+  full_mod_files: 134
+  unchanged_original_PNGs: 83
+  new_Python_contract_tests: PASS_5
+  native_2_1_24_062_electric_cases: PASS_3_OF_3
+  native_062_total_ticks: 2030
+  separate_real_HSR_masts_substation_EM_cargo_fluid_hidden_J_probe_run: 45034430942
+  native_gui_owner_test: NOT_TESTED
+  sourcebacked_motor_wagon_traction: NOT_IMPLEMENTED
+  no_main_merge: true
+  public_release: false
