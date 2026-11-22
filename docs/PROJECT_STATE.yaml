@@ -1,3 +1,80 @@
+em072a5_b8_two_real_EM070_shared_HSR_policy_fork:
+  date: "2026-11-22"
+  branch: experiment/em072a5-native-sharedline-b8
+  parent_B7_sha: c5f2cacc4189d04533afac5ac0f9ba05531e8bfd
+  status: real_Factorio_500tick_two_variants_and_independent_SERVER_SAVE_LOAD_PASS_research_only
+  native_engine: "Factorio 2.1.24 build 87808 Linux headless"
+  actual_gameplay_source: "ElectrifiedMainline 0.1.62"
+  exact_official_CI_run: 44925677432
+  exact_official_inner_ZIP_sha256: 91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575
+  production_gameplay_files_changed: false
+  original_native_EM070_count: 2
+  shared_real_HSR_component_count: 1
+  common_native_electric_corridor_network_id_tested: true
+  separate_native_factory_network_ids_tested: true
+  native_factory_accumulator_count_each: 84
+  native_factory_total_source_accumulators: 168
+  source_capacity_each_j: 420000000
+  source_power_limit_each_W: 25200000
+  native_corridor_accumulator_count_in_B8: 0
+  native_temporary_script_owned_line_terminal_count: 1
+  native_input_only_traction_meter_count: 1
+  native_independent_moving_LuaTrain_ids: 16
+  synthetic_test_demand_per_train_W: 2000000
+  total_synthetic_traction_demand_W: 32000000
+  station_A_max_W: 20000000
+  station_B_max_W: 20000000
+  before_brownout_A_peak_plan_MW: 20
+  before_brownout_B_peak_plan_MW: 12
+  real_native_factoryB_load_position: "(500,23)"
+  factoryB_native_load_network_membership_verified: true
+  industrial_native_EEI_load_B_requested_W: 30000000
+  B_brownout_from_tick: 260
+  B_factory_brownout_checked_ticks: 217
+  test_AUTO_B_flipped_to_export_tick: 261
+  test_AUTO_B_planned_export_MW: -4.8
+  test_AUTO_A_factory_to_corridor_J: 131666666.667
+  test_AUTO_B_factory_to_corridor_J: 27200000
+  test_AUTO_B_corridor_to_factory_J: 10217391.304
+  test_AUTO_B_signed_net_import_J: 16982608.696
+  test_AUTO_train_burner_grants_J: 148492753.623
+  test_AUTO_train_burner_spent_J: 148492753.623
+  test_AUTO_remaining_burner_J: 0
+  test_AUTO_factoryB_industrial_paid_J: 109293913.043
+  test_AUTO_global_finite_ledger_residual_J: 0
+  test_manual_import_B_factory_to_corridor_J: 55520000
+  test_manual_import_B_corridor_to_factory_J: 0
+  test_manual_import_train_burner_grants_J: 186746666.667
+  test_manual_import_train_burner_spent_J: 142577827.620
+  test_manual_import_remaining_burner_J: 44168839.047
+  test_manual_import_factoryB_industrial_paid_J: 70800000
+  test_manual_import_global_finite_ledger_residual_J: -0.000001
+  test_extra_train_credited_J_import_vs_AUTO: 38253913.044
+  test_extra_factoryB_industrial_consumed_J_AUTO_vs_import: 38493913.043
+  native_benchmark_ticks_per_variant: 500
+  true_native_server_SAVE_tick_each_variant: 300
+  independent_native_disk_LOAD_ticks_each_variant: 200
+  test_AUTO_native_log_sha256: acc6c7f0c80afe789a2552c7fee3cfcb567765d872f5cd97d124c7fb45e3843d
+  test_AUTO_native_reload_log_sha256: e1f580028108d4c47070f5be956720b1f27453c2754ceaaf351cb92d87fcb0fd
+  test_manual_import_native_log_sha256: 0ead8da33296b2f5635b6203f0d4be35102fa600cbb5b5e67018e787a90af24d
+  test_manual_import_native_reload_log_sha256: 87ae8704b72ec28908f17888d798faa5cb0010ceb6a0740da7681c3d8ba5a26f
+  actual_sample_points_500ticks: 2
+  preflight: docs/research/native-shared-two-station-preflight-b8-072a5.md
+  report: docs/research/native-shared-two-station-b8-072a5.md
+  machine_report: docs/research/native-shared-two-station-b8-072a5.json
+  strict_runner: tests/run_native_shared_072a5b8.py
+  source_probe: tests/em072a5-b8-probe/
+  source_native_logs_library: /Factorio/Network-062/shared-072a5b8/
+  true_auto_dispatch_policy_priority: AUTHOR_CONCEPTUAL_DECISION_OPEN
+  B7_corridor_battery_factory_first_policy: AUTHOR_CONCEPTUAL_DECISION_OPEN
+  true_player_robot_blueprint_undo: NOT_TESTED
+  actual_electric_locomotive_from_VOID: NOT_IMPLEMENTED
+  large_world_UPS_and_multiplayer: NOT_TESTED
+  next_technical_gate_independent_of_policy: EM072_A5_B9_saturation_priority_and_real_player_mining_blueprint_lifecycle
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072a5_b7_native_demand_alias_proof:
   date: "2026-11-22"
   branch: experiment/em072a5-native-demand-cache-b7
