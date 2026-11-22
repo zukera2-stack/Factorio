@@ -3187,7 +3187,9 @@ em072_c5_client_gui_observer:
   helper_native_LuaTrain_locomotives_counts_extra: C4_NATIVE_PROVEN
   c5_observer_reports_counts_not_pixels: true
   native_Factorio_2_1_24_C5_test: NOT_RUN
-  static_python_parser_test: PENDING_LOCAL_CHECK
+  static_python_parser_test: PASS_2_OF_2_OFFLINE_BYTE_EXACT_GITHUB_SOURCE
+  python_py_compile: PASS
+  actual_Lua_data_stage_or_Client_CI: NOT_RUN
   next_gate: native_client_GUI_screenshots_and_open_event_log_then_owner_decision_if_extra_slot_visible
   main_merge_authorized: false
   public_release_authorized: false
