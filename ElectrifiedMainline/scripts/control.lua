@@ -19,6 +19,7 @@ local technical046 = require("scripts.technical_network_046")
 local bridge058 = require("scripts.power_bridge_058")
 local mast059 = require("scripts.mast_network_059")
 local pantograph049 = require("scripts.pantograph_visual_049")
+local paidTraction065 = require("scripts.traction_paid_065")
 -- Legacy wire managers are retained for cleanup only. 046 technical and visual graphs are independent.
 local function empty_native_graph() return {nodes={},edges={}} end
 
@@ -579,6 +580,8 @@ local function on_tick(event)
     bridge058.on_tick(event.tick,graph)
     art030.on_tick(event.tick,graph)
     ghost_visual023.on_tick(event.tick)
+    -- After real EM070 native bridge settlement and exact confirmed contact geometry.
+    paidTraction065.on_tick(event.tick,art030,pantograph049)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end

@@ -13,3 +13,6 @@
 **Architecture experiment:** isolate scripts/traction_paid_065.lua and prototypes/traction_paid_065.lua; after EM070 tick and contact graph update, locate current live anchor network from contact endpoints, select active importing bridge whose output network matches, deduct donor output.energy before native burner.remaining_burning_fuel increases. Any mismatch, missing source, invalid connector or native assertion -> FAIL and **no delivery to user**. Keep accepted 83 PNG/art unchanged. Main and 0.1.63 unaffected.
 
 **Status at creation:** PREFLIGHT ONLY, no native success asserted.
+
+## Implementation hypothesis recorded (engine result PENDING)
+Experimental complete 0.1.65 source appends `prototypes.traction_paid_065` and invokes `scripts.traction_paid_065.on_tick` after real EM070 and verified catenary graph. It converts **only** true EM loco to native finite BurnerEnergySource with existing hidden internal category. Positive charge only if actual drawn contact resolves both mast IDs to native verified 25kV same-network anchors and active importing real EM070 output; that output's already-paid joules are subtracted **before** equal amount is placed in locomotive burner. 2MW/60 input cap and 2MJ on-loco reserve, no LuaTrain.speed edit, no motor-wagon 500kW helper fuel. New source unverified in engine at writing; evidence/negative controls next.

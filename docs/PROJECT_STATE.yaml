@@ -287,7 +287,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.64" # isolated 25kV diagnosis/legacy-pole retirement; main unchanged
+  mod_version: "0.1.65" # source-paid native locomotive experiment ONLY; main unchanged
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -2183,7 +2183,7 @@ em065_native_real_locomotive_traction_research:
   date: "2026-11-22"
   branch: experiment/em065-source-paid-locomotive-drive-native
   parent_test_064_SHA: eeccfcc9b15cefb808423731e506d4a112c0bbc4
-  status: PREFLIGHT_ONLY
+  status: IMPLEMENTED_NATIVE_VALIDATION_PENDING
   intended_exp_version: "0.1.65"
   loco_native_power_W: 2000000
   real_loco_energy_buffer_cap_J: 2000000
@@ -2198,3 +2198,14 @@ em065_native_real_locomotive_traction_research:
   release_authorized: false
   main_modified: false
   report: docs/research/em065-source-paid-real-loco-20261122.md
+
+  finite_burner_native_2MW_locomotive_implemented: true
+  max_source_grant_J_per_tick: 33333.333333333336
+  max_paid_locomotive_reserve_J: 2000000
+  native_source_prior_debit_policy: true
+  required_real_contact_mast_pair: true
+  native_same_electric_network_as_EM070_output: true
+  old_void_locomotive_065: false
+  actual_drive_game_result: NOT_YET_RUN
+  existing_500kW_motor_helper_fuel: 0
+  no_main_or_user_063_changes: true
