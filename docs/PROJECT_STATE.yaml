@@ -2316,4 +2316,7 @@ em066_autonomous_fullmod_campaign_20261122:
   expected_preexisting_issue_73: FAIL_TO_DETECT
   expected_preexisting_issue_77: FAIL_TO_DETECT
   expected_preexisting_issue_78: FAIL_TO_DETECT
-  current_result: CI_PENDING
+  current_result: RETRY_AFTER_ZIP_ROOT_HARNESS_FIX
+  original_first_workflow_run: 45050428138
+  original_first_failure: test_only_wrong_archive_root_prefix
+  verified_full_game_ZIP_sha256_in_first_run: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e

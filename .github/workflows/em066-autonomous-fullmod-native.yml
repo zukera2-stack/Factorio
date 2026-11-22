@@ -42,9 +42,9 @@ jobs:
           sha256sum "$zip" | tee "$RUNNER_TEMP/em066-full/sha256.txt"
           printf 'mod_sha=%s\n' "$(sha256sum "$zip" | cut -d ' ' -f1)" >> "$GITHUB_OUTPUT"
           unzip -Z1 "$zip" > "$RUNNER_TEMP/em066-full/manifest.txt"
-          grep -F 'ElectrifiedMainline_0.1.65/control.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
-          grep -F 'ElectrifiedMainline_0.1.65/prototypes/em072_c5_fullmod_trial_063.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
-          grep -F 'ElectrifiedMainline_0.1.65/scripts/traction_paid_065.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
+          grep -F 'ElectrifiedMainline/control.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
+          grep -F 'ElectrifiedMainline/prototypes/em072_c5_fullmod_trial_063.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
+          grep -F 'ElectrifiedMainline/scripts/traction_paid_065.lua' "$RUNNER_TEMP/em066-full/manifest.txt"
           printf 'FULL_REAL_GAME_ARCHIVE VERIFIED_SHA256=%s\n' "$(sha256sum "$zip" | cut -d ' ' -f1)"
       - uses: actions/upload-artifact@v4
         with:
