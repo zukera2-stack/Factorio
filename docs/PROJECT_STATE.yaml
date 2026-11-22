@@ -2408,3 +2408,21 @@ em067_hidden_C5_helper_lifecycle_preflight:
   em067_native_hidden_helper_orphan_80tick: RE_TEST_PENDING
   em067_native_20MW_true_fault_disk_SAVELOAD: RE_TEST_PENDING
   em067_real_25kv_demand_issue_77: UNRESOLVED
+em068_true_native_25kv_consumer_probe_20261122:
+  branch: experiment/em068-native-25kv-consumer-probe-20261122
+  source_unmodified_full_mod_version: "0.1.67"
+  source_sha_at_start: 3cc563677782f6705d23ca009d2641b6828f3300
+  official_full_game_zip_sha256: f496066e0c6c677616daf050435c47ab60196c8f9f6bece5db79b835f6b1a462
+  official_factorio_version: "2.1.24 build 87808"
+  only_separate_native_observer_and_prototype_probe: true
+  intended_source_25kv_network: real_native_EM070_bridge_line_port
+  intended_real_sink_priority: secondary-input
+  intended_real_sink_limit_W: 2000000
+  intended_buffer_J: 100000
+  native_real_secondary_demand_observed: PENDING
+  native_real_consumer_buffer_charges: PENDING
+  no_source_control_J: 0
+  no_double_debit_locomotive_integration: NOT_IMPLEMENTED
+  status: RESEARCH_PREFLIGHT_ONLY
+  main_modified: false
+  research: docs/research/em068-actual-native-line-consumer-feasibility-20261122.md
