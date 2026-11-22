@@ -1,0 +1,97 @@
+{
+  "label": "EM072-A5-B7 native demand-cache mutation isolated",
+  "native": true,
+  "engine": "Factorio 2.1.24 build 87808 Linux headless",
+  "original_CI_sha256": "91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575",
+  "4_modes_benchmark_pass": true,
+  "full_corrected_disk_save_load_pass": true,
+  "control": {
+    "cached_sample_tick_at_250": 242.0,
+    "cached_sample_tick_at_295": 242.0,
+    "broken_direct_demand_J_tick250": 1200000.0,
+    "broken_direct_demand_J_tick295": 7200000.0,
+    "fixed_direct_demand_J_tick250": 133333.333,
+    "fixed_direct_demand_J_tick295": 133333.333,
+    "native_secondary_raw_demand_J_tick250": 133333.333
+  },
+  "variants": {
+    "add": {
+      "planned_station_peak_mw": 20.0,
+      "native_bridge_EEI_to_EEI_j": 9000000.667,
+      "pre_brownout_native_bridge_transfer_j": 7207334.0,
+      "native_transfer_peak_mw": 19.56,
+      "bank_j_tick_295": 120000000.0,
+      "factory_j_tick_295": 412678666.0,
+      "bank_j_tick_496": 97800000.0,
+      "four_native_locomotives_received_j": 30880000.0,
+      "second_factory_brownout_ticks": 187.0,
+      "primary_j_received": 39533333.333,
+      "primary_residual_j": -2e-06,
+      "secondary_residual_j": -2e-06,
+      "log_sha256": "141bcf53ed3ac82fc9b20410bff4b39e7f629fe64a90114be46e88454653e3d0"
+    },
+    "copy_add": {
+      "planned_station_peak_mw": 0.8,
+      "native_bridge_EEI_to_EEI_j": 1920000.667,
+      "pre_brownout_native_bridge_transfer_j": 727334.0,
+      "native_transfer_peak_mw": 19.56,
+      "bank_j_tick_295": 113520000.0,
+      "factory_j_tick_295": 419358666.0,
+      "bank_j_tick_496": 90600000.0,
+      "four_native_locomotives_received_j": 30880000.0,
+      "second_factory_brownout_ticks": 187.0,
+      "primary_j_received": 36440000.0,
+      "primary_residual_j": -2e-06,
+      "secondary_residual_j": 1e-06,
+      "log_sha256": "8077c6d719fae20aceb720f9e877e5dbf58b5dfe59ed32e10e40f53b0324ed5a"
+    },
+    "copy_max": {
+      "planned_station_peak_mw": 0.8,
+      "native_bridge_EEI_to_EEI_j": 1920000.667,
+      "pre_brownout_native_bridge_transfer_j": 727334.0,
+      "native_transfer_peak_mw": 19.56,
+      "bank_j_tick_295": 113520000.0,
+      "factory_j_tick_295": 419358666.0,
+      "bank_j_tick_496": 90600000.0,
+      "four_native_locomotives_received_j": 30880000.0,
+      "second_factory_brownout_ticks": 187.0,
+      "primary_j_received": 36440000.0,
+      "primary_residual_j": -2e-06,
+      "secondary_residual_j": 1e-06,
+      "log_sha256": "e03d8e98ec1f9bf04f22ee60a0674221bbb057b4e704844004ed5eaeeaac05db"
+    },
+    "meter": {
+      "planned_station_peak_mw": 0.8,
+      "native_bridge_EEI_to_EEI_j": 1920000.667,
+      "pre_brownout_native_bridge_transfer_j": 727334.0,
+      "native_transfer_peak_mw": 19.56,
+      "bank_j_tick_295": 113533333.333,
+      "factory_j_tick_295": 419358666.0,
+      "bank_j_tick_496": 90613333.333,
+      "four_native_locomotives_received_j": 30880000.0,
+      "second_factory_brownout_ticks": 187.0,
+      "primary_j_received": 39533333.333,
+      "primary_residual_j": -2e-06,
+      "secondary_residual_j": 1e-06,
+      "log_sha256": "6be0ea16791faebf570aec7505fdf9167ac74038950760b297a62c561c3a6235"
+    }
+  },
+  "corrected_independent_load": {
+    "native_b7": {
+      "transfer_j": 1920000.667,
+      "pre_brownout_transfer_j": 727334.0,
+      "actual_peak_mw": 19.56,
+      "planned_peak_mw": 0.8
+    },
+    "checkpoint_bytes": 728476,
+    "native_log_sha256": "19d6453d8e89bf351f7e0d8e8ed7a6d342c80c6b34a7533871782eea2533dd26",
+    "reload_log_sha256": "06c039dcdf22ac5ea45f420e852cd8e9ef3b96bc7c868d22ff08a9e86cfdcb68"
+  },
+  "limitations": [
+    "B7 changes only disposable test clone, not mod gameplay",
+    "primary+secondary injected fixed test demand, no native dynamic throttle",
+    "locomotive in main still void",
+    "outpost battery dispatch priority concept not selected",
+    "user/robot mining/blueprint/undo/MP/UPS not tested"
+  ]
+}

@@ -1,3 +1,59 @@
+em072a5_b7_native_demand_alias_proof:
+  date: "2026-11-22"
+  branch: experiment/em072a5-native-demand-cache-b7
+  parent_B6_sha: 80f41b04f1299071d263a228f9bf4fcc4779454d
+  research_only: true
+  native_status: four_variant_real_engine_500tick_each_and_full_real_disk_SAVE_LOAD_PASS
+  native_engine: "Factorio 2.1.24 build 87808 Linux headless"
+  original_gameplay_source: "ElectrifiedMainline 0.1.62"
+  ci_inner_zip_sha256: 91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575
+  original_ci_run: 44925677432
+  gameplay_code_files_changed: false
+  production_b6_test_injection_exists: false
+  2_real_native_EM070: true
+  real_trains_total: 16
+  native_separate_HSR_components: 2
+  native_stations_demanded_B_fixed_W: 8000000
+  test_cached_native_sample_tick: 242
+  wrong_alias_direct_demand_t250_j_per_tick: 1200000
+  wrong_alias_direct_demand_t295_j_per_tick: 7200000
+  correct_static_direct_demand_j_per_tick: 133333.333333
+  original_B_station_peak_plan_mw: 20
+  corrected_B_station_peak_plan_mw: 0.8
+  original_B_source_backed_EEI_transfer_j: 9000000.667
+  corrected_B_source_backed_EEI_transfer_j: 1920000.667
+  original_B_battery_at_tick295_j: 120000000
+  corrected_B_battery_at_tick295_j: 113520000
+  actual_B_all_four_locomotive_grants_j_both: 30880000
+  corrected_B_real_engine_transfer_peak_mw_transient: 19.56
+  corrected_A_12_locomotives_grants_j: 36440000
+  corrected_A_ledger_residual_j: -0.000002
+  corrected_B_ledger_residual_j: 0.000001
+  brownout_shortfall_ticks: 187
+  compared_real_native_modes: [add, copy_add, copy_max, meter]
+  benchmark_ticks_each: 500
+  full_native_real_server_SAVE_tick: 385
+  full_native_independent_disk_LOAD_ticks: 115
+  checkpoint_bytes: 728476
+  verified_full_native_log_sha256: 19d6453d8e89bf351f7e0d8e8ed7a6d342c80c6b34a7533871782eea2533dd26
+  independent_disk_reload_log_sha256: 06c039dcdf22ac5ea45f420e852cd8e9ef3b96bc7c868d22ff08a9e86cfdcb68
+  strict_single_variant_runner: tests/run_native_flow_072a5b7.py
+  full_matrix_runner: tests/run_native_demand_matrix_072a5b7.py
+  report: docs/research/native-demand-cache-b7-072a5.md
+  machine_report: docs/research/native-demand-cache-matrix-b7-072a5.json
+  native_logs_library: /Factorio/Network-062/demand-072a5b7/
+  native_no_double_count_after_cache_fix_in_this_fixture: true
+  universal_other_demands_double_count_eliminated: NOT_PROVEN
+  factory_first_vs_battery_first_policy: CONCEPTUAL_OWNER_DECISION_OPEN
+  two_real_EM070_on_same_line: NOT_TESTED
+  full_gameplay_motor: VOID_STILL
+  player_robot_blueprint_undo: NOT_TESTED
+  mp_large_world_UPS: NOT_TESTED
+  next_native_gate_independent_of_policy: EM072_A5_B8_two_EM070_shared_physical_HSR_component_and_native_source_fairness
+  merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072a5_b6_two_native_EM070_factory_brownout:
   date: "2026-11-22"
   branch: experiment/em072a5-native-brownout-b6
