@@ -287,7 +287,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.62" # source-only main checkpoint, NOT patcher-approved
+  mod_version: "0.1.63" # research branch full source test ONLY; main remains 0.1.62
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -2088,6 +2088,16 @@ em072_full_mod_player_test_063:
   CI_full_source_static_tests: PENDING
   native_2_1_24_full_source_gate_workflow: .github/workflows/em072-fullmod-063-native.yml
   official_native_real_items_probe: tests/em063-native-fullmod-probe
-  official_native_game_test: PENDING
+  official_native_game_test: PASS_SCOPED_REAL_ENGINE_45034430942
+  actual_native_full_source_run: 45034430942
+  native_run_engine: Factorio_2_1_24_build_87808_Linux_headless_with_official_DLC
+  native_game_probes: PASS_REAL_HSR_29_REAL_EM_ONE_MOTOR_CARGO_FLUID_TWO_MASTS_ONE_SUBSTATION_ONE_HIDDEN_HELPER_0J_FOUR_CARRIAGES
+  native_verified_visible_span_tiles: 14
+  native_actual_client_GUI: UNTESTED
+  native_proof_scope: independent_disposable_native_probe_not_user_console_scene
+  native_game_files_packaged: 134
+  native_art_pngs_packaged: 83
+  CI_early_static_failure: historical_ghost_test_unrecognized_new_version
+  CI_early_docs_failure: project_mod_version_mismatch_corrected
   native_Factorio_2_1_24_data_stage: NOT_RUN
   owner_client_real_full_mod_test: NOT_RUN

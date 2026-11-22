@@ -56,3 +56,9 @@ Full source running under official 2.1.24 headless and owner's graphical client 
 
 ## 10. License
 Only native public Factorio source prototype contracts and own prior C4 research inspected. No third-party source or graphics copied.
+
+## 7d. Native result / initial CI fixes — 2026-11-22
+- [Official Factorio native workflow 45034430942](https://github.com/zukera2-stack/Factorio/actions/runs/45034430942) **PASS**: engine **2.1.24 build 87808 Linux headless** (official installed DLC also loaded), actual full `ElectrifiedMainline_0.1.63.zip` (134 runtime files, 83 accepted sprites), 29 true `em-high-speed-straight-rail`, one real `em-electric-locomotive`, native `em-motor-cargo-wagon` cargo, native `em-motor-fluid-wagon` fluid, two 25kV catenary masts, one `em-35kv-traction-substation`, one invisible 1MW booster with 0J; visible 14-tile span, real native carriage count 4, locomotive count 2.
+- Native log: `[EM063 NATIVE PASS] full_real_mod=0.1.63|HSR=29|real_EM=1|motor_cargo=1|motor_fluid=1|masts=2|substation=1|native_carriages=4|native_locos=2|hidden_helper_J=0|span=14`.
+- Initial standard build CI of version 0.1.63 **FAIL** due outdated `tests/35kv_ghost_023.lua` which selected legacy art checks for unknown version; 039 art is unchanged. Initial docs CI **FAIL** because `project.mod_version` was incorrectly 0.1.62 while `info.json` is 0.1.63. Corrected test version guard and project scoped version; **do not** mark standard Build ZIP PASS before fresh CI.
+- Native result **does not cover** `/em-test-scene` player-initiated function (independent probe duplicates real prototype/geometry checks), graphical vanilla GUI, Undo/Redo, source-paid EM070 J, regen, MP or large-network performance.
