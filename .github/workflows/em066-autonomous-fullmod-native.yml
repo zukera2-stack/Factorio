@@ -123,7 +123,7 @@ jobs:
             grep -F '[AUDIT EM065 NO POWER AUTO PASS]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
             grep -F '[AUDIT EM065 MULTITRAIN RESULT]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
             grep -Fq 'both_eventually_contact=true' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
-            min_J=$(sed -n 's/.*first_min_J=\\([0-9.]*\\).*/\\1/p' "$RUNNER_TEMP/em066-native/logs/audit-native.log" | tail -n 1)
+            min_J=$(awk -F'first_min_J=' '/AUDIT EM065 MULTITRAIN RESULT/ {split($2,a,"|"); print a[1]}' "$RUNNER_TEMP/em066-native/logs/audit-native.log" | tail -n 1)
             test -n "$min_J"
             awk -v v="$min_J" 'BEGIN{ if (v+0<=1000) exit 1 }'
             echo "[EM066 FAIRNESS NATIVE PASS] source=1MW|both_real_EM_locomotives_positive_at_tick60|min_J=$min_J"

@@ -2366,3 +2366,12 @@ em066_fair_share_preflight_20261122:
   historical_ghost_asset_guard_numeric_version_fixed: true
   docs_project_version_matches_actual_fullmod_info: true
   fair_native_retrial: PENDING
+  native_fairness_actual_game_run: 45051217757
+  native_fair_1MW_two_real_locos_t60_J: [466666.6667, 466666.6667]
+  original_unfair_065_same_fixture_t60_J: [933333.3333, 0]
+  native_fair_0_1_66_source_behavior_observed: PASS_SCOPED
+  previous_strict_parser: BLOCKED_BY_ESCAPED_SED
+  strict_native_assertion_awk_retest: PENDING
+  native_EM070_20MW_real_disk_SAVELOAD_0_1_66: PASS
+  native_25kv_demand_issue_77: FAIL
+  native_owner_orphan_issue_73: FAIL
