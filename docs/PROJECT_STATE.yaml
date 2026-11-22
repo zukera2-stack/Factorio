@@ -1,3 +1,32 @@
+em072_paid_owner_lifecycle_native_lab:
+  date: "2026-11-22"
+  branch: experiment/em072-paid-owner-lifecycle-native-20261122
+  base_commit: 0027132d46d3d077d3f92dcc9def5029d971be97
+  full_original_mod_version: "0.1.69"
+  full_original_zip_sha256: 2915cf0a89670d12de9db4289aa7b9043467e8b9705b547bb4e21aa526edaa54
+  engine: Factorio_2.1.24_build87808_linux_headless
+  real_native_positive_cases: 7
+  source_paid_owner_death: pass
+  source_paid_native_train_split: pass
+  second_real_locomotive_survives_owner_loss: pass
+  isolated_foreign_force_native_sink: pass_paid_j_escrow
+  native_1mw_scarcity: pass
+  real_2_and_4_motor_wagon_boost: pass
+  destroyed_owner_paid_J_refunded_to_sink: 8333.333
+  force_isolated_positive_J_escrow: 8333.333
+  settlement_local_energy_residual_J: 0
+  physical_server_save_process_reload: pass
+  server_save_tick: 125
+  fullmod_tested_tick: 160
+  third_party_unannounced_paid_helper_delete: unresolved_explicit_feature_fail
+  fullmod_gameplay_runtime_modified: false
+  production_motor_wagon_controller: not_implemented
+  production_shared_authoritative_allocator: not_implemented
+  owner_gui_undo_mp: not_tested
+  main_modified: false
+  release_authorized: false
+  research_file: docs/research/EM072_PAID_OWNER_LIFECYCLE_NATIVE_2026-11-22.md
+
 em072_source_paid_scarce_1MW_boundary:
   date: "2026-11-22"
   engine: Factorio_2_1_24_build87808
