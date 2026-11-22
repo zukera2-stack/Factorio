@@ -2129,3 +2129,24 @@ em072_fullmod_063_verified_delivery:
   sourcebacked_motor_wagon_traction: NOT_IMPLEMENTED
   no_main_merge: true
   public_release: false
+
+em063_parallel_fullmod_fault_matrix:
+  date: "2026-11-22"
+  branch: experiment/em063-fault-matrix-parallel-20261122
+  status: RESEARCH_PREFLIGHT_ONLY
+  baseline_fullmod_063_sha: 2650d44b3caccc63189d6516b14bcd11d4800b8d
+  baseline_fullmod_063_inner_zip_SHA256: 2b150cdc506dafdde8fd10358e8f4e31d62c3215469db2027ba2a56b4d47c2b6
+  fullmod_runtime_code_changed: false
+  independent_parallel_lanes: [rail_and_rolling_stock, electrical_faults_and_recovery]
+  exact_engine: Factorio_2_1_24_build_87808_linux_headless
+  true_disk_save_load_required: true
+  assert_defects_not_masked: true
+  known_unimplemented_paid_traction: true
+  owner_native_GUI: UNVERIFIED
+  owner_Undo_and_robots: UNVERIFIED
+  source_paid_wagon_500kW: NOT_IMPLEMENTED
+  CI_rail_stock_lane: NOT_RUN
+  CI_power_fault_lane: NOT_RUN
+  main_merge_authorized: false
+  public_release_authorized: false
+  test_plan: docs/research/em063-parallel-fullmod-fault-matrix-20261122.md
