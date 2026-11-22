@@ -1,3 +1,27 @@
+em072_lossy_dismantling_final_official_070:
+  date: "2026-11-22"
+  test_gameplay_commit: c8dcc3c495498cccff680ec219e9a7728e1c068c
+  official_build_run: 45066262782
+  official_build_result: success
+  official_artifact_id: 14771053545
+  official_zip_sha256: d0a06def2972570f3dbfc0a8aaed5f05dae8b2931764bf634511415535a1f23f
+  exact_official_zip_local_native_loss_scenarios: 10
+  exact_official_zip_local_native_original_traction_scenarios: 9
+  physical_independent_server_save_reload: pass_same_tick170
+  069_to_official_070_real_disk_save_migration: pass
+  paid_booster_dismantle_J: 8333.333
+  unchanged_native_sink_J_before_after: 6666.667
+  original_cargo_iron: 37
+  original_fluid_water: 9000
+  inherited_approved_png_unchanged: 83
+  docs_validation_run: 45066348028
+  docs_validation_result: success
+  automatic_motor_wagon_controller: not_implemented
+  user_gui_undo_mp: not_tested
+  release_authorized: false
+  main_modified: false
+  research_record: docs/research/EM072_LOSSY_DEMOLITION_NATIVE_20261122.md
+
 em072_lossy_dismantling_native_070:
   decision_date: "2026-11-22"
   owner_approved: paid_hidden_motor_residual_is_dismantling_loss
