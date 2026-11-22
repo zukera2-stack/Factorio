@@ -2243,3 +2243,42 @@ em065_native_real_locomotive_traction_research:
   native_SAVELOAD_marker_checked_only_independent_reload: true
   native_ledger_regex_fixed: true
   SAVELOAD_result_after_correction: PENDING
+em065_native_paid_full_2MW_test_evidence:
+  date: "2026-11-22"
+  source_branch: experiment/em065-source-paid-locomotive-drive-native
+  native_engine_version: Factorio_2_1_24_build_87808_Linux_headless
+  source_code_sha_tested: 19f4ce3a33932558bf12c435cdeeb6dc0b0845a1
+  native_run_id: 45041147885
+  native_run_conclusion: success
+  native_log_artifact_id: 14761787331
+  native_log_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/45041147885/artifacts/14761787331
+  true_paid_native_LOCO_2MW: PASS
+  actual_factory_SOURCE_W: 20000000
+  same_native_25kv_network_verified: true
+  native_source_cumulative_debited_J: 3200000
+  native_loco_burner_cumulative_credited_J: 3200000
+  finite_real_loco_reserve_cap_J: 2000000
+  real_HSR_movement_to_native_station_tiles: 24
+  no_contact_control_J_at_tick420: 0
+  no_speed_writes: true
+  real_disk_server_SAVE_tick: 125
+  real_disk_SAVE_bytes: 681041
+  real_disk_checkpoint_SHA256: e3d50575824653cf826941ece30086facef2d781b9687a9cb4de3c202e922f0c
+  separate_native_process_test_SAVE_ticks: 365
+  native_real_SAVE_LOAD: PASS
+  native_units_and_ledger_persisted: true
+  full_CI_build_run_id: 45041147861
+  full_CI_build_conclusion: success
+  full_CI_fullmod_artifact_id: 14762080183
+  full_CI_fullmod_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/45041147861/artifacts/14762080183
+  full_CI_inner_ZIP_name: ElectrifiedMainline_0.1.65.zip
+  full_CI_inner_ZIP_SHA256: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  full_CI_game_files: 137
+  retained_accepted_PNG_files: 83
+  historical_real_EM062_power_regression_3_cases: PASS
+  full_docs_validation: PASS
+  owner_GUI_and_existing_save_migration: NOT_TESTED
+  motor_wagon_500kW_source_paid_tier: NOT_IMPLEMENTED
+  existing_hidden_helper_owner_orphan_issue: https://github.com/zukera2-stack/Factorio/issues/73
+  main_merge_authorized: false
+  user_release_authorized: false
