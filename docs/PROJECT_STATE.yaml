@@ -2133,7 +2133,7 @@ em072_fullmod_063_verified_delivery:
 em063_parallel_fullmod_fault_matrix:
   date: "2026-11-22"
   branch: experiment/em063-fault-matrix-parallel-20261122
-  status: RESEARCH_PREFLIGHT_ONLY
+  status: PROBE_AND_PARALLEL_WORKFLOW_SOURCE_IMPLEMENTED_CI_PENDING
   baseline_fullmod_063_sha: 2650d44b3caccc63189d6516b14bcd11d4800b8d
   baseline_fullmod_063_inner_zip_SHA256: 2b150cdc506dafdde8fd10358e8f4e31d62c3215469db2027ba2a56b4d47c2b6
   fullmod_runtime_code_changed: false
@@ -2145,8 +2145,18 @@ em063_parallel_fullmod_fault_matrix:
   owner_native_GUI: UNVERIFIED
   owner_Undo_and_robots: UNVERIFIED
   source_paid_wagon_500kW: NOT_IMPLEMENTED
-  CI_rail_stock_lane: NOT_RUN
-  CI_power_fault_lane: NOT_RUN
+  CI_rail_stock_lane: PENDING
+  CI_power_fault_lane: PENDING
+  matrix_workflow: .github/workflows/em063-parallel-fault-matrix.yml
+  railstock_probe: tests/em063-fault-rail-stock
+  electrical_probe: tests/em063-fault-electrical
+  separate_engine_processes_for_SAVE_LOAD: true
+  matrix_fail_fast: false
+  strict_ZIP_identity_check: true
+  first_process_rail_stock_ticks: 115
+  second_process_rail_stock_ticks: 130
+  first_process_electrical_ticks: 525
+  second_process_electrical_ticks: 740
   main_merge_authorized: false
   public_release_authorized: false
   test_plan: docs/research/em063-parallel-fullmod-fault-matrix-20261122.md

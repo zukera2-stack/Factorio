@@ -1,0 +1,86 @@
+name: EM063 FULL MOD parallel native fault matrix
+on:
+  push:
+    branches: ['experiment/em063-fault-matrix-parallel-20261122']
+    paths:
+      - 'tests/em063-fault-*/**'
+      - '.github/workflows/em063-parallel-fault-matrix.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full_mod_native_fault:
+    name: Native fault / ${{ matrix.lane }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - lane: rail_stock
+            probe: em063-fault-rail-stock
+            checkpoint: em063-fault-rail_stock-checkpoint
+            first_ticks: 115
+            second_ticks: 130
+            marker: '[EM063 RAIL STOCK PASS]'
+          - lane: electrical
+            probe: em063-fault-electrical
+            checkpoint: em063-fault-electrical-checkpoint
+            first_ticks: 525
+            second_ticks: 740
+            marker: '[EM063 POWER FAULT PASS]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify the exact same installed full-mod 0.1.63 ZIP source
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_full_mod_063.py' -v
+          python3 scripts/package_mod.py --output "$RUNNER_TEMP/fault-package"
+          echo "2b150cdc506dafdde8fd10358e8f4e31d62c3215469db2027ba2a56b4d47c2b6  $RUNNER_TEMP/fault-package/ElectrifiedMainline_0.1.63.zip" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/em063-fault/mods" "$RUNNER_TEMP/em063-fault/logs"
+          cp "$RUNNER_TEMP/fault-package/ElectrifiedMainline_0.1.63.zip" "$RUNNER_TEMP/em063-fault/mods/"
+          cp -a "tests/${{ matrix.probe }}" "$RUNNER_TEMP/em063-fault/mods/${{ matrix.probe }}_0.0.1"
+          printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"${{ matrix.probe }}","enabled":true}]}' > "$RUNNER_TEMP/em063-fault/mods/mod-list.json"
+          sha256sum "$RUNNER_TEMP/em063-fault/mods/ElectrifiedMainline_0.1.63.zip" > "$RUNNER_TEMP/em063-fault/logs/engine-mod-sha256.txt"
+      - name: Download exact official Factorio 2.1.24 / 87808 native engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/em063-engine"
+          curl -fL --retry 2 --max-time 150 https://factorio.com/get-download/2.1.24/headless/linux64 -o "$RUNNER_TEMP/em063-engine.tar.xz"
+          tar -xJf "$RUNNER_TEMP/em063-engine.tar.xz" -C "$RUNNER_TEMP/em063-engine"
+          "$RUNNER_TEMP/em063-engine/factorio/bin/x64/factorio" --version | tee "$RUNNER_TEMP/em063-fault/logs/version.txt"
+          grep -F '2.1.24' "$RUNNER_TEMP/em063-fault/logs/version.txt"
+      - name: Fresh disposable game and first real process with checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/em063-engine/factorio/bin/x64/factorio"
+          mods="$RUNNER_TEMP/em063-fault/mods"
+          "$bin" --mod-directory "$mods" --create "$RUNNER_TEMP/em063-fault/initial.zip" 2>&1 | tee "$RUNNER_TEMP/em063-fault/logs/create.log"
+          "$bin" --mod-directory "$mods" --benchmark "$RUNNER_TEMP/em063-fault/initial.zip" --benchmark-ticks ${{ matrix.first_ticks }} --benchmark-runs 1 2>&1 | tee "$RUNNER_TEMP/em063-fault/logs/first-process.log"
+          grep -F 'disk_checkpoint' "$RUNNER_TEMP/em063-fault/logs/first-process.log"
+          checkpoint=$(find "$RUNNER_TEMP" -type f -name "${{ matrix.checkpoint }}.zip" -print -quit)
+          test -n "$checkpoint" && test -s "$checkpoint" || { echo "NO REAL DISK CHECKPOINT: ${{ matrix.checkpoint }}"; exit 1; }
+          echo "$checkpoint" > "$RUNNER_TEMP/em063-fault/checkpoint-path.txt"
+          sha256sum "$checkpoint" > "$RUNNER_TEMP/em063-fault/logs/checkpoint-sha256.txt"
+      - name: Independently resume saved state in new Factorio process and enforce all fault gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/em063-engine/factorio/bin/x64/factorio"
+          mods="$RUNNER_TEMP/em063-fault/mods"
+          checkpoint=$(cat "$RUNNER_TEMP/em063-fault/checkpoint-path.txt")
+          "$bin" --mod-directory "$mods" --benchmark "$checkpoint" --benchmark-ticks ${{ matrix.second_ticks }} --benchmark-runs 1 2>&1 | tee "$RUNNER_TEMP/em063-fault/logs/resume-process.log"
+          grep -F "${{ matrix.marker }}" "$RUNNER_TEMP/em063-fault/logs/resume-process.log"
+      - name: Upload lane logs and real SAVE SHA even on native failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: EM063-native-fault-${{ matrix.lane }}-${{ github.sha }}
+          path: ${{ runner.temp }}/em063-fault/logs/**
+          if-no-files-found: warn
+          retention-days: 30

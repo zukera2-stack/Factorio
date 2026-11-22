@@ -41,7 +41,12 @@ The two jobs **never share the same save directory** or engine state. Build one 
 ## 6. Experiment steps / rollback
 (1) independent ephemeral fresh map, exact full ZIP; (2) native setup and baseline verified; (3) mutate one dimension (remove helper, cut demand, demolish substation); (4) log before/after counts, Joules, owners, entity/unit identity; (5) save to engine-owned disk using `game.server_save` and resume from that exact checkpoint in a **different Factorio process**; (6) final pass only if all enforced checks pass. On fault, assert so CI marks FAIL; retain logs/artifact and refine test only if measurement is invalid. Rollback: delete this branch/test-only probes; owner's `ElectrifiedMainline_0.1.63.zip` remains SHA-identical.
 
-## 7. Implementation and evidence — pending
+## 7. Implementation — parallel native CI ready
+- Two independent probe mods under `tests/em063-fault-rail-stock/` and `tests/em063-fault-electrical/` (no `ElectrifiedMainline/` changes).
+- Dedicated [parallel workflow](../../.github/workflows/em063-parallel-fault-matrix.yml) matrix jobs, `fail-fast: false`. Both **run the exact 0.1.63 ZIP** from original source SHA256 pin; they do not borrow or alter each other's saves. The rail job uses 115 engine ticks then loads its real disk checkpoint in separate process for 130 ticks; electrical job uses 525 then 740 ticks. Each script terminates with its own PASS marker only if all native phase checks pass.
+- Deliberate strict orphan guard (rail lane, only actual EM owner destroyed), genuine source demolition and split/restore guard (energy lane). All logs retained on failing CI. New test suite uses genuine engine entities and native interfaces, not Lua-synthesized success.
+- Source code committed, **native CI status PENDING** before actual run.
+
 The test workflow and probe code will be added next. Exact CI run/job/artifact refs and failures must be recorded, with per-lane PASS/FAIL, not a single invented blanket PASS.
 
 ## 8. Actual native results — NOT RUN
