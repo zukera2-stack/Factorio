@@ -1,3 +1,72 @@
+em072_owner_approved_policy_B_factory_rescue:
+  decision_date: "2026-11-22"
+  status: approved_by_owner
+  policy: EM070_AUTO_can_export_from_shared_HSR_to_underpowered_factory_even_if_trains_have_unmet_power_demand
+  implementation: existing_EM070_AUTO_behavior_observed_native_B8_B9
+  source: docs/decisions/EM072_AUTO_POLICY_B_2026-11-22.md
+  do_not_override_with_traction_first: true
+  manual_import_mode_remains_available: true
+  unrelated_stationary_corridor_battery_first_vs_factory_first_policy: OPEN_not_decided
+  authorize_main_merge: false
+
+em072a5_b9_hybrid_finite_onboard_battery_native_laboratory:
+  date: "2026-11-22"
+  branch: experiment/em072a5-native-loco-battery-b9
+  source_B8_head: e9c70b2e5d7d788fe686806ea9f4a83090115bcd
+  status: native_two_worlds_500_ticks_and_independent_real_SAVE_LOAD_PASS_research_only
+  native_factorio: "2.1.24 build 87808 linux64 headless"
+  official_original_CI_build: "ElectrifiedMainline 0.1.62"
+  exact_mod_zip_sha256: 91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575
+  official_CI_run: 44925677432
+  game_source_and_main_changed: false
+  original_main_electric_locomotive_energy_source: void
+  actual_test_locomotives: 16
+  real_EM070_count: 2
+  genuine_native_shared_rail_electric_network: true
+  factory_B_real_native_EEI_brownout_30MW: true
+  factory_B_native_battery_max_discharge_25_2MW: true
+  approved_AUTO_B_factory_backfeed_real_J: 10217391.304
+  laboratory_onboard_battery_implementation: finite_scripted_per_locomotive_lua_storage_debited_to_REAL_LuaBurner
+  laboratory_onboard_capacity_per_locomotive_j: 2000000
+  laboratory_onboard_max_power_per_locomotive_w: 1000000
+  test_capacity_and_power_author_approved_for_gameplay: false
+  real_native_grid_to_16_train_burners_both_tests_j: 148492753.623
+  positive_control_initial_battery_total_j: 32000000
+  positive_control_debited_battery_j: 32000000
+  positive_control_battery_brownout_j: 27066666.667
+  positive_control_battery_still_untransferred_after_t496_j: 0
+  positive_control_battery_emptied_at_tick: 373
+  positive_control_concurrent_grid_plus_onboard_ticks: 136
+  positive_control_native_burner_credited_j: 180492753.623
+  positive_control_native_burner_actually_spent_j: 145029149.236
+  positive_control_native_burner_unspent_j: 35463604.387
+  negative_zero_battery_native_burner_credited_j: 148492753.623
+  negative_zero_battery_native_burner_spent_j: 148492753.623
+  negative_zero_battery_debited_j: 0
+  both_native_global_finite_ledgers_within_j: 0.01
+  both_NATIVE_benchmark_ticks: 500
+  both_REAL_server_SAVE_tick: 300
+  both_independent_disk_LOAD_ticks: 200
+  battery_native_log_sha256: 23c8e7ea98d1512cb4dc298dd0d48030b7807646491d7247bc3f514e11bce084
+  battery_reload_log_sha256: 214dee859ca723a3ddf3cbe199a1abc13187795199604a37a20c754f96680b37
+  empty_native_log_sha256: b1ef6b323ec67aa90140b6908680313683a64e4dda2a2ffaae3ec42985eb59e2
+  empty_reload_log_sha256: 3788d3ea2c2c5f9ebf3619b765ed3461e7c11925c69eec91e568dd00e962c33a
+  comparison_runner: tests/run_native_battery_matrix_072a5b9.py
+  individual_runner: tests/run_native_battery_072a5b9.py
+  report: docs/research/native-onboard-battery-b9-072a5.md
+  research_preflight: docs/research/native-onboard-battery-preflight-b9-072a5.md
+  decision_record: docs/decisions/EM072_AUTO_POLICY_B_2026-11-22.md
+  native_logs_library: /Factorio/Network-062/onboard-battery-072a5b9/
+  native_mechanical_gain_over_control_proved: false
+  actual_product_battery_charging_and_regen: NOT_IMPLEMENTED
+  owner_approved_gameplay_onboard_battery_spec: NOT_YET_DECIDED
+  player_blueprint_undo_mining_unit_id_lifecycle: NOT_TESTED
+  60UPS_Multiplayer: NOT_TESTED
+  next_policy_independent_gate: B10_real_locomotive_battery_charge_lifecycle_and_power_control
+  main_merge_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072a5_b8_two_real_EM070_shared_HSR_policy_fork:
   date: "2026-11-22"
   branch: experiment/em072a5-native-sharedline-b8

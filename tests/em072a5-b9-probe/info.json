@@ -1,0 +1,11 @@
+{
+  "name": "em072a5-b9-probe",
+  "version": "0.0.1",
+  "title": "EM072 A5 B8 two EM070 on one physical shared HSR research probe",
+  "author": "Factorio QA",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "ElectrifiedMainline >= 0.1.62"
+  ]
+}
