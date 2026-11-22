@@ -1,0 +1,76 @@
+{
+  "audit_date": "2026-11-22",
+  "repo": "zukera2-stack/Factorio",
+  "main_sha": "cf75656fda374824944311f26bbd454bc90ad45b",
+  "fullmod_063_sha": "2650d44b3caccc63189d6516b14bcd11d4800b8d",
+  "fullmod_065_gameplay_sha": "19f4ce3a33932558bf12c435cdeeb6dc0b0845a1",
+  "source_065_sha256": "a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e",
+  "native_engine": "Factorio 2.1.24 build 87808 linux64 headless",
+  "original_065_test": {
+    "run": 45041147885,
+    "motion_tiles": 24,
+    "paid_output_J": 3200000,
+    "credited_burner_J": 3200000,
+    "real_disk_save_load": true
+  },
+  "audit_runs": [
+    {
+      "run": 45042971982,
+      "artifact_id": 14762317389,
+      "conclusion": "success_diagnostic",
+      "shared_source_W": 1000000,
+      "real_locomotives": 2,
+      "tick60_loco_A_J": 933333.333,
+      "tick60_loco_B_J": 0,
+      "tick120_loco_A_J": 1933333.333,
+      "tick120_loco_B_J": 0,
+      "negative_offgrid_auto": "PASS"
+    },
+    {
+      "run": 45043138579,
+      "artifact_id": 14762098856,
+      "conclusion": "success_diagnostic",
+      "native_25kv_line_primary_demand_J_tick_at_120": 0,
+      "native_25kv_line_secondary_demand_J_tick_at_120": 0,
+      "line_secondary_output_J_tick_at_300": 16666.667,
+      "real_loco_battery_total_J_at_120": 1933333.333,
+      "simultaneous_train_fairness": "FAIL"
+    }
+  ],
+  "prior_release_energy_gate": {
+    "source_version": "0.1.62",
+    "unexplained_loss_J_no_accumulators": 1500000,
+    "unexplained_loss_J_with_8_accumulators": 1537742,
+    "retested_on_065": false
+  },
+  "faults": [
+    {
+      "id": "A-01",
+      "severity": "P0",
+      "result": "NATIVE_25KV_DEMAND_ZERO"
+    },
+    {
+      "id": "A-02",
+      "severity": "P1",
+      "result": "NATIVE_1MW_TWO_TRAIN_FIFO_STARVATION"
+    },
+    {
+      "id": "A-03",
+      "severity": "P1",
+      "result": "NATIVE_ORPHAN_HELPER_80T_ON_063"
+    },
+    {
+      "id": "A-04",
+      "severity": "P1",
+      "result": "HISTORICAL_ENERGY_LEAK_RETEST_REQUIRED"
+    },
+    {
+      "id": "A-05",
+      "severity": "P1",
+      "result": "PAID_MOTOR_WAGON_500KW_NOT_IMPLEMENTED"
+    }
+  ],
+  "status": "BLOCKED_FOR_PRODUCTION",
+  "main_modified": false,
+  "gameplay_065_modified": false
+}

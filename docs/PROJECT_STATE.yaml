@@ -2314,3 +2314,23 @@ em065_independent_full_traction_audit_20261122:
   actual_25kv_native_grid_flow_test: PENDING
   native_evidence: PENDING
   no_release_or_merge: true
+em065_full_audit_20261122_final:
+  audit_date: "2026-11-22"
+  native_2_1_24_audit_rerun: 45043138579
+  native_audit_log_artifact_id: 14762098856
+  source_fullmod_065_gameplay_sha: 19f4ce3a33932558bf12c435cdeeb6dc0b0845a1
+  tested_zip_sha256: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  actual_native_25kv_primary_demand_tick60_120_240_300: [0, 0, 0, 0]
+  actual_native_25kv_secondary_demand_tick60_120_240_300: [0, 0, 0, 0]
+  actual_native_25kv_secondary_output_J_at_tick300: 16666.667
+  two_train_actual_source_W: 1000000
+  second_loco_J_tick60_120: [0, 0]
+  first_loco_J_tick60_120: [933333.333, 1933333.333]
+  both_locomotives_later_native_contact: true
+  authenticated_offgrid_loco_native_AUTO_schedule: true
+  offgrid_native_AUTO_loco_J_and_displacement_at_tick240: [0, 0]
+  gameplay_source_changes_in_audit: none
+  audit_report: docs/research/em065-independent-full-audit-20261122.md
+  audit_machine_results: docs/research/em065-independent-full-audit-20261122.json
+  overall_release_gate: FAIL
+  merge_to_main_authorized: false
