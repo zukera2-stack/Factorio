@@ -2320,3 +2320,10 @@ em066_autonomous_fullmod_campaign_20261122:
   original_first_workflow_run: 45050428138
   original_first_failure: test_only_wrong_archive_root_prefix
   verified_full_game_ZIP_sha256_in_first_run: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  initial_dual_lane_native_run: 45050518918
+  baseline_full_ZIP_hash_confirmed: true
+  native_original_fault_probes_blocked_before_gameplay: exact_test_dependency_063
+  native_test_only_dependencies_now_accept_065: true
+  independent_1MW_audit_rerun_065: PASS_DIAGNOSTIC_WITH_FEATURE_FAIL_77_78
+  exact_working_full_game_065_unmodified: true
+  new_native_retry: PENDING
