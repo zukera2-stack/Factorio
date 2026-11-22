@@ -43,10 +43,34 @@ local function verify_stock(s,expected_helpers)
     "|fluid_unit="..s.fluid_id.."|hidden_J="..
       tostring(expected_helpers>0 and s.helper.burner.remaining_burning_fuel or 0))
 end
+
+local function catalog(kind,dictionary)
+  local names={}
+  for name in pairs(dictionary) do
+    if name:sub(1,3)=="em-" then names[#names+1]=name end
+  end
+  table.sort(names)
+  check(#names>0,"native no EM "..kind.." were registered")
+  say("fullmod_catalog","class="..kind.."|count="..#names.."|names="..table.concat(names,","))
+  return #names
+end
+
 local function setup()
   local surface=game.surfaces[1]
   surface.request_to_generate_chunks({BASE_X,0},5)
   surface.force_generate_chunk_requests()
+  local item_total=catalog("items",prototypes.item)
+  local entity_total=catalog("entities",prototypes.entity)
+  local recipe_total=catalog("recipes",prototypes.recipe)
+  local technology_total=catalog("technologies",prototypes.technology)
+  check(item_total>=14,"expected at least 14 real EM mod items")
+  check(entity_total>=12,"expected at least 12 real EM mod entities")
+  check(recipe_total>=8,"missing real EM crafting recipes")
+  check(technology_total>=4,"missing original research technology tree")
+  check(not prototypes.item["em-c5-technical-booster-1000"],
+    "technical hidden locomotive must not have user-usable inventory item")
+  check(not prototypes.recipe["em-c5-test-internal-joule-063"],
+    "hidden internal-J test item must not be craftable")
   local entities={
     "em-high-speed-straight-rail","em-curved-high-speed-rail",
     "em-curved-high-speed-rail-b","em-half-diagonal-high-speed-rail",
@@ -104,6 +128,37 @@ end
 script.on_event(defines.events.on_tick,function(ev)
   local t=ev.tick
   if t==2 then setup() end
+  if t==25 then
+    local s=storage.rail_fault
+    s.temporary_masts={}
+    for n=1,8 do
+      local name=n%2==0 and "em-35kv-catenary-pole-north" or "em-35kv-catenary-pole"
+      s.temporary_masts[n]=create(s.loco.surface,name,BASE_X+12*n,70)
+    end
+    say("mast_churn_build","created=8|kinds=south_north")
+  end
+  if t==55 then
+    local s=storage.rail_fault
+    for n=1,8,2 do
+      s.temporary_masts[n].destroy{raise_destroy=true}
+      check(not s.temporary_masts[n].valid,"mast wasn't destroyed in fault cycle "..n)
+    end
+    say("mast_churn_cut","removed=4")
+  end
+  if t==75 then
+    local s=storage.rail_fault
+    for n=1,8,2 do
+      s.temporary_masts[n]=create(s.loco.surface,"em-35kv-catenary-pole",
+        BASE_X+12*n,70)
+    end
+    say("mast_churn_restore","rebuilt=4")
+  end
+  if t==90 or t==140 then
+    for n,e in ipairs(storage.rail_fault.temporary_masts) do
+      check(e.valid,"masts not restored after destructive churning n="..n)
+    end
+    say("mast_churn_verify","real_masts=8|tick="..t)
+  end
   if t==40 or t==90 then verify_stock(storage.rail_fault,1) end
   if t==100 then
     local ok,res=pcall(function() game.server_save("em063-fault-rail_stock-checkpoint") end)

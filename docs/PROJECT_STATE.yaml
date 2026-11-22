@@ -2158,7 +2158,16 @@ em063_parallel_fullmod_fault_matrix:
   second_parallel_rail_artifact_id: 14759149885
   rail_orphan_recheck_tick: 240
   rail_orphan_recheck_after_30tick_callbacks: true
-  rail_orphan_recheck_status: PENDING
+  rail_orphan_recheck_status: REPRODUCED_PERSISTENT_80_TICKS
+  rail_orphan_issue_url: https://github.com/zukera2-stack/Factorio/issues/73
+  third_parallel_run_id: 45036655919
+  third_parallel_power_lane_result: PASS
+  third_parallel_rail_lane_result: FAIL_PERSISTENT_ORPHAN_TICK240
+  third_parallel_rail_logs_artifact_id: 14760350040
+  third_parallel_electrical_logs_artifact_id: 14759474459
+  fullmod_native_catalog_enumeration_added: true
+  mast_fuzz_8build_4destroy_4restore_added: true
+  catalog_mast_stress_repeat: PENDING
   initial_parallel_run_id: 45036063598
   initial_parallel_both_jobs_started: true
   initial_rail_native_items_geometry_stock_cargo_pass: true
