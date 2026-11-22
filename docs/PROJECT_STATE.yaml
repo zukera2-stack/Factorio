@@ -1,3 +1,84 @@
+em072a5_b6_two_native_EM070_factory_brownout:
+  date: "2026-11-22"
+  branch: experiment/em072a5-native-brownout-b6
+  parent_B5_sha: 219edd0d4247986f1beb336761604b02fdf3744c
+  status: native_engine_500_ticks_and_independent_real_disk_SAVE_LOAD_PASS_research_only
+  native_factorio_version: "2.1.24 build 87808 Linux headless"
+  original_gameplay_mod: "ElectrifiedMainline 0.1.62"
+  exact_original_EM071_EM070_CI_run: 44925677432
+  exact_original_CI_artifact: 14714614745
+  exact_original_CI_inner_zip_sha256: 91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575
+  production_gameplay_files_changed: false
+  main_branch_modified: false
+  actual_native_EM070_station_count: 2
+  first_station_A_mode_after_t300: OFF
+  second_station_B_mode_after_t300: AUTO
+  actual_native_factory_electric_components: 2
+  actual_native_corridor_electric_components: 2
+  physical_native_HSR_components: 2
+  native_independent_train_ids_total: 16
+  primary_corridor_locomotive_count: 12
+  secondary_corridor_locomotive_count: 4
+  static_test_w_per_locomotive: 2000000
+  native_factory_A_accumulator_count: 84
+  native_factory_B_accumulator_count: 84
+  native_factory_B_initial_capacity_j: 420000000
+  native_factory_B_discharge_limit_w: 25200000
+  native_corridor_A_accumulator_count: 24
+  native_corridor_A_initial_j: 0
+  native_corridor_A_recharge: real_solar_with_real_EM070
+  native_corridor_B_accumulator_count: 24
+  native_corridor_B_initial_j: 120000000
+  corridor_B_initial_charge_method: test_only_precharged_not_gameplay_charge
+  secondary_native_solar_created: 340
+  secondary_native_solar_factory_connected_at_t90: 326
+  all_native_solar_panels_removed_tick: 225
+  second_ledger_initial_j_tick231: 541212000
+  true_second_EM070_AUTO_active_plan_ticks_t250_295: 46
+  true_second_EM070_Auto_peak_planned_mw: 20
+  actual_second_EM070_native_real_output_mw_directly_measured: false
+  actual_second_corridor_locomotive_demand_mw: 8
+  demand_double_count_proven: false
+  demand_double_count_excluded: false
+  output_20mw_could_include_battery_charging: unverified
+  factory_load_start_tick: 300
+  factory_load_request_w: 30000000
+  factory_load_kind: native_EEI_secondary_input_script_drains_measured_J_only
+  factory_load_natural_player_beacon_furnace: false
+  factory_load_actual_native_J_consumed: 82231578.947
+  measured_native_factory_under_supply_ticks_t310_496: 187
+  second_factory_ledger_residual_j: -0.000002
+  second_locomotives_total_native_burner_credited_j: 30880000
+  second_locomotives_native_burner_spent_j: 27217939.353
+  second_locomotives_remaining_fuel_j: 3662060.647
+  second_locomotives_equal_credited_each_j: 7720000
+  second_locomotives_min_native_movement_tiles: 354.086
+  first_locomotives_total_native_burner_credited_j: 39533333.333
+  first_locomotives_total_native_spent_j: 39533333.333
+  first_locomotives_ledger_residual_j: -0.000002
+  first_locomotives_min_real_movement_tiles: 194.172
+  strict_native_benchmark_ticks: 500
+  true_server_SAVE_tick: 385
+  separate_native_LOAD_ticks: 115
+  native_checkpoint_bytes: 735607
+  independent_disk_LOAD_metrics_exact_equal: true
+  native_benchmark_log_sha256: e5d16d56b5e72da366bbc812a9aedb5e05c733550a69530c3286771b42f1d021
+  native_reload_log_sha256: fc9417cb9e087d31ea9a23b63091497a5c6f3da66e09836dc3b0aba563e07a84
+  runner: tests/run_native_brownout_072a5b6.py
+  test_only_probe: tests/em072a5-b6-probe/
+  report: docs/research/native-two-station-brownout-b6-072a5.md
+  preflight: docs/research/native-two-station-preflight-b6-072a5.md
+  machine_report: docs/research/native-two-station-brownout-b6-072a5.json
+  raw_logs_library: /Factorio/Network-062/brownout-072a5b6/
+  main_locomotive_energy_source_void: true
+  real_player_robot_blueprint_UNDO: NOT_TESTED
+  shared_two_EM070_single_corridor: NOT_TESTED
+  multiplayer_and_60UPS: NOT_TESTED
+  next_gate: EM072_A5_B7_per_tick_natively_measured_station_J_and_demand_dedup
+  merge_to_main_authorized: false
+  release_authorized: false
+  patcher_authorized: false
+
 em072a5_b5_native_dual_component_research:
   date: "2026-11-22"
   branch: experiment/em072a5-native-dualcomponent-b5

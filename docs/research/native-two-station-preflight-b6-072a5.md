@@ -1,0 +1,29 @@
+# EM072-A5-B6 — native research worksheet: two real EM070 / factory brownout
+
+**Date:** 2026-11-22. **Status:** hypothesis was tested in an isolated Factorio 2.1.24 build 87808 lab; **not production gameplay**. Branch will be `experiment/em072a5-native-brownout-b6` based only on B5 commit `219edd0d4247986f1beb336761604b02fdf3744c`.
+
+## Source, version and working native analogue
+
+- Working precedent: B5's physically disconnected native 12+4 trains, two script-owned terminals and two independent 24-cell buffers; `tests/run_native_dual_072a5b5.py`, report `docs/research/native-multicomponent-b5-072a5.md`, commit `219edd0d4247986f1beb336761604b02fdf3744c`. B5 did **not** contain a second EM070 or an independent native factory source.
+- Exact original EM071/EM070 ZIP of ElectrifiedMainline **0.1.62**, from GitHub Actions [run 44925677432](https://github.com/zukera2-stack/Factorio/actions/runs/44925677432), artifact `14714614745`, inner game ZIP SHA256 `91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575`. The strict runner checks the original five core Git blob SHA-1 values **before** making a disposable patched copy.
+- Main game real source read: `scripts/power_bridge_058.lua` (creates true native factory/line ports, `M.LIMIT=20000000/60`, AUTO plan), `scripts/bridge_dispatch_059.lua` (native-flow and direct-demand plan with no-joule-creation), `scripts/bridge_devices_060.lua` (native accumulator sampling), `scripts/technical_network_046.lua` (script-owned copper/feeder), `scripts/power_019.lua` (real HSR graph). Actual prototype `prototypes/power_bridge_058.lua`; same native Base accumulator and solar-panel types as B3/B5. No unverified third-party workaround was introduced.
+- API reference (runtime verified in installed engine; links may describe later API revisions): [LuaEntity](https://lua-api.factorio.com/latest/classes/LuaEntity.html), [LuaElectricEnergySource](https://lua-api.factorio.com/latest/classes/LuaElectricEnergySource.html), [ElectricEnergyInterfacePrototype](https://lua-api.factorio.com/latest/prototypes/ElectricEnergyInterfacePrototype.html), [LuaWireConnector](https://lua-api.factorio.com/latest/classes/LuaWireConnector.html).
+
+## Falsifiable test design
+
+1. Extend B5 **only in disposable test-mod fixture** with a second actual `em-35kv-traction-substation` near y=160, fed from a new separated factory with **84 native vanilla accumulator = 420 MJ / 25.2 MW** and its own real native solar field. Retain B5 second 24 native corridor accumulators = 120 MJ, test-seeded to full at t1, and 4 real moving locomotive burners; keep the first 12-train, first-EM070 circuit unchanged.
+2. Validate two real station entities and **four distinct native electric networks**: factory A, corridor A, factory B, corridor B, with two independent physical HSR connected components. Assert zero cross-corridor train authorization. Stock mast supply-area radius must remain zero; only test-owned terminals connect to native anchors.
+3. Disable real A and B solar fields at t225; close honest finite-J ledgers for both components at t231. On t240 enter four separate 2 MW native demands on the B physical corridor **once** and sample B AUTO dispatch, station status and native movement. Station's *planned* flow must not exceed 20 MW; **planned flow is not equivalent to measured actual native electric consumption**.
+4. At t300 turn on a distinct test-only **30 MW native EEI factory consumer** in B's factory. Native EEI input is supplied by Factorio's own solver; a Lua control loop **only drains the actual EEI buffer contents and records consumed J**, representing external factory demand. This is not an ordinary vanilla player factory or naturally powered furnace, and this deliberate scripted sink is a laboratory simplification. Because the native 84-cell battery can output ≤25.2MW with both solar fields removed, 30 MW continuous requested demand must exhibit shortages. Count t310–496 if measured native EEI replenishment is below 30MW/60 by more than 1kJ.
+5. Assert the four B trains still obtain >0.5MJ **after** t300, primary 12 trains and B5 rail/owner fail-closed controls remain working, no cross-network native J, no change to original locomotive speed through Lua. Ledger equation, after solar removal: initial `[factory cells + corridor cells + bridge input/output EEIs + native traction meter + native factory load EEI + burner remaining]` = current corresponding stored J + `burner energy spent` + recorded `native EEI industrial-load J consumed` (within 3J).
+6. Native 500-tick benchmark PASS, true headless server SAVE on tick385 while A missing its controller, independent Factorio **LOAD +115 ticks** and equal key metrics. No save, main, tag, gameplay ZIP or patcher mutation.
+
+## Failure and negative controls
+
+- Refuse if any of the four native network IDs coincide, if any 84 B factory cells / 24 B corridor accumulators have the wrong native ID, or if any foreign locomotive authorizes a cross-component path.
+- Refuse if B's native 20 MW plan cap is exceeded, if factory demand fails to exhibit a native shortfall, if B trains stop entirely during the shortfall, or if either finite-J ledger leaks/unaccounted J.
+- Explicitly leave **double-count risk** of B's 20 MW plan vs 8 MW traction to a **separate flow-per-tick measurement gate**: a 20 MW plan might charge batteries or reflect duplicated inputs, and cannot alone diagnose either cause.
+
+## Proof scope
+
+Full measured evidence in `native-two-station-brownout-b6-072a5.md` and the machine-readable result. No actual user mining/Blueprint/Undo, no network merging of the two EM070 into one HSR component, no player factory load, no multiplayer, no performance/UPS guarantee and **no production change** are claimed.

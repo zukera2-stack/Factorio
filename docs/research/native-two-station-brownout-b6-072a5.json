@@ -1,0 +1,78 @@
+{
+  "native_status": "PASS",
+  "branch": "research B6 isolated",
+  "engine": "Factorio 2.1.24 build 87808",
+  "source_game_zip_sha256": "91aef47ca13a0009e46ab92c9ad5735e0af30c6acc16bab1cf0507a8855a2575",
+  "two_native_EM070_stations": true,
+  "two_native_factory_source_components": true,
+  "trains": 16,
+  "outpost_banks": 2,
+  "real_native_factory_brownout": true,
+  "native_benchmark_ticks": 500,
+  "real_server_SAVE_tick": 385,
+  "independent_LOAD_ticks": 115,
+  "native_primary": {
+    "delivered_j": 39533333.333,
+    "spent_j": 39533333.333,
+    "residual_j": -2e-06,
+    "train_min_j": 3294444.444,
+    "train_max_j": 3294444.444,
+    "travel_tiles": 194.172,
+    "cache_builds": 3.0
+  },
+  "reload_primary": {
+    "delivered_j": 39533333.333,
+    "spent_j": 39533333.333,
+    "residual_j": -2e-06,
+    "train_min_j": 3294444.444,
+    "train_max_j": 3294444.444,
+    "travel_tiles": 194.172,
+    "cache_builds": 3.0
+  },
+  "native_secondary": {
+    "second_count": 4.0,
+    "second_delivered_j": 30880000.0,
+    "second_native_spent_j": 27217939.353,
+    "second_burner_remaining_j": 3662060.647,
+    "second_residual_j": -2e-06,
+    "second_train_min_j": 7720000.0,
+    "second_train_max_j": 7720000.0,
+    "second_travel_tiles": 354.086,
+    "second_cache_builds": 4.0
+  },
+  "reload_secondary": {
+    "second_count": 4.0,
+    "second_delivered_j": 30880000.0,
+    "second_native_spent_j": 27217939.353,
+    "second_burner_remaining_j": 3662060.647,
+    "second_residual_j": -2e-06,
+    "second_train_min_j": 7720000.0,
+    "second_train_max_j": 7720000.0,
+    "second_travel_tiles": 354.086,
+    "second_cache_builds": 4.0
+  },
+  "native_b6": {
+    "peak_station_mw": 20.0,
+    "second_factory_native_sink_j": 82231578.947,
+    "shortfall_ticks": 187.0,
+    "second_factory_ledger_residual_j": -2e-06,
+    "second_native_locomotive_grants_j": 30880000.0
+  },
+  "reload_b6": {
+    "peak_station_mw": 20.0,
+    "second_factory_native_sink_j": 82231578.947,
+    "shortfall_ticks": 187.0,
+    "second_factory_ledger_residual_j": -2e-06,
+    "second_native_locomotive_grants_j": 30880000.0
+  },
+  "checkpoint_bytes": 735607,
+  "native_log_sha256": "e5d16d56b5e72da366bbc812a9aedb5e05c733550a69530c3286771b42f1d021",
+  "reload_log_sha256": "fc9417cb9e087d31ea9a23b63091497a5c6f3da66e09836dc3b0aba563e07a84",
+  "not_tested": [
+    "real user blueprint/Undo",
+    "MP",
+    "2-EM070 same shared HSR",
+    "full gameplay",
+    "large UPS"
+  ]
+}
