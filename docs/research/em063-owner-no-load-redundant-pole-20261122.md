@@ -25,3 +25,6 @@
 
 ## Measurement and result
 **Before code:** screenshots/video inspected; cause established in source as void-powered train; ordinary pole duplicate confirmed. Native 0.1.64 removal/load and traction energy experiments **NOT YET RUN**. Do not claim actual 2MW paid drive is available. Research archive will be updated with exact CI run/log evidence or FAIL.
+
+## Research implementation, 0.1.64
+Code includes new `prototypes/em063_retire_ordinary_pole_064.lua`: keeps ordinary `em-electric-pole` **entity, item and recipe IDs** for legacy save compatibility; hides item and recipe, disables default recipe, removes tech unlock. The player's `/em-test-kit` no longer grants it. Base vanilla and both true 25kV mast directions plus actual traction substation remain unchanged. No art touched. This fixes crafting clutter but does NOT connect traction Joules, since the locomotive remains void-powered. Native engine tests PENDING at this commit.

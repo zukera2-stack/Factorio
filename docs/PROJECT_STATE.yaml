@@ -287,7 +287,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.63" # research branch full source test ONLY; main remains 0.1.62
+  mod_version: "0.1.64" # isolated 25kV diagnosis/legacy-pole retirement; main unchanged
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -2151,3 +2151,17 @@ em063_owner_no_load_legacy_pole_audit_20261122:
   main_merge_authorized: false
   public_release_authorized: false
   research: docs/research/em063-owner-no-load-redundant-pole-20261122.md
+
+em064_retire_obsolete_ordinary_pole_20261122:
+  version: "0.1.64"
+  original_fullmod_063_source_SHA: 2650d44b3caccc63189d6516b14bcd11d4800b8d
+  original_user_fullmod_063_ZIP_unchanged: true
+  legacy_em_electric_pole_item_entity_recipe_IDs_kept: true
+  obsolete_item_and_recipe_hidden: true
+  obsolete_research_recipe_unlock_removed: true
+  obsolete_item_removed_from_test_kit: true
+  original_real_25kv_masts_and_substation_unchanged: true
+  original_accepted_graphics_unchanged: true
+  true_locomotive_25kv_power_consumption_implemented: false
+  CI_native_validation: PENDING
+  main_merge_authorized: false

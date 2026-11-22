@@ -33,7 +33,6 @@ commands.add_command("em-test-kit","Give REAL mod items for a temporary 0.1.63 t
   if not p or not p.valid then return end
   local kit={
     {"em-high-speed-rail",100},
-    {"em-electric-pole",12},
     {"em-35kv-catenary-pole",12},
     {"em-35kv-catenary-pole-north",12},
     {"em-35kv-traction-substation",4},
