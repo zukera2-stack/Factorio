@@ -749,3 +749,6 @@ commands.add_command("em-25kv-priority", "Select an electric interface, accumula
         player.print(priority_diag061.report(entity))
     end
 end)
+
+-- 0.1.63 TEST BRANCH ONLY: opt-in single scene with genuine main mod objects.
+require("scripts.em072_c5_fullmod_trial_063")

@@ -36,7 +36,13 @@ Same-type successful **full-mod** integration precedent has NOT been measured; C
 ## 6. Hypothesis / falsification / rollback
 Hypothesis: by packaging unchanged 0.1.62 source with actual two wagon clones and a read-only optional GUI trial, the user can validate authentic item UI and hidden helper visibility without misrepresenting the electric drivetrain. Falsification: Factorio data-stage fails, real rail geometry/coupler fails, any original item missing, native GUI unexpectedly polluted, existing full runtime interference, or native ZIP content mismatch. Rollback: remove experimental 0.1.63 ZIP, restore prior main-built 0.1.62 ZIP, discard disposable test save; no main branch or old player save edited.
 
-## 7. Implementation / verification — PENDING
+## 7. Implementation / verification — initial source record
+Implemented in research-only `ElectrifiedMainline_0.1.63`: original 0.1.62 files and art retained, append `prototypes.em072_c5_fullmod_trial_063` to `data.lua`, `scripts.em072_c5_fullmod_trial_063` to `scripts/control.lua`; two native wagon prototypes and items/recipes/tech unlock; one native invisible finite-burner helper tier for 1/2/4 wagon counts, but no energy-seeding code; optional `/em-test-kit`, `/em-test-scene` (compact actual custom HSR + actual EM + wagon + mast/substation), `/em-test-train` and GUI observer. Factorio APIs not yet client-tested; CI/real engine pending. **C4+Base helper test is not proof of 0.1.63 gameplay.**
+
+## 7b. Human-scale test and original items
+`/em-test-kit` grants actual named items from original mod: `em-high-speed-rail`, two authentic catenary masts, `em-35kv-traction-substation`, `em-electric-locomotive`, standard `em-electric-pole` and native railway replacement planner, plus newly added cargo/fluid motor wagon items. `/em-test-scene` is **opt-in** only and limited to 29 genuine HSR rail pieces with real vehicle and only two masts and one substation; no 13-lane 720-tile benchmark. Original production 0.1.62 runtime still processes native building and network/Undo events. This scene tests GUI/coupling and physical placement only: hidden adapter 0J; the EM loco's existing void source is unchanged. Exact game results await user/CI.
+
+## 7c. Native startup and screenshots pending
 Exact code, ZIP/CI, headless client and owner screenshots to be appended after evidence, not invented.
 
 ## 8. Actual game results — NOT TESTED

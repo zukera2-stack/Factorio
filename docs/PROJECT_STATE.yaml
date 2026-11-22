@@ -2054,7 +2054,7 @@ dispatch_cache_067_exact_CI_2026_11_21:
 
 em072_full_mod_player_test_063:
   date: "2026-11-22"
-  status: RESEARCH_PREFLIGHT_ONLY
+  status: IMPLEMENTED_PENDING_CI_NATIVE_CLIENT_TEST
   branch: experiment/em072-fullmod-player-test-063
   source_main_sha: cf75656fda374824944311f26bbd454bc90ad45b
   source_main_version: "0.1.62"
@@ -2065,8 +2065,25 @@ em072_full_mod_player_test_063:
   no_new_updater: true
   C4_C5_base_only_HUGE_LAB_rejected_for_human: true
   existing_HSR_catenary_substation_real_loco_art_preserve: true
-  C5_new_wagon_types: PLANNED_NOT_IN_MAIN
+  C5_new_wagon_types: IMPLEMENTED_ONLY_IN_TEST_BRANCH
   hidden_helper_no_free_J: REQUIRED
   actual_native_full_game: NOT_TESTED
   owner_GUI: NOT_TESTED
   plan: docs/research/em072-full-source-gui-test-063.md
+
+  real_source_package_version: "0.1.63"
+  complete_existing_main_runtime_and_artwork_retained: true
+  added_real_motor_cargo_prototype: em-motor-cargo-wagon
+  added_real_motor_fluid_prototype: em-motor-fluid-wagon
+  added_technical_helper_prototypes: [em-c5-technical-booster-500, em-c5-technical-booster-1000, em-c5-technical-booster-2000]
+  hidden_technical_helper_J_seed: 0
+  actual_EM_locomotive_void_source_still_present: true
+  source_backed_EM070_J_drive_implemented: false
+  optional_scene_command: /em-test-scene
+  real_object_kit_command: /em-test-kit
+  native_train_gui_log_command: /em-test-train
+  auto_spawns_on_normal_load: false
+  permanent_main_logic_changes: false
+  CI_package_status: PENDING
+  native_Factorio_2_1_24_data_stage: NOT_RUN
+  owner_client_real_full_mod_test: NOT_RUN

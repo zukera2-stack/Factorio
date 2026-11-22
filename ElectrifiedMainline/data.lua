@@ -23,3 +23,6 @@ require("prototypes.hsr_concrete_053")
 
 -- 058 isolated native power bridge.
 require("prototypes.power_bridge_058")
+
+-- 0.1.63 TEST BRANCH ONLY: two real native wagon types and finite-J hidden GUI adapter.
+require("prototypes.em072_c5_fullmod_trial_063")
