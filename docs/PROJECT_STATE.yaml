@@ -2051,3 +2051,32 @@ dispatch_cache_067_exact_CI_2026_11_21:
   user_release_permission: false
   human_report: docs/research/25kv-dispatch-cache-067-CI.md
   machine_report: docs/research/25kv-dispatch-cache-067-CI.json
+cross_branch_em065_independent_audit_20261122:
+  date: "2026-11-22"
+  docs_only_main_candidate: true
+  main_gameplay_version_unchanged: "0.1.62"
+  main_gameplay_baseline_sha: cf75656fda374824944311f26bbd454bc90ad45b
+  main_original_void_locomotive: true
+  owner_fullmod_test_063_sha: 2650d44b3caccc63189d6516b14bcd11d4800b8d
+  research_fullmod_065_sha: 053fdd9d528b39db8f57eba5698aebfe9d79c506
+  research_fullmod_zip_sha256: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  research_fullmod_native_one_loco_24_tiles: PASS_45041147885
+  independent_native_audit_runs: [45042971982, 45043138579]
+  native_factorio_version: "2.1.24 build 87808"
+  native_25kv_load_0_while_loco_charges: FAIL_issue_77
+  native_1MW_two_loco_fairness: FAIL_issue_78
+  native_unpowered_real_AUTO_control: PASS
+  technical_helper_orphan_80ticks: FAIL_issue_73
+  motor_wagon_extra_500kW_source_paid: NOT_IMPLEMENTED
+  brake_regeneration: NOT_IMPLEMENTED
+  historical_0_1_62_unexplained_J_no_accumulators: 1500000
+  historical_0_1_62_unexplained_J_eight_accumulators: 1537742
+  historical_lifecycle_closed_reservoir_retested_0_1_65: false
+  owner_windows_GUI_old_SAVE_mp: NOT_VALIDATED
+  main_release_status: BLOCKED
+  mod_portal_or_installer_authorized: false
+  beta_main_merge_authorized: false
+  audit_only_PR: https://github.com/zukera2-stack/Factorio/pull/79
+  docs_cross_branch_current_work: docs/CURRENT_WORK.md
+  docs_gated_recovery_plan: docs/plans/EM065_AUDIT_RECOVERY_20261122.md
+  independent_audit_report: https://github.com/zukera2-stack/Factorio/blob/audit/em065-native-multitrain-20261122/docs/research/em065-independent-full-audit-20261122-FINAL.md

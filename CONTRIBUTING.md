@@ -75,6 +75,20 @@ The 0.1.7 straight-ground-rail test demonstrates why this process matters:
 - Guard optional prototypes and keep optional integrations out of hard dependencies.
 - If a same-type precedent cannot be found, document the search scope and uncertainty before experimenting.
 
+## Mandatory adversarial validation gate for electrification (audit 2026-11-22)
+
+For source-funded locomotive/25kV work, a passed package CI, one native acceleration test, or internal debit=credit Lua counters **must not** be labelled a full game or release PASS. Separate these measurable layers:
+
+1. **Real vs virtual network load:** while an authenticated locomotive requests actual power, log both engine-side factory generator `LuaElectricNetwork.parent_network.flow_last_tick` and **native 25kV catenary demand**. Virtual `dispatch.plan(networks).load` alone cannot prove the user-visible electric network is actually loaded. Test stationary battery charging **and** powered movement independently.
+2. **Scarcity and fairness:** with two identical true locomotive prototypes and an actual **1MW** native factory EEI feeding the same authenticated catenary, both must receive a nonzero finite share in the first 60 ticks (if equal priority is the chosen policy), and aggregate native source discharge and stored energy must balance. Prior native run #45043138579 reproduced locomotive B at 0J through tick120; do not change its expectation before adding a separately measured fixed case.
+3. **Negative controls must be active:** a 0J locomotive without contact must have a **genuine native AUTO schedule to a connected station**. Include source shutdown **while** train moves, missing mast/bridge, depletion of a finite pre-paid reserve, splits/joins and real server disk SAVE followed by different-process LOAD.
+4. **All-power ledger:** an equality between two counters incremented from the same `amount` is only a *local transfer* check. Independently snapshot generator output, each native EEI buffer, each real train reserve, ordinary accumulators, physical/explicitly approved loss events and unaccounted delta. Historical 0.1.62 tests detected 1,500,000 J unexplained network-switching deficit; new code cannot be cleared until analogous lifecycle tests pass on the **exact changed mod archive**.
+5. **Entire catalog and lifecycle:** authenticate the real EM locomotive and every motor cargo/fluid item with representative contents, test hidden native-helper cleanup after owner demolition and save/load ([Issue #73](https://github.com/zukera2-stack/Factorio/issues/73)); do not energize helpers while orphan ownership is unresolved. Test native GUI, Blueprint/Undo/Redo, robots, curved/diagonal/elevated rails, migration and multiplayer separately before saying complete.
+6. **Proof-level integrity:** classify each gate as source-only, static mock, package, actual native Factorio headless, native Windows GUI screenshot, owner real save, or owner-authorized release. A GREEN workflow can have **an expected reproduced defect inside it**; cite the actual assertion/result rather than calling it a feature PASS. Keep exact SHA+Factorio build+artifact and explicit remaining FAILs.
+7. **Project-memory safety:** preserve earlier project docs; if a status or implementation change deletes hundreds of unrelated existing YAML/Markdown lines, **fail review and compare against the parent tree**. A former EM065 test iteration accidentally removed 2,414 documentation lines and was subsequently repaired. Do not let test code overwrite documentation with literal placeholder content.
+
+[Detailed gated recovery plan](docs/plans/EM065_AUDIT_RECOVERY_20261122.md) · [independent native audit](https://github.com/zukera2-stack/Factorio/blob/audit/em065-native-multitrain-20261122/docs/research/em065-independent-full-audit-20261122-FINAL.md) · [draft documentation and tests PR #79](https://github.com/zukera2-stack/Factorio/pull/79).
+
 ## Before requesting review
 
 - [ ] The exact user-visible behavior and test scope are stated.
