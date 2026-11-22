@@ -2051,3 +2051,22 @@ dispatch_cache_067_exact_CI_2026_11_21:
   user_release_permission: false
   human_report: docs/research/25kv-dispatch-cache-067-CI.md
   machine_report: docs/research/25kv-dispatch-cache-067-CI.json
+
+em072_full_mod_player_test_063:
+  date: "2026-11-22"
+  status: RESEARCH_PREFLIGHT_ONLY
+  branch: experiment/em072-fullmod-player-test-063
+  source_main_sha: cf75656fda374824944311f26bbd454bc90ad45b
+  source_main_version: "0.1.62"
+  proposed_experiment_version: "0.1.63"
+  owner_requested: FULL_REAL_MOD_ZIP_NOT_BASE_ONLY_LAB
+  no_main_merge: true
+  no_public_release: true
+  no_new_updater: true
+  C4_C5_base_only_HUGE_LAB_rejected_for_human: true
+  existing_HSR_catenary_substation_real_loco_art_preserve: true
+  C5_new_wagon_types: PLANNED_NOT_IN_MAIN
+  hidden_helper_no_free_J: REQUIRED
+  actual_native_full_game: NOT_TESTED
+  owner_GUI: NOT_TESTED
+  plan: docs/research/em072-full-source-gui-test-063.md
