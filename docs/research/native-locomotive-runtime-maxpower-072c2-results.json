@@ -1,0 +1,43 @@
+{
+  "engine": "Factorio 2.1.24 build 87808 Linux Headless",
+  "result": "RUNTIME MAX_POWER MUTATION BLOCKED, PREDECLARED 2MW AND 3MW PROTOTYPES MOVE DIFFERENTLY",
+  "entity_max_power_edit_supported": false,
+  "prototype_power_edit_at_runtime_supported": false,
+  "loco_prototype_swap_property_supported": false,
+  "energy_source": "void (TEST ONLY, FREE ENERGY, NOT GAMEPLAY)",
+  "wagons_tested": false,
+  "samples": {
+    "60": {
+      "2mw": {
+        "distance_tiles": 26.203125,
+        "speed_tiles_per_tick": 0.85742435
+      },
+      "3mw": {
+        "distance_tiles": 39.234375,
+        "speed_tiles_per_tick": 1.2
+      }
+    },
+    "120": {
+      "2mw": {
+        "distance_tiles": 93.785156,
+        "speed_tiles_per_tick": 1.2
+      },
+      "3mw": {
+        "distance_tiles": 111.234375,
+        "speed_tiles_per_tick": 1.2
+      }
+    },
+    "180": {
+      "2mw": {
+        "distance_tiles": 165.785156,
+        "speed_tiles_per_tick": 1.2
+      },
+      "3mw": {
+        "distance_tiles": 183.234375,
+        "speed_tiles_per_tick": 1.2
+      }
+    }
+  },
+  "benchmark_log_sha256": "edb75037443b4518ccb83619471c6a74c74d48f27c02115b6b2a03606e11ec99",
+  "gameplay_accepted": false
+}

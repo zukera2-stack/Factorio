@@ -1,3 +1,44 @@
+em072_c2_runtime_max_power_api_check:
+  date: '2026-11-22'
+  owner_choice_motor_wagon_traction: A_KEEP_NATIVE_CARGO_AND_FLUID_WAGONS
+  owner_rejects_fuel_acceleration_modifiers_for_motor_wagons: true
+  owner_wants_no_direct_train_speed_writes: true
+  desired_power_formula_w: '2000000 * loco_count + 500000 * motor_wagon_count'
+  desired_action: change_live_locomotive_max_power_when_coupled
+  runtime_api_change_locomotive_max_power_supported: false
+  actual_native_engine: 'Factorio 2.1.24 build 87808 Linux64 Headless Base-only'
+  experimental_locomotive_proto_2mw_at_data_stage_created: true
+  experimental_locomotive_proto_3mw_at_data_stage_created: true
+  dynamic_lua_entity_max_power_read_success: false
+  dynamic_lua_entity_max_power_write_success: false
+  dynamic_lua_entity_prototype_max_power_write_success: false
+  runtime_lua_entity_prototype_switch_success: false
+  actual_lua_prototype_modification_error: No_modifications_of_LuaEntityPrototype_are_currently_possible
+  actual_lua_entity_write_error: LuaEntity_does_not_contain_key_max_power
+  actual_lua_entity_prototype_switch_error: LuaEntity_prototype_is_read_only
+  t60_2mw_void_loco_tiles: 26.203125
+  t60_3mw_void_loco_tiles: 39.234375
+  t120_2mw_void_loco_tiles: 93.785156
+  t120_3mw_void_loco_tiles: 111.234375
+  t180_2mw_void_loco_tiles: 165.785156
+  t180_3mw_void_loco_tiles: 183.234375
+  void_energy_in_test_is_product_acceptable: false
+  motor_wagons_500kw_native_engine_power_proven: false
+  predeclared_prototype_variant_entity_replacement_safe: NOT_TESTED
+  predeclared_prototype_variant_entity_replacement_approved: false
+  measured_real_train_battery_or_EM070_power_flow_in_this_test: NOT_TESTED
+  native_benchmark_ticks: 185
+  native_benchmark_log_sha256: edb75037443b4518ccb83619471c6a74c74d48f27c02115b6b2a03606e11ec99
+  native_runner: tests/run_native_runtime_maxpower_072c2.py
+  test_fixture: tests/em072-c2-power-api-probe/
+  source_report: docs/research/native-locomotive-runtime-maxpower-072c2.md
+  decision_document: docs/decisions/EM072_MOTOR_WAGON_OPTION_A_2026-11-22.md
+  source_logs_library: /Factorio/Network-062/EM072-C2-runtime-maxpower/
+  production_mod_version: 0.1.62
+  production_mod_main_modified: false
+  release_authorized: false
+  merge_to_main_authorized: false
+
 em072c_native_motor_wagon_traction_blocker:
   date: '2026-11-22'
   branch: experiment/em072-c-motor-wagon-native-blocker
