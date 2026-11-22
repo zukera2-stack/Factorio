@@ -2165,3 +2165,8 @@ em064_retire_obsolete_ordinary_pole_20261122:
   true_locomotive_25kv_power_consumption_implemented: false
   CI_native_validation: PENDING
   main_merge_authorized: false
+  engine_probe: tests/em064-native-pole-retirement-probe
+  engine_probe_workflow: .github/workflows/em064-native-retired-pole.yml
+  inherited_062_native_power_cases_required: true
+  inherited_062_test_runner_accepts_064: true
+  native_status: PENDING

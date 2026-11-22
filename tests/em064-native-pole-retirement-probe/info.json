@@ -1,0 +1,11 @@
+{
+  "name": "em064-native-pole-retirement-probe",
+  "version": "0.0.1",
+  "title": "EM064 Retired ordinary pole native compatibility gate",
+  "author": "EM Research",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "ElectrifiedMainline >= 0.1.64"
+  ]
+}

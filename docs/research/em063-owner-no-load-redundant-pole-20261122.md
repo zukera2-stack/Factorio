@@ -28,3 +28,6 @@
 
 ## Research implementation, 0.1.64
 Code includes new `prototypes/em063_retire_ordinary_pole_064.lua`: keeps ordinary `em-electric-pole` **entity, item and recipe IDs** for legacy save compatibility; hides item and recipe, disables default recipe, removes tech unlock. The player's `/em-test-kit` no longer grants it. Base vanilla and both true 25kV mast directions plus actual traction substation remain unchanged. No art touched. This fixes crafting clutter but does NOT connect traction Joules, since the locomotive remains void-powered. Native engine tests PENDING at this commit.
+
+## Real-engine verification infrastructure
+Dedicated CI full 0.1.64 ZIP is loaded into official 2.1.24/87808 with independent disposable probe. It must assert legacy item and recipe remain registered but hidden, no technology unlock, **legacy entity still can be placed and mined to original item**, vanilla small pole still exists, two actual 25kV masts and substation remain placeable, all real rolling-stock/rail entities remain registered. Existing standard full ZIP workflow still runs inherited Lua and native 20MW bridge regressions after version guards extended. Outcome PENDING.
