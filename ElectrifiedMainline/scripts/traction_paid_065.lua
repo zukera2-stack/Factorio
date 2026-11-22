@@ -100,6 +100,11 @@ local function charge(e,art,pantograph,stats)
   end
 end
 local function all_real_locomotives()
+  -- Static 0.1.62 legacy Lua mock tests intentionally lack the actual native
+  -- train_manager. In real Factorio 2.1.24 this manager always exists.
+  if not (game and game.train_manager and game.train_manager.get_trains) then
+    return {}
+  end
   local owners={}
   for _,t in pairs(game.train_manager.get_trains{stock="em-electric-locomotive"}) do
     if t.valid then

@@ -6,3 +6,12 @@ undefined
   native_generator_off_tick: 240
   native_negative_second_check_tick: 420
   native_2_1_24_result: PENDING
+
+  native_initial_source_paid_charge_run: 45040415124
+  actual_fullmod_paid_burner_charge_J_at_tick240: 2000000
+  independent_offgrid_burner_J_at_tick420: 0
+  native_initial_source_paid_charge_result: PASS
+  native_2MW_train_motion_gate: PENDING
+  native_motion_goal: EM065_NATIVE_GOAL
+  native_motion_min_tiles_by_tick180: 2
+  historical_mock_train_manager_guard_added: true

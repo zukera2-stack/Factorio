@@ -26,6 +26,21 @@ local function setup()
   source.input_flow_limit=0;source.output_flow_limit=LIMIT;source.energy=0
   -- A positive owner at a true contact span, one negative untouched off-line.
   local loco=entity(s,"em-electric-locomotive",0,1)
+  local goal=nil
+  for _,cfg in ipairs({
+    {27,3,defines.direction.east},
+    {27,-1,defines.direction.west},
+    {29,3,defines.direction.east},
+    {29,-1,defines.direction.west},
+  }) do
+    local e=s.create_entity{name="train-stop",position={x=cfg[1],y=cfg[2]},
+      direction=cfg[3],force="player",raise_built=true}
+    if e and e.valid and e.connected_rail then goal=e;break end
+    if e and e.valid then e.destroy() end
+  end
+  assert(goal and goal.valid and goal.connected_rail,
+    "Real native train stop not connected on horizontal HSR corridor")
+  goal.backer_name="EM065_NATIVE_GOAL"
   local no=game.create_surface("em065-no-catenary",{width=128,height=128})
   no.generate_with_lab_tiles=true
   no.request_to_generate_chunks({0,0},2);no.force_generate_chunk_requests()
@@ -36,6 +51,8 @@ local function setup()
          (negative.burner.remaining_burning_fuel or 0)==0,
     "new real EM locomotive starts with unpaid J")
   storage.em065_test={source=source,positive=loco,negative=negative,
+    goal=goal,positive_origin_x=loco.position.x,
+    negative_origin_x=negative.position.x,
     source_substation=sub,sink_substation=subb,source_initial=0}
   log("[EM065 PROBE] setup=actual_HSR_real_loco_20MW_3mast_2sub|burner_J=0|source_W=20000000")
 end
@@ -48,14 +65,37 @@ script.on_event(defines.events.on_tick,function(e)
       e.tick,s.source.energy,s.positive.burner.remaining_burning_fuel,
       s.negative.burner.remaining_burning_fuel))
   end
+  if e.tick==60 then
+    -- The real burner MUST have been charged with a finite amount before auto drive.
+    s.before_motion_J=s.positive.burner.remaining_burning_fuel
+    assert(s.before_motion_J>100000 and s.before_motion_J<=2000000,
+      "positive native 25kV source has not paid the true locomotive at startup")
+    local t=s.positive.train
+    t.schedule={current=1,records={{station="EM065_NATIVE_GOAL",
+      wait_conditions={{type="time",ticks=900}}}}}
+    t.manual_mode=false
+    log("[EM065 NATIVE ROUTE] tick=60|charged_J="..s.before_motion_J..
+      "|native_goal="..s.goal.backer_name.."|manual="..tostring(t.manual_mode))
+  end
+  if e.tick==180 then
+    s.distance_by_180=math.abs(s.positive.position.x-s.positive_origin_x)
+    log("[EM065 NATIVE MOTION] tick=180|distance="..s.distance_by_180..
+      "|speed="..s.positive.train.speed.."|remaining_J="..
+      s.positive.burner.remaining_burning_fuel)
+  end
   if e.tick==240 then
     local paid=s.positive.burner.remaining_burning_fuel
     local unpowered=s.negative.burner.remaining_burning_fuel
     assert(unpowered==0,"negative off-line loco received unpaid J: "..unpowered)
-    assert(paid>100000,"live 25kV true contact delivered NO paid real-loco Joules: "..paid)
+    assert(s.before_motion_J>100000,"source never paid 2MW locomotive")
+    assert(s.distance_by_180 and s.distance_by_180>2,
+      "native true EM locomotive did not move >2 tiles with paid J")
+    assert(math.abs(s.negative.position.x-s.negative_origin_x)<0.001,
+      "negative off-contact locomotive moved unexpectedly")
     assert(paid<=2000000,"paid real loco exceeded 2MJ physical reserve")
-    log("[EM065 NATIVE PAID PASS] initial_J=0|grid_20MW=on|loco_burner_J="..
-      paid.."|negative_offline_J=0|no_fake_fuel")
+    log("[EM065 NATIVE PAID PASS] initial_J=0|grid_20MW=on|charged_initial_J="..
+      s.before_motion_J.."|native_motion_tiles="..s.distance_by_180..
+      "|remaining_J="..paid.."|negative_offline_J=0|no_fake_fuel")
     -- Once paid positive-control confirmed, cut the true source.
     s.source.power_production=0;s.source.output_flow_limit=0
     s.source_substation.destroy{raise_destroy=true}
