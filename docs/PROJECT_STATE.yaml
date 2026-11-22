@@ -2282,3 +2282,27 @@ em065_native_paid_full_2MW_test_evidence:
   existing_hidden_helper_owner_orphan_issue: https://github.com/zukera2-stack/Factorio/issues/73
   main_merge_authorized: false
   user_release_authorized: false
+
+em066_autonomous_fullmod_campaign_20261122:
+  created: "2026-11-22"
+  isolated_branch: experiment/em066-autonomous-fullmod-boundaries-20261122
+  base_fullmod_065_docs_sha: 053fdd9d528b39db8f57eba5698aebfe9d79c506
+  base_actual_game_source_sha: 19f4ce3a33932558bf12c435cdeeb6dc0b0845a1
+  initial_complete_ZIP_from_GitHub_Actions_run: 45041147861
+  initial_complete_ZIP_artifact_id: 14762080183
+  initial_complete_ZIP_sha256: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  target_native_engine: Factorio_2_1_24_87808
+  same_game_ZIP_in_both_native_lanes: REQUIRED
+  test_lane_A: electrical_20MW_plus_real_1MW_two_train_scarcity_and_zero_native_demand
+  test_lane_B: full_native_catalog_rail_geometry_motor_stock_orphan_and_mast_cycle
+  independent_real_server_disk_save_reload_in_both_lanes: REQUIRED
+  latest_source_repack_for_any_game_change: REQUIRED
+  baseline_issue_77_native_25kv_demand: FAIL_PREVIOUSLY_REPRODUCED
+  baseline_issue_78_two_train_starvation: FAIL_PREVIOUSLY_REPRODUCED
+  baseline_issue_73_hidden_owner_orphan: FAIL_PREVIOUSLY_REPRODUCED
+  campaign_native_result: PENDING
+  campaign_source_fix_result: PENDING
+  user_fullmod_063_source_unchanged: true
+  main_062_unchanged: true
+  docs: docs/research/em066-autonomous-fullmod-native-boundary-20261122.md
+  project_release_authorized: false
