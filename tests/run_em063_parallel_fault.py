@@ -23,7 +23,7 @@ CONFIG = {
         "checkpoint": "em063-fault-rail_stock-checkpoint",
         "tick": 100,
         "benchmark": 115,
-        "resume": 130,
+        "resume": 230,
         "pass": "[EM063 RAIL STOCK PASS]",
         "later": "event=destroy_owner|tick=160",
     },

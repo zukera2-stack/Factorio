@@ -22,7 +22,7 @@ jobs:
             probe: em063-fault-rail-stock
             checkpoint: em063-fault-rail_stock-checkpoint
             first_ticks: 115
-            second_ticks: 130
+            second_ticks: 230
             marker: '[EM063 RAIL STOCK PASS]'
           - lane: electrical
             probe: em063-fault-electrical

@@ -142,10 +142,23 @@ script.on_event(defines.events.on_tick,function(ev)
     local water=fluid and fluid.amount or 0
     check(cargo==37 and math.abs(water-9000)<0.001,
       "owner destruction damaged real cargo/fluid")
-    -- Fault gate: no orphan technical loco after its only real EM owner is removed.
+    say("post_owner_10ticks","hidden_valid="..tostring(s.helper.valid)..
+        "|iron="..cargo.."|water="..water)
+  end
+  if t==240 then
+    local s=storage.rail_fault
+    local cargo=s.cargo.get_inventory(defines.inventory.cargo_wagon).get_item_count("iron-plate")
+    local fluid=s.fluid.get_fluid(1)
+    local water=fluid and fluid.amount or 0
+    say("post_owner_80ticks","hidden_valid="..tostring(s.helper.valid)..
+        "|iron="..cargo.."|water="..water)
+    check(cargo==37 and math.abs(water-9000)<0.001,
+      "real cargo/fluid damaged after 80 ownerless ticks")
+    -- Ownerless hidden locomotive must not remain after 80 ticks (covering
+    -- at least two 30-tick main mod train update periods).
     check(not s.helper.valid,
-      "ORPHAN_HIDDEN_LOCOMOTIVE: 0.1.63 has no owner cleanup after real EM destruction")
-    say("PASS","real full mod stock survived SAVE/LOAD, helper retier and owner destroy without orphan")
+      "PERSISTENT_ORPHAN_HIDDEN_LOCOMOTIVE: 80 ticks after destroying sole real EM owner")
+    say("PASS","real full mod stock survived SAVE/LOAD, helper retier and owner destruction")
     log("[EM063 RAIL STOCK PASS] all scoped fullmod native item/geometry/identity/disk/recovery checks")
   end
 end)
