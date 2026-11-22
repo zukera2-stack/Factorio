@@ -287,7 +287,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.65" # source-paid native locomotive experiment ONLY; main unchanged
+  mod_version: "0.1.66" # isolated fair-share source-paid native locomotive experiment; main unchanged
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -2358,3 +2358,11 @@ em066_fair_share_preflight_20261122:
   acceptance_native_both_trains_charge_within_tick60: threshold_minimum_1000J
   native_retested_20MW_and_1MW_and_stock_and_disk_SAVE_LOAD: PENDING
   original_unfixed_issue_77_and_73_not_ignored: true
+  fair_native_run_first: 45051051938
+  fair_native_first_result: TEST_HARNESS_HEREDOC_SYNTAX_BLOCKED_FAIRNESS
+  real_native_20MW_electric_fault_disk_SAVE_LOAD_0_1_66: PASS
+  real_native_rail_stock_issue_73_reproduced_0_1_66: FAIL
+  fair_native_same_game_ZIP_repeat_build: PASS
+  historical_ghost_asset_guard_numeric_version_fixed: true
+  docs_project_version_matches_actual_fullmod_info: true
+  fair_native_retrial: PENDING

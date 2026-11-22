@@ -66,7 +66,12 @@ assert(proto:find('catenary.placeable_position_visualization = nil',1,true))
 -- The native ghost construction contract stays the same across art sets,
 -- but current 0.1.42 uses reviewed 039 shaft, arm and icon assets.
 local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
-if info:find('"version": "0.1.42"',1,true) or info:find('"version": "0.1.43"',1,true) or info:find('"version": "0.1.44"',1,true) or info:find('"version": "0.1.45"',1,true) or info:find('"version": "0.1.46"',1,true) or info:find('"version": "0.1.47"',1,true) or info:find('"version": "0.1.48"',1,true) or info:find('"version": "0.1.49"',1,true) or info:find('"version": "0.1.50"',1,true) or info:find('"version": "0.1.51"',1,true) or info:find('"version": "0.1.52"',1,true) or info:find('"version": "0.1.53"',1,true) or info:find('"version": "0.1.54"',1,true) or info:find('"version": "0.1.55"',1,true) or info:find('"version": "0.1.56"',1,true) or info:find('"version": "0.1.57"',1,true) or info:find('"version": "0.1.58"',1,true) or info:find('"version": "0.1.59"',1,true) or (info:find('"version": "0.1.60"',1,true) or (info:find('"version": "0.1.61"',1,true) or (info:find('"version": "0.1.62"',1,true) or (info:find('"version": "0.1.63"',1,true) or (info:find('"version": "0.1.64"',1,true) or (info:find('"version": "0.1.65"',1,true) or info:find('"version": "0.1.66"',1,true))))))) then
+local version=assert(info:match('"version"%s*:%s*"(0%.1%.%d+)"'),
+    "expected game source mod version 0.1.x for ghost prototype test")
+local major,minor,patch=version:match("^(%d+)%.(%d+)%.(%d+)$")
+assert(major=="0" and minor=="1" and tonumber(patch),
+    "unsupported source-version format for ghost fixture")
+if tonumber(patch)>=42 then
     assert(proto:find('pole-south-039.png',1,true))
     assert(proto:find('pole-north-039.png',1,true))
     assert(proto:find('pole-arm-south-039.png',1,true))

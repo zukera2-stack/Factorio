@@ -122,17 +122,11 @@ jobs:
             grep -F '[AUDIT EM065 25KV NATIVE FLOW]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
             grep -F '[AUDIT EM065 NO POWER AUTO PASS]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
             grep -F '[AUDIT EM065 MULTITRAIN RESULT]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
-            python3 - <<'PY'
-            import re, pathlib
-            s=pathlib.Path(__import__('os').environ['RUNNER_TEMP']+'/em066-native/logs/audit-native.log').read_text()
-            m=re.search(r'\\[AUDIT EM065 MULTITRAIN RESULT\\] both_eventually_contact=(true|false)\\|first_min_J=([0-9.]+)',s)
-            if not m or m.group(1)!='true':
-                raise SystemExit('ERROR: both genuine motor loco physical grid contacts NOT independently verified')
-            minimum=float(m.group(2))
-            if minimum<=1000:
-                raise SystemExit('FAIL FAIRNESS #78: second genuine loco got <=1kJ at tick60, minimum='+str(minimum))
-            print('[EM066 FAIRNESS NATIVE PASS] source=1MW|both_native_EM_locomotives_positive_at_tick60|min_J='+str(minimum))
-            PY
+            grep -Fq 'both_eventually_contact=true' "$RUNNER_TEMP/em066-native/logs/audit-native.log"
+            min_J=$(sed -n 's/.*first_min_J=\\([0-9.]*\\).*/\\1/p' "$RUNNER_TEMP/em066-native/logs/audit-native.log" | tail -n 1)
+            test -n "$min_J"
+            awk -v v="$min_J" 'BEGIN{ if (v+0<=1000) exit 1 }'
+            echo "[EM066 FAIRNESS NATIVE PASS] source=1MW|both_real_EM_locomotives_positive_at_tick60|min_J=$min_J"
             if grep -Fq '[AUDIT EM065 FAIRNESS DEFECT REPRODUCED]' "$RUNNER_TEMP/em066-native/logs/audit-native.log"; then
               echo "FEATURE_FAIL: issue #78 first-come-first-served train starvation" | tee "$RUNNER_TEMP/em066-native/logs/feature-failures.txt"
             fi
