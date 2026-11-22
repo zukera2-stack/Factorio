@@ -1,3 +1,22 @@
+em072_source_paid_scarce_1MW_boundary:
+  date: "2026-11-22"
+  engine: Factorio_2_1_24_build87808
+  factory_source_w: 1000000
+  requested_traction_w: 2500000
+  real_em_burner_J_tick60: 512777.778
+  helper_paid_cumulative_J_tick60: 55000
+  helper_native_burner_J_tick60: 3333.333
+  source_cumulative_max_J_tick60: 1000000
+  helper_paid_cumulative_J_tick220: 588333.333
+  native_movement_tiles_tick220: 71.871094
+  native_requested_demand_J_tick: 41666.667
+  result: pass_isolated_true_fullmod_one_qa_controller
+  original_double_qa_run_discarded: true
+  entire_native_positive_scenarios: 11
+  paid_owner_orphan_negative_feature_failure: still_reproduced
+  gameplay_runtime_changed: false
+  release_authorized: false
+
 em072_source_paid_500kw_fullmod_proof:
   date: "2026-11-22"
   status: native_implementation_feasibility_proved_production_blocked

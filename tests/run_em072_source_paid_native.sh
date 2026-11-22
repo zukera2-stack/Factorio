@@ -19,7 +19,7 @@ cp -a tests/em072-source-paid-wagon-probe "$work/mods/em072-paidproof_0.0.1"
 cat > "$work/mods/mod-list.json" <<'JSON'
 {"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em072-paidproof","enabled":true}]}
 JSON
-pass_cases=(base zero paid paid_fluid paid_both base4 paid4 paid_cut paid_offgrid paid_delete_fixed)
+pass_cases=(base zero paid paid_fluid paid_both base4 paid4 paid_cut paid_offgrid paid_scarce paid_delete_fixed)
 for case_id in "${pass_cases[@]}";do
  logpath="$work/$case_id.log"
  if ! "$FACTORIO_BIN" --mod-directory "$work/mods" --test-scenario em072-paidproof/paid --test-arg "$case_id" --test-ticks 240 > "$logpath" 2>&1;then
@@ -34,4 +34,4 @@ if "$FACTORIO_BIN" --mod-directory "$work/mods" --test-scenario em072-paidproof/
 fi
 grep -F 'ORPHAN: paid helper still exists' "$work/paid_delete.log" >/dev/null || { tail -50 "$work/paid_delete.log";exit 1; }
 echo 'EXPECTED_FEATURE_FAIL: orphan charged helper after owner destroyed, NOT a production PASS'
-echo 'RESEARCH_QA_PASS: 10 native positive scenarios + 1 explicitly expected feature failure; real fullmod unchanged'
+echo 'RESEARCH_QA_PASS: 11 native positive scenarios + 1 explicitly expected feature failure; real fullmod unchanged'

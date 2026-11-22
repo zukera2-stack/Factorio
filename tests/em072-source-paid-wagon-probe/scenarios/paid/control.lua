@@ -2,9 +2,10 @@
 -- Not a release or production motor wagon controller; no LuaTrain.speed writes.
 local CASE=script.test_arg or 'base'
 local HAS_HELPER=(CASE~='base' and CASE~='base4')
-local PAID=(CASE=='paid4' or CASE=='paid' or CASE=='paid_fluid' or CASE=='paid_cut' or CASE=='paid_delete' or CASE=='paid_delete_fixed' or CASE=='paid_offgrid' or CASE=='paid_both')
+local PAID=(CASE=='paid_scarce' or CASE=='paid4' or CASE=='paid' or CASE=='paid_fluid' or CASE=='paid_cut' or CASE=='paid_delete' or CASE=='paid_delete_fixed' or CASE=='paid_offgrid' or CASE=='paid_both')
 local BOOST_W=(CASE=='paid4') and 2000000 or (CASE=='paid_both') and 1000000 or 500000
 local LMAX=BOOST_W/60
+local SOURCE_W=CASE=='paid_scarce' and 1000000 or 20000000
 local function logit(tag,msg) log('[EM072 PAIDPROOF] '..CASE..' '..tag..' '..msg) end
 local function ck(b,msg) if not b then error('[EM072 PAIDPROOF FAIL] '..CASE..' '..msg) end end
 local function spawn(s,name,x,y,direction)
@@ -26,8 +27,8 @@ local function setup()
  local source=spawn(s,'electric-energy-interface',-20,13,defines.direction.east)
  source.electric_interface_mode=defines.electric_interface_mode.primary_output
  source.electric_buffer_size=10000000
- source.power_production=20000000/60;source.power_usage=0
- source.input_flow_limit=0;source.output_flow_limit=20000000/60;source.energy=0
+ source.power_production=SOURCE_W/60;source.power_usage=0
+ source.input_flow_limit=0;source.output_flow_limit=SOURCE_W/60;source.energy=0
  -- The existing fullmod C5 motor wagons are genuine cargo/fluid native prototypes.
  local loco=spawn(s,'em-electric-locomotive',0,1)
  local cargo=spawn(s,CASE=='paid_fluid' and 'cargo-wagon' or 'em-motor-cargo-wagon',7,1)
@@ -61,7 +62,7 @@ local function setup()
     demand_peak=0,helper_max_J=0,energy_left=0}
  storage.proof=st
  logit('SETUP', 'real_stock='..#t.carriages..' helper='..tostring(HAS_HELPER)..' paid='..tostring(PAID)..
-   ' span='..span..' cargo=37 fluid=9000 source_W=20000000 booster_W='..BOOST_W)
+   ' span='..span..' cargo=37 fluid=9000 source_W='..SOURCE_W..' booster_W='..BOOST_W)
 end
 local function find_line_out()
  local lab=game.surfaces['em-25kv-isolated-bridge-058']
@@ -130,6 +131,16 @@ script.on_event(defines.events.on_tick,function(ev)
      if f then st.demand_peak=math.max(st.demand_peak,(f.primary_demand or 0)+(f.secondary_demand or 0)) end
      credit(st)
    end
+ end
+ if CASE=='paid_scarce' and tick==60 then
+   local native_loco=st.loco.burner.remaining_burning_fuel or 0
+   local native_helper=st.helper.burner.remaining_burning_fuel or 0
+   ck(native_loco>1000 and st.paid_J>1000 and native_helper>0,
+      '1MW scarcity denied paid J to real loco or 500kW motor helper')
+   ck(native_loco+st.paid_J<=SOURCE_W+50000,
+      '1MW source exceeded 60-tick available J (check other source EEI buffers)')
+   logit('SCARCITY',string.format('tick60 native_loco_J=%.3f paid_helper_cumulative_J=%.3f helper_buffer_J=%.3f sum=%.3f',
+      native_loco,st.paid_J,native_helper,native_loco+st.paid_J))
  end
  if tick==50 then
    local driver=st.s.create_entity{name='character',position=st.loco.position,force='player'}
