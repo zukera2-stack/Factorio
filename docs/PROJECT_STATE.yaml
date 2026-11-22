@@ -2327,3 +2327,19 @@ em066_autonomous_fullmod_campaign_20261122:
   independent_1MW_audit_rerun_065: PASS_DIAGNOSTIC_WITH_FEATURE_FAIL_77_78
   exact_working_full_game_065_unmodified: true
   new_native_retry: PENDING
+em066_fair_share_preflight_20261122:
+  status: RESEARCH_ONLY_NO_GAMEPLAY_YET
+  new_isolated_branch: experiment/em066-fair-share-fullmod-20261122
+  forked_from_complete_fullmod_campaign: 3c69ed6cc30c29f429ff996eb9e349eb1aceda76
+  prospective_fullmod_version: "0.1.66"
+  source_budget: each_actual_native_EM070_output_EEI_J
+  per_loco_native_input_power_W: 2000000
+  per_loco_native_reserve_cap_J: 2000000
+  equal_priority_policy: max_min_equal_share_under_scarcity
+  source_debit_BEFORE_native_burner_credit: true
+  native_1MW_2train_first60_positive: NOT_TESTED
+  strict_underlying_fullmod_ZIP: REQUIRED
+  unrelated_issue_77_native_load: FAIL_UNRESOLVED
+  unrelated_issue_73_helper_orphan: FAIL_UNRESOLVED
+  no_main_release_old_user_saves: true
+  research: docs/research/em066-real-loco-fair-share-preflight-20261122.md
