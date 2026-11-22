@@ -2102,6 +2102,8 @@ em072_full_mod_player_test_063:
   CI_legacy_test_guard_repairs: [tests/35kv_ghost_023.lua, tests/25kv_auto_wire_028.lua, tests/25kv_span_029.lua, tests/35kv_topology.lua, tests/25kv_visual_geometry_048.lua]
   CI_native_062_inheritance_script: tests/run_headless_062.sh
   CI_native_062_script_version_support: [0.1.62, 0.1.63]
+  CI_native_062_test_probe_dependency: ElectrifiedMainline_>=_0.1.62
+  CI_native_062_unchanged_power_ledger_assertions: true
   CI_test_guards_only_not_runtime_changes: true
   native_Factorio_2_1_24_data_stage: NOT_RUN
   owner_client_real_full_mod_test: NOT_RUN

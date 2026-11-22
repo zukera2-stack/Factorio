@@ -68,3 +68,6 @@ The normal ZIP pipeline originally **FAIL** in old, version-specific Lua tests: 
 
 ## 7f. Full inherited QA remains enabled
 The 0.1.63 branch now uses the same native 056 visual-axis contract in `tests/25kv_visual_geometry_048.lua` as 0.1.62. `tests/run_headless_062.sh` was fixed to read `info.json` and use actual versioned `ElectrifiedMainline_0.1.62.zip` or `ElectrifiedMainline_0.1.63.zip`. The three real 2.1.24 electrical bridge/priority/fairness scenarios remain obligatory; no skipping older tests or editing game runtime. Re-check exact CI logs before verdict.
+
+## 7g. EM062 real engine probe dependency fix
+After the native `run_headless_062.sh` runner selected 0.1.63, the official Factorio engine correctly rejected three **test-only** probe mods with `ElectrifiedMainline = 0.1.62` exact dependencies, before executing any power simulation. Changed only their `tests/em062-{power,priority,fairness}-probe/info.json` dependencies to `ElectrifiedMainline >= 0.1.62`; their control.lua source and evidence rules are unchanged. Fresh standard CI must run all three test scenarios against full 0.1.63 and report actual result.
