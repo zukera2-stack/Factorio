@@ -45,6 +45,9 @@ em072_current_state_correction_2026_11_22:
   B10_correct_wagon_without_battery_native_test: NOT_PERFORMED
   B10_previous_member_solo_after_split: NOT_TESTED
   B10_early_test_source_archive: /Factorio/Network-062/B10-preclarification-archive/
+  B10_historical_noncompliant_draft_PR: 62
+  B10_historical_noncompliant_branch: experiment/em072a5-native-train-bus-b10
+  B10_historical_PR_wagon_battery_model_approved: false
   B10_audit_document: docs/research/native-consist-b10-scope-audit-2026-11-22.md
   actual_wagon_500kW_traction: NOT_IMPLEMENTED
   locomotive_25kV_recharge_and_regen: NOT_IMPLEMENTED
