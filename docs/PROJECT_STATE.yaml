@@ -1,3 +1,30 @@
+em072_em075_integration_20261123:
+  date: "2026-11-23"
+  branch: integration/em072-em075-20mw-20261123
+  verified_lineage: em072_to_em073_to_em074_to_em075_20mw_fix_fast_forward
+  baseline_integrated_game_sha: 21114f065828432274604054c0bfc80afd61ee92
+  fullmod_game_members: 140
+  original_png_count_unmodified: 83
+  exact_modified_game_blobs_matched: 7
+  per_substation_power_limit_w: 20000000
+  single_120mw_substation: rejected_owner
+  scaling_20mw_station_counts: [1, 2, 3, 6]
+  scaling_measured_mw: [20, 40, 60, 120]
+  fullmod_native_factorio_version: "2.1.24 build 87808 linux64 headless"
+  independent_native_runs: 2
+  native_ticks_each: 2830
+  native_ticks_total: 5660
+  native_forward_reverse_overload_dropout_starvation_off: passed
+  fullmod_em074_status_prototype_load: passed
+  local_probe_uses_real_eei_not_trains: true
+  native_200_motor_wagon_high_scenarios: not_run
+  real_train_traction_acceptance: not_run
+  windows_gui_mp_save_load_undo_acceptance: not_run
+  github_actions_triggered_by_owner_request: false
+  main_modified: false
+  release_or_merge_to_main_authorized: false
+  report: docs/integration/EM072_EM075_NATIVE_20261123.md
+
 em075_single_120mw_rejected_owner_20261123:
   date: "2026-11-23"
   status: rejected_single_120mw_substation
