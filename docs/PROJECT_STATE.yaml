@@ -1,3 +1,38 @@
+em074_native_indicators_official_final_20261123:
+  report_date: "2026-11-23"
+  experimental_branch: experiment/em074-native-traction-status-20261123
+  gameplay_commit: 9a50e062a28833c347f009de5cac5129c2ea3ca4
+  build_GHA_run: 45172918546
+  build_GHA_result: success
+  documentation_GHA_run: 45172918591
+  documentation_GHA_result: success
+  artifact_id: 14818410254
+  official_fullmod_zip_sha256: 9a6e0f2658375d383810977c4a2bd6158dbce3a656ed0653306e2c5eeaaefe28
+  complete_mod_files: 140
+  original_artwork_png_unchanged: 83
+  gameplay_script_logic_unchanged_from_073: true
+  native_factorio_version: "2.1.24 build87808"
+  original_vanilla_burner_usage_unmodified: true
+  electric_loco_native_status_ru: "Нет контактной сети"
+  electric_loco_native_icon: "__core__/graphics/icons/alerts/electricity-icon-red.png"
+  hidden_motor_native_icon: "__core__/graphics/empty.png"
+  all_256_hidden_boosters_status_data_and_runtime: pass
+  official_exact_zip_native_gameplay_passed: 12
+  official_exact_zip_native_gameplay_total: 12
+  official_zero_w_offgrid_negative: pass
+  official_no_EM_200_motor_wagons_no_self_propulsion: pass
+  official_two_head_auto_reverse: pass
+  official_200_motor_opposite_heads_both_directions: pass
+  official_same_heading_no_double_motor: pass
+  official_owner_dismantle_loss: pass
+  actual_Windows_GUI_new_icon_accepted: false
+  missing_catenary_vs_missing_voltage_separated: false
+  train_out_of_fuel_global_alert_fully_suppressed: unverified
+  owner_saves_untouched: true
+  main_modified: false
+  release_authorized: false
+  report_path: docs/research/EM074_STATUS_FINAL_OFFICIAL_QA_2026-11-23.md
+
 em074_status_indicators_20261123:
   date: "2026-11-23"
   branch: experiment/em074-native-traction-status-20261123
