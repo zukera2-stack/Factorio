@@ -18,7 +18,7 @@ printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainl
 for c in 201 401 dual201 800 zero201; do
  "$FACTORIO_BIN" --mod-directory "$work/mods" --test-scenario em078-alert-qa/native --test-arg "$c" --test-ticks 55 > "$logs/no_path_$c.log" 2>&1 || { tail -70 "$logs/no_path_$c.log";exit 1; }
  grep -Fq "[EM078 QA DATA PASS]" "$logs/no_path_$c.log"
- grep -Fq "NATIVE_NO_PATH|state=no_path|" "$logs/no_path_$c.log"
+ grep -Fq "NATIVE_NO_PATH|hidden=" "$logs/no_path_$c.log"
  grep -Fq 'Test passed at tick' "$logs/no_path_$c.log"
  echo "PASS native no_path $c"
 done
