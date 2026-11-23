@@ -6,6 +6,6 @@
   "factorio_version": "2.1",
   "dependencies": [
     "base >= 2.1.0",
-    "ElectrifiedMainline = 0.1.73"
+    "ElectrifiedMainline = 0.1.74"
   ]
 }

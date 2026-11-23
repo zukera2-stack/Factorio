@@ -35,3 +35,6 @@ require("prototypes.traction_paid_065")
 
 -- EM068: actual native 25 kV electric consumer; no Lua-only simulated load.
 require("prototypes.traction_native_consumer_068")
+
+-- EM074 prototype-only indicators; no runtime energy manipulation.
+require("prototypes.traction_status_074")

@@ -1,0 +1,10 @@
+local function check(b,t)if not b then error('[EM074 STATUS QA FAIL] '..t)end end
+script.on_init(function()
+ local a=assert(prototypes.burner_usage['em-25kv-electric-status-074'])
+ local b=assert(prototypes.burner_usage['em-hidden-motor-status-074'])
+ check(a.name=='em-25kv-electric-status-074','electric usage missing in runtime')
+ check(b.name=='em-hidden-motor-status-074','hidden usage missing in runtime')
+ local l=assert(prototypes.entity['em-electric-locomotive'])
+ log('[EM074 STATUS QA RUNTIME] PASS: real burner usages registered and real EM locomotive prototype available')
+ script.finish_test(true)
+end)

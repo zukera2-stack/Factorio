@@ -1,3 +1,32 @@
+em074_status_indicators_20261123:
+  date: "2026-11-23"
+  branch: experiment/em074-native-traction-status-20261123
+  based_on_experimental_commit: 5ab81df6c33dc2f03ad3d2176358d7e8abb77ffa
+  version: "0.1.74"
+  scope: native_per_entity_visual_status_and_locale_only
+  vanilla_fuel_status_modified: false
+  native_electric_burner_usage: em-25kv-electric-status-074
+  native_electric_low_charge_status_ru: "Нет контактной сети"
+  native_electric_alert_icon: "__core__/graphics/icons/alerts/electricity-icon-red.png"
+  native_hidden_burner_usage: em-hidden-motor-status-074
+  native_hidden_alert_icon: "__core__/graphics/empty.png"
+  hidden_boosters_status_prototypes_verified: 256
+  original_png_unchanged: 83
+  original_native_energy_bus_changed: false
+  original_native_motor_physics_changed: false
+  local_fullmod_factorio_2_1_24_status_data_test: pass
+  local_fullmod_sourcepaid_single: pass
+  local_fullmod_0w_and_offgrid: pass
+  local_fullmod_two_station_auto_both_directions: pass
+  local_fullmod_two_head_owner_demolition: pass
+  local_fullmod_200_wagons_stress: pending
+  official_ci_full_mod_zip_test: pending
+  windows_gui_visual_test: not_run
+  note: "No contact icon text is static based on empty native burner; can also appear with powerless 25kV line"
+  existing_current_main_modified: false
+  release_authorized: false
+  file: docs/research/EM074_NATIVE_STATUS_RESEARCH_2026-11-23.md
+
 em073_exact_official_073_final_native:
   report_date: "2026-11-23"
   branch: experiment/em073-native-directional-heads-20261123
@@ -717,7 +746,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.73" # experimental native engine directional boosters; research, no release
+  mod_version: "0.1.74" # experimental UI statuses; source-paid physics unchanged; NOT RELEASE
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"

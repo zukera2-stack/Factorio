@@ -1,0 +1,1 @@
+{"name":"em074-status-qa","version":"0.0.1","title":"EM074 native status prototype QA","author":"Local QA","factorio_version":"2.1","dependencies":["base >= 2.1.0","ElectrifiedMainline = 0.1.74"]}
