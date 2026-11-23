@@ -10,6 +10,7 @@ local DOUBLE=OPPOSITE or CASE=='double_same' or CASE=='long200highsame' or CASE=
 local LOCOLESS=(CASE=='standalone200')
 local EXPECT=(LOCOLESS and 0 or ((OPPOSITE and 2) or 1))
 local GRID=(CASE~='zero' and CASE~='offgrid' and CASE~='bidir_zero' and CASE~='bidir_offgrid' and not CASE:find('highzero$') and not CASE:find('highoffgrid$'))
+-- 'high' is 120 MW FACTORY over-generation against a 20 MW substation, not a 120 MW station.
 local SUPPLY_W=(CASE=='brownout' and 1000000 or CASE=='zero' and 0 or CASE=='bidir_zero' and 0 or CASE:find('highzero$') and 0 or CASE:find('high20$') and 20000000 or CASE:find('high') and 120000000 or 20000000)
 local MOTOR=(CASE~='nonmotor' and CASE:find('passive$')==nil)
 local REAL=(CASE~='vanilla' and not LOCOLESS)
@@ -369,9 +370,9 @@ script.on_event(defines.events.on_tick,function(e)
     if LOCOLESS then ck(math.abs(st.loco.position.x-st.start_x)<0.001,'200 wagons without EM started moving') end
   end
   if CASE=='long200high' then
-     ck(SUPPLY_W==120000000,'actual factory primary-output must provide 120MW')
-     ck((paid.motor_paid_J or 0)>200000000,'120MW source did not exceed prior 20MW ledger ceiling')
-     ck(math.abs(st.loco.position.x-st.start_x)>80,'200 motor wagons did not really accelerate with 120MW')
+     ck(SUPPLY_W==120000000,'overload fixture must generate 120 MW on factory side')
+     ck((paid.motor_paid_J or 0)<105000000,'one 20MW feeder illegally paid motor energy at 120MW rating')
+     ck(math.abs(st.loco.position.x-st.start_x)>0.001,'200 motor wagons should move within a 20MW supply budget')
    elseif CASE=='long200high20' then
      ck(SUPPLY_W==20000000 and (paid.motor_paid_J or 0)<70000000,
        '20MW original source must still limit paid motor Joules')

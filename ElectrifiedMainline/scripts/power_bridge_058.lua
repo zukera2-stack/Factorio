@@ -5,7 +5,8 @@ local traction065=require("scripts.traction_paid_065")
 local art030=require("scripts.catenary_art_030")
 local pantograph049=require("scripts.pantograph_visual_049")
 local devices=require("scripts.bridge_devices_060")
-local M={LIMIT=120000000/60,SUB="em-35kv-traction-substation"}
+-- Owner rule: one station supplies at most 20 MW; scale by parallel stations.
+local M={LIMIT=20000000/60,SUB="em-35kv-traction-substation"}
 local PORT="em-25kv-bridge-port-058"
 local INPUT,OUTPUT="em-25kv-bridge-input-058","em-25kv-bridge-output-058"
 local LAB="em-25kv-isolated-bridge-058"

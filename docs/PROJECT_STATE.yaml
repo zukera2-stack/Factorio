@@ -1,3 +1,24 @@
+em075_single_120mw_rejected_owner_20261123:
+  date: "2026-11-23"
+  status: rejected_single_120mw_substation
+  approved_power_limit_per_station_w: 20000000
+  native_input_limit: 20MW
+  native_output_limit: 20MW
+  scaling_rule: parallel_identical_20mw_stations
+  n1_mw: 20
+  n2_mw: 40
+  n3_mw: 60
+  n6_mw: 120
+  old_120mw_per_station_native_evidence: historical_not_accepted
+  local_factorio_2_1_24_fullmod_073_20mw_parallel_2830_ticks: passed
+  corrected_em074_native_fullmod: not_run
+  modified_200_wagon_high_test: not_run
+  github_actions_started: false
+  main_modified: false
+  merged: false
+  released: false
+  record: docs/decisions/EM075_REJECT_SINGLE_120MW_2026-11-23.md
+
 em074_native_indicators_official_final_20261123:
   report_date: "2026-11-23"
   experimental_branch: experiment/em074-native-traction-status-20261123

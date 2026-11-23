@@ -20,5 +20,5 @@ local function interface(name,priority,input,output)
    energy_production="0W",energy_usage="0W",gui_mode="none"
  }
 end
-data:extend({port,interface("em-25kv-bridge-input-058","dynamic","120MW","0W"),
- interface("em-25kv-bridge-output-058","dynamic","0W","120MW")})
+data:extend({port,interface("em-25kv-bridge-input-058","dynamic","20MW","0W"),
+ interface("em-25kv-bridge-output-058","dynamic","0W","20MW")})
