@@ -1,3 +1,28 @@
+chatgpt_library_assets_review_20261123:
+  date: "2026-11-23"
+  source: private_chatgpt_library_metadata
+  folder: "/Мод фактроио/"
+  supplemental_folder: "/Factorio/"
+  x64_factorio_2_1_24_archive:
+    filename: factorio-headless_linux_2.1.24.tar.xz
+    visible_size_bytes: 61211876
+    raw_bytes_accessible_this_session: false
+  arm64_factorio_2_1_24_archive:
+    filename: factorio-headless_linux-arm64_2.1.24.tar.xz
+    visible_size_bytes: 56021436
+    raw_bytes_verified: false
+  em074_mod_zip:
+    filename: ElectrifiedMainline_0.1.74.zip
+    visible_size_bytes: 18179798
+    raw_bytes_accessible_this_session: false
+  retrieval_blocker: "This Project file does not have an authorized raw-byte materialization path."
+  native_factorio_2_1_24_test_performed_this_session: false
+  github_workflows_triggered: false
+  runtime_or_game_code_changed: false
+  document: docs/CHATGPT_LIBRARY_ASSETS.md
+  library_is_external_to_github: true
+  release_or_merge_authorized: false
+
 em072_075_distributed_traction_plan:
   status: owner_design_approved_documented_only
   decision_date: "2026-11-21"
