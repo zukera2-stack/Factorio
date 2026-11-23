@@ -4,7 +4,7 @@
 local base = assert(data.raw["burner-usage"] and data.raw["burner-usage"]["fuel"])
 local electric = table.deepcopy(base)
 electric.name = "em-25kv-electric-status-074"
-electric.no_fuel_status = {"em-traction-status.no-contact"}
+electric.no_fuel_status = {"em-traction-status.no-traction-power"}
 electric.empty_slot_caption = {"em-traction-status.energy"}
 electric.empty_slot_description = {"em-traction-status.energy-description"}
 electric.icon = {
@@ -29,10 +29,13 @@ for name,proto in pairs(data.raw.locomotive) do
   if name:match("^em%-c5%-technical%-booster%-%d+$") then
     assert(proto.energy_source and proto.energy_source.type == "burner")
     proto.energy_source.burner_usage = technical.name
+    -- Factorio suppresses "no fuel" render via BaseEnergySource.render_no_power_icon.
+    -- Invisible BurnerUsage icon is kept as a secondary safeguard only.
+    proto.energy_source.render_no_power_icon = false
     count=count+1
   end
 end
 assert(count == 256, "EM074 expected exactly 256 finite-J hidden locomotive prototypes")
 assert(data.raw.locomotive.locomotive.energy_source.burner_usage == nil,
  "EM074 must not alter vanilla fuel-status rendering")
-log("[EM074 STATUS] electric=no-contact red-electricity; technical=transparent; boosters="..count)
+log("[EM074 STATUS] electric=no-traction-power red-electricity; technical=no-fuel-icon-disabled; boosters="..count)

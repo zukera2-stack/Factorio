@@ -1,3 +1,26 @@
+em076_traction_status_native_20261123:
+  date: "2026-11-23"
+  branch: fix/em076-traction-power-status-20261123
+  real_electric_loco_ru_status: "Нет тягового питания"
+  real_electric_loco_en_status: "No traction power"
+  real_electric_status_icon: "__core__/graphics/icons/alerts/electricity-icon-red.png"
+  logical_locomotives_count: 256
+  helper_burner_render_no_power_icon: false
+  helper_transparent_usage_fallback_preserved: true
+  vanilla_fuel_warning_changed: false
+  power_bridge_limit_per_station_mw: 20
+  local_factorio_native_version: "2.1.24 build 87808 linux64 headless"
+  native_prototype_and_runtime_burner_status: passed
+  native_grid_2830_tick_scaling_and_overload_regression: passed
+  gui_visual_acceptance: not_run
+  global_train_out_of_fuel_alert: not_verified
+  new_motorized_train_scenario_runs: not_run
+  github_actions_triggered: false
+  main_modified: false
+  release_authorized: false
+  merged: false
+  report: docs/research/EM076_TRACTION_POWER_STATUS_2026-11-23.md
+
 em072_em075_integration_20261123:
   date: "2026-11-23"
   branch: integration/em072-em075-20mw-20261123
