@@ -1,3 +1,28 @@
+em078_hidden_helper_no_path_alert_20261123:
+  date: "2026-11-23"
+  branch: fix/em078-hide-technical-no-path-icons-20261123
+  based_on: experiment/em077-block-traction-200-native-20261123
+  mod_version: "0.1.78"
+  owner_video_error: native_flashing_train_no_path_icon_at_hidden_helper_positions
+  hidden_helper_prototypes: 256
+  helper_alert_icon_scale: 0
+  helper_icons_positioning: empty
+  real_electric_and_vanilla_alerts_unchanged: true
+  helper_fuel_warning_still_disabled: true
+  standard_substation_mw: 20
+  native_headless_engine: "Factorio 2.1.24 build87808"
+  native_all_256_prototypes: passed
+  native_actual_no_path_201_401_dual201_800_zero201: passed_5_of_5
+  native_fullmod_077_regressions: passed_17_of_17
+  archive_sha256: a6b5433b5513a9755a53185a5063bbf41f8bf15a1fe625a20b720bc351d38163
+  unmodified_original_pngs: 83
+  visual_windows_gui_confirmed: false
+  save_load_and_multiplayer_retested: false
+  main_modified: false
+  merge_authorized: false
+  release_authorized: false
+  report: docs/research/EM078_NO_PATH_TECH_ALERT_2026-11-23.md
+
 em077_200_motor_wagon_blocks_20261123:
   date: "2026-11-23"
   branch: experiment/em077-block-traction-200-native-20261123

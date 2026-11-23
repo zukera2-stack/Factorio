@@ -69,6 +69,9 @@ for motor_count=1,256 do
   p.collision_box={{-0.2,-0.26},{0.2,0.26}}
   p.selection_box={{-0.2,-0.26},{0.2,0.26}}
   p.selectable_in_game=false
+  -- EM078: force alerts at hidden locomotive origin to zero display scale
+  p.alert_icon_scale=0
+  p.icons_positioning={} -- No engine fuel inventory icon in Alt mode for helpers
   p.hidden_in_factoriopedia=true
   p.pictures={rotated={filename=empty,width=1,height=1,direction_count=1}}
   p.wheels={rotated={filename=empty,width=1,height=1,direction_count=1}}
