@@ -1,3 +1,41 @@
+em077_200_motor_wagon_blocks_20261123:
+  date: "2026-11-23"
+  branch: experiment/em077-block-traction-200-native-20261123
+  owner_approved: true
+  max_motor_wagons_per_helper: 200
+  motor_wagon_increment_w: 500000
+  full_block_helper_w: 100000000
+  legacy_prototype_count_preserved: 256
+  new_block_prototype_count_used: 200
+  authentic_headings_at_most: 2
+  power_per_individual_substation_w: 20000000
+  obsolete_global_120mw_native_sink_ceiling_removed: true
+  factorio_version: "2.1.24 build 87808 linux64 headless"
+  fullmod_native_cases_pass: 17
+  fullmod_native_cases_total: 17
+  largest_motor_consist_natively_tested: 800
+  auto201_distance_tiles_at_tick300: 50.059
+  power401_native_sink_peak_demand_mw: 202.5
+  power401_number_of_20mw_stations: 11
+  power401_paid_energy_j: 359966666.667
+  network_2830_tick_parallel_regression: passed
+  em076_status_regression: passed
+  exact_zip_201_and_status_native: passed
+  exact_zip_17_case_rerun: stopped_after_first_eight_passed_due_to_time_limit
+  zip_filename: ElectrifiedMainline_0.1.77.zip
+  zip_sha256: 741a67285de59fd81cf95a7a2ef5654e1559d37a960039e0a7dfbc3f39b92fc6
+  zip_game_files: 140
+  original_png_unchanged: 83
+  real_save_load_roundtrip: not_run
+  windows_gui: not_run
+  multiplayer: not_run
+  github_actions_launched_manually: false
+  main_modified: false
+  merged: false
+  stable_release: false
+  decision: docs/decisions/EM077_200_WAGON_BLOCKS_2026-11-23.md
+  report: docs/research/EM077_BLOCK_TRACTION_NATIVE_2026-11-23.md
+
 em076_traction_status_native_20261123:
   date: "2026-11-23"
   branch: fix/em076-traction-power-status-20261123

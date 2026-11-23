@@ -47,10 +47,12 @@ data:extend({
 
 local empty="__core__/graphics/empty.png"
 -- Exact +500 kW increments through 256 motor wagons (128 MW nameplate).
--- One hidden engine per REAL EM heading (at most two opposite directions),
--- never 256 helpers for 256 wagons. Same-heading real EMs share one helper.
--- Experimental 0.1.72 bridge lab can carry up to 120MW from a genuine grid; burner is
--- credited only by already paid 25kV Joules, not by changing speed.
+-- EM077 uses one native helper per BLOCK of 200 motor wagons per heading.
+-- 201=100MW+0.5MW, 401=100MW+100MW+0.5MW; two opposing headings
+-- each have their own block set. Preserve all 256 historical prototypes
+-- for compatibility with older saves (only first 200 are used for new blocks).
+-- No individual 120MW bridge: actual power is from N x 20MW substations.
+-- Burner credits only already-paid native 25kV Joules, never writes speed.
 for motor_count=1,256 do
   local kilowatts=500*motor_count
   local p=table.deepcopy(assert(data.raw.locomotive.locomotive))

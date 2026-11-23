@@ -1,7 +1,7 @@
 -- EM065 research P0: finite, source-paid native locomotive traction.
 -- ALL charge comes from live native EM070 output buffer on same real 25kV network.
--- No speed writes or fabricated energy. One authenticated native booster per
--- REAL locomotive heading (up to two) shares the SAME actual paid 25kV sink.
+-- No speed writes or fabricated energy. Multiple block helpers per
+-- REAL locomotive heading (up to two headings) share the SAME paid 25kV sink.
 -- Native Factorio alone decides which of the opposite locomotives moves.
 local M={MAX_PER_TICK=2000000/60,BUFFER_CAP=2000000}
 local FUEL="em-c5-test-internal-joule-063"
@@ -59,7 +59,24 @@ local function donor(network,force)
 end
 
 local SINK="em-25kv-native-traction-consumer-068"
-local MAX_SOURCE_PER_TICK=120000000/60
+local PER_STANDARD_BRIDGE_J_TICK=20000000/60
+local function network_bridged_capacity_j_tick(network,force)
+  local bs=storage.em and storage.em.bridge058
+  if not (bs and bs.stations) then return 0 end
+  local n=0
+  for id,r in pairs(bs.stations) do
+    if r.direction=="import" and r.status=="active" and
+      r.output and r.output.valid and r.input and r.input.valid and
+      r.factory_port and r.factory_port.valid and
+      r.line_port and r.line_port.valid and
+      r.output.electric_network_id==network and
+      r.line_port.electric_network_id==network and
+      r.output.force==force and entity(id) then
+      n=n+1
+    end
+  end
+  return n*PER_STANDARD_BRIDGE_J_TICK
+end
 local function native_state()
   storage.em=storage.em or {}
   storage.em.traction_native_068=storage.em.traction_native_068 or
@@ -276,7 +293,11 @@ local function fair_charge(owners,art,pantograph,stats)
         req.native_sink=output
       end
       -- Genuine 25kV native input power demand, never a virtual Lua consumer.
-      output.input_flow_limit=math.min(MAX_SOURCE_PER_TICK,requested)
+      -- Native EEI demand cannot exceed the aggregate 20MW per REAL bridge.
+      -- Never reintroduce a 120MW single-station or global 120MW ceiling.
+      local net=group.source.line_port.electric_network_id
+      output.input_flow_limit=math.min(requested,
+        network_bridged_capacity_j_tick(net,group.source.line_port.force))
     end
     local available=output and output.valid and
       math.max(0,output.energy) or 0
