@@ -1,3 +1,25 @@
+parallel_20mw_substations_owner_decision_20261123:
+  date: "2026-11-23"
+  status: owner_approved_design_native_same_pair_parallel_not_yet_tested
+  policy: parallel_identical_20MW_substations
+  native_single_station_limit_mw: 20
+  scaling_examples:
+    - {substations: 1, theoretical_limit_mw: 20}
+    - {substations: 2, theoretical_limit_mw: 40}
+    - {substations: 3, theoretical_limit_mw: 60}
+    - {substations: 6, theoretical_limit_mw: 120}
+  alternative_40_60_120MW_station_variants: rejected_as_gameplay_architecture
+  experimental_single_120MW_lab_feeder: historical_research_only_not_user_gameplay_design
+  adequate_generation_and_common_valid_25kv_network_required: true
+  physical_factory_to_catenary_short_circuits_forbidden: true
+  game_code_changed_by_decision: false
+  exact_official_two_adjacent_same_pair_40MW_native_game_test: not_run
+  relevant_multisource_32substation_test: passed_historical_not_same_pair_40MW_proof
+  next_test: fullmod_factorio_2_1_24_two_20MW_parallel_same_factory_catenary_networks_with_measured_J
+  docs: docs/research/25kv-parallel-20mw-owner-decision-2026-11-23.md
+  main_gameplay_merge_authorized: false
+  public_release_authorized: false
+
 em072_075_distributed_traction_plan:
   status: owner_design_approved_documented_only
   decision_date: "2026-11-21"
