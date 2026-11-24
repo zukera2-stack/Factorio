@@ -7,6 +7,7 @@
 - **Original source:** owner-uploaded `blender-unity-skill.zip`, inside: `blender-unity/SKILL.md`.
 - **Unmodified portable skill in repository:** [`.agents/skills/blender-unity/SKILL.md`](../.agents/skills/blender-unity/SKILL.md).
 - **Persistent ChatGPT Library copy:** `/Мод фактроио/skills/blender-unity/SKILL.md` — search/read using project Files tools when available; library file ID: `libfile_7d8a665f003c81919076c2569c512c18`.
+- **Original ZIP backed up in Library:** `/Мод фактроио/skills/blender-unity/blender-unity-skill.zip` (library ID `libfile_2f01d79039d48191a7aa600ff4026f1e`); read `SKILL.md` directly where possible, since the original ZIP includes only this markdown file.
 - **SHA256 exact UTF-8 `SKILL.md`:** `af8ce4cf71ad095e22e95023deaba87c406405bf804751f24b6a92052296bbb9`. Original ZIP SHA256 `3b73a5d04e44718cb63155d5c7c533867d3264484ae79d4a4ddfccdd3aa2f426`.
 - For future sessions: first read this document and the **complete** skill, not only its filename, plus `AGENTS.md`, `docs/CURRENT_WORK.md`, `docs/AI_CONTEXT.md` and `docs/PROJECT_STATE.yaml`. Retrieve live branch HEAD; do not assume prior binary paths remain mounted.
 
