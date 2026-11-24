@@ -300,6 +300,10 @@ jobs:
         run: |
           python scripts/sprites/icons_057.py
           python scripts/verify_057.py
+      - name: Stage exact locally rendered V3 art (no rendering)
+        if: needs.detect.outputs.version == '0.1.79'
+        run: python scripts/verify_em079_visual_patch.py
+
       - name: Verify frozen runtime PNG manifest
         if: needs.detect.outputs.frozen == 'true'
         run: python scripts/verify_runtime_artwork.py

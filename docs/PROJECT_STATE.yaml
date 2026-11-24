@@ -3074,3 +3074,17 @@ em068_integrated_native_25kv_traction_research_20261122:
   no_output_EEI_double_debit_source_runtime: true
   standard_full_docs_QA: PENDING
   full_native_factorio_2_1_24: PENDING
+
+
+em079_v3_visual_trial:
+  status: blocked_waiting_for_exact_local_binary_upload
+  base_commit: "b9e494c4963483269265b4eff4c9d3ba5cc093e9"
+  branch: "experiment/em079-locomotive-v3-visual"
+  version: "0.1.79"
+  patch_sha256: "97fa7fe4d8195d5ae6944ec62aa6bfc06e8437eea92e537e7ddccdbf4ffba7ac"
+  replacement_pngs: 41
+  gameplay_lua_changed: false
+  remote_render: false
+  official_install_zip: not_built
+  game_visual_acceptance: not_run
+  release_authorized: false
