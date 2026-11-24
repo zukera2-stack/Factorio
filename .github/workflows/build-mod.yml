@@ -27,6 +27,10 @@ on:
       - ".github/workflows/build-mod.yml"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -36,6 +40,7 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
       frozen: ${{ steps.artwork.outputs.frozen }}
+      input_ready: ${{ steps.input.outputs.ready }}
     steps:
       - uses: actions/checkout@v4
       - id: version
@@ -43,6 +48,16 @@ jobs:
       - id: artwork
         run: |
           if test -f docs/builds/runtime-artwork.json; then echo frozen=true >> "$GITHUB_OUTPUT"; else echo frozen=false >> "$GITHUB_OUTPUT"; fi
+      - id: input
+        shell: bash
+        run: |
+          if test "${{ steps.version.outputs.version }}" = 0.1.79 && ! test -f art/sprites/locomotive-v3/Locomotive_V3_visual_patch.zip; then
+            echo "::notice::EM079 packaging BLOCKED: exact locally rendered PNG archive missing"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
   lua_qa:
     name: Lua syntax and functional preflight
     needs: detect
@@ -168,7 +183,7 @@ jobs:
           retention-days: 3
   package:
     needs: [detect, lua_qa, render052]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && needs.lua_qa.result == 'success' && (needs.render052.result == 'success' || needs.render052.result == 'skipped') }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.input_ready == 'true' || github.event_name == 'workflow_dispatch') && needs.lua_qa.result == 'success' && (needs.render052.result == 'success' || needs.render052.result == 'skipped') }}
     name: Package and validate test ZIP
     runs-on: ubuntu-latest
     steps:
