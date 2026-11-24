@@ -1,3 +1,37 @@
+asset_3d_agent_toolchain_20261124:
+  status: optional_local_qa_tooling_proven_not_game_asset_accepted
+  research_source: docs/research/3d-agent-source-report-20261124.md
+  research_assessment: docs/research/3d-agent-tooling-assessment-20261124.md
+  source_report_sha256: 1d866a0a266b968778e9b7fdb8df4acbeb17a02586956fbaef644749de0e5306
+  skill_original_preserved: .agents/skills/blender-unity/SKILL.md
+  skill_factorio: .agents/skills/factorio-3d-asset-pipeline/SKILL.md
+  protocol: docs/3D_ASSET_PIPELINE.md
+  tools:
+    - tools/3d/asset_cli.py
+    - tools/3d/blender_asset_qa.py
+    - tools/3d/ortho_sheet.py
+  testing:
+    blender_version: "5.3.0"
+    input: locomotive_049_down(2).glb
+    input_status: original_owner_provided_reference
+    meshes: 305
+    triangles: 7192
+    uv_missing_meshes: 305
+    smoke_non_strict: pass_with_uv_warnings
+    smoke_strict_require_uv: expected_fail_exit_1
+    orthographic_views: front_left_top_hero_png_generated
+    regenerated_ortho_svg_grid: front_left_top_xml_parse_pass
+    reference_image_calibrated_comparison: not_run
+    full_mesh_self_intersection: not_run
+    factorio_game_tests: not_run
+  owner_no_drafts_as_deliverables: true
+  optional_image_to_3d_provider_installed: false
+  approved_new_locomotive: false
+  approved_new_factorio_sprites: false
+  game_code_changed: false
+  main_changed: false
+  release_authorized: false
+
 em072_075_distributed_traction_plan:
   status: owner_design_approved_documented_only
   decision_date: "2026-11-21"

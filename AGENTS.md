@@ -24,6 +24,7 @@ Project skills (portable SKILL.md; Codex discovers `.agents/skills`, other assis
 - [`factorio-handoff`](.agents/skills/factorio-handoff/SKILL.md) — start a new chat, recover live branches and task state.
 - [`factorio-native-research`](.agents/skills/factorio-native-research/SKILL.md) — Factorio API/prototype, EEI priority and engine experiments.
 - [`blender-unity`](.agents/skills/blender-unity/SKILL.md) — owner-provided portable Blender automation/asset-QA skill, preserved verbatim; **Unity-specific sections do not apply to Factorio**. For Factorio 3D assets, read [`docs/BLENDER_SKILL_ACCESS.md`](docs/BLENDER_SKILL_ACCESS.md) before editing or exporting.
+- [`factorio-3d-asset-pipeline`](.agents/skills/factorio-3d-asset-pipeline/SKILL.md) — **Factorio-specific, owner-researched 3D asset workflow**, live Blender read-only mesh audit and model-derived grid views; read [`docs/3D_ASSET_PIPELINE.md`](docs/3D_ASSET_PIPELINE.md). Do not deliver blockout drafts or claim Factorio acceptance from GLB alone.
 - The Windows Git Updater skill was **retired on 2026-11-21** together with executable patcher sources. Do not use or suggest this install workflow.
 
 A future new chat must not treat `PROJECT_CONTEXT.md` (2026-11-09 notebook), historical README paragraphs or scoped `main` status as the latest feature brief.
