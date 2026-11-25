@@ -54,6 +54,9 @@ jobs:
           if test "${{ steps.version.outputs.version }}" = 0.1.79 && ! test -f art/sprites/locomotive-v3/Locomotive_V3_visual_patch.zip; then
             echo "::notice::EM079 packaging BLOCKED: exact locally rendered PNG archive missing"
             echo "ready=false" >> "$GITHUB_OUTPUT"
+          elif test "${{ steps.version.outputs.version }}" = 0.1.80 && ! test -f art/sprites/locomotive-v3/EM080_visual_patch.zip; then
+            echo "::notice::EM080 packaging BLOCKED: exact locally rendered PNG archive missing"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
           fi
@@ -148,6 +151,12 @@ jobs:
             lua5.2 tests/bridge_devices_060.lua
             lua5.2 tests/power_bridge_cold_start_060.lua
           fi
+
+      - name: EM080 native visual and spark regression mocks
+        if: needs.detect.outputs.version == '0.1.80'
+        run: |
+          lua5.2 tests/locomotive_visual_080.lua
+          lua5.2 tests/pantograph_spark_052.lua
 
       - name: Full 0.1.63 genuine-object source contract tests
         if: needs.detect.outputs.version == '0.1.63'
@@ -318,6 +327,10 @@ jobs:
       - name: Stage exact locally rendered V3 art (no rendering)
         if: needs.detect.outputs.version == '0.1.79'
         run: python scripts/verify_em079_visual_patch.py
+
+      - name: Stage exact local EM080 visual patch (no rendering)
+        if: needs.detect.outputs.version == '0.1.80'
+        run: python scripts/verify_em080_visual_patch.py
 
       - name: Verify frozen runtime PNG manifest
         if: needs.detect.outputs.frozen == 'true'

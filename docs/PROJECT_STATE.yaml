@@ -915,7 +915,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.79" # experimental 200-wagon block traction; native QA; NOT RELEASE
+  mod_version: "0.1.80" # experimental 200-wagon block traction; native QA; NOT RELEASE
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -3088,3 +3088,18 @@ em079_v3_visual_trial:
   official_install_zip: not_built
   game_visual_acceptance: not_run
   release_authorized: false
+
+
+em080_visual_trial:
+  status: static_render_pass_waiting_for_exact_binary_input
+  branch: "experiment/em080-locomotive-visual-fix"
+  base_commit: "22bac7894fb9161df616bd8080072a0a09b39de2"
+  version: "0.1.80"
+  local_patch_sha256: "afb31e5a10449a024137a2f53798745338eab0afca785d9587884af1092bb060"
+  png_count: 57
+  render_directions: 256
+  bogie_meshes: 93
+  gameplay_lua_changed: false
+  spark_script_changed: false
+  native_game_acceptance: not_run
+  official_install_zip: blocked_missing_patch
