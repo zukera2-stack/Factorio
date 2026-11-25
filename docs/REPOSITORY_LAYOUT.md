@@ -18,6 +18,9 @@
 | `docs/research/` | Research decisions and provenance |
 | `tests/` | Automated regression tests |
 | `scripts/` | Packaging, art/QA tools, plus `direct_patch.py` (standalone local Direct Patch verifier) |
+| `.agents/skills/factorio-assets-from-reference/` | Source-based artwork skill, contract and job template |
+| `scripts/assets/qa_sprite_edit.py` | PNG alpha, size, source and frame-grid QA (no mod installs) |
+| `tests/test_asset_workshop.py` | Offline synthetic regression tests for artwork edit contract |
 | `patches/` | Metadata-only Direct Patch registry, README and ignore rules; NO ZIP/PNG assets |
 | `build/direct-patch/` | Generated small local ZIP+external manifest, ignored in Git |
 | `build/package/` | Generated full installable ZIP for CI, ignored in Git |

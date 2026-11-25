@@ -3280,3 +3280,21 @@ direct_patch_standard_v2:
   main_version_unchanged: "0.1.62"
   main_merge_authorized: false
   release_authorized: false
+
+asset_workshop_skill_em086:
+  date: '2026-11-25'
+  branch: feature/factorio-assets-from-reference-20261125
+  skill: .agents/skills/factorio-assets-from-reference/SKILL.md
+  workflow_doc: docs/development/ASSET_WORKSHOP.md
+  sprite_qa: scripts/assets/qa_sprite_edit.py
+  sprite_qa_tests: tests/test_asset_workshop.py
+  local_unit_tests: PASS_12_of_12
+  ci_workflow: .github/workflows/asset-workshop-checks.yml
+  study_source: /Factorio/References/Motor-Wagon-Vanilla-Sprite-Studies/cargo_actual_screenshot_before_after_2d_preview.zip
+  study_is_runtime_art: false
+  original_vanilla_wagon_atlas_available: false
+  motor_cargo_runtime_art_created: false
+  motor_fluid_runtime_art_created: false
+  changed_game_files: 0
+  main_modified: false
+  owner_windows_acceptance: pending

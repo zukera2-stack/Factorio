@@ -5,6 +5,9 @@ description: Recover active Electrified Mainline work from GitHub when starting 
 
 # Factorio — восстановление проекта и цикл Direct Patch
 
+> Graphic requests: first read [factorio-assets-from-reference](../factorio-assets-from-reference/SKILL.md) and [Asset Workshop](../../../docs/development/ASSET_WORKSHOP.md). Reference screenshot study is not an atlas; do not invent vanilla body geometry.
+
+
 **Текущее решение владельца: 25.11.2026.** Малые версии мода передаются **Direct Patch ZIP в чате**, без обязательной GitHub Actions сборки на каждом шаге. Полная CI — только при интеграции/контрольной полной сборке. Старый Windows Updater не использовать. `main` не менять без прямого разрешения.
 
 ## При начале нового чата

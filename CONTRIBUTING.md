@@ -1,3 +1,5 @@
+> **Source-based asset rule 2026-11-25:** for sprites, icons, rolling-stock visuals or recolors use [factorio-assets-from-reference](.agents/skills/factorio-assets-from-reference/SKILL.md). A generated concept is not an exact vanilla repaint; a single screenshot study is not a sprite atlas. Verify source, frames, alpha, masks, shadows and pivot in [Asset Workshop](docs/development/ASSET_WORKSHOP.md) before game integration.
+
 > **Текущий процесс 25.11.2026:** новые локальные версии поставляются через [Direct Patch](docs/development/DIRECT_PATCH_WORKFLOW.md), а не через полную GitHub CI на каждую итерацию. Полная CI нужна перед интеграцией. [Реестр патчей](patches/registry.json). Старая инструкция о CI-only поставке в истории от 19.11.2026 отменена для ручных локальных патчей. Ни один способ не даёт разрешения на release/merge main.
 
 > **2026-11-21:** EM071 accepted on owner screenshot and merged [PR #47](https://github.com/zukera2-stack/Factorio/pull/47). Former Windows patcher scripts have been retired and removed from their source branch; do not recreate/ship an updater. Main game source 0.1.62 is NOT a release.
