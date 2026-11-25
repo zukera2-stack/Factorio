@@ -1,0 +1,1 @@
+{"name":"em-extended-qa","version":"0.0.1","title":"EM087 extended native regression","author":"QA","factorio_version":"2.1","dependencies":["base >= 2.1.24","ElectrifiedMainline >= 0.1.87"]}

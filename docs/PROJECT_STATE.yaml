@@ -1,3 +1,21 @@
+em087_full_regression_20261125:
+  branch: test/em087-full-regression-20261125
+  base_commit: "6f67adc25132a6a9a81b4e0959d3ac237b12a997"
+  mod_version: "0.1.87"
+  status: functional_pass_performance_gate_open
+  launches: 54
+  successful_scenarios: 51
+  explicit_native_pass: 46
+  stand_assertions: 5
+  corrected_test_fixture_attempts: 3
+  moving_trains: 100
+  prototype_assertions: 256
+  gameplay_files_changed: 0
+  windows_visibility: pending
+  evidence: "/Factorio/Local-QA/EM087_FULL_REGRESSION_EVIDENCE.zip"
+  next: em087b
+  main_merged: false
+
 em087_performance_experiment_20261125:
   date: "2026-11-25"
   branch: experiment/em087-performance-r2
