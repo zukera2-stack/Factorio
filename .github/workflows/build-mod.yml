@@ -57,7 +57,7 @@ jobs:
           elif test "${{ steps.version.outputs.version }}" = 0.1.80 && ! test -f art/sprites/locomotive-v3/EM080_visual_patch.zip; then
             echo "::notice::EM080 packaging BLOCKED: exact locally rendered PNG archive missing"
             echo "ready=false" >> "$GITHUB_OUTPUT"
-          elif test "${{ steps.version.outputs.version }}" = 0.1.81 && { ! test -f art/sprites/locomotive-v3/EM080_visual_patch.zip || ! test -f art/sprites/locomotive-v3/EM081_wheels_patch.zip; }; then
+          elif { test "${{ steps.version.outputs.version }}" = 0.1.81 || test "${{ steps.version.outputs.version }}" = 0.1.82; } && { ! test -f art/sprites/locomotive-v3/EM080_visual_patch.zip || ! test -f art/sprites/locomotive-v3/EM081_wheels_patch.zip; }; then
             echo "::notice::EM081 packaging BLOCKED: exact base or wheel patch missing"
             echo "ready=false" >> "$GITHUB_OUTPUT"
           else
@@ -162,9 +162,13 @@ jobs:
           lua5.2 tests/pantograph_spark_052.lua
 
       - name: EM081 wheel atlas and spark regression mocks
-        if: needs.detect.outputs.version == '0.1.81'
+        if: (needs.detect.outputs.version == '0.1.81' || needs.detect.outputs.version == '0.1.82')
         run: |
-          lua5.2 tests/locomotive_visual_081.lua
+          if test "${{ needs.detect.outputs.version }}" = 0.1.82; then
+            lua5.2 tests/locomotive_visual_082.lua
+          else
+            lua5.2 tests/locomotive_visual_081.lua
+          fi
           lua5.2 tests/pantograph_spark_052.lua
 
       - name: Full 0.1.63 genuine-object source contract tests
@@ -342,7 +346,7 @@ jobs:
         run: python scripts/verify_em080_visual_patch.py
 
       - name: Stage exact EM080 base and EM081 wheels (no rendering)
-        if: needs.detect.outputs.version == '0.1.81'
+        if: (needs.detect.outputs.version == '0.1.81' || needs.detect.outputs.version == '0.1.82')
         run: python scripts/verify_em081_wheels_patch.py
 
       - name: Verify frozen runtime PNG manifest

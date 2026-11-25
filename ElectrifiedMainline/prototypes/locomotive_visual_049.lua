@@ -16,11 +16,12 @@ local loco=assert(data.raw.locomotive["em-electric-locomotive"])
 loco.pictures={rotated={layers={body,mask,shadow}}}
 -- Single two-axle bogie at each native joint. No baked wheels in body.
 local bogie,bogie_shadow=layer("bogie"),layer("bogie-shadow")
--- EM081: wheel-only 256px cells, centered at the rail-plane joint.
--- Equivalent physical anchor to old 512px cells shifted by -1 tile.
+-- EM082: preserve EM081 wheel pixels, use native wheel vertical offset.
+-- Whole small cells, no body-style dice splitting. Ground shadow stays at rail plane.
 for _,wheel in ipairs({bogie,bogie_shadow}) do
-    wheel.width=256;wheel.height=256;wheel.shift={0,0}
+    wheel.width=256;wheel.height=256;wheel.shift={0,0};wheel.dice=nil
 end
+bogie.shift={0,0.25}
 bogie_shadow.flags={"shadow"};bogie_shadow.draw_as_shadow=true
 loco.wheels={rotated={layers={bogie,bogie_shadow}}}
 -- Physics, item, color and rail orientation policy remain inherited.
