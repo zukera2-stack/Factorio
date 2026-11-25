@@ -1,3 +1,5 @@
+> **Текущий процесс 25.11.2026:** новые локальные версии поставляются через [Direct Patch](docs/development/DIRECT_PATCH_WORKFLOW.md), а не через полную GitHub CI на каждую итерацию. Полная CI нужна перед интеграцией. [Реестр патчей](patches/registry.json). Старая инструкция о CI-only поставке в истории от 19.11.2026 отменена для ручных локальных патчей. Ни один способ не даёт разрешения на release/merge main.
+
 > **2026-11-21:** EM071 accepted on owner screenshot and merged [PR #47](https://github.com/zukera2-stack/Factorio/pull/47). Former Windows patcher scripts have been retired and removed from their source branch; do not recreate/ship an updater. Main game source 0.1.62 is NOT a release.
 
 > **Branch-aware handoff:** read [`docs/CURRENT_WORK.md`](docs/CURRENT_WORK.md) before choosing a base. Stable `main` 0.1.56, installed Updater-approved `test/updater-approved` 0.1.61, and proposed public beta 0.1.62 in PR #46 are distinct refs until merged. The Windows Updater 1.1 experiment is discontinued by owner decision. `test/updater-approved` is historical only; do not install with that patcher or promote it. Any future distribution must be explicitly reauthorized.
@@ -25,7 +27,7 @@ An analogy is a source of a testable hypothesis, not proof that two entities beh
 9. **Validate in layers.**
    - Static/source checks and Lua syntax.
    - Data-stage prototype validation and diagnostics.
-   - CI packaging and archive structure.
+   - For local work: verify Direct Patch ZIP and hashes against exact baseline; for integration: complete CI packaging and archive structure.
    - In-game test in the target Factorio version, with the relevant mods and save.
    - Undo/Redo, robot/item behavior, partial/cancelled operations, and regression tests where relevant.
 10. **Record evidence and synchronize project memory.** Update `docs/STATUS.md`, `docs/AI_CONTEXT.md`, `docs/PROJECT_STATE.yaml`, and `CHANGELOG.md` as appropriate. Material implementation or status changes must update `AI_CONTEXT.md` and `PROJECT_STATE.yaml` in the same coherent change set.
@@ -88,8 +90,9 @@ The 0.1.7 straight-ground-rail test demonstrates why this process matters:
 
 ## Game-only packaging
 
-Run `python -m unittest discover -s tests -p 'test_package_mod.py' -v` and `python scripts/package_mod.py`. The installable ZIP is in `build/package/`; the QA atlas in `build/qa/` is a separate artifact. Place developer-only material outside the mod folder. See [repository layout](docs/REPOSITORY_LAYOUT.md).
+**For local iterations:** restore two exact complete mod folders, then use `python scripts/direct_patch.py build --base BASE --target TARGET --out build/direct-patch/patch.zip --manifest build/direct-patch/patch.manifest.json`, with `--record-deletions` only when explicitly listing removed files. Validate `python scripts/direct_patch.py verify --base BASE --patch build/direct-patch/patch.zip --manifest build/direct-patch/patch.manifest.json --target TARGET`. Give the ZIP directly to the owner; manifest and test logs stay outside the ZIP and in GPT Library. Never modify owner-installed files; user extracts into the confirmed base and tests visually in Windows. See [full policy](docs/development/DIRECT_PATCH_WORKFLOW.md).
 
-The project owner requires all installable ZIPs distributed to users to originate from GitHub Actions. The local command above is only for developer checks; use the exact CI-built inner ZIP for distribution, with source commit, run ID, artifact ID and hash recorded. Do not repackage locally.
+**For full integration checkpoints:** run `python -m unittest discover -s tests -p 'test_package_mod.py' -v` and `python scripts/package_mod.py`; execute repository GitHub Actions CI, verify exact graphics/restored PNGs and compare full game-file SHA256 with accepted owner files. The installable full ZIP is separate from patch ZIP and from QA. Green CI doesn't imply Windows gameplay acceptance.
 
-**Owner clarification (2026-11-19):** deliver install ZIPs only by direct GitHub Actions artifact links. Do not download, copy, extract, or duplicate distributable ZIPs into the ChatGPT Library or project files for delivery. Library is for technical material, source models, sketches, experiment outputs, and evidence. Record CI validation, source commit and artifact ID; obtain inner archive SHA256 from CI logs if emitted, not by copying the release into Library.
+**Historical superseded rule:** 19.11.2026 required all ZIP downloads directly from GitHub Actions and prohibited Library copies. Owner decision 25.11.2026 explicitly authorized Direct Patch and Library snapshots for local development; old Windows Updater remains retired. Neither local patch nor full CI authorizes main merge or release.
+

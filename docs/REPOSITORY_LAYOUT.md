@@ -1,3 +1,5 @@
+> **Текущая структура (25.11.2026):** `patches/` — реестр, **не игровые ZIP**; `scripts/direct_patch.py` — сборщик/проверка маленьких обновлений; `tests/test_direct_patch.py` и `.github/workflows/direct-patch-checks.yml` — форматная проверка без запуска игры. [Актуальный стандарт](development/DIRECT_PATCH_WORKFLOW.md). Полная интеграционная CI-сборка — отдельно. Старые правила поставки ниже исторические.
+
 > **2026-11-21:** current main includes accepted EM071 [PR #47](https://github.com/zukera2-stack/Factorio/pull/47), mod source 0.1.62; no release. Former Windows Updater has been retired and deleted at the HEAD of `feature/git-updater-060` (only README retirement marker remains). All references below describing an active updater are historical.
 
 > **This layout section was originally documented for stable 0.1.56; proposed public beta 0.1.62 is in PR #46, using the same packaging boundaries.** Current work across branches: [`CURRENT_WORK.md`](CURRENT_WORK.md). In the new docs-only continuation PR, `.agents/skills/` adds portable agent instructions; Updater 1.1 source `tools/updater/` lives **only** on `feature/git-updater-060` at the audit date, not in main's installable `ElectrifiedMainline/` tree.
@@ -15,8 +17,10 @@
 | `docs/development/` | Developer notes on prototypes, scripts and optional integrations |
 | `docs/research/` | Research decisions and provenance |
 | `tests/` | Automated regression tests |
-| `scripts/` | Packaging, art/QA tools |
-| `build/package/` | Generated installable ZIP, ignored in Git |
+| `scripts/` | Packaging, art/QA tools, plus `direct_patch.py` (standalone local Direct Patch verifier) |
+| `patches/` | Metadata-only Direct Patch registry, README and ignore rules; NO ZIP/PNG assets |
+| `build/direct-patch/` | Generated small local ZIP+external manifest, ignored in Git |
+| `build/package/` | Generated full installable ZIP for CI, ignored in Git |
 | `build/qa/` | Generated diagnostic atlas, separate CI artifact, ignored in Git |
 | `dist/` | Historical game-accepted 0.1.8 rollback ZIP, deliberately retained |
 | `Исходник_v2.1.20b/` | Historical reference material, not mod payload; preserved pending separate provenance/licensing audit |
@@ -56,7 +60,10 @@ No runtime Lua or assets were removed. Legacy native probe, helpers, tests and s
 
 Build 44413378503: Lua regressions, approved art verification, 3 package tests, game-only ZIP, separate atlas upload all passed. Docs run 44413378502 passed. Clean artifact 14478116616 downloaded and compared: 51 entries, 16 PNGs unchanged byte for byte versus earlier 048 ZIP; 302634 bytes, CRC clean, SHA256 `dfdeeab22c4cfb16cc9ec8e319d8566362cf86478d440ce7d738b55f9f309d15`. Old archive 322746 bytes. Draft PR #27. Original branch ref update failed with GitHub API errors, so the cleanup is anchored in a separate experimental branch. Subsequent live visual-continuity acceptance: [test report](tests/catenary-0.1.48-user-acceptance.md). Network ID/ordinary-grid isolation remains unverified.
 
-## Distribution policy (owner decision)
-All distributable mod ZIPs must be produced by GitHub Actions. The local packaging script is a CI implementation and may be used only for developer validation, not for user distribution. Download and distribute the exact inner ZIP from the successful CI artifact; do not repackage locally. Record commit, run, artifact and SHA256. Do not include QA atlases or outer artifact bundles in the game archive.
+## Distribution policy (owner decision 2026-11-25)
 
-**Owner clarification (2026-11-19):** deliver install ZIPs only by direct GitHub Actions artifact links. Do not download, copy, extract, or duplicate distributable ZIPs into the ChatGPT Library or project files for delivery. Library is for technical material, source models, sketches, experiment outputs, and evidence. Record CI validation, source commit and artifact ID; obtain inner archive SHA256 from CI logs if emitted, not by copying the release into Library.
+**Direct Patch** for local manual updates is assembled and verified outside GitHub Actions from exact base/target folders, delivered to the owner as a small ZIP, and recorded in `patches/registry.json` plus the GPT Library. Paths inside are relative to the mod root. The manifest and QA do not belong inside the game ZIP. Full detailed rule: [Direct Patch](development/DIRECT_PATCH_WORKFLOW.md).
+
+**Complete integration build** must be reproducible by GitHub Actions (render/atlas staging, packaging, functional QA); provenance and matching owner game-file hashes are retained. A full ZIP from CI is **not** a release until separately authorized.
+
+**Historical 2026-11-19 instruction** requiring GitHub Actions for every ZIP and banning all Library snapshots was superseded for local development on 2026-11-25. Do not restore the retired Windows updater. No main merges without permission.
