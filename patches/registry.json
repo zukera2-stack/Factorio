@@ -1,0 +1,58 @@
+{
+  "schema": "factorio-direct-patch-registry/v1",
+  "project": "ElectrifiedMainline",
+  "updated_on": "2026-11-25",
+  "main_version_at_review": "0.1.62",
+  "last_owner_running_archive_version": "0.1.84",
+  "latest_integration_candidate_version": "0.1.85",
+  "latest_integration_branch": "integration/em085-main-candidate",
+  "entries": [
+    {
+      "id": "EM082",
+      "from": "0.1.81",
+      "to": "0.1.82",
+      "purpose": "Make local V3 wheel bogies visible at native wheel offset",
+      "zip": "/Factorio/Patches/EM082_manual_patch_from_081.zip",
+      "zip_sha256": "f0067af552a15d8b1b06ea815c7ca183a4fcd114bd753bff9ae84397a295ee2a",
+      "source_branch": "experiment/em082-wheel-visibility",
+      "owner_status": "owner_confirmed_visible_wheels",
+      "manual_deletions": []
+    },
+    {
+      "id": "EM083",
+      "from": "0.1.82",
+      "to": "0.1.83",
+      "purpose": "Restore original EM079 raised pantograph; preserve folded ghost and EM082 wheels",
+      "zip": "/Factorio/Patches/EM083_pantograph_restore_from_EM082.zip",
+      "zip_sha256": "5ccb1dd12e099945641dfad5889246539b884c0bd2048e9ee5635ac267314b2d",
+      "source_branch": "experiment/em083-pantograph-restore",
+      "owner_status": "present_byte_exact_in_owner_running_0.1.84_archive;_spark_not_separately_accepted",
+      "manual_deletions": []
+    },
+    {
+      "id": "EM084",
+      "from": "0.1.83",
+      "to": "0.1.84",
+      "purpose": "Correct motor wagon GUI traction status and entity localizations",
+      "zip": "/Factorio/Patches/EM084_motor_wagon_status_Direct_Patch_from_0.1.83.zip",
+      "zip_sha256": "7fbaa11b4a91aedd84c6104c9d433b03d14bed0f0a1d5340d37ded217a5d017d",
+      "source_branch": "experiment/em084-motor-wagon-status",
+      "owner_status": "all_five_patch_files_present_byte_exact_in_owner_running_0.1.84_archive;gui_acceptance_not_proven",
+      "manual_deletions": []
+    },
+    {
+      "id": "EM085",
+      "from": "0.1.84",
+      "to": "0.1.85",
+      "purpose": "Remove legacy non-catenary factory pole and migrate old saved entities/items to vanilla",
+      "zip": "/Factorio/Patches/EM085_remove_obsolete_pole_Direct_Patch_from_0.1.84.zip",
+      "zip_sha256": "e01c4935c9d3fd323a91bbe64430764da725570a9758da3664824218a87389f8",
+      "source_branch": "experiment/em085-remove-legacy-factory-pole",
+      "integration_branch": "integration/em085-main-candidate",
+      "owner_status": "candidate_native_and_ci_verified_windows_acceptance_pending",
+      "ci_run": 45664465532,
+      "ci_artifact_game_files_match": "157/157",
+      "manual_deletions": ["prototypes/em063_retire_ordinary_pole_064.lua"]
+    }
+  ]
+}
