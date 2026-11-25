@@ -3225,3 +3225,28 @@ em085_legacy_factory_pole_removal:
   patch_bytes: 17099
   modified_game_files: 7
   official_release: false
+
+em085_owner_archive_ci_parity:
+  date: "2026-11-25"
+  status: ci_success_native_zip_pass_owner_windows_085_pending
+  integration_branch: integration/em085-main-candidate
+  owner_actual_version: "0.1.84"
+  owner_uploaded_archive: /Factorio/Working-Mod/ElectrifiedMainline_0.1.84_OWNER_RUNNING_20261125.7z
+  owner_archive_sha256: 00029dbc64c59687ba85784c7b82c2e5819c6585c1c0a980788ad3b2512e889f
+  owner_non_png_files_match_source: 58
+  owner_graphic_png_match_em081_baseline: 91
+  owner_raised_panto_png_match_em083_direct_patch: 8
+  candidate_version: "0.1.85"
+  candidate_full_zip_sha256: 90a7f6ebe5ba5cb49c70f0b7c0df03bd41d01d06b1e4da99f19866a31c7a0111
+  github_ci_full_zip_sha256: d876f62f307b2236f16ca4b3e322c82aeac2d13be4a485c40328c7d85cc232c1
+  github_ci_run_id: 45664465532
+  github_ci_build: success
+  github_docs_ci_run_id: 45664287482
+  github_docs_ci: success
+  compared_game_files: 157
+  differing_game_files: 0
+  owner_candidate_native_zip_load: PASS
+  github_ci_native_zip_load: PASS
+  owner_windows_em085_test: pending
+  main_merged: false
+  official_release: false
