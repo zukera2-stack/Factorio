@@ -1,3 +1,5 @@
+> **25.11.2026 — библиотека и Direct Patch:** текущий рабочий архив, переданный владельцем, — `/Factorio/Working-Mod/ElectrifiedMainline_0.1.84_OWNER_RUNNING_20261125.7z` (SHA256 `00029dbc64c59687ba85784c7b82c2e5819c6585c1c0a980788ad3b2512e889f`); EM085 CI-кандидат и точное сравнение 157/157 — в той же Working-Mod. Сырые ZIP обновлений и внешние manifest хранятся в `/Factorio/Patches/`, исходный код и [реестр](../../patches/registry.json) — GitHub. Следовать [актуальному процессу](DIRECT_PATCH_WORKFLOW.md); старые ссылки на базу EM082 ниже — **история**, не текущий старт нового агента. Полная интеграционная CI не требуется для выдачи каждого малого патча. Windows EM085 ещё не подтверждена.
+
 # GPT Library — working mod recovery (2026-11-25)
 
 Owner explicitly requested persistent working copy and folder structure after adopting Direct Patch. GitHub remains source/history; the owner archive is a local QA snapshot, not a release or repackaged CI distribution.

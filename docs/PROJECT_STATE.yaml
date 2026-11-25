@@ -3250,3 +3250,33 @@ em085_owner_archive_ci_parity:
   owner_windows_em085_test: pending
   main_merged: false
   official_release: false
+
+direct_patch_standard_v2:
+  owner_decision_date: "2026-11-25"
+  status: github_process_documented_and_ci_validated
+  branch: feature/direct-patch-standard-20261125
+  owner_approved_local_delivery: direct_patch
+  canonical_document: docs/development/DIRECT_PATCH_WORKFLOW.md
+  registry: patches/registry.json
+  registry_schema: factorio-direct-patch-registry/v1
+  tool: scripts/direct_patch.py
+  tool_schema: factorio-direct-patch/v1
+  tool_tests: tests/test_direct_patch.py
+  tool_tests_local: PASS_9_of_9
+  actual_em084_to_em085_virtual_overlay: PASS_7_changed_one_manual_deletion
+  native_gameplay_modified_by_process_branch: false
+  ci_workflow: .github/workflows/direct-patch-checks.yml
+  ci_validation_run: 45668668965
+  ci_validation: success
+  incremental_patch_zip_root: extracted_mod_root
+  incremental_patch_manifest: external
+  incremental_patch_required_for_each_iteration: true
+  full_github_ci_required_for_local_patch: false
+  full_github_ci_required_before_main_integration: true
+  current_owner_running_version: "0.1.84"
+  current_ci_native_candidate: "0.1.85"
+  owner_windows_085_acceptance: pending
+  stale_updater: retired
+  main_version_unchanged: "0.1.62"
+  main_merge_authorized: false
+  release_authorized: false
