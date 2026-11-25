@@ -184,30 +184,49 @@ local function rail_path_info(a,b,max_distance,context)
     -- Bounded lowest-cost rail walk; never traverse vanilla, elevated,
     -- enemy or disconnected rail. Cost is approximate entity-centre path
     -- distance, not Factorio's exact rail spline length.
-    local queue={{rail=start,length=0,curved=start.name~=straight}}
-    local best={[start.unit_number]=0}
-    local visited=0
     local max_walk=max_distance or (limits.STRAIGHT*1.5+4)
-    while #queue>0 and visited<192 do
+    -- Resume the exact original bounded traversal for another target from
+    -- the same start, ONLY within the synchronous technical plan. Each
+    -- target uses its first accepted pop, with the same tie order and cap.
+    local walk
+    if context then
+        context.walks=context.walks or {}
+        local row=context.walks[a.rail_id]
+        if not row then row={};context.walks[a.rail_id]=row end
+        walk=row[max_walk]
+        if not walk then
+            walk={queue={{rail=start,id=a.rail_id,length=0,curved=start.name~=straight}},
+                best={[a.rail_id]=0},visited=0,results={}}
+            row[max_walk]=walk
+        end
+    else
+        walk={queue={{rail=start,id=a.rail_id,length=0,curved=start.name~=straight}},
+            best={[a.rail_id]=0},visited=0,results={}}
+    end
+    if walk.results[b.rail_id] then return walk.results[b.rail_id] end
+    local queue,best=walk.queue,walk.best
+    while #queue>0 and walk.visited<192 do
         local best_i=1
         for i=2,#queue do
             if queue[i].length<queue[best_i].length then best_i=i end
         end
         local cur=table.remove(queue,best_i)
-        if cur.length<=best[cur.rail.unit_number]+0.00001 then
-            visited=visited+1
-            if cur.rail.unit_number==b.rail_id then
-                return {length=cur.length,curved=cur.curved}
+        if cur.length<=best[cur.id]+0.00001 then
+            walk.visited=walk.visited+1
+            if not walk.results[cur.id] then
+                walk.results[cur.id]={length=cur.length,curved=cur.curved}
             end
+            if not context and cur.id==b.rail_id then return walk.results[cur.id] end
             for _,other in ipairs(neighbours(cur.rail)) do
                 local cost=cur.length+other.length
                 if cost<=max_walk and
                     (not best[other.id] or cost<best[other.id]-0.00001) then
                     best[other.id]=cost
-                    queue[#queue+1]={rail=other.rail,length=cost,
+                    queue[#queue+1]={rail=other.rail,id=other.id,length=cost,
                         curved=cur.curved or other.curved}
                 end
             end
+            if cur.id==b.rail_id then return walk.results[cur.id] end
         end
     end
     return nil

@@ -273,8 +273,8 @@ function M.on_tick(tick,graph)
  end
  local direct=devices.sample(s,tick,physical,allowed)
  local previous=(s.sample_tick==tick-1 and s.last_auto or {})
- local function observe(e)
-   local raw=e.electric_network_id
+ local function observe(e,raw)
+   raw=raw or e.electric_network_id
    if not raw then return nil end
    if cache[raw] then return cache[raw] end
    local k,flow=dispatch.read_network(e)
@@ -304,7 +304,7 @@ function M.on_tick(tick,graph)
      elseif r.mode=="import" or r.mode=="export" or r.mode=="auto" then
        local f,l=r.factory_port.electric_network_id,r.line_port.electric_network_id
        if f and l and f==p.electric_network_id and l==a.electric_network_id then
-         local fk,lk=observe(r.factory_port),observe(r.line_port)
+         local fk,lk=observe(r.factory_port,f),observe(r.line_port,l)
          if r.mode=="auto" then
            local mast=get(s.feeders[id])
            if not (fk and lk and mast and mast.electric_network_id==l and t.mast_connected and t.mast_connected[s.feeders[id]]) then
@@ -358,7 +358,10 @@ function M.on_tick(tick,graph)
  local corridor={}
  for _,aid in pairs(t.helpers) do
    local a=get(aid)
-   if valid(a) and a.electric_network_id then corridor[observe(a) or a.electric_network_id]=true end
+   if valid(a) then
+     local raw=a.electric_network_id
+     if raw then corridor[observe(a,raw) or raw]=true end
+   end
  end
  local safe,shorted={},{}
  for _,c in ipairs(candidates) do

@@ -161,11 +161,12 @@ function M.plan(input,edges,limit)
      while a[supply]>1 do
        local seen,prev=shortest_tree(src)
        local destinations={}
-       for _,dst in ipairs(ids) do
-         if dst~=src and n[dst][demand]>1 and seen[dst] then
+       for dst in pairs(seen) do
+         if dst~=src and n[dst][demand]>1 then
            destinations[#destinations+1]=dst
          end
        end
+       table.sort(destinations)
        if #destinations==0 then break end
        local budget=a[supply]/#destinations
        local transferred=0

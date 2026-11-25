@@ -1,3 +1,30 @@
+em087b_exact_walk_bridge_20261125:
+  date: "2026-11-25"
+  branch: experiment/em087b-exact-walk-bridge
+  base_commit: "bd5168d0ede652b64890f3a4007d78407e844cd5"
+  mod_version: "0.1.88"
+  status: partial_experiment_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_regression_pass: 51
+  explicit_native_pass: 46
+  stand_assertions_pass: 5
+  simulated_path_comparisons: 144000
+  simulated_dispatch_comparisons: 1000
+  code_only_50_mean_ms: [19.904, 18.936]
+  code_only_100_mean_ms: [39.920, 37.8935]
+  code_only_long201_mean_ms: [2.9735, 3.0555]
+  same_version_native_checksums_match: true
+  full_version_performance_benchmark: not_run
+  persistent_incremental_graph: design_only
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: f405fe155a42d629b116350970f0a2408a3f510c56cd52ee2bb96c19790d8c75
+  evidence: "/Factorio/Local-QA/EM087B_PERFORMANCE_EVIDENCE.zip"
+  next: em087c
+  main_merged: false
+  official_release: false
+
 em087_full_regression_20261125:
   branch: test/em087-full-regression-20261125
   base_commit: "6f67adc25132a6a9a81b4e0959d3ac237b12a997"

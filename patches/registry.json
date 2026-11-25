@@ -81,10 +81,26 @@
       "owner_status": "experimental_partial_performance_gate_not_met_not_for_primary_install_windows_pending",
       "manual_deletions": [],
       "evidence": "/Factorio/Patches/EM087_PERFORMANCE_EVIDENCE.zip"
+    },
+    {
+      "id": "EM088",
+      "stage": "EM087B",
+      "from": "0.1.87",
+      "to": "0.1.88",
+      "purpose": "Experimental resumable exact phase-local rail walks and reachable-demand enumeration; no persistent topology cache",
+      "zip": "/Factorio/Patches/EM087B_performance_EXPERIMENT_Direct_Patch_from_0.1.87.zip",
+      "manifest": "/Factorio/Patches/EM087B_performance.manifest.json",
+      "zip_sha256": "f405fe155a42d629b116350970f0a2408a3f510c56cd52ee2bb96c19790d8c75",
+      "source_branch": "experiment/em087b-exact-walk-bridge",
+      "owner_status": "experimental_partial_performance_gate_not_met_not_for_primary_install_windows_pending",
+      "manual_deletions": [],
+      "evidence": "/Factorio/Local-QA/EM087B_PERFORMANCE_EVIDENCE.zip",
+      "full_tested_archive": "/Factorio/Local-QA/EM087B_0.1.88_full_EXPERIMENT.zip",
+      "full_tested_archive_sha256": "43e4b0d4e24866dfa64eb030694efc08880607741c922a19f7f37f886f595007"
     }
   ],
   "latest_local_candidate_version": "0.1.86",
   "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
-  "latest_experiment_version": "0.1.87",
-  "latest_experiment_branch": "experiment/em087-performance-r2"
+  "latest_experiment_version": "0.1.88",
+  "latest_experiment_branch": "experiment/em087b-exact-walk-bridge"
 }
