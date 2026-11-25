@@ -1,3 +1,5 @@
+> **EM084 UI Direct Patch candidate:** See docs/development/EM084_MOTOR_WAGON_STATUS.md. Library ZIP version 0.1.83→0.1.84. Linux native probe PASS, owner Windows GUI acceptance pending. Does not alter train power or real alert status.
+
 > **EM083 Direct Patch candidate (2026-11-25):** User rejected custom wrecks (keep vanilla), requested original EM079 raised collector. See [EM083 patch recovery](docs/development/EM083_PANTOGRAPH_RESTORE.md). Only eight raised panto PNGs + info.json in Library; source GitHub branch without binary patch alone is NOT a complete runnable EM083. Owner EM082 baseline remains confirmed; EM083 Windows acceptance pending.
 
 > **Working Library snapshot:** restore `/Factorio/Working-Mod/ElectrifiedMainline_0.1.82_owner.zip` for local QA. Follow [Library workspace recovery](docs/development/GPT_LIBRARY_WORKSPACE.md) and live Direct Patch state. This is an owner-supplied working copy, not CI distribution.
