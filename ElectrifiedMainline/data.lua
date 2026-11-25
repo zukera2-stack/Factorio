@@ -27,9 +27,6 @@ require("prototypes.power_bridge_058")
 -- 0.1.63 TEST BRANCH ONLY: two real native wagon types and finite-J hidden GUI adapter.
 require("prototypes.em072_c5_fullmod_trial_063")
 
--- Research 0.1.64: non-destructive retirement of redundant factory pole.
-require("prototypes.em063_retire_ordinary_pole_064")
-
 -- EM065 research: finite paid native locomotive burner, NO free void power.
 require("prototypes.traction_paid_065")
 

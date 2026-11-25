@@ -1,3 +1,5 @@
+> **EM085 Direct Patch**: owner requested obsolete factory pole `em-electric-pole` removed *completely*. Code and migrations recorded at [EM085](docs/development/EM085_REMOVE_ORDINARY_POLE.md). Item, recipe, entity and research unlock removed; JSON migration maps old item/entity to vanilla small-electric-pole. No changes to 25 kV catenary. Local native migration PASS; owner Windows acceptance pending. GitHub branch sources are not a complete mod without earlier binary sprite patches.
+
 > **EM084 UI Direct Patch candidate:** See docs/development/EM084_MOTOR_WAGON_STATUS.md. Library ZIP version 0.1.83→0.1.84. Linux native probe PASS, owner Windows GUI acceptance pending. Does not alter train power or real alert status.
 
 > **EM083 Direct Patch candidate (2026-11-25):** User rejected custom wrecks (keep vanilla), requested original EM079 raised collector. See [EM083 patch recovery](docs/development/EM083_PANTOGRAPH_RESTORE.md). Only eight raised panto PNGs + info.json in Library; source GitHub branch without binary patch alone is NOT a complete runnable EM083. Owner EM082 baseline remains confirmed; EM083 Windows acceptance pending.

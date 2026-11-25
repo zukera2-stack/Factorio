@@ -362,29 +362,6 @@ local function unmark_rail(rail)
     storage.em.electrified_rails[key] = nil
 end
 
-local function mark_rails_near_pole(pole)
-    if not (pole and pole.valid and pole.name == "em-electric-pole") then return end
-
-    local p = pole.position
-    local area = {
-        { p.x - RAIL_RADIUS, p.y - RAIL_RADIUS },
-        { p.x + RAIL_RADIUS, p.y + RAIL_RADIUS }
-    }
-    local rails = pole.surface.find_entities_filtered({
-        area = area,
-        name = {
-            "em-high-speed-straight-rail",
-            "em-curved-high-speed-rail",
-            "em-curved-high-speed-rail-b",
-            "em-half-diagonal-high-speed-rail"
-        }
-    })
-
-    for _, rail in pairs(rails) do
-        mark_rail(rail)
-    end
-end
-
 local function on_built(event)
     ensure_storage()
     local entity = event.entity
@@ -406,8 +383,6 @@ local function on_built(event)
     if RAIL_NAMES[entity.name] then
         mark_rail(entity)
         power019.on_rail_changed(entity)
-    elseif entity.name == "em-electric-pole" then
-        mark_rails_near_pole(entity)
     end
 end
 
