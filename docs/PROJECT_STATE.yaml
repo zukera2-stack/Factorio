@@ -3156,3 +3156,23 @@ direct_patch_workflow:
   main_merge_authorized: false
   full_release_authorized: false
   first_manual_patch: owner_confirmed
+
+
+gpt_library_workspace:
+  owner_approved: true
+  root: /Factorio
+  recovery_doc: docs/development/GPT_LIBRARY_WORKSPACE.md
+  working_archive: /Factorio/Working-Mod/ElectrifiedMainline_0.1.82_owner.zip
+  working_manifest: /Factorio/Working-Mod/EM082_owner_baseline_manifest.json
+  version: "0.1.82"
+  game_source_commit: a71f98e7352c36e63b1a220e55c45496c1d01e31
+  archive_sha256: ed60bbfe6a1027adceb1d8ecc910624d360ba9f9bda5b9cb6af906033a762f80
+  files: 156
+  pngs: 99
+  patches: /Factorio/Patches
+  models: /Factorio/Models
+  backups: /Factorio/Backups
+  engine: /Factorio/Local-QA/engines/factorio-headless_linux_2.1.24.tar.xz
+  archive_crc: PASS
+  owner_working_snapshot: true
+  release: false
