@@ -915,7 +915,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.82" # experimental 200-wagon block traction; native QA; NOT RELEASE
+  mod_version: "0.1.83" # experimental 200-wagon block traction; native QA; NOT RELEASE
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -3175,4 +3175,25 @@ gpt_library_workspace:
   engine: /Factorio/Local-QA/engines/factorio-headless_linux_2.1.24.tar.xz
   archive_crc: PASS
   owner_working_snapshot: true
+  release: false
+
+em083_pantograph_restore:
+  status: direct_patch_candidate_owner_windows_acceptance_pending
+  branch: experiment/em083-pantograph-restore
+  version: "0.1.83"
+  previous_confirmed_version: "0.1.82"
+  local_patch: /Factorio/Patches/EM083_pantograph_restore_from_EM082.zip
+  patch_sha256: 5ccb1dd12e099945641dfad5889246539b884c0bd2048e9ee5635ac267314b2d
+  patch_file_count: 9
+  rgba_atlases_changed: 8
+  directions_verified: 256
+  native_factorio_2_1_24_prototype_map_benchmark_30_ticks: PASS
+  owner_windows_acceptance: NOT_RUN
+  3d_rerender: false
+  gameplay_changes: false
+  spark_scripts_changed: false
+  folded_ghost: retained_compact_em080
+  raised_collector: original_em079_pose
+  original_wrecks: vanilla_inherited
+  custom_wreck: deferred_unapproved
   release: false
