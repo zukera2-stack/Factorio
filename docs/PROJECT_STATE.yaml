@@ -3197,3 +3197,31 @@ em083_pantograph_restore:
   original_wrecks: vanilla_inherited
   custom_wreck: deferred_unapproved
   release: false
+
+em085_legacy_factory_pole_removal:
+  decision_date: "2026-11-25"
+  owner_requested: true
+  status: direct_patch_native_2_1_24_pass_windows_pending
+  branch: experiment/em085-remove-legacy-factory-pole
+  mod_version: "0.1.85"
+  base_version: "0.1.84"
+  removed_prototype_entity: em-electric-pole
+  removed_prototype_item: em-electric-pole
+  removed_prototype_recipe: em-electric-pole
+  removed_technology_unlock: true
+  obsolete_module_deleted_in_github: true
+  manual_delete_from_unpacked_mod: prototypes/em063_retire_ordinary_pole_064.lua
+  migration_file: migrations/0.1.85.json
+  migration_entity_to: small-electric-pole
+  migration_item_to: small-electric-pole
+  native_old_save_test: PASS_one_entity_seven_items
+  native_fresh_mod_2_1_24: PASS
+  native_direct_patch_benchmark_30_ticks: PASS
+  owner_windows_acceptance: pending
+  catenary_25kv_unchanged: true
+  traction_unchanged: true
+  patch_library: /Factorio/Patches/EM085_remove_obsolete_pole_Direct_Patch_from_0.1.84.zip
+  patch_sha256: e01c4935c9d3fd323a91bbe64430764da725570a9758da3664824218a87389f8
+  patch_bytes: 17099
+  modified_game_files: 7
+  official_release: false
