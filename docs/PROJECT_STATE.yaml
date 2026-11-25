@@ -1,3 +1,27 @@
+em087_performance_experiment_20261125:
+  date: "2026-11-25"
+  branch: experiment/em087-performance-r2
+  base_commit: "ce9b30eaab9465c71c669dfd545657490cc5301b"
+  mod_version: "0.1.87"
+  status: partial_experimental_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_explicit_pass: 10
+  native_800_motor_assertions: pass
+  technical_helpers_at_800: 4
+  native_gui_complete_invisibility: windows_pending
+  long201_base_mean_ms: 4.200333333333333
+  long201_final_mean_ms: 2.9026666666666667
+  hundred_train_full_candidate_mean_ms: 36.552
+  hundred_train_code_only_mean_ms: 30.522
+  hundred_train_code_only_peak_ms: 512.860
+  performance_gate: not_met
+  patch_sha256: f99ae5a3d431893c79eea7edf84396df722c986a2e1e91d7f34ebf60fed64439
+  evidence: "/Factorio/Patches/EM087_PERFORMANCE_EVIDENCE.zip"
+  next: em087b_bridge_and_incremental_topology_safety
+  main_merged: false
+  official_release: false
+
 em078_hidden_helper_no_path_alert_20261123:
   date: "2026-11-23"
   branch: fix/em078-hide-technical-no-path-icons-20261123

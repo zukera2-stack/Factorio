@@ -450,17 +450,20 @@ end
 -- Diagnostic pass: identify the rail closest to each custom locomotive.
 -- This deliberately reports rail identity only; it does not infer that the rail
 -- is powered and does not alter train movement or energy.
-local function find_rail_under_locomotive(locomotive)
+local function find_rail_under_locomotive(locomotive, cache)
     local train = locomotive.train
     if not (train and train.valid) then return nil end
 
+    local id=locomotive.unit_number
+    if cache and cache[id]~=nil then return cache[id] or nil end
     local closest_rail = nil
     local best_distance_squared = math.huge
-
+    local pos=locomotive.position
     for _, rail in pairs(train.get_rails()) do
         if rail.valid then
-            local dx = rail.position.x - locomotive.position.x
-            local dy = rail.position.y - locomotive.position.y
+            local rp=rail.position
+            local dx = rp.x - pos.x
+            local dy = rp.y - pos.y
             local distance_squared = dx * dx + dy * dy
 
             if distance_squared < best_distance_squared then
@@ -470,15 +473,16 @@ local function find_rail_under_locomotive(locomotive)
         end
     end
 
+    if cache then cache[id]=closest_rail or false end
     return closest_rail
 end
 
-local function update_rail_diagnostics(train, state)
+local function update_rail_diagnostics(train, state, rail_cache)
     state.rail_diagnostics = state.rail_diagnostics or {}
 
     for _, locomotive in pairs(get_custom_locomotives(train)) do
         local locomotive_id = locomotive.unit_number or locomotive.name
-        local rail = find_rail_under_locomotive(locomotive)
+        local rail = find_rail_under_locomotive(locomotive,rail_cache)
         local rail_name = rail and rail.name or "<no-rail>"
         local rail_id = rail and rail.unit_number or "nil"
 
@@ -580,8 +584,10 @@ local function on_tick(event)
     local trains = game.train_manager.get_trains({
         stock = "em-electric-locomotive"
     })
+    -- Exact same rail result within this visual/diagnostic phase only.
+    local rail_cache={}
     pantograph049.sync(trains, get_custom_locomotives,event.tick,art030.contact_at,function(e)
-        local rail=find_rail_under_locomotive(e)
+        local rail=find_rail_under_locomotive(e,rail_cache)
         return rail and (rail.name=="em-high-speed-straight-rail" or rail.name=="em-half-diagonal-high-speed-rail"
             or rail.name=="em-curved-high-speed-rail" or rail.name=="em-curved-high-speed-rail-b")
     end)
@@ -597,7 +603,7 @@ local function on_tick(event)
             if state then
                 if update_rails then
                     -- Diagnostic only: determine the rail under each custom locomotive.
-                    update_rail_diagnostics(train, state)
+                    update_rail_diagnostics(train, state,rail_cache)
                 end
 
                 -- Used by the later battery/regen implementation. No energy is

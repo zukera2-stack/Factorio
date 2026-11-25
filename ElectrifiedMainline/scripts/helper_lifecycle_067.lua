@@ -173,7 +173,8 @@ function M.targets()
       local k=tr.id
       local c=cache[k]
       if not c then
-        c={allowed=authorised_owners(tr),needed=counts(n_motors(tr))}
+        local n=n_motors(tr)
+        c={allowed=authorised_owners(tr),needed=counts(n),motors=n}
         cache[k]=c
       end
       local watts=power(h.name)
@@ -183,7 +184,7 @@ function M.targets()
         local seen=used[owner]
         if (seen[watts] or 0)<c.needed[watts] then
           seen[watts]=(seen[watts] or 0)+1
-          results[#results+1]={helper=h,owner=o,watts=watts,motors=n_motors(tr)}
+          results[#results+1]={helper=h,owner=o,watts=watts,motors=c.motors}
         end
       end
     end

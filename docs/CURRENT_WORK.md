@@ -1,3 +1,11 @@
+# EM087 — performance experiment, 2026-11-25
+
+**PARTIAL / EXPERIMENT**, not accepted, not main. Latest maintenance candidate remains EM086 0.1.86; last owner-running archive 0.1.84. Do not install EM087 in primary owner game. [Full QA](development/EM087_PERFORMANCE_QA.md) / [registry](../patches/registry.json). 6 files, 99 PNG unchanged, Direct Patch build/verify PASS. Native Factorio 2.1.24 10 explicit functional PASS plus 800 motor wagon assertion (4 helpers, 805 stock, cargo preserved). No changes to native physics/power or helper concealment. Player must not see technical helpers; native train/station GUI remains unverified in Windows; acceptance blocked if empty helper slots visible.
+
+Same input save 201 wagons: final R2 4.200 -> 2.903 ms/tick, measured energy ledgers identical. 50/100 stationary trains and substations: code-only equal version checksums match, peak 699 -> 280 ms and 1700 -> 513 ms. Full 0.1.87 100 train mean 36.552 ms vs base 35.129; gate NOT met. Profile confirmed technical046 633 ms on 50-train tick600; next regular bridge058 (~4.2 ms on tick599) and incremental topology + safety audit; no throttling safety. 100 km, mass moving trains, memory A/B, MP and Windows not verified. Do not advance battery/regen until performance gate; no merge/CI release. Evidence library /Factorio/Patches/EM087_PERFORMANCE_EVIDENCE.zip includes real logs, synthetic saves and tested code. Use only exact 0.1.86 as isolated base.
+
+Historical handoff follows.
+
 # EM086 branch handoff — 2026-11-25
 
 This branch is a **local maintenance candidate 0.1.86**, NOT main, NOT a release. Owner-running 0.1.84 and EM085 integration candidate status are unchanged. See [EM086 QA](development/EM086_MAINTENANCE_QA.md) and [patch registry](../patches/registry.json).

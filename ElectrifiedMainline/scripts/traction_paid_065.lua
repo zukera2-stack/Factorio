@@ -35,12 +35,12 @@ local function network_for_contact(e,art,pantograph)
     and aa.electric_network_id==ab.electric_network_id) then
     return nil,"native-25kv-network-unverified"
   end
-  return aa.electric_network_id,nil
+  return aa.electric_network_id,nil,aa
 end
 local function donor(network,force)
   local bridge=storage.em and storage.em.bridge058
   if not (bridge and bridge.stations) then return nil end
-  local list={}
+  local best_id,best=nil,nil
   for id,r in pairs(bridge.stations) do
     local output=r.output
     if r.direction=="import" and r.status=="active"
@@ -51,11 +51,10 @@ local function donor(network,force)
       and r.line_port.electric_network_id==network
       and output.force==force
       and entity(id) then
-      list[#list+1]={id=id,r=r}
+      if not best_id or id<best_id then best_id,best=id,r end
     end
   end
-  table.sort(list,function(a,b)return a.id<b.id end)
-  return list[1] and list[1].r or nil
+  return best
 end
 
 local SINK="em-25kv-native-traction-consumer-068"
@@ -207,7 +206,16 @@ end
 -- Source-paid Joules are allocated per actual native EM070 output buffer.
 -- Two equal-need real locomotives can never be charged greedily by unit_number.
 -- No train.speed writes; no extra fuel; only the real EM locomotive has a reserve.
-local function eligible(e,art,pantograph,stats,target)
+-- Phase-local donor/contact memo. No cache spans bridge settlement, helper
+-- reconciliation, tick boundaries or a save/load. False records negative results.
+local function phase_donor(cache,net,force)
+  local f=force.index
+  local row=cache[f]
+  if not row then row={};cache[f]=row end
+  if row[net]==nil then row[net]=donor(net,force) or false end
+  return row[net] or nil
+end
+local function eligible(e,art,pantograph,stats,target,contacts,donors)
   local contact_owner=target and target.owner or e
   if not (e and e.valid and e.unit_number and e.burner and
       contact_owner and contact_owner.valid and
@@ -226,13 +234,19 @@ local function eligible(e,art,pantograph,stats,target)
   end
   -- Keep one native-tick reserve in the hidden engine; real EM retains 2 MJ.
   if old>=cap-limit/2 then return nil end
-  local net,why=network_for_contact(contact_owner,art,pantograph)
+  local uid=contact_owner.unit_number
+  local c=contacts[uid]
+  if not c then
+    local net,why=network_for_contact(contact_owner,art,pantograph)
+    c={net=net,why=why};contacts[uid]=c
+  end
+  local net,why=c.net,c.why
   if not net then
     stats.miss_contact=stats.miss_contact+1
     stats.last_contact_reason=why
     return nil
   end
-  local source=donor(net,contact_owner.force)
+  local source=phase_donor(donors,net,contact_owner.force)
   if not source then
     stats.miss_supply=stats.miss_supply+1
     return nil
@@ -289,8 +303,9 @@ end
 
 local function fair_charge(owners,art,pantograph,stats)
   local groups,ids={},{}
+  local contacts,donors={},{}
   for _,e in ipairs(owners) do
-    local req=eligible(e,art,pantograph,stats)
+    local req=eligible(e,art,pantograph,stats,nil,contacts,donors)
     if req then
       local id=req.source.output.unit_number
       if not id then error("[EM066 PAID FAIL] donor EEI has no native unit_number") end
@@ -305,7 +320,7 @@ local function fair_charge(owners,art,pantograph,stats)
   -- locomotive. Helpers cannot touch a mast directly and never get a second
   -- independent reservoir or second direct EEI sink.
   for _,target in ipairs(motor067.targets()) do
-    local req=eligible(target.helper,art,pantograph,stats,target)
+    local req=eligible(target.helper,art,pantograph,stats,target,contacts,donors)
     if req then
       local id=req.source.output.unit_number
       if not groups[id] then groups[id]={source=req.source,requests={}};ids[#ids+1]=id end
@@ -367,9 +382,12 @@ local function all_real_locomotives()
   local owners={}
   for _,t in pairs(game.train_manager.get_trains{stock="em-electric-locomotive"}) do
     if t.valid then
-      for _,e in ipairs(t.carriages) do
-        if e.valid and e.name=="em-electric-locomotive" then
-          owners[#owners+1]=e
+      local groups=t.locomotives
+      for _,heading in ipairs({"front_movers","back_movers"}) do
+        for _,e in ipairs(groups[heading] or {}) do
+          if e.valid and e.name=="em-electric-locomotive" then
+            owners[#owners+1]=e
+          end
         end
       end
     end
@@ -389,22 +407,14 @@ function M.requests(art,pantograph,dispatch)
   -- The native EM070 planner otherwise sees zero factory-grid/line demand:
   -- a Lua locomotive has no native electrical energy source. Advertise only
   -- finite, verified pending train demand on that REAL anchor network.
-  local requests={}
+  local requests,donors={},{}
   for _,e in ipairs(all_real_locomotives()) do
     local burner=e.burner
     if burner then
       local left=math.min(M.MAX_PER_TICK,math.max(0,M.BUFFER_CAP-(burner.remaining_burning_fuel or 0)))+(helpers[e.unit_number] or 0)
       if left>1 then
-        local net=network_for_contact(e,art,pantograph)
+        local net,_,anchor=network_for_contact(e,art,pantograph)
         if net then
-          local anchor=nil
-          local tech=storage.em and storage.em.technical_046
-          -- Same exact IDs as those already verified in network_for_contact.
-          local h=pantograph.head_offset(pantograph.frame(e.orientation))
-          local contact=art.contact_at(e.surface.index,e.force.name,
-            {x=e.position.x+h.x,y=e.position.y+h.y})
-          local a=contact and tonumber(contact.key:match("^(%d+):"))
-          if a and tech then anchor=entity(tech.helpers[a]) end
           local key=anchor and dispatch.network_key(anchor)
           if key then
             -- Keep ONLY cold-start bootstrap virtual demand. Once an actual
@@ -426,7 +436,7 @@ function M.requests(art,pantograph,dispatch)
             -- The request does not grant Joules; only the engine-paid sink
             -- can credit the real burner. Once donor() is active, native
             -- demand takes over without double-advertising the same train.
-            local active_donor=donor(net,e.force)
+            local active_donor=phase_donor(donors,net,e.force)
             if not has_native or not active_donor then
               requests[key]=(requests[key] or 0)+
                 left

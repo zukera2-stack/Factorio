@@ -131,17 +131,20 @@ local function resolve(s,id)
 end
 -- This is deliberately *not* RailSignalPrototype: no changes to train blocks.
 -- Check real rail connectivity, so nearby but independent tracks do not join.
-local function rail_path_info(a,b,max_distance)
+local function rail_path_info(a,b,max_distance,context)
     if not (a and b and a.rail_id and b.rail_id
         and a.surface_index==b.surface_index
         and a.force_name==b.force_name) then return nil end
     local surface=game.surfaces[a.surface_index]
     local force=game.forces[a.force_name]
     if not (surface and force) then return nil end
-    local start
-    for _,r in pairs(surface.find_entities_filtered{
-        position={x=a.x,y=a.y},radius=RADIUS,name=RAILS,force=force}) do
-        if r.unit_number==a.rail_id then start=r;break end
+    local start=context and a.id and context.starts[a.id]
+    if start==nil then
+        for _,r in pairs(surface.find_entities_filtered{
+            position={x=a.x,y=a.y},radius=RADIUS,name=RAILS,force=force}) do
+            if r.unit_number==a.rail_id then start=r;break end
+        end
+        if context and a.id then context.starts[a.id]=start or false end
     end
     if not (start and start.valid and RAIL_SET[start.name]) then return nil end
     local straight="em-high-speed-straight-rail"
@@ -151,6 +154,33 @@ local function rail_path_info(a,b,max_distance)
     local directions={defines.rail_direction.front,defines.rail_direction.back}
     local turns={defines.rail_connection_direction.straight,
         defines.rail_connection_direction.left,defines.rail_connection_direction.right}
+    -- Phase-local cache: the technical plan reads native rail adjacency but
+    -- never mutates rails. Reuse only exact ordered neighbours during this
+    -- synchronous plan; no cache across ticks, events or save/load.
+    local function neighbours(rail)
+        local id=rail.unit_number
+        local result=context and context.neighbours[id]
+        if result then return result end
+        result={}
+        local pos=rail.position
+        for _,d in ipairs(directions) do
+            for _,turn in ipairs(turns) do
+                local other=rail.get_connected_rail{
+                    rail_direction=d,rail_connection_direction=turn}
+                if other and other.valid and RAIL_SET[other.name]
+                    and other.unit_number and other.force.name==a.force_name
+                    and other.surface.index==a.surface_index then
+                    local op=other.position
+                    local dx=op.x-pos.x
+                    local dy=op.y-pos.y
+                    result[#result+1]={rail=other,id=other.unit_number,
+                        length=math.max(1,math.sqrt(dx*dx+dy*dy)),curved=other.name~=straight}
+                end
+            end
+        end
+        if context then context.neighbours[id]=result end
+        return result
+    end
     -- Bounded lowest-cost rail walk; never traverse vanilla, elevated,
     -- enemy or disconnected rail. Cost is approximate entity-centre path
     -- distance, not Factorio's exact rail spline length.
@@ -169,24 +199,13 @@ local function rail_path_info(a,b,max_distance)
             if cur.rail.unit_number==b.rail_id then
                 return {length=cur.length,curved=cur.curved}
             end
-            for _,d in ipairs(directions) do
-                for _,turn in ipairs(turns) do
-                    local other=cur.rail.get_connected_rail{
-                        rail_direction=d,rail_connection_direction=turn}
-                    if other and other.valid and RAIL_SET[other.name]
-                        and other.unit_number and other.force.name==a.force_name
-                        and other.surface.index==a.surface_index then
-                        local dx=other.position.x-cur.rail.position.x
-                        local dy=other.position.y-cur.rail.position.y
-                        local cost=cur.length+math.max(1,math.sqrt(dx*dx+dy*dy))
-                        if cost<=max_walk and
-                            (not best[other.unit_number] or
-                                cost<best[other.unit_number]-0.00001) then
-                            best[other.unit_number]=cost
-                            queue[#queue+1]={rail=other,length=cost,
-                                curved=cur.curved or other.name~=straight}
-                        end
-                    end
+            for _,other in ipairs(neighbours(cur.rail)) do
+                local cost=cur.length+other.length
+                if cost<=max_walk and
+                    (not best[other.id] or cost<best[other.id]-0.00001) then
+                    best[other.id]=cost
+                    queue[#queue+1]={rail=other.rail,length=cost,
+                        curved=cur.curved or other.curved}
                 end
             end
         end
@@ -197,9 +216,9 @@ local function connected_rail_path(a,b)
     return rail_path_info(a,b)~=nil
 end
 -- HSR continuity only; no geometric side/angle gate.
-function M.technical_path(a,b)
+function M.technical_path(a,b,context)
     if not (a and b and a.rail_adjacent and b.rail_adjacent) then return nil end
-    return rail_path_info(a,b,limits.WIRE_REACH*1.5+4)
+    return rail_path_info(a,b,limits.WIRE_REACH*1.5+4,context)
 end
 
 -- Deterministic complete cosmetic plan, no rail walk.

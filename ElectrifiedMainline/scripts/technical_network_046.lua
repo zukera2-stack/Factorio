@@ -23,7 +23,10 @@ local function d2(a,b) return (a.x-b.x)^2+(a.y-b.y)^2 end
 -- Spatial buckets and actual continuous HSR path; no visual edges.
 -- Vanilla-inspired 5-link cap. Not a claim to reproduce engine auto-connect.
 function M.plan(nodes,path_check)
-  path_check=path_check or power.technical_path
+  if not path_check then
+    local context={starts={},neighbours={}}
+    path_check=function(a,b) return power.technical_path(a,b,context) end
+  end
   local buckets,valid={},{}
   local function cell(n,x,y) return group(n).."/"..x.."/"..y end
   for id,n in pairs(nodes) do
@@ -99,7 +102,8 @@ local function audit(s)
   for id,h in pairs(s.helpers) do reverse[h]=id end
   local removed,failed=0,0
   for id,h in pairs(s.helpers) do
-    local c=conn(helper(h),false)
+    local anchor_entity=helper(h)
+    local c=conn(anchor_entity,false)
     if c then
       local reject={}
       for _,link in pairs(c.real_connections) do
@@ -108,10 +112,10 @@ local function audit(s)
         local other=owner and owner.valid and reverse[owner.unit_number]
         local permitted_port=owner and owner.valid and owner.name=="em-25kv-bridge-port-058"
           and s.bridge_ports[owner.unit_number]==h
-          and owner.force.name==helper(h).force.name
+          and owner.force.name==anchor_entity.force.name
           and link.origin==origin()
         local permitted_mast=owner and owner.valid and owner.unit_number==id and mast(owner.name)
-          and owner.surface.index==helper(h).surface.index and owner.force.name==helper(h).force.name
+          and owner.surface.index==anchor_entity.surface.index and owner.force.name==anchor_entity.force.name
           and link.origin==origin()
         if target and target.valid and not (permitted_mast or permitted_port or (other and s.edges[key(id,other)] and link.origin==origin())) then
           reject[#reject+1]={target=target,origin=link.origin or defines.wire_origin.player}

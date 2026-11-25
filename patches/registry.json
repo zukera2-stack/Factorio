@@ -68,8 +68,23 @@
       "owner_status": "candidate_local_native_11_pass_windows_pending_native_consist_visibility_unverified",
       "manual_deletions": [],
       "evidence": "/Factorio/Patches/EM086_MAINTENANCE_EVIDENCE.zip"
+    },
+    {
+      "id": "EM087",
+      "from": "0.1.86",
+      "to": "0.1.87",
+      "purpose": "Experimental per-phase train/rail lookup reuse and technical topology adjacency reuse",
+      "zip": "/Factorio/Patches/EM087_performance_EXPERIMENT_Direct_Patch_from_0.1.86.zip",
+      "manifest": "/Factorio/Patches/EM087_performance.manifest.json",
+      "zip_sha256": "f99ae5a3d431893c79eea7edf84396df722c986a2e1e91d7f34ebf60fed64439",
+      "source_branch": "experiment/em087-performance-r2",
+      "owner_status": "experimental_partial_performance_gate_not_met_not_for_primary_install_windows_pending",
+      "manual_deletions": [],
+      "evidence": "/Factorio/Patches/EM087_PERFORMANCE_EVIDENCE.zip"
     }
   ],
   "latest_local_candidate_version": "0.1.86",
-  "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers"
+  "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
+  "latest_experiment_version": "0.1.87",
+  "latest_experiment_branch": "experiment/em087-performance-r2"
 }
