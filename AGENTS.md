@@ -83,3 +83,6 @@ Build every distributable install ZIP exclusively via the repository's GitHub Ac
 
 ## Current baseline and branches
 Main 0.1.62 is the **owner-accepted source baseline**, including the EM071 cosmetic rail fork. The mod is not finished or released. Other active tested and research branches exist: see [current cross-branch handoff](docs/CURRENT_WORK.md), then live branch HEADs. Preserve original visual algorithm unless a reproducible defect is observed. New standalone main-line features usually branch from `main`; continuation of the existing 060 electric bridge must retain the exact vetted 060 base or it loses the implementation. **Never merge unapproved experiment to main or move `test/updater-approved` without explicit owner permission.** Do not invoke the retired Windows Updater or invent a replacement patcher. Future installation approaches require explicit owner authorization.
+
+## Owner-approved graphics patch delivery (2026-11-25)
+For graphical iterations follow [the graphics patch workflow](docs/development/GRAPHICS_PATCH_WORKFLOW.md): local render, scoped exact ZIP inputs, SHA256 validation, official CI full game ZIP only, independent game acceptance. Not an installer or revival of retired Updater. No main or release changes.

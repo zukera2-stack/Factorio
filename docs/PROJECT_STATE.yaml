@@ -3091,7 +3091,7 @@ em079_v3_visual_trial:
 
 
 em080_visual_trial:
-  status: static_render_pass_waiting_for_exact_binary_input
+  status: ci_packaged_waiting_for_native_visual_acceptance
   branch: "experiment/em080-locomotive-visual-fix"
   base_commit: "22bac7894fb9161df616bd8080072a0a09b39de2"
   version: "0.1.80"
@@ -3102,4 +3102,17 @@ em080_visual_trial:
   gameplay_lua_changed: false
   spark_script_changed: false
   native_game_acceptance: not_run
-  official_install_zip: blocked_missing_patch
+  official_install_zip: ci_packaged
+  packaged_commit: "2c36d9cab744b5a7bec9582fcbc5d48c87e6060b"
+  ci_run: 45595966590
+  ci_artifact: 15013750947
+  inner_zip_sha256: "e3c9a55a64769cd944b9d92832049dbb3e463816af4d727d73b79cc85fd6917d"
+
+
+graphics_patch_workflow:
+  owner_approved: true
+  decision_date: "2026-11-25"
+  standard: docs/development/GRAPHICS_PATCH_WORKFLOW.md
+  render: local
+  delivery: official_ci_full_zip
+  auto_release: false
