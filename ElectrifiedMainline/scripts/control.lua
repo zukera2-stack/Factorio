@@ -21,6 +21,7 @@ local mast059 = require("scripts.mast_network_059")
 local pantograph049 = require("scripts.pantograph_visual_049")
 local paidTraction065 = require("scripts.traction_paid_065")
 local helper067 = require("scripts.helper_lifecycle_067")
+local wagon_status084 = require("scripts.motor_wagon_status_084")
 -- Legacy wire managers are retained for cleanup only. 046 technical and visual graphs are independent.
 local function empty_native_graph() return {nodes={},edges={}} end
 
@@ -666,6 +667,9 @@ script.on_event(defines.events.on_player_selected_area, on_player_selected_area)
 script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconstruction)
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_tick, on_tick)
+-- EM084: override only the opened motor-wagon GUI status, never native alerts.
+script.on_event(defines.events.on_gui_opened, wagon_status084.on_gui_opened)
+script.on_nth_tick(60, function(_) wagon_status084.refresh_opened_players() end)
 
 -- Read-only diagnostic for the unpowered 0.1.9 visual catenary graph.
 commands.add_command("em-35kv-status", "Show visual graph; see /em-25kv-mode status for power.", function(event)
