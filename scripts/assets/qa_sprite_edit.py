@@ -33,9 +33,12 @@ def check(
     frame_width: int | None = None,
     frame_height: int | None = None,
     frames: int | None = None,
+    allow_empty_layer: bool = False,
 ) -> dict:
     if mode not in {"repaint", "component", "study"}:
         raise AssetCheckError("mode must be repaint, component, or study")
+    if allow_empty_layer and mode != "component":
+        raise AssetCheckError("empty layer can only be explicitly declared for a component")
     if not source.is_file() or not candidate.is_file():
         raise AssetCheckError("source and candidate must be real files")
     if source.suffix.lower() != ".png" or candidate.suffix.lower() != ".png":
@@ -51,7 +54,7 @@ def check(
         dst = dst_raw.convert("RGBA")
         if src.size != dst.size and mode != "component":
             raise AssetCheckError("canvas size changed; same view/geometry required")
-        if mode != "study" and not alpha_bbox(dst):
+        if mode != "study" and not alpha_bbox(dst) and not allow_empty_layer:
             raise AssetCheckError("candidate has zero visible sprite pixels")
         if frame_width is not None or frame_height is not None or frames is not None:
             if not (frame_width and frame_height and frames):
@@ -74,7 +77,7 @@ def check(
                 for x in range(0, dst.width, frame_width):
                     sub = dst.crop((x, y, x + frame_width, y + frame_height))
                     frame_boxes.append(sub.getchannel("A").getbbox())
-            if mode != "study" and any(b is None for b in frame_boxes):
+            if mode != "study" and not allow_empty_layer and any(b is None for b in frame_boxes):
                 raise AssetCheckError("one or more declared runtime frames are fully transparent")
         delta = ImageChops.difference(src.convert("RGB"), dst.convert("RGB")) if src.size == dst.size else None
         # RGBA ImageChops.getbbox() checks all four bands, so unchanged alpha
@@ -95,6 +98,7 @@ def check(
             "changed_bbox": delta.getbbox() if delta is not None else None,
             "frame_grid": {"width": frame_width, "height": frame_height, "count": frames},
             "frame_alpha_bounds": frame_boxes,
+            "allow_empty_layer": allow_empty_layer,
             "qa_pass": True,
             "windows_game_acceptance": "NOT_TESTED",
             "note": "This checks PNG structure, not pivots, permissions, Factorio API, visuals, or runtime behaviour.",
@@ -109,10 +113,11 @@ def main() -> int:
     p.add_argument("--frame-width", type=int)
     p.add_argument("--frame-height", type=int)
     p.add_argument("--frames", type=int)
+    p.add_argument("--allow-empty-layer", action="store_true", help="Only for intentionally blank component layers such as folded-pantograph-down")
     p.add_argument("--report", type=Path)
     a = p.parse_args()
     try:
-        result = check(a.source, a.candidate, a.mode, a.frame_width, a.frame_height, a.frames)
+        result = check(a.source, a.candidate, a.mode, a.frame_width, a.frame_height, a.frames, a.allow_empty_layer)
     except (AssetCheckError, OSError) as e:
         p.exit(2, f"ASSET QA FAIL: {e}\n")
     text = json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n"

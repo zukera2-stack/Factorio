@@ -3288,7 +3288,7 @@ asset_workshop_skill_em086:
   workflow_doc: docs/development/ASSET_WORKSHOP.md
   sprite_qa: scripts/assets/qa_sprite_edit.py
   sprite_qa_tests: tests/test_asset_workshop.py
-  local_unit_tests: PASS_12_of_12
+  local_unit_tests: PASS_14_of_14
   ci_workflow: .github/workflows/asset-workshop-checks.yml
   study_source: /Factorio/References/Motor-Wagon-Vanilla-Sprite-Studies/cargo_actual_screenshot_before_after_2d_preview.zip
   study_is_runtime_art: false

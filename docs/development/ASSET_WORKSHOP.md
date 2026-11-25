@@ -13,7 +13,7 @@
 3. Проверь лицензионную возможность распространять основанный на Base PNG файл. Для несогласованных источников используй Base ref или оригинально нарисованный комплект. Не загружай чужую графику в игровой ZIP без оснований.
 4. Сделай один честный эскиз **до/после одного и того же ракурса**, без декоративного постера. Для `repaint` альфа исходника и целевого PNG должна совпасть пиксельно; для компонента нужны отдельно измеренные pivot/размер/тень.
 5. Технический sprite-candidate: atlas sizes, named layers, mask/shadow, `direction_count`, `line_length`, `lines_per_file`, `shift/scale`, native entity bounding/joint geometry, transparent pixels, 256/8/прочие направления — берутся из реального прототипа. Не превращай один screenshot в 256 фальшивых ориентаций.
-6. Запусти `scripts/assets/qa_sprite_edit.py` и сохрани JSON QA вне `ElectrifiedMainline/`. Для полного мода запускай **нужные** Lua+native Factorio тесты; Headless не проверяет художественное качество.
+6. Запусти `scripts/assets/qa_sprite_edit.py` и сохрани JSON QA вне `ElectrifiedMainline/`. Полностью пустые намеренно отключённые слои (например folded-pantograph-down) допускаются **только** в режиме `component` с явным `--allow-empty-layer`, а не как ошибка потерянных пикселей. Для полного мода запускай **нужные** Lua+native Factorio тесты; Headless не проверяет художественное качество.
 7. Выдай явно подписанный preview. После тестов сформируй **Direct Patch** только из изменённых файлов и `info.json`, отдельный manifest, QA и versioned `from→to` по [стандарту](DIRECT_PATCH_WORKFLOW.md); визуальная приёмка в Windows остаётся за владельцем.
 
 ## Файлы

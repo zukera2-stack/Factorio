@@ -41,7 +41,7 @@ description: Create, repaint, edit, render, verify, and deliver Factorio Electri
 
 Используй 
 `python scripts/assets/qa_sprite_edit.py --source PATH --candidate PATH --mode repaint --frame-width W --frame-height H --frames N --report REPORT.json`
-для **pixel-exact** перекраски; `--mode component` только для отдельно нарисованной детали, `--mode study` для скриншота/концепта (результат не игрового уровня). Тесты: `python -m unittest discover -s tests -p 'test_asset_workshop.py' -v`. Проверка PNG по одному кадру **не проверяет** повороты, сцепку, тени в Factorio и примыкание к рельсу; проверить все нужные направления, размеры, маски, тени, колёса, двери/анимацию и ghost в 2.1.
+для **pixel-exact** перекраски; `--mode component` только для отдельно нарисованной детали (для намеренно пустого вспомогательного слоя, например `pantograph-down`, явный `--allow-empty-layer`), `--mode study` для скриншота/концепта (результат не игрового уровня). Тесты: `python -m unittest discover -s tests -p 'test_asset_workshop.py' -v`. Проверка PNG по одному кадру **не проверяет** повороты, сцепку, тени в Factorio и примыкание к рельсу; проверить все нужные направления, размеры, маски, тени, колёса, двери/анимацию и ghost в 2.1.
 
 У каждой поставки есть `source_provenance` и `qa.json`: ref + SHA, target + SHA, режим, ограничения, исходная и целевая версия, механика изменялась/нет, результат тестов, что не проверено. Плоский концепт, ZIP с исходниками и игровой ZIP — разные артефакты. Не заявляй «в игре проверено» по картинке, рендеру или Linux Headless.
 

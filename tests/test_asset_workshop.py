@@ -95,6 +95,18 @@ class AssetWorkshopTests(unittest.TestCase):
         self.assertEqual(r["candidate_size"], [8, 8])
         self.assertFalse(r["alpha_identical"])
 
+    def test_intentionally_empty_component_layer_needs_explicit_flag(self):
+        Image.new("RGBA", (16, 8)).save(self.b)
+        with self.assertRaisesRegex(qa.AssetCheckError, "zero visible"):
+            qa.check(self.a, self.b, "component", 8, 8, 2)
+        r = qa.check(self.a, self.b, "component", 8, 8, 2, allow_empty_layer=True)
+        self.assertEqual(r["frame_alpha_bounds"], [None, None])
+        self.assertTrue(r["allow_empty_layer"])
+
+    def test_empty_layer_flag_rejected_for_repaint(self):
+        with self.assertRaisesRegex(qa.AssetCheckError, "only be explicitly"):
+            qa.check(self.a, self.b, "repaint", 8, 8, 2, allow_empty_layer=True)
+
     def test_unsupported_mode_rejected(self):
         with self.assertRaisesRegex(qa.AssetCheckError, "mode must"):
             qa.check(self.a, self.b, "magic", 8, 8, 2)
