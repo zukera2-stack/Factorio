@@ -3130,14 +3130,29 @@ em081_wheels_trial:
 
 
 em082_wheel_visibility:
-  status: native_isolated_prototype_pass_visual_acceptance_pending
+  status: owner_direct_patch_confirmed_wheels_visible
   base_commit: "c020f2323fb5cdf9170d2541a929d0aefacecabb"
   version: "0.1.82"
   local_engine: "2.1.24 headless"
   isolated_native_scenario: PASS
   full_mod_native: NOT_RUN
-  native_visual_acceptance: NOT_RUN
+  native_visual_acceptance: owner_wheel_visibility_confirmed_video_sampled
   wheel_shift: [0, 0.25]
   wheel_dice_removed: true
   png_changed: false
   gameplay_changed: false
+
+
+direct_patch_workflow:
+  owner_approved: true
+  decision_date: "2026-11-25"
+  standard: docs/development/DIRECT_PATCH_WORKFLOW.md
+  local_delivery: direct_scoped_zip
+  current_base_version: "0.1.82"
+  current_base_commit: "a71f98e7352c36e63b1a220e55c45496c1d01e31"
+  mandatory_ci_per_iteration: false
+  official_full_zip: optional_checkpoint
+  updater: retired
+  main_merge_authorized: false
+  full_release_authorized: false
+  first_manual_patch: owner_confirmed

@@ -1,3 +1,5 @@
+> **Superseded for local development by [Direct Patch](DIRECT_PATCH_WORKFLOW.md), owner decision 2026-11-25.** Local render/hash/QA rules still apply. Mandatory per-iteration GitHub upload/full CI packaging is retired; historical CI recipe may be used for optional official checkpoints.
+
 # Графические патчи — стандарт разработки (2026-11-25)
 
 Владелец одобрил идею отдельных патчей. Это правило процесса, не автоматическая приёмка EM080, не разрешение на релиз или изменение main.
