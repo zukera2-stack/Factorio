@@ -18,6 +18,6 @@ Owner explicitly requested persistent working copy and folder structure after ad
 4. Record path, version, source commit, archive and per-file hashes, acceptance status and unresolved tasks in docs. No main/release authorization. Current pending: custom wrecks and old collector appearance; spark visual confirmation pending. No new game changes in this documentation update.
 
 ## Owner-supplied original vanilla remnants resources (2026-11-25)
-- GPT Library: `/Factorio/References/Vanilla-Remnants/remnants.7z` (original owner upload, 897,000 bytes approximately; SHA256 `682efeb6c5f9b8a6213685e4232669c1b503c4ff65baad8682901b3f044d37c0`). The upload was verified as a 7-Zip archive by file signature and successfully stored in the Library.
+- GPT Library: `/Factorio/References/Vanilla-Remnants/remnants.7z` (original owner upload, 896,279 bytes; SHA256 `682efeb6c5f9b8a6213685e4232669c1b503c4ff65baad8682901b3f044d37c0`). The upload was verified as a 7-Zip archive by file signature and successfully stored in the Library.
 - **Contents not yet enumerated:** 7z extraction tools are unavailable in this container. A new agent should materialize the exact Library file, list and inspect archive entries safely before comparing vanilla wreck sprites to EM083. Do not claim any specific image is inside until confirmed.
 - Treat these files as original reference assets for visual comparison, not as distributable mod sprites; do not overwrite the original archive. Changes to vanilla assets or game files are not authorized.
