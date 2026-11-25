@@ -915,7 +915,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.80" # experimental 200-wagon block traction; native QA; NOT RELEASE
+  mod_version: "0.1.81" # experimental 200-wagon block traction; native QA; NOT RELEASE
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -3116,3 +3116,14 @@ graphics_patch_workflow:
   render: local
   delivery: official_ci_full_zip
   auto_release: false
+
+
+em081_wheels_trial:
+  status: local_render_pass_waiting_for_patch_upload
+  base_commit: "51312a6e37136d5dd3c559e9f51e9015e92905d4"
+  version: "0.1.81"
+  patch_sha256: "f3fb61cb21915e6d9e8ef8bf01aa8218b92de169f36927180bbbb5322d55d818"
+  patch_pngs: 17
+  native_visual_acceptance: not_run
+  gameplay_changed: false
+  pantograph_changed: false

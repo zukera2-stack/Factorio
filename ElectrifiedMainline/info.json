@@ -1,11 +1,11 @@
 {
   "name": "ElectrifiedMainline",
-  "version": "0.1.80",
+  "version": "0.1.81",
   "title": "Electrified Mainline",
   "author": "Bionic Assistant",
   "contact": "",
   "homepage": "",
-  "description": "Experimental Electrified Mainline for Factorio 2.1: true 25 kV line, 20 MW per identical parallel substation, source-paid native electric locomotive and +500 kW per motor cargo/fluid wagon. EM077 block traction: one actual hidden native helper per 200 motor wagons per real locomotive heading, plus one remainder helper. Keeps the EM076 no-traction-power warning and hidden-helper icon suppression. Research build; not a stable release. Regeneration, owner Windows GUI acceptance, save migration and multiplayer remain under testing. EM078 experimental UI: suppress native no-path alert icons and Alt-mode fuel indicators only on 256 hidden technical locomotives; real EM route alerts remain. EM079: V3 visual-only locomotive trial; no gameplay changes. EM080: native V3 bogies and folded collector in placement preview; cosmetic only.",
+  "description": "Experimental Electrified Mainline for Factorio 2.1: true 25 kV line, 20 MW per identical parallel substation, source-paid native electric locomotive and +500 kW per motor cargo/fluid wagon. EM077 block traction: one actual hidden native helper per 200 motor wagons per real locomotive heading, plus one remainder helper. Keeps the EM076 no-traction-power warning and hidden-helper icon suppression. Research build; not a stable release. Regeneration, owner Windows GUI acceptance, save migration and multiplayer remain under testing. EM078 experimental UI: suppress native no-path alert icons and Alt-mode fuel indicators only on 256 hidden technical locomotives; real EM route alerts remain. EM079: V3 visual-only locomotive trial; no gameplay changes. EM080: native V3 bogies and folded collector in placement preview; cosmetic only. EM081: local V3 wheel rerender, joint-centered atlas; no gameplay changes.",
   "factorio_version": "2.1",
   "dependencies": [
     "base >= 2.1.0"
