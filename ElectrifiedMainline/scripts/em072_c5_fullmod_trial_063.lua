@@ -150,7 +150,8 @@ commands.add_command("em-test-train","Log true full-mod selected locomotive/wago
   say(p,"manual_inspect|"..x)
 end)
 
-script.on_event(defines.events.on_gui_opened,function(e)
+local M={}
+function M.on_gui_opened(e)
   local p=e.player_index and game.get_player(e.player_index)
   if not p then return end
   local entity=e.entity
@@ -159,4 +160,5 @@ script.on_event(defines.events.on_gui_opened,function(e)
     log(prefix.."gui_open|tick="..game.tick.."|gui_type="..
       tostring(e.gui_type).."|"..report("gui_open",entity,p))
   end
-end)
+end
+return M

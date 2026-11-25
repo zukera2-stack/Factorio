@@ -643,7 +643,6 @@ script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconst
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_tick, on_tick)
 -- EM084: override only the opened motor-wagon GUI status, never native alerts.
-script.on_event(defines.events.on_gui_opened, wagon_status084.on_gui_opened)
 script.on_nth_tick(60, function(_) wagon_status084.refresh_opened_players() end)
 
 -- Read-only diagnostic for the unpowered 0.1.9 visual catenary graph.
@@ -740,7 +739,19 @@ commands.add_command("em-25kv-priority", "Select an electric interface, accumula
 end)
 
 -- 0.1.63 TEST BRANCH ONLY: opt-in single scene with genuine main mod objects.
-require("scripts.em072_c5_fullmod_trial_063")
+local trial063 = require("scripts.em072_c5_fullmod_trial_063")
+-- Factorio registers one handler per event per mod. Keep EM084 and the
+-- legacy read-only trace in a single dispatcher, never open helper GUIs.
+script.on_event(defines.events.on_gui_opened,function(event)
+    local e=event.entity
+    if e and e.valid and e.name:match('^em%-c5%-technical%-booster%-%d+$') then
+        local player=game.get_player(event.player_index)
+        if player and player.valid then player.opened=nil end
+        return
+    end
+    wagon_status084.on_gui_opened(event)
+    trial063.on_gui_opened(event)
+end)
 -- EM072 experimental read-only QA API. Exposes only numeric IDs and Joules;
 -- no helper spawning, no arbitrary credit, no gameplay execution hook.
 remote.add_interface('em072_native_qa_071',{
@@ -756,6 +767,9 @@ remote.add_interface('em072_native_qa_071',{
             paid_J=p.debited_J or 0,motor_paid_J=p.motor_paid_J or 0,
             motor_grants=p.motor_grants or 0,
             native_sink_paid_J=n.metered_native_J or 0,
+            native_sink_discarded_J=n.discarded_J or 0,
+            native_sink_retired=n.retired or 0,
+            native_sink_unobserved_removed=n.unobserved_removed or 0,
         }
     end
 })

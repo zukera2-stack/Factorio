@@ -281,7 +281,7 @@ local function mount(train,n,chosen_owner,watts)
     return false
   end
   s.owners[h.unit_number]=chosen_owner.unit_number
-  h.minable_flag=false;h.destructible=false
+  h.minable_flag=false;h.destructible=false;h.operable=false
   if not (h.burner and fuel(h)==0) then
     retire(h,'initial-nonzero-j')
     error('[EM072 MOUNT FAIL] unpaid hidden burner starts with J')
@@ -327,6 +327,8 @@ local function scan_real_trains()
       -- Adopt saved hidden locomotives, including remote blocks within a long
       -- train. The engine heading, not Euclidean proximity, chooses owner.
       for _,h in ipairs(helpers) do
+        -- Apply to retained helpers from older saves as well as new helpers.
+        h.minable_flag=false;h.destructible=false;h.operable=false
         if not s.owners[h.unit_number] then
           local chosen=group_owner(t,h)
           if chosen then s.owners[h.unit_number]=chosen.unit_number end

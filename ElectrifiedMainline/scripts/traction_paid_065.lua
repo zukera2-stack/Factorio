@@ -85,6 +85,36 @@ local function native_state()
   n.sinks_meta=n.sinks_meta or {}
   return n
 end
+-- EM086: retire buffers only when the original output AND the physical
+-- feeder are irrecoverably absent. A temporary split or replacement on the
+-- same surviving feeder must retain paid energy for the EM069 rejoin path.
+-- Never transfer a retired buffer to a different network. Measure the loss
+-- before destruction; stale invalid references have unknown loss, not zero.
+local function retire_orphan_sinks(n,tick)
+  local ids={}
+  for id in pairs(n.sinks) do ids[#ids+1]=id end
+  table.sort(ids)
+  for _,id in ipairs(ids) do
+    local sink=n.sinks[id]
+    local meta=n.sinks_meta[id]
+    if not (sink and sink.valid) then
+      n.sinks[id]=nil;n.sinks_meta[id]=nil
+      n.unobserved_removed=(n.unobserved_removed or 0)+1
+      log(string.format('[EM086 SINK UNOBSERVED LOSS] tick=%d output=%d',tick,id))
+    elseif not entity(id) and meta and meta.feeder and not entity(meta.feeder) then
+      local j=math.max(0,sink.energy)
+      local unit=sink.unit_number
+      sink.input_flow_limit=0;sink.output_flow_limit=0
+      if sink.destroy() then
+        n.discarded_J=(n.discarded_J or 0)+j
+        n.retired=(n.retired or 0)+1
+        n.sinks[id]=nil;n.sinks_meta[id]=nil
+        log(string.format('[EM086 SINK RETIRED] tick=%d output=%d feeder=%d sink=%d loss_J=%.3f cumulative_loss_J=%.3f',
+          tick,id,meta.feeder,unit,j,n.discarded_J))
+      end
+    end
+  end
+end
 local function sink_for_output(source)
   local id=source.output.unit_number
   local state=native_state()
@@ -420,6 +450,7 @@ function M.on_tick(tick,art,pantograph)
   local owners=all_real_locomotives()
   fair_charge(owners,art,pantograph,stats)
   if tick%60==0 then
+    retire_orphan_sinks(n,tick)
     local nSinks,total,nativeDemand=0,0,0
     for _,sink in pairs(n.sinks) do
       if sink.valid then

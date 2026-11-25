@@ -72,7 +72,10 @@ for motor_count=1,256 do
   -- EM078: force alerts at hidden locomotive origin to zero display scale
   p.alert_icon_scale=0
   p.icons_positioning={} -- No engine fuel inventory icon in Alt mode for helpers
+  p.hidden=true
   p.hidden_in_factoriopedia=true
+  p.allow_copy_paste=false
+  p.icons=nil;p.icon=empty;p.icon_size=1
   p.pictures={rotated={filename=empty,width=1,height=1,direction_count=1}}
   p.wheels={rotated={filename=empty,width=1,height=1,direction_count=1}}
   p.front_light=nil
@@ -86,7 +89,9 @@ for motor_count=1,256 do
   p.placeable_by=nil
   p.next_upgrade=nil
   p.flags={"placeable-off-grid","not-blueprintable",
-    "not-deconstructable","not-on-map"}
+    "not-deconstructable","not-on-map","hide-alt-info","not-upgradable",
+    "no-automated-item-insertion","no-automated-item-removal","not-in-kill-statistics",
+    "not-repairable"}
   data:extend({p})
 end
 log("[EM072 0.1.71] 256 exact-power finite-J technical booster prototypes; shared native energy allocation only")
