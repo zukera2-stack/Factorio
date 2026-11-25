@@ -350,6 +350,10 @@ jobs:
         if: (needs.detect.outputs.version == '0.1.81' || needs.detect.outputs.version == '0.1.82')
         run: python scripts/verify_em081_wheels_patch.py
 
+      - name: Restore exact EM080 body and EM081 wheels for EM085
+        if: needs.detect.outputs.version == '0.1.85'
+        run: python scripts/verify_em081_wheels_patch.py
+
       - name: Rebuild EM083 exact raised collector and verify all EM085 graphics
         if: needs.detect.outputs.version == '0.1.85'
         run: |
