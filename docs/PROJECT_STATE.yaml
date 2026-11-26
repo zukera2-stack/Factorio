@@ -1,3 +1,52 @@
+em087p_sync_profile_20261126:
+  date: "2026-11-26"
+  branch: "test/em087p-sync-profile"
+  base_commit: "f000495098980ae15c6338fbbe2e5db948f94c49"
+  runtime_version: "0.1.98"
+  status: partial_targeted_native_pass_performance_inconclusive
+  profile_train_count: 100
+  diagnostic_windows_pass: [true, true]
+  diagnostic_end_tick: 601
+  diagnostic_fixture_lines_equal: 12
+  diagnostic_energy_total_J: 12500000000
+  diagnostic_paid_t600_J: 1488444257.816
+  t600_sync_ms: [1831.987425, 1946.686185]
+  t600_path_selection_ms: [532.214759, 455.575160]
+  t600_candidates_partition_base_ms: 295.142852
+  t600_wire_audit_ms: [127.878066, 783.674615]
+  corridor_scan_median_ms: [8.3031165, 8.2386895]
+  corridor_scan_max_ms: [36.164203, 13.222591]
+  candidate_code_only_sha256: b636c265f4794022f1a39ddc8975a2540e2c4f0f0a4245c05004ecd1a52d60e4
+  targeted_native_cases_pass: 5
+  path_oracle_comparisons: 8935
+  path_oracle_native_hits: 3603
+  charged_short_cases_pass: 4
+  mixed_native_cases_pass: 11
+  mixed_fixture_lines_equal: 124
+  functional_workers: 3
+  focused_wall_seconds: 6.851
+  mixed_wall_seconds: 21.664
+  mixed_cgroup_peak_bytes: 2323107840
+  oom_events: 0
+  stationary100_benchmark_ticks: 480
+  benchmark_runs_per_variant: 1
+  benchmark_mean_ms: [36.863, 34.898]
+  benchmark_max_ms: [433.656, 395.596]
+  benchmark_checksum: 2975750948
+  benchmark_compared_lines_equal: 526
+  full_long100_arrival: not_run
+  full_prior_regression: not_run
+  performance_gate: not_met
+  candidate_promoted: false
+  runtime_changed: false
+  evidence: "/Factorio/Local-QA/EM087P_SYNC_PROFILE_EVIDENCE.zip"
+  evidence_sha256: b909a816262bad6f5a2b4fc3f35ee6a6903cf92648048feaffc064f5d1995117
+  report: docs/development/EM087P_SYNC_PROFILE_QA.md
+  next: em087q_same_save_long100_periodic_audit
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em087o_continuous_profile_20261126:
   date: "2026-11-26"
   branch: "test/em087o-continuous-profile"
