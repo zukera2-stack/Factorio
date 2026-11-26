@@ -3,8 +3,9 @@ local M={}
 local function positive(v) return math.max(0,v or 0) end
 local function parent_key(e)
  local sub=e.electric_network
- if not(sub and sub.valid and sub.parent_network and sub.parent_network.valid) then return nil end
+ if not (sub and sub.valid) then return nil end
  local parent=sub.parent_network
+ if not (parent and parent.valid) then return nil end
  local id=sub.id
  for _,n in pairs(parent.sub_networks) do if n.valid and n.id<id then id=n.id end end
  return id,parent
@@ -81,7 +82,9 @@ function M.plan(input,edges,limit)
    cache_hits=cache_hits+1
    local result={}
    for id,v in pairs(cached_plan.flows) do result[id]=v end
-   return result
+   local charge={}
+   for id,v in pairs(cached_plan.charge or {}) do charge[id]=v end
+   return result,charge
  end
  cache_misses=cache_misses+1
  local n,ids,adj,flows,directed={},{},{},{},{}
@@ -161,11 +164,12 @@ function M.plan(input,edges,limit)
      while a[supply]>1 do
        local seen,prev=shortest_tree(src)
        local destinations={}
-       for _,dst in ipairs(ids) do
-         if dst~=src and n[dst][demand]>1 and seen[dst] then
+       for dst in pairs(seen) do
+         if dst~=src and n[dst][demand]>1 then
            destinations[#destinations+1]=dst
          end
        end
+       table.sort(destinations)
        if #destinations==0 then break end
        local budget=a[supply]/#destinations
        local transferred=0
@@ -219,6 +223,11 @@ function M.plan(input,edges,limit)
    v.gen=v.gen-localcharge;v.charge=v.charge-localcharge
  end
  route("gen","charge")
+ local charge_received={}
+ for id,v in pairs(input) do
+   local j=positive(v.charge)-n[id].charge
+   if j>1 then charge_received[id]=j end
+ end
  -- Persist only scalar snapshots of this exact call, never entity/network data.
  local snapshot,count=snapshot_inputs(input)
  local edge_snapshot={}
@@ -226,7 +235,8 @@ function M.plan(input,edges,limit)
  local result_snapshot={}
  for id,amount in pairs(flows) do result_snapshot[id]=amount end
  cached_plan={inputs=snapshot,input_count=count,edges=edge_snapshot,
-              edge_count=#edges,limit=limit,flows=result_snapshot}
- return flows
+              edge_count=#edges,limit=limit,flows=result_snapshot,charge=charge_received}
+ local result_charge={};for id,j in pairs(charge_received) do result_charge[id]=j end
+ return flows,result_charge
 end
 return M

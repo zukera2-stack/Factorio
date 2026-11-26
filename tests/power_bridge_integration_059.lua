@@ -17,7 +17,7 @@ local force={name="player",set_surface_hidden=function()end}
 local surface={index=1,name="nauvis",valid=true}
 local lab
 local function entity(name,s,pos,id,netid)
- local e={name=name,valid=true,surface=s,force=force,position=pos,unit_number=id,electric_network_id=netid,energy=0,electric_buffer_size=333334}
+ local e={name=name,valid=true,surface=s,force=force,position=pos,unit_number=id,electric_network_id=netid,energy=0,electric_buffer_size=math.ceil(M.LIMIT)}
  e.electric_network=net(netid)
  local c={valid=true,owner=e,real_connections={}}
  local function remove(a,b,origin)for i=#a.real_connections,1,-1 do if a.real_connections[i].target==b and a.real_connections[i].origin==origin then table.remove(a.real_connections,i) end end end

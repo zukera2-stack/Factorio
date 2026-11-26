@@ -23,3 +23,15 @@ require("prototypes.hsr_concrete_053")
 
 -- 058 isolated native power bridge.
 require("prototypes.power_bridge_058")
+
+-- 0.1.63 TEST BRANCH ONLY: two real native wagon types and finite-J hidden GUI adapter.
+require("prototypes.em072_c5_fullmod_trial_063")
+
+-- EM065 research: finite paid native locomotive burner, NO free void power.
+require("prototypes.traction_paid_065")
+
+-- EM068: actual native 25 kV electric consumer; no Lua-only simulated load.
+require("prototypes.traction_native_consumer_068")
+
+-- EM074 prototype-only indicators; no runtime energy manipulation.
+require("prototypes.traction_status_074")

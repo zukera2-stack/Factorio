@@ -18,3 +18,7 @@ Mandatory for non-trivial code, new prototype, electric-distribution logic, comp
 9. Commit research evidence in `docs/research/` and update branch handoff and machine state together as required by AGENTS.
 
 Relevant current research is linked in `docs/CURRENT_WORK.md`. No unsupported hidden Factorio APIs or unverified magic flags.
+
+## Parallel native functional QA (EM087N)
+
+Before running a regression batch, read [parallel QA standard](../../../docs/development/PARALLEL_QA_STANDARD.md) and [runner](../../../tests/em087m-mixed-outposts/PARALLEL_QA.md). Measure actual RAM/CPU and calibrate workers; on the tested 4 GiB/4 CPU environment prefer up to 3 small workers, 2 medium, 1 large with 768 MiB reserve and separate writable paths. Never run independent QA alongside UPS/profiling benchmarks. Reuse exact engine/mod, record per-case results and resource peaks. The sampled memory guard is not an absolute OOM guarantee. EM087N 11/11 serial and parallel, 2.18x batch throughput; no runtime acceleration implied.

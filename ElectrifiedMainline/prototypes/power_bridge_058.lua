@@ -14,7 +14,7 @@ local function interface(name,priority,input,output)
    flags={"placeable-off-grid","not-on-map","not-blueprintable","not-deconstructable","hide-alt-info","get-by-unit-number"},
    collision_box={{0,0},{0,0}},selection_box={{0,0},{0,0}},collision_mask={layers={}},
    selectable_in_game=false,
-   energy_source={type="electric",buffer_capacity="333334J",usage_priority=priority,
+   energy_source={type="electric",buffer_capacity="2MJ",usage_priority=priority,
       input_flow_limit=input,output_flow_limit=output,drain="0W",
       render_no_power_icon=false,render_no_network_icon=false},
    energy_production="0W",energy_usage="0W",gui_mode="none"

@@ -1,0 +1,33 @@
+# EM090 — Native braking identification and energy calibration
+
+**Status: PARTIAL / observation PASS, strict brake-work gate BLOCKED.** Exact production base 0.1.101, parent `6bea9d6c7549cf269efd5c2df18707e34752ff44`; Factorio 2.1.24 build87808 linux64 headless. No gameplay changes, no recovered joules. Full archive SHA256 `6e2b48acea118b4542ff0be0b8101c1b844bb74e1359897af1b2653818fd8376` checked. Research worksheet written before fixture; Base locomotives cloned from exact installed Base trains.lua, only experimental power, max speed, braking and finite fuel changes. Wiki/API consulted; API latest version differs from engine, exact observed fields used. Third-party source not inspected, not relied on.
+
+## Native results
+
+Eight Base-only observation cases completed (six initial cases and two added controls), plus two fullmod 0.1.101 cases with enabled onboard storage and trace-only QA instrumentation. Initial batch 3 workers, 7.594s, sampled peak 2194120704 B; second batch 2 cases admitted up to 3 workers, 4.098s, peak 1744277504 B; exact fullmod 2 workers, 5.465s, peak 1796571136 B. 4 GiB/4 CPU cgroup, 768 MiB reserve, no OOM or guard activation. Measurements are QA throughput, not UPS. Base-only initial six used original fixture before adding two extra control branches (no changes to previous scenario behavior). The delivered runner supports FACTORIO_BIN; original executed path runner preserved.
+
+| Case | Native observation | Result |
+|---|---|---|
+| station600 | arrival t560, max speed 1.032469769, 108 braking deceleration intervals + 1 other | PASS |
+| station2000 | arrival t354, max speed 1.932652344, 196 braking + 1 other | PASS |
+| station4000 | arrival t314, max speed 2, 204 braking + 1 other | PASS |
+| heavy2000 | 3000 weight, arrival t412, 215 braking + 1 other | PASS |
+| bonus2000 | +100% braking force bonus, arrival t306, 107 braking + 1 other | PASS |
+| coast2000 | fuel cutoff t120, accounted 15997777.777778 J removed; 779 decreases, zero braking flags, no arrival | PASS |
+| manual2000 | switch to manual mode t120, engine stops, 157 braking + 1 other | PASS |
+| collision2000 | tank inserted t180 while braking, actual damage, t184 v=0 with braking flag still set | PASS (negative control) |
+| onboard-move | exact EM089 with storage, 696 tiles arrived, cargo/fluid preserved, 201 flagged decreases + 41 other | PASS |
+| onboard-outage | exact EM089, generator disabled/restored, arrival, 220 flagged decreases + 1 other | PASS |
+
+## Findings and blockers
+
+1. `LuaTrain.riding_state.acceleration` exists and distinguishes the tested native automatic braking from fuel-starved coast. `state` also reports arrive_station. At t156 in station2000 the flag is already braking while speed still rises, hence sampling order matters. Last deceleration may be reported as wait_station/nothing. Do not treat flag as exact prior-interval brake work.
+2. Collision counterexample: at t183 v=1.653841154766 tiles/tick, state arrive_station, braking flag. Tank damage 121.4815826416 at tick183; next sample t184 v=0, state on_the_path, still braking flag, locomotive health unchanged. Naive delta-energy would award 9846686.034707 J. Collision cannot be detected from train health alone; reject suspect intervals, transitions and excessive deceleration, and consider damage event ordering. Simple wiki brake-force/weight relation not exact for all samples; error includes station terminal adjustment, not an engine-certified force measurement.
+3. SI conversion falsified as direct energy accounting: at station2000 peak tick156, 2000 weight, 1.932652343668 tiles/tick, assume 1 tile=1m and 60 ticks/s and weight kg, then 13.446522 MJ kinetic vs 5.202222 MJ fuel consumed (2.585x). At station600 peak 3.837578 vs 4.500667 MJ; power change invalidates universal SI interpretation. At station4000 peak 14.4 vs 4.656835 MJ. Fullmod onboard-move peak t921, weight 4001 including technical helper, speed 2, grid credit 2016666.666667 J, store-to-burner 9916666.666667 J, current native burner total 1908994.467319 J; fixture initial empty, no observed helper removal before peak, measured engine debit estimate 10024338.866015 J. Naive kinetic 28807200 J, ratio 2.873726. Fullmod outage peak t922, debit estimate 10058392.056248 J, same naive kinetic. At 65% naive conversion exceeds all consumed fuel. Weight is a game parameter including technical helper; treating as SI kg is an explicitly falsified hypothesis, not a physical mass measurement.
+4. No direct native joule-valued regenerative brake work API identified or validated. A robust universally equivalent brake-work estimator has NOT been established. Strict EM090 gate therefore BLOCKED, no EM091 credit enabled. Signals, actual player driving, collision variants, modded/diesel consists, topology changes during motion, independent reload during braking, Windows/MP remain open. No reason to rerun all 91 old cases because runtime unchanged; two targeted fullmod tests run.
+
+## Proposed next architectural decision (not yet approved)
+
+Adopt a conservative explicitly game-defined recoverable kinetic-energy ledger instead of SI conversion. Only actual measured paid native burner consumption during verified acceleration may create a finite kinetic-credit budget (not burner credits or historical cumulative spend). Never create it from an observed nonzero speed, fuel from an unverified diesel/mod, teleport or changed composition. During speed decline use the fraction of tracked kinetic budget proportional to validated speed-squared reduction, consume that fraction irrevocably; coast/collision/unknown intervals and all remaining credit at stop become accounted losses. No repeated claims, no carryover across split/merge/uncertain transitions in first version. Regeneration is a separately capped fraction of validated brake decrease and budget, limited by generator nameplate, receiver cap/rate and explicit efficiency; all unaccepted energy is loss. All bookkeeping is per stable physical consist membership, reset on ambiguous identity; persistent save/load proof mandatory. Preserve owner priority 25kV then storage then loss in eventual integration. Model would be conservative accounting, not measured physical brake work; requires owner acceptance of abstraction before implementation. First prove exact native fuel debit per phase including helper and station refill, then signal/collision/split/MP checks and closed-energy repeated accelerate/brake cycles with empty sources. Keep runtime 0.1.101 unchanged, no main merge/release/owner install.
+
+Evidence SHA256: `1ce06f34f814967835b49657adaaa8b157c29e2457e7636f36ddf5ad56ed1acc`.

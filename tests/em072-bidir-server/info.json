@@ -1,0 +1,11 @@
+{
+  "name": "em072-bidir-server",
+  "version": "0.0.1",
+  "title": "EM073 native two-head SAVE/LOAD server QA",
+  "author": "local testing only",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0",
+    "ElectrifiedMainline = 0.1.73"
+  ]
+}

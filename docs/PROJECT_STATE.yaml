@@ -1,3 +1,2029 @@
+em094_integration_20261126:
+  branch: integration/em094d4-main-candidate
+  runtime_base: "949a99f2f281fc226356d5f6e247a84dce12b4f8"
+  candidate_version: "0.1.103"
+  status: final_native_and_ci_pass_pending_owner_merge_decision
+  candidate_sha256: 9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e
+  game_files: 169
+  exact_non_png: 70
+  exact_owner_png: 99
+  runtime_changed: false
+  raw_git_game_files: 153
+  staging: frozen_em080_em081_em083
+  payload_manifest: docs/builds/integration-runtime.json
+  local_payload_verify: pass
+  local_negative_checks: pass
+  native_smoke: 2_of_2_pass
+  open_prs_audited: 52
+  full_ci: pass_45884793896_payload_169_of_169
+  ci_zip_sha256: 859bab6a13a5d36c10cf85df1014f2bf968e2a1e934828d4dc1bda9d5265de91
+  ci_artifact: 15148278640
+  test_stand: /Factorio/Local-QA/EM094-Integration/EM094_INTEGRATION_TEST_STAND.zip
+  test_stand_sha256: 51c2837023c94914f354c534b0b4f9b8cf4cb28a54aa3f3740f95be9816bc2d5
+  test_stand_dry_run: pass
+  full_final_regression: pass_92_of_92
+  mixed100_final: pass_100_arrivals
+  final_total_cases: 111
+  final_pass_cases: 111
+  explicit_completion_cases: 106
+  stand_assertion_cases: 5
+  fault_cases_pass: 18
+  mixed100_final_J: 12499999999.042
+  mixed100_grid_J: 44099964.517325
+  mixed100_onboard_J: 7298642.382695
+  mixed100_alternate_J: 13304498.534357
+  mixed100_uncertain_J: 0
+  mixed100_pending_J: 0
+  final_max_workers: 3
+  final_peak_bytes: 2423939072
+  final_sum_wall_s: 638.988
+  final_oom_events: 0
+  final_evidence: /Factorio/Local-QA/EM094-Integration/EM094_FINAL_TEST_EVIDENCE.zip
+  final_evidence_sha256: 6a0d64d26456b7c51f2624ff3fd9b155d95def828d06954ab1d568717d942d74
+  final_report: docs/development/EM094_INTEGRATION_FINAL_QA.md
+  windows_owner: pending
+  owner_running_version: "0.1.84"
+  main_version: "0.1.62"
+  main_merged: false
+  official_release: false
+  report: docs/development/EM094_INTEGRATION_AUDIT.md
+  test_plan: docs/development/EM094_INTEGRATION_TEST_PLAN.md
+
+em094d4_anchor_settlement_20261126:
+  date: "2026-11-26"
+  branch: experiment/em094d4-anchor-settlement
+  base_commit: 44d129087d976a7f599f5045e331a2a45eccb939
+  candidate_version: "0.1.103"
+  status: targeted_fault_gates_pass_qa_setting_only_full_regression_pending
+  candidate_sha256: 9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e
+  game_files: 169
+  unchanged_png: 99
+  changed_blobs:
+    scripts/control.lua: cac0eca57a427b1110e32aee7dfd1b14de5a01af
+    scripts/line_terminal_094.lua: 0794843d54786522bda5bb577e4e4ab4fd78c69f
+  exact_candidate_tests: 18
+  exact_candidate_pass: 18
+  expected_negative_tests: 1
+  native_robot_mine_ticks: [238, 251, 266]
+  native_robot_fallback_J: [2926.300485005, 2165.800485005, 1288.300485005]
+  native_robot_uncertain_J: 0
+  anchor_script_removal: pass
+  anchor_entity_death: pass
+  post_solver_certified_grid_J: 3043.300485005
+  post_solver_retired_sink_J: 3043.300485007
+  hidden_wire_negative: pass_uncertain_not_certified
+  hidden_wire_uncertain_J: 3043.300485005
+  hidden_wire_grid_J: 0
+  cut_reload: pass
+  cut_save_sha256: 6d422f6e0445eebaf48accf735515dfcb73b3c6e5defd9eb7aeb24813d966617
+  cut_reload_matching_rows: 12
+  setting_qa_tests: 4
+  setting_qa_pass: 4
+  setting_after_transfer: pass_qa_owned_assignment
+  setting_before_transfer: pass_first_eligible_mod_tick_252
+  setting_owner_gui: not_run
+  setting_qa_variant_sha256: e6842cd7f70999f7b1df629218932bf5da7e722d8005cfb928ad8736d4bcea3d
+  setting_early_trace_sha256: 774a4025c9c776867ae664c6fad60b245a10137b083364f87dfbdefb782f80bd
+  max_concurrent_processes: 2
+  peak_cgroup_bytes: 2589229056
+  oom_events: 0
+  evidence_sha256: bf93cfabb8f47a3085d7824e802c44fba289c42298ede9b79554c40083b3800c
+  evidence: "/Factorio/Local-QA/EM094D4_ANCHOR_SETTLEMENT_EVIDENCE.zip"
+  candidate: "/Factorio/Local-QA/EM094D4-Anchor-Settlement/EM094D4_0.1.103_CODE_ONLY_QA.zip"
+  report: docs/development/EM094D4_ANCHOR_SETTLEMENT_QA.md
+  prior92_on_changed_candidate: not_run
+  mixed100_on_changed_candidate: not_run
+  ups_benchmark: not_run
+  next: full_native_regression_and_mixed100_then_isolated_ups
+  last_validated_experimental_version: "0.1.102"
+  last_owner_running: "0.1.84"
+  owner_accepted: false
+  main_merged: false
+  official_release: false
+
+em094d3_full_regression_20261126:
+  date: "2026-11-26"
+  branch: test/em094d3-full-regression
+  base_commit: ae5d032dab8db9ed5e5250f5fd6eb017edb63834
+  candidate_version: "0.1.103"
+  status: partial_regression_pass_anchor_certificate_fail_disable_blocked
+  candidate_sha256: a163ba442cae98fc05d692334a38e64f82d0aa366eb5dd4d187e88900891b8a2
+  runtime_changed: false
+  engine: "2.1.24 build87808 Linux headless"
+  regression_total: 92
+  regression_pass: 92
+  explicit_completion_cases: 87
+  stand_assertion_cases: 5
+  mixed100_grid_on: pass
+  mixed100_arrived: 100
+  mixed100_budget_J: 12500000000
+  mixed100_final_J: 12499999999.042
+  mixed100_alternate_J: 13304498.534357
+  mixed100_grid_recovered_J: 44099964.517325
+  mixed100_onboard_recovered_J: 7298642.383
+  mixed100_uncertain_J: 0
+  mixed100_pending_J: 0
+  pending_owner_deletion: pass
+  pending_receiver_deletion: pass
+  pending_anchor_deletion_strict: fail_uncertain_debit
+  pending_anchor_uncertain_J: 3043.300485005
+  pending_anchor_measured_retirement_loss_J: 3043.300485007
+  pending_anchor_diagnostic_energy_closure_J: 2000000
+  pending_anchor_final_ports: 0
+  repeated_ring12: pass
+  repeated_ring_second_alternate_J: 11191970.22194
+  station_cap_every_tick_pass: true
+  pending_disk_reload: pass
+  pending_disk_equal_rows: 11
+  pending_disk_sha256: 5847adf7426e6dbc9506a58a515fb9ffe44c88cb36866ebf392b78554f7285ff
+  pending_runtime_disable: blocked_engine_setting_permissions
+  max_concurrent_processes: 3
+  peak_cgroup_bytes: 3063750656
+  oom_events: 0
+  evidence: "/Factorio/Local-QA/EM094D3_FULL_REGRESSION_EVIDENCE.zip"
+  evidence_sha256: f9048dfe9a99c9bb319badab8b66d55470ccc718a9ea73327e4237f8e365e03f
+  report: docs/development/EM094D3_FULL_REGRESSION_QA.md
+  ups_benchmark: not_run
+  next: anchor_deletion_certificate_and_owner_setting_disable
+  last_validated_experimental_version: "0.1.102"
+  owner_accepted: false
+  main_merged: false
+  official_release: false
+
+em094d2_bridge_output_capacity_20261126:
+  date: "2026-11-26"
+  branch: experiment/em094d2-bridge-output-capacity
+  base_commit: "54328ab506622adc6e9c0eb051868ee629225084"
+  candidate_version: "0.1.103"
+  status: targeted_native_pass_qa_only_full_regression_pending
+  native_engine: "2.1.24 build87808 linux64 headless"
+  base_sha256: 7821445f3d7aad6dfae3f1b9a5f4f019691d9559ba5760adbe22ac7b7e4ff3d6
+  candidate_sha256: a163ba442cae98fc05d692334a38e64f82d0aa366eb5dd4d187e88900891b8a2
+  changed_file: ElectrifiedMainline/scripts/power_bridge_058.lua
+  candidate_blob: 33d54471724fb629faedd479cc369118fbfb092a
+  game_files: 169
+  unchanged_png: 99
+  root_cause: role_swap_retains_shrunk_input_as_output_buffer_capacity
+  observed_plan_J_tick: 153333.333333333
+  observed_input_J: 153020.035818795
+  observed_output_capacity_J: 322.550637922
+  observed_transfer_J_tick: 322.550637922
+  repair: grow_output_buffer_to_current_bounded_cap_before_transfer
+  station_limit_W: 20000000
+  original_grid_on_alternate_J: 36929.802168
+  original_grid_off_alternate_J: 3305028.809550
+  alternate_gate_J: 100000
+  mixed12_grid_on_alternate_J: 13270815.260464
+  mixed12_grid_off_alternate_J: 13228830.425377
+  mixed12_final_total_J: 1500000000
+  mixed12_grid_recovered_J: 5291995.742079
+  mixed24_grid_on_alternate_J: 13320120.388245
+  mixed24_final_total_J: 2999999999.305
+  mixed24_grid_recovered_J: 10583991.484158
+  exchange100_pass: true
+  exchange100_recipients_moved: 50
+  exchange100_grid_J: 4034031.261013
+  exchange100_recipient_J: 2017015.630507
+  exchange100_final_total_J: 100000000.000023
+  exact_candidate_cases_pass: 11
+  exact_candidate_cases_fail: 0
+  oom_events: 0
+  evidence_sha256: 90a4bec73f894901ab6caf13688e4dc27d7f28f8a9c6ca43edc26d78a0049307
+  evidence: "/Factorio/Local-QA/EM094D2_BRIDGE_OUTPUT_EVIDENCE.zip"
+  candidate: "/Factorio/Local-QA/EM094D2-Bridge-Output-Capacity/EM094D2_0.1.103_CODE_ONLY_QA.zip"
+  report: docs/development/EM094D2_BRIDGE_OUTPUT_QA.md
+  prior92_regression: not_run
+  mixed100_grid_on: not_run
+  pending_lifecycle_exact: not_run
+  ups_benchmark: not_run
+  last_validated_experimental_version: "0.1.102"
+  last_owner_running: "0.1.84"
+  owner_accepted: false
+  main_merged: false
+  official_release: false
+  next: full_native_regression_and_mixed100
+
+em094d_automatic_terminals_20261126:
+  branch: "experiment/em094d-automatic-terminals-blocked"
+  base_commit: "06529e7fedde4176b966d9d17f2ded738260f33e"
+  candidate_version: "0.1.103"
+  last_validated_experimental_version: "0.1.102"
+  status: partial_candidate_blocked_mixed_ring
+  grid_regen_default: false
+  candidate_sha256: 7821445f3d7aad6dfae3f1b9a5f4f019691d9559ba5760adbe22ac7b7e4ff3d6
+  candidate_files: 169
+  changed_game_files: 8
+  unchanged_png: 99
+  automatic_terminal_lifecycle: positive_pass
+  retired_empty_terminals: 3
+  final_terminal_count: 0
+  exchange100_pass: true
+  exchange100_recipients_moved: 50
+  exchange100_grid_J: 4034031.261013
+  exchange100_receiver_J: 2017015.630507
+  exchange100_budget_J: 100000000
+  exchange100_final_J: 100000000.000023
+  exchange100_samples: 421
+  mixed12_grid_on_pass: false
+  mixed12_arrived: 12
+  mixed12_fail_tick: 1300
+  mixed12_grid_recovered_J: 5291995.742079
+  mixed12_onboard_recovered_J: 875837.086
+  mixed12_budget_J: 1500000000
+  mixed12_last_total_J: 1499999999.578
+  alternate_path_min_J: 100000
+  alternate_grid_on_J: 36929.802168
+  alternate_grid_off_J: 3305028.809550
+  alternate_no_export_diagnostic_J: 3305028.809550
+  no_export_diagnostic_sha256: 323ce8ab0aa14efcf5a2c78f6b46fcb0ae6a237ef38bbd7482d89725501c14e1
+  exact_candidate_cases_pass: 9
+  exact_candidate_cases_fail: 1
+  old_disabled_controls_pass: 4
+  diagnostic_case_pass: 1
+  final_functional_wall_seconds: 88.446
+  old_controls_workers: 2
+  old_controls_wall_seconds: 9.609
+  oom_events: 0
+  source_sha256: 51a9a579e798a5184f045902522ca42267385cd3c2d90e1be6869be2c84d6df2
+  evidence_sha256: ca922469efb85c3da86465113893946a77d86950a64c0cf1f85e09fb3ba23a8c
+  evidence: "/Factorio/Local-QA/EM094D_AUTOMATIC_TERMINALS_EVIDENCE.zip"
+  report: docs/development/EM094D_AUTOMATIC_TERMINALS_QA.md
+  full_previous_regression: not_run
+  mixed100_grid_on: not_run
+  ups_benchmark: not_run
+  pending_lifecycle_exact_candidate: not_proven
+  next: em094d2_dispatch_feedback_isolation
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em094c_topology_pending_20261126:
+  date: "2026-11-26"
+  branch: "test/em094c-topology-pending"
+  base_commit: "89f6d3d21863f2fe82cf8235e02c52e68ac880be"
+  runtime_version: "0.1.102"
+  status: partial_supported_topology_pending_diagnostic_pass
+  runtime_changed: false
+  native_engine: "2.1.24 build87808 linux64 headless"
+  vanilla_control_cases_pass: 6
+  permitted_network_merge_is_normal: true
+  old_native_key_equality_required: false
+  local_port_binding_preserved: true
+  physical_unverified_debit_separate: true
+  pending_settlement_independent_of_enable: true
+  positive_distinct_cases_pass: 10
+  negative_foreign_link_reproduced: 1
+  successful_executions: 12
+  initial_fixture_failures: 2
+  normal_join_source_key_before: 1
+  normal_join_source_key_after: 0
+  join_accepted_J: 100000
+  split_accepted_J: 0
+  split_residual_J: 100000
+  foreign_physical_J: 100000
+  foreign_certified_J: 0
+  foreign_uncertain_J: 100000
+  small_workers: 3
+  small_wall_seconds: 11.997
+  small_peak_bytes: 2652090368
+  large_train_count: 100
+  large_recipient_moved: 50
+  large_budget_J: 100000000
+  large_closed_samples: 421
+  large_final_total_J: 100000000.000023
+  large_grid_J: 4034031.261013
+  large_recipient_paid_J: 2017015.630507
+  large_pending_J: 0
+  large_rejected_J: 0
+  large_uncertain_J: 0
+  large_wall_seconds: 28.448
+  large_peak_bytes: 2001862656
+  live_join_pending_tick: 237
+  live_join_pending_J: 3043.3004850051
+  live_join_grid_J: 80680.625220
+  live_join_receiver_J: 40340.312610
+  disable_pending_J: 3043.3004850051
+  disable_grid_J: 3043.300485
+  disable_receiver_J: 1521.650243
+  disable_new_grants: false
+  disable_pending_after_J: 0
+  checkpoint_request_tick: 237
+  checkpoint_request_pending_J: 3043.3004850051
+  checkpoint_sha256: 04076aec922326d18bc2bf6fb6e1187ddca89973e95ca7ffd5ed1323778283e5
+  reload_equal_rows: 11
+  oom_events: 0
+  topology_probe_sha256: dd6bc862cefd4c3c7815f847a3b58abb80afdfb79041ee8155cf3300056d8664
+  disable_probe_sha256: 70d0f05d13538d17b1db3f6d483ccbed33cf0a2a3745be5214cefba0d16db405
+  source_sha256: 54d2b9e72a3d998cec28931d87cecefbf9b9142cc3859a91ac7fd25cbb6b854f
+  evidence: "/Factorio/Local-QA/EM094C_TOPOLOGY_PENDING_EVIDENCE.zip"
+  evidence_sha256: eea5f9997ac446b61866bbb810ecbb134c23012197d084625ab972ffe0792120
+  report: docs/development/EM094C_TOPOLOGY_PENDING_QA.md
+  automatic_terminal_lifecycle: not_implemented
+  previous_regression_rerun: false
+  integrated_mixed100: not_run
+  performance_gate: not_met
+  next: em094d_automatic_terminal_lifecycle_mixed_factory_and_storage
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em094a_terminal_integration_20261126:
+  date: "2026-11-26"
+  branch: "test/em094a-terminal-integration"
+  base_commit: "0cb10f4f97672f8f7992205682d5b9ff5b049038"
+  runtime_version: "0.1.102"
+  status: partial_native_exchange_pass_production_safety_blocked
+  native_engine: "2.1.24 build87808 linux64 headless"
+  runtime_changed: false
+  positive_native_cases_pass: 9
+  negative_fault_reproduced: 1
+  initial_setting_fixture_failures: 2
+  terminal_small_cases_pass: 4
+  terminal_multi_accepted_J: 400000
+  terminal_isolated_accepted_J: 0
+  terminal_no_load_residual_J: 200000
+  terminal_cut_first_receiver_J: 0
+  terminal_cut_intact_receiver_J: 100000
+  terminal_cut_residual_J: 100000
+  large_terminal_corridors: 100
+  large_terminal_ports: 200
+  large_terminal_accepted_J: 10000000
+  large_terminal_valid_after_audit: 200
+  large_terminal_train_count: 0
+  actual_train_cases_pass: 4
+  actual_counts: [2, 6, 4, 100]
+  actual_grid_J: [80680.625220, 242041.875661, 161361.250441, 4034031.261013]
+  actual_receiver_paid_J: [40340.312610, 121020.937830, 80680.625220, 2017015.630507]
+  actual_receiver_moved: [1, 3, 2, 50]
+  actual_large_corridors: 50
+  actual_large_seed_budget_J: 100000000
+  actual_large_closed_samples: 421
+  actual_large_final_total_J: 100000000.000023
+  actual_large_paid_J: 104034031.261036
+  actual_large_native_consumed_J: 60461460.074946
+  actual_large_brake_intervals: 2600
+  actual_large_pending_J: 0
+  actual_large_rejected_J: 0
+  actual_large_other_corridor_J: 0
+  actual_large_arrivals: not_tested
+  actual_large_motor_wagons: false
+  late_script_short_wrong_sink_J: 100000
+  late_script_short_certified_J: 0
+  late_script_short_uncertain_J: 100000
+  small_workers: 3
+  small_wall_seconds: 8.012
+  small_peak_bytes: 2445463552
+  large_terminal_wall_seconds: 5.583
+  actual_small_workers: 2
+  actual_small_wall_seconds: 5.411
+  actual_large_workers: 1
+  actual_large_wall_seconds: 29.988
+  actual_large_peak_bytes: 1755353088
+  oom_events: 0
+  terminal_probe_sha256: b76948314f47cf2aee3345695b48a571c48e030aeea5f704bb82bfc0d33fd280
+  integrated_probe_sha256: 1b34d5761eadb1398644492193c02975e4e0b2fe7ba1dbfd99085795ac5c275d
+  source_sha256: 5fd7c7a3b39b63668fa6dcf2d6b52e0ff751da0da157964d6b4cce4ac3694731
+  evidence: "/Factorio/Local-QA/EM094A_TERMINAL_INTEGRATION_EVIDENCE.zip"
+  evidence_sha256: f64ee5743a1c7ab8b53d11f1a4075b6dce1ecd4790b185f1120f1b59349e5475
+  report: docs/development/EM094A_TERMINAL_INTEGRATION_QA.md
+  previous_regression_rerun: false
+  production_queue: blocked
+  pending_reload_disable: not_proven
+  performance_gate: not_met
+  next: em094b_topology_freeze_terminal_lifecycle_pending_save_disable
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em092_093_native_exchange_20261126:
+  date: "2026-11-26"
+  branch: "test/em092-093-native-exchange"
+  base_commit: "adedb5a8a5342ae831d7d95c387d14db89fdfd34"
+  runtime_version: "0.1.102"
+  status: partial_diagnostic_feasibility_pass_production_not_complete
+  native_engine: "2.1.24 build87808 linux64 headless"
+  full_runtime_changed: false
+  large_onboard_stress_count: 100
+  large_stress_arrived: 100
+  large_stress_samples: 17
+  large_stress_budget_J: 12500000000
+  large_stress_recovered_onboard_J: 51398606.900
+  large_stress_final_store_J: 3171860024.487
+  large_stress_paid_J: 784497210.573
+  large_stress_measured_debit_J: 585177177.177
+  large_stress_wall_seconds: 193.161
+  large_stress_peak_rss_kib: 586892
+  large_stress_native_grid_recovery: false
+  large_stress_continuous_motion: false
+  independent_base_line_cases_pass: 4
+  base_line_budget_J: 2000000
+  base_no_import_paid_J: 0
+  direct_probe_paid_J: 2000000
+  direct_probe_displacement_tiles: 157
+  exchange_native_grid_J: 80680.625220
+  exchange_recipient_paid_J: 40340.312610
+  exchange_recipient_displacement_tiles: 0.41796875
+  exchange_other_corridor_J: 0
+  exchange_budget_J: 2000000
+  exchange_closed_samples: 421
+  priority_factory_J: 77637.324735
+  priority_factory_fallback_J: 3043.300485
+  priority_no_receiver_grid_J: 0
+  priority_no_receiver_fallback_J: 41100.812610
+  priority_no_receiver_rejected_J: 39579.812610
+  successful_executions: 10
+  first_small_workers: 2
+  first_small_wall_seconds: 9.579
+  final_small_workers: 3
+  final_small_wall_seconds: 6.120
+  final_small_peak_bytes: 2753581056
+  oom_events: 0
+  direct_probe_sha256: 6953c04ccdbd327397f0c2f9a34320319f5c0df4a52671e52fd58c62f96fcd8b
+  exchange_probe_sha256: d969d2efe32fdc93ba8f5cdc25e7471dc059af9818ed2ddab3b276e4adc7d872
+  priority_probe_sha256: db05b2084d137d7f10d741f6a98b4f688eb71035c4b5ec0761788739103c300c
+  source_sha256: cb8380fecab93e6c5695d4141761558792967b38681a60bcc7efb8ef62b90120
+  evidence: "/Factorio/Local-QA/EM092_093_NATIVE_EXCHANGE_EVIDENCE.zip"
+  evidence_sha256: 30e913349921d2a6324230cbb61e550ad65a384cd71282bff85c48de53a8014f
+  report: docs/development/EM092_093_NATIVE_EXCHANGE_QA.md
+  previous_regression_rerun: false
+  production_queue: not_implemented
+  pending_topology_and_reload: not_proven
+  integrated100_grid_recovery: not_run
+  performance_gate: not_met
+  next: em092_093_production_safe_native_exchange
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em091_onboard_regen_20261126:
+  date: "2026-11-26"
+  branch: "experiment/em091-onboard-regen"
+  base_commit: "e933b542c2fc314d9a6123f974839ff81882210d"
+  base_runtime: "0.1.101"
+  mod_version: "0.1.102"
+  status: experimental_native_pass_opt_in
+  native_engine: "2.1.24 build87808 linux64 headless"
+  architecture: docs/plans/EM091_ONBOARD_REGEN_ARCHITECTURE.md
+  regen_enabled_default: false
+  requires_storage_enabled: true
+  native_debit_receipts: true
+  both_braking_flags_required: true
+  virtual_kinetic_pool: false
+  trial_C: 450
+  trial_eta: 0.65
+  trial_locomotive_regen_W: 2000000
+  motor_wagon_regen_W: 500000
+  final_balance_approved: false
+  actual_grid_export: false
+  onboard_only_gate: true
+  total_cases_pass: 92
+  explicit_completion_markers: 87
+  established_stand_assertions: 5
+  old_core_cases_pass: 66
+  old_mixed_cases_pass: 11
+  new_focused_disk_cases_pass: 13
+  enabled_stress_counts_pass: [12, 24]
+  core_workers: 2
+  core_wall_seconds: 177.133
+  core_peak_cgroup_bytes: 2989842432
+  mixed_workers: 2
+  mixed_wall_seconds: 32.482
+  stress_workers: 1
+  stress_wall_seconds: 57.142
+  oom_events: 0
+  auto_distance_tiles: 696
+  auto_budget_J: 12000000
+  auto_estimate_J: 992395.939
+  auto_recovered_J: 498112.436
+  auto_rejected_J: 494283.504
+  auto_store_discharge_J: 10414779.103
+  auto_measured_debit_J: 11933333.333
+  three_cycle_recovered_J: 2101900.477
+  four_cycle_budget_J: 19200000
+  four_cycle_measured_debit_J: 20452222.222
+  four_cycle_recovered_J: 2167437.939
+  four_cycle_store_discharge_J: 19350709.997
+  four_cycle_final_store_J: 61.275
+  empty_recovered_J: 0
+  coast_recovered_J: 0
+  foreign_recovered_J: 0
+  unverified_initial_fuel_recovered_J: 0
+  disabled_recovered_J: 0
+  full_store_rejected_J: 695452.447
+  collision_interval_recovered_J: 0
+  collision_preimpact_recovered_J: 129702.485
+  disk_checkpoint_request_tick: 1080
+  disk_checkpoint_request_recovered_J: 17303.403
+  disk_checkpoint_sha256: edea473f8b4f229bc37996fcc274c4c33dcd1718c30e0288a0bd7f267b062a74
+  disk_reload_equal_lines: 2
+  stress_samples_each: 17
+  stress_budgets_J: [1500000000, 3000000000]
+  stress_recovered_J: [6167832.828, 12335665.656]
+  stress_final_stored_J: [257353967.019, 642561123.513]
+  game_files: 166
+  unchanged_pngs: 99
+  full_sha256: eebed6e004a13b002a2a33101d771a3b7b0ee12d3dbba2bd12e19f6cb902e1a7
+  patch_sha256: 84b96e47afdb501e44a5d1e89b757e6029fa8d7d795f23a6f5a2839fabdb9e4d
+  patch_staged_parity: true
+  source_sha256: 9d3dd6fd841b4e8047dab0533b0b6e1cfa4aa18a2c1db113d25db3ab57074966
+  evidence: "/Factorio/Local-QA/EM091_ONBOARD_REGEN_EVIDENCE.zip"
+  evidence_sha256: 1f6eb810074205b84336d9e97b84add779de881955a6de53e4e454187719c555
+  report: docs/development/EM091_ONBOARD_REGEN_QA.md
+  performance_gate: not_met
+  full_connected100_enabled: not_run
+  long100_enabled: not_run
+  dedicated_opt_in_migration: not_run
+  windows_gui: pending
+  multiplayer: not_run
+  next: em092_native_25kv_recovery_and_acceptance
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em090b_brake_calibration_20261126:
+  date: "2026-11-26"
+  branch: "test/em090b-brake-calibration"
+  base_commit: "c02e48e6f82ff7fc9887fe357b05c88c231cc8ad"
+  runtime_version: "0.1.101"
+  status: native_diagnostic_pass_production_credit_not_implemented
+  owner_approved_calibrated_classical_model: true
+  virtual_kinetic_pool: false
+  native_engine: "2.1.24 build87808 linux64 headless"
+  original_matrix_cases_pass: 8
+  final_base_cases_pass: 12
+  final_fullmod_cases_pass: 3
+  reused_holdout_traces: 10
+  equal_brake_swapped_trajectory: true
+  manual_nonterminal_brake_law: B_over_M
+  coast_intervals: 378
+  coast_max_error_tiles_per_tick: 9.726663918740996e-13
+  trial_C: 450
+  training_min_C: 976.7847748594874
+  holdout_min_C: 632.2793437265333
+  trial_eta: 0.65
+  trial_locomotive_regen_W: 2000000
+  final_balance_approved: false
+  certified_epoch_from_rest: true
+  positive_K_change_debit_guard: true
+  exact_general_native_debit_proven: false
+  native_cycle_count: 3
+  cycle_consumed_J: 12002222.222222257
+  cycle_hypothetical_J: 800466.399882575
+  natural_starvation_hypothetical_J: 0
+  passive_hypothetical_J: 0
+  collision_interval_hypothetical_J: 0
+  fullmod_empty_hypothetical_J: 0
+  fullmod_move_hypothetical_J: 992395.939366798
+  fullmod_outage_hypothetical_J: 1144618.356265991
+  fullmod_move_estimated_consumed_J: 11933333.3333333
+  fullmod_outage_estimated_consumed_J: 12352885.93269405
+  fullmod_B_total: 36
+  fullmod_B_motor: 26
+  final_base_workers: 3
+  final_base_wall_seconds: 14.057
+  final_base_peak_bytes: 2373943296
+  final_fullmod_workers: 2
+  final_fullmod_wall_seconds: 8.114
+  final_fullmod_peak_bytes: 1928863744
+  oom_events: 0
+  actual_regen_credit_J: 0
+  runtime_changed: false
+  full_regression_rerun: false
+  evidence: "/Factorio/Local-QA/EM090B_BRAKE_CALIBRATION_EVIDENCE.zip"
+  evidence_sha256: 9f6f938cd6dedb533be7c4bea61db88943a73f3d2321424d01b1630001f4db49
+  source_sha256: 03641169efe9bbccd024e0d45ae6773ade439515f4de5b67192c81804f8ccbd3
+  report: docs/development/EM090B_BRAKE_CALIBRATION_QA.md
+  next: em091_native_paid_debit_and_actual_onboard_regen
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em090_native_brake_20261126:
+  date: "2026-11-26"
+  branch: "test/em090-native-brake"
+  base_commit: "6bea9d6c7549cf269efd5c2df18707e34752ff44"
+  runtime_version: "0.1.101"
+  status: partial_observation_pass_strict_brake_work_gate_blocked
+  native_engine: "2.1.24 build87808 linux64 headless"
+  base_observation_cases_pass: 8
+  fullmod_storage_enabled_cases_pass: 2
+  total_observation_cases_pass: 10
+  station2000_braking_decel_intervals: 196
+  station2000_other_decel_intervals: 1
+  coast_decel_intervals: 779
+  coast_braking_flags: 0
+  brake_flag_precedes_actual_decel: true
+  collision_brake_flag_false_positive: true
+  collision_locomotive_health_unchanged: true
+  collision_tank_damage_event: true
+  station2000_peak_naive_K_J: 13446522.293347
+  station2000_peak_consumed_J: 5202222.222222
+  fullmod_move_peak_naive_K_J: 28807200
+  fullmod_move_peak_estimated_consumed_J: 10024338.866015
+  fullmod_move_peak_ratio: 2.873725677577
+  direct_SI_kinetic_accounting_valid: false
+  native_brake_work_proven: false
+  regen_credit_enabled: false
+  proposed_paid_kinetic_ledger_owner_approved: false
+  initial_base_workers: 3
+  initial_base_wall_seconds: 7.594
+  initial_base_peak_bytes: 2194120704
+  extra_base_wall_seconds: 4.098
+  fullmod_workers: 2
+  fullmod_wall_seconds: 5.465
+  oom_events: 0
+  runtime_changed: false
+  full_prior_regression_rerun: false
+  evidence: "/Factorio/Local-QA/EM090_NATIVE_BRAKE_EVIDENCE.zip"
+  evidence_sha256: 1ce06f34f814967835b49657adaaa8b157c29e2457e7636f36ddf5ad56ed1acc
+  source_sha256: a87c435f27013aabbf72213fa232c9821ccd35e69cf09c477aa16c4a54807520
+  report: docs/development/EM090_NATIVE_BRAKE_QA.md
+  next: owner_decision_conservative_game_defined_kinetic_ledger_then_EM091
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em089_onboard_storage_20261126:
+  date: "2026-11-26"
+  branch: "experiment/em089-onboard-storage"
+  base_commit: "7c93659c523c460a494309883ac5a06190b1ceef"
+  base_runtime: "0.1.100"
+  mod_version: "0.1.101"
+  status: experimental_native_pass_opt_in
+  native_engine: "2.1.24 build87808 linux64 headless"
+  architecture: docs/plans/EM089_ONBOARD_ARCHITECTURE.md
+  storage_owner: physical_locomotive_unit_number
+  storage_enabled_default: false
+  capacity_J: 60000000
+  charge_limit_W_per_loco: 2000000
+  discharge_limit_W_per_loco: 4000000
+  initial_charge_J: 0
+  capacity_and_rates_final_balance_approved: false
+  transfer_efficiency_experiment: 1
+  charge_stationary_auto_import_only: true
+  charge_moving: not_implemented
+  generator_to_charge_plan_after_loads: true
+  actual_native_sink_debit: true
+  regeneration_enabled: false
+  prior_core_cases_pass: 66
+  prior_mixed_cases_pass: 11
+  new_focused_cases_pass: 11
+  actual_migration_pass: true
+  connected_stress_counts_pass: [12, 24]
+  total_cases_pass: 91
+  explicit_completion_markers: 86
+  established_stand_assertions: 5
+  core_workers: 3
+  core_wall_seconds: 122.179
+  core_peak_cgroup_bytes: 2798567424
+  focused_workers: 3
+  focused_wall_seconds: 17.012
+  mixed_workers: 2
+  mixed_wall_seconds: 27.49
+  stress_workers: 1
+  stress_wall_seconds: 47.233
+  oom_events: 0
+  cap_test_stored_J: 60000000
+  zero_source_onboard_J: 0
+  factory_battery_only_onboard_J: 0
+  initial_rejected_factory_battery_onboard_J: 5000
+  competing_load_received_J: 20000000
+  offgrid_distance_tiles: 696
+  offgrid_discharge_J: 9916666.667
+  offgrid_motor_discharge_J: 3308333.333
+  split_each_store_J: 8000000
+  deletion_accounted_loss_J: 8000000
+  shared_new_loco_burner_J: 2000000
+  disk_checkpoint_stored_J: 5933333.333
+  disk_checkpoint_sha256: 5cf2cc3e3fb023c9c1aad0920b9c2d3e5d8207e305a4e4fe27bd02fd16f83c1f
+  disk_reload_equal_lines: 6
+  migration_checkpoint_sha256: 2bfb27d82f089cc1d8df9b24ed1febbf073a00141fb65725f67f0d53eee98cde
+  migration_previous_paid_J: 2000000
+  migration_new_store_J: 0
+  stress_sample_count_each: 17
+  stress_energy_budgets_J: [1500000000, 3000000000]
+  stress_final_stored_J: [251186134.191, 630225457.857]
+  game_files: 162
+  unchanged_pngs: 99
+  full_sha256: 6e2b48acea118b4542ff0be0b8101c1b844bb74e1359897af1b2653818fd8376
+  patch_sha256: dd6714ad1d58b4ba1ae5d7c6fd6088b4997782827f11dd740e21239e56f268ec
+  patch_staged_parity: true
+  evidence: "/Factorio/Local-QA/EM089_ONBOARD_STORAGE_EVIDENCE.zip"
+  evidence_sha256: 98c44256f238e2999d9458c305b62bdda561f907d6c8cf44c42ec768ec0cfaaa
+  report: docs/development/EM089_ONBOARD_STORAGE_QA.md
+  performance_gate: not_met
+  full_connected100_enabled: not_run
+  long100_enabled: not_run
+  settings_transition_native: not_run
+  windows_gui: pending
+  multiplayer: not_run
+  next: em090_native_brake_identification_and_calibration
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em088_train_energy_20261126:
+  date: "2026-11-26"
+  branch: "experiment/em088-train-energy"
+  base_commit: "9ef3f4c13fe5cad27119fdf3aa8be842bcfe56c7"
+  base_runtime: "0.1.98"
+  mod_version: "0.1.100"
+  status: experimental_native_pass
+  owner_approved_hybrid_architecture: true
+  architecture: docs/plans/EM088_HYBRID_ARCHITECTURE.md
+  physical_loco_owner_unit_number: true
+  native_live_membership: true
+  legacy_history_not_energy: true
+  battery_enabled: false
+  regeneration_enabled: false
+  previous_optimization: postponed_not_resolved
+  full_native_cases_pass: 82
+  explicit_cases_pass: 77
+  stand_assertions_pass: 5
+  old_core_cases_pass: 66
+  mixed_cases_pass: 11
+  stress_counts_pass: [12, 24]
+  new_bus_reload_migration_pass: 3
+  core_parallel_workers: 3
+  core_wall_seconds: 119.423
+  core_peak_cgroup_bytes: 2658832384
+  oom_events: 0
+  bus_paid_J: 4000000
+  bus_retired_history_J: 2000000
+  bus_checkpoint_sha256: 45df47ef681053d683ca4567fedb574fb7f2c42cd64e569aecc212df31498d96
+  migration_checkpoint_sha256: b737162cab01e9238e1e199286e6704470f02f172c703f7b2ec25a4af310334d
+  migration_legacy_J: 4000000
+  migration_new_J: 2000000
+  migration_paid_J: 6000000
+  closed_fixture_budget_J: 20000000
+  moving100_arrived: 100
+  moving100_paid_J: 601666666.66668
+  moving100_motor_paid_J: 135000000.00002
+  native_rail_comparisons: 8935
+  game_files: 158
+  unchanged_pngs: 99
+  full_sha256: 965ecfe334f53819b2771aca3a6861d7e67e722ca9a113ddfcd5a37ca0d612fa
+  patch_sha256: 417857851c55325c33e5aa6fa21103e9a41e8c6272fd2cc3186a0f5ff5cd9365
+  patch_staged_parity: true
+  evidence: "/Factorio/Local-QA/EM088_TRAIN_ENERGY_EVIDENCE.zip"
+  evidence_sha256: b361f8fc1c6022e60ca409978f9611190563170fe11753cc4d8153030ecf497a
+  report: docs/development/EM088_TRAIN_ENERGY_QA.md
+  performance_gate: not_met
+  full_connected_stress100: not_rerun
+  full_long100: not_rerun
+  next: em089_finite_onboard_accumulator
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em087p_sync_profile_20261126:
+  date: "2026-11-26"
+  branch: "test/em087p-sync-profile"
+  base_commit: "f000495098980ae15c6338fbbe2e5db948f94c49"
+  runtime_version: "0.1.98"
+  status: partial_targeted_native_pass_performance_inconclusive
+  profile_train_count: 100
+  diagnostic_windows_pass: [true, true]
+  diagnostic_end_tick: 601
+  diagnostic_fixture_lines_equal: 12
+  diagnostic_energy_total_J: 12500000000
+  diagnostic_paid_t600_J: 1488444257.816
+  t600_sync_ms: [1831.987425, 1946.686185]
+  t600_path_selection_ms: [532.214759, 455.575160]
+  t600_candidates_partition_base_ms: 295.142852
+  t600_wire_audit_ms: [127.878066, 783.674615]
+  corridor_scan_median_ms: [8.3031165, 8.2386895]
+  corridor_scan_max_ms: [36.164203, 13.222591]
+  candidate_code_only_sha256: b636c265f4794022f1a39ddc8975a2540e2c4f0f0a4245c05004ecd1a52d60e4
+  targeted_native_cases_pass: 5
+  path_oracle_comparisons: 8935
+  path_oracle_native_hits: 3603
+  charged_short_cases_pass: 4
+  mixed_native_cases_pass: 11
+  mixed_fixture_lines_equal: 124
+  functional_workers: 3
+  focused_wall_seconds: 6.851
+  mixed_wall_seconds: 21.664
+  mixed_cgroup_peak_bytes: 2323107840
+  oom_events: 0
+  stationary100_benchmark_ticks: 480
+  benchmark_runs_per_variant: 1
+  benchmark_mean_ms: [36.863, 34.898]
+  benchmark_max_ms: [433.656, 395.596]
+  benchmark_checksum: 2975750948
+  benchmark_compared_lines_equal: 526
+  full_long100_arrival: not_run
+  full_prior_regression: not_run
+  performance_gate: not_met
+  candidate_promoted: false
+  runtime_changed: false
+  evidence: "/Factorio/Local-QA/EM087P_SYNC_PROFILE_EVIDENCE.zip"
+  evidence_sha256: b909a816262bad6f5a2b4fc3f35ee6a6903cf92648048feaffc064f5d1995117
+  report: docs/development/EM087P_SYNC_PROFILE_QA.md
+  next: em087q_same_save_long100_periodic_audit
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em087o_continuous_profile_20261126:
+  date: "2026-11-26"
+  branch: "test/em087o-continuous-profile"
+  base_commit: "4b50b0e9d8a485d142d857b0ae1be4e3374c444e"
+  runtime_version: "0.1.98"
+  status: partial_native_test_only_pass
+  nominal_route_tiles: 761
+  arrival_displacement_min_exclusive_tiles: 700
+  full_long_train_counts: [12, 24]
+  full_long_pass: [true, true]
+  full_long_end_tick: 2401
+  full_long_sample_count_each: 23
+  sampled_moving_ticks: [240, 360, 480, 600]
+  full_long_budgets_J: [1500000000, 3000000000]
+  functional_workers: 2
+  functional_wall_seconds: 53.627
+  functional_peak_cgroup_bytes: 1632268288
+  oom_events: 0
+  profiled_train_count: 100
+  profile_window_pass: true
+  profile_window_end_tick: 601
+  profile_budget_J: 12500000000
+  profile_sample_count: 6
+  profile_t600_paid_J: 1488444257.816
+  profile_wall_seconds: 81.19
+  profile_max_rss_kib: 908576
+  ordinary_profile_samples: 12
+  ordinary_bridge_median_ms: 34.933759
+  ordinary_isolation_median_ms: 9.235318
+  ordinary_ports_median_ms: 7.270932
+  ordinary_dispatch_median_ms: 3.7165785
+  ordinary_paid_traction_median_ms: 7.59379
+  t427_bridge_peak_ms: 178.144999
+  t600_outer_profile_sum_ms: 2427.715028
+  t600_technical_sync_ms: 1524.244400
+  t600_mast_sync_ms: 384.463386
+  t600_art_ms: 302.757755
+  t600_bridge_ms: 195.914851
+  full_uninstrumented_long100: not_run
+  same_save_uninstrumented_benchmark: not_run
+  prior_full_regression_rerun: not_run
+  performance_gate: not_met
+  runtime_changed: false
+  evidence: "/Factorio/Local-QA/EM087O_CONTINUOUS_QA_EVIDENCE.zip"
+  evidence_sha256: effc4d4688e9eb5ebe6a1c55d5747bb54e9a0beea649eeb24dee500acce74dd5
+  source_archive_sha256: c3bb440cf25a135931ecb538a12e04dd1fa595cee561b2727ccc700c7443cd45
+  report: docs/development/EM087O_CONTINUOUS_QA.md
+  next: em087p_full_sync_subphase_and_isolation_profile
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+parallel_qa_policy_20261126:
+  status: documented_proven_workflow
+  scope: independent_native_functional_tests_only
+  evidence_commit: "cc558e2c4c7a5f02fe51ab8f9c4bc827783ecac2"
+  standard: docs/development/PARALLEL_QA_STANDARD.md
+  runner: tests/em087m-mixed-outposts/run_parallel.py
+  runbook: tests/em087m-mixed-outposts/PARALLEL_QA.md
+  remeasure_effective_limits_each_session: true
+  calibrated_environment:
+    ram_mib: 4096
+    cpu_quota: 4
+    reserve_mib: 768
+    small_worker_planning_mib: 700
+    small_workers: 3
+    medium_workers: 2
+    large_workers: 1
+  performance_benchmark_workers: 1
+  concurrent_qa_during_benchmark: false
+  isolated_writable_paths: true
+  immutable_shared_inputs: true
+  sampled_guard_not_oom_guarantee: true
+  verified_cases_serial_parallel: [11, 11]
+  verified_wall_seconds: [44.302, 20.339]
+  matching_fixture_log_lines: 124
+  runtime_acceleration_proven: false
+  owner_install_changed: false
+
+em087n_parallel_stress_20261126:
+  date: "2026-11-26"
+  branch: "test/em087n-parallel-stress"
+  base_commit: "464737717489a88c8c5782dc10613617a9921153"
+  runtime_version: "0.1.98"
+  status: native_test_only_pass_keep_runtime
+  native_engine: "2.1.24 build87808 linux64 headless"
+  cgroup_memory_limit_bytes: 4294967296
+  cpu_quota: 4
+  reserved_memory_mib: 768
+  small_worker_estimate_mib: 700
+  calibration_workers: 2
+  calibration_pass: 2
+  comparison_workers: [1, 3]
+  comparison_cases_pass: [11, 11]
+  comparison_wall_seconds: [44.302, 20.339]
+  comparison_cgroup_peak_bytes: [1633517568, 2393780224]
+  comparison_fixture_log_lines_equal: 124
+  disk_reload_equal_snapshots_each: 6
+  oom_events: 0
+  sampled_memory_guard_triggered: false
+  stress_train_counts: [12, 24, 100]
+  stress_pass: [true, true, true]
+  stress_budget_J: [1500000000, 3000000000, 12500000000]
+  stress_energy_samples_each: 17
+  stress100_corridors: 100
+  stress100_ring_links: 100
+  stress100_substations: 275
+  stress100_native_accumulators: 200
+  stress100_outposts_each_role: 25
+  stress100_trains_arrived: 100
+  stress100_paid_train_J: 785255349.94526
+  stress100_outage_load_gain_J: 131587622.895
+  stress100_wall_seconds: 107.227
+  stress100_max_rss_kib: 596860
+  stress100_cgroup_peak_bytes: 1688064000
+  stress100_ring_bypass: PASS
+  stress100_rejoin: PASS
+  runtime_changed: false
+  performance_gate: not_met
+  long_continuous_motion: not_tested
+  evidence: "/Factorio/Local-QA/EM087N_PARALLEL_EVIDENCE.zip"
+  evidence_sha256: 1484b771b96af12c2a5c8e890d95d76d3629cfa7ee4c0fe892cc36641aec124a
+  suite: "/Factorio/Local-QA/EM087N_PARALLEL_TEST_SUITE.zip"
+  suite_sha256: 90a5a3d4f52fecb8b698b2ac4ab9c3e9e4a76c7b01efc0e81698495c397be6a7
+  report: docs/development/EM087N_PARALLEL_QA.md
+  next: em087o_continuous_motion_profile
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em087m_mixed_outposts_20261126:
+  date: "2026-11-26"
+  branch: "test/em087m-mixed-outposts"
+  base_commit: "08b1791b41c5dcc323f32ad634a49abab47ee5e3"
+  runtime_version: "0.1.98"
+  status: native_test_only_pass_keep_runtime
+  native_engine: "2.1.24 build87808 linux64 headless"
+  native_new_cases_pass: 10
+  independent_disk_reload: PASS
+  small_chain_energy_J: 200000000
+  small_chain_sample_count: 15
+  disk_reload_equal_snapshots: 6
+  scale_corridors: 12
+  scale_vanilla_transit_networks: 11
+  scale_substations: 31
+  scale_native_accumulators: 24
+  scale_outposts_per_role: 3
+  scale_trains_arrived: 3
+  scale_paid_train_J: 16381386.646605
+  scale_energy_J: 600000000
+  scale_sample_count: 15
+  single_path_measured_W: 20000000
+  zero_source_load_J: 0
+  native_solar_W: 480000
+  battery_only_load_J: 11900000
+  buffer_only_load_J: 11900000
+  rejected_candidate_version: "0.1.99"
+  rejected_candidate_mixed_cases_pass: 9
+  code_only_moving100_sample_mean_ms: [57.640, 73.820]
+  code_only_moving100_sample_peak_ms: [324.185, 394.817]
+  code_only_checksums_match: false
+  performance_gate: not_met
+  full_candidate_old_regressions: not_run
+  suite: tests/em087m-mixed-outposts
+  standalone_runner_end_to_end: not_run
+  evidence: "/Factorio/Local-QA/EM087M_MIXED_OUTPOSTS_EVIDENCE.zip"
+  evidence_sha256: a5eff399da828d52be9cad1cce6091f51c4bebba1aa4d58cf59c4f0af893cc89
+  report: docs/development/EM087M_MIXED_OUTPOSTS_QA.md
+  runtime_changed: false
+  main_merged: false
+  official_release: false
+
+em087l_active_idle_demand_20261126:
+  date: "2026-11-26"
+  branch: "experiment/em087l-active-idle-demand"
+  base_commit: "1559c6fc3a3d467808a7a46c69138be7f20b0860"
+  mod_version: "0.1.98"
+  status: partial_experiment_root_cause_fixed_performance_gate_open
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 65
+  explicit_native_pass: 60
+  stand_assertions_pass: 5
+  additional_wake_idle_exact_zip: PASS
+  one_train_buffer_stops: [151, 2]
+  moving100_buffer_stops: [15100, 200]
+  moving100_arrived: 100
+  moving100_distance_tiles: 7600
+  moving100_paid_J: 601666666.66668
+  moving100_motor_paid_J: 135000000.00002
+  native_fault_variants_pass: 4
+  frozen_buffer_J: 333333.33333333
+  restored_delivery_J: 9833333.3333332
+  code_only_moving100_runs_per_variant: 2
+  code_only_moving100_benchmark_ticks: 200
+  code_only_moving100_mean_ms: [69.3765, 57.5545]
+  code_only_moving100_worst_peak_ms: [295.520, 358.304]
+  code_only_moving100_buffer_stops_both_runs: [11800, 200]
+  within_variant_checksums_match: true
+  cross_variant_checksums_match: false
+  sampled_paid_ledgers_match: true
+  supplemental_benchmarks: incomplete_no_paired_verdict
+  performance_gate: not_met
+  full_version_performance_benchmark: not_run
+  windows_native_gui: pending
+  multiplayer: not_run
+  game_files: 157
+  unchanged_pngs: 99
+  full_archive_sha256: 9c3ebef74c366aaeed530e48b53a1c1594acbe8e7347ad6aed07bba5733b2d9a
+  patch_sha256: fbba074d591eecc894ed5a7f07668812cd1142f759fc09abf1468ec175d9c885
+  evidence: "/Factorio/Local-QA/EM087L_ACTIVE_IDLE_EVIDENCE.zip"
+  evidence_sha256: cae013fdb4a8cf009498c42fb74542a72c605e6409141c24fe09b671f96ea4c2
+  report: docs/development/EM087L_ACTIVE_IDLE_QA.md
+  next: em087m_continuous_motion_native_observe_and_traction_profile
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
+em087k_steady_phase_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087k-steady-phase
+  base_commit: "4096f3e3cc1295a4cc4ab95ec5f640c28191460b"
+  mod_version: "0.1.97"
+  status: partial_experiment_mixed_performance_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 65
+  explicit_native_pass: 60
+  stand_assertions_pass: 5
+  charged_buffer_fault_variants_pass: 4
+  frozen_buffer_J: 333333.33333333
+  restored_delivery_J: 9833333.3333332
+  code_only_runs_per_variant: 2
+  code_only_50_mean_ms: [15.933, 16.8175]
+  code_only_100_mean_ms: [38.9575, 36.513]
+  code_only_long201_mean_ms: [3.307, 2.935]
+  code_only_moving100_mean_ms: [52.0695, 49.656]
+  moving100_benchmark_ticks: 200
+  moving100_buffer_stop_events_per_run: 6000
+  moving100_preexisting_auto_idle_oscillation: observed
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: b3439467df1dd6982dc2a18c355c8fb8ee8d87f346c000d7b03d01d7f57e31af
+  evidence: "/Factorio/Local-QA/EM087K_STEADY_PHASE_EVIDENCE.zip"
+  next: em087l_active_idle_demand_feedback
+  main_merged: false
+  official_release: false
+
+em087j_native_negative_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087j-native-negative
+  base_commit: "063d87a6cb491759f45fa9a63e27a00926e26339"
+  mod_version: "0.1.96"
+  status: partial_experiment_safety_fix_and_peak_improvement_gate_open
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 62
+  explicit_native_pass: 57
+  stand_assertions_pass: 5
+  native_path_oracle_comparisons: 8935
+  preexisting_idle_short_reproduced_on_base: true
+  idle_short_final_freeze_recovery: pass
+  frozen_buffer_J: 333333.33333333
+  restored_delivery_J: 9833333.3333332
+  code_only_runs_per_variant: 1
+  code_only_50_mean_ms: [14.984, 15.258]
+  code_only_50_max_ms: [379.496, 221.735]
+  code_only_100_mean_ms: [36.870, 33.285]
+  code_only_100_max_ms: [724.190, 397.873]
+  code_only_long201_mean_ms: [3.135, 2.732]
+  code_only_long201_max_ms: [25.594, 57.536]
+  profiled_tick600_path_search_ms: [510.188515, 162.440123]
+  profiled_tick600_technical_ms: [714.428031, 275.273217]
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: c90114553c74b7835218630d882b434a5ab437963475fb8716eecbbbf4513098
+  evidence: "/Factorio/Local-QA/EM087J_NATIVE_NEGATIVE_EVIDENCE.zip"
+  next: steady_bridge_traction_visual_profile_and_fault_matrix
+  main_merged: false
+  official_release: false
+
+em087i_native_audit_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087i-native-audit
+  base_commit: "c1ea587040ddabbcf0bc215700c41ad8a59a09a6"
+  mod_version: "0.1.95"
+  status: partial_experiment_mean_improved_gate_open
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 61
+  explicit_native_pass: 56
+  stand_assertions_pass: 5
+  real_mast_foreign_missing_wrong_origin: pass
+  code_only_50_mean_ms: [19.62, 17.2055]
+  code_only_100_mean_ms: [39.2425, 36.698]
+  code_only_long201_mean_ms: [3.09, 2.9965]
+  code_only_100_max_ms: [876.568, 1006.199]
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  idle_drain_isolation_separate_fault_test: not_run
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 3678293ed0a8e9d741df9cf1c932a4b7fe641b33ec84394c83835e317262ac5e
+  evidence: "/Factorio/Local-QA/EM087I_NATIVE_AUDIT_EVIDENCE.zip"
+  next: profile_periodic_audit_and_idle_active_bridge
+  main_merged: false
+  official_release: false
+
+em087h_native_ports_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087h-native-ports
+  base_commit: "51eceb442ed7d8fdd487795f9d46e861e427f431"
+  mod_version: "0.1.94"
+  status: partial_experiment_mixed_performance_not_accepted
+  excluded_gameplay_experiment: "0.1.93"
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 60
+  explicit_native_pass: 55
+  stand_assertions_pass: 5
+  connector_predicate_comparisons: 10
+  native_switch_parent_grouping: pass
+  code_only_50_mean_ms: [19.0215, 17.549]
+  code_only_100_mean_ms: [42.4385, 39.708]
+  code_only_long201_mean_ms: [3.048, 3.584]
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  direct_patch: blocked_nonadjacent_versions
+  full_archive_sha256: 229a75b0d14bf64c7a17542c16855e93b66a975616eaaddf23037f1da815702f
+  evidence: "/Factorio/Local-QA/EM087H_NATIVE_PORTS_EVIDENCE.zip"
+  next: native_bridge_isolation_and_mast_audit
+  main_merged: false
+  official_release: false
+
+em087g_path_memo_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087g-path-memo
+  base_commit: "51eceb442ed7d8fdd487795f9d46e861e427f431"
+  mod_version: "0.1.93"
+  status: partial_experiment_performance_regression_not_adopted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 60
+  explicit_native_pass: 55
+  stand_assertions_pass: 5
+  profiled_runs_pass: 4
+  fresh_same_version_disk_reload: pass
+  native_pathfinder_electrical_equivalence: disproved_signal_and_vanilla_rail
+  first_cut_fresh_path_queries: 11
+  first_cut_reused_path_queries: 50
+  event_sync_mean_ms: [16.2111524, 18.0282884]
+  code_only_50_mean_ms: [21.7375, 20.4295]
+  code_only_100_mean_ms: [42.1955, 43.8215]
+  code_only_long201_mean_ms: [3.722, 3.5325]
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: b1e5f966a83d5cd2b6f228444d25a38ba8903c233a2a381a00339fc4b6bd00ae
+  evidence: "/Factorio/Local-QA/EM087G_PATH_MEMO_EVIDENCE.zip"
+  next: vanilla_first_native_audit_bridge_profile
+  next_comparison_base: "0.1.92"
+  main_merged: false
+  official_release: false
+
+em087f_local_plan_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087f-local-plan
+  base_commit: "c39ccbffc6abd265c6f0426807c0f30d95ec0f1e"
+  mod_version: "0.1.92"
+  status: partial_experiment_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 57
+  explicit_native_pass: 52
+  stand_assertions_pass: 5
+  profiled_stress_runs_pass: 4
+  profile_samples_per_variant: 24
+  local_50_corridors_sync_mean_ms: [42.572009625, 23.32333975]
+  local_50_corridors_candidate_pairs_recomputed: [150, 3]
+  code_only_50_mean_ms: [19.0555, 18.586]
+  code_only_100_mean_ms: [43.025, 42.0905]
+  code_only_long201_mean_ms: [3.0315, 3.013]
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  persistent_incremental_graph: component_local_experimental
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 31dc2b8412438a4b2b17c405343c637cbbb709aea2d9a5f3cea6bee73f1a81c6
+  evidence: "/Factorio/Local-QA/EM087F_LOCAL_PLAN_EVIDENCE.zip"
+  next: em087g_path_specific_invalidation
+  main_merged: false
+  official_release: false
+
+em087e_native_rail_watch_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087e-native-rail-watch
+  base_commit: "f1ca72caf6b2b36cd30cb2cf3e414da7412999bf"
+  mod_version: "0.1.91"
+  status: partial_experiment_performance_regression
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_regression_pass: 53
+  additional_native_pass: 3
+  total_candidate_scenarios_pass: 56
+  silent_cut_tick: 200
+  notification_tick: 200
+  split_verified_tick: 203
+  disk_reload_watcher: pass
+  residual_J: 333333.33333334
+  later_delivery_J_ticks_220_260: 0
+  code_only_50_mean_ms: [15.7775, 18.176]
+  code_only_100_mean_ms: [38.4535, 40.5135]
+  code_only_long201_mean_ms: [2.4965, 3.153]
+  same_version_native_checksums_match: false
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  persistent_incremental_graph: not_implemented
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 83b99e57f68abb4958bbe8737145b754f5b72b623c9c8d2d5dae4cd7473011f2
+  evidence: "/Factorio/Local-QA/EM087E_RAIL_WATCH_EVIDENCE.zip"
+  next: dependency_specific_invalidation
+  main_merged: false
+  official_release: false
+
+em087d_native_index_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087d-native-network-index
+  base_commit: "80fe245f122e7cda6306fc7a705e17804d48fe7c"
+  mod_version: "0.1.90"
+  status: partial_experiment_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_regression_pass: 53
+  explicit_native_pass: 48
+  stand_assertions_pass: 5
+  independent_destruction_probe: pass
+  total_candidate_scenarios_pass: 54
+  native_silent_destruction_latency_ticks_in_probe: 0
+  native_destruction_watcher_gameplay: not_implemented
+  code_only_50_mean_ms: [14.632, 16.1655]
+  code_only_100_mean_ms: [38.508, 38.3705]
+  code_only_long201_mean_ms: [2.6895, 2.691]
+  profiled_100_moving_requests_mean_ms: [19.305, 7.011]
+  profiled_100_moving_fair_charge_mean_ms: [14.326, 4.766]
+  profile_samples_per_function_per_variant: 23
+  same_version_native_checksums_match: true
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 43659633b3b4ee4bc858b454cf8958311bb4a5fa94ae800aed56cb6a7f347efd
+  evidence: "/Factorio/Local-QA/EM087D_NATIVE_INDEX_EVIDENCE.zip"
+  next: em087e_native_path_dependency_invalidation
+  main_merged: false
+  official_release: false
+
+em087c_native_topology_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087c-native-topology
+  base_commit: "cf8f637f835096d4d337a8f2762756768e6a66c2"
+  mod_version: "0.1.89"
+  status: partial_experiment_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_regression_pass: 51
+  additional_native_pass: 2
+  actual_path_comparisons: 8935
+  native_fast_path_hits: 3603
+  code_only_50_mean_ms: [17.4665, 15.24]
+  code_only_100_mean_ms: [38.1295, 37.9795]
+  code_only_long201_mean_ms: [2.796, 2.7345]
+  actual_100_mean_ms: 38.5235
+  actual_100_max_ms: 698.583
+  same_version_native_checksums_match: true
+  full_audit_period_ticks: 600
+  persistent_incremental_graph: not_implemented
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 231ebab04b58b8d36cc807ee85610eeab1a4bc8ab9a0bafeed60a20b0a22467d
+  evidence: "/Factorio/Local-QA/EM087C_NATIVE_TOPOLOGY_EVIDENCE.zip"
+  next: native_bridge_profile_event_invalidation
+  main_merged: false
+  official_release: false
+
+em087b_exact_walk_bridge_20261125:
+  date: "2026-11-25"
+  branch: experiment/em087b-exact-walk-bridge
+  base_commit: "bd5168d0ede652b64890f3a4007d78407e844cd5"
+  mod_version: "0.1.88"
+  status: partial_experiment_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_regression_pass: 51
+  explicit_native_pass: 46
+  stand_assertions_pass: 5
+  simulated_path_comparisons: 144000
+  simulated_dispatch_comparisons: 1000
+  code_only_50_mean_ms: [19.904, 18.936]
+  code_only_100_mean_ms: [39.920, 37.8935]
+  code_only_long201_mean_ms: [2.9735, 3.0555]
+  same_version_native_checksums_match: true
+  full_version_performance_benchmark: not_run
+  persistent_incremental_graph: design_only
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: f405fe155a42d629b116350970f0a2408a3f510c56cd52ee2bb96c19790d8c75
+  evidence: "/Factorio/Local-QA/EM087B_PERFORMANCE_EVIDENCE.zip"
+  next: em087c
+  main_merged: false
+  official_release: false
+
+em087_full_regression_20261125:
+  branch: test/em087-full-regression-20261125
+  base_commit: "6f67adc25132a6a9a81b4e0959d3ac237b12a997"
+  mod_version: "0.1.87"
+  status: functional_pass_performance_gate_open
+  launches: 54
+  successful_scenarios: 51
+  explicit_native_pass: 46
+  stand_assertions: 5
+  corrected_test_fixture_attempts: 3
+  moving_trains: 100
+  prototype_assertions: 256
+  gameplay_files_changed: 0
+  windows_visibility: pending
+  evidence: "/Factorio/Local-QA/EM087_FULL_REGRESSION_EVIDENCE.zip"
+  next: em087b
+  main_merged: false
+
+em087_performance_experiment_20261125:
+  date: "2026-11-25"
+  branch: experiment/em087-performance-r2
+  base_commit: "ce9b30eaab9465c71c669dfd545657490cc5301b"
+  mod_version: "0.1.87"
+  status: partial_experimental_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_explicit_pass: 10
+  native_800_motor_assertions: pass
+  technical_helpers_at_800: 4
+  native_gui_complete_invisibility: windows_pending
+  long201_base_mean_ms: 4.200333333333333
+  long201_final_mean_ms: 2.9026666666666667
+  hundred_train_full_candidate_mean_ms: 36.552
+  hundred_train_code_only_mean_ms: 30.522
+  hundred_train_code_only_peak_ms: 512.860
+  performance_gate: not_met
+  patch_sha256: f99ae5a3d431893c79eea7edf84396df722c986a2e1e91d7f34ebf60fed64439
+  evidence: "/Factorio/Patches/EM087_PERFORMANCE_EVIDENCE.zip"
+  next: em087b_bridge_and_incremental_topology_safety
+  main_merged: false
+  official_release: false
+
+em078_hidden_helper_no_path_alert_20261123:
+  date: "2026-11-23"
+  branch: fix/em078-hide-technical-no-path-icons-20261123
+  based_on: experiment/em077-block-traction-200-native-20261123
+  mod_version: "0.1.78"
+  owner_video_error: native_flashing_train_no_path_icon_at_hidden_helper_positions
+  hidden_helper_prototypes: 256
+  helper_alert_icon_scale: 0
+  helper_icons_positioning: empty
+  real_electric_and_vanilla_alerts_unchanged: true
+  helper_fuel_warning_still_disabled: true
+  standard_substation_mw: 20
+  native_headless_engine: "Factorio 2.1.24 build87808"
+  native_all_256_prototypes: passed
+  native_actual_no_path_201_401_dual201_800_zero201: passed_5_of_5
+  native_fullmod_077_regressions: passed_17_of_17
+  archive_sha256: a6b5433b5513a9755a53185a5063bbf41f8bf15a1fe625a20b720bc351d38163
+  unmodified_original_pngs: 83
+  visual_windows_gui_confirmed: false
+  save_load_and_multiplayer_retested: false
+  main_modified: false
+  merge_authorized: false
+  release_authorized: false
+  report: docs/research/EM078_NO_PATH_TECH_ALERT_2026-11-23.md
+
+em077_200_motor_wagon_blocks_20261123:
+  date: "2026-11-23"
+  branch: experiment/em077-block-traction-200-native-20261123
+  owner_approved: true
+  max_motor_wagons_per_helper: 200
+  motor_wagon_increment_w: 500000
+  full_block_helper_w: 100000000
+  legacy_prototype_count_preserved: 256
+  new_block_prototype_count_used: 200
+  authentic_headings_at_most: 2
+  power_per_individual_substation_w: 20000000
+  obsolete_global_120mw_native_sink_ceiling_removed: true
+  factorio_version: "2.1.24 build 87808 linux64 headless"
+  fullmod_native_cases_pass: 17
+  fullmod_native_cases_total: 17
+  largest_motor_consist_natively_tested: 800
+  auto201_distance_tiles_at_tick300: 50.059
+  power401_native_sink_peak_demand_mw: 202.5
+  power401_number_of_20mw_stations: 11
+  power401_paid_energy_j: 359966666.667
+  network_2830_tick_parallel_regression: passed
+  em076_status_regression: passed
+  exact_zip_201_and_status_native: passed
+  exact_zip_17_case_rerun: stopped_after_first_eight_passed_due_to_time_limit
+  zip_filename: ElectrifiedMainline_0.1.77.zip
+  zip_sha256: 741a67285de59fd81cf95a7a2ef5654e1559d37a960039e0a7dfbc3f39b92fc6
+  zip_game_files: 140
+  original_png_unchanged: 83
+  real_save_load_roundtrip: not_run
+  windows_gui: not_run
+  multiplayer: not_run
+  github_actions_launched_manually: false
+  main_modified: false
+  merged: false
+  stable_release: false
+  decision: docs/decisions/EM077_200_WAGON_BLOCKS_2026-11-23.md
+  report: docs/research/EM077_BLOCK_TRACTION_NATIVE_2026-11-23.md
+
+em076_traction_status_native_20261123:
+  date: "2026-11-23"
+  branch: fix/em076-traction-power-status-20261123
+  real_electric_loco_ru_status: "Нет тягового питания"
+  real_electric_loco_en_status: "No traction power"
+  real_electric_status_icon: "__core__/graphics/icons/alerts/electricity-icon-red.png"
+  logical_locomotives_count: 256
+  helper_burner_render_no_power_icon: false
+  helper_transparent_usage_fallback_preserved: true
+  vanilla_fuel_warning_changed: false
+  power_bridge_limit_per_station_mw: 20
+  local_factorio_native_version: "2.1.24 build 87808 linux64 headless"
+  native_prototype_and_runtime_burner_status: passed
+  native_grid_2830_tick_scaling_and_overload_regression: passed
+  gui_visual_acceptance: not_run
+  global_train_out_of_fuel_alert: not_verified
+  new_motorized_train_scenario_runs: not_run
+  github_actions_triggered: false
+  main_modified: false
+  release_authorized: false
+  merged: false
+  report: docs/research/EM076_TRACTION_POWER_STATUS_2026-11-23.md
+
+em072_em075_integration_20261123:
+  date: "2026-11-23"
+  branch: integration/em072-em075-20mw-20261123
+  verified_lineage: em072_to_em073_to_em074_to_em075_20mw_fix_fast_forward
+  baseline_integrated_game_sha: 21114f065828432274604054c0bfc80afd61ee92
+  fullmod_game_members: 140
+  original_png_count_unmodified: 83
+  exact_modified_game_blobs_matched: 7
+  per_substation_power_limit_w: 20000000
+  single_120mw_substation: rejected_owner
+  scaling_20mw_station_counts: [1, 2, 3, 6]
+  scaling_measured_mw: [20, 40, 60, 120]
+  fullmod_native_factorio_version: "2.1.24 build 87808 linux64 headless"
+  independent_native_runs: 2
+  native_ticks_each: 2830
+  native_ticks_total: 5660
+  native_forward_reverse_overload_dropout_starvation_off: passed
+  fullmod_em074_status_prototype_load: passed
+  local_probe_uses_real_eei_not_trains: true
+  native_200_motor_wagon_high_scenarios: not_run
+  real_train_traction_acceptance: not_run
+  windows_gui_mp_save_load_undo_acceptance: not_run
+  github_actions_triggered_by_owner_request: false
+  main_modified: false
+  release_or_merge_to_main_authorized: false
+  report: docs/integration/EM072_EM075_NATIVE_20261123.md
+
+em075_single_120mw_rejected_owner_20261123:
+  date: "2026-11-23"
+  status: rejected_single_120mw_substation
+  approved_power_limit_per_station_w: 20000000
+  native_input_limit: 20MW
+  native_output_limit: 20MW
+  scaling_rule: parallel_identical_20mw_stations
+  n1_mw: 20
+  n2_mw: 40
+  n3_mw: 60
+  n6_mw: 120
+  old_120mw_per_station_native_evidence: historical_not_accepted
+  local_factorio_2_1_24_fullmod_073_20mw_parallel_2830_ticks: passed
+  corrected_em074_native_fullmod: not_run
+  modified_200_wagon_high_test: not_run
+  github_actions_started: false
+  main_modified: false
+  merged: false
+  released: false
+  record: docs/decisions/EM075_REJECT_SINGLE_120MW_2026-11-23.md
+
+em074_native_indicators_official_final_20261123:
+  report_date: "2026-11-23"
+  experimental_branch: experiment/em074-native-traction-status-20261123
+  gameplay_commit: 9a50e062a28833c347f009de5cac5129c2ea3ca4
+  build_GHA_run: 45172918546
+  build_GHA_result: success
+  documentation_GHA_run: 45172918591
+  documentation_GHA_result: success
+  artifact_id: 14818410254
+  official_fullmod_zip_sha256: 9a6e0f2658375d383810977c4a2bd6158dbce3a656ed0653306e2c5eeaaefe28
+  complete_mod_files: 140
+  original_artwork_png_unchanged: 83
+  gameplay_script_logic_unchanged_from_073: true
+  native_factorio_version: "2.1.24 build87808"
+  original_vanilla_burner_usage_unmodified: true
+  electric_loco_native_status_ru: "Нет контактной сети"
+  electric_loco_native_icon: "__core__/graphics/icons/alerts/electricity-icon-red.png"
+  hidden_motor_native_icon: "__core__/graphics/empty.png"
+  all_256_hidden_boosters_status_data_and_runtime: pass
+  official_exact_zip_native_gameplay_passed: 12
+  official_exact_zip_native_gameplay_total: 12
+  official_zero_w_offgrid_negative: pass
+  official_no_EM_200_motor_wagons_no_self_propulsion: pass
+  official_two_head_auto_reverse: pass
+  official_200_motor_opposite_heads_both_directions: pass
+  official_same_heading_no_double_motor: pass
+  official_owner_dismantle_loss: pass
+  actual_Windows_GUI_new_icon_accepted: false
+  missing_catenary_vs_missing_voltage_separated: false
+  train_out_of_fuel_global_alert_fully_suppressed: unverified
+  owner_saves_untouched: true
+  main_modified: false
+  release_authorized: false
+  report_path: docs/research/EM074_STATUS_FINAL_OFFICIAL_QA_2026-11-23.md
+
+em074_status_indicators_20261123:
+  date: "2026-11-23"
+  branch: experiment/em074-native-traction-status-20261123
+  based_on_experimental_commit: 5ab81df6c33dc2f03ad3d2176358d7e8abb77ffa
+  version: "0.1.74"
+  scope: native_per_entity_visual_status_and_locale_only
+  vanilla_fuel_status_modified: false
+  native_electric_burner_usage: em-25kv-electric-status-074
+  native_electric_low_charge_status_ru: "Нет контактной сети"
+  native_electric_alert_icon: "__core__/graphics/icons/alerts/electricity-icon-red.png"
+  native_hidden_burner_usage: em-hidden-motor-status-074
+  native_hidden_alert_icon: "__core__/graphics/empty.png"
+  hidden_boosters_status_prototypes_verified: 256
+  original_png_unchanged: 83
+  original_native_energy_bus_changed: false
+  original_native_motor_physics_changed: false
+  local_fullmod_factorio_2_1_24_status_data_test: pass
+  local_fullmod_sourcepaid_single: pass
+  local_fullmod_0w_and_offgrid: pass
+  local_fullmod_two_station_auto_both_directions: pass
+  local_fullmod_two_head_owner_demolition: pass
+  local_fullmod_200_wagons_stress: pending
+  official_ci_full_mod_zip_test: pending
+  windows_gui_visual_test: not_run
+  note: "No contact icon text is static based on empty native burner; can also appear with powerless 25kV line"
+  existing_current_main_modified: false
+  release_authorized: false
+  file: docs/research/EM074_NATIVE_STATUS_RESEARCH_2026-11-23.md
+
+em073_exact_official_073_final_native:
+  report_date: "2026-11-23"
+  branch: experiment/em073-native-directional-heads-20261123
+  fullmod_gameplay_commit: acf3aa7a7de1c97c425977d8be57aba3c1f4c74d
+  docs_only_final_commit: pending
+  official_GHA_build_run: 45082646087
+  official_GHA_build_result: success
+  docs_GHA_validation_run: 45082646089
+  docs_GHA_validation_result: success
+  artifact_id: 14778316033
+  official_inner_fullmod_zip_sha256: 30ba63f788cafbcfcc8454e62759cb00017f7459739b9fb211a1e7fd52433276
+  full_game_members_exactly_local_equal: 139
+  accepted_approved_png_unchanged: 83
+  native_official_factorio: "2.1.24 build87808"
+  native_official_scenarios_passed: 12
+  native_official_scenarios_total: 12
+  direction_controller_lua: none
+  native_AUTO_HSR_real_stations_arrival_ticks: [355,802]
+  exact_official_native_200_opposite_2_EM_helpers: 2
+  exact_official_native_200_opposite_extra_nameplate_each_direction_w: 100000000
+  exact_official_native_200_opposite_forward_tiles_t300: -109.859
+  exact_official_native_200_opposite_reverse_tiles_t300: 109.859
+  exact_official_native_200_same_heading_2_EM_helpers: 1
+  exact_official_native_200_no_EM_helpers: 0
+  exact_official_native_200_no_EM_motor_J: 0
+  exact_official_native_200_no_EM_motion_tiles: 0
+  exact_official_native_0W_and_offgrid_negative: pass
+  genuine_native_25kv_motor_debit_J_t300: 282200000
+  genuine_native_25kv_demand_W_t300: 102000000
+  real_independent_server_save_tick125_reload_tick300: pass_exact_all_snapshot
+  real_official_072_to_official_073_test_save_migration: pass_one_to_two_helpers
+  real_user_saves_tested: false
+  manual_reverse_switching_deprioritized: true
+  complete_200_motor_AUTO_roundtrip_tested: false
+  GUI_blueprint_undo_mp_60UPS: untested
+  original_main_unchanged: true
+  release_authorized: false
+  report_path: docs/research/EM073_NATIVE_BIDIRECTIONAL_OWNER_ENGINE_TEST_2026-11-23.md
+
+em073_native_directional_heads_local:
+  date: "2026-11-23"
+  branch: experiment/em073-native-directional-heads-20261123
+  base_experiment_head: aa0240ba77962b14295ce5c9dbbe4ad71b634d49
+  experimental_mod_version: "0.1.73"
+  native_engine: Factorio_2_1_24_build87808
+  real_em_headings_grouping: LuaTrain_locomotives_front_movers_back_movers
+  lua_manual_direction_switch: false
+  native_wagon_booster_power_per_heading_for_200_wagons_W: 100000000
+  native_wagon_booster_num_for_opposite_heads: 2
+  native_wagon_booster_num_for_two_same_heading_em: 1
+  native_test_source_w: 120000000
+  local_native_scenarios_pass: 12
+  local_native_scenarios_total: 12
+  native_auto_real_two_stops_arrival_tick: [355,802]
+  native_200_motor_pushpull_distance_forward_tiles_tick300: -109.859
+  native_200_motor_pushpull_distance_reverse_tiles_tick300: 109.859
+  native_opposite_idle_helper_J_tick300: 966666.667
+  native_200_no_em_helper_count: 0
+  native_200_no_em_motor_paid_J: 0
+  native_200_no_em_distance_tiles: 0
+  native_zero_w_and_offgrid: pass
+  native_owner_demolition_loss_J: 16666.667
+  native_two_process_disk_save_tick125_to_tick300: pass_exact
+  original_approved_png_unchanged: 83
+  original_full_game_files: 139
+  exact_official_073_zip: pending
+  main_modified: false
+  release_authorized: false
+  research: docs/research/EM073_NATIVE_BIDIRECTIONAL_OWNER_ENGINE_TEST_2026-11-23.md
+
+em072_120mw_official_native_072:
+  date: "2026-11-23"
+  official_build_run: 45079778110
+  fullmod_source_commit: 916582ea2e24ee929964a5384b74056b6f472637
+  official_artifact_id: 14776198323
+  official_inner_zip_sha256: 67766bf58c390d3b644dd84f4b27e12a789a1cf4fd9b640f65ad7b6a758b2753
+  official_artifact_fullmod_files: 139
+  official_original_png_unchanged: 83
+  native_official_high_120mw_test: pass
+  native_official_high_120mw_200_motor_paid_J_tick300: 283333333.333
+  native_official_high_120mw_200_distance_tiles_tick300: 113.559
+  native_official_20mw_control_test: pass_same_51_3MJ_16_824tiles
+  native_official_0w_negative: pass_0J_0movement
+  native_official_offgrid_negative: pass_0J_0movement
+  native_official_single_small_consist: pass
+  exact_official_zip_native_scenarios: 5
+  local_two_real_em_same_head_200_motor: pass
+  main_changed: false
+  player_craftable_120mw_power_plant: not_implemented
+  ordinary_gameplay_20mw_station_still_approved: true
+  functional_reverse_two_head_motor: fail_unresolved
+  release_authorized: false
+
+em072_120mw_adequate_native_source:
+  date: "2026-11-23"
+  branch: experiment/em072-120mw-native-test-feeder-20261123
+  parent_commit: 2cdbc63697aa529a3a7538750f1b60692113d605
+  experimental_mod_version: "0.1.72"
+  factory_qa_source_w: 120000000
+  native_25kv_bridge_limit_w: 120000000
+  native_secondary_input_sink_limit_w: 120000000
+  200_motor_extra_nameplate_w: 100000000
+  single_em_nominal_w: 2000000
+  native_sink_request_w_tick300: 102000000
+  native_120mw_motor_paid_J_tick300: 283333333.333
+  native_120mw_distance_tiles_tick300: 113.559
+  native_20mw_motor_paid_J_tick300: 51300000
+  native_20mw_distance_tiles_tick300: 16.824
+  upgraded_bridge_at_20mw_source_same_baseline: true
+  native_0w_offgrid_negative: pass
+  real_engine: Factorio_2_1_24_build87808
+  official_072_GHA_zip_confirmed: false
+  120mw_normal_player_source_or_substation_approved: false
+  original_20mw_main_modified: false
+  reversed_two_head_additional_traction: still_fail_071
+  no_main_merge_or_release: true
+  research_file: docs/research/EM072_120MW_NATIVE_POWER_SOURCE_2026-11-23.md
+
+em072_owner_directional_logical_boosters_20261123:
+  owner_clarification_date: "2026-11-23"
+  status: accepted_design_not_implemented
+  concept: source_paid_native_hidden_booster_attached_to_each_real_em_heading
+  motor_wagon_alone_requires_real_em_loco: true
+  motor_wagon_without_em_self_propulsion: forbidden
+  single_em_200_motor_wagons_extra_nominal_W: 100000000
+  single_em_own_nominal_W: 2000000
+  single_em_total_installed_nominal_W: 102000000
+  source_power_remains_independent_cap: true
+  bidirectional_two_opposite_em: one_hidden_booster_each_direction
+  activate_booster_for_current_direction_only: true
+  multiple_same_heading_em: no_duplicate_motor_wagon_power
+  paid_j_from_authorized_25kv_only: true
+  non_active_helper_free_reversing_traction: must_test_and_prevent
+  helper_demolition_residual_loss: owner_approved
+  motor_200_without_any_em_native_negative_test: NOT_TESTED
+  existing_071_reverse_functional_test: FAIL
+  actual_071_bidirectional_controller: not_implemented
+  main_modified: false
+  release_authorized: false
+  contract_doc: docs/research/EM072_DIRECTIONAL_MOTOR_BOOSTER_OWNER_CONTRACT_2026-11-23.md
+
+em072_real_native_integrated_071_official_final:
+  date: "2026-11-23"
+  branch: experiment/em072-integrated-071-native-giant-dual-20261123
+  tested_gameplay_commit: a04b5f51998525a13293468d4a8a67970973397c
+  official_ci_run: 45072992463
+  official_ci_result: success
+  official_artifact_id: 14774151350
+  official_inner_zip_sha256: 46dd835ab1aadb46f32a4c6de73683b12b2efe191a052018b66688bb998edb7c
+  exact_fullmod_native_forward_and_ownership_tests: 18
+  exact_fullmod_native_forward_and_ownership_pass: 18
+  source_paid_hidden_motors_created_by_game_not_qa: true
+  engine: Factorio_2_1_24_build87808_linux_headless
+  64_motor_tiles_tick1200: 1690.234
+  64_passive_tiles_tick1200: 7.465
+  64_push_pull_one_way_tiles_tick1200: 1679.234
+  128_motor_tiles_tick1200: 1152.000
+  200_motor_tiles_tick1200: 651.277
+  200_motor_dual_em_same_head_tiles_tick1200: 644.793
+  256_motor_tiles_tick1200: 451.281
+  owner_loss_and_split_real_j_dissipation: pass
+  genuine_25kv_offgrid_0w_1mw_brownout: pass
+  auto_station_native_train_route: pass
+  new_tick0_independent_server_disk_save_tick125_reload_tick300_exact: pass
+  critical_reverse_boost_feature: fail
+  reverse_cab_motor_tiles_tick300: 68.973
+  reverse_cab_passive_tiles_tick300: 70.086
+  reverse_motor_native_burner_J_tick300: 16666.667
+  reverse_user_acceptance_blocked: true
+  reverse_reproduction: tests/run_em072_reverse_boundary.sh
+  game_files_total: 139
+  approved_png_unchanged: 83
+  hidden_max_motor_wagons_supported: 256
+  gui_blueprint_undo_mp_ups_user_real_saves: untested
+  main_modified: false
+  release_authorized: false
+  main_merge_authorized: false
+  report: docs/research/EM072_NATIVE_071_INTEGRATED_MOTOR_TRAIN_2026-11-23.md
+
+em072_real_native_integrated_motor_071:
+  date: "2026-11-23"
+  branch: experiment/em072-integrated-071-native-giant-dual-20261123
+  base_experimental_commit: 9bb32364dbd2ec3c18cddc6c2d9da42c661daee3
+  version: "0.1.71"
+  factorio_native_engine: "2.1.24 build87808 linux headless"
+  full_mod_game_files: 139
+  original_approved_png_unchanged: 83
+  gameplay_changes: [info.json, prototypes/em072_c5_fullmod_trial_063.lua, scripts/helper_lifecycle_067.lua, scripts/traction_paid_065.lua, scripts/control.lua]
+  native_energy_bus_real_25kv_sink_paid: pass_local_source
+  qa_overlay_creates_helper_or_credits_j: false
+  max_native_motor_wagons_supported: 256
+  extra_native_hidden_engines_per_train: 1
+  native_long_64_motor_tiles_t1200: 1690.234
+  native_long_64_passive_tiles_t1200: 7.465
+  native_long_64_pushpull_two_head_tiles_t1200: 1679.234
+  native_long_128_motor_tiles_t1200: 1152.000
+  native_long_200_motor_tiles_t300: 16.824
+  native_long_200_two_head_tiles_t300: 16.816
+  native_long_256_motor_tiles_t300: 11.836
+  native_auto_hsr_station: pass_t500
+  native_offgrid_and_0w_free_traction: pass_negative
+  native_1mw_source_scarcity: pass
+  paid_j_loss_on_split_and_owner_dismantle: pass
+  real_independent_server_save_reload_identical_tick300: pass
+  original_full_071_official_ci_zip: not_yet_built
+  official_071_exact_artifact_native_retets: pending
+  200_and_256_full_route: not_yet_verified
+  gui_undo_blueprint_mp_user_saves: not_tested
+  release_authorized: false
+  main_merge_authorized: false
+  report: docs/research/EM072_NATIVE_071_INTEGRATED_MOTOR_TRAIN_2026-11-23.md
+
+em072_lossy_dismantling_final_official_070:
+  date: "2026-11-22"
+  test_gameplay_commit: c8dcc3c495498cccff680ec219e9a7728e1c068c
+  official_build_run: 45066262782
+  official_build_result: success
+  official_artifact_id: 14771053545
+  official_zip_sha256: d0a06def2972570f3dbfc0a8aaed5f05dae8b2931764bf634511415535a1f23f
+  exact_official_zip_local_native_loss_scenarios: 10
+  exact_official_zip_local_native_original_traction_scenarios: 9
+  physical_independent_server_save_reload: pass_same_tick170
+  069_to_official_070_real_disk_save_migration: pass
+  paid_booster_dismantle_J: 8333.333
+  unchanged_native_sink_J_before_after: 6666.667
+  original_cargo_iron: 37
+  original_fluid_water: 9000
+  inherited_approved_png_unchanged: 83
+  docs_validation_run: 45066348028
+  docs_validation_result: success
+  automatic_motor_wagon_controller: not_implemented
+  user_gui_undo_mp: not_tested
+  release_authorized: false
+  main_modified: false
+  research_record: docs/research/EM072_LOSSY_DEMOLITION_NATIVE_20261122.md
+
+em072_lossy_dismantling_native_070:
+  decision_date: "2026-11-22"
+  owner_approved: paid_hidden_motor_residual_is_dismantling_loss
+  branch: experiment/em072-lossy-dismantling-fullmod-20261122
+  parent_sha: 16980fff7ffb968d09a36ebdc46804e228299f71
+  experimental_mod_version: "0.1.70"
+  main_mod_version: "0.1.62"
+  engine: Factorio_2.1.24_build87808_linux_headless
+  original_official_069_zip_sha256: 2915cf0a89670d12de9db4289aa7b9043467e8b9705b547bb4e21aa526edaa54
+  changed_gameplay_files: [info.json, scripts/control.lua, scripts/helper_lifecycle_067.lua]
+  original_png_unchanged: 83
+  local_positive_loss_scenarios: 10
+  repeated_paid_traction_scenarios: 9
+  distinct_server_save_and_load: pass_identical_tick170
+  old_069_save_to_new_070_load: pass
+  native_500kw_dismantle_loss_J: 8333.333
+  native_1000kw_dismantle_loss_J: 16666.667
+  native_2000kw_dismantle_loss_J: 33333.333
+  native_1MW_source_lowpower_dismantle_loss_J: 3333.333
+  credits_to_25kv_on_hidden_demolition_J: 0
+  refunded_escrow_J: 0
+  no_event_thirdparty_destruction: unknown_actual_J_logged_without_fabricating_refund
+  automatic_motor_placement_and_shared_energy_bus: not_implemented
+  official_branch_ci_zip: pending
+  production_release: blocked
+  main_merge_authorized: false
+  research: docs/research/EM072_LOSSY_DEMOLITION_NATIVE_20261122.md
+
+em072_paid_owner_lifecycle_native_lab:
+  date: "2026-11-22"
+  branch: experiment/em072-paid-owner-lifecycle-native-20261122
+  base_commit: 0027132d46d3d077d3f92dcc9def5029d971be97
+  full_original_mod_version: "0.1.69"
+  full_original_zip_sha256: 2915cf0a89670d12de9db4289aa7b9043467e8b9705b547bb4e21aa526edaa54
+  engine: Factorio_2.1.24_build87808_linux_headless
+  real_native_positive_cases: 7
+  source_paid_owner_death: pass
+  source_paid_native_train_split: pass
+  second_real_locomotive_survives_owner_loss: pass
+  isolated_foreign_force_native_sink: pass_paid_j_escrow
+  native_1mw_scarcity: pass
+  real_2_and_4_motor_wagon_boost: pass
+  destroyed_owner_paid_J_refunded_to_sink: 8333.333
+  force_isolated_positive_J_escrow: 8333.333
+  settlement_local_energy_residual_J: 0
+  physical_server_save_process_reload: pass
+  server_save_tick: 125
+  fullmod_tested_tick: 160
+  third_party_unannounced_paid_helper_delete: unresolved_explicit_feature_fail
+  fullmod_gameplay_runtime_modified: false
+  production_motor_wagon_controller: not_implemented
+  production_shared_authoritative_allocator: not_implemented
+  owner_gui_undo_mp: not_tested
+  main_modified: false
+  release_authorized: false
+  research_file: docs/research/EM072_PAID_OWNER_LIFECYCLE_NATIVE_2026-11-22.md
+
+em072_source_paid_scarce_1MW_boundary:
+  date: "2026-11-22"
+  engine: Factorio_2_1_24_build87808
+  factory_source_w: 1000000
+  requested_traction_w: 2500000
+  real_em_burner_J_tick60: 512777.778
+  helper_paid_cumulative_J_tick60: 55000
+  helper_native_burner_J_tick60: 3333.333
+  source_cumulative_max_J_tick60: 1000000
+  helper_paid_cumulative_J_tick220: 588333.333
+  native_movement_tiles_tick220: 71.871094
+  native_requested_demand_J_tick: 41666.667
+  result: pass_isolated_true_fullmod_one_qa_controller
+  original_double_qa_run_discarded: true
+  entire_native_positive_scenarios: 11
+  paid_owner_orphan_negative_feature_failure: still_reproduced
+  gameplay_runtime_changed: false
+  release_authorized: false
+
+em072_source_paid_500kw_fullmod_proof:
+  date: "2026-11-22"
+  status: native_implementation_feasibility_proved_production_blocked
+  experimental_branch: experiment/em072-source-paid-500kw-fullmod-native-20261122
+  parent_ref: 3941669ab5b8db3e6cd61cd08ad21b84c33f507a
+  parent_gameplay_source_commit: 48fb34df72bbed0fa73105c1acef77a830808428
+  official_fullmod_zip_sha256: 2915cf0a89670d12de9db4289aa7b9043467e8b9705b547bb4e21aa526edaa54
+  game_version: "0.1.69"
+  factorio_native_engine: "2.1.24 build87808 Linux headless"
+  source_mod_runtime_changed: false
+  approved_art_modified: false
+  actual_500kw_cargo_and_fluid_acceleration: pass_test_only
+  actual_1000kw_two_motor_acceleration: pass_test_only
+  actual_2000kw_four_motor_acceleration: pass_test_only
+  true_25kv_native_paid_eei_positive_demand: pass_test_only
+  zeroJ_helper_no_free_traction: pass
+  offgrid_negative: pass
+  source_loss_while_moving: pass
+  active_helper_real_server_disk_save_reload: pass
+  owner_delete_paid_helper_lifecycle: fail_reproduced
+  test_only_orphan_escrow_conservation_delta_J: 0
+  production_shared_traction_bus: not_implemented
+  gui_undo_multiplayer_real_owner_save: not_tested
+  main_merge_authorized: false
+  release_authorized: false
+  research: docs/research/EM072_SOURCE_PAID_500KW_FULLMOD_NATIVE_20261122.md
+
+em069_owner_lowpower_policy:
+  decision_date: "2026-11-22"
+  owner_decision: accept_lowpower_deadband_do_not_pursue_mathematical_exactness
+  observed_not_charging_w: [1, 60]
+  observed_charging_w: 61
+  dispatcher_existing_cutoff_j_per_tick: 1
+  scope: deliberately_approximate_physical_model_not_explicit_parasitic_simulation
+  lowpower_is_release_blocker_by_itself: false
+  zero_source_and_offgrid_0j_negative_controls: mandatory
+  genuine_1MW_20MW_native_energy_accounting: mandatory
+  preservation_of_paid_positive_j_buffers: mandatory
+  release_authorized: false
+  main_merge_authorized: false
+
+em069_final_official_native_validation:
+  date: "2026-11-22"
+  branch: experiment/em069-local-native-recovery-20261122
+  tested_gameplay_commit: 48fb34df72bbed0fa73105c1acef77a830808428
+  actions_build_run_id: 45058171776
+  actions_build_conclusion: success
+  official_ci_artifact_id: 14768556556
+  official_inner_zip: ElectrifiedMainline_0.1.69.zip
+  official_inner_zip_sha256: 2915cf0a89670d12de9db4289aa7b9043467e8b9705b547bb4e21aa526edaa54
+  fullmod_files: 139
+  original_art_png_files_unchanged: 83
+  exact_engine: Factorio_2.1.24_build87808_linux_x64
+  all_official_zip_local_positive_scenarios: 21
+  official_zip_native_fairness_scarcity_1MW_2_4_8_16: pass
+  official_zip_native_paid_20MW_train_motion: pass
+  official_zip_substation_three_break_rejoin_same_sink_unit_number: pass
+  official_zip_closed_reservoir_rejoin_drift_J: 0
+  official_zip_real_disk_save_separate_process_load: pass
+  original_068_to_official_069_disposable_save_migration: pass
+  lowpower_1W_at_300ticks_native_source_J: 4.966667
+  lowpower_1W_train_received_J: 0
+  lowpower_60W_at_tick60_train_received_J: 0
+  lowpower_61W_at_tick60_both_locomotives: pass
+  status: experimental_native_pass_with_lowpower_open_and_gui_not_tested
+  release_authorized: false
+  main_modified: false
+
+em069_ci_full_native_regression_allowlist:
+  date: "2026-11-22"
+  after_failed_run: 45058035888
+  observed_exact_error: "Unsupported EM062 native regression mod version: 0.1.69"
+  resolution: add_069_to_existing_native_regression_allowlist
+  changed_source: tests/run_headless_062.sh
+  actual_three_native_tests: mandatory_unmodified
+  actual_game_runtime_changed_again: false
+  final_ci_packaging: pending
+  release_authorized: false
+
+em069_lua_regression_gate_correction:
+  date: "2026-11-22"
+  experiment_version: "0.1.69"
+  first_official_build_run: 45057859427
+  first_official_build_result: lua_preflight_failed
+  cause: legacy_068_only_test_geometry_guards
+  test_files_updated:
+    - tests/35kv_topology.lua
+    - tests/25kv_auto_wire_028.lua
+    - tests/25kv_span_029.lua
+    - tests/25kv_visual_geometry_048.lua
+  runtime_game_files_changed_again: false
+  actual_069_native_local_results: unchanged_20_positive
+  official_build_recheck: pending
+  release_authorized: false
+
+em069_local_native_recovery:
+  source_parent_commit: 147ac491e28da741e27585bc1e6326ee34d7d794
+  target_branch: experiment/em069-local-native-recovery-20261122
+  source_version: "0.1.69"
+  source_scope: experimental_only_no_main_merge_or_release
+  engine_native: "Factorio 2.1.24 build87808 Linux headless"
+  original_full_ci_068_sha256: e92d82373c1207ed5083bf29b8f9962aa0e9a90e55c6a9dbf3a2e2a212159bb3
+  local_test_only_069_zip_sha256: 685ecbe037832d36c2facd2febe25ee0efec1e2221248288167b897497ddf93c
+  complete_game_files: 139
+  original_png_unmodified: 83
+  local_positive_scenarios: 20
+  local_source_outage_and_paid_sink_rejoin: pass
+  local_orphan_native_buffer_rejoined_paid_j: 33333.333
+  local_zero_source_closed_energy_balance_j: 0
+  original068_to_new069_local_saved_game_migration: pass_own_disposable_save_only
+  lowpower_1W_60W_boundary: fail_open_0J_with_nonzero_real_source
+  lowpower_61W_boundary: pass_2_eligible_locomotives
+  release_gate: blocked
+  github_actions_069_zip_provenance: pending
+  windows_gui_blueprint_undo_multiplayer_old_player_save: not_tested
+  motor_wagon_500kW_and_regeneration: not_implemented
+  evidence_record: docs/research/em069-native-paid-recovery-local-20261122.md
+
 em072_075_distributed_traction_plan:
   status: owner_design_approved_documented_only
   decision_date: "2026-11-21"
@@ -287,7 +2313,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.62" # source-only main checkpoint, NOT patcher-approved
+  mod_version: "0.1.103" # integration candidate; final QA and merge pending
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
@@ -2051,3 +4077,574 @@ dispatch_cache_067_exact_CI_2026_11_21:
   user_release_permission: false
   human_report: docs/research/25kv-dispatch-cache-067-CI.md
   machine_report: docs/research/25kv-dispatch-cache-067-CI.json
+
+em072_full_mod_player_test_063:
+  date: "2026-11-22"
+  status: IMPLEMENTED_PENDING_CI_NATIVE_CLIENT_TEST
+  branch: experiment/em072-fullmod-player-test-063
+  source_main_sha: cf75656fda374824944311f26bbd454bc90ad45b
+  source_main_version: "0.1.62"
+  proposed_experiment_version: "0.1.63"
+  owner_requested: FULL_REAL_MOD_ZIP_NOT_BASE_ONLY_LAB
+  no_main_merge: true
+  no_public_release: true
+  no_new_updater: true
+  C4_C5_base_only_HUGE_LAB_rejected_for_human: true
+  existing_HSR_catenary_substation_real_loco_art_preserve: true
+  C5_new_wagon_types: IMPLEMENTED_ONLY_IN_TEST_BRANCH
+  hidden_helper_no_free_J: REQUIRED
+  actual_native_full_game: NOT_TESTED
+  owner_GUI: NOT_TESTED
+  plan: docs/research/em072-full-source-gui-test-063.md
+
+  real_source_package_version: "0.1.63"
+  complete_existing_main_runtime_and_artwork_retained: true
+  added_real_motor_cargo_prototype: em-motor-cargo-wagon
+  added_real_motor_fluid_prototype: em-motor-fluid-wagon
+  added_technical_helper_prototypes: [em-c5-technical-booster-500, em-c5-technical-booster-1000, em-c5-technical-booster-2000]
+  hidden_technical_helper_J_seed: 0
+  actual_EM_locomotive_void_source_still_present: true
+  source_backed_EM070_J_drive_implemented: false
+  optional_scene_command: /em-test-scene
+  real_object_kit_command: /em-test-kit
+  native_train_gui_log_command: /em-test-train
+  auto_spawns_on_normal_load: false
+  permanent_main_logic_changes: false
+  CI_package_status: PASS_FULL_ZIP_45034991114
+  CI_full_source_static_tests: PASS_5
+  native_2_1_24_full_source_gate_workflow: .github/workflows/em072-fullmod-063-native.yml
+  official_native_real_items_probe: tests/em063-native-fullmod-probe
+  official_native_game_test: PASS_SCOPED_REAL_ENGINE_45034430942
+  actual_native_full_source_run: 45034430942
+  native_run_engine: Factorio_2_1_24_build_87808_Linux_headless_with_official_DLC
+  native_game_probes: PASS_REAL_HSR_29_REAL_EM_ONE_MOTOR_CARGO_FLUID_TWO_MASTS_ONE_SUBSTATION_ONE_HIDDEN_HELPER_0J_FOUR_CARRIAGES
+  native_verified_visible_span_tiles: 14
+  native_actual_client_GUI: UNTESTED
+  native_proof_scope: independent_disposable_native_probe_not_user_console_scene
+  native_game_files_packaged: 134
+  native_art_pngs_packaged: 83
+  CI_early_static_failure: historical_ghost_test_unrecognized_new_version
+  CI_early_docs_failure: project_mod_version_mismatch_corrected
+  CI_legacy_test_guard_repairs: [tests/35kv_ghost_023.lua, tests/25kv_auto_wire_028.lua, tests/25kv_span_029.lua, tests/35kv_topology.lua, tests/25kv_visual_geometry_048.lua]
+  CI_native_062_inheritance_script: tests/run_headless_062.sh
+  CI_native_062_script_version_support: [0.1.62, 0.1.63]
+  CI_native_062_test_probe_dependency: ElectrifiedMainline_>=_0.1.62
+  CI_native_062_unchanged_power_ledger_assertions: true
+  CI_test_guards_only_not_runtime_changes: true
+  native_Factorio_2_1_24_data_stage: NOT_RUN
+  owner_client_real_full_mod_test: NOT_RUN
+
+em072_fullmod_063_verified_delivery:
+  date: "2026-11-22"
+  head_tested_source_commit: ac7f032785cdfad162b0ad49e4731b77a81bb13b
+  game_archive: ElectrifiedMainline_0.1.63.zip
+  CI_workflow_run_id: 45034991114
+  CI_conclusion: success
+  CI_artifact_id: 14759242115
+  CI_artifact_size_bytes: 18156592
+  CI_artifact_expiration: "2026-12-22"
+  CI_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/45034991114/artifacts/14759242115
+  CI_exact_inner_ZIP_SHA256: 2b150cdc506dafdde8fd10358e8f4e31d62c3215469db2027ba2a56b4d47c2b6
+  full_mod_files: 134
+  unchanged_original_PNGs: 83
+  new_Python_contract_tests: PASS_5
+  native_2_1_24_062_electric_cases: PASS_3_OF_3
+  native_062_total_ticks: 2030
+  separate_real_HSR_masts_substation_EM_cargo_fluid_hidden_J_probe_run: 45034430942
+  native_gui_owner_test: NOT_TESTED
+  sourcebacked_motor_wagon_traction: NOT_IMPLEMENTED
+  no_main_merge: true
+  public_release: false
+
+em063_owner_no_load_legacy_pole_audit_20261122:
+  date: "2026-11-22"
+  branch: experiment/em063-source-traction-audit-legacy-pole-20261122
+  source_fullmod_063_sha: 2650d44b3caccc63189d6516b14bcd11d4800b8d
+  input_video_duration_seconds: 59.117
+  screenshot_normal_ordinary_pole_recipe: CONFIRMED
+  screenshot_actual_25kv_train_load: NO_DRAW_OBSERVED
+  source_em_loco_native_energy_source: void
+  source_em_loco_max_power_W: 2000000
+  source_EM070_to_em_loco_joule_link: NOT_IMPLEMENTED
+  legacy_mod_item: em-electric-pole
+  legacy_item_is_ordinary_native_pole: true
+  regular_pole_needed_for_25kv: false
+  native_main_apparel_or_visual_changes_authorized: false
+  planned_legacy_retirement_migration: retain_ID_hide_recipe_and_item
+  native_safe_retirement_test: PENDING
+  source_paid_traction_research: PENDING
+  train_hidden_helper_orphan_issue: https://github.com/zukera2-stack/Factorio/issues/73
+  main_merge_authorized: false
+  public_release_authorized: false
+  research: docs/research/em063-owner-no-load-redundant-pole-20261122.md
+
+em064_retire_obsolete_ordinary_pole_20261122:
+  version: "0.1.64"
+  original_fullmod_063_source_SHA: 2650d44b3caccc63189d6516b14bcd11d4800b8d
+  original_user_fullmod_063_ZIP_unchanged: true
+  legacy_em_electric_pole_item_entity_recipe_IDs_kept: true
+  obsolete_item_and_recipe_hidden: true
+  obsolete_research_recipe_unlock_removed: true
+  obsolete_item_removed_from_test_kit: true
+  original_real_25kv_masts_and_substation_unchanged: true
+  original_accepted_graphics_unchanged: true
+  true_locomotive_25kv_power_consumption_implemented: false
+  CI_native_validation: PENDING
+  main_merge_authorized: false
+  engine_probe: tests/em064-native-pole-retirement-probe
+  engine_probe_workflow: .github/workflows/em064-native-retired-pole.yml
+  inherited_062_native_power_cases_required: true
+  inherited_062_test_runner_accepts_064: true
+  native_status: PASS_ACTUAL_ENGINE_45039543079
+  source_fullmod_064_CI: PASS_45039542994
+  inner_fullmod_064_ZIP_sha256: ba25d010f6d3ce073bf2a2e89ceae6e4abb5691582aa8afd809161a27032f37b
+  fullmod_064_files_count: 135
+  original_accepted_PNG_count: 83
+  inherited_EM062_native_20MW_scenarios: PASS_3_OF_3
+  independent_native_legacy_retirement_pass: true
+  direct_CI_artifact: https://github.com/zukera2-stack/Factorio/actions/runs/45039542994/artifacts/14760704016
+  native_evidence_artifact: https://github.com/zukera2-stack/Factorio/actions/runs/45039543079/artifacts/14761017737
+  traction_25kv_J_source_paid: NOT_IMPLEMENTED
+em065_native_real_locomotive_traction_research:
+  date: "2026-11-22"
+  branch: experiment/em065-source-paid-locomotive-drive-native
+  parent_test_064_SHA: eeccfcc9b15cefb808423731e506d4a112c0bbc4
+  status: IMPLEMENTED_NATIVE_VALIDATION_PENDING
+  intended_exp_version: "0.1.65"
+  loco_native_power_W: 2000000
+  real_loco_energy_buffer_cap_J: 2000000
+  grant_source_must_be_native_paid_EM070_output: true
+  require_contact_matching_live_mast_native_25kv_network: true
+  no_speed_writes: true
+  no_wagon_owned_battery_or_internal_free_J: true
+  hidden_wagon_helper_issue_73_remains_blocked: true
+  actual_native_2_1_24_source_paid_traction: NOT_RUN
+  offnetwork_negative: NOT_RUN
+  real_SAVE_LOAD: NOT_RUN
+  release_authorized: false
+  main_modified: false
+  report: docs/research/em065-source-paid-real-loco-20261122.md
+
+  finite_burner_native_2MW_locomotive_implemented: true
+  max_source_grant_J_per_tick: 33333.333333333336
+  max_paid_locomotive_reserve_J: 2000000
+  native_source_prior_debit_policy: true
+  required_real_contact_mast_pair: true
+  native_same_electric_network_as_EM070_output: true
+  old_void_locomotive_065: false
+  actual_drive_game_result: NOT_YET_RUN
+  existing_500kW_motor_helper_fuel: 0
+  no_main_or_user_063_changes: true
+
+  dispatch_virtual_locomotive_demand_implemented: true
+  native_network_load_requires_real_mast_connected_contact: true
+  source_EEI_credit_after_real_payment_only: true
+  source_paid_native_engine_validated: false
+  native_research_probe: tests/em065-native-paid-locomotive-probe
+  native_research_workflow: .github/workflows/em065-native-paid-loco.yml
+  native_positive_at_tick60_J: 1866666.6666667
+  native_paid_total_by_tick120_J: 3200000
+  native_train_distance_at_tick180_tiles: 24
+  native_no_contact_negative_J_at_tick420: 0
+  native_real_movement_positive: PASS_45040579187
+  native_paid_charge_and_0W_run: PASS_45040579187
+  real_disk_SAVE_LOAD: NOT_TESTED
+  full_inherited_standard_CI: PASS
+  hidden_helper_owner_cleanup_issue: https://github.com/zukera2-stack/Factorio/issues/73
+  production_release_authorized: false
+  native_REAL_private_server_checkpoint_tick: 125
+  native_separate_process_test_save_ticks: 365
+  native_REAL_save_load_script: tests/run_em065_real_saveload.py
+  native_REAL_save_load_status: PENDING
+  native_loco_unit_number_persistence_required: true
+  native_burner_credit_debit_equality_required: true
+  native_no_contact_second_loco_after_load_J: 0
+  failed_first_SAVE_harness_run: 45040943403
+  first_SAVE_harness_failure: separate_mod_storage_access_not_allowed
+  corrected_SAVE_harness_private_native_loco_J_and_UID: true
+  corrected_SAVE_harness_read_full_mod_LEDGER_from_native_log: true
+  SAVE_load_real_engine_after_correction: PENDING
+  save_load_previously_failed_CI: 45041057012
+  save_load_failure_reason: benchmark_ticks_450_runs_only_0_to_449_and_wrong_marker_expectation
+  native_SAVELOAD_marker_checked_only_independent_reload: true
+  native_ledger_regex_fixed: true
+  SAVELOAD_result_after_correction: PENDING
+em065_native_paid_full_2MW_test_evidence:
+  date: "2026-11-22"
+  source_branch: experiment/em065-source-paid-locomotive-drive-native
+  native_engine_version: Factorio_2_1_24_build_87808_Linux_headless
+  source_code_sha_tested: 19f4ce3a33932558bf12c435cdeeb6dc0b0845a1
+  native_run_id: 45041147885
+  native_run_conclusion: success
+  native_log_artifact_id: 14761787331
+  native_log_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/45041147885/artifacts/14761787331
+  true_paid_native_LOCO_2MW: PASS
+  actual_factory_SOURCE_W: 20000000
+  same_native_25kv_network_verified: true
+  native_source_cumulative_debited_J: 3200000
+  native_loco_burner_cumulative_credited_J: 3200000
+  finite_real_loco_reserve_cap_J: 2000000
+  real_HSR_movement_to_native_station_tiles: 24
+  no_contact_control_J_at_tick420: 0
+  no_speed_writes: true
+  real_disk_server_SAVE_tick: 125
+  real_disk_SAVE_bytes: 681041
+  real_disk_checkpoint_SHA256: e3d50575824653cf826941ece30086facef2d781b9687a9cb4de3c202e922f0c
+  separate_native_process_test_SAVE_ticks: 365
+  native_real_SAVE_LOAD: PASS
+  native_units_and_ledger_persisted: true
+  full_CI_build_run_id: 45041147861
+  full_CI_build_conclusion: success
+  full_CI_fullmod_artifact_id: 14762080183
+  full_CI_fullmod_artifact_url: https://github.com/zukera2-stack/Factorio/actions/runs/45041147861/artifacts/14762080183
+  full_CI_inner_ZIP_name: ElectrifiedMainline_0.1.65.zip
+  full_CI_inner_ZIP_SHA256: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  full_CI_game_files: 137
+  retained_accepted_PNG_files: 83
+  historical_real_EM062_power_regression_3_cases: PASS
+  full_docs_validation: PASS
+  owner_GUI_and_existing_save_migration: NOT_TESTED
+  motor_wagon_500kW_source_paid_tier: NOT_IMPLEMENTED
+  existing_hidden_helper_owner_orphan_issue: https://github.com/zukera2-stack/Factorio/issues/73
+  main_merge_authorized: false
+  user_release_authorized: false
+
+em066_autonomous_fullmod_campaign_20261122:
+  created: "2026-11-22"
+  isolated_branch: experiment/em066-autonomous-fullmod-boundaries-20261122
+  base_fullmod_065_docs_sha: 053fdd9d528b39db8f57eba5698aebfe9d79c506
+  base_actual_game_source_sha: 19f4ce3a33932558bf12c435cdeeb6dc0b0845a1
+  initial_complete_ZIP_from_GitHub_Actions_run: 45041147861
+  initial_complete_ZIP_artifact_id: 14762080183
+  initial_complete_ZIP_sha256: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  target_native_engine: Factorio_2_1_24_87808
+  same_game_ZIP_in_both_native_lanes: REQUIRED
+  test_lane_A: electrical_20MW_plus_real_1MW_two_train_scarcity_and_zero_native_demand
+  test_lane_B: full_native_catalog_rail_geometry_motor_stock_orphan_and_mast_cycle
+  independent_real_server_disk_save_reload_in_both_lanes: REQUIRED
+  latest_source_repack_for_any_game_change: REQUIRED
+  baseline_issue_77_native_25kv_demand: FAIL_PREVIOUSLY_REPRODUCED
+  baseline_issue_78_two_train_starvation: FAIL_PREVIOUSLY_REPRODUCED
+  baseline_issue_73_hidden_owner_orphan: FAIL_PREVIOUSLY_REPRODUCED
+  campaign_native_result: PENDING
+  campaign_source_fix_result: PENDING
+  user_fullmod_063_source_unchanged: true
+  main_062_unchanged: true
+  docs: docs/research/em066-autonomous-fullmod-native-boundary-20261122.md
+  project_release_authorized: false
+  native_workflow_full_zip_parallel_original_065: .github/workflows/em066-autonomous-fullmod-native.yml
+  native_fullmod_game_package_hash_enforced: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  native_both_lanes_download_same_GHA_artifact: true
+  native_fault_injection_lanes: [electrical, rail_stock]
+  native_electrical_additional_scarcity_probe: tests/em065-audit-native-probe
+  native_fault_real_disk_save_runner: tests/run_em066_parallel_fault.py
+  test_source_has_no_gameplay_modifications: true
+  expected_preexisting_issue_73: FAIL_TO_DETECT
+  expected_preexisting_issue_77: FAIL_TO_DETECT
+  expected_preexisting_issue_78: FAIL_TO_DETECT
+  current_result: RETRY_AFTER_ZIP_ROOT_HARNESS_FIX
+  original_first_workflow_run: 45050428138
+  original_first_failure: test_only_wrong_archive_root_prefix
+  verified_full_game_ZIP_sha256_in_first_run: a8ef5756d4f64abefb678b769f5640f548fea007013347e7544e647ee4fa781e
+  initial_dual_lane_native_run: 45050518918
+  baseline_full_ZIP_hash_confirmed: true
+  native_original_fault_probes_blocked_before_gameplay: exact_test_dependency_063
+  native_test_only_dependencies_now_accept_065: true
+  independent_1MW_audit_rerun_065: PASS_DIAGNOSTIC_WITH_FEATURE_FAIL_77_78
+  exact_working_full_game_065_unmodified: true
+  new_native_retry: PENDING
+em066_fair_share_preflight_20261122:
+  status: CODE_IMPLEMENTED_GAME_ENGINE_PENDING
+  new_isolated_branch: experiment/em066-fair-share-fullmod-20261122
+  forked_from_complete_fullmod_campaign: 3c69ed6cc30c29f429ff996eb9e349eb1aceda76
+  prospective_fullmod_version: "0.1.66"
+  source_budget: each_actual_native_EM070_output_EEI_J
+  per_loco_native_input_power_W: 2000000
+  per_loco_native_reserve_cap_J: 2000000
+  equal_priority_policy: max_min_equal_share_under_scarcity
+  source_debit_BEFORE_native_burner_credit: true
+  native_1MW_2train_first60_positive: PENDING_NATIVE
+  strict_underlying_fullmod_ZIP: REQUIRED
+  unrelated_issue_77_native_load: FAIL_UNRESOLVED
+  unrelated_issue_73_helper_orphan: FAIL_UNRESOLVED
+  no_main_release_old_user_saves: true
+  research: docs/research/em066-real-loco-fair-share-preflight-20261122.md
+
+  experimental_fullmod_info_version: "0.1.66"
+  source_real_loco_fair_max_min_waterfill: implemented
+  source_fair_allocation_grouped_by_native_EEI_unit_number: true
+  old_unmodified_native_bridge_source_power_limits: true
+  original_83_approved_PNG_unchanged: true
+  proper_native_1MW_first60_dual_real_loco: NOT_YET_TESTED
+  preserved_EM065_real_one_loco_24_tiles_SAVE_LOAD: RE_TEST_PENDING
+  current_fair_share_full_ZIP_github_actions: PENDING_0_1_66
+  whole_game_ZIP_built_once_in_GHA_before_two_lanes: true
+  two_parallel_game_runners_same_exact_artifact_SHA256: true
+  double_deterministic_build_check: true
+  acceptance_native_both_trains_charge_within_tick60: threshold_minimum_1000J
+  native_retested_20MW_and_1MW_and_stock_and_disk_SAVE_LOAD: PENDING
+  original_unfixed_issue_77_and_73_not_ignored: true
+  fair_native_run_first: 45051051938
+  fair_native_first_result: TEST_HARNESS_HEREDOC_SYNTAX_BLOCKED_FAIRNESS
+  real_native_20MW_electric_fault_disk_SAVE_LOAD_0_1_66: PASS
+  real_native_rail_stock_issue_73_reproduced_0_1_66: FAIL
+  fair_native_same_game_ZIP_repeat_build: PASS
+  historical_ghost_asset_guard_numeric_version_fixed: true
+  docs_project_version_matches_actual_fullmod_info: true
+  fair_native_retrial: PENDING
+  native_fairness_actual_game_run: 45051217757
+  native_fair_1MW_two_real_locos_t60_J: [466666.6667, 466666.6667]
+  original_unfair_065_same_fixture_t60_J: [933333.3333, 0]
+  native_fair_0_1_66_source_behavior_observed: PASS_SCOPED
+  previous_strict_parser: BLOCKED_BY_ESCAPED_SED
+  strict_native_assertion_awk_retest: PENDING
+  native_EM070_20MW_real_disk_SAVELOAD_0_1_66: PASS
+  native_25kv_demand_issue_77: FAIL
+  native_owner_orphan_issue_73: FAIL
+em067_hidden_C5_helper_lifecycle_preflight:
+  date: "2026-11-22"
+  branch: experiment/em067-helper-orphan-native-fullmod-20261122
+  fork_sha: 29584d1b9dd76ad763a7727e4fd79787eba04526
+  status: CODE_IMPLEMENTED_NATIVE_VALIDATION_PENDING
+  target_fullmod_version: "0.1.67"
+  current_true_hidden_helper_prototype: em-c5-technical-booster-1000
+  current_hidden_helper_energy_J: 0
+  current_native_orphan_tick_after_owner_destroy: 80
+  expected_cleanup_observed_no_later_than_ticks: 10
+  no_visible_motor_wagon_or_real_EM_destroy: true
+  no_charge_or_speed_change: true
+  charged_hidden_helper_refund_contract: BLOCKED_REQUIRES_FUTURE_OWNER_MAPPING
+  native_actual_catalog_37_iron_9000_water_SAVELOAD: REQUIRED
+  native_same_full_artifact_two_lanes: REQUIRED
+  inherited_issue_78_fair_1MW_expected: PASS
+  inherited_issue_77_native_load: FAIL_UNRESOLVED
+  native_0J_orphan_fix_result: PENDING_GAME
+  no_main_release_or_installed_user_063_changes: true
+  research: docs/research/em067-0j-helper-orphan-native-preflight-20261122.md
+  actual_0_1_67_mod_source_implemented: true
+  cleanup_module: ElectrifiedMainline/scripts/helper_lifecycle_067.lua
+  cleanup_scans_native_trains_with_exact_hidden_prototype_every_ticks: 10
+  preserves_real_EM_motor_cargo_fluid_and_vanilla_locos: true
+  source_paid_hidden_energy_J: 0
+  charged_helper_auto_destroy: false
+  full_native_0_1_67_verified: false
+  em067_full_native_parallel_workflow: .github/workflows/em066-autonomous-fullmod-native.yml
+  em067_fullmod_SHA_from_same_packaged_GHA_artifact: true
+  em067_native_1MW_dual_train_fair_charge_60tick: RE_TEST_PENDING
+  em067_native_hidden_helper_orphan_80tick: RE_TEST_PENDING
+  em067_native_20MW_true_fault_disk_SAVELOAD: RE_TEST_PENDING
+  em067_real_25kv_demand_issue_77: UNRESOLVED
+em068_integrated_native_25kv_traction_research_20261122:
+  branch: experiment/em068-native-25kv-traction-source-paid-fullmod
+  fork_full_0_1_67_SHA: 3cc563677782f6705d23ca009d2641b6828f3300
+  target_experimental_version: "0.1.68"
+  native_actual_consumer_feasibility_run: 45052279629
+  native_25kv_2MW_demand_measured_J_tick: 33333.333
+  native_20MW_factory_real_EEI_buffer_received_J: 100000
+  native_separate_offgrid_EEI_received_J: 0
+  source_integrated_loco_native_sink_from_real_25kv: CODE_IMPLEMENTED_NATIVE_PENDING
+  direct_old_source_output_debit_to_loco_must_be_removed: true
+  double_count_prevention_required: true
+  true_1MW_two_train_fair_battery_J: RETEST_PENDING
+  full_native_20MW_real_fault_disk_SAVELOAD: RETEST_PENDING
+  full_native_cargo_fluid_helper_lifecycle_disk_SAVELOAD: RETEST_PENDING
+  physical_25kv_native_demand_while_loco_charges: RETEST_PENDING
+  source_global_J_conservation_closed_reservoir: RETEST_PENDING
+  main_user_saves_release_unchanged: true
+  preflight: docs/research/em068-full-native-traction-consumer-preflight-20261122.md
+
+  full_source_0_1_68_info_and_real_EEI_prototype: true
+  native_EEI_sink_per_EM070_output_existing_verified_port: true
+  sink_has_real_25kv_secondary_input_native_priority: true
+  max_native_20MW_input_per_sink_J_tick: 333333.3333333333
+  debit_real_sink_buffer_before_burner_grant: true
+  no_lua_source_output_energy_second_debit: true
+  virtual_traction_load_suppressed_with_live_real_sink: true
+  old_paid_J_held_if_line_disconnects: true
+  actual_fullmod_0_1_68_native_result: PENDING
+  two_independent_fullmod_native_0_1_68_workflow: .github/workflows/em066-autonomous-fullmod-native.yml
+  one_actual_native_2MW_loco_SAVE_LOAD_workflow: .github/workflows/em068-real-25kv-native-loco.yml
+  full_real_ZIP_double_deterministic_build: true
+  both_fullmod_parallel_lanes_same_actual_SHA256: true
+  true_native_25kv_demand_measured_while_positive_loco_motion: REQUIRED
+  real_1MW_2native_loco_fair_60tick_both_gt_1000J: REQUIRED
+  native_owner_orphan_80ticks: REQUIRED_ABSENT
+  no_output_EEI_double_debit_source_runtime: true
+  standard_full_docs_QA: PENDING
+  full_native_factorio_2_1_24: PENDING
+
+
+em079_v3_visual_trial:
+  status: blocked_waiting_for_exact_local_binary_upload
+  base_commit: "b9e494c4963483269265b4eff4c9d3ba5cc093e9"
+  branch: "experiment/em079-locomotive-v3-visual"
+  version: "0.1.79"
+  patch_sha256: "97fa7fe4d8195d5ae6944ec62aa6bfc06e8437eea92e537e7ddccdbf4ffba7ac"
+  replacement_pngs: 41
+  gameplay_lua_changed: false
+  remote_render: false
+  official_install_zip: not_built
+  game_visual_acceptance: not_run
+  release_authorized: false
+
+
+em080_visual_trial:
+  status: ci_packaged_waiting_for_native_visual_acceptance
+  branch: "experiment/em080-locomotive-visual-fix"
+  base_commit: "22bac7894fb9161df616bd8080072a0a09b39de2"
+  version: "0.1.80"
+  local_patch_sha256: "afb31e5a10449a024137a2f53798745338eab0afca785d9587884af1092bb060"
+  png_count: 57
+  render_directions: 256
+  bogie_meshes: 93
+  gameplay_lua_changed: false
+  spark_script_changed: false
+  native_game_acceptance: not_run
+  official_install_zip: ci_packaged
+  packaged_commit: "2c36d9cab744b5a7bec9582fcbc5d48c87e6060b"
+  ci_run: 45595966590
+  ci_artifact: 15013750947
+  inner_zip_sha256: "e3c9a55a64769cd944b9d92832049dbb3e463816af4d727d73b79cc85fd6917d"
+
+
+graphics_patch_workflow:
+  owner_approved: true
+  decision_date: "2026-11-25"
+  standard: docs/development/GRAPHICS_PATCH_WORKFLOW.md
+  render: local
+  delivery: official_ci_full_zip
+  auto_release: false
+
+
+em081_wheels_trial:
+  status: ci_packaged_owner_reports_invisible_wheels
+  base_commit: "51312a6e37136d5dd3c559e9f51e9015e92905d4"
+  version: "0.1.81"
+  patch_sha256: "f3fb61cb21915e6d9e8ef8bf01aa8218b92de169f36927180bbbb5322d55d818"
+  patch_pngs: 17
+  native_visual_acceptance: not_run
+  gameplay_changed: false
+  pantograph_changed: false
+
+
+em082_wheel_visibility:
+  status: owner_direct_patch_confirmed_wheels_visible
+  base_commit: "c020f2323fb5cdf9170d2541a929d0aefacecabb"
+  version: "0.1.82"
+  local_engine: "2.1.24 headless"
+  isolated_native_scenario: PASS
+  full_mod_native: NOT_RUN
+  native_visual_acceptance: owner_wheel_visibility_confirmed_video_sampled
+  wheel_shift: [0, 0.25]
+  wheel_dice_removed: true
+  png_changed: false
+  gameplay_changed: false
+
+
+direct_patch_workflow:
+  owner_approved: true
+  decision_date: "2026-11-25"
+  standard: docs/development/DIRECT_PATCH_WORKFLOW.md
+  local_delivery: direct_scoped_zip
+  current_base_version: "0.1.82"
+  current_base_commit: "a71f98e7352c36e63b1a220e55c45496c1d01e31"
+  mandatory_ci_per_iteration: false
+  official_full_zip: optional_checkpoint
+  updater: retired
+  main_merge_authorized: false
+  full_release_authorized: false
+  first_manual_patch: owner_confirmed
+
+
+gpt_library_workspace:
+  owner_approved: true
+  root: /Factorio
+  recovery_doc: docs/development/GPT_LIBRARY_WORKSPACE.md
+  working_archive: /Factorio/Working-Mod/ElectrifiedMainline_0.1.82_owner.zip
+  working_manifest: /Factorio/Working-Mod/EM082_owner_baseline_manifest.json
+  version: "0.1.82"
+  game_source_commit: a71f98e7352c36e63b1a220e55c45496c1d01e31
+  archive_sha256: ed60bbfe6a1027adceb1d8ecc910624d360ba9f9bda5b9cb6af906033a762f80
+  files: 156
+  pngs: 99
+  patches: /Factorio/Patches
+  models: /Factorio/Models
+  backups: /Factorio/Backups
+  engine: /Factorio/Local-QA/engines/factorio-headless_linux_2.1.24.tar.xz
+  archive_crc: PASS
+  owner_working_snapshot: true
+  release: false
+
+em083_pantograph_restore:
+  status: direct_patch_candidate_owner_windows_acceptance_pending
+  branch: experiment/em083-pantograph-restore
+  version: "0.1.83"
+  previous_confirmed_version: "0.1.82"
+  local_patch: /Factorio/Patches/EM083_pantograph_restore_from_EM082.zip
+  patch_sha256: 5ccb1dd12e099945641dfad5889246539b884c0bd2048e9ee5635ac267314b2d
+  patch_file_count: 9
+  rgba_atlases_changed: 8
+  directions_verified: 256
+  native_factorio_2_1_24_prototype_map_benchmark_30_ticks: PASS
+  owner_windows_acceptance: NOT_RUN
+  3d_rerender: false
+  gameplay_changes: false
+  spark_scripts_changed: false
+  folded_ghost: retained_compact_em080
+  raised_collector: original_em079_pose
+  original_wrecks: vanilla_inherited
+  custom_wreck: deferred_unapproved
+  release: false
+
+em085_legacy_factory_pole_removal:
+  decision_date: "2026-11-25"
+  owner_requested: true
+  status: direct_patch_native_2_1_24_pass_windows_pending
+  branch: experiment/em085-remove-legacy-factory-pole
+  mod_version: "0.1.85"
+  base_version: "0.1.84"
+  removed_prototype_entity: em-electric-pole
+  removed_prototype_item: em-electric-pole
+  removed_prototype_recipe: em-electric-pole
+  removed_technology_unlock: true
+  obsolete_module_deleted_in_github: true
+  manual_delete_from_unpacked_mod: prototypes/em063_retire_ordinary_pole_064.lua
+  migration_file: migrations/0.1.85.json
+  migration_entity_to: small-electric-pole
+  migration_item_to: small-electric-pole
+  native_old_save_test: PASS_one_entity_seven_items
+  native_fresh_mod_2_1_24: PASS
+  native_direct_patch_benchmark_30_ticks: PASS
+  owner_windows_acceptance: pending
+  catenary_25kv_unchanged: true
+  traction_unchanged: true
+  patch_library: /Factorio/Patches/EM085_remove_obsolete_pole_Direct_Patch_from_0.1.84.zip
+  patch_sha256: e01c4935c9d3fd323a91bbe64430764da725570a9758da3664824218a87389f8
+  patch_bytes: 17099
+  modified_game_files: 7
+  official_release: false
+
+em085_owner_archive_ci_parity:
+  date: "2026-11-25"
+  status: ci_success_native_zip_pass_owner_windows_085_pending
+  integration_branch: integration/em085-main-candidate
+  owner_actual_version: "0.1.84"
+  owner_uploaded_archive: /Factorio/Working-Mod/ElectrifiedMainline_0.1.84_OWNER_RUNNING_20261125.7z
+  owner_archive_sha256: 00029dbc64c59687ba85784c7b82c2e5819c6585c1c0a980788ad3b2512e889f
+  owner_non_png_files_match_source: 58
+  owner_graphic_png_match_em081_baseline: 91
+  owner_raised_panto_png_match_em083_direct_patch: 8
+  candidate_version: "0.1.85"
+  candidate_full_zip_sha256: 90a7f6ebe5ba5cb49c70f0b7c0df03bd41d01d06b1e4da99f19866a31c7a0111
+  github_ci_full_zip_sha256: d876f62f307b2236f16ca4b3e322c82aeac2d13be4a485c40328c7d85cc232c1
+  github_ci_run_id: 45664465532
+  github_ci_build: success
+  github_docs_ci_run_id: 45664287482
+  github_docs_ci: success
+  compared_game_files: 157
+  differing_game_files: 0
+  owner_candidate_native_zip_load: PASS
+  github_ci_native_zip_load: PASS
+  owner_windows_em085_test: pending
+  main_merged: false
+  official_release: false

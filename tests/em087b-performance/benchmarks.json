@@ -1,0 +1,230 @@
+{
+  "50x2": {
+    "base": {
+      "runs": [
+        [
+          19.299,
+          7.649,
+          319.76
+        ],
+        [
+          20.509,
+          7.941,
+          349.633
+        ]
+      ],
+      "mean_ms": 19.904,
+      "max_ms": 349.633,
+      "checksums": [
+        "193633970",
+        "193633970"
+      ]
+    },
+    "codeonly": {
+      "runs": [
+        [
+          18.664,
+          7.873,
+          305.594
+        ],
+        [
+          19.208,
+          7.514,
+          318.758
+        ]
+      ],
+      "mean_ms": 18.936,
+      "max_ms": 318.758,
+      "checksums": [
+        "193633970",
+        "193633970"
+      ]
+    },
+    "identical_checksums": true,
+    "ledger_comparison": {
+      "[EM072 PAID LEDGER]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM068 ACTUAL NATIVE TRAIN LOAD]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM077 MOTOR STATE]": {
+        "base_count": 2,
+        "candidate_count": 2,
+        "equal": true
+      },
+      "[EM060] station=": {
+        "base_count": 300,
+        "candidate_count": 300,
+        "equal": true
+      },
+      "[EM069 BUFFER STOP]": {
+        "base_count": 0,
+        "candidate_count": 0,
+        "equal": true
+      },
+      "[EM087 SNAP]": {
+        "base_count": 2,
+        "candidate_count": 2,
+        "equal": true
+      }
+    },
+    "mean_reduction_pct": 4.8633440514469495
+  },
+  "100x2": {
+    "base": {
+      "runs": [
+        [
+          43.023,
+          16.926,
+          705.457
+        ],
+        [
+          36.817,
+          16.189,
+          579.534
+        ]
+      ],
+      "mean_ms": 39.92,
+      "max_ms": 705.457,
+      "checksums": [
+        "4124129646",
+        "4124129646"
+      ]
+    },
+    "codeonly": {
+      "runs": [
+        [
+          37.086,
+          15.495,
+          544.131
+        ],
+        [
+          38.701,
+          15.887,
+          649.877
+        ]
+      ],
+      "mean_ms": 37.8935,
+      "max_ms": 649.877,
+      "checksums": [
+        "4124129646",
+        "4124129646"
+      ]
+    },
+    "identical_checksums": true,
+    "ledger_comparison": {
+      "[EM072 PAID LEDGER]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM068 ACTUAL NATIVE TRAIN LOAD]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM077 MOTOR STATE]": {
+        "base_count": 2,
+        "candidate_count": 2,
+        "equal": true
+      },
+      "[EM060] station=": {
+        "base_count": 600,
+        "candidate_count": 600,
+        "equal": true
+      },
+      "[EM069 BUFFER STOP]": {
+        "base_count": 0,
+        "candidate_count": 0,
+        "equal": true
+      },
+      "[EM087 SNAP]": {
+        "base_count": 2,
+        "candidate_count": 2,
+        "equal": true
+      }
+    },
+    "mean_reduction_pct": 5.076402805611224
+  },
+  "long201": {
+    "base": {
+      "runs": [
+        [
+          2.847,
+          1.253,
+          43.325
+        ],
+        [
+          3.1,
+          1.292,
+          43.632
+        ]
+      ],
+      "mean_ms": 2.9735,
+      "max_ms": 43.632,
+      "checksums": [
+        "3411091946",
+        "3411091946"
+      ]
+    },
+    "codeonly": {
+      "runs": [
+        [
+          3.246,
+          1.277,
+          55.069
+        ],
+        [
+          2.865,
+          1.268,
+          49.734
+        ]
+      ],
+      "mean_ms": 3.0555000000000003,
+      "max_ms": 55.069,
+      "checksums": [
+        "3411091946",
+        "3411091946"
+      ]
+    },
+    "identical_checksums": true,
+    "ledger_comparison": {
+      "[EM072 PAID LEDGER]": {
+        "base_count": 40,
+        "candidate_count": 40,
+        "equal": true
+      },
+      "[EM068 ACTUAL NATIVE TRAIN LOAD]": {
+        "base_count": 40,
+        "candidate_count": 40,
+        "equal": true
+      },
+      "[EM077 MOTOR STATE]": {
+        "base_count": 4,
+        "candidate_count": 4,
+        "equal": true
+      },
+      "[EM060] station=": {
+        "base_count": 2400,
+        "candidate_count": 2400,
+        "equal": true
+      },
+      "[EM069 BUFFER STOP]": {
+        "base_count": 1198,
+        "candidate_count": 1198,
+        "equal": true
+      },
+      "[EM087 SNAP]": {
+        "base_count": 0,
+        "candidate_count": 0,
+        "equal": true
+      }
+    },
+    "mean_reduction_pct": -2.7576929544308237
+  }
+}

@@ -19,7 +19,7 @@ local physical_eei,physical_acc={},{}
 function surface.find_entities_filtered(arg) if arg.name then return physical_eei else local out={} for _,e in ipairs(physical_acc)do out[#out+1]=e end return out end end
 local lab
 local function entity(name,s,pos,id,netid)
- local e={name=name,valid=true,surface=s,force=force,position=pos,unit_number=id,electric_network_id=netid,energy=0,electric_buffer_size=333334}
+ local e={name=name,valid=true,surface=s,force=force,position=pos,unit_number=id,electric_network_id=netid,energy=0,electric_buffer_size=math.ceil(M.LIMIT)}
  e.electric_network=net(netid)
  local c={valid=true,owner=e,real_connections={}}
  local function remove(a,b,origin)for i=#a.real_connections,1,-1 do if a.real_connections[i].target==b and a.real_connections[i].origin==origin then table.remove(a.real_connections,i) end end end

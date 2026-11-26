@@ -1,0 +1,65 @@
+name: EM068 native 25kV-funded locomotive physical AUTO motion and two-process SAVELOAD
+on:
+  push:
+    branches: ['experiment/em068-native-25kv-traction-source-paid-fullmod']
+    paths:
+      - 'ElectrifiedMainline/**'
+      - 'tests/em065-native-paid-locomotive-probe/**'
+      - 'tests/run_em065_real_saveload.py'
+      - 'tests/run_headless_062.sh'
+      - '.github/workflows/em068-real-25kv-native-loco.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch official Factorio 2.1.24 / build 87808
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/em065-game"
+          curl -fL --retry 2 --max-time 150 https://factorio.com/get-download/2.1.24/headless/linux64 -o "$RUNNER_TEMP/em065-game.tar.xz"
+          tar -xJf "$RUNNER_TEMP/em065-game.tar.xz" -C "$RUNNER_TEMP/em065-game"
+          "$RUNNER_TEMP/em065-game/factorio/bin/x64/factorio" --version | tee "$RUNNER_TEMP/em065-version.txt"
+          grep -F '2.1.24' "$RUNNER_TEMP/em065-version.txt"
+      - name: Build genuine FULL mod and run real 25kV paid-loco positive / off-grid negative
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_full_mod_063.py' -v
+          python3 scripts/package_mod.py
+          test -s build/package/ElectrifiedMainline_0.1.68.zip
+          mkdir -p "$RUNNER_TEMP/em065-mods"
+          cp build/package/ElectrifiedMainline_0.1.68.zip "$RUNNER_TEMP/em065-mods/"
+          cp -a tests/em065-native-paid-locomotive-probe "$RUNNER_TEMP/em065-mods/em065-native-paid-locomotive-probe_0.0.1"
+          printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em065-native-paid-locomotive-probe","enabled":true}]}' > "$RUNNER_TEMP/em065-mods/mod-list.json"
+          bin="$RUNNER_TEMP/em065-game/factorio/bin/x64/factorio"
+          "$bin" --mod-directory "$RUNNER_TEMP/em065-mods" --create "$RUNNER_TEMP/em065-initial.zip" | tee "$RUNNER_TEMP/em065-create.log"
+          "$bin" --mod-directory "$RUNNER_TEMP/em065-mods" --benchmark "$RUNNER_TEMP/em065-initial.zip" --benchmark-ticks 450 --benchmark-runs 1 | tee "$RUNNER_TEMP/em065-native.log"
+          grep -F '[EM065 NATIVE PAID PASS]' "$RUNNER_TEMP/em065-native.log"
+          grep -F '[EM068 REAL 25KV POWER DEMAND PASS]' "$RUNNER_TEMP/em065-native.log"
+          grep -F '[EM065 NATIVE 0W CONTROL]' "$RUNNER_TEMP/em065-native.log"
+          python3 -m py_compile tests/run_em065_real_saveload.py
+          python3 tests/run_em065_real_saveload.py \
+            --factorio "$bin" \
+            --mods "$RUNNER_TEMP/em065-mods" \
+            --initial "$RUNNER_TEMP/em065-initial.zip" \
+            --output "$RUNNER_TEMP/em065-save-load"
+          sha256sum build/package/ElectrifiedMainline_0.1.68.zip | tee "$RUNNER_TEMP/em065-source-sha256.txt"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EM068-real-25kv-demand-native-2MW-movement-evidence-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/em065-create.log
+            ${{ runner.temp }}/em065-native.log
+            ${{ runner.temp }}/em065-version.txt
+            ${{ runner.temp }}/em065-source-sha256.txt
+            ${{ runner.temp }}/em065-save-load/em065-real-save-load-server.log
+            ${{ runner.temp }}/em065-save-load/em065-real-save-load-reload.log
+            ${{ runner.temp }}/em065-save-load/em065-real-save-load-checkpoint.sha256
+          if-no-files-found: warn

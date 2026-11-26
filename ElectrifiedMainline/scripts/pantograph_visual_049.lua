@@ -88,16 +88,15 @@ function M.sync(trains,get_locomotives,tick,contact_at,is_hsr)
                     local row=s[id]
                     local state=M.state(train.speed,row and row.state)
                     local frame=M.frame(e.orientation)
-                    local sprite=string.format("em-panto-052-%s-%03d",state,frame)
                     local r=render_object(row)
                     if not r then
                         destroy(row)
-                        r=rendering.draw_sprite{sprite=sprite,surface=e.surface,
+                        r=rendering.draw_sprite{sprite=string.format("em-panto-052-%s-%03d",state,frame),surface=e.surface,
                             target={entity=e,offset={0,-1}},render_layer="higher-object-above"}
                         s[id]={id=r.id,state=state,frame=frame}
                     else
                         if row.state~=state or row.frame~=frame then
-                            r.sprite=sprite
+                            r.sprite=string.format("em-panto-052-%s-%03d",state,frame)
                             row.state=state;row.frame=frame
                         end
                     end

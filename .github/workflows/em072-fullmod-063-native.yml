@@ -1,0 +1,60 @@
+name: EM072 Full Mod 0.1.63 actual native game gate
+on:
+  push:
+    branches: ['experiment/em072-fullmod-player-test-063']
+    paths:
+      - 'ElectrifiedMainline/**'
+      - 'tests/em063-native-fullmod-probe/**'
+      - 'tests/test_full_mod_063.py'
+      - '.github/workflows/em072-fullmod-063-native.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native_full_source:
+    name: Real Factorio 2.1.24 full source item/scene engine check
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get official Factorio 2.1.24 Linux headless binary
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/em063-game"
+          curl -fL --retry 1 --max-time 90 "https://factorio.com/get-download/2.1.24/headless/linux64" -o "$RUNNER_TEMP/em063-game.tar.xz"
+          tar -xJf "$RUNNER_TEMP/em063-game.tar.xz" -C "$RUNNER_TEMP/em063-game"
+          "$RUNNER_TEMP/em063-game/factorio/bin/x64/factorio" --version | tee "$RUNNER_TEMP/em063-engine.txt"
+          grep -F '2.1.24' "$RUNNER_TEMP/em063-engine.txt"
+      - name: Build EXACT full-mod game runtime package inside GitHub Actions runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_full_mod_063.py' -v
+          python3 -m unittest discover -s tests -p 'test_package_mod.py' -v
+          python3 scripts/package_mod.py
+          sha256sum build/package/ElectrifiedMainline_0.1.63.zip | tee "$RUNNER_TEMP/em063-zip.sha256"
+          mkdir -p "$RUNNER_TEMP/em063-mods"
+          cp build/package/ElectrifiedMainline_0.1.63.zip "$RUNNER_TEMP/em063-mods/"
+          cp -a tests/em063-native-fullmod-probe "$RUNNER_TEMP/em063-mods/em063-native-fullmod-probe_0.0.1"
+          printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em063-native-fullmod-probe","enabled":true}]}' > "$RUNNER_TEMP/em063-mods/mod-list.json"
+      - name: Load FULL mod in official native engine and prove actual prototypes/rolling stock
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/em063-game/factorio/bin/x64/factorio"
+          "$bin" --mod-directory "$RUNNER_TEMP/em063-mods" --create "$RUNNER_TEMP/em063-first.zip" | tee "$RUNNER_TEMP/em063-create.log"
+          "$bin" --mod-directory "$RUNNER_TEMP/em063-mods" --benchmark "$RUNNER_TEMP/em063-first.zip" --benchmark-ticks 30 --benchmark-runs 1 | tee "$RUNNER_TEMP/em063-native.log"
+          grep -F '[EM063 NATIVE PASS]' "$RUNNER_TEMP/em063-native.log"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EM072-063-fullmod-native-logs
+          path: |
+            ${{ runner.temp }}/em063-create.log
+            ${{ runner.temp }}/em063-native.log
+            ${{ runner.temp }}/em063-engine.txt
+            ${{ runner.temp }}/em063-zip.sha256
+          if-no-files-found: warn

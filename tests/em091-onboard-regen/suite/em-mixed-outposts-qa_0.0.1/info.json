@@ -1,0 +1,1 @@
+{"name":"em-mixed-outposts-qa","version":"0.0.1","title":"EM087M mixed outposts native QA","author":"QA","factorio_version":"2.1","dependencies":["base >= 2.1.0","ElectrifiedMainline >= 0.1.98"]}

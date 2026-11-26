@@ -100,19 +100,24 @@ M.on_parent_removed(poleA)
 assert(M.ensure_storage().helpers[poleA.unit_number]==nil)
 local src=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
 local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
-if not info:find('"version": "0.1.47"',1,true) and not info:find('"version": "0.1.48"',1,true) and not info:find('"version": "0.1.49"',1,true) and not info:find('"version": "0.1.50"',1,true) and not info:find('"version": "0.1.51"',1,true) and not info:find('"version": "0.1.52"',1,true) and not info:find('"version": "0.1.53"',1,true) and not info:find('"version": "0.1.54"',1,true) and not info:find('"version": "0.1.55"',1,true) and not info:find('"version": "0.1.56"',1,true) and not info:find('"version": "0.1.57"',1,true) and not info:find('"version": "0.1.58"',1,true) and not info:find('"version": "0.1.59"',1,true) and not (info:find('"version": "0.1.60"',1,true) or (info:find('"version": "0.1.61"',1,true) or info:find('"version": "0.1.62"',1,true))) then
+local source_minor=tonumber(info:match('"version"%s*:%s*"0%.1%.(%d+)"'))
+assert(source_minor,"Expected 0.1.x mod version in source regression fixture")
+-- Version 0.1.56+ uses current rail-axis geometry; avoid a stale whitelist.
+if source_minor<47 then
 assert(src:find("corridor(e.surface,e.force,x,y)",1,true))
 assert(src:find("path_info(x,y)",1,true))
 assert(src:find("radius=SPAN+RADIUS+4",1,true),
   "Broken middle track must re-check mast ends beyond 5 tiles")
 else
- if info:find('"version": "0.1.56"',1,true) or info:find('"version": "0.1.57"',1,true) or info:find('"version": "0.1.58"',1,true) or info:find('"version": "0.1.59"',1,true) or (info:find('"version": "0.1.60"',1,true) or (info:find('"version": "0.1.61"',1,true) or info:find('"version": "0.1.62"',1,true))) then
+  if source_minor>=56 then
   assert(src:find("axis056.plan(s.nodes)",1,true))
  else
   assert(src:find("visual047.plan(s.nodes)",1,true))
  end
  assert(src:find("radius=limits.WIRE_REACH*1.5+4+RADIUS",1,true))
- assert(src:find("function M.technical_path(a,b)",1,true))
+ assert(src:find("function M.technical_path(a,b)",1,true) or
+        src:find("function M.technical_path(a,b,context)",1,true),
+        "Technical path must expose the current rail continuity contract")
 end
 assert(not src:find("rendering.draw_line",1,true))
 -- Dynamic unit mock of rail continuity: close, disconnected ВСМ MUST be rejected.
@@ -147,6 +152,15 @@ assert(power.connected_rail_path(na,nb),
   "Physically connected custom HSR rails must permit the edge")
 local same={rail_id=701,x=2,y=0,surface_index=1,force_name="player"}
 assert(power.connected_rail_path(na,same))
+-- Current phase-local cache accepts only physically connected HSR as well.
+if src:find("function M.technical_path(a,b,context)",1,true) then
+  na.rail_adjacent=true; nb.rail_adjacent=true
+  joined=false
+  local function fresh_context() return {starts={},neighbours={},disable_native_segments=true} end
+  assert(not power.technical_path(na,nb,fresh_context()), "Cached walk must reject disconnected HSR")
+  joined=true
+  assert(power.technical_path(na,nb,fresh_context()), "Cached walk must accept connected HSR")
+end
 
 local pr=assert(io.open("ElectrifiedMainline/prototypes/native_wire_auto_028.lua")):read("*a")
 assert(pr:find("em-25kv-contact-anchor",1,true))

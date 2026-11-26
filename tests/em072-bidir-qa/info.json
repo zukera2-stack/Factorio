@@ -1,0 +1,11 @@
+{
+  "name": "em072-bidir-qa",
+  "version": "0.0.1",
+  "title": "EM073 Native Directional Motors QA",
+  "author": "Local QA",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0",
+    "ElectrifiedMainline = 0.1.74"
+  ]
+}

@@ -1,7 +1,11 @@
 -- Native separate electrical networks; actual buffered joules, never generated.
 local technical=require("scripts.technical_network_046")
 local dispatch=require("scripts.bridge_dispatch_059")
+local traction065=require("scripts.traction_paid_065")
+local art030=require("scripts.catenary_art_030")
+local pantograph049=require("scripts.pantograph_visual_049")
 local devices=require("scripts.bridge_devices_060")
+-- Owner rule: one station supplies at most 20 MW; scale by parallel stations.
 local M={LIMIT=20000000/60,SUB="em-35kv-traction-substation"}
 local PORT="em-25kv-bridge-port-058"
 local INPUT,OUTPUT="em-25kv-bridge-input-058","em-25kv-bridge-output-058"
@@ -66,12 +70,9 @@ end
 local function sole_link(port,target)
  local a,b=connector(port),connector(target)
  if not (a and b) then return false end
- local n=0
- for _,link in pairs(a.real_connections) do
-   if not (link.target and link.target.valid and link.target.owner==target and link.origin==defines.wire_origin.script) then return false end
-   n=n+1
- end
- return n==1 and a.is_connected_to(b,defines.wire_origin.script)
+ -- Native count + native origin-aware connectivity; both connectors belong
+ -- to live physical entities. No materialized WireConnection array needed.
+ return a.real_connection_count==1 and a.is_connected_to(b,defines.wire_origin.script)
 end
 local function connect(port,target)
  local a,b=connector(port),connector(target)
@@ -220,7 +221,7 @@ end
 -- 063: Native EEI outputs still hold real joules at auto-idle transitions.
 -- Do not destroy these buffers before the game has discharged them. The station
 -- itself is still an electric pole (no persistent internal accumulator).
-local function idle_or_drain(r,raw_flows,route_open)
+local function idle_or_drain(r,raw_flows,route_open,is_isolated,factory_key,line_key)
   if not route_open then reject(r,"auto-idle-no-connected-peer");return end
  -- Factory generators still running? An ordinary factory brownout takes priority.
  -- Never keep secondary bridge power attached in auto-idle while the source
@@ -237,6 +238,9 @@ local function idle_or_drain(r,raw_flows,route_open)
    and src.electric_network_id==src_port.electric_network_id
    and dst.electric_network_id==dst_port.electric_network_id
    and (src.energy>1 or dst.energy>1) then
+   -- A native peer alone is not isolation proof. Stored joules must remain
+   -- frozen if this factory shares any physical corridor parent network.
+   if not is_isolated(factory_key,line_key) then reject(r,"factory-corridor-short");return end
    -- Stop new imports; old J can leave ONLY when a peer is connected.
    src.input_flow_limit=0
    src.output_flow_limit=0
@@ -259,18 +263,29 @@ function M.on_tick(tick,graph)
  local s=state()
  if s.dirty or tick%60==0 then sync_graph(s,graph) end
  local t=technical.ensure_storage()
+ -- Native entity references are stable by unit_number within this phase.
+ -- Never cache a network ID across a topology mutation; all existing live
+ -- network/isolation/sole-link tests remain in place.
+ local entities={}
+ local function lookup(id)
+   if not id then return nil end
+   local e=entities[id]
+   if e and e.valid then return e end
+   e=get(id);entities[id]=e
+   return e
+ end
  local candidates,auto_edges,networks={},{},{}
  local cache,raw_flows,physical,allowed={},{},{},{}
  for id,station in pairs(s.stations) do
    if station.mode~="off" then
-     local p=get(id)
+     local p=lookup(id)
      if p then local key=dispatch.network_key(p);if key then physical[p.surface.index]=p.surface;allowed[key]=true end end
    end
  end
  local direct=devices.sample(s,tick,physical,allowed)
  local previous=(s.sample_tick==tick-1 and s.last_auto or {})
- local function observe(e)
-   local raw=e.electric_network_id
+ local function observe(e,raw)
+   raw=raw or e.electric_network_id
    if not raw then return nil end
    if cache[raw] then return cache[raw] end
    local k,flow=dispatch.read_network(e)
@@ -282,8 +297,8 @@ function M.on_tick(tick,graph)
    end
  end
  for id,r in pairs(s.stations) do
-   local p=get(id)
-   local a=get(t.helpers[s.feeders[id]])
+   local p=lookup(id)
+   local a=lookup(t.helpers[s.feeders[id]])
    if r.mode=="off" then if r.factory_port or r.line_port or r.input or r.output then detach(r,"mode-off") end;r.status="off"
    elseif not p or not a or p.force.name~=a.force.name or p.surface.index~=a.surface.index or (t.stats.audit_failed or 0)>0 or (t.stats.mast_audit_failed or 0)>0 then
       detach(r,"no-feeder-or-audit-failed");r.status="no-feeder-or-audit-failed"
@@ -300,9 +315,9 @@ function M.on_tick(tick,graph)
      elseif r.mode=="import" or r.mode=="export" or r.mode=="auto" then
        local f,l=r.factory_port.electric_network_id,r.line_port.electric_network_id
        if f and l and f==p.electric_network_id and l==a.electric_network_id then
-         local fk,lk=observe(r.factory_port),observe(r.line_port)
+         local fk,lk=observe(r.factory_port,f),observe(r.line_port,l)
          if r.mode=="auto" then
-           local mast=get(s.feeders[id])
+           local mast=lookup(s.feeders[id])
            if not (fk and lk and mast and mast.electric_network_id==l and t.mast_connected and t.mast_connected[s.feeders[id]]) then
              reject(r,"auto-network-or-mast-unverified")
            else auto_edges[#auto_edges+1]={id=id,a=fk,b=lk,raw_a=f,raw_b=l} end
@@ -318,7 +333,18 @@ function M.on_tick(tick,graph)
    end
  end
  -- Automatic allocation is coordinated across every connected ordinary/corridor network.
- local plan=dispatch.plan(networks,auto_edges,M.LIMIT)
+ -- EM065 test branch: a native locomotive is NOT itself an electric network
+ -- consumer. Register only its finite, authenticated pending 2MW demand in the
+ -- existing native EM070 dispatch planner; every delivered joule is still
+ -- physically debited later from the native charged 25kV output EEI.
+ local traction_demand,battery_charge=traction065.requests(art030,pantograph049,dispatch)
+ for id,j in pairs(traction_demand) do
+   if networks[id] then networks[id].load=networks[id].load+j end
+ end
+ for id,j in pairs(battery_charge or {}) do
+   if networks[id] then networks[id].charge=math.max(networks[id].charge,j) end
+ end
+ local plan,charge_budget=dispatch.plan(networks,auto_edges,M.LIMIT)
  local connected_peers={}
  for _,edge in ipairs(auto_edges) do connected_peers[edge.b]=(connected_peers[edge.b] or 0)+1 end
  if tick%600==0 or not s.last_flow_log then
@@ -330,6 +356,26 @@ function M.on_tick(tick,graph)
        tostring(id),f.primary_output or 0,f.secondary_output or 0,f.solar_output or 0,f.primary_demand or 0,f.secondary_demand or 0,f.maximum_production or 0,f.maximum_consumption or 0,f.tertiary_output or 0,f.tertiary_demand or 0,f.accumulator_energy or 0,f.accumulator_capacity or 0,o.offer or 0,o.demand or 0,v.production or 0,v.demand or 0,v.stored or 0,v.capacity or 0,v.charge or 0,v.discharge or 0,v.interfaces or 0,v.accumulators or 0,n.gen,n.load,n.battery,n.charge))
    end
  end
+ -- Only build this synchronous native-network set for an actual drain.
+ -- No permission survives a tick; normal candidate isolation below remains.
+ local live_corridor
+ local function corridor_keys()
+   if not live_corridor then
+     live_corridor={}
+     for _,aid in pairs(t.helpers) do
+       local a=lookup(aid)
+       if valid(a) then
+         local raw=a.electric_network_id
+         if raw then live_corridor[observe(a,raw) or raw]=true end
+       end
+     end
+   end
+   return live_corridor
+ end
+ local function idle_isolated(factory_key,line_key)
+   if not factory_key or factory_key==line_key then return false end
+   return not corridor_keys()[factory_key]
+ end
  for _,edge in ipairs(auto_edges) do
    local r=s.stations[edge.id]
    local v=plan[edge.id] or 0
@@ -339,15 +385,15 @@ function M.on_tick(tick,graph)
      local sk,dk=edge.a,edge.b
      if v<0 then src,dst=dst,src;sk,dk=dk,sk end
      candidates[#candidates+1]={id=edge.id,source=sk,target=dk,raw_source=src.electric_network_id,raw_target=dst.electric_network_id,src=src,dst=dst,limit=math.min(M.LIMIT,math.abs(v)),direction=direction,auto=true}
-    else idle_or_drain(r,raw_flows,(connected_peers[edge.b] or 0)>1) end
+    else idle_or_drain(r,raw_flows,(connected_peers[edge.b] or 0)>1,idle_isolated,edge.a,edge.b) end
  end
  s.last_auto={};s.sample_tick=tick
  -- Any factory terminal sharing a corridor network means actual isolation was lost.
- local corridor={}
- for _,aid in pairs(t.helpers) do
-   local a=get(aid)
-   if valid(a) and a.electric_network_id then corridor[observe(a) or a.electric_network_id]=true end
- end
+ -- Port repairs have finished; idle_or_drain only changes EEI buffers/flows
+ -- or retires empty EEIs. No pole or wire is edited between these checks.
+ -- Retain live isolation for every nonempty batch, using the same native
+ -- corridor set if a drain already required it in this synchronous phase.
+ local corridor=#candidates>0 and corridor_keys() or {}
  local safe,shorted={},{}
  for _,c in ipairs(candidates) do
    local r=s.stations[c.id]
@@ -400,6 +446,13 @@ function M.on_tick(tick,graph)
          local ok,old_in,old_out=pcall(function()return r.input.input_flow_limit,r.output.output_flow_limit end)
          old_in=(ok and type(old_in)=="number") and math.min(M.LIMIT,old_in) or M.LIMIT
          old_out=(ok and type(old_out)=="number") and math.min(M.LIMIT,old_out) or M.LIMIT
+         -- EM094D.2: a role-swapped EEI inherits its former input capacity.
+         -- A tiny previous input allocation must not cap a later output forever.
+         -- Grow only (never discard retained joules), bounded by the current
+         -- station transfer plan and the existing 20 MW ceiling.
+         if r.output.electric_buffer_size<cap then
+           r.output.electric_buffer_size=cap
+         end
          local ei,eo,amount=M.transfer(math.min(r.input.energy,cap),r.output.energy,r.output.electric_buffer_size)
          r.input.energy=r.input.energy-amount
          r.output.energy=eo
@@ -436,7 +489,7 @@ function M.on_tick(tick,graph)
  end
  -- Settled diagnostic: log status transitions and periodic actual IDs, not only command-time waiting.
  for id,r in pairs(s.stations) do
-   local p=get(id);local m=get(s.feeders[id]);local anchor=get(t.helpers[s.feeders[id]])
+   local p=lookup(id);local m=lookup(s.feeders[id]);local anchor=lookup(t.helpers[s.feeders[id]])
    local line=valid(r.line_port) and r.line_port.electric_network_id
    local signature=table.concat({r.mode or "-",r.status or "-",r.direction or "-",tostring(p and p.electric_network_id),tostring(line),tostring(m and m.electric_network_id),tostring(anchor and anchor.electric_network_id)}, "/")
    r.planned_mw=(plan[id] or 0)*60/1e6
@@ -445,6 +498,15 @@ function M.on_tick(tick,graph)
      r.last_signature=signature
    end
  end
+ -- Only this tick's generator-to-charge allocation; not a grant of Joules.
+ local authorized={}
+ -- A rejected planned bridge makes generator-to-charge provenance ambiguous.
+ -- Conservatively freeze all new onboard charging for this tick.
+ if #safe~=#candidates or next(rejected) then return authorized end
+ for id,j in pairs(battery_charge or {}) do
+   authorized[id]=math.min(j,charge_budget[id] or 0)
+ end
+ return authorized
 end
 function M.command(player,param)
  local e=player.selected

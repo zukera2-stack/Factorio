@@ -2,7 +2,7 @@ name: Validate project documentation
 
 on:
   push:
-    branches: [main, diagnostic/blueprint-rail-undo, 'feature/**', 'experiment/**']
+    branches: [main, diagnostic/blueprint-rail-undo, 'feature/**', 'experiment/**', 'integration/**']
     paths:
       - "docs/**"
       - "AGENTS.md"
@@ -22,6 +22,10 @@ on:
       - "ElectrifiedMainline/info.json"
       - ".github/workflows/validate-docs.yml"
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 permissions:
   contents: read

@@ -1,0 +1,21 @@
+# EM094 integration final native QA
+
+**Native integration PASS 111/111 scheduled cases; CI payload parity PASS 169/169; ready for owner acceptance and explicit development-main merge decision. Not merged, not released, not owner accepted.** Active branch integration/em094d4-main-candidate; tested source 0ffa7c5d1cc93cd0c4ca32d44468e91c3397565b, runtime D4 unchanged 0.1.103 SHA256 9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e. CI run [45884793896](https://github.com/zukera2-stack/Factorio/actions/runs/45884793896) success including syntax, owner artwork reconstruction, package boundary and full manifest parity. Inner CI ZIP SHA256 859bab6a13a5d36c10cf85df1014f2bf968e2a1e934828d4dc1bda9d5265de91, artifact15148278640; ZIP metadata differs, runtime payload matches pinned manifest. Local exact pinned ZIP tested with Factorio2.1.24 build87808 Linux headless: core14/14, small69/69, heavy9/9, mixed100 1/1, targeted18/18. 106 explicit completion markers +5 legacy stand assertion cases (not UPS benchmark). Mixed100 arrived100/100 cargo intact t900; final12499999999.042 J of12.5GJ, grid44099964.517325 J, onboard7298642.382695 J, alternate13304498.534357 J, pending/uncertain0. Faults: actual robot mining at238/251/266 ticks PASS, script deletion/death/owner/receiver removal PASS, expected negative foreign hidden wire remains uncertain, repeated ring PASS, existing post-cut checkpoint independently loaded PASS. 3 max processes, 4GiB RAM/4CPU, reserve768MiB, peak2423939072 B, no OOM or guard, sum group wall638.988s. Evidence459 entries SHA256 6a0d64d26456b7c51f2624ff3fd9b155d95def828d06954ab1d568717d942d74 in /Factorio/Local-QA/EM094-Integration/EM094_FINAL_TEST_EVIDENCE.zip. Separate D4 QA-only setting tests4/4 retained, not repeated; owner GUI/Windows upgrade of actual save, multiplayer, UPS not proven. [Final report](development/EM094_INTEGRATION_FINAL_QA.md). No gameplay or artwork changes, no main merge, closure or release. Next owner decision, then merge and archive branch histories. Historical entries below.
+
+## Execution
+
+Exact archive and prepared stand hashes checked before starting. Command: python run_final.py --factorio /path/factorio/bin/x64/factorio --full-mod /path/ElectrifiedMainline_0.1.103.zip --output /fresh/qa. Stand SHA256 51c2837023c94914f354c534b0b4f9b8cf4cb28a54aa3f3740f95be9816bc2d5. The initial local verifier invocation omitted --manifest and failed to locate default path outside repo; reran with explicit --manifest integration-runtime.json, PASS. No scenario or acceptance thresholds changed. Actual process group results:
+
+| Group | Pass | Workers | Seconds | Peak cgroup bytes |
+|---|---:|---:|---:|---:|
+| core14 | 14/14 | 2 | 25.733 | 1839984640 |
+| regression-small | 69/69 | 3 | 123.287 | 2386890752 |
+| regression-large | 9/9 | 1 | 135.784 | 1487900672 |
+| mixed100 | 1/1 | 1 | 283.957 | 1641680896 |
+| faults | 18/18 | 2 | 70.227 | 2423939072 |
+
+Five legacy stand cases (bench-10x2, bench-1x2, bench-100x2, bench-50x2, bench-1x800) passed their pinned SNAP assertions rather than explicit Test passed marker. No UPS benchmark. The expected negative hidden-wire case records uncertain3043.300485005 J and grid0, not certified delivery; final2MJ balance and ports0. Ordinary robot cases retain fallback2926.300485005/2165.800485005/1288.300485005 J respectively, uncertain0 and final ports0. The repeated ring and post-cut checkpoint load passed. Mixed100 t1500 total12499999999.042 J, actual alternate13304498.534357 J vs >100000 J gate. All processes terminated normally. Full logs and five resource reports in evidence.
+
+## Remaining scope
+
+No owner GUI/Windows real save or multiplayer run. Four prior D4 separate owning-setting QA scenarios were not part of this scheduled111; unchanged exact gameplay runtime. No general performance claim. Prior CI initially failed stale test contracts, corrected in tested source; CI package success independently confirms exact manifest, not native gameplay on the CI ZIP container itself. Ready to submit owner acceptance and explicit merge decision; retain main0.1.62 and owner-running0.1.84 until authorized. Do not delete divergent branches without retention audit or publish a release.

@@ -1,0 +1,38 @@
+name: Direct Patch tooling and registry checks
+
+on:
+  push:
+    branches: [main, 'feature/**', 'experiment/**', 'integration/**']
+    paths:
+      - 'scripts/direct_patch.py'
+      - 'tests/test_direct_patch.py'
+      - 'patches/**'
+      - 'docs/development/DIRECT_PATCH_WORKFLOW.md'
+      - '.github/workflows/direct-patch-checks.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/direct_patch.py'
+      - 'tests/test_direct_patch.py'
+      - 'patches/**'
+      - 'docs/development/DIRECT_PATCH_WORKFLOW.md'
+      - '.github/workflows/direct-patch-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  direct_patch:
+    name: Verify Direct Patch contract (no game installation)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run standard-library patch tests and registry validation
+        run: |
+          python -m unittest discover -s tests -p 'test_direct_patch.py' -v
+          python -m json.tool patches/registry.json > /dev/null
+          python -m py_compile scripts/direct_patch.py

@@ -1,0 +1,6 @@
+# Binaries and generated QA belong to the Library or ignored build/
+*.zip
+*.7z
+*.png
+*.glb
+*.manifest.json

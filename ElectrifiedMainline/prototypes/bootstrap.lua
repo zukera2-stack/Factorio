@@ -4,7 +4,7 @@
 -- API verification notes (2.1.20):
 -- - Locomotives use energy_source :: BurnerEnergySource or VoidEnergySource
 -- - Rail types are separate: straight-rail, curved-rail, half-diagonal-rail
--- - Vanilla electric-pole exists. Existing em-electric-pole is on the ordinary grid.
+-- - The redundant legacy factory electric pole has been removed in EM085.
 -- - New isolated 35kV supports are defined separately in prototypes/power_019.lua.
 -- - Train regeneration is not implemented; on_tick only observes rail/speed.
 
@@ -61,7 +61,6 @@ data:extend({
         effects = {
             { type = "unlock-recipe", recipe = "em-concrete-beam" },
             { type = "unlock-recipe", recipe = "em-heavy-copper-cable" },
-            { type = "unlock-recipe", recipe = "em-electric-pole" },
         },
         prerequisites = { "electric-engine", "logistics-2", "steel-processing" },
         unit = { count = 500, time = 60, ingredients = { { "automation-science-pack", 1 }, { "logistic-science-pack", 1 }, { "chemical-science-pack", 1 } } },
@@ -110,29 +109,6 @@ data:extend({
         },
         prerequisites = { "em-electrified-railways", "logistics-3" },
         unit = { count = 3500, time = 120, ingredients = { { "automation-science-pack", 4 }, { "production-science-pack", 2 } } },
-    },
-})
-
-data:extend({
-    {
-        type = "item",
-        name = "em-electric-pole",
-        icon = "__base__/graphics/icons/steel-chest.png",
-        icon_size = 64,
-        subgroup = "energy",
-        order = "a[electric-pole]-e[electric-pole]",
-        stack_size = 100,
-        weight = 5
-    },
-
-    {
-        type = "recipe",
-        name = "em-electric-pole",
-        enabled = false,
-        ingredients = { { type = "item", name = "em-concrete-beam", amount = 2 }, { type = "item", name = "em-heavy-copper-cable", amount = 3 }, { type = "item", name = "steel-plate", amount = 5 } },
-        results = {{ type = "item", name = "em-electric-pole", amount = 1 }},
-        energy_required = 10,
-        categories = { "crafting" },
     },
 })
 
@@ -370,11 +346,6 @@ end
 hsr_icon(data.raw.recipe["em-high-speed-rail"])
 hsr_icon(data.raw.recipe["em-rail-replacement-planner"], true)
 hsr_icon(data.raw.technology["em-high-speed-rails"])
-
--- A real small electric pole, not an item-only visual marker.
-clone_placeable_entity("electric-pole", "small-electric-pole",
-    "em-electric-pole", "em-electric-pole")
-data.raw.item["em-electric-pole"].icon = "__base__/graphics/icons/small-electric-pole.png"
 
 -- Keep the custom locomotive's intended performance and energy-source concept,
 -- but inherit the complete rolling-stock prototype from the base locomotive.

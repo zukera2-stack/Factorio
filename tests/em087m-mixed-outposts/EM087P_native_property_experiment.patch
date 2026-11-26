@@ -1,0 +1,25 @@
+--- a/ElectrifiedMainline/scripts/power_019.lua
++++ b/ElectrifiedMainline/scripts/power_019.lua
+@@ -156,8 +156,11 @@
+         local force,surface=start.force,start.surface
+         local good=true
+         for i,r in ipairs(rails) do
+-            if not (r.valid and r.name==start.name and r.unit_number and
+-                r.force==force and r.surface==surface and not seen[r.unit_number]) then good=false;break end
++            -- The segment start was checked as HSR straight above. No rail
++            -- mutation occurs during this synchronous certificate scan.
++            if not (r.valid and r.name=="em-high-speed-straight-rail") then good=false;break end
++            local rid=r.unit_number
++            if not (rid and r.force==force and r.surface==surface and not seen[rid]) then good=false;break end
+             local pos=r.position
+             if prev then
+                 local dx,dy=pos.x-prev.x,pos.y-prev.y
+@@ -167,7 +170,7 @@
+                 axis,step=ax,d
+             end
+             if i==1 then first=r end
+-            last=r;prev=pos;seen[r.unit_number]=true;positions[r.unit_number]=(i-1)*2;ordered[i]=r
++            last=r;prev=pos;seen[rid]=true;positions[rid]=(i-1)*2;ordered[i]=r
+         end
+         if good and seen[id] and axis then
+             local function outside(r)

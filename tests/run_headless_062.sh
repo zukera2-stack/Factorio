@@ -17,15 +17,17 @@ fi
 "$engine" --version | tee "$work/version.txt"
 grep -F '2.1.24' "$work/version.txt"
 python3 scripts/package_mod.py --output "$work/package"
-test -f "$work/package/ElectrifiedMainline_0.1.62.zip"
-sha256sum "$work/package/ElectrifiedMainline_0.1.62.zip"
+mod_version=$(python3 -c 'import json; print(json.load(open("ElectrifiedMainline/info.json"))["version"])')
+case "$mod_version" in 0.1.62|0.1.63|0.1.64|0.1.65|0.1.66|0.1.67|0.1.68|0.1.69|0.1.70|0.1.71|0.1.72|0.1.73|0.1.74) ;; *) echo "Unsupported EM062 native regression mod version: $mod_version"; exit 1 ;; esac
+test -f "$work/package/ElectrifiedMainline_${mod_version}.zip"
+sha256sum "$work/package/ElectrifiedMainline_${mod_version}.zip"
 for spec in \
  'em062-power-probe:1050:[EM061 NATIVE PASS]' \
  'em062-priority-probe:300:[EM061 MATRIX PASS]' \
  'em062-fairness-probe:680:[EM062 NATIVE PASS]'; do
   IFS=: read -r name ticks marker <<< "$spec"
   mkdir -p "$work/$name/mods"
-  cp "$work/package/ElectrifiedMainline_0.1.62.zip" "$work/$name/mods/"
+  cp "$work/package/ElectrifiedMainline_${mod_version}.zip" "$work/$name/mods/"
   cp -a "tests/$name" "$work/$name/mods/${name}_0.0.1"
   printf '%s\n' "{\"mods\":[{\"name\":\"base\",\"enabled\":true},{\"name\":\"ElectrifiedMainline\",\"enabled\":true},{\"name\":\"$name\",\"enabled\":true}]}" > "$work/$name/mods/mod-list.json"
   echo "[EM062] $name: create map"

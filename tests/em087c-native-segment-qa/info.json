@@ -1,0 +1,1 @@
+{"name":"em-native-segment-qa","version":"0.0.1","title":"EM087C native segment differential and wire split QA","author":"Local QA","factorio_version":"2.1","dependencies":["base >= 2.1.24","ElectrifiedMainline >= 0.1.89"]}

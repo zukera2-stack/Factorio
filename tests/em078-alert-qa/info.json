@@ -1,0 +1,11 @@
+{
+  "name": "em078-alert-qa",
+  "version": "0.0.1",
+  "title": "EM078 hidden no-path alert native QA",
+  "author": "QA agent",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0",
+    "ElectrifiedMainline >= 0.1.78"
+  ]
+}

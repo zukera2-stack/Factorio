@@ -1,0 +1,55 @@
+name: EM064 retired pole native Factorio proof
+on:
+  push:
+    branches: ['experiment/em063-source-traction-audit-legacy-pole-20261122']
+    paths:
+      - 'ElectrifiedMainline/**'
+      - 'tests/em064-native-pole-retirement-probe/**'
+      - 'tests/run_headless_062.sh'
+      - '.github/workflows/em064-native-retired-pole.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  game:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download official Factorio 2.1.24 headless
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/em064-game"
+          curl -fL --retry 2 --max-time 150 https://factorio.com/get-download/2.1.24/headless/linux64 -o "$RUNNER_TEMP/em064-game.tar.xz"
+          tar -xJf "$RUNNER_TEMP/em064-game.tar.xz" -C "$RUNNER_TEMP/em064-game"
+          "$RUNNER_TEMP/em064-game/factorio/bin/x64/factorio" --version | tee "$RUNNER_TEMP/em064-version.txt"
+          grep -F '2.1.24' "$RUNNER_TEMP/em064-version.txt"
+      - name: Run full 0.1.64 mod actual game and native legacy save-safe test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_full_mod_063.py' -v
+          python3 scripts/package_mod.py
+          test -s build/package/ElectrifiedMainline_0.1.64.zip
+          mkdir -p "$RUNNER_TEMP/em064-mods"
+          cp build/package/ElectrifiedMainline_0.1.64.zip "$RUNNER_TEMP/em064-mods/"
+          cp -a tests/em064-native-pole-retirement-probe "$RUNNER_TEMP/em064-mods/em064-native-pole-retirement-probe_0.0.1"
+          printf '%s\n' '{"mods":[{"name":"base","enabled":true},{"name":"ElectrifiedMainline","enabled":true},{"name":"em064-native-pole-retirement-probe","enabled":true}]}' > "$RUNNER_TEMP/em064-mods/mod-list.json"
+          bin="$RUNNER_TEMP/em064-game/factorio/bin/x64/factorio"
+          "$bin" --mod-directory "$RUNNER_TEMP/em064-mods" --create "$RUNNER_TEMP/em064-initial.zip" | tee "$RUNNER_TEMP/em064-create.log"
+          "$bin" --mod-directory "$RUNNER_TEMP/em064-mods" --benchmark "$RUNNER_TEMP/em064-initial.zip" --benchmark-ticks 45 --benchmark-runs 1 | tee "$RUNNER_TEMP/em064-native.log"
+          grep -F '[EM064 NATIVE POLE PASS]' "$RUNNER_TEMP/em064-native.log"
+          sha256sum build/package/ElectrifiedMainline_0.1.64.zip | tee "$RUNNER_TEMP/em064-source-sha256.txt"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EM064-obsolete-pole-native-evidence-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/em064-create.log
+            ${{ runner.temp }}/em064-native.log
+            ${{ runner.temp }}/em064-version.txt
+            ${{ runner.temp }}/em064-source-sha256.txt
+          if-no-files-found: warn

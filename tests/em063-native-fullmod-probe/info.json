@@ -1,0 +1,11 @@
+{
+  "name": "em063-native-fullmod-probe",
+  "version": "0.0.1",
+  "title": "EM 0.1.63 native real item/prototype research gate",
+  "author": "EM Research",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0",
+    "ElectrifiedMainline >= 0.1.63"
+  ]
+}

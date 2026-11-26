@@ -1,0 +1,7 @@
+Isolated Factorio 2.1.24 headless evidence (not full mod, not GPU rendering):
+Candidate visual prototype git blob b5e282d3544804dfd0af942613e4074b89f84047
+Native log SHA256 4274d041a9900dbdd812a44d183389f8c8f68f3b9a4dc2f481b247e122174d47
+3.046 Script @__level__/control.lua:15: EM082 NATIVE PROBE created locomotive, orientation=0.25 train=2
+3.061 Script @__level__/control.lua:20: EM082 NATIVE PROBE PASS: 30 ticks, actual entity and train, no visual assertion
+3.062 Info RunTest.cpp:105: Test passed at tick 31
+3.166 Goodbye

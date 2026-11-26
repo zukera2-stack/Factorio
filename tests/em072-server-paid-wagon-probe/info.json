@@ -1,0 +1,11 @@
+{
+  "name": "em072-paidproof-server",
+  "version": "0.0.1",
+  "title": "EM072 native source-paid locomotive booster SAVE/LOAD gate",
+  "author": "QA only",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0",
+    "ElectrifiedMainline = 0.1.69"
+  ]
+}

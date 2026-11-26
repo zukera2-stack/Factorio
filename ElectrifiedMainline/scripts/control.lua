@@ -17,8 +17,14 @@ local art030 = require("scripts.catenary_art_030")
 local diag045 = require("scripts.catenary_diag_045")
 local technical046 = require("scripts.technical_network_046")
 local bridge058 = require("scripts.power_bridge_058")
+local onboard089 = require("scripts.onboard_storage_089")
+local term094 = require("scripts.line_terminal_094")
+local regen091 = require("scripts.brake_recovery_091")
 local mast059 = require("scripts.mast_network_059")
 local pantograph049 = require("scripts.pantograph_visual_049")
+local paidTraction065 = require("scripts.traction_paid_065")
+local helper067 = require("scripts.helper_lifecycle_067")
+local wagon_status084 = require("scripts.motor_wagon_status_084")
 -- Legacy wire managers are retained for cleanup only. 046 technical and visual graphs are independent.
 local function empty_native_graph() return {nodes={},edges={}} end
 
@@ -81,6 +87,8 @@ script.on_init(function()
 end)
 script.on_configuration_changed(function()
     ensure_storage()
+    onboard089.audit()
+    regen091.invalidate()
     native_wire_probe026.cleanup_on_version_change()
     power019.rebuild_all()
     nativewire028.rebuild_all(empty_native_graph())
@@ -359,29 +367,6 @@ local function unmark_rail(rail)
     storage.em.electrified_rails[key] = nil
 end
 
-local function mark_rails_near_pole(pole)
-    if not (pole and pole.valid and pole.name == "em-electric-pole") then return end
-
-    local p = pole.position
-    local area = {
-        { p.x - RAIL_RADIUS, p.y - RAIL_RADIUS },
-        { p.x + RAIL_RADIUS, p.y + RAIL_RADIUS }
-    }
-    local rails = pole.surface.find_entities_filtered({
-        area = area,
-        name = {
-            "em-high-speed-straight-rail",
-            "em-curved-high-speed-rail",
-            "em-curved-high-speed-rail-b",
-            "em-half-diagonal-high-speed-rail"
-        }
-    })
-
-    for _, rail in pairs(rails) do
-        mark_rail(rail)
-    end
-end
-
 local function on_built(event)
     ensure_storage()
     local entity = event.entity
@@ -391,6 +376,7 @@ local function on_built(event)
         or "on_built_entity", event, entity)
     if not (entity and entity.valid) then return end
 
+    helper067.on_built(entity)
     power019.on_built(event)
     bridge058.on_built(entity)
     if entity.name=="em-35kv-catenary-pole" or entity.name=="em-35kv-catenary-pole-north" then
@@ -402,8 +388,6 @@ local function on_built(event)
     if RAIL_NAMES[entity.name] then
         mark_rail(entity)
         power019.on_rail_changed(entity)
-    elseif entity.name == "em-electric-pole" then
-        mark_rails_near_pole(entity)
     end
 end
 
@@ -417,6 +401,8 @@ local function cleanup_train_for_entity(event)
     diag_entity(diag_name, event, entity)
     if not (entity and entity.valid) then return end
 
+    term094.before_anchor_removed(entity)
+    helper067.on_removed(entity)
     pantograph049.remove(entity)
     native_wire_probe026.on_mast_removed(entity)
     bridge058.on_removed(entity)
@@ -470,17 +456,20 @@ end
 -- Diagnostic pass: identify the rail closest to each custom locomotive.
 -- This deliberately reports rail identity only; it does not infer that the rail
 -- is powered and does not alter train movement or energy.
-local function find_rail_under_locomotive(locomotive)
+local function find_rail_under_locomotive(locomotive, cache)
     local train = locomotive.train
     if not (train and train.valid) then return nil end
 
+    local id=locomotive.unit_number
+    if cache and cache[id]~=nil then return cache[id] or nil end
     local closest_rail = nil
     local best_distance_squared = math.huge
-
+    local pos=locomotive.position
     for _, rail in pairs(train.get_rails()) do
         if rail.valid then
-            local dx = rail.position.x - locomotive.position.x
-            local dy = rail.position.y - locomotive.position.y
+            local rp=rail.position
+            local dx = rp.x - pos.x
+            local dy = rp.y - pos.y
             local distance_squared = dx * dx + dy * dy
 
             if distance_squared < best_distance_squared then
@@ -490,15 +479,16 @@ local function find_rail_under_locomotive(locomotive)
         end
     end
 
+    if cache then cache[id]=closest_rail or false end
     return closest_rail
 end
 
-local function update_rail_diagnostics(train, state)
+local function update_rail_diagnostics(train, state, rail_cache)
     state.rail_diagnostics = state.rail_diagnostics or {}
 
     for _, locomotive in pairs(get_custom_locomotives(train)) do
         local locomotive_id = locomotive.unit_number or locomotive.name
-        local rail = find_rail_under_locomotive(locomotive)
+        local rail = find_rail_under_locomotive(locomotive,rail_cache)
         local rail_name = rail and rail.name or "<no-rail>"
         local rail_id = rail and rail.unit_number or "nil"
 
@@ -556,6 +546,8 @@ local function on_train_created(event)
     end
 
     initialize_train_state(train, previous_state)
+    regen091.train_changed(event)
+    helper067.on_train_created(event)
 end
 
 local function on_tick(event)
@@ -563,9 +555,11 @@ local function on_tick(event)
     -- on_configuration_changed when only runtime code changed. Initialize
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
-    if power019.on_tick(event.tick) then
+    regen091.begin(event.tick)
+    local rail_changed,rail_changes=power019.on_tick(event.tick)
+    if rail_changed then
         bridge058.mark_dirty()
-        technical046.mark_dirty()
+        technical046.mark_dirty(rail_changes)
         ghost_visual023.mark_dirty()
         art030.mark_dirty()
     end
@@ -576,9 +570,16 @@ local function on_tick(event)
         ghost_visual023.mark_dirty()
     end
     mast059.on_tick(event.tick,graph)
-    bridge058.on_tick(event.tick,graph)
+    local charge_budget=bridge058.on_tick(event.tick,graph)
     art030.on_tick(event.tick,graph)
     ghost_visual023.on_tick(event.tick)
+    -- After real EM070 native bridge settlement and exact confirmed contact geometry.
+    -- Reconcile actual native consists BEFORE charging: never grant an
+    -- orphaned/mismatched booster J from this tick's native 25kV sink.
+    helper067.on_tick(event.tick)
+    paidTraction065.on_tick(event.tick,art030,pantograph049,charge_budget)
+    regen091.finish(event.tick,onboard089,function(e) return paidTraction065.contact(e,art030,pantograph049) end)
+    term094.retire(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
@@ -594,8 +595,10 @@ local function on_tick(event)
     local trains = game.train_manager.get_trains({
         stock = "em-electric-locomotive"
     })
+    -- Exact same rail result within this visual/diagnostic phase only.
+    local rail_cache={}
     pantograph049.sync(trains, get_custom_locomotives,event.tick,art030.contact_at,function(e)
-        local rail=find_rail_under_locomotive(e)
+        local rail=find_rail_under_locomotive(e,rail_cache)
         return rail and (rail.name=="em-high-speed-straight-rail" or rail.name=="em-half-diagonal-high-speed-rail"
             or rail.name=="em-curved-high-speed-rail" or rail.name=="em-curved-high-speed-rail-b")
     end)
@@ -611,7 +614,7 @@ local function on_tick(event)
             if state then
                 if update_rails then
                     -- Diagnostic only: determine the rail under each custom locomotive.
-                    update_rail_diagnostics(train, state)
+                    update_rail_diagnostics(train, state,rail_cache)
                 end
 
                 -- Used by the later battery/regen implementation. No energy is
@@ -655,7 +658,12 @@ script.on_event(defines.events.on_redo_applied, on_diag_redo)
 script.on_event(defines.events.on_player_selected_area, on_player_selected_area)
 script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconstruction)
 script.on_event(defines.events.on_train_created, on_train_created)
+script.on_event(defines.events.on_object_destroyed, technical046.on_object_destroyed)
 script.on_event(defines.events.on_tick, on_tick)
+script.on_event(defines.events.on_entity_damaged, regen091.damage)
+script.on_event(defines.events.on_runtime_mod_setting_changed, regen091.setting_changed)
+-- EM084: override only the opened motor-wagon GUI status, never native alerts.
+script.on_nth_tick(60, function(_) wagon_status084.refresh_opened_players() end)
 
 -- Read-only diagnostic for the unpowered 0.1.9 visual catenary graph.
 commands.add_command("em-35kv-status", "Show visual graph; see /em-25kv-mode status for power.", function(event)
@@ -749,3 +757,48 @@ commands.add_command("em-25kv-priority", "Select an electric interface, accumula
         player.print(priority_diag061.report(entity))
     end
 end)
+
+-- 0.1.63 TEST BRANCH ONLY: opt-in single scene with genuine main mod objects.
+local trial063 = require("scripts.em072_c5_fullmod_trial_063")
+-- Factorio registers one handler per event per mod. Keep EM084 and the
+-- legacy read-only trace in a single dispatcher, never open helper GUIs.
+script.on_event(defines.events.on_gui_opened,function(event)
+    local e=event.entity
+    if e and e.valid and e.name:match('^em%-c5%-technical%-booster%-%d+$') then
+        local player=game.get_player(event.player_index)
+        if player and player.valid then player.opened=nil end
+        return
+    end
+    wagon_status084.on_gui_opened(event)
+    trial063.on_gui_opened(event)
+end)
+-- EM072 experimental read-only QA API. Exposes only numeric IDs and Joules;
+-- no helper spawning, no arbitrary credit, no gameplay execution hook.
+remote.add_interface('em072_native_qa_071',{
+    snapshot=function(helper_id)
+        local h=helper_id and game.get_entity_by_unit_number(helper_id)
+        local hs=storage.em and storage.em.helper067 or {}
+        local p=storage.em and storage.em.traction_paid_065 or {}
+        local n=storage.em and storage.em.traction_native_068 or {}
+        return {
+            owner=h and hs.owners and hs.owners[helper_id] or nil,
+            created=hs.created or 0,removed=hs.orphan_helpers_removed or 0,
+            lost_J=hs.removed_loss_J or 0,external_J=hs.external_loss_J or 0,
+            paid_J=p.debited_J or 0,motor_paid_J=p.motor_paid_J or 0,
+            motor_grants=p.motor_grants or 0,
+            native_sink_paid_J=n.metered_native_J or 0,
+            native_sink_discarded_J=n.discarded_J or 0,
+            native_sink_retired=n.retired or 0,
+            native_sink_unobserved_removed=n.unobserved_removed or 0,
+        }
+    end
+})
+
+-- EM088 read-only accounting API; no arbitrary energy mutation.
+remote.add_interface("em088_train_energy",{snapshot=require("scripts.train_energy_088").snapshot})
+
+remote.add_interface("em089_onboard_storage",{snapshot=onboard089.snapshot})
+
+remote.add_interface("em091_brake_recovery",{snapshot=regen091.snapshot})
+
+remote.add_interface("em094_line_terminal",{snapshot=term094.snapshot})

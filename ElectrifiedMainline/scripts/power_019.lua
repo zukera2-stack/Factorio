@@ -131,64 +131,197 @@ local function resolve(s,id)
 end
 -- This is deliberately *not* RailSignalPrototype: no changes to train blocks.
 -- Check real rail connectivity, so nearby but independent tracks do not join.
-local function rail_path_info(a,b,max_distance)
+-- EM087C: a native rail segment has no interior branch, signal or stop.
+-- Certify ONLY a complete cardinal straight HSR chain, with exact 2-tile
+-- spacing and the same force/surface. A reachable boundary with an external
+-- HSR neighbour defeats the certificate (the original bounded walk wins).
+-- This is a per-plan read of the engine, never a persistent permission.
+local function native_straight_path(start,b,max_walk,context)
+    if not context or context.disable_native_segments then return nil end
+    if start.name~="em-high-speed-straight-rail" then return nil end
+    context.native_segments=context.native_segments or {}
+    local segments=context.native_segments
+    local id=start.unit_number
+    local c=segments[id]
+    if c==nil then
+        -- Avoid copying arbitrarily large segments to Lua. A 100km line
+        -- therefore falls back to the ordinary bounded walker.
+        local ok,rails=pcall(function()
+            if start.get_rail_segment_length()>8192 then return nil end
+            return start.get_rail_segment_rails(defines.rail_direction.front)
+        end)
+        if not ok or not rails or #rails<2 then segments[id]=false;return nil end
+        local positions,seen,ordered={},{},{}
+        local axis,step,first,last,prev
+        local force,surface=start.force,start.surface
+        local good=true
+        for i,r in ipairs(rails) do
+            if not (r.valid and r.name==start.name and r.unit_number and
+                r.force==force and r.surface==surface and not seen[r.unit_number]) then good=false;break end
+            local pos=r.position
+            if prev then
+                local dx,dy=pos.x-prev.x,pos.y-prev.y
+                local ax=(math.abs(dx)==2 and dy==0) and 'x' or ((math.abs(dy)==2 and dx==0) and 'y' or nil)
+                local d=ax and (ax=='x' and dx or dy)
+                if not ax or (axis and (axis~=ax or step~=d)) then good=false;break end
+                axis,step=ax,d
+            end
+            if i==1 then first=r end
+            last=r;prev=pos;seen[r.unit_number]=true;positions[r.unit_number]=(i-1)*2;ordered[i]=r
+        end
+        if good and seen[id] and axis then
+            local function outside(r)
+                for _,d in ipairs({defines.rail_direction.front,defines.rail_direction.back}) do
+                    for _,turn in ipairs({defines.rail_connection_direction.straight,defines.rail_connection_direction.left,defines.rail_connection_direction.right}) do
+                        local n=r.get_connected_rail{rail_direction=d,rail_connection_direction=turn}
+                        if n and n.valid and RAIL_SET[n.name] and n.unit_number and n.force==force and n.surface==surface and not seen[n.unit_number] then return true end
+                    end
+                end
+                return false
+            end
+            c={positions=positions,ordered=ordered,last=(#rails-1)*2,left_external=outside(first),right_external=outside(last)}
+            for rid in pairs(seen) do segments[rid]=c end
+        else
+            for _,r in ipairs(rails) do if r.valid and r.unit_number then segments[r.unit_number]=false end end
+            segments[id]=false;return nil
+        end
+    end
+    if not c then return nil end
+    local from,to=c.positions[id],c.positions[b.rail_id]
+    if from==nil then return nil end
+    if (c.left_external and from<=max_walk) or (c.right_external and c.last-from<=max_walk) then return nil end
+    -- Certified cardinal segment, no reachable external HSR continuation.
+    -- Every admissible bounded walk stays on this chain. An absent target
+    -- (e.g. a parallel disconnected line) cannot be reached. False is a
+    -- proven negative, nil means unknown and invokes the exact walker.
+    if to==nil then return false end
+    local length=math.abs(from-to)
+    if length>max_walk then return false end
+    -- Original bounded search allows 192 accepted pops. On a chain spaced
+    -- exactly 2 tiles, at most 2*floor(max_walk/2)+1 nodes can be popped.
+    if length<=max_walk and 2*math.floor(max_walk/2)+1<=192 then
+        context.native_segment_hits=(context.native_segment_hits or 0)+1
+        local result={length=length,curved=false}
+        if context.capture_paths then
+            result.rails={}
+            for i=math.min(from,to)/2+1,math.max(from,to)/2+1 do
+                result.rails[#result.rails+1]=c.ordered[i]
+            end
+        end
+        return result
+    end
+    return nil
+end
+function M.attached_rail(a)
+    local surface=game.surfaces[a.surface_index]
+    local force=game.forces[a.force_name]
+    if not (surface and force and a.rail_id) then return nil end
+    for _,r in pairs(surface.find_entities_filtered{
+        position={x=a.x,y=a.y},radius=RADIUS,name=RAILS,force=force}) do
+        if r.valid and r.unit_number==a.rail_id then return r end
+    end
+end
+local function rail_path_info(a,b,max_distance,context)
     if not (a and b and a.rail_id and b.rail_id
         and a.surface_index==b.surface_index
         and a.force_name==b.force_name) then return nil end
     local surface=game.surfaces[a.surface_index]
     local force=game.forces[a.force_name]
     if not (surface and force) then return nil end
-    local start
-    for _,r in pairs(surface.find_entities_filtered{
-        position={x=a.x,y=a.y},radius=RADIUS,name=RAILS,force=force}) do
-        if r.unit_number==a.rail_id then start=r;break end
+    local start=context and a.id and context.starts[a.id]
+    if start==nil then
+        for _,r in pairs(surface.find_entities_filtered{
+            position={x=a.x,y=a.y},radius=RADIUS,name=RAILS,force=force}) do
+            if r.unit_number==a.rail_id then start=r;break end
+        end
+        if context and a.id then context.starts[a.id]=start or false end
     end
     if not (start and start.valid and RAIL_SET[start.name]) then return nil end
     local straight="em-high-speed-straight-rail"
     if a.rail_id==b.rail_id then
-        return {length=0,curved=start.name~=straight}
+        return {length=0,curved=start.name~=straight,rails=context and context.capture_paths and {start} or nil}
     end
     local directions={defines.rail_direction.front,defines.rail_direction.back}
     local turns={defines.rail_connection_direction.straight,
         defines.rail_connection_direction.left,defines.rail_connection_direction.right}
+    -- Phase-local cache: the technical plan reads native rail adjacency but
+    -- never mutates rails. Reuse only exact ordered neighbours during this
+    -- synchronous plan; no cache across ticks, events or save/load.
+    local function neighbours(rail)
+        local id=rail.unit_number
+        local result=context and context.neighbours[id]
+        if result then return result end
+        result={}
+        local pos=rail.position
+        for _,d in ipairs(directions) do
+            for _,turn in ipairs(turns) do
+                local other=rail.get_connected_rail{
+                    rail_direction=d,rail_connection_direction=turn}
+                if other and other.valid and RAIL_SET[other.name]
+                    and other.unit_number and other.force.name==a.force_name
+                    and other.surface.index==a.surface_index then
+                    local op=other.position
+                    local dx=op.x-pos.x
+                    local dy=op.y-pos.y
+                    result[#result+1]={rail=other,id=other.unit_number,
+                        length=math.max(1,math.sqrt(dx*dx+dy*dy)),curved=other.name~=straight}
+                end
+            end
+        end
+        if context then context.neighbours[id]=result end
+        return result
+    end
     -- Bounded lowest-cost rail walk; never traverse vanilla, elevated,
     -- enemy or disconnected rail. Cost is approximate entity-centre path
     -- distance, not Factorio's exact rail spline length.
-    local queue={{rail=start,length=0,curved=start.name~=straight}}
-    local best={[start.unit_number]=0}
-    local visited=0
     local max_walk=max_distance or (limits.STRAIGHT*1.5+4)
-    while #queue>0 and visited<192 do
+    local direct=native_straight_path(start,b,max_walk,context)
+    if direct==false then return nil end
+    if direct then return direct end
+    -- Resume the exact original bounded traversal for another target from
+    -- the same start, ONLY within the synchronous technical plan. Each
+    -- target uses its first accepted pop, with the same tie order and cap.
+    local walk
+    if context then
+        context.walks=context.walks or {}
+        local row=context.walks[a.rail_id]
+        if not row then row={};context.walks[a.rail_id]=row end
+        walk=row[max_walk]
+        if not walk then
+            walk={queue={{rail=start,id=a.rail_id,length=0,curved=start.name~=straight,
+                path=context.capture_paths and {rail=start} or nil}},
+                best={[a.rail_id]=0},visited=0,results={}}
+            row[max_walk]=walk
+        end
+    else
+        walk={queue={{rail=start,id=a.rail_id,length=0,curved=start.name~=straight}},
+            best={[a.rail_id]=0},visited=0,results={}}
+    end
+    if walk.results[b.rail_id] then return walk.results[b.rail_id] end
+    local queue,best=walk.queue,walk.best
+    while #queue>0 and walk.visited<192 do
         local best_i=1
         for i=2,#queue do
             if queue[i].length<queue[best_i].length then best_i=i end
         end
         local cur=table.remove(queue,best_i)
-        if cur.length<=best[cur.rail.unit_number]+0.00001 then
-            visited=visited+1
-            if cur.rail.unit_number==b.rail_id then
-                return {length=cur.length,curved=cur.curved}
+        if cur.length<=best[cur.id]+0.00001 then
+            walk.visited=walk.visited+1
+            if not walk.results[cur.id] then
+                walk.results[cur.id]={length=cur.length,curved=cur.curved,path=cur.path}
             end
-            for _,d in ipairs(directions) do
-                for _,turn in ipairs(turns) do
-                    local other=cur.rail.get_connected_rail{
-                        rail_direction=d,rail_connection_direction=turn}
-                    if other and other.valid and RAIL_SET[other.name]
-                        and other.unit_number and other.force.name==a.force_name
-                        and other.surface.index==a.surface_index then
-                        local dx=other.position.x-cur.rail.position.x
-                        local dy=other.position.y-cur.rail.position.y
-                        local cost=cur.length+math.max(1,math.sqrt(dx*dx+dy*dy))
-                        if cost<=max_walk and
-                            (not best[other.unit_number] or
-                                cost<best[other.unit_number]-0.00001) then
-                            best[other.unit_number]=cost
-                            queue[#queue+1]={rail=other,length=cost,
-                                curved=cur.curved or other.name~=straight}
-                        end
-                    end
+            if not context and cur.id==b.rail_id then return walk.results[cur.id] end
+            for _,other in ipairs(neighbours(cur.rail)) do
+                local cost=cur.length+other.length
+                if cost<=max_walk and
+                    (not best[other.id] or cost<best[other.id]-0.00001) then
+                    best[other.id]=cost
+                    queue[#queue+1]={rail=other.rail,id=other.id,length=cost,
+                        curved=cur.curved or other.curved,
+                        path=cur.path and {rail=other.rail,previous=cur.path} or nil}
                 end
             end
+            if cur.id==b.rail_id then return walk.results[cur.id] end
         end
     end
     return nil
@@ -197,9 +330,9 @@ local function connected_rail_path(a,b)
     return rail_path_info(a,b)~=nil
 end
 -- HSR continuity only; no geometric side/angle gate.
-function M.technical_path(a,b)
+function M.technical_path(a,b,context)
     if not (a and b and a.rail_adjacent and b.rail_adjacent) then return nil end
-    return rail_path_info(a,b,limits.WIRE_REACH*1.5+4)
+    return rail_path_info(a,b,limits.WIRE_REACH*1.5+4,context)
 end
 
 -- Deterministic complete cosmetic plan, no rail walk.
@@ -317,22 +450,28 @@ function M.on_removed(event)
 end
 function M.on_rail_changed(e)
     if not (e and e.valid and RAIL_SET[e.name]) then return end
+    M.queue_rail_change(e.surface.index,e.force.name,e.position)
+end
+-- Destruction notifications carry no live entity. Use its recorded location
+-- to run exactly the same local mast refresh before next settlement.
+function M.queue_rail_change(surface_index,force_name,position)
     local s=M.ensure_storage()
-    local x,y=e.position.x,e.position.y
-    local key=tostring(e.surface.index)..":"..e.force.name..":"..
+    local x,y=position.x,position.y
+    local key=tostring(surface_index)..":"..force_name..":"..
         tostring(math.floor(x/4))..":"..tostring(math.floor(y/4))
-    s.rail_queue[key]={surface_index=e.surface.index,
-        force_name=e.force.name,position={x=x,y=y},tick=game.tick+1}
+    s.rail_queue[key]={surface_index=surface_index,
+        force_name=force_name,position={x=x,y=y},tick=game.tick+1}
 end
 function M.on_tick(tick)
     local s=M.ensure_storage()
     if not next(s.rail_queue) then return false end
-    local buckets={}
+    local buckets,changes={},{}
     local changed=false
     for key,change in pairs(s.rail_queue) do
         if tick>=change.tick then
             s.rail_queue[key]=nil
             changed=true
+            changes[#changes+1]=change
             local surface=game.surfaces[change.surface_index]
             local force=game.forces[change.force_name]
             if surface and force then
@@ -354,7 +493,7 @@ function M.on_tick(tick)
         refresh(entry.surface,entry.force,entry.position)
     end
     -- Even a rail-only edit can split a technical path.
-    return changed
+    return changed,changes
 end
 function M.status(player)
     local s=M.ensure_storage()

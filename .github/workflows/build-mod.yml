@@ -2,18 +2,20 @@ name: Build Factorio mod ZIP
 
 on:
   push:
-    branches: [main, diagnostic/blueprint-rail-undo, test/undo-stabilization-018, 'feature/**', 'experiment/**']
+    branches: [main, diagnostic/blueprint-rail-undo, test/undo-stabilization-018, 'feature/**', 'experiment/**', 'integration/**']
     paths:
       - "ElectrifiedMainline/**"
       - "tests/**"
       - "scripts/sprites/**"
       - "scripts/verify_*.py"
+      - "scripts/rebuild_em083_pantograph.py"
       - "scripts/package_mod.py"
       - "scripts/verify_runtime_artwork.py"
       - "scripts/atlas_045.py"
       - "docs/tests/evidence/SPRITES_039_QA.json"
       - "docs/builds/013-payload.json"
       - "docs/builds/runtime-artwork.json"
+      - "docs/builds/integration-runtime.json"
       - "art/sprites/**"
       - "art/rail_053/**"
       - ".github/workflows/build-mod.yml"
@@ -27,6 +29,10 @@ on:
       - ".github/workflows/build-mod.yml"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -36,6 +42,7 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
       frozen: ${{ steps.artwork.outputs.frozen }}
+      input_ready: ${{ steps.input.outputs.ready }}
     steps:
       - uses: actions/checkout@v4
       - id: version
@@ -43,6 +50,22 @@ jobs:
       - id: artwork
         run: |
           if test -f docs/builds/runtime-artwork.json; then echo frozen=true >> "$GITHUB_OUTPUT"; else echo frozen=false >> "$GITHUB_OUTPUT"; fi
+      - id: input
+        shell: bash
+        run: |
+          if test "${{ steps.version.outputs.version }}" = 0.1.79 && ! test -f art/sprites/locomotive-v3/Locomotive_V3_visual_patch.zip; then
+            echo "::notice::EM079 packaging BLOCKED: exact locally rendered PNG archive missing"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          elif test "${{ steps.version.outputs.version }}" = 0.1.80 && ! test -f art/sprites/locomotive-v3/EM080_visual_patch.zip; then
+            echo "::notice::EM080 packaging BLOCKED: exact locally rendered PNG archive missing"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          elif { test "${{ steps.version.outputs.version }}" = 0.1.81 || test "${{ steps.version.outputs.version }}" = 0.1.82; } && { ! test -f art/sprites/locomotive-v3/EM080_visual_patch.zip || ! test -f art/sprites/locomotive-v3/EM081_wheels_patch.zip; }; then
+            echo "::notice::EM081 packaging BLOCKED: exact base or wheel patch missing"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
   lua_qa:
     name: Lua syntax and functional preflight
     needs: detect
@@ -134,6 +157,26 @@ jobs:
             lua5.2 tests/power_bridge_cold_start_060.lua
           fi
 
+      - name: EM080 native visual and spark regression mocks
+        if: needs.detect.outputs.version == '0.1.80'
+        run: |
+          lua5.2 tests/locomotive_visual_080.lua
+          lua5.2 tests/pantograph_spark_052.lua
+
+      - name: EM081 wheel atlas and spark regression mocks
+        if: (needs.detect.outputs.version == '0.1.81' || needs.detect.outputs.version == '0.1.82')
+        run: |
+          if test "${{ needs.detect.outputs.version }}" = 0.1.82; then
+            lua5.2 tests/locomotive_visual_082.lua
+          else
+            lua5.2 tests/locomotive_visual_081.lua
+          fi
+          lua5.2 tests/pantograph_spark_052.lua
+
+      - name: Full 0.1.63 genuine-object source contract tests
+        if: needs.detect.outputs.version == '0.1.63'
+        run: python3 -m unittest discover -s tests -p 'test_full_mod_063.py' -v
+
   render052:
     needs: [detect, lua_qa]
     if: needs.detect.outputs.frozen != 'true' && ((needs.detect.outputs.version == '0.1.52' || needs.detect.outputs.version == '0.1.53' || needs.detect.outputs.version == '0.1.54' || needs.detect.outputs.version == '0.1.55' || needs.detect.outputs.version == '0.1.56' || needs.detect.outputs.version == '0.1.57' || needs.detect.outputs.version == '0.1.58' || needs.detect.outputs.version == '0.1.59' || needs.detect.outputs.version == '0.1.60'))
@@ -164,7 +207,7 @@ jobs:
           retention-days: 3
   package:
     needs: [detect, lua_qa, render052]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && needs.lua_qa.result == 'success' && (needs.render052.result == 'success' || needs.render052.result == 'skipped') }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.input_ready == 'true' || github.event_name == 'workflow_dispatch') && needs.lua_qa.result == 'success' && (needs.render052.result == 'success' || needs.render052.result == 'skipped') }}
     name: Package and validate test ZIP
     runs-on: ubuntu-latest
     steps:
@@ -296,8 +339,30 @@ jobs:
         run: |
           python scripts/sprites/icons_057.py
           python scripts/verify_057.py
+      - name: Stage exact locally rendered V3 art (no rendering)
+        if: needs.detect.outputs.version == '0.1.79'
+        run: python scripts/verify_em079_visual_patch.py
+
+      - name: Stage exact local EM080 visual patch (no rendering)
+        if: needs.detect.outputs.version == '0.1.80'
+        run: python scripts/verify_em080_visual_patch.py
+
+      - name: Stage exact EM080 base and EM081 wheels (no rendering)
+        if: (needs.detect.outputs.version == '0.1.81' || needs.detect.outputs.version == '0.1.82')
+        run: python scripts/verify_em081_wheels_patch.py
+
+      - name: Restore exact EM080 body and EM081 wheels for integrated runtime
+        if: needs.detect.outputs.version == '0.1.85' || hashFiles('docs/builds/integration-runtime.json') != ''
+        run: python scripts/verify_em081_wheels_patch.py
+
+      - name: Rebuild EM083 exact raised collector and verify owner graphics
+        if: needs.detect.outputs.version == '0.1.85' || hashFiles('docs/builds/integration-runtime.json') != ''
+        run: |
+          python -m pip install "numpy==2.3.5" "Pillow==12.3.0"
+          python scripts/rebuild_em083_pantograph.py --repo .
+
       - name: Verify frozen runtime PNG manifest
-        if: needs.detect.outputs.frozen == 'true'
+        if: needs.detect.outputs.frozen == 'true' && needs.detect.outputs.version != '0.1.85' && hashFiles('docs/builds/integration-runtime.json') == ''
         run: python scripts/verify_runtime_artwork.py
       - name: Validate package boundary
         run: python -m unittest discover -s tests -p 'test_package_mod.py' -v
@@ -339,6 +404,10 @@ jobs:
             build/qa/locomotive-052-preview.png
             build/qa/locomotive-052-assets.json
           if-no-files-found: error
+      - name: Verify integration payload before artifact upload
+        if: hashFiles('docs/builds/integration-runtime.json') != ''
+        run: python scripts/verify_integration_runtime.py --archive "${{ steps.package.outputs.archive }}"
+
       - name: Upload test ZIP
         uses: actions/upload-artifact@v4
         with:

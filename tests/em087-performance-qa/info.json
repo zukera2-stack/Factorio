@@ -1,0 +1,1 @@
+{"name": "em-audit-qa", "version": "0.0.1", "title": "EM085 Independent Audit", "author": "Local QA", "factorio_version": "2.1", "dependencies": ["base >= 2.1.24", "ElectrifiedMainline >= 0.1.85"]}

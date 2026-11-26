@@ -1,0 +1,11 @@
+{
+  "name": "em072-paidowner-lifecycle",
+  "version": "0.0.1",
+  "title": "EM072 automatic paid owner lifecycle QA - isolated fullmod",
+  "author": "QA only",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0",
+    "ElectrifiedMainline = 0.1.69"
+  ]
+}

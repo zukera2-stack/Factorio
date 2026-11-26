@@ -1,0 +1,289 @@
+{
+  "training_min_C_by_case": {
+    "wagononly": [
+      1251.4231373001087,
+      120
+    ],
+    "autoboth": [
+      976.7847748594874,
+      223
+    ],
+    "autowagononly": [
+      1020.9918646363207,
+      188
+    ],
+    "autolocoonly": [
+      1020.9918646363207,
+      188
+    ],
+    "locoonly": [
+      1251.4231373001087,
+      120
+    ],
+    "bothbonus": [
+      1251.4231373001087,
+      120
+    ],
+    "coast": [
+      1251.4231373001087,
+      120
+    ],
+    "both": [
+      1251.4231373001087,
+      120
+    ]
+  },
+  "holdout_min_C_by_case": {
+    "station2000": [
+      939.1219203078139,
+      156
+    ],
+    "collision2000": [
+      939.1219203078139,
+      156
+    ],
+    "station600": [
+      3316.5579052934127,
+      186
+    ],
+    "coast2000": [
+      1005.3309955174836,
+      120
+    ],
+    "bonus2000": [
+      933.3627274974684,
+      163
+    ],
+    "manual2000": [
+      1005.3309955174836,
+      120
+    ],
+    "heavy2000": [
+      1009.5706534803969,
+      195
+    ],
+    "station4000": [
+      655.7159269536994,
+      69
+    ],
+    "onboard-outage": [
+      758.7352124657799,
+      920
+    ],
+    "onboard-move": [
+      632.2793437265333,
+      920
+    ]
+  },
+  "coast_intervals": 378,
+  "coast_max_error": 9.726663918740996e-13,
+  "manual": {
+    "locoonly": {
+      "nominal_decel": 0.006667,
+      "intervals": 165,
+      "max_error": 2.0036056147532122e-16
+    },
+    "wagononly": {
+      "nominal_decel": 0.006667,
+      "intervals": 165,
+      "max_error": 2.0036056147532122e-16
+    },
+    "both": {
+      "nominal_decel": 0.013333333333333334,
+      "intervals": 82,
+      "max_error": 6.666698443291708e-13
+    },
+    "bothbonus": {
+      "nominal_decel": 0.02666666666666667,
+      "intervals": 40,
+      "max_error": 6.667409679916858e-13
+    }
+  },
+  "base_final": {
+    "wagononly": {
+      "actual_fuel_J": 4002222.22222212,
+      "hypothetical_J": 26.746997076,
+      "max_per_tick_J": 0.322011008,
+      "reasons": {
+        "stop": 616,
+        "acceleration": 119,
+        "no-brake": 1,
+        "estimate": 165
+      }
+    },
+    "autoboth": {
+      "actual_fuel_J": 7435555.555555517,
+      "hypothetical_J": 536332.467635983,
+      "max_per_tick_J": 7140.643805851,
+      "reasons": {
+        "stop": 3,
+        "acceleration": 222,
+        "estimate": 111,
+        "terminal-adjustment": 31,
+        "no-brake": 1
+      }
+    },
+    "starve": {
+      "actual_fuel_J": 4000000.0,
+      "hypothetical_J": 0.0,
+      "max_per_tick_J": 0.0,
+      "reasons": {
+        "stop": 2,
+        "acceleration": 119,
+        "unpaid-acceleration": 1,
+        "uncertain-epoch": 779
+      }
+    },
+    "autowagononly": {
+      "actual_fuel_J": 6268888.888888828,
+      "hypothetical_J": 32.39229993,
+      "max_per_tick_J": 0.200270382,
+      "reasons": {
+        "stop": 3,
+        "acceleration": 187,
+        "estimate": 214,
+        "terminal-adjustment": 22
+      }
+    },
+    "autocollision": {
+      "actual_fuel_J": 20000000.0,
+      "hypothetical_J": 130647.928128687,
+      "max_per_tick_J": 7140.643805851,
+      "reasons": {
+        "stop": 641,
+        "acceleration": 222,
+        "estimate": 19,
+        "unobserved-start": 2,
+        "uncertain-epoch": 17
+      },
+      "collision": {
+        "tick": 243,
+        "v0": 1.575710420819,
+        "v1": 0.0,
+        "grant_J": 0.0
+      }
+    },
+    "cycle": {
+      "actual_fuel_J": 12002222.222222257,
+      "hypothetical_J": 800466.399882575,
+      "max_per_tick_J": 6428.53114391,
+      "reasons": {
+        "stop": 293,
+        "acceleration": 359,
+        "no-brake": 3,
+        "estimate": 246
+      }
+    },
+    "autolocoonly": {
+      "actual_fuel_J": 6268888.888888828,
+      "hypothetical_J": 647845.998590751,
+      "max_per_tick_J": 4005.407635743,
+      "reasons": {
+        "stop": 3,
+        "acceleration": 187,
+        "estimate": 214,
+        "terminal-adjustment": 22
+      }
+    },
+    "passive": {
+      "actual_fuel_J": 4002222.22222212,
+      "hypothetical_J": 0.0,
+      "max_per_tick_J": 0.0,
+      "reasons": {
+        "stop": 699,
+        "acceleration": 119,
+        "no-brake": 1,
+        "invalid-motor": 82
+      }
+    },
+    "locoonly": {
+      "actual_fuel_J": 4002222.22222212,
+      "hypothetical_J": 534939.941514259,
+      "max_per_tick_J": 6440.220151602,
+      "reasons": {
+        "stop": 616,
+        "acceleration": 119,
+        "no-brake": 1,
+        "estimate": 165
+      }
+    },
+    "bothbonus": {
+      "actual_fuel_J": 4002222.22222212,
+      "hypothetical_J": 257817.846128125,
+      "max_per_tick_J": 12529.446153203,
+      "reasons": {
+        "stop": 741,
+        "acceleration": 119,
+        "no-brake": 1,
+        "estimate": 40
+      }
+    },
+    "coast": {
+      "actual_fuel_J": 4002222.22222212,
+      "hypothetical_J": 0.0,
+      "max_per_tick_J": 0.0,
+      "reasons": {
+        "stop": 2,
+        "acceleration": 119,
+        "uncertain-epoch": 780
+      }
+    },
+    "both": {
+      "actual_fuel_J": 4002222.22222212,
+      "hypothetical_J": 264263.292281328,
+      "max_per_tick_J": 6381.723076602,
+      "reasons": {
+        "stop": 699,
+        "acceleration": 119,
+        "no-brake": 1,
+        "estimate": 82
+      }
+    }
+  },
+  "full_final": {
+    "onboard-outage": {
+      "estimated_fuel_J": 12352885.93269405,
+      "hypothetical_J": 1144618.356265991,
+      "max_per_tick_J": 8875.528721105,
+      "B": "B=36.000000",
+      "motorB": "motorB=26.000000",
+      "friction": "F=2.000000",
+      "capW": "capW=3000000",
+      "reasons": {
+        "stop": 885,
+        "acceleration": 201,
+        "no-brake": 135,
+        "estimate": 196,
+        "terminal-adjustment": 24
+      }
+    },
+    "onboard-move": {
+      "estimated_fuel_J": 11933333.3333333,
+      "hypothetical_J": 992395.939366798,
+      "max_per_tick_J": 8670.089115067,
+      "B": "B=36.000000",
+      "motorB": "motorB=26.000000",
+      "friction": "F=2.000000",
+      "capW": "capW=3000000",
+      "reasons": {
+        "stop": 885,
+        "acceleration": 201,
+        "no-brake": 155,
+        "estimate": 178,
+        "terminal-adjustment": 22
+      }
+    },
+    "onboard-empty": {
+      "estimated_fuel_J": 0.0,
+      "hypothetical_J": 0.0,
+      "max_per_tick_J": 0.0,
+      "B": "B=20.000000",
+      "motorB": "motorB=20.000000",
+      "friction": "F=0.500000",
+      "capW": "capW=2000000",
+      "reasons": {
+        "stop": 361
+      }
+    }
+  }
+}
