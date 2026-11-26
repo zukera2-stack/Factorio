@@ -1,3 +1,71 @@
+em094a_terminal_integration_20261126:
+  date: "2026-11-26"
+  branch: "test/em094a-terminal-integration"
+  base_commit: "0cb10f4f97672f8f7992205682d5b9ff5b049038"
+  runtime_version: "0.1.102"
+  status: partial_native_exchange_pass_production_safety_blocked
+  native_engine: "2.1.24 build87808 linux64 headless"
+  runtime_changed: false
+  positive_native_cases_pass: 9
+  negative_fault_reproduced: 1
+  initial_setting_fixture_failures: 2
+  terminal_small_cases_pass: 4
+  terminal_multi_accepted_J: 400000
+  terminal_isolated_accepted_J: 0
+  terminal_no_load_residual_J: 200000
+  terminal_cut_first_receiver_J: 0
+  terminal_cut_intact_receiver_J: 100000
+  terminal_cut_residual_J: 100000
+  large_terminal_corridors: 100
+  large_terminal_ports: 200
+  large_terminal_accepted_J: 10000000
+  large_terminal_valid_after_audit: 200
+  large_terminal_train_count: 0
+  actual_train_cases_pass: 4
+  actual_counts: [2, 6, 4, 100]
+  actual_grid_J: [80680.625220, 242041.875661, 161361.250441, 4034031.261013]
+  actual_receiver_paid_J: [40340.312610, 121020.937830, 80680.625220, 2017015.630507]
+  actual_receiver_moved: [1, 3, 2, 50]
+  actual_large_corridors: 50
+  actual_large_seed_budget_J: 100000000
+  actual_large_closed_samples: 421
+  actual_large_final_total_J: 100000000.000023
+  actual_large_paid_J: 104034031.261036
+  actual_large_native_consumed_J: 60461460.074946
+  actual_large_brake_intervals: 2600
+  actual_large_pending_J: 0
+  actual_large_rejected_J: 0
+  actual_large_other_corridor_J: 0
+  actual_large_arrivals: not_tested
+  actual_large_motor_wagons: false
+  late_script_short_wrong_sink_J: 100000
+  late_script_short_certified_J: 0
+  late_script_short_uncertain_J: 100000
+  small_workers: 3
+  small_wall_seconds: 8.012
+  small_peak_bytes: 2445463552
+  large_terminal_wall_seconds: 5.583
+  actual_small_workers: 2
+  actual_small_wall_seconds: 5.411
+  actual_large_workers: 1
+  actual_large_wall_seconds: 29.988
+  actual_large_peak_bytes: 1755353088
+  oom_events: 0
+  terminal_probe_sha256: b76948314f47cf2aee3345695b48a571c48e030aeea5f704bb82bfc0d33fd280
+  integrated_probe_sha256: 1b34d5761eadb1398644492193c02975e4e0b2fe7ba1dbfd99085795ac5c275d
+  source_sha256: 5fd7c7a3b39b63668fa6dcf2d6b52e0ff751da0da157964d6b4cce4ac3694731
+  evidence: "/Factorio/Local-QA/EM094A_TERMINAL_INTEGRATION_EVIDENCE.zip"
+  evidence_sha256: f64ee5743a1c7ab8b53d11f1a4075b6dce1ecd4790b185f1120f1b59349e5475
+  report: docs/development/EM094A_TERMINAL_INTEGRATION_QA.md
+  previous_regression_rerun: false
+  production_queue: blocked
+  pending_reload_disable: not_proven
+  performance_gate: not_met
+  next: em094b_topology_freeze_terminal_lifecycle_pending_save_disable
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em092_093_native_exchange_20261126:
   date: "2026-11-26"
   branch: "test/em092-093-native-exchange"
