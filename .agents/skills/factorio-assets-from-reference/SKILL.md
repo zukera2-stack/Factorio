@@ -7,6 +7,12 @@ description: Create, repaint, edit, render, verify, and deliver Factorio Electri
 
 Этот навык **обязателен для любого запроса на игровую графику** проекта `zukera2-stack/Factorio`: перекраска, переделка кузова, колёс, опор, проводов, вагонов, wreck, иконок, рендер из V3, изготовление 256-направленного атласа. Прочитай [контракт и примеры](references/asset-contract.md), [входной шаблон заказа](references/request-template.md) и [рабочую дисциплину](../../../docs/development/ASSET_WORKSHOP.md). Основной путь: **фактический источник → проверяемая правка → одинаковый ракурс «до/после» → согласие владельца → реальные спрайты → Direct Patch**.
 
+## 3D-first rolling-stock design — owner instruction 2026-11-26
+
+For new rolling-stock bodies, use the approved concept → real 3D → sprites pipeline, not the old vanilla repaint-only route. The owner explicitly authorizes new smooth cargo/tank/battery bodies; the original V3 locomotive is protected. First propose visual concept sketches in the V3 style, marked CONCEPT, not model renders. Record each approved sketch file SHA256 and owner approval; never start its production model before that explicit art approval. Concept images may be artistic; do not infer calibrated dimensions from perspective drawings. Show same-scale side/top/three-quarter views where possible. If a conceptual choice is unresolved, record it as a proposal. After concept approval, iterate autonomously on real geometry and show only a verified final model candidate, not intermediate blockouts as finished work.
+
+Use [A3DS reference-to-model skill](https://github.com/zukera2-stack/Agent-3D-Studio/blob/3c0f4d057f8569bc410120baf3f009dce86b9eab/.agents/skills/a3ds-reference-to-model/SKILL.md) and [method](https://github.com/zukera2-stack/Agent-3D-Studio/blob/3c0f4d057f8569bc410120baf3f009dce86b9eab/docs/REFERENCE_TO_MODEL_METHOD.md), **method B** for mechanical assemblies. Pin this exact source revision; A3DS main is bootstrap only, Stage 04B stacked experimental branch is frozen, do not modify it or start Stage 05. Reuse its V3 parametric generator and original geometry; Blender may be used for inspection, materials and rendering, not required for A3DS core. Do not equate sketch, verified GLB, sprite candidate, and in-game acceptance. See [rolling-stock task](../../../docs/development/ROLLING_STOCK_3D_DESIGN.md).
+
 ## 0. Сначала — что именно пользователь просит
 
 - **Эскиз/концепт/«покажи»**: сделать **1–2 реальные пробы** на конкретных исходниках в одинаковом масштабе. Когда пользователь просит именно нарисовать новое изображение, допускается генерация изображения, но *её результат нельзя называть отредактированным ванильным спрайтом*. Не генерируй плакат с выдуманным поездом, если задача — перекрасить ванильный вагон.
@@ -45,7 +51,7 @@ description: Create, repaint, edit, render, verify, and deliver Factorio Electri
 
 У каждой поставки есть `source_provenance` и `qa.json`: ref + SHA, target + SHA, режим, ограничения, исходная и целевая версия, механика изменялась/нет, результат тестов, что не проверено. Плоский концепт, ZIP с исходниками и игровой ZIP — разные артефакты. Не заявляй «в игре проверено» по картинке, рендеру или Linux Headless.
 
-## 5. Текущий конкретный пример: моторные вагоны
+## 5. Исторический пример перекраски моторных вагонов (до нового 3D-задания 26.11.2026)
 
 В `ElectrifiedMainline/prototypes/em072_c5_fullmod_trial_063.lua` оба моторных вагона являются **копиями native cargo-wagon / fluid-wagon**. Не создавать пассажирскую электричку, закрытый «моторный ящик» или новый кузов. Принцип: тот же грузовой вагон и цистерна, **только одобренная графитово-серая/красная окраска и согласованная тяговая тележка V3/EM082**. Количество и форма резервуаров/грузовых отсеков берутся из реальных исходных кадров, не из воображения. Никакого самостоятельного пантографа на вагоне — источник тяги остаётся в электровозе. У тележки нужны отдельные положение/собственные колёса/тень, сохраняется физика и сцепка.
 

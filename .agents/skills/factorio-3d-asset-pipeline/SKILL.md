@@ -5,6 +5,12 @@ description: Inspect Blender/GLB 3D assets, produce reproducible 3D-derived tech
 
 # Factorio 3D — agent workflow after 2026-11-24 research
 
+## 3D-first rolling-stock design — owner instruction 2026-11-26
+
+For new rolling-stock bodies, use the approved concept → real 3D → sprites pipeline, not the old vanilla repaint-only route. The owner explicitly authorizes new smooth cargo/tank/battery bodies; the original V3 locomotive is protected. First propose visual concept sketches in the V3 style, marked CONCEPT, not model renders. Record each approved sketch file SHA256 and owner approval; never start its production model before that explicit art approval. Concept images may be artistic; do not infer calibrated dimensions from perspective drawings. Show same-scale side/top/three-quarter views where possible. If a conceptual choice is unresolved, record it as a proposal. After concept approval, iterate autonomously on real geometry and show only a verified final model candidate, not intermediate blockouts as finished work.
+
+Use [A3DS reference-to-model skill](https://github.com/zukera2-stack/Agent-3D-Studio/blob/3c0f4d057f8569bc410120baf3f009dce86b9eab/.agents/skills/a3ds-reference-to-model/SKILL.md) and [method](https://github.com/zukera2-stack/Agent-3D-Studio/blob/3c0f4d057f8569bc410120baf3f009dce86b9eab/docs/REFERENCE_TO_MODEL_METHOD.md), **method B** for mechanical assemblies. Pin this exact source revision; A3DS main is bootstrap only, Stage 04B stacked experimental branch is frozen, do not modify it or start Stage 05. Reuse its V3 parametric generator and original geometry; Blender may be used for inspection, materials and rendering, not required for A3DS core. Do not equate sketch, verified GLB, sprite candidate, and in-game acceptance. See [rolling-stock task](../../../docs/development/ROLLING_STOCK_3D_DESIGN.md).
+
 ## Read before running
 
 1. Read root `AGENTS.md`, `docs/CURRENT_WORK.md`, `docs/AI_CONTEXT.md`, `docs/PROJECT_STATE.yaml` on your **actual working branch**; verify GitHub refs.

@@ -1,3 +1,14 @@
+rolling_stock_3d_20261126:
+  branch: feature/rolling-stock-3d-design
+  status: concept_pending_owner_approval
+  base: 362c6f22e8174cd2e06141dcbeaba8dce5a2026e
+  a3ds_ref: 3c0f4d057f8569bc410120baf3f009dce86b9eab
+  a3ds_method: B_parametric_mechanical_assembly
+  owner_approved_sketches: 0
+  runtime_changed: false
+  model_source_verified: true
+  task: docs/development/ROLLING_STOCK_3D_DESIGN.md
+
 em094_integration_20261126:
   branch: integration/em094d4-main-candidate
   runtime_base: "949a99f2f281fc226356d5f6e247a84dce12b4f8"
