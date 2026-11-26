@@ -1,3 +1,32 @@
+em087i_native_audit_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087i-native-audit
+  base_commit: "c1ea587040ddabbcf0bc215700c41ad8a59a09a6"
+  mod_version: "0.1.95"
+  status: partial_experiment_mean_improved_gate_open
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 61
+  explicit_native_pass: 56
+  stand_assertions_pass: 5
+  real_mast_foreign_missing_wrong_origin: pass
+  code_only_50_mean_ms: [19.62, 17.2055]
+  code_only_100_mean_ms: [39.2425, 36.698]
+  code_only_long201_mean_ms: [3.09, 2.9965]
+  code_only_100_max_ms: [876.568, 1006.199]
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  idle_drain_isolation_separate_fault_test: not_run
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 3678293ed0a8e9d741df9cf1c932a4b7fe641b33ec84394c83835e317262ac5e
+  evidence: "/Factorio/Local-QA/EM087I_NATIVE_AUDIT_EVIDENCE.zip"
+  next: profile_periodic_audit_and_idle_active_bridge
+  main_merged: false
+  official_release: false
+
 em087h_native_ports_20261126:
   date: "2026-11-26"
   branch: experiment/em087h-native-ports

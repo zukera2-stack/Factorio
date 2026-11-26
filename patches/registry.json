@@ -191,10 +191,26 @@
       "evidence": "/Factorio/Local-QA/EM087H_NATIVE_PORTS_EVIDENCE.zip",
       "full_tested_archive": "/Factorio/Local-QA/EM087H_0.1.94_full_EXPERIMENT.zip",
       "full_tested_archive_sha256": "229a75b0d14bf64c7a17542c16855e93b66a975616eaaddf23037f1da815702f"
+    },
+    {
+      "id": "EM095",
+      "stage": "EM087I",
+      "from": "0.1.94",
+      "to": "0.1.95",
+      "purpose": "Native mast singleton predicate with exact fallback; skip unused isolation traversal for empty batch of new transfer candidates",
+      "zip": "/Factorio/Patches/EM087I_native_audit_EXPERIMENT_Direct_Patch_from_0.1.94.zip",
+      "manifest": "/Factorio/Patches/EM087I_native_audit.manifest.json",
+      "zip_sha256": "3678293ed0a8e9d741df9cf1c932a4b7fe641b33ec84394c83835e317262ac5e",
+      "source_branch": "experiment/em087i-native-audit",
+      "owner_status": "experiment_functional_pass_mean_improved_performance_gate_open",
+      "manual_deletions": [],
+      "evidence": "/Factorio/Local-QA/EM087I_NATIVE_AUDIT_EVIDENCE.zip",
+      "full_tested_archive": "/Factorio/Local-QA/EM087I_0.1.95_full_EXPERIMENT.zip",
+      "full_tested_archive_sha256": "df0cd2857f11071e09ac1c4bf73d2682b062d57fa888bcfb832aaa8252a7ed4b"
     }
   ],
   "latest_local_candidate_version": "0.1.86",
   "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
-  "latest_experiment_version": "0.1.94",
-  "latest_experiment_branch": "experiment/em087h-native-ports"
+  "latest_experiment_version": "0.1.95",
+  "latest_experiment_branch": "experiment/em087i-native-audit"
 }

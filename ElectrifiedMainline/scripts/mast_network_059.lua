@@ -22,8 +22,11 @@ function M.sync(graph)
        if not pc then failed=failed+1
        else
          local bad={}
-         for _,l in pairs(pc.real_connections) do
-           if l.target and l.target.valid and not(ac and l.target.owner==a and l.origin==origin) then bad[#bad+1]=l end
+         -- Exact native singleton proof; any other shape retains the full audit.
+         if not (ac and pc.real_connection_count==1 and pc.is_connected_to(ac,origin)) then
+           for _,l in pairs(pc.real_connections) do
+             if l.target and l.target.valid and not(ac and l.target.owner==a and l.origin==origin) then bad[#bad+1]=l end
+           end
          end
          local safe=true
          for _,l in ipairs(bad) do

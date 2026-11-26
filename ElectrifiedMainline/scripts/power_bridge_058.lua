@@ -364,11 +364,16 @@ function M.on_tick(tick,graph)
  s.last_auto={};s.sample_tick=tick
  -- Any factory terminal sharing a corridor network means actual isolation was lost.
  local corridor={}
- for _,aid in pairs(t.helpers) do
-   local a=lookup(aid)
-   if valid(a) then
-     local raw=a.electric_network_id
-     if raw then corridor[observe(a,raw) or raw]=true end
+ -- No transfer candidates means no interface can be credited below.
+ -- The complete live isolation scan remains mandatory for every nonempty batch.
+ -- observe() only updates phase-local tables here, after dispatch and logging.
+ if #candidates>0 then
+   for _,aid in pairs(t.helpers) do
+     local a=lookup(aid)
+     if valid(a) then
+       local raw=a.electric_network_id
+       if raw then corridor[observe(a,raw) or raw]=true end
+     end
    end
  end
  local safe,shorted={},{}
