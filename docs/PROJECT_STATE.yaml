@@ -1,3 +1,73 @@
+em094c_topology_pending_20261126:
+  date: "2026-11-26"
+  branch: "test/em094c-topology-pending"
+  base_commit: "89f6d3d21863f2fe82cf8235e02c52e68ac880be"
+  runtime_version: "0.1.102"
+  status: partial_supported_topology_pending_diagnostic_pass
+  runtime_changed: false
+  native_engine: "2.1.24 build87808 linux64 headless"
+  vanilla_control_cases_pass: 6
+  permitted_network_merge_is_normal: true
+  old_native_key_equality_required: false
+  local_port_binding_preserved: true
+  physical_unverified_debit_separate: true
+  pending_settlement_independent_of_enable: true
+  positive_distinct_cases_pass: 10
+  negative_foreign_link_reproduced: 1
+  successful_executions: 12
+  initial_fixture_failures: 2
+  normal_join_source_key_before: 1
+  normal_join_source_key_after: 0
+  join_accepted_J: 100000
+  split_accepted_J: 0
+  split_residual_J: 100000
+  foreign_physical_J: 100000
+  foreign_certified_J: 0
+  foreign_uncertain_J: 100000
+  small_workers: 3
+  small_wall_seconds: 11.997
+  small_peak_bytes: 2652090368
+  large_train_count: 100
+  large_recipient_moved: 50
+  large_budget_J: 100000000
+  large_closed_samples: 421
+  large_final_total_J: 100000000.000023
+  large_grid_J: 4034031.261013
+  large_recipient_paid_J: 2017015.630507
+  large_pending_J: 0
+  large_rejected_J: 0
+  large_uncertain_J: 0
+  large_wall_seconds: 28.448
+  large_peak_bytes: 2001862656
+  live_join_pending_tick: 237
+  live_join_pending_J: 3043.3004850051
+  live_join_grid_J: 80680.625220
+  live_join_receiver_J: 40340.312610
+  disable_pending_J: 3043.3004850051
+  disable_grid_J: 3043.300485
+  disable_receiver_J: 1521.650243
+  disable_new_grants: false
+  disable_pending_after_J: 0
+  checkpoint_request_tick: 237
+  checkpoint_request_pending_J: 3043.3004850051
+  checkpoint_sha256: 04076aec922326d18bc2bf6fb6e1187ddca89973e95ca7ffd5ed1323778283e5
+  reload_equal_rows: 11
+  oom_events: 0
+  topology_probe_sha256: dd6bc862cefd4c3c7815f847a3b58abb80afdfb79041ee8155cf3300056d8664
+  disable_probe_sha256: 70d0f05d13538d17b1db3f6d483ccbed33cf0a2a3745be5214cefba0d16db405
+  source_sha256: 54d2b9e72a3d998cec28931d87cecefbf9b9142cc3859a91ac7fd25cbb6b854f
+  evidence: "/Factorio/Local-QA/EM094C_TOPOLOGY_PENDING_EVIDENCE.zip"
+  evidence_sha256: eea5f9997ac446b61866bbb810ecbb134c23012197d084625ab972ffe0792120
+  report: docs/development/EM094C_TOPOLOGY_PENDING_QA.md
+  automatic_terminal_lifecycle: not_implemented
+  previous_regression_rerun: false
+  integrated_mixed100: not_run
+  performance_gate: not_met
+  next: em094d_automatic_terminal_lifecycle_mixed_factory_and_storage
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em094a_terminal_integration_20261126:
   date: "2026-11-26"
   branch: "test/em094a-terminal-integration"
