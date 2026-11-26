@@ -22,9 +22,9 @@ local function group(n) return tostring(n.surface_index).."/"..n.force_name end
 local function d2(a,b) return (a.x-b.x)^2+(a.y-b.y)^2 end
 -- Spatial buckets and actual continuous HSR path; no visual edges.
 -- Vanilla-inspired 5-link cap. Not a claim to reproduce engine auto-connect.
-function M.plan(nodes,path_check)
+function M.plan(nodes,path_check,capture)
   if not path_check then
-    local context={starts={},neighbours={}}
+    local context={starts={},neighbours={},capture_paths=capture~=nil}
     path_check=function(a,b) return power.technical_path(a,b,context) end
   end
   local buckets,valid={},{}
@@ -59,7 +59,9 @@ function M.plan(nodes,path_check)
       -- Avoid redundant triangles like ordinary short-neighbour wiring.
       local redundant=false
       for n in pairs(adj[e.a] or {}) do if adj[e.b] and adj[e.b][n] then redundant=true;break end end
-      if not redundant and path_check(valid[e.a],valid[e.b]) then
+      local path=not redundant and path_check(valid[e.a],valid[e.b])
+      if path then
+        if capture then capture(path) end
         edges[key(e.a,e.b)]=e
         adj[e.a]=adj[e.a] or {};adj[e.b]=adj[e.b] or {}
         adj[e.a][e.b]=true;adj[e.b][e.a]=true
@@ -75,6 +77,8 @@ function M.ensure_storage()
   if not s then s={helpers={},edges={},stats={},dirty=true};storage.em.technical_046=s end
   s.components=s.components or {}
   s.bridge_ports=s.bridge_ports or {}
+  s.rail_watch=s.rail_watch or {}
+  s.rail_registration=s.rail_registration or {}
   return s
 end
 local function destroy(id)
@@ -209,6 +213,33 @@ function M.refresh_components(verified)
   s.components=next_components
   return changed
 end
+-- Watch only actual selected path dependencies and mast attachment rails.
+-- No permission is cached: full plan/audit cadence remains unchanged.
+-- Registrations are globally deduplicated by the engine and survive reload.
+local function update_watch(s,ids)
+  local watches,registrations={},{}
+  for id,r in pairs(ids) do
+    if r and r.valid then
+      local old=s.rail_watch[id]
+      local registration=old and old.registration or script.register_on_object_destroyed(r)
+      local rec={registration=registration,unit=id,surface_index=r.surface.index,
+        force_name=r.force.name,position=r.position}
+      watches[id]=rec;registrations[registration]=rec
+    end
+  end
+  s.rail_watch=watches;s.rail_registration=registrations
+end
+function M.on_object_destroyed(event)
+  local s=M.ensure_storage()
+  local rec=s.rail_registration[event.registration_number]
+  if not rec then return end
+  s.rail_registration[event.registration_number]=nil
+  s.rail_watch[rec.unit]=nil
+  -- The callback may arrive at the end of the tick; the ordinary queue
+  -- refreshes mast attachment and syncs copper BEFORE the next paid phase.
+  power.queue_rail_change(rec.surface_index,rec.force_name,rec.position)
+  log('[EM087E RAIL DESTROYED] tick='..game.tick..' rail='..rec.unit)
+end
 function M.sync(graph)
   local s=M.ensure_storage()
   local nodes,parents={},{}
@@ -225,7 +256,17 @@ function M.sync(graph)
   end
   local failures=0
   for id,p in pairs(parents) do if not anchor(s,id,p) then failures=failures+1 end end
-  s.edges=M.plan(nodes)
+  local dependencies={}
+  for _,n in pairs(nodes) do
+    local r=power.attached_rail(n)
+    if r then dependencies[r.unit_number]=r end
+  end
+  s.edges=M.plan(nodes,nil,function(path)
+    for _,r in ipairs(path.rails or {}) do dependencies[r.unit_number]=r end
+    local link=path.path
+    while link do dependencies[link.rail.unit_number]=link.rail;link=link.previous end
+  end)
+  update_watch(s,dependencies)
   local removed,rejected,verified,anchors,connectors=audit(s)
   local connected,missed,desired=0,0,0
   for _,e in pairs(s.edges) do

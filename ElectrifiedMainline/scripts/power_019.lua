@@ -151,7 +151,7 @@ local function native_straight_path(start,b,max_walk,context)
             return start.get_rail_segment_rails(defines.rail_direction.front)
         end)
         if not ok or not rails or #rails<2 then segments[id]=false;return nil end
-        local positions,seen={},{}
+        local positions,seen,ordered={},{},{}
         local axis,step,first,last,prev
         local force,surface=start.force,start.surface
         local good=true
@@ -167,7 +167,7 @@ local function native_straight_path(start,b,max_walk,context)
                 axis,step=ax,d
             end
             if i==1 then first=r end
-            last=r;prev=pos;seen[r.unit_number]=true;positions[r.unit_number]=(i-1)*2
+            last=r;prev=pos;seen[r.unit_number]=true;positions[r.unit_number]=(i-1)*2;ordered[i]=r
         end
         if good and seen[id] and axis then
             local function outside(r)
@@ -179,7 +179,7 @@ local function native_straight_path(start,b,max_walk,context)
                 end
                 return false
             end
-            c={positions=positions,last=(#rails-1)*2,left_external=outside(first),right_external=outside(last)}
+            c={positions=positions,ordered=ordered,last=(#rails-1)*2,left_external=outside(first),right_external=outside(last)}
             for rid in pairs(seen) do segments[rid]=c end
         else
             for _,r in ipairs(rails) do if r.valid and r.unit_number then segments[r.unit_number]=false end end
@@ -195,9 +195,25 @@ local function native_straight_path(start,b,max_walk,context)
     -- exactly 2 tiles, at most 2*floor(max_walk/2)+1 nodes can be popped.
     if length<=max_walk and 2*math.floor(max_walk/2)+1<=192 then
         context.native_segment_hits=(context.native_segment_hits or 0)+1
-        return {length=length,curved=false}
+        local result={length=length,curved=false}
+        if context.capture_paths then
+            result.rails={}
+            for i=math.min(from,to)/2+1,math.max(from,to)/2+1 do
+                result.rails[#result.rails+1]=c.ordered[i]
+            end
+        end
+        return result
     end
     return nil
+end
+function M.attached_rail(a)
+    local surface=game.surfaces[a.surface_index]
+    local force=game.forces[a.force_name]
+    if not (surface and force and a.rail_id) then return nil end
+    for _,r in pairs(surface.find_entities_filtered{
+        position={x=a.x,y=a.y},radius=RADIUS,name=RAILS,force=force}) do
+        if r.valid and r.unit_number==a.rail_id then return r end
+    end
 end
 local function rail_path_info(a,b,max_distance,context)
     if not (a and b and a.rail_id and b.rail_id
@@ -217,7 +233,7 @@ local function rail_path_info(a,b,max_distance,context)
     if not (start and start.valid and RAIL_SET[start.name]) then return nil end
     local straight="em-high-speed-straight-rail"
     if a.rail_id==b.rail_id then
-        return {length=0,curved=start.name~=straight}
+        return {length=0,curved=start.name~=straight,rails=context and context.capture_paths and {start} or nil}
     end
     local directions={defines.rail_direction.front,defines.rail_direction.back}
     local turns={defines.rail_connection_direction.straight,
@@ -265,7 +281,8 @@ local function rail_path_info(a,b,max_distance,context)
         if not row then row={};context.walks[a.rail_id]=row end
         walk=row[max_walk]
         if not walk then
-            walk={queue={{rail=start,id=a.rail_id,length=0,curved=start.name~=straight}},
+            walk={queue={{rail=start,id=a.rail_id,length=0,curved=start.name~=straight,
+                path=context.capture_paths and {rail=start} or nil}},
                 best={[a.rail_id]=0},visited=0,results={}}
             row[max_walk]=walk
         end
@@ -284,7 +301,7 @@ local function rail_path_info(a,b,max_distance,context)
         if cur.length<=best[cur.id]+0.00001 then
             walk.visited=walk.visited+1
             if not walk.results[cur.id] then
-                walk.results[cur.id]={length=cur.length,curved=cur.curved}
+                walk.results[cur.id]={length=cur.length,curved=cur.curved,path=cur.path}
             end
             if not context and cur.id==b.rail_id then return walk.results[cur.id] end
             for _,other in ipairs(neighbours(cur.rail)) do
@@ -293,7 +310,8 @@ local function rail_path_info(a,b,max_distance,context)
                     (not best[other.id] or cost<best[other.id]-0.00001) then
                     best[other.id]=cost
                     queue[#queue+1]={rail=other.rail,id=other.id,length=cost,
-                        curved=cur.curved or other.curved}
+                        curved=cur.curved or other.curved,
+                        path=cur.path and {rail=other.rail,previous=cur.path} or nil}
                 end
             end
             if cur.id==b.rail_id then return walk.results[cur.id] end
@@ -425,12 +443,17 @@ function M.on_removed(event)
 end
 function M.on_rail_changed(e)
     if not (e and e.valid and RAIL_SET[e.name]) then return end
+    M.queue_rail_change(e.surface.index,e.force.name,e.position)
+end
+-- Destruction notifications carry no live entity. Use its recorded location
+-- to run exactly the same local mast refresh before next settlement.
+function M.queue_rail_change(surface_index,force_name,position)
     local s=M.ensure_storage()
-    local x,y=e.position.x,e.position.y
-    local key=tostring(e.surface.index)..":"..e.force.name..":"..
+    local x,y=position.x,position.y
+    local key=tostring(surface_index)..":"..force_name..":"..
         tostring(math.floor(x/4))..":"..tostring(math.floor(y/4))
-    s.rail_queue[key]={surface_index=e.surface.index,
-        force_name=e.force.name,position={x=x,y=y},tick=game.tick+1}
+    s.rail_queue[key]={surface_index=surface_index,
+        force_name=force_name,position={x=x,y=y},tick=game.tick+1}
 end
 function M.on_tick(tick)
     local s=M.ensure_storage()

@@ -1,3 +1,36 @@
+em087e_native_rail_watch_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087e-native-rail-watch
+  base_commit: "f1ca72caf6b2b36cd30cb2cf3e414da7412999bf"
+  mod_version: "0.1.91"
+  status: partial_experiment_performance_regression
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_regression_pass: 53
+  additional_native_pass: 3
+  total_candidate_scenarios_pass: 56
+  silent_cut_tick: 200
+  notification_tick: 200
+  split_verified_tick: 203
+  disk_reload_watcher: pass
+  residual_J: 333333.33333334
+  later_delivery_J_ticks_220_260: 0
+  code_only_50_mean_ms: [15.7775, 18.176]
+  code_only_100_mean_ms: [38.4535, 40.5135]
+  code_only_long201_mean_ms: [2.4965, 3.153]
+  same_version_native_checksums_match: false
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  persistent_incremental_graph: not_implemented
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 83b99e57f68abb4958bbe8737145b754f5b72b623c9c8d2d5dae4cd7473011f2
+  evidence: "/Factorio/Local-QA/EM087E_RAIL_WATCH_EVIDENCE.zip"
+  next: dependency_specific_invalidation
+  main_merged: false
+  official_release: false
+
 em087d_native_index_20261126:
   date: "2026-11-26"
   branch: experiment/em087d-native-network-index

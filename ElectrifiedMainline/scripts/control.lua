@@ -647,6 +647,7 @@ script.on_event(defines.events.on_redo_applied, on_diag_redo)
 script.on_event(defines.events.on_player_selected_area, on_player_selected_area)
 script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconstruction)
 script.on_event(defines.events.on_train_created, on_train_created)
+script.on_event(defines.events.on_object_destroyed, technical046.on_object_destroyed)
 script.on_event(defines.events.on_tick, on_tick)
 -- EM084: override only the opened motor-wagon GUI status, never native alerts.
 script.on_nth_tick(60, function(_) wagon_status084.refresh_opened_players() end)
