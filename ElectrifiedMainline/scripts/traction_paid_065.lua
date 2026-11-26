@@ -37,44 +37,42 @@ local function network_for_contact(e,art,pantograph)
   end
   return aa.electric_network_id,nil,aa
 end
-local function donor(network,force)
+-- EM087D: index live eligible import bridges in one synchronous phase.
+-- No network/permission persists between ticks or across bridge settlement.
+local SINK="em-25kv-native-traction-consumer-068"
+local PER_STANDARD_BRIDGE_J_TICK=20000000/60
+local function active_bridge_index()
+  local index={}
   local bridge=storage.em and storage.em.bridge058
-  if not (bridge and bridge.stations) then return nil end
-  local best_id,best=nil,nil
+  if not (bridge and bridge.stations) then return index end
   for id,r in pairs(bridge.stations) do
     local output=r.output
     if r.direction=="import" and r.status=="active"
       and output and output.valid and r.input and r.input.valid
       and r.factory_port and r.factory_port.valid
-      and r.line_port and r.line_port.valid
-      and output.electric_network_id==network
-      and r.line_port.electric_network_id==network
-      and output.force==force
-      and entity(id) then
-      if not best_id or id<best_id then best_id,best=id,r end
+      and r.line_port and r.line_port.valid then
+      local net=output.electric_network_id
+      if net and r.line_port.electric_network_id==net and entity(id) then
+        local f=output.force.index
+        local row=index[f]
+        if not row then row={};index[f]=row end
+        local rec=row[net]
+        if not rec then rec={count=0};row[net]=rec end
+        rec.count=rec.count+1
+        if not rec.id or id<rec.id then rec.id=id;rec.donor=r end
+      end
     end
   end
-  return best
+  return index
 end
-
-local SINK="em-25kv-native-traction-consumer-068"
-local PER_STANDARD_BRIDGE_J_TICK=20000000/60
-local function network_bridged_capacity_j_tick(network,force)
-  local bs=storage.em and storage.em.bridge058
-  if not (bs and bs.stations) then return 0 end
-  local n=0
-  for id,r in pairs(bs.stations) do
-    if r.direction=="import" and r.status=="active" and
-      r.output and r.output.valid and r.input and r.input.valid and
-      r.factory_port and r.factory_port.valid and
-      r.line_port and r.line_port.valid and
-      r.output.electric_network_id==network and
-      r.line_port.electric_network_id==network and
-      r.output.force==force and entity(id) then
-      n=n+1
-    end
-  end
-  return n*PER_STANDARD_BRIDGE_J_TICK
+local function phase_bridge(cache,net,force)
+  if not cache.index then cache.index=active_bridge_index() end
+  local row=cache.index[force.index]
+  return row and row[net] or nil
+end
+local function phase_capacity(cache,net,force)
+  local rec=phase_bridge(cache,net,force)
+  return rec and rec.count*PER_STANDARD_BRIDGE_J_TICK or 0
 end
 local function native_state()
   storage.em=storage.em or {}
@@ -209,11 +207,8 @@ end
 -- Phase-local donor/contact memo. No cache spans bridge settlement, helper
 -- reconciliation, tick boundaries or a save/load. False records negative results.
 local function phase_donor(cache,net,force)
-  local f=force.index
-  local row=cache[f]
-  if not row then row={};cache[f]=row end
-  if row[net]==nil then row[net]=donor(net,force) or false end
-  return row[net] or nil
+  local rec=phase_bridge(cache,net,force)
+  return rec and rec.donor or nil
 end
 local function eligible(e,art,pantograph,stats,target,contacts,donors)
   local contact_owner=target and target.owner or e
@@ -342,7 +337,7 @@ local function fair_charge(owners,art,pantograph,stats)
       -- Never reintroduce a 120MW single-station or global 120MW ceiling.
       local net=group.source.line_port.electric_network_id
       output.input_flow_limit=math.min(requested,
-        network_bridged_capacity_j_tick(net,group.source.line_port.force))
+        phase_capacity(donors,net,group.source.line_port.force))
     end
     local available=output and output.valid and
       math.max(0,output.energy) or 0
@@ -408,6 +403,7 @@ function M.requests(art,pantograph,dispatch)
   -- a Lua locomotive has no native electrical energy source. Advertise only
   -- finite, verified pending train demand on that REAL anchor network.
   local requests,donors={},{}
+  local sink_index=nil
   for _,e in ipairs(all_real_locomotives()) do
     local burner=e.burner
     if burner then
@@ -420,14 +416,25 @@ function M.requests(art,pantograph,dispatch)
             -- Keep ONLY cold-start bootstrap virtual demand. Once an actual
             -- native 25kV consumer is installed and connected, native
             -- flow_last_tick.secondary_demand is the real EM070 input signal.
-            local n=storage.em and storage.em.traction_native_068
-            local has_native=false
-            if n and n.sinks then
-              for _,sink in pairs(n.sinks) do
-                if sink.valid and sink.electric_network_id==net
-                    and sink.force==e.force then has_native=true;break end
+            if not sink_index then
+              sink_index={}
+              local n=storage.em and storage.em.traction_native_068
+              if n and n.sinks then
+                for _,sink in pairs(n.sinks) do
+                  if sink.valid then
+                    local raw=sink.electric_network_id
+                    if raw then
+                      local f=sink.force.index
+                      local row=sink_index[f]
+                      if not row then row={};sink_index[f]=row end
+                      row[raw]=true
+                    end
+                  end
+                end
               end
             end
+            local row=sink_index[e.force.index]
+            local has_native=row and row[net] or false
             -- A native sink can outlive a contact outage. Once the bridge
             -- goes auto-idle, it cannot reactivate from sink demand alone:
             -- fair_charge only enables that sink after donor() is active.

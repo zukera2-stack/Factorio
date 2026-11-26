@@ -1,0 +1,1 @@
+{"name":"em-destroy-qa","version":"0.0.1","title":"EM087D destruction event probe","author":"QA","factorio_version":"2.1","dependencies":["base","ElectrifiedMainline >= 0.1.89"]}

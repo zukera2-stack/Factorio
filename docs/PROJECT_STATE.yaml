@@ -1,3 +1,34 @@
+em087d_native_index_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087d-native-network-index
+  base_commit: "80fe245f122e7cda6306fc7a705e17804d48fe7c"
+  mod_version: "0.1.90"
+  status: partial_experiment_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_regression_pass: 53
+  explicit_native_pass: 48
+  stand_assertions_pass: 5
+  independent_destruction_probe: pass
+  total_candidate_scenarios_pass: 54
+  native_silent_destruction_latency_ticks_in_probe: 0
+  native_destruction_watcher_gameplay: not_implemented
+  code_only_50_mean_ms: [14.632, 16.1655]
+  code_only_100_mean_ms: [38.508, 38.3705]
+  code_only_long201_mean_ms: [2.6895, 2.691]
+  profiled_100_moving_requests_mean_ms: [19.305, 7.011]
+  profiled_100_moving_fair_charge_mean_ms: [14.326, 4.766]
+  profile_samples_per_function_per_variant: 23
+  same_version_native_checksums_match: true
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 43659633b3b4ee4bc858b454cf8958311bb4a5fa94ae800aed56cb6a7f347efd
+  evidence: "/Factorio/Local-QA/EM087D_NATIVE_INDEX_EVIDENCE.zip"
+  next: em087e_native_path_dependency_invalidation
+  main_merged: false
+  official_release: false
+
 em087c_native_topology_20261126:
   date: "2026-11-26"
   branch: experiment/em087c-native-topology

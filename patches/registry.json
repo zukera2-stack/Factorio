@@ -113,10 +113,26 @@
       "evidence": "/Factorio/Local-QA/EM087C_NATIVE_TOPOLOGY_EVIDENCE.zip",
       "full_tested_archive": "/Factorio/Local-QA/EM087C_0.1.89_full_EXPERIMENT.zip",
       "full_tested_archive_sha256": "a248628b6ceacaad37f51d63d9b5baf35bd64122e1cb7f60813a3414ca3a5c1d"
+    },
+    {
+      "id": "EM090",
+      "stage": "EM087D",
+      "from": "0.1.89",
+      "to": "0.1.90",
+      "purpose": "Phase-local active native bridge and sink lookup indexes; no persistent topology permission",
+      "zip": "/Factorio/Patches/EM087D_native_index_EXPERIMENT_Direct_Patch_from_0.1.89.zip",
+      "manifest": "/Factorio/Patches/EM087D_native_index.manifest.json",
+      "zip_sha256": "43659633b3b4ee4bc858b454cf8958311bb4a5fa94ae800aed56cb6a7f347efd",
+      "source_branch": "experiment/em087d-native-network-index",
+      "owner_status": "experimental_partial_performance_gate_not_met_windows_pending",
+      "manual_deletions": [],
+      "evidence": "/Factorio/Local-QA/EM087D_NATIVE_INDEX_EVIDENCE.zip",
+      "full_tested_archive": "/Factorio/Local-QA/EM087D_0.1.90_full_EXPERIMENT.zip",
+      "full_tested_archive_sha256": "b2721282661a508ef6840da95c59b9589519a663278c097b6b36b8d59af3ca34"
     }
   ],
   "latest_local_candidate_version": "0.1.86",
   "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
-  "latest_experiment_version": "0.1.89",
-  "latest_experiment_branch": "experiment/em087c-native-topology"
+  "latest_experiment_version": "0.1.90",
+  "latest_experiment_branch": "experiment/em087d-native-network-index"
 }
