@@ -1,3 +1,49 @@
+em087l_active_idle_demand_20261126:
+  date: "2026-11-26"
+  branch: "experiment/em087l-active-idle-demand"
+  base_commit: "1559c6fc3a3d467808a7a46c69138be7f20b0860"
+  mod_version: "0.1.98"
+  status: partial_experiment_root_cause_fixed_performance_gate_open
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 65
+  explicit_native_pass: 60
+  stand_assertions_pass: 5
+  additional_wake_idle_exact_zip: PASS
+  one_train_buffer_stops: [151, 2]
+  moving100_buffer_stops: [15100, 200]
+  moving100_arrived: 100
+  moving100_distance_tiles: 7600
+  moving100_paid_J: 601666666.66668
+  moving100_motor_paid_J: 135000000.00002
+  native_fault_variants_pass: 4
+  frozen_buffer_J: 333333.33333333
+  restored_delivery_J: 9833333.3333332
+  code_only_moving100_runs_per_variant: 2
+  code_only_moving100_benchmark_ticks: 200
+  code_only_moving100_mean_ms: [69.3765, 57.5545]
+  code_only_moving100_worst_peak_ms: [295.520, 358.304]
+  code_only_moving100_buffer_stops_both_runs: [11800, 200]
+  within_variant_checksums_match: true
+  cross_variant_checksums_match: false
+  sampled_paid_ledgers_match: true
+  supplemental_benchmarks: incomplete_no_paired_verdict
+  performance_gate: not_met
+  full_version_performance_benchmark: not_run
+  windows_native_gui: pending
+  multiplayer: not_run
+  game_files: 157
+  unchanged_pngs: 99
+  full_archive_sha256: 9c3ebef74c366aaeed530e48b53a1c1594acbe8e7347ad6aed07bba5733b2d9a
+  patch_sha256: fbba074d591eecc894ed5a7f07668812cd1142f759fc09abf1468ec175d9c885
+  evidence: "/Factorio/Local-QA/EM087L_ACTIVE_IDLE_EVIDENCE.zip"
+  evidence_sha256: cae013fdb4a8cf009498c42fb74542a72c605e6409141c24fe09b671f96ea4c2
+  report: docs/development/EM087L_ACTIVE_IDLE_QA.md
+  next: em087m_continuous_motion_native_observe_and_traction_profile
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em087k_steady_phase_20261126:
   date: "2026-11-26"
   branch: experiment/em087k-steady-phase

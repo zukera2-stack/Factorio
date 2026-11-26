@@ -216,6 +216,13 @@ local function phase_donor(cache,net,force)
   local rec=phase_bridge(cache,net,force)
   return rec and rec.donor or nil
 end
+-- Both native charging and its bootstrap advertisement must use the same
+-- finite headroom threshold. A request smaller than the charging deadband
+-- cannot activate a real consumer and must not wake an idle bridge.
+local function pending_want(old,limit,cap)
+  if old>=cap-limit/2 then return 0 end
+  return math.max(0,math.min(limit,cap-old))
+end
 local function eligible(e,art,pantograph,stats,target,contacts,donors)
   local contact_owner=target and target.owner or e
   if not (e and e.valid and e.unit_number and e.burner and
@@ -234,7 +241,8 @@ local function eligible(e,art,pantograph,stats,target,contacts,donors)
     error('[EM072 PAID FAIL] finite native burner exceeded cap unit='..e.unit_number..' J='..old..' cap='..cap)
   end
   -- Keep one native-tick reserve in the hidden engine; real EM retains 2 MJ.
-  if old>=cap-limit/2 then return nil end
+  local want=pending_want(old,limit,cap)
+  if want<=0 then return nil end
   local uid=contact_owner.unit_number
   local c=contacts[uid]
   if not c then
@@ -252,8 +260,6 @@ local function eligible(e,art,pantograph,stats,target,contacts,donors)
     stats.miss_supply=stats.miss_supply+1
     return nil
   end
-  local want=math.max(0,math.min(limit,cap-old))
-  if want<=0 then return nil end
   return {e=e,burner=burner,source=source,want=want,grant=0,limit=limit,cap=cap,kind=target and "motor" or "loco"}
 end
 
@@ -402,7 +408,7 @@ function M.requests(art,pantograph,dispatch)
   for _,target in ipairs(motor067.targets()) do
     local old=target.helper.burner and (target.helper.burner.remaining_burning_fuel or 0) or 0
     local cap=target.watts/60
-    local left=math.max(0,math.min(cap,cap-old))
+    local left=pending_want(math.max(0,old),cap,cap)
     helpers[target.owner.unit_number]=(helpers[target.owner.unit_number] or 0)+left
   end
   -- The native EM070 planner otherwise sees zero factory-grid/line demand:
@@ -413,7 +419,7 @@ function M.requests(art,pantograph,dispatch)
   for _,e in ipairs(all_real_locomotives()) do
     local burner=e.burner
     if burner then
-      local left=math.min(M.MAX_PER_TICK,math.max(0,M.BUFFER_CAP-(burner.remaining_burning_fuel or 0)))+(helpers[e.unit_number] or 0)
+      local left=pending_want(math.max(0,burner.remaining_burning_fuel or 0),M.MAX_PER_TICK,M.BUFFER_CAP)+(helpers[e.unit_number] or 0)
       if left>1 then
         local net,_,anchor=network_for_contact(e,art,pantograph)
         if net then
