@@ -1,3 +1,45 @@
+em087m_mixed_outposts_20261126:
+  date: "2026-11-26"
+  branch: "test/em087m-mixed-outposts"
+  base_commit: "08b1791b41c5dcc323f32ad634a49abab47ee5e3"
+  runtime_version: "0.1.98"
+  status: native_test_only_pass_keep_runtime
+  native_engine: "2.1.24 build87808 linux64 headless"
+  native_new_cases_pass: 10
+  independent_disk_reload: PASS
+  small_chain_energy_J: 200000000
+  small_chain_sample_count: 15
+  disk_reload_equal_snapshots: 6
+  scale_corridors: 12
+  scale_vanilla_transit_networks: 11
+  scale_substations: 31
+  scale_native_accumulators: 24
+  scale_outposts_per_role: 3
+  scale_trains_arrived: 3
+  scale_paid_train_J: 16381386.646605
+  scale_energy_J: 600000000
+  scale_sample_count: 15
+  single_path_measured_W: 20000000
+  zero_source_load_J: 0
+  native_solar_W: 480000
+  battery_only_load_J: 11900000
+  buffer_only_load_J: 11900000
+  rejected_candidate_version: "0.1.99"
+  rejected_candidate_mixed_cases_pass: 9
+  code_only_moving100_sample_mean_ms: [57.640, 73.820]
+  code_only_moving100_sample_peak_ms: [324.185, 394.817]
+  code_only_checksums_match: false
+  performance_gate: not_met
+  full_candidate_old_regressions: not_run
+  suite: tests/em087m-mixed-outposts
+  standalone_runner_end_to_end: not_run
+  evidence: "/Factorio/Local-QA/EM087M_MIXED_OUTPOSTS_EVIDENCE.zip"
+  evidence_sha256: a5eff399da828d52be9cad1cce6091f51c4bebba1aa4d58cf59c4f0af893cc89
+  report: docs/development/EM087M_MIXED_OUTPOSTS_QA.md
+  runtime_changed: false
+  main_merged: false
+  official_release: false
+
 em087l_active_idle_demand_20261126:
   date: "2026-11-26"
   branch: "experiment/em087l-active-idle-demand"
