@@ -31,6 +31,7 @@ def run(name):
  if name=='scale':args=['--test-scenario','em-mixed-outposts-qa/scale','--test-ticks','1520']
  if name=='disk-load':args=['--test-save',str(root/'mixed-outposts-t901.zip'),'--test-arg','mixed','--test-ticks','1520']
  if name.startswith('stress'):args=['--test-scenario','em-mixed-outposts-qa/stress','--test-arg',name.removeprefix('stress'),'--test-ticks','1520']
+ if name.startswith('continuous'):args=['--test-scenario','em-mixed-outposts-qa/continuous','--test-arg',name.removeprefix('continuous'),'--test-ticks','2420']
  t=time.monotonic();log=d/'stdout.log'
  with log.open('w') as f:
   with lock:

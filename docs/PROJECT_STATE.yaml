@@ -1,3 +1,55 @@
+em087o_continuous_profile_20261126:
+  date: "2026-11-26"
+  branch: "test/em087o-continuous-profile"
+  base_commit: "4b50b0e9d8a485d142d857b0ae1be4e3374c444e"
+  runtime_version: "0.1.98"
+  status: partial_native_test_only_pass
+  nominal_route_tiles: 761
+  arrival_displacement_min_exclusive_tiles: 700
+  full_long_train_counts: [12, 24]
+  full_long_pass: [true, true]
+  full_long_end_tick: 2401
+  full_long_sample_count_each: 23
+  sampled_moving_ticks: [240, 360, 480, 600]
+  full_long_budgets_J: [1500000000, 3000000000]
+  functional_workers: 2
+  functional_wall_seconds: 53.627
+  functional_peak_cgroup_bytes: 1632268288
+  oom_events: 0
+  profiled_train_count: 100
+  profile_window_pass: true
+  profile_window_end_tick: 601
+  profile_budget_J: 12500000000
+  profile_sample_count: 6
+  profile_t600_paid_J: 1488444257.816
+  profile_wall_seconds: 81.19
+  profile_max_rss_kib: 908576
+  ordinary_profile_samples: 12
+  ordinary_bridge_median_ms: 34.933759
+  ordinary_isolation_median_ms: 9.235318
+  ordinary_ports_median_ms: 7.270932
+  ordinary_dispatch_median_ms: 3.7165785
+  ordinary_paid_traction_median_ms: 7.59379
+  t427_bridge_peak_ms: 178.144999
+  t600_outer_profile_sum_ms: 2427.715028
+  t600_technical_sync_ms: 1524.244400
+  t600_mast_sync_ms: 384.463386
+  t600_art_ms: 302.757755
+  t600_bridge_ms: 195.914851
+  full_uninstrumented_long100: not_run
+  same_save_uninstrumented_benchmark: not_run
+  prior_full_regression_rerun: not_run
+  performance_gate: not_met
+  runtime_changed: false
+  evidence: "/Factorio/Local-QA/EM087O_CONTINUOUS_QA_EVIDENCE.zip"
+  evidence_sha256: effc4d4688e9eb5ebe6a1c55d5747bb54e9a0beea649eeb24dee500acce74dd5
+  source_archive_sha256: c3bb440cf25a135931ecb538a12e04dd1fa595cee561b2727ccc700c7443cd45
+  report: docs/development/EM087O_CONTINUOUS_QA.md
+  next: em087p_full_sync_subphase_and_isolation_profile
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 parallel_qa_policy_20261126:
   status: documented_proven_workflow
   scope: independent_native_functional_tests_only
