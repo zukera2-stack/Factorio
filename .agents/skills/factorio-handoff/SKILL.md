@@ -18,3 +18,7 @@ Use this whenever the user asks to continue, says "новый чат", asks what
 9. End with a succinct handoff: current branch/HEAD, changed files, QA level, user action (if any), open risks and next task. No imagined asynchronous work.
 
 Never copy old commit logs into a new answer as if live; fetch and reconcile first.
+
+## Parallel native functional QA (EM087N)
+
+Before running a regression batch, read [parallel QA standard](../../../docs/development/PARALLEL_QA_STANDARD.md) and [runner](../../../tests/em087m-mixed-outposts/PARALLEL_QA.md). Measure actual RAM/CPU and calibrate workers; on the tested 4 GiB/4 CPU environment prefer up to 3 small workers, 2 medium, 1 large with 768 MiB reserve and separate writable paths. Never run independent QA alongside UPS/profiling benchmarks. Reuse exact engine/mod, record per-case results and resource peaks. The sampled memory guard is not an absolute OOM guarantee. EM087N 11/11 serial and parallel, 2.18x batch throughput; no runtime acceleration implied.

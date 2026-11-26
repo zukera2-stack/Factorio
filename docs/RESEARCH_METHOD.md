@@ -77,3 +77,7 @@ The earlier assertion that native rail upgrades are categorically unsupported wa
 Stop and research again instead of adding more workarounds when: (a) the API rules are unknown, (b) a source example is from an incompatible game version, (c) a claimed unsupported behavior has not been checked against a same-type working example, (d) code conflicts with a mod's existing `next_upgrade` chain, or (e) a fallback destroys native Undo ownership.
 
 For major mechanics (power grids, charging, brakes, signal behavior), repeat the procedure from scratch: find native or modded precedents and measure limits before designing new runtime code.
+
+## Native regression execution
+
+Use [resource-budgeted parallel QA](development/PARALLEL_QA_STANDARD.md) for independent functional tests when resources permit. Run UPS and profiler measurements alone. Preserve the same engine, fixtures, acceptance criteria and evidence for each case; parallel execution is not evidence of faster game simulation.

@@ -1,3 +1,30 @@
+parallel_qa_policy_20261126:
+  status: documented_proven_workflow
+  scope: independent_native_functional_tests_only
+  evidence_commit: "cc558e2c4c7a5f02fe51ab8f9c4bc827783ecac2"
+  standard: docs/development/PARALLEL_QA_STANDARD.md
+  runner: tests/em087m-mixed-outposts/run_parallel.py
+  runbook: tests/em087m-mixed-outposts/PARALLEL_QA.md
+  remeasure_effective_limits_each_session: true
+  calibrated_environment:
+    ram_mib: 4096
+    cpu_quota: 4
+    reserve_mib: 768
+    small_worker_planning_mib: 700
+    small_workers: 3
+    medium_workers: 2
+    large_workers: 1
+  performance_benchmark_workers: 1
+  concurrent_qa_during_benchmark: false
+  isolated_writable_paths: true
+  immutable_shared_inputs: true
+  sampled_guard_not_oom_guarantee: true
+  verified_cases_serial_parallel: [11, 11]
+  verified_wall_seconds: [44.302, 20.339]
+  matching_fixture_log_lines: 124
+  runtime_acceleration_proven: false
+  owner_install_changed: false
+
 em087n_parallel_stress_20261126:
   date: "2026-11-26"
   branch: "test/em087n-parallel-stress"
