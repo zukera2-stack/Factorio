@@ -1,3 +1,52 @@
+em094d3_full_regression_20261126:
+  date: "2026-11-26"
+  branch: test/em094d3-full-regression
+  base_commit: ae5d032dab8db9ed5e5250f5fd6eb017edb63834
+  candidate_version: "0.1.103"
+  status: partial_regression_pass_anchor_certificate_fail_disable_blocked
+  candidate_sha256: a163ba442cae98fc05d692334a38e64f82d0aa366eb5dd4d187e88900891b8a2
+  runtime_changed: false
+  engine: "2.1.24 build87808 Linux headless"
+  regression_total: 92
+  regression_pass: 92
+  explicit_completion_cases: 87
+  stand_assertion_cases: 5
+  mixed100_grid_on: pass
+  mixed100_arrived: 100
+  mixed100_budget_J: 12500000000
+  mixed100_final_J: 12499999999.042
+  mixed100_alternate_J: 13304498.534357
+  mixed100_grid_recovered_J: 44099964.517325
+  mixed100_onboard_recovered_J: 7298642.383
+  mixed100_uncertain_J: 0
+  mixed100_pending_J: 0
+  pending_owner_deletion: pass
+  pending_receiver_deletion: pass
+  pending_anchor_deletion_strict: fail_uncertain_debit
+  pending_anchor_uncertain_J: 3043.300485005
+  pending_anchor_measured_retirement_loss_J: 3043.300485007
+  pending_anchor_diagnostic_energy_closure_J: 2000000
+  pending_anchor_final_ports: 0
+  repeated_ring12: pass
+  repeated_ring_second_alternate_J: 11191970.22194
+  station_cap_every_tick_pass: true
+  pending_disk_reload: pass
+  pending_disk_equal_rows: 11
+  pending_disk_sha256: 5847adf7426e6dbc9506a58a515fb9ffe44c88cb36866ebf392b78554f7285ff
+  pending_runtime_disable: blocked_engine_setting_permissions
+  max_concurrent_processes: 3
+  peak_cgroup_bytes: 3063750656
+  oom_events: 0
+  evidence: "/Factorio/Local-QA/EM094D3_FULL_REGRESSION_EVIDENCE.zip"
+  evidence_sha256: f9048dfe9a99c9bb319badab8b66d55470ccc718a9ea73327e4237f8e365e03f
+  report: docs/development/EM094D3_FULL_REGRESSION_QA.md
+  ups_benchmark: not_run
+  next: anchor_deletion_certificate_and_owner_setting_disable
+  last_validated_experimental_version: "0.1.102"
+  owner_accepted: false
+  main_merged: false
+  official_release: false
+
 em094d2_bridge_output_capacity_20261126:
   date: "2026-11-26"
   branch: experiment/em094d2-bridge-output-capacity
