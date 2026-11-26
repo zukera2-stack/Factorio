@@ -99,15 +99,43 @@ class PatchTests(unittest.TestCase):
         entries = reg["entries"]
         self.assertTrue(entries)
         self.assertEqual(len({e["id"] for e in entries}), len(entries))
+        known = {entries[0]["from"]}
         for i, e in enumerate(entries):
             self.assertRegex(e["id"], r"^EM\d{3}$")
-            self.assertRegex(e["zip_sha256"], r"^[0-9a-f]{64}$")
-            self.assertTrue(e["zip"].startswith("/Factorio/Patches/"))
-            self.assertNotEqual(e["from"], e["to"])
-            if i:
-                self.assertEqual(e["from"], entries[i-1]["to"])
+            self.assertIn(e["from"], known)
+            self.assertNotIn(e["to"], known)
+            versions = [tuple(map(int, e[k].split("."))) for k in ("from", "to")]
+            self.assertTrue(versions[1] > versions[0])
+            if e.get("delivery") in ("full_experiment_only_nonadjacent_direct_patch_blocked",
+                                     "full_qa_only_integration_not_delivered"):
+                self.assertNotIn("zip", e)
+                self.assertNotIn("zip_sha256", e)
+                self.assertRegex(e["full_tested_archive_sha256"], r"^[0-9a-f]{64}$")
+                self.assertTrue(e["full_tested_archive"].startswith("/Factorio/Local-QA/"))
+                if e["delivery"] == "full_experiment_only_nonadjacent_direct_patch_blocked":
+                    self.assertNotEqual(versions[1], (*versions[0][:2], versions[0][2]+1))
+                if "historical_nonadjacent_zip" in e:
+                    self.assertTrue(e["historical_nonadjacent_zip"].startswith("/Factorio/Patches/"))
+                    self.assertRegex(e["historical_nonadjacent_zip_sha256"], r"^[0-9a-f]{64}$")
+            else:
+                self.assertRegex(e["zip_sha256"], r"^[0-9a-f]{64}$")
+                self.assertTrue(e["zip"].startswith("/Factorio/Patches/"))
+                self.assertEqual(versions[1], (*versions[0][:2], versions[0][2]+1))
+                if i:
+                    self.assertEqual(e["from"], entries[i-1]["to"])
+            if "full_tested_archive" in e:
+                self.assertRegex(e["full_tested_archive_sha256"], r"^[0-9a-f]{64}$")
+                self.assertTrue(e["full_tested_archive"].startswith("/Factorio/Local-QA/"))
             dp.case_unique(e["manual_deletions"])
-        self.assertEqual(entries[-1]["to"], reg["latest_integration_candidate_version"])
+            known.add(e["to"])
+        latest = reg["latest_integration_candidate_version"]
+        self.assertIn(latest, known)
+        if reg.get("latest_integration_status") == "prepared_for_final_test_not_delivered":
+            self.assertEqual(entries[-1]["to"], latest)
+            self.assertEqual(entries[-1]["delivery"], "full_qa_only_integration_not_delivered")
+            self.assertEqual(entries[-1]["full_tested_archive"], reg["latest_integration_reference_archive"])
+            self.assertEqual(entries[-1]["full_tested_archive_sha256"], reg["latest_integration_reference_sha256"])
+
 
     def test_output_overwrite_prevented(self):
         self.build()

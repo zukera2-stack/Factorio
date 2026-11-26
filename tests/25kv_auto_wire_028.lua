@@ -115,7 +115,9 @@ else
   assert(src:find("visual047.plan(s.nodes)",1,true))
  end
  assert(src:find("radius=limits.WIRE_REACH*1.5+4+RADIUS",1,true))
- assert(src:find("function M.technical_path(a,b)",1,true))
+ assert(src:find("function M.technical_path(a,b)",1,true) or
+        src:find("function M.technical_path(a,b,context)",1,true),
+        "Technical path must expose the current rail continuity contract")
 end
 assert(not src:find("rendering.draw_line",1,true))
 -- Dynamic unit mock of rail continuity: close, disconnected ВСМ MUST be rejected.
@@ -150,6 +152,15 @@ assert(power.connected_rail_path(na,nb),
   "Physically connected custom HSR rails must permit the edge")
 local same={rail_id=701,x=2,y=0,surface_index=1,force_name="player"}
 assert(power.connected_rail_path(na,same))
+-- Current phase-local cache accepts only physically connected HSR as well.
+if src:find("function M.technical_path(a,b,context)",1,true) then
+  na.rail_adjacent=true; nb.rail_adjacent=true
+  joined=false
+  local function fresh_context() return {starts={},neighbours={},disable_native_segments=true} end
+  assert(not power.technical_path(na,nb,fresh_context()), "Cached walk must reject disconnected HSR")
+  joined=true
+  assert(power.technical_path(na,nb,fresh_context()), "Cached walk must accept connected HSR")
+end
 
 local pr=assert(io.open("ElectrifiedMainline/prototypes/native_wire_auto_028.lua")):read("*a")
 assert(pr:find("em-25kv-contact-anchor",1,true))

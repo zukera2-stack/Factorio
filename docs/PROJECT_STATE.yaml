@@ -15,7 +15,10 @@ em094_integration_20261126:
   local_negative_checks: pass
   native_smoke: 2_of_2_pass
   open_prs_audited: 52
-  full_ci: pending
+  full_ci: rerun_pending_after_test_contract_repairs
+  test_stand: /Factorio/Local-QA/EM094-Integration/EM094_INTEGRATION_TEST_STAND.zip
+  test_stand_sha256: 51c2837023c94914f354c534b0b4f9b8cf4cb28a54aa3f3740f95be9816bc2d5
+  test_stand_dry_run: pass
   full_final_regression: pending
   mixed100_final: pending
   windows_owner: pending
