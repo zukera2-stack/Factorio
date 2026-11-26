@@ -1,3 +1,5 @@
+> **Final native QA: PASS 111/111; CI PASS.** See [final report](EM094_INTEGRATION_FINAL_QA.md). The preparation statements below are historical. Owner/merge decision remains pending.
+
 # Integration audit — EM094D.4 to main candidate (2026-11-26)
 
 **PREPARED FOR FINAL TEST, not merged, not released, not owner accepted.** Branch integration/em094d4-main-candidate, runtime base 949a99f2f281fc226356d5f6e247a84dce12b4f8. Current main 0.1.62 cf75656fda374824944311f26bbd454bc90ad45b, D4 ahead127/behind0. Keep exact 0.1.103 runtime, no version bump or gameplay changes. Prior 92/92 and mixed100 PASS belong to D.2; final D.4 18/18 exact +4/4 separate QA-only setting tests. Do not equate packaging with game acceptance.

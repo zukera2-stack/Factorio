@@ -2,7 +2,7 @@ em094_integration_20261126:
   branch: integration/em094d4-main-candidate
   runtime_base: "949a99f2f281fc226356d5f6e247a84dce12b4f8"
   candidate_version: "0.1.103"
-  status: prepared_for_final_test_not_merged
+  status: final_native_and_ci_pass_pending_owner_merge_decision
   candidate_sha256: 9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e
   game_files: 169
   exact_non_png: 70
@@ -15,12 +15,32 @@ em094_integration_20261126:
   local_negative_checks: pass
   native_smoke: 2_of_2_pass
   open_prs_audited: 52
-  full_ci: rerun_pending_after_test_contract_repairs
+  full_ci: pass_45884793896_payload_169_of_169
+  ci_zip_sha256: 859bab6a13a5d36c10cf85df1014f2bf968e2a1e934828d4dc1bda9d5265de91
+  ci_artifact: 15148278640
   test_stand: /Factorio/Local-QA/EM094-Integration/EM094_INTEGRATION_TEST_STAND.zip
   test_stand_sha256: 51c2837023c94914f354c534b0b4f9b8cf4cb28a54aa3f3740f95be9816bc2d5
   test_stand_dry_run: pass
-  full_final_regression: pending
-  mixed100_final: pending
+  full_final_regression: pass_92_of_92
+  mixed100_final: pass_100_arrivals
+  final_total_cases: 111
+  final_pass_cases: 111
+  explicit_completion_cases: 106
+  stand_assertion_cases: 5
+  fault_cases_pass: 18
+  mixed100_final_J: 12499999999.042
+  mixed100_grid_J: 44099964.517325
+  mixed100_onboard_J: 7298642.382695
+  mixed100_alternate_J: 13304498.534357
+  mixed100_uncertain_J: 0
+  mixed100_pending_J: 0
+  final_max_workers: 3
+  final_peak_bytes: 2423939072
+  final_sum_wall_s: 638.988
+  final_oom_events: 0
+  final_evidence: /Factorio/Local-QA/EM094-Integration/EM094_FINAL_TEST_EVIDENCE.zip
+  final_evidence_sha256: 6a0d64d26456b7c51f2624ff3fd9b155d95def828d06954ab1d568717d942d74
+  final_report: docs/development/EM094_INTEGRATION_FINAL_QA.md
   windows_owner: pending
   owner_running_version: "0.1.84"
   main_version: "0.1.62"
