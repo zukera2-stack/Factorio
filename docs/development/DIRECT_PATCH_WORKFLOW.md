@@ -1,27 +1,81 @@
-# Direct Patch — утверждённый процесс разработки (2026-11-25)
+# Direct Patch — утверждённый цикл разработки Electrified Mainline
 
-Владелец подтвердил: «патч сработал закрепляем работу с модом старый процесс опускаем». Это заменяет обязательную загрузку графического ZIP на GitHub и ожидание полной CI-сборки для каждой локальной итерации. Старый процесс сохранён исторически и для контрольной полной сборки при необходимости. Это не восстановление Windows Updater и не разрешение на релиз или merge main.
+**Решение владельца: 25 ноября 2026.** Вместо ожидания полной сборки GitHub для каждого изменения — небольшой ZIP, который вручную распаковывается поверх **одной** рабочей папки мода. Старый Windows Updater не используется и не восстанавливается. Это рабочий цикл разработки, **не** право на выпуск релиза, автоматическую установку или слияние с `main`.
 
-## Правила
-1. Рабочая установка: одна распакованная папка %APPDATA%/Factorio/mods/ElectrifiedMainline. Все резервные копии и другие ZIP этого мода вне mods. Перед применением закрыть игру. Сохранить исходную папку и отдельное сохранение игры для отката.
-2. Базовая версия и точный исходный commit обязательны. Текущая рабочая база EM082 / 0.1.82 / a71f98e7352c36e63b1a220e55c45496c1d01e31. Для следующих изменений выдавать последовательный ZIP с исходной и целевой версией в имени. Не предполагать, что владелец применил следующий патч без подтверждения.
-3. ZIP содержит только новые или заменяемые игровые файлы с путями относительно корня мода (info.json, prototypes/..., graphics/..., scripts/...); без дополнительной папки ElectrifiedMainline, без установщика, скриптов запуска, отчётов, вложенного ZIP. Обновить info.json до целевой версии. Не помещать manifest или README внутрь игрового дерева. Удаления обычным ZIP не выполняются; если требуется удаление, сообщить отдельный точный список и проверить зависимости/миграции.
-4. Рендер и вычисления локально. Проверить ZIP CRC, отсутствие дублированных, абсолютных, обходных и конфликтующих путей (включая Windows case-fold), SHA256 архива и каждого файла до/после, применимость к точной базе, Lua и ресурсы, распаковку на копии. Manifest, исходники, логи и сравнения отдельно. По возможности запускать Factorio 2.1.24 Linux headless; не путать headless и mock с графической проверкой в Windows.
-5. Сразу выдавать пользователю Direct Patch ZIP в чате, без обязательного CI, ручной загрузки бинарных файлов на GitHub или полной упаковки. Синхронизировать исходники, provenance, hashes, QA и статус в рабочей ветке. Бинарные артефакты сохранять в доступном хранилище, не заявлять их наличие на GitHub без проверки. Изменения, затрагивающие принятые решения, main или релиз, требуют отдельного разрешения. Официальный полный установочный ZIP при необходимости по старому CI-контракту; не обязательный шаг разработки.
-6. Приёмка: пользователь распаковывает патч в корень мода с заменой файлов, запускает Factorio и сообщает результат. Записать отдельно подтверждение версии, конкретных исправлений, логи и нерешённые вопросы. Для отката использовать резервную копию, а не только менять номер версии. При отсутствии точной базы не выдавать неподтверждённый патч как применимый.
+Источники: [реестр патчей](../../patches/registry.json), [инструмент проверки](../../scripts/direct_patch.py), [восстановление библиотеки](GPT_LIBRARY_WORKSPACE.md), [EM085 интеграционная сверка](EM085_OWNER_ARCHIVE_INTEGRATION.md). Для ветки с этим документом перед работой всегда проверять live HEAD и `info.json`.
 
-## Первый подтверждённый случай
-EM081 c020f2323fb5cdf9170d2541a929d0aefacecabb -> EM082 a71f98e7352c36e63b1a220e55c45496c1d01e31. EM082_manual_patch_from_081.zip, 2266 bytes, SHA256 f0067af552a15d8b1b06ea815c7ca183a4fcd114bd753bff9ae84397a295ee2a. Два файла: info.json и prototypes/locomotive_visual_049.lua. Изолированная распаковка и headless PASS, владелец подтверждает успешное ручное применение. Windows 2.1.25 log factorio-current(20261125-123628).log: 0.1.82 data/data-updates/data-final-fixes, sprites loaded, save loaded, normal shutdown. Видео Factorio 2026.11.25 - 15.32.59.01.mp4: 62.35 s; видимые колёса, движение на прямых и кривых, поднятый пантограф достигает провода; на 17 s виден поднятый пантограф, на 27 s обломки грузового вагона между электровозами. Это не полный тест искры, питания, всех углов или гибели электровоза. Старую форму пантографа пользователь ранее попросил вернуть; задача остаётся открытой. EM082 принята как рабочая база Direct Patch, не весь мод/релиз.
+## 1. Два независимых процесса
 
-## Persistent GPT Library workspace (2026-11-25)
-Owner EM082 working archive is available in `/Factorio/Working-Mod/ElectrifiedMainline_0.1.82_owner.zip`, SHA256 ed60bbfe6a1027adceb1d8ecc910624d360ba9f9bda5b9cb6af906033a762f80. See [workspace recovery contract](GPT_LIBRARY_WORKSPACE.md). New agents must restore exact archive/manifest before local Direct Patch QA. Models, patches and Linux engines in dedicated folders. Current 0.1.82 snapshot is not a release. Never infer Library availability from repository paths alone.
+| Процесс | Для чего | Кто выдаёт ZIP | Сборка GitHub обязательна |
+|---|---|---|---|
+| **Direct Patch** | Быстрые игровые итерации владельца | Агент: проверенный ZIP только с изменёнными игровыми файлами | **Нет** |
+| **Полная контрольная сборка** | Интеграция, архив версии, проверка готовности к `main` | GitHub Actions по воспроизводимым исходникам | **Да — перед интеграцией** |
 
+Зелёный GitHub Actions означает, что код/пакет собран и его проверки прошли, **но не доказывает** нормальную работу в игре. Linux Factorio headless проверяет механику и загрузку, **но не Windows-графику**. Только отзыв владельца подтверждает игровой визуальный результат. `main`/PR/релиз — отдельное разрешение владельца.
 
-## EM083 Direct Patch — old collector, wrecks deferred (2026-11-25)
-Owner requested the original EM079 pantograph, explicitly declined custom wrecks as noncanonical. EM083 is a pantograph-only visual candidate. EM082 remains owner-confirmed working library baseline until owner tests EM083 in Windows. No custom corpse and no custom wreck sprites are included. Corpse and dying_explosion remain native vanilla.
+## 2. Где находится актуальная база
 
-Restored old raised silhouette from exact EM079 atlas /Factorio/References/EM079-Original-Pantograph/Locomotive_V3_visual_patch.zip (SHA256 97fa7fe4d8195d5ae6944ec62aa6bfc06e8437eea92e537e7ddccdbf4ffba7ac). Source over exact owner EM082 archive /Factorio/Working-Mod/ElectrifiedMainline_0.1.82_owner.zip (SHA256 ed60bbfe6a1027adceb1d8ecc910624d360ba9f9bda5b9cb6af906033a762f80). The accepted compact folded ghost stays baked in body. It is mathematically impossible to bake the EM079 tall folded collector and fully replace it with EM079 raised using only source-over overlay (4,711–24,384 excess alpha pixels per atlas); hence do not claim exact old folded ghost. Raised state matches old EM079 full 3D sprite, using inverse source-over roof patch. No 3D rerender.
+- На ПК владельца: `%APPDATA%\Factorio\mods\ElectrifiedMainline\` — **распакованная** папка. Должны лежать `info.json`, `data.lua`, `control.lua`, `graphics/`, `prototypes/`, `scripts/`. Важно: не допускать второго ZIP/папки того же мода в `mods`; резервные копии держать **за пределами** `mods`. Factorio должен быть закрыт при замене файлов.
+- В GitHub: текущие исходники **рабочей ветки**, проверенная история и сценарий восстановления полного ZIP. Не путать исторический `main` 0.1.62 с текущими испытаниями EM08x.
+- В GPT Library: `/Factorio/Working-Mod/` — точные архивы владельца и контрольные кандидаты; `/Factorio/Patches/` — выданные Direct Patch ZIP и внешние manifest/QA; `/Factorio/Models/` — 3D-оригиналы; `/Factorio/Local-QA/` — Linux Factorio и журналы; `/Factorio/Backups/` — подтверждённые снимки.
+- **На момент 25.11.2026** владелец предоставил реально запускавшуюся 0.1.84 (`ElectrifiedMainline_0.1.84_OWNER_RUNNING_20261125.7z`). 0.1.85 собрана из неё и проверена Linux + полным GitHub CI (157/157 файлов совпадают), **однако приёмка 0.1.85 в Windows ещё не зафиксирована**. Не подменять 0.1.84 в библиотеке кандидатом без явного подтверждения владельца.
 
-Direct Patch 0.1.82 -> 0.1.83: /Factorio/Patches/EM083_pantograph_restore_from_EM082.zip, SHA256 5ccb1dd12e099945641dfad5889246539b884c0bd2048e9ee5635ac267314b2d, 2,604,179 bytes. Nine paths relative to mod root: eight graphics/entity/locomotive-052/pantograph-up-00..07.png (4096x2048 RGBA; 256 directions) plus info.json. 147 other game files byte-identical. Manifest /Factorio/Patches/EM083_pantograph_restore_manifest.json; generator and QA /Factorio/Patches/EM083_pantograph_restore_source_QA.zip. Composite test 256/256 directions: no alpha-excess in base vs raised target, 0 pixels >16 premultiplied-channel delta in every frame; worst 1 pixel >8, maximum 2 protected mask-overlap pixels per frame. Exact ZIP CRC/hash/staging PASS. Native Linux Factorio 2.1.24 FULL mod 0.1.83 successfully loaded data, data-updates, data-final-fixes, created a map, then benchmarked 30 world ticks. Logs SHA256 create 53d8e4a1ff8d42098440bb8444a8651155dffae32d01f7514f6a9c8d62448f0d; benchmark be53dfdf65809f8878eda25c9a1c3f0543dc875a369b2ad32ed55ebd68541f20. No real locomotive movement, spark or Windows visual test in this run; panto/traction scripts unchanged by bytes and old passing tests remain historical.
+## 3. Формат маленького ZIP
 
-Delivery: extract direct patch into unpacked ElectrifiedMainline with overwrite, game closed, exact base version 0.1.82. Patch does not need Github Actions or manual binary upload. Do not overwrite the library owner baseline before acceptance; no main merge or release. This GitHub branch intentionally contains only updated info.json and docs; render PNG inputs are stored in the GPT Library, not committed as binaries. To recreate the executable candidate, start from the library owner's complete 0.1.82 archive and apply the exact patch.
+Имя: `EMNNN_<описание>_Direct_Patch_from_0.1.xx.zip`, в отдельном manifest указаны исходная и целевая версии. Обязательные требования:
+
+1. Внутри ZIP **нет** внешней папки `ElectrifiedMainline/`: первый уровень — `info.json`, `prototypes/`, `scripts/`, `graphics/`, `locale/`, `migrations/` и другие **допустимые игровые** пути.
+2. В ZIP входят только изменённые и добавленные игровые файлы, обязательно новый `info.json` со следующей версией `0.1.(N+1)`; порядок применения патчей **строгий**, пропускать версии нельзя.
+3. Никаких `README`, исходников рендера, отчётов, тестов, внешнего `manifest.json`, вложенных архивов, исполняемых установщиков и опасных/конфликтующих имён.
+4. Обычная распаковка ZIP **не удаляет** файлы. При удалении существующего файла указать **точный список**, проверять его контрольные суммы; архив и инструкция должны явно предупреждать о ручном удалении. При удалении игровых прототипов дополнительно проверить миграцию старых сохранений. EM085 удаляет `prototypes/em063_retire_ordinary_pole_064.lua` после распаковки.
+5. Внешний `*.manifest.json` (не в игровой ZIP) хранит SHA256 ZIP, точное дерево base/target, SHA256 старой и новой копий каждого заменённого файла, список ручных удалений. Отдельно сохранить исходники сборки, журналы, статус Windows/QA и ссылки на GitHub commit.
+
+**Внимание:** нельзя гарантировать применимость патча только по числу версии. Совпадать должны также содержимое точной **исходной** копии и SHA256 файлов/дерева. При несоответствии — **остановиться**, восстановить известную базу, не пытаться продолжать частичное обновление.
+
+## 4. Создание и автоматическая проверка
+
+После подготовки двух **изолированных** полных папок исходной и целевой версий (не пользовательский `mods`):
+
+```bash
+python scripts/direct_patch.py build \
+  --base /qa/EM084/ElectrifiedMainline \
+  --target /qa/EM085/ElectrifiedMainline \
+  --out build/direct-patch/EM085_Direct_Patch_from_0.1.84.zip \
+  --manifest build/direct-patch/EM085.manifest.json \
+  --record-deletions
+
+python scripts/direct_patch.py verify \
+  --base /qa/EM084/ElectrifiedMainline \
+  --patch build/direct-patch/EM085_Direct_Patch_from_0.1.84.zip \
+  --manifest build/direct-patch/EM085.manifest.json \
+  --target /qa/EM085/ElectrifiedMainline
+```
+
+`--record-deletions` требуется **только** при наличии удалений: инструмент не стирает файлы, а фиксирует их для ручной операции. Без этого флага удаление блокирует сборку. `verify` проверяет ZIP, безопасные пути и SHA256, а затем **моделирует наложение в памяти**; пользовательские файлы не меняются.
+
+Перед выдачей ZIP: проверить Lua/локализации/ресурсы; загрузку **полного**, а не упрощённого, мода в реальном Linux Factorio (если доступен); для миграций — реальный SAVE → LOAD в новой версии с содержимым старого сохранения; для графики — полный набор направлений и прозрачность. Тесты форматного инструмента: `python -m unittest discover -s tests -p 'test_direct_patch.py' -v` (GitHub Actions также запускает их). Никогда не называть эти проверки Windows-приёмкой.
+
+## 5. Применение и откат владельцем
+
+1. Закрыть игру и скопировать папку мода + сохранение в **резерв вне `mods`**.
+2. Проверить, что установлена **исходная** версия патча и **нет второго экземпляра** мода в `mods`.
+3. Распаковать Direct Patch **внутрь** `%APPDATA%\Factorio\mods\ElectrifiedMainline\` с заменой файлов. При наличии ручных удалений выполнить **только перечисленные** действия. Не распаковывать ZIP папкой `mods/EM085_.../`.
+4. Проверить новую версию в меню модов и конкретное исправление в Windows Factorio. При ошибке — вернуть резервную копию папки и сохранения; не ограничиваться откатом `info.json`.
+5. Сообщить результат. Агент записывает `owner_status`/скриншот/лог (или `pending`, если не проверено) в `patches/registry.json`, `docs/CURRENT_WORK.md`, `docs/AI_CONTEXT.md`, `docs/PROJECT_STATE.yaml`. Архив в библиотеке не перезаписывать без сохранения прежней подтверждённой точки.
+
+## 6. Правила веток, GitHub и интеграции
+
+- **1 изменение → 1 Direct Patch → 1 уникальная версия и запись в [реестре](../../patches/registry.json).** Отдельная рабочая ветка от последней воспроизводимой базы; обновить исходники, тесты и branch-scoped handoff. Direct Patch генерируется **локально**; GitHub содержит код, инструмент сборки и **метаданные**, но большие PNG можно хранить как точные исходные архивы с хешами либо восстанавливать проверяемым скриптом.
+- Патч и его внешний manifest сохранять в `/Factorio/Patches/`. В GitHub `patches/` — **только реестр и инструкция**, без ZIP/PNG-дубликатов. Точные пути/хеши позволяют агенту найти патч и доказательства после смены чата. Перед новой версией восстановить актуальную игровую базу и перепроверить реестр.
+- Не делать полной GitHub Actions сборки **на каждый патч**. Локальная проверка и выдача владельцу не зависят от Actions; отдельный Action проверяет только формат Direct Patch инструмента и реестр. **На интеграционном рубеже** полная GitHub CI-сборка обязательна; сравнить её файлы с игровой копией владельца, проверить реальный полный мод/миграции, дождаться нужной Windows-приёмки.
+- Нельзя автоматически перемещать PR, сливать `main`, выпускать Mod Portal-релиз, заменять принятые файлы, менять старую ветку без прямого разрешения владельца. Контрольная GitHub сборка не является релизом.
+- Исторические инструкции «все архивы только GitHub Actions» относятся к официальным полным дистрибутивам **до решения о Direct Patch**. Они **не действуют** для ручных малых патчей разработки. Windows Updater остаётся выведенным из эксплуатации.
+
+## 7. Проверенные этапы по состоянию на 25.11.2026
+
+- **EM082** (0.1.81→0.1.82) — владелец подтвердил видимость колёс, Direct Patch принят.
+- **EM083** (0.1.82→0.1.83) — восстановление поднятого пантографа. Восемь атласов из оригинала EM079, принятое сложенное изображение в ghost; владелец передал архив 0.1.84, содержащий эти восемь точных файлов. Отдельная детальная проверка искры не подтверждена.
+- **EM084** (0.1.83→0.1.84) — статус моторного вагона; все пять изменённых игровых файлов в архиве владельца 0.1.84 совпадают с исходниками EM084.
+- **EM085** (0.1.84→0.1.85) — удаление дублирующей обычной электрической опоры + JSON миграция к ванильной; native SAVE/LOAD прошёл. GitHub интеграционная полная сборка прошла, 157/157 игровых файлов совпали с локальным кандидатом. **Проверка владельцем в Windows ещё ожидается.** Обломки электровоза по решению владельца остаются **ванильными**, не внедрять экспериментальный wreck.
+
+Исторические промежуточные исследования, нерелизные PR и старые правила CI-поставки сохраняются в истории Git. Сведения в документации имеют дату; **текущие факты всегда перепроверять** по GitHub и реальной копии владельца.

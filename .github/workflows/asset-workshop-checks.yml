@@ -1,0 +1,48 @@
+name: Asset Workshop skill and sprite QA
+
+on:
+  push:
+    branches: [main, 'feature/**', 'experiment/**', 'integration/**']
+    paths:
+      - '.agents/skills/factorio-assets-from-reference/**'
+      - 'scripts/assets/**'
+      - 'tests/test_asset_workshop.py'
+      - 'docs/development/ASSET_WORKSHOP.md'
+      - '.github/workflows/asset-workshop-checks.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.agents/skills/factorio-assets-from-reference/**'
+      - 'scripts/assets/**'
+      - 'tests/test_asset_workshop.py'
+      - 'docs/development/ASSET_WORKSHOP.md'
+      - '.github/workflows/asset-workshop-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sprite_qa:
+    name: Check source-based asset workflow and PNG QA
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'Pillow>=11,<13'
+      - run: python -m unittest discover -s tests -p 'test_asset_workshop.py' -v
+      - run: python -m py_compile scripts/assets/qa_sprite_edit.py
+      - name: Validate skill entrypoint and documentation refs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('.agents/skills/factorio-assets-from-reference/SKILL.md').read_text(encoding='utf-8')
+          assert s.startswith('---\nname: factorio-assets-from-reference\n'), 'Missing valid skill header'
+          for p in ('.agents/skills/factorio-assets-from-reference/references/asset-contract.md',
+                    '.agents/skills/factorio-assets-from-reference/references/request-template.md',
+                    'docs/development/ASSET_WORKSHOP.md','scripts/assets/qa_sprite_edit.py'):
+              assert Path(p).is_file(), p
+          assert '256 направлений из одного скриншота' in s
+          PY

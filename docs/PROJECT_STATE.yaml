@@ -1,3 +1,31 @@
+em094_integration_20261126:
+  branch: integration/em094d4-main-candidate
+  runtime_base: "949a99f2f281fc226356d5f6e247a84dce12b4f8"
+  candidate_version: "0.1.103"
+  status: prepared_for_final_test_not_merged
+  candidate_sha256: 9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e
+  game_files: 169
+  exact_non_png: 70
+  exact_owner_png: 99
+  runtime_changed: false
+  raw_git_game_files: 153
+  staging: frozen_em080_em081_em083
+  payload_manifest: docs/builds/integration-runtime.json
+  local_payload_verify: pass
+  local_negative_checks: pass
+  native_smoke: 2_of_2_pass
+  open_prs_audited: 52
+  full_ci: pending
+  full_final_regression: pending
+  mixed100_final: pending
+  windows_owner: pending
+  owner_running_version: "0.1.84"
+  main_version: "0.1.62"
+  main_merged: false
+  official_release: false
+  report: docs/development/EM094_INTEGRATION_AUDIT.md
+  test_plan: docs/development/EM094_INTEGRATION_TEST_PLAN.md
+
 em094d4_anchor_settlement_20261126:
   date: "2026-11-26"
   branch: experiment/em094d4-anchor-settlement
@@ -2262,7 +2290,7 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.85" # experimental 200-wagon block traction; native QA; NOT RELEASE
+  mod_version: "0.1.103" # integration candidate; final QA and merge pending
   main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
