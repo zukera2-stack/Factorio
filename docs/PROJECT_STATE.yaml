@@ -1,3 +1,31 @@
+em087c_native_topology_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087c-native-topology
+  base_commit: "cf8f637f835096d4d337a8f2762756768e6a66c2"
+  mod_version: "0.1.89"
+  status: partial_experiment_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_regression_pass: 51
+  additional_native_pass: 2
+  actual_path_comparisons: 8935
+  native_fast_path_hits: 3603
+  code_only_50_mean_ms: [17.4665, 15.24]
+  code_only_100_mean_ms: [38.1295, 37.9795]
+  code_only_long201_mean_ms: [2.796, 2.7345]
+  actual_100_mean_ms: 38.5235
+  actual_100_max_ms: 698.583
+  same_version_native_checksums_match: true
+  full_audit_period_ticks: 600
+  persistent_incremental_graph: not_implemented
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 231ebab04b58b8d36cc807ee85610eeab1a4bc8ab9a0bafeed60a20b0a22467d
+  evidence: "/Factorio/Local-QA/EM087C_NATIVE_TOPOLOGY_EVIDENCE.zip"
+  next: native_bridge_profile_event_invalidation
+  main_merged: false
+  official_release: false
+
 em087b_exact_walk_bridge_20261125:
   date: "2026-11-25"
   branch: experiment/em087b-exact-walk-bridge

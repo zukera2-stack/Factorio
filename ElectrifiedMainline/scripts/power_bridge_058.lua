@@ -72,10 +72,10 @@ local function sole_link(port,target)
  if not (a and b) then return false end
  local n=0
  for _,link in pairs(a.real_connections) do
-   if not (link.target and link.target.valid and link.target.owner==target and link.origin==defines.wire_origin.script) then return false end
+   if not (link.target and link.target.valid and link.target==b and link.origin==defines.wire_origin.script) then return false end
    n=n+1
  end
- return n==1 and a.is_connected_to(b,defines.wire_origin.script)
+ return n==1
 end
 local function connect(port,target)
  local a,b=connector(port),connector(target)
@@ -263,11 +263,22 @@ function M.on_tick(tick,graph)
  local s=state()
  if s.dirty or tick%60==0 then sync_graph(s,graph) end
  local t=technical.ensure_storage()
+ -- Native entity references are stable by unit_number within this phase.
+ -- Never cache a network ID across a topology mutation; all existing live
+ -- network/isolation/sole-link tests remain in place.
+ local entities={}
+ local function lookup(id)
+   if not id then return nil end
+   local e=entities[id]
+   if e and e.valid then return e end
+   e=get(id);entities[id]=e
+   return e
+ end
  local candidates,auto_edges,networks={},{},{}
  local cache,raw_flows,physical,allowed={},{},{},{}
  for id,station in pairs(s.stations) do
    if station.mode~="off" then
-     local p=get(id)
+     local p=lookup(id)
      if p then local key=dispatch.network_key(p);if key then physical[p.surface.index]=p.surface;allowed[key]=true end end
    end
  end
@@ -286,8 +297,8 @@ function M.on_tick(tick,graph)
    end
  end
  for id,r in pairs(s.stations) do
-   local p=get(id)
-   local a=get(t.helpers[s.feeders[id]])
+   local p=lookup(id)
+   local a=lookup(t.helpers[s.feeders[id]])
    if r.mode=="off" then if r.factory_port or r.line_port or r.input or r.output then detach(r,"mode-off") end;r.status="off"
    elseif not p or not a or p.force.name~=a.force.name or p.surface.index~=a.surface.index or (t.stats.audit_failed or 0)>0 or (t.stats.mast_audit_failed or 0)>0 then
       detach(r,"no-feeder-or-audit-failed");r.status="no-feeder-or-audit-failed"
@@ -306,7 +317,7 @@ function M.on_tick(tick,graph)
        if f and l and f==p.electric_network_id and l==a.electric_network_id then
          local fk,lk=observe(r.factory_port,f),observe(r.line_port,l)
          if r.mode=="auto" then
-           local mast=get(s.feeders[id])
+           local mast=lookup(s.feeders[id])
            if not (fk and lk and mast and mast.electric_network_id==l and t.mast_connected and t.mast_connected[s.feeders[id]]) then
              reject(r,"auto-network-or-mast-unverified")
            else auto_edges[#auto_edges+1]={id=id,a=fk,b=lk,raw_a=f,raw_b=l} end
@@ -357,7 +368,7 @@ function M.on_tick(tick,graph)
  -- Any factory terminal sharing a corridor network means actual isolation was lost.
  local corridor={}
  for _,aid in pairs(t.helpers) do
-   local a=get(aid)
+   local a=lookup(aid)
    if valid(a) then
      local raw=a.electric_network_id
      if raw then corridor[observe(a,raw) or raw]=true end
@@ -451,7 +462,7 @@ function M.on_tick(tick,graph)
  end
  -- Settled diagnostic: log status transitions and periodic actual IDs, not only command-time waiting.
  for id,r in pairs(s.stations) do
-   local p=get(id);local m=get(s.feeders[id]);local anchor=get(t.helpers[s.feeders[id]])
+   local p=lookup(id);local m=lookup(s.feeders[id]);local anchor=lookup(t.helpers[s.feeders[id]])
    local line=valid(r.line_port) and r.line_port.electric_network_id
    local signature=table.concat({r.mode or "-",r.status or "-",r.direction or "-",tostring(p and p.electric_network_id),tostring(line),tostring(m and m.electric_network_id),tostring(anchor and anchor.electric_network_id)}, "/")
    r.planned_mw=(plan[id] or 0)*60/1e6

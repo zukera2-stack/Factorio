@@ -131,6 +131,74 @@ local function resolve(s,id)
 end
 -- This is deliberately *not* RailSignalPrototype: no changes to train blocks.
 -- Check real rail connectivity, so nearby but independent tracks do not join.
+-- EM087C: a native rail segment has no interior branch, signal or stop.
+-- Certify ONLY a complete cardinal straight HSR chain, with exact 2-tile
+-- spacing and the same force/surface. A reachable boundary with an external
+-- HSR neighbour defeats the certificate (the original bounded walk wins).
+-- This is a per-plan read of the engine, never a persistent permission.
+local function native_straight_path(start,b,max_walk,context)
+    if not context or context.disable_native_segments then return nil end
+    if start.name~="em-high-speed-straight-rail" then return nil end
+    context.native_segments=context.native_segments or {}
+    local segments=context.native_segments
+    local id=start.unit_number
+    local c=segments[id]
+    if c==nil then
+        -- Avoid copying arbitrarily large segments to Lua. A 100km line
+        -- therefore falls back to the ordinary bounded walker.
+        local ok,rails=pcall(function()
+            if start.get_rail_segment_length()>8192 then return nil end
+            return start.get_rail_segment_rails(defines.rail_direction.front)
+        end)
+        if not ok or not rails or #rails<2 then segments[id]=false;return nil end
+        local positions,seen={},{}
+        local axis,step,first,last,prev
+        local force,surface=start.force,start.surface
+        local good=true
+        for i,r in ipairs(rails) do
+            if not (r.valid and r.name==start.name and r.unit_number and
+                r.force==force and r.surface==surface and not seen[r.unit_number]) then good=false;break end
+            local pos=r.position
+            if prev then
+                local dx,dy=pos.x-prev.x,pos.y-prev.y
+                local ax=(math.abs(dx)==2 and dy==0) and 'x' or ((math.abs(dy)==2 and dx==0) and 'y' or nil)
+                local d=ax and (ax=='x' and dx or dy)
+                if not ax or (axis and (axis~=ax or step~=d)) then good=false;break end
+                axis,step=ax,d
+            end
+            if i==1 then first=r end
+            last=r;prev=pos;seen[r.unit_number]=true;positions[r.unit_number]=(i-1)*2
+        end
+        if good and seen[id] and axis then
+            local function outside(r)
+                for _,d in ipairs({defines.rail_direction.front,defines.rail_direction.back}) do
+                    for _,turn in ipairs({defines.rail_connection_direction.straight,defines.rail_connection_direction.left,defines.rail_connection_direction.right}) do
+                        local n=r.get_connected_rail{rail_direction=d,rail_connection_direction=turn}
+                        if n and n.valid and RAIL_SET[n.name] and n.unit_number and n.force==force and n.surface==surface and not seen[n.unit_number] then return true end
+                    end
+                end
+                return false
+            end
+            c={positions=positions,last=(#rails-1)*2,left_external=outside(first),right_external=outside(last)}
+            for rid in pairs(seen) do segments[rid]=c end
+        else
+            for _,r in ipairs(rails) do if r.valid and r.unit_number then segments[r.unit_number]=false end end
+            segments[id]=false;return nil
+        end
+    end
+    if not c then return nil end
+    local from,to=c.positions[id],c.positions[b.rail_id]
+    if from==nil or to==nil then return nil end
+    if (c.left_external and from<=max_walk) or (c.right_external and c.last-from<=max_walk) then return nil end
+    local length=math.abs(from-to)
+    -- Original bounded search allows 192 accepted pops. On a chain spaced
+    -- exactly 2 tiles, at most 2*floor(max_walk/2)+1 nodes can be popped.
+    if length<=max_walk and 2*math.floor(max_walk/2)+1<=192 then
+        context.native_segment_hits=(context.native_segment_hits or 0)+1
+        return {length=length,curved=false}
+    end
+    return nil
+end
 local function rail_path_info(a,b,max_distance,context)
     if not (a and b and a.rail_id and b.rail_id
         and a.surface_index==b.surface_index
@@ -185,6 +253,8 @@ local function rail_path_info(a,b,max_distance,context)
     -- enemy or disconnected rail. Cost is approximate entity-centre path
     -- distance, not Factorio's exact rail spline length.
     local max_walk=max_distance or (limits.STRAIGHT*1.5+4)
+    local direct=native_straight_path(start,b,max_walk,context)
+    if direct then return direct end
     -- Resume the exact original bounded traversal for another target from
     -- the same start, ONLY within the synchronous technical plan. Each
     -- target uses its first accepted pop, with the same tie order and cap.

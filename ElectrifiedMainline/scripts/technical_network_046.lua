@@ -101,9 +101,15 @@ local function audit(s)
   local reverse={}
   for id,h in pairs(s.helpers) do reverse[h]=id end
   local removed,failed=0,0
+  local seen,anchors,connectors={},{},{}
   for id,h in pairs(s.helpers) do
-    local anchor_entity=helper(h)
-    local c=conn(anchor_entity,false)
+    local a=helper(h)
+    anchors[id]=a
+    connectors[id]=conn(a,false)
+  end
+  for id,h in pairs(s.helpers) do
+    local anchor_entity=anchors[id]
+    local c=connectors[id]
     if c then
       local reject={}
       for _,link in pairs(c.real_connections) do
@@ -117,6 +123,16 @@ local function audit(s)
         local permitted_mast=owner and owner.valid and owner.unit_number==id and mast(owner.name)
           and owner.surface.index==anchor_entity.surface.index and owner.force.name==anchor_entity.force.name
           and link.origin==origin()
+        -- Use the actual native copper connector snapshot; never treat a
+        -- planned edge or a shared electrical ID as proof of a real wire.
+        local edge_key=other and key(id,other)
+        local planned=edge_key and s.edges[edge_key]
+        if planned and other~=id and link.origin==origin()
+          and target.valid and owner.surface.index==anchor_entity.surface.index
+          and owner.force.name==anchor_entity.force.name
+          and target==connectors[other] then
+          local row=seen[edge_key] or {};row[id]=true;seen[edge_key]=row
+        end
         if target and target.valid and not (permitted_mast or permitted_port or (other and s.edges[key(id,other)] and link.origin==origin())) then
           reject[#reject+1]={target=target,origin=link.origin or defines.wire_origin.player}
         end
@@ -129,7 +145,12 @@ local function audit(s)
       end
     end
   end
-  return removed,failed
+  local verified={}
+  for k,row in pairs(seen) do
+    local e=s.edges[k]
+    if e and row[e.a] and row[e.b] then verified[k]=e end
+  end
+  return removed,failed,verified,anchors,connectors
 end
 -- Stable component label = minimum unit number in the component.
 -- Only add edges supplied by the caller; runtime supplies verified script links,
@@ -164,9 +185,10 @@ function M.preview_components(nodes)
   -- Pure forecast. No electric entity, connector, storage or Undo mutation.
   return M.components(M.plan(nodes))
 end
-function M.refresh_components()
+function M.refresh_components(verified)
   local s=M.ensure_storage()
-  local verified={}
+  if not verified then
+  verified={}
   for k,e in pairs(s.edges) do
     local a,b=helper(s.helpers[e.a]),helper(s.helpers[e.b])
     local ca,cb=conn(a,false),conn(b,false)
@@ -175,6 +197,7 @@ function M.refresh_components()
       local ok,res=pcall(function() return ca.is_connected_to(cb,origin()) end)
       if ok and res then verified[k]=e end
     end
+  end
   end
   local next_components=M.components(verified)
   local old=s.components
@@ -203,20 +226,22 @@ function M.sync(graph)
   local failures=0
   for id,p in pairs(parents) do if not anchor(s,id,p) then failures=failures+1 end end
   s.edges=M.plan(nodes)
-  local removed,rejected=audit(s)
+  local removed,rejected,verified,anchors,connectors=audit(s)
   local connected,missed,desired=0,0,0
   for _,e in pairs(s.edges) do
     desired=desired+1
-    local a,b=helper(s.helpers[e.a]),helper(s.helpers[e.b])
-    local ca,cb=conn(a,true),conn(b,true)
+    local a,b=anchors[e.a],anchors[e.b]
+    local ca,cb=connectors[e.a],connectors[e.b]
+    if not (ca and ca.valid) then ca=conn(a,true) end
+    if not (cb and cb.valid) then cb=conn(b,true) end
     -- Check ownership, surface, force and physical distance AGAIN before
     -- bypassing native reach. Never bypass a different network's connector.
-    if rejected==0 and a and b and ca and cb and a.surface.index==b.surface.index
+    if rejected==0 and a and a.valid and b and b.valid and ca and cb and a.surface.index==b.surface.index
        and a.force.name==b.force.name and d2(a.position,b.position)<=M.REACH^2 then
       local ok,res=pcall(function()
-        return ca.is_connected_to(cb,origin()) or ca.connect_to(cb,false,origin())
+        return verified[key(e.a,e.b)]~=nil or ca.is_connected_to(cb,origin()) or ca.connect_to(cb,false,origin())
       end)
-      if ok and res then connected=connected+1
+      if ok and res then connected=connected+1;verified[key(e.a,e.b)]=e
       else
         missed=missed+1
         log("[EM048 tech] script copper refused "..key(e.a,e.b).." "..tostring(res))
@@ -227,7 +252,9 @@ function M.sync(graph)
     removed=removed,audit_failed=rejected}
   s.sync_generation=(s.sync_generation or 0)+1
   s.dirty=false
-  return M.refresh_components()
+  -- In a clean sync the engine has confirmed every edge, including newly
+  -- created ones. An abnormal sync takes the original independent path.
+  return M.refresh_components((rejected==0 and missed==0 and failures==0) and verified or nil)
 end
 function M.mark_dirty() M.ensure_storage().dirty=true end
 function M.on_parent_removed(e)
@@ -247,10 +274,10 @@ function M.on_tick(tick,graph)
   local s=M.ensure_storage()
   if s.dirty or tick%600==0 then return M.sync(graph)
   elseif tick%60==0 then
-    local n,f=audit(s)
+    local n,f,verified=audit(s)
     s.stats.audit_failed=f
     if n>0 or f>0 then log("[EM048 tech] unauthorized removed="..n.." failed="..f);s.dirty=true end
-    return M.refresh_components()
+    return M.refresh_components((n==0 and f==0) and verified or nil)
   end
   return false
 end

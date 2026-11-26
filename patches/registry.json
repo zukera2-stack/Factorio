@@ -1,7 +1,7 @@
 {
   "schema": "factorio-direct-patch-registry/v1",
   "project": "ElectrifiedMainline",
-  "updated_on": "2026-11-25",
+  "updated_on": "2026-11-26",
   "main_version_at_review": "0.1.62",
   "last_owner_running_archive_version": "0.1.84",
   "latest_integration_candidate_version": "0.1.85",
@@ -97,10 +97,26 @@
       "evidence": "/Factorio/Local-QA/EM087B_PERFORMANCE_EVIDENCE.zip",
       "full_tested_archive": "/Factorio/Local-QA/EM087B_0.1.88_full_EXPERIMENT.zip",
       "full_tested_archive_sha256": "43e4b0d4e24866dfa64eb030694efc08880607741c922a19f7f37f886f595007"
+    },
+    {
+      "id": "EM089",
+      "stage": "EM087C",
+      "from": "0.1.88",
+      "to": "0.1.89",
+      "purpose": "Native straight rail segment certificate, native copper audit reuse, bridge reference lookup memo",
+      "zip": "/Factorio/Patches/EM087C_native_topology_EXPERIMENT_Direct_Patch_from_0.1.88.zip",
+      "manifest": "/Factorio/Patches/EM087C_native_topology.manifest.json",
+      "zip_sha256": "231ebab04b58b8d36cc807ee85610eeab1a4bc8ab9a0bafeed60a20b0a22467d",
+      "source_branch": "experiment/em087c-native-topology",
+      "owner_status": "experimental_partial_performance_gate_not_met_windows_pending",
+      "manual_deletions": [],
+      "evidence": "/Factorio/Local-QA/EM087C_NATIVE_TOPOLOGY_EVIDENCE.zip",
+      "full_tested_archive": "/Factorio/Local-QA/EM087C_0.1.89_full_EXPERIMENT.zip",
+      "full_tested_archive_sha256": "a248628b6ceacaad37f51d63d9b5baf35bd64122e1cb7f60813a3414ca3a5c1d"
     }
   ],
   "latest_local_candidate_version": "0.1.86",
   "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
-  "latest_experiment_version": "0.1.88",
-  "latest_experiment_branch": "experiment/em087b-exact-walk-bridge"
+  "latest_experiment_version": "0.1.89",
+  "latest_experiment_branch": "experiment/em087c-native-topology"
 }
