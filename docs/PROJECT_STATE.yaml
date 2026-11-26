@@ -1,12 +1,19 @@
 rolling_stock_3d_20261126:
   branch: feature/rolling-stock-3d-design
-  status: concept_approved_modeling_authorized
+  status: model_qa_pass_owner_3d_review_pending
   base: 362c6f22e8174cd2e06141dcbeaba8dce5a2026e
   a3ds_ref: 3c0f4d057f8569bc410120baf3f009dce86b9eab
   a3ds_method: B_parametric_mechanical_assembly
   owner_approved_sketches: 3
   approved_concept_sha256: 921c9df9cad2d3964c142702cebf8b047078f0bb54e0f918b1f6551841f592c2
   runtime_changed: false
+  real_models: 3
+  model_new_solids_closed: 531
+  v3_bogie_nodes_per_model: 186
+  owner_3d_accepted: false
+  sprites_rendered: false
+  model_archive: /Factorio/Models/Rolling-Stock-V1/V3_Rolling_Stock_3D_v1.zip
+  model_archive_sha256: 5f736b5ebcc2ccb5e243e27bf5fb8a56752e2422c761f61dd045525d0c65e2d4
   model_source_verified: true
   task: docs/development/ROLLING_STOCK_3D_DESIGN.md
 
