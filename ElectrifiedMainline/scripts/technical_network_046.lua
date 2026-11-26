@@ -22,11 +22,7 @@ local function group(n) return tostring(n.surface_index).."/"..n.force_name end
 local function d2(a,b) return (a.x-b.x)^2+(a.y-b.y)^2 end
 -- Spatial buckets and actual continuous HSR path; no visual edges.
 -- Vanilla-inspired 5-link cap. Not a claim to reproduce engine auto-connect.
-function M.plan(nodes,path_check,capture)
-  if not path_check then
-    local context={starts={},neighbours={},capture_paths=capture~=nil}
-    path_check=function(a,b) return power.technical_path(a,b,context) end
-  end
+local function candidates_for(nodes)
   local buckets,valid={},{}
   local function cell(n,x,y) return group(n).."/"..x.."/"..y end
   for id,n in pairs(nodes) do
@@ -53,6 +49,9 @@ function M.plan(nodes,path_check,capture)
     if a.a~=b.a then return a.a<b.a end
     return a.b<b.b
   end)
+  return candidates,valid
+end
+local function select_edges(candidates,valid,path_check,capture)
   local edges,adj,degree={},{},{}
   for _,e in ipairs(candidates) do
     if (degree[e.a] or 0)<M.MAX_DEGREE and (degree[e.b] or 0)<M.MAX_DEGREE then
@@ -61,7 +60,7 @@ function M.plan(nodes,path_check,capture)
       for n in pairs(adj[e.a] or {}) do if adj[e.b] and adj[e.b][n] then redundant=true;break end end
       local path=not redundant and path_check(valid[e.a],valid[e.b])
       if path then
-        if capture then capture(path) end
+        if capture then capture(path,e) end
         edges[key(e.a,e.b)]=e
         adj[e.a]=adj[e.a] or {};adj[e.b]=adj[e.b] or {}
         adj[e.a][e.b]=true;adj[e.b][e.a]=true
@@ -70,6 +69,67 @@ function M.plan(nodes,path_check,capture)
     end
   end
   return edges
+end
+function M.plan(nodes,path_check,capture)
+  local candidates,valid=candidates_for(nodes)
+  if not path_check then
+    local context={starts={},neighbours={},capture_paths=capture~=nil}
+    path_check=function(a,b) return power.technical_path(a,b,context) end
+  end
+  return select_edges(candidates,valid,path_check,capture)
+end
+-- Potential components use EVERY geometric candidate, not selected wires.
+-- Hence degree/triangle decisions cannot interact across component borders.
+local function partitions(valid,candidates)
+  local parent={}
+  for id in pairs(valid) do parent[id]=id end
+  local function root(id)
+    local r=id
+    while parent[r]~=r do r=parent[r] end
+    while parent[id]~=id do local q=parent[id];parent[id]=r;id=q end
+    return r
+  end
+  for _,e in ipairs(candidates) do
+    local a,b=root(e.a),root(e.b)
+    if a~=b then parent[math.max(a,b)]=math.min(a,b) end
+  end
+  local groups,by_node={},{}
+  for id,n in pairs(valid) do
+    local r=root(id);local g=groups[r]
+    if not g then g={nodes={},count=0,edges={},deps={}};groups[r]=g end
+    g.nodes[id]=n;g.count=g.count+1;by_node[id]=g
+  end
+  return groups,by_node
+end
+local function same_nodes(a,b)
+  if not b or a.count~=b.count then return false end
+  for id,n in pairs(a.nodes) do
+    local o=b.nodes[id]
+    if not o or o.x~=n.x or o.y~=n.y or o.name~=n.name or
+      o.rail_id~=n.rail_id or o.surface_index~=n.surface_index or o.force_name~=n.force_name then return false end
+  end
+  return true
+end
+-- A bounded walk is <=64 tiles from its start attachment. Add 3 tiles
+-- mast offset and 6 tiles for coalesced 4x4 edit buckets, conservatively.
+local INVALIDATE_RADIUS=M.REACH*1.5+4+3+6
+local function affected(g,old,changes,watches)
+  if not same_nodes(g,old) then return true end
+  for _,n in pairs(g.nodes) do
+    for _,c in ipairs(changes) do
+      if n.surface_index==c.surface_index and n.force_name==c.force_name and
+        d2(n,c.position)<=INVALIDATE_RADIUS^2 then return true end
+    end
+  end
+  -- Never reuse a group with a destroyed or moved dependency even if the
+  -- notification is still queued. Full periodic replan remains independent.
+  for id,r in pairs(old.deps) do
+    local w=watches[id]
+    if not (r.valid and w and r.surface.index==w.surface_index and r.force.name==w.force_name) then return true end
+    local pos=r.position
+    if pos.x~=w.position.x or pos.y~=w.position.y then return true end
+  end
+  return false
 end
 function M.ensure_storage()
   storage.em=storage.em or {}
@@ -216,14 +276,22 @@ end
 -- Watch only actual selected path dependencies and mast attachment rails.
 -- No permission is cached: full plan/audit cadence remains unchanged.
 -- Registrations are globally deduplicated by the engine and survive reload.
-local function update_watch(s,ids)
+local function update_watch(s,ids,reused)
   local watches,registrations={},{}
   for id,r in pairs(ids) do
     if r and r.valid then
       local old=s.rail_watch[id]
-      local registration=old and old.registration or script.register_on_object_destroyed(r)
-      local rec={registration=registration,unit=id,surface_index=r.surface.index,
-        force_name=r.force.name,position=r.position}
+      local rec=old and reused[id] and old or nil
+      if not rec then
+        local registration=old and old.registration or script.register_on_object_destroyed(r)
+        local pos=r.position
+        local surface_index,force_name=r.surface.index,r.force.name
+        if old and old.surface_index==surface_index and old.force_name==force_name and
+          old.position.x==pos.x and old.position.y==pos.y then rec=old
+        else rec={registration=registration,unit=id,surface_index=surface_index,
+          force_name=force_name,position=pos} end
+      end
+      local registration=rec.registration
       watches[id]=rec;registrations[registration]=rec
     end
   end
@@ -240,7 +308,7 @@ function M.on_object_destroyed(event)
   power.queue_rail_change(rec.surface_index,rec.force_name,rec.position)
   log('[EM087E RAIL DESTROYED] tick='..game.tick..' rail='..rec.unit)
 end
-function M.sync(graph)
+function M.sync(graph,changes)
   local s=M.ensure_storage()
   local nodes,parents={},{}
   for id,n in pairs(graph.nodes or {}) do
@@ -256,17 +324,47 @@ function M.sync(graph)
   end
   local failures=0
   for id,p in pairs(parents) do if not anchor(s,id,p) then failures=failures+1 end end
-  local dependencies={}
-  for _,n in pairs(nodes) do
-    local r=power.attached_rail(n)
-    if r then dependencies[r.unit_number]=r end
+  local candidates,valid=candidates_for(nodes)
+  local groups,by_node=partitions(valid,candidates)
+  local old=s.plan_groups or {}
+  local reuse,work={},{}
+  local dependencies,reused={},{}
+  local full=not changes or not s.plan_groups
+  local rebuilt,retained=0,0
+  local context={starts={},neighbours={},capture_paths=true}
+  for id,g in pairs(groups) do
+    if not full and not affected(g,old[id],changes,s.rail_watch) then
+      g.edges=old[id].edges;g.deps=old[id].deps;reuse[g]=true;retained=retained+1
+    else
+      rebuilt=rebuilt+1
+      for nid,n in pairs(g.nodes) do
+        local r=power.attached_rail(n)
+        context.starts[nid]=r or false
+        if r then g.deps[r.unit_number]=r end
+      end
+    end
   end
-  s.edges=M.plan(nodes,nil,function(path)
-    for _,r in ipairs(path.rails or {}) do dependencies[r.unit_number]=r end
+  for _,e in ipairs(candidates) do
+    if not reuse[by_node[e.a]] then work[#work+1]=e end
+  end
+  local fresh=select_edges(work,valid,function(a,b) return power.technical_path(a,b,context) end,function(path,e)
+    local deps=by_node[e.a].deps
+    for _,r in ipairs(path.rails or {}) do deps[r.unit_number]=r end
     local link=path.path
-    while link do dependencies[link.rail.unit_number]=link.rail;link=link.previous end
+    while link do deps[link.rail.unit_number]=link.rail;link=link.previous end
   end)
-  update_watch(s,dependencies)
+  for k,e in pairs(fresh) do by_node[e.a].edges[k]=e end
+  s.edges={}
+  for _,g in pairs(groups) do
+    for k,e in pairs(g.edges) do s.edges[k]=e end
+    for id,r in pairs(g.deps) do
+      dependencies[id]=r
+      if reuse[g] and reused[id]~=false then reused[id]=true else reused[id]=false end
+    end
+  end
+  s.plan_groups=groups
+  update_watch(s,dependencies,reused)
+  if not full then log(string.format('[EM087F LOCAL PLAN] tick=%d rebuilt=%d retained=%d candidates=%d/%d',game.tick,rebuilt,retained,#work,#candidates)) end
   local removed,rejected,verified,anchors,connectors=audit(s)
   local connected,missed,desired=0,0,0
   for _,e in pairs(s.edges) do
@@ -292,32 +390,41 @@ function M.sync(graph)
   s.stats={desired=desired,connected=connected,missed=missed,failures=failures,
     removed=removed,audit_failed=rejected}
   s.sync_generation=(s.sync_generation or 0)+1
-  s.dirty=false
+  s.dirty=false;s.dirty_changes=nil
   -- In a clean sync the engine has confirmed every edge, including newly
   -- created ones. An abnormal sync takes the original independent path.
   return M.refresh_components((rejected==0 and missed==0 and failures==0) and verified or nil)
 end
-function M.mark_dirty() M.ensure_storage().dirty=true end
+function M.mark_dirty(changes)
+  local s=M.ensure_storage()
+  if not changes then s.dirty_changes=nil
+  elseif not s.dirty then s.dirty_changes=changes
+  elseif s.dirty_changes then
+    for _,c in ipairs(changes) do s.dirty_changes[#s.dirty_changes+1]=c end
+  end
+  s.dirty=true
+end
 function M.on_parent_removed(e)
   if not (e and e.valid and mast(e.name)) then return end
   local s=M.ensure_storage()
   destroy(s.helpers[e.unit_number]);s.helpers[e.unit_number]=nil
-  s.dirty=true
+  M.mark_dirty()
 end
 function M.rebuild_all(graph)
   local s=M.ensure_storage()
   for _,surface in pairs(game.surfaces) do
     for _,e in pairs(surface.find_entities_filtered{name=NAME}) do if e.valid then e.destroy() end end
   end
-  s.helpers={};s.edges={};M.sync(graph)
+  s.helpers={};s.edges={};s.plan_groups=nil;M.sync(graph)
 end
 function M.on_tick(tick,graph)
   local s=M.ensure_storage()
-  if s.dirty or tick%600==0 then return M.sync(graph)
+  if tick%600==0 then return M.sync(graph)
+  elseif s.dirty then return M.sync(graph,s.dirty_changes)
   elseif tick%60==0 then
     local n,f,verified=audit(s)
     s.stats.audit_failed=f
-    if n>0 or f>0 then log("[EM048 tech] unauthorized removed="..n.." failed="..f);s.dirty=true end
+    if n>0 or f>0 then log("[EM048 tech] unauthorized removed="..n.." failed="..f);M.mark_dirty() end
     return M.refresh_components((n==0 and f==0) and verified or nil)
   end
   return false

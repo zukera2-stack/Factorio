@@ -1,3 +1,34 @@
+em087f_local_plan_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087f-local-plan
+  base_commit: "c39ccbffc6abd265c6f0426807c0f30d95ec0f1e"
+  mod_version: "0.1.92"
+  status: partial_experiment_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 57
+  explicit_native_pass: 52
+  stand_assertions_pass: 5
+  profiled_stress_runs_pass: 4
+  profile_samples_per_variant: 24
+  local_50_corridors_sync_mean_ms: [42.572009625, 23.32333975]
+  local_50_corridors_candidate_pairs_recomputed: [150, 3]
+  code_only_50_mean_ms: [19.0555, 18.586]
+  code_only_100_mean_ms: [43.025, 42.0905]
+  code_only_long201_mean_ms: [3.0315, 3.013]
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  persistent_incremental_graph: component_local_experimental
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: 31dc2b8412438a4b2b17c405343c637cbbb709aea2d9a5f3cea6bee73f1a81c6
+  evidence: "/Factorio/Local-QA/EM087F_LOCAL_PLAN_EVIDENCE.zip"
+  next: em087g_path_specific_invalidation
+  main_merged: false
+  official_release: false
+
 em087e_native_rail_watch_20261126:
   date: "2026-11-26"
   branch: experiment/em087e-native-rail-watch

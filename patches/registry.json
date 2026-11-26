@@ -145,10 +145,26 @@
       "evidence": "/Factorio/Local-QA/EM087E_RAIL_WATCH_EVIDENCE.zip",
       "full_tested_archive": "/Factorio/Local-QA/EM087E_0.1.91_full_EXPERIMENT.zip",
       "full_tested_archive_sha256": "4c5ac930dac3303b160f0f4344a56335eb86bb9bd3575275a643cc2bb0a858c5"
+    },
+    {
+      "id": "EM092",
+      "stage": "EM087F",
+      "from": "0.1.91",
+      "to": "0.1.92",
+      "purpose": "Component-local topology planning for notified rail edits with full independent audit retained",
+      "zip": "/Factorio/Patches/EM087F_local_plan_EXPERIMENT_Direct_Patch_from_0.1.91.zip",
+      "manifest": "/Factorio/Patches/EM087F_local_plan.manifest.json",
+      "zip_sha256": "31dc2b8412438a4b2b17c405343c637cbbb709aea2d9a5f3cea6bee73f1a81c6",
+      "source_branch": "experiment/em087f-local-plan",
+      "owner_status": "experiment_functional_pass_performance_gate_not_met",
+      "manual_deletions": [],
+      "evidence": "/Factorio/Local-QA/EM087F_LOCAL_PLAN_EVIDENCE.zip",
+      "full_tested_archive": "/Factorio/Local-QA/EM087F_0.1.92_full_EXPERIMENT.zip",
+      "full_tested_archive_sha256": "0ef5c4890704808d5efdf21a2c654eb8ae58fcbd34f8320cc7bab87dea37624b"
     }
   ],
   "latest_local_candidate_version": "0.1.86",
   "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
-  "latest_experiment_version": "0.1.91",
-  "latest_experiment_branch": "experiment/em087e-native-rail-watch"
+  "latest_experiment_version": "0.1.92",
+  "latest_experiment_branch": "experiment/em087f-local-plan"
 }

@@ -548,9 +548,10 @@ local function on_tick(event)
     -- on_configuration_changed when only runtime code changed. Initialize
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
-    if power019.on_tick(event.tick) then
+    local rail_changed,rail_changes=power019.on_tick(event.tick)
+    if rail_changed then
         bridge058.mark_dirty()
-        technical046.mark_dirty()
+        technical046.mark_dirty(rail_changes)
         ghost_visual023.mark_dirty()
         art030.mark_dirty()
     end

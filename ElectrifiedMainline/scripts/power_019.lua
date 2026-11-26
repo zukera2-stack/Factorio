@@ -458,12 +458,13 @@ end
 function M.on_tick(tick)
     local s=M.ensure_storage()
     if not next(s.rail_queue) then return false end
-    local buckets={}
+    local buckets,changes={},{}
     local changed=false
     for key,change in pairs(s.rail_queue) do
         if tick>=change.tick then
             s.rail_queue[key]=nil
             changed=true
+            changes[#changes+1]=change
             local surface=game.surfaces[change.surface_index]
             local force=game.forces[change.force_name]
             if surface and force then
@@ -485,7 +486,7 @@ function M.on_tick(tick)
         refresh(entry.surface,entry.force,entry.position)
     end
     -- Even a rail-only edit can split a technical path.
-    return changed
+    return changed,changes
 end
 function M.status(player)
     local s=M.ensure_storage()
