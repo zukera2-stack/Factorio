@@ -1,3 +1,82 @@
+em089_onboard_storage_20261126:
+  date: "2026-11-26"
+  branch: "experiment/em089-onboard-storage"
+  base_commit: "7c93659c523c460a494309883ac5a06190b1ceef"
+  base_runtime: "0.1.100"
+  mod_version: "0.1.101"
+  status: experimental_native_pass_opt_in
+  native_engine: "2.1.24 build87808 linux64 headless"
+  architecture: docs/plans/EM089_ONBOARD_ARCHITECTURE.md
+  storage_owner: physical_locomotive_unit_number
+  storage_enabled_default: false
+  capacity_J: 60000000
+  charge_limit_W_per_loco: 2000000
+  discharge_limit_W_per_loco: 4000000
+  initial_charge_J: 0
+  capacity_and_rates_final_balance_approved: false
+  transfer_efficiency_experiment: 1
+  charge_stationary_auto_import_only: true
+  charge_moving: not_implemented
+  generator_to_charge_plan_after_loads: true
+  actual_native_sink_debit: true
+  regeneration_enabled: false
+  prior_core_cases_pass: 66
+  prior_mixed_cases_pass: 11
+  new_focused_cases_pass: 11
+  actual_migration_pass: true
+  connected_stress_counts_pass: [12, 24]
+  total_cases_pass: 91
+  explicit_completion_markers: 86
+  established_stand_assertions: 5
+  core_workers: 3
+  core_wall_seconds: 122.179
+  core_peak_cgroup_bytes: 2798567424
+  focused_workers: 3
+  focused_wall_seconds: 17.012
+  mixed_workers: 2
+  mixed_wall_seconds: 27.49
+  stress_workers: 1
+  stress_wall_seconds: 47.233
+  oom_events: 0
+  cap_test_stored_J: 60000000
+  zero_source_onboard_J: 0
+  factory_battery_only_onboard_J: 0
+  initial_rejected_factory_battery_onboard_J: 5000
+  competing_load_received_J: 20000000
+  offgrid_distance_tiles: 696
+  offgrid_discharge_J: 9916666.667
+  offgrid_motor_discharge_J: 3308333.333
+  split_each_store_J: 8000000
+  deletion_accounted_loss_J: 8000000
+  shared_new_loco_burner_J: 2000000
+  disk_checkpoint_stored_J: 5933333.333
+  disk_checkpoint_sha256: 5cf2cc3e3fb023c9c1aad0920b9c2d3e5d8207e305a4e4fe27bd02fd16f83c1f
+  disk_reload_equal_lines: 6
+  migration_checkpoint_sha256: 2bfb27d82f089cc1d8df9b24ed1febbf073a00141fb65725f67f0d53eee98cde
+  migration_previous_paid_J: 2000000
+  migration_new_store_J: 0
+  stress_sample_count_each: 17
+  stress_energy_budgets_J: [1500000000, 3000000000]
+  stress_final_stored_J: [251186134.191, 630225457.857]
+  game_files: 162
+  unchanged_pngs: 99
+  full_sha256: 6e2b48acea118b4542ff0be0b8101c1b844bb74e1359897af1b2653818fd8376
+  patch_sha256: dd6714ad1d58b4ba1ae5d7c6fd6088b4997782827f11dd740e21239e56f268ec
+  patch_staged_parity: true
+  evidence: "/Factorio/Local-QA/EM089_ONBOARD_STORAGE_EVIDENCE.zip"
+  evidence_sha256: 98c44256f238e2999d9458c305b62bdda561f907d6c8cf44c42ec768ec0cfaaa
+  report: docs/development/EM089_ONBOARD_STORAGE_QA.md
+  performance_gate: not_met
+  full_connected100_enabled: not_run
+  long100_enabled: not_run
+  settings_transition_native: not_run
+  windows_gui: pending
+  multiplayer: not_run
+  next: em090_native_brake_identification_and_calibration
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em088_train_energy_20261126:
   date: "2026-11-26"
   branch: "experiment/em088-train-energy"

@@ -337,11 +337,14 @@ function M.on_tick(tick,graph)
  -- consumer. Register only its finite, authenticated pending 2MW demand in the
  -- existing native EM070 dispatch planner; every delivered joule is still
  -- physically debited later from the native charged 25kV output EEI.
- local traction_demand=traction065.requests(art030,pantograph049,dispatch)
+ local traction_demand,battery_charge=traction065.requests(art030,pantograph049,dispatch)
  for id,j in pairs(traction_demand) do
    if networks[id] then networks[id].load=networks[id].load+j end
  end
- local plan=dispatch.plan(networks,auto_edges,M.LIMIT)
+ for id,j in pairs(battery_charge or {}) do
+   if networks[id] then networks[id].charge=math.max(networks[id].charge,j) end
+ end
+ local plan,charge_budget=dispatch.plan(networks,auto_edges,M.LIMIT)
  local connected_peers={}
  for _,edge in ipairs(auto_edges) do connected_peers[edge.b]=(connected_peers[edge.b] or 0)+1 end
  if tick%600==0 or not s.last_flow_log then
@@ -488,6 +491,15 @@ function M.on_tick(tick,graph)
      r.last_signature=signature
    end
  end
+ -- Only this tick's generator-to-charge allocation; not a grant of Joules.
+ local authorized={}
+ -- A rejected planned bridge makes generator-to-charge provenance ambiguous.
+ -- Conservatively freeze all new onboard charging for this tick.
+ if #safe~=#candidates or next(rejected) then return authorized end
+ for id,j in pairs(battery_charge or {}) do
+   authorized[id]=math.min(j,charge_budget[id] or 0)
+ end
+ return authorized
 end
 function M.command(player,param)
  local e=player.selected

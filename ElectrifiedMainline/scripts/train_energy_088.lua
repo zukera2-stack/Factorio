@@ -70,8 +70,28 @@ function M.transfer_grid_to_burner(req,stats,native)
     stats.motor_paid_J=(stats.motor_paid_J or 0)+amount
     stats.motor_grants=(stats.motor_grants or 0)+1
   end
+  return amount
 end
 
+-- Debit the finite physical onboard store before crediting the native burner.
+-- Grid-history counters are deliberately unchanged.
+function M.transfer_store_to_burner(req,donor,row,amount)
+  local owner,e=req.owner,req.e
+  if not (donor and donor.valid and donor.name==EM and owner and owner.valid and owner.name==EM
+    and e and e.valid and donor.train and donor.train.valid and owner.train and owner.train.valid and e.train and e.train.valid
+    and donor.train.id==owner.train.id and owner.train.id==e.train.id
+    and donor.force==e.force and owner.force==e.force and donor.surface==e.surface and owner.surface==e.surface) then return 0 end
+  local burner=req.burner;local old=math.max(0,burner.remaining_burning_fuel or 0)
+  amount=math.max(0,math.min(amount,row.J,req.limit-(req.grid_paid or 0),req.cap-old))
+  if amount<=0 then return 0 end
+  if not burner.currently_burning then
+    burner.currently_burning=prototypes.item[FUEL];burner.remaining_burning_fuel=0;old=0
+  end
+  row.J=row.J-amount
+  burner.remaining_burning_fuel=old+amount
+  if math.abs(burner.remaining_burning_fuel-(old+amount))>0.05 then error("[EM089] native burner credit mismatch") end
+  return amount
+end
 
 -- A periodic audit retires history, not actual energy; never transfers J.
 function M.audit(stats)
@@ -116,7 +136,7 @@ function M.snapshot(unit)
   local result={legacy_paid_J=legacy,legacy_motor_J=legacy_motor,retired_loco_J=rl,
     retired_motor_J=rm,live_loco_J=l,live_motor_J=m,paid_J=legacy+rl+rm+l+m,
     motor_paid_J=legacy_motor+rm+m,original_paid_J=stats.debited_J or 0,
-    battery_enabled=false,regen_enabled=false,owners={}}
+    battery_enabled=settings and settings.global and settings.global["em089-experimental-onboard-storage"] and settings.global["em089-experimental-onboard-storage"].value==true or false,regen_enabled=false,owners={}}
   if not unit then return result end
   local e=game.get_entity_by_unit_number(unit)
   if not (e and e.valid and e.name==EM and e.train and e.train.valid) then return result end

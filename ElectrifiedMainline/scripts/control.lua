@@ -17,6 +17,7 @@ local art030 = require("scripts.catenary_art_030")
 local diag045 = require("scripts.catenary_diag_045")
 local technical046 = require("scripts.technical_network_046")
 local bridge058 = require("scripts.power_bridge_058")
+local onboard089 = require("scripts.onboard_storage_089")
 local mast059 = require("scripts.mast_network_059")
 local pantograph049 = require("scripts.pantograph_visual_049")
 local paidTraction065 = require("scripts.traction_paid_065")
@@ -84,6 +85,7 @@ script.on_init(function()
 end)
 script.on_configuration_changed(function()
     ensure_storage()
+    onboard089.audit()
     native_wire_probe026.cleanup_on_version_change()
     power019.rebuild_all()
     nativewire028.rebuild_all(empty_native_graph())
@@ -562,14 +564,14 @@ local function on_tick(event)
         ghost_visual023.mark_dirty()
     end
     mast059.on_tick(event.tick,graph)
-    bridge058.on_tick(event.tick,graph)
+    local charge_budget=bridge058.on_tick(event.tick,graph)
     art030.on_tick(event.tick,graph)
     ghost_visual023.on_tick(event.tick)
     -- After real EM070 native bridge settlement and exact confirmed contact geometry.
     -- Reconcile actual native consists BEFORE charging: never grant an
     -- orphaned/mismatched booster J from this tick's native 25kV sink.
     helper067.on_tick(event.tick)
-    paidTraction065.on_tick(event.tick,art030,pantograph049)
+    paidTraction065.on_tick(event.tick,art030,pantograph049,charge_budget)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
@@ -784,3 +786,5 @@ remote.add_interface('em072_native_qa_071',{
 
 -- EM088 read-only accounting API; no arbitrary energy mutation.
 remote.add_interface("em088_train_energy",{snapshot=require("scripts.train_energy_088").snapshot})
+
+remote.add_interface("em089_onboard_storage",{snapshot=onboard089.snapshot})

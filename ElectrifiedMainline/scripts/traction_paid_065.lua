@@ -5,6 +5,8 @@
 -- Native Factorio alone decides which of the opposite locomotives moves.
 local M={MAX_PER_TICK=2000000/60,BUFFER_CAP=2000000}
 local energy088=require("scripts.train_energy_088")
+local battery089=require("scripts.onboard_storage_089")
+local dispatch089=require("scripts.bridge_dispatch_059")
 local motor067=require("scripts.helper_lifecycle_067")
 local function entity(id)
   if not id then return nil end
@@ -250,29 +252,35 @@ local function eligible(e,art,pantograph,stats,target,contacts,donors)
     c={net=net,why=why};contacts[uid]=c
   end
   local net,why=c.net,c.why
+  local req={e=e,owner=contact_owner,burner=burner,want=want,grant=0,limit=limit,cap=cap,kind=target and "motor" or "loco"}
   if not net then
     stats.miss_contact=stats.miss_contact+1
     stats.last_contact_reason=why
-    return nil
+    return battery089.enabled() and req or nil
   end
   local source=phase_donor(donors,net,contact_owner.force)
   if not source then
     stats.miss_supply=stats.miss_supply+1
-    return nil
+    return battery089.enabled() and req or nil
   end
-  return {e=e,owner=contact_owner,burner=burner,source=source,want=want,grant=0,limit=limit,cap=cap,kind=target and "motor" or "loco"}
+  req.source=source
+  return req
 end
 
 local function credit_paid(req,stats)
-  energy088.transfer_grid_to_burner(req,stats,native_state())
+  req.grid_paid=energy088.transfer_grid_to_burner(req,stats,native_state()) or 0
 end
 
-local function fair_charge(owners,art,pantograph,stats)
+local function fair_charge(owners,art,pantograph,stats,charge_budget)
   local groups,ids={},{}
+  local pending,blocked={},{}
   local contacts,donors={},{}
   for _,e in ipairs(owners) do
     local req=eligible(e,art,pantograph,stats,nil,contacts,donors)
     if req then
+      pending[#pending+1]=req;blocked[req.owner.train.id]=true
+    end
+    if req and req.source then
       local id=req.source.output.unit_number
       if not id then error("[EM066 PAID FAIL] donor EEI has no native unit_number") end
       if not groups[id] then
@@ -288,6 +296,9 @@ local function fair_charge(owners,art,pantograph,stats)
   for _,target in ipairs(motor067.targets()) do
     local req=eligible(target.helper,art,pantograph,stats,target,contacts,donors)
     if req then
+      pending[#pending+1]=req;blocked[req.owner.train.id]=true
+    end
+    if req and req.source then
       local id=req.source.output.unit_number
       if not groups[id] then groups[id]={source=req.source,requests={}};ids[#ids+1]=id end
       groups[id].requests[#groups[id].requests+1]=req
@@ -298,6 +309,9 @@ local function fair_charge(owners,art,pantograph,stats)
     local group=groups[id]
     local output=sink_for_output(group.source)
     if output then
+      if output.electric_interface_mode~=defines.electric_interface_mode.secondary_input then
+        output.electric_interface_mode=defines.electric_interface_mode.secondary_input
+      end
       local requested=0
       for _,req in ipairs(group.requests) do
         requested=requested+req.want
@@ -337,6 +351,45 @@ local function fair_charge(owners,art,pantograph,stats)
     end
     for _,req in ipairs(group.requests) do credit_paid(req,stats) end
   end
+  if not battery089.enabled() then return end
+  local discharged=battery089.discharge(owners,pending,game.tick)
+  -- First-stage conservative charging: only stationary, no pending traction
+  -- for the consist or donor group; dispatch classifies charge below loads.
+  local charging,cids={},{}
+  charge_budget=charge_budget or {}
+  for _,e in ipairs(owners) do
+    local want=battery089.want(e)
+    if want>1 and not blocked[e.train.id] and not discharged[e.train.id] then
+      local net,_,anchor=network_for_contact(e,art,pantograph)
+      local key=net and anchor and dispatch089.network_key(anchor)
+      local source=net and phase_donor(donors,net,e.force)
+      if source and source.mode=='auto' and key and (charge_budget[key] or 0)>1 then
+        local id=source.output.unit_number
+        if not groups[id] then
+          if not charging[id] then charging[id]={source=source,owners={},key=key};cids[#cids+1]=id end
+          charging[id].owners[#charging[id].owners+1]={e=e,want=want}
+        end
+      end
+    end
+  end
+  table.sort(cids)
+  for _,id in ipairs(cids) do
+    local c=charging[id];local output=sink_for_output(c.source)
+    if output and (charge_budget[c.key] or 0)>1 then
+      if output.electric_interface_mode~=defines.electric_interface_mode.tertiary_input then
+        output.electric_interface_mode=defines.electric_interface_mode.tertiary_input
+      end
+      local requested=0;for _,r in ipairs(c.owners) do requested=requested+r.want end
+      local allowance=math.min(requested,charge_budget[c.key])
+      local available=math.min(allowance,math.max(0,output.energy))
+      for _,r in ipairs(c.owners) do
+        battery089.charge(r.e,c.source,output,math.min(r.want,available*r.want/requested),game.tick)
+      end
+      charge_budget[c.key]=math.max(0,charge_budget[c.key]-allowance)
+      local want=0;for _,r in ipairs(c.owners) do want=want+battery089.want(r.e) end
+      output.input_flow_limit=math.min(want,allowance,phase_capacity(donors,c.source.line_port.electric_network_id,c.source.line_port.force))
+    end
+  end
 end
 
 local function all_real_locomotives()
@@ -373,7 +426,7 @@ function M.requests(art,pantograph,dispatch)
   -- The native EM070 planner otherwise sees zero factory-grid/line demand:
   -- a Lua locomotive has no native electrical energy source. Advertise only
   -- finite, verified pending train demand on that REAL anchor network.
-  local requests,donors={},{}
+  local requests,donors,charges={},{},{}
   local sink_index=nil
   for _,e in ipairs(all_real_locomotives()) do
     local burner=e.burner
@@ -392,7 +445,7 @@ function M.requests(art,pantograph,dispatch)
               local n=storage.em and storage.em.traction_native_068
               if n and n.sinks then
                 for _,sink in pairs(n.sinks) do
-                  if sink.valid then
+                  if sink.valid and sink.electric_interface_mode==defines.electric_interface_mode.secondary_input then
                     local raw=sink.electric_network_id
                     if raw then
                       local f=sink.force.index
@@ -422,12 +475,20 @@ function M.requests(art,pantograph,dispatch)
           end
         end
       end
+      if left<=1 and battery089.enabled() then
+        local want=battery089.want(e)
+        if want>1 then
+          local net,_,anchor=network_for_contact(e,art,pantograph)
+          local key=net and anchor and dispatch.network_key(anchor)
+          if key then charges[key]=(charges[key] or 0)+want end
+        end
+      end
     end
   end
-  return requests
+  return requests,charges
 end
 
-function M.on_tick(tick,art,pantograph)
+function M.on_tick(tick,art,pantograph,charge_budget)
   local stats=ensure()
   local n=native_state()
   -- Disabled default for every old sink. Only current live authenticated
@@ -436,9 +497,10 @@ function M.on_tick(tick,art,pantograph)
     if sink.valid then sink.input_flow_limit=0 end
   end
   local owners=all_real_locomotives()
-  fair_charge(owners,art,pantograph,stats)
+  fair_charge(owners,art,pantograph,stats,charge_budget)
   if tick%60==0 then
     energy088.audit(stats)
+    battery089.audit()
     retire_orphan_sinks(n,tick)
     local nSinks,total,nativeDemand=0,0,0
     for _,sink in pairs(n.sinks) do
