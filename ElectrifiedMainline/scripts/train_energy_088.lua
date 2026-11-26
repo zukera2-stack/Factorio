@@ -3,6 +3,7 @@
 -- Membership is derived from native consists, no stored authority or energy
 -- follows a transient train ID. Battery/regen disabled until separately proven.
 local M={}
+local regen091=require("scripts.brake_recovery_091")
 local EM="em-electric-locomotive"
 local FUEL="em-c5-test-internal-joule-063"
 local function ensure(stats)
@@ -70,6 +71,7 @@ function M.transfer_grid_to_burner(req,stats,native)
     stats.motor_paid_J=(stats.motor_paid_J or 0)+amount
     stats.motor_grants=(stats.motor_grants or 0)+1
   end
+  regen091.credit(req.e,amount)
   return amount
 end
 
@@ -90,6 +92,7 @@ function M.transfer_store_to_burner(req,donor,row,amount)
   row.J=row.J-amount
   burner.remaining_burning_fuel=old+amount
   if math.abs(burner.remaining_burning_fuel-(old+amount))>0.05 then error("[EM089] native burner credit mismatch") end
+  regen091.credit(req.e,amount)
   return amount
 end
 
@@ -136,7 +139,7 @@ function M.snapshot(unit)
   local result={legacy_paid_J=legacy,legacy_motor_J=legacy_motor,retired_loco_J=rl,
     retired_motor_J=rm,live_loco_J=l,live_motor_J=m,paid_J=legacy+rl+rm+l+m,
     motor_paid_J=legacy_motor+rm+m,original_paid_J=stats.debited_J or 0,
-    battery_enabled=settings and settings.global and settings.global["em089-experimental-onboard-storage"] and settings.global["em089-experimental-onboard-storage"].value==true or false,regen_enabled=false,owners={}}
+    battery_enabled=settings and settings.global and settings.global["em089-experimental-onboard-storage"] and settings.global["em089-experimental-onboard-storage"].value==true or false,regen_enabled=regen091.enabled(),owners={}}
   if not unit then return result end
   local e=game.get_entity_by_unit_number(unit)
   if not (e and e.valid and e.name==EM and e.train and e.train.valid) then return result end

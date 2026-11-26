@@ -105,6 +105,25 @@ function M.discharge(owners,requests,tick)
   end
   return used
 end
+-- Internal EM091 receiver only. No public remote mutation. The offered energy
+-- has already passed the native debit and brake certificate.
+function M.recover(owners,amount,tick)
+  if not M.enabled() or amount<=0 then return 0 end
+  local accepted=0
+  for _,e in ipairs(owners) do
+    if real(e) and e.train.speed~=0 then
+      local r=row(e,true)
+      if r.discharged_tick~=tick and r.charged_tick~=tick then
+        local j=math.max(0,math.min(amount-accepted,M.CHARGE,M.CAP-r.J))
+        if j>0 then
+          r.J=r.J+j;r.regen_J=(r.regen_J or 0)+j;r.charged_tick=tick
+          local s=state(true);s.regen_J=(s.regen_J or 0)+j;accepted=accepted+j
+        end
+      end
+    end
+  end
+  return accepted
+end
 function M.audit()
   local s=state(false);if not s then return end
   local ids={};for id in pairs(s.owners) do ids[#ids+1]=id end;table.sort(ids)
@@ -118,7 +137,7 @@ function M.audit()
       total=total+r.J
     end
   end
-  if math.abs(s.charged_J-s.discharged_J-s.lost_J-total)>math.max(0.05,s.charged_J*1e-10) then error('[EM089] closed battery ledger mismatch') end
+  if math.abs(s.charged_J+(s.regen_J or 0)-s.discharged_J-s.lost_J-total)>math.max(0.05,s.charged_J*1e-10) then error('[EM089] closed battery ledger mismatch') end
   if game.tick%600==0 then
     log(string.format('[EM089 STORAGE] tick=%d enabled=%s stored_J=%.3f charged_J=%.3f discharged_J=%.3f motor_J=%.3f lost_J=%.3f',game.tick,tostring(M.enabled()),total,s.charged_J,s.discharged_J,s.motor_J or 0,s.lost_J))
   end
@@ -126,7 +145,7 @@ end
 function M.snapshot(unit)
   local s=state(false) or {owners={},charged_J=0,discharged_J=0,lost_J=0}
   local result={enabled=M.enabled(),capacity_J=M.CAP,charge_J_tick=M.CHARGE,discharge_J_tick=M.DISCHARGE,
-    charged_J=s.charged_J,discharged_J=s.discharged_J,motor_J=s.motor_J or 0,lost_J=s.lost_J,stored_J=0,owners={}}
+    charged_J=s.charged_J,regen_J=s.regen_J or 0,discharged_J=s.discharged_J,motor_J=s.motor_J or 0,lost_J=s.lost_J,stored_J=0,owners={}}
   local ids={};for id in pairs(s.owners) do ids[#ids+1]=id end;table.sort(ids)
   for _,id in ipairs(ids) do result.stored_J=result.stored_J+s.owners[id].J end
   local e=unit and game.get_entity_by_unit_number(unit)
@@ -134,7 +153,7 @@ function M.snapshot(unit)
     result.train_id=e.train.id
     for _,heading in ipairs({'front_movers','back_movers'}) do
       for _,o in ipairs(e.train.locomotives[heading] or {}) do
-        if real(o) then local r=s.owners[o.unit_number];result.owners[#result.owners+1]={unit=o.unit_number,J=r and r.J or 0,charged_J=r and r.charged_J or 0,discharged_J=r and r.discharged_J or 0} end
+        if real(o) then local r=s.owners[o.unit_number];result.owners[#result.owners+1]={unit=o.unit_number,J=r and r.J or 0,charged_J=r and r.charged_J or 0,regen_J=r and r.regen_J or 0,discharged_J=r and r.discharged_J or 0} end
       end
     end
     table.sort(result.owners,function(a,b)return a.unit<b.unit end)

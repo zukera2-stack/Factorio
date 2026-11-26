@@ -18,6 +18,7 @@ local diag045 = require("scripts.catenary_diag_045")
 local technical046 = require("scripts.technical_network_046")
 local bridge058 = require("scripts.power_bridge_058")
 local onboard089 = require("scripts.onboard_storage_089")
+local regen091 = require("scripts.brake_recovery_091")
 local mast059 = require("scripts.mast_network_059")
 local pantograph049 = require("scripts.pantograph_visual_049")
 local paidTraction065 = require("scripts.traction_paid_065")
@@ -86,6 +87,7 @@ end)
 script.on_configuration_changed(function()
     ensure_storage()
     onboard089.audit()
+    regen091.invalidate()
     native_wire_probe026.cleanup_on_version_change()
     power019.rebuild_all()
     nativewire028.rebuild_all(empty_native_graph())
@@ -542,6 +544,7 @@ local function on_train_created(event)
     end
 
     initialize_train_state(train, previous_state)
+    regen091.train_changed(event)
     helper067.on_train_created(event)
 end
 
@@ -550,6 +553,7 @@ local function on_tick(event)
     -- on_configuration_changed when only runtime code changed. Initialize
     -- persistent state lazily before any tick handler reads it.
     ensure_storage()
+    regen091.begin(event.tick)
     local rail_changed,rail_changes=power019.on_tick(event.tick)
     if rail_changed then
         bridge058.mark_dirty()
@@ -572,6 +576,7 @@ local function on_tick(event)
     -- orphaned/mismatched booster J from this tick's native 25kV sink.
     helper067.on_tick(event.tick)
     paidTraction065.on_tick(event.tick,art030,pantograph049,charge_budget)
+    regen091.finish(event.tick,onboard089)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
@@ -652,6 +657,8 @@ script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconst
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_object_destroyed, technical046.on_object_destroyed)
 script.on_event(defines.events.on_tick, on_tick)
+script.on_event(defines.events.on_entity_damaged, regen091.damage)
+script.on_event(defines.events.on_runtime_mod_setting_changed, regen091.setting_changed)
 -- EM084: override only the opened motor-wagon GUI status, never native alerts.
 script.on_nth_tick(60, function(_) wagon_status084.refresh_opened_players() end)
 
@@ -788,3 +795,5 @@ remote.add_interface('em072_native_qa_071',{
 remote.add_interface("em088_train_energy",{snapshot=require("scripts.train_energy_088").snapshot})
 
 remote.add_interface("em089_onboard_storage",{snapshot=onboard089.snapshot})
+
+remote.add_interface("em091_brake_recovery",{snapshot=regen091.snapshot})

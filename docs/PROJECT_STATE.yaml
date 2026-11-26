@@ -1,3 +1,88 @@
+em091_onboard_regen_20261126:
+  date: "2026-11-26"
+  branch: "experiment/em091-onboard-regen"
+  base_commit: "e933b542c2fc314d9a6123f974839ff81882210d"
+  base_runtime: "0.1.101"
+  mod_version: "0.1.102"
+  status: experimental_native_pass_opt_in
+  native_engine: "2.1.24 build87808 linux64 headless"
+  architecture: docs/plans/EM091_ONBOARD_REGEN_ARCHITECTURE.md
+  regen_enabled_default: false
+  requires_storage_enabled: true
+  native_debit_receipts: true
+  both_braking_flags_required: true
+  virtual_kinetic_pool: false
+  trial_C: 450
+  trial_eta: 0.65
+  trial_locomotive_regen_W: 2000000
+  motor_wagon_regen_W: 500000
+  final_balance_approved: false
+  actual_grid_export: false
+  onboard_only_gate: true
+  total_cases_pass: 92
+  explicit_completion_markers: 87
+  established_stand_assertions: 5
+  old_core_cases_pass: 66
+  old_mixed_cases_pass: 11
+  new_focused_disk_cases_pass: 13
+  enabled_stress_counts_pass: [12, 24]
+  core_workers: 2
+  core_wall_seconds: 177.133
+  core_peak_cgroup_bytes: 2989842432
+  mixed_workers: 2
+  mixed_wall_seconds: 32.482
+  stress_workers: 1
+  stress_wall_seconds: 57.142
+  oom_events: 0
+  auto_distance_tiles: 696
+  auto_budget_J: 12000000
+  auto_estimate_J: 992395.939
+  auto_recovered_J: 498112.436
+  auto_rejected_J: 494283.504
+  auto_store_discharge_J: 10414779.103
+  auto_measured_debit_J: 11933333.333
+  three_cycle_recovered_J: 2101900.477
+  four_cycle_budget_J: 19200000
+  four_cycle_measured_debit_J: 20452222.222
+  four_cycle_recovered_J: 2167437.939
+  four_cycle_store_discharge_J: 19350709.997
+  four_cycle_final_store_J: 61.275
+  empty_recovered_J: 0
+  coast_recovered_J: 0
+  foreign_recovered_J: 0
+  unverified_initial_fuel_recovered_J: 0
+  disabled_recovered_J: 0
+  full_store_rejected_J: 695452.447
+  collision_interval_recovered_J: 0
+  collision_preimpact_recovered_J: 129702.485
+  disk_checkpoint_request_tick: 1080
+  disk_checkpoint_request_recovered_J: 17303.403
+  disk_checkpoint_sha256: edea473f8b4f229bc37996fcc274c4c33dcd1718c30e0288a0bd7f267b062a74
+  disk_reload_equal_lines: 2
+  stress_samples_each: 17
+  stress_budgets_J: [1500000000, 3000000000]
+  stress_recovered_J: [6167832.828, 12335665.656]
+  stress_final_stored_J: [257353967.019, 642561123.513]
+  game_files: 166
+  unchanged_pngs: 99
+  full_sha256: eebed6e004a13b002a2a33101d771a3b7b0ee12d3dbba2bd12e19f6cb902e1a7
+  patch_sha256: 84b96e47afdb501e44a5d1e89b757e6029fa8d7d795f23a6f5a2839fabdb9e4d
+  patch_staged_parity: true
+  source_sha256: 9d3dd6fd841b4e8047dab0533b0b6e1cfa4aa18a2c1db113d25db3ab57074966
+  evidence: "/Factorio/Local-QA/EM091_ONBOARD_REGEN_EVIDENCE.zip"
+  evidence_sha256: 1f6eb810074205b84336d9e97b84add779de881955a6de53e4e454187719c555
+  report: docs/development/EM091_ONBOARD_REGEN_QA.md
+  performance_gate: not_met
+  full_connected100_enabled: not_run
+  long100_enabled: not_run
+  dedicated_opt_in_migration: not_run
+  windows_gui: pending
+  multiplayer: not_run
+  next: em092_native_25kv_recovery_and_acceptance
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em090b_brake_calibration_20261126:
   date: "2026-11-26"
   branch: "test/em090b-brake-calibration"

@@ -1,0 +1,37 @@
+# EM091 — onboard regenerative braking, native experimental PASS
+
+Date 2026-11-26. Parent EM090B e933b542c2fc314d9a6123f974839ff81882210d; exact baseline EM089 0.1.101. Factorio 2.1.24 build87808 linux64 headless. 0.1.102 opt-in, not owner installation. [Architecture](../plans/EM091_ONBOARD_REGEN_ARCHITECTURE.md), [native research](../research/EM091_ONBOARD_REGEN_RESEARCH.md). First actual onboard-only credit; grid-first export is still EM092; no speed write or virtual kinetic reservoir.
+
+## Exact scope and accounting
+Full SHA256 `eebed6e004a13b002a2a33101d771a3b7b0ee12d3dbba2bd12e19f6cb902e1a7`, 166 members; 9 changed/added files, no deletion, all 99 PNG byte-identical. Direct patch SHA256 `84b96e47afdb501e44a5d1e89b757e6029fa8d7d795f23a6f5a2839fabdb9e4d`, staged member parity. Runtime captures native burner at end of paid phase vs before next phase; validates every paid receipt, empty inventory, internal item prototype, helper owner, live train identity and stable parameters. `brake_estimator_091` exact EM090B estimator, C450, eta .65, 2MW loco trial +0.5MW/motor, both brake flags, no state-transition/terminal/coast credit, bounded actual acceleration. Certificate from rest, invalidate on gap, damage, train created, settings/config change. Native debit is proven in controlled fixtures, not a universal anti-tamper or engine mechanical-work API. `charged_J+regen_J=stored_J+discharged_J+lost_J`; subtract cumulative recovered J from old closed-source ledger to avoid double counting. Global damage guard conservative; no per-surface optimization yet. New switch default false, requires EM089 enabled, 60MJ/2MW charge/4MW discharge experiment. Same physical store cannot charge and discharge same tick, rejected J discarded. Existing traction refill can consume some recovered J or reject candidate due to simultaneous discharge; no claim optimal return.
+
+## Native results — 92 distinct cases PASS (87 explicit plus 5 established stand assertions)
+66 previous core with regen/storage default disabled (incl 100 moving, 8935 paths, 4 short fault variants), 11 old mixed default disabled; 13 new focused/negative/real disk cases (one disabled control), 2 connected stress with storage+regen enabled. Tests use exact verified archive member bytes extracted to isolated per-process directories. Mixed and old core use prior test fixtures; full old EM089 standalone suite not separately repeated. Count no failed attempts; retained below. 4GiB/4CPU cgroup, 768MiB reserve, no OOM or guard activation. Core 2 workers 177.133s peak 2989842432B; final-focused 2 workers 30.550s peak 2639466496B (10 successful, collision corrected in separate run 5.240s); disk 1 worker 1.853s; mixed+reuse 2 workers 32.482s peak 2932330496B; stress12/24 admitted 1 worker 57.142s peak 2709393408B. No benchmark or 60 UPS claim.
+
+| Focused case | Native result |
+|---|---|
+| auto | 696 cells, cargo37 iron/fluid9000 water preserved, 12MJ budget, source output off, initially store 9.916667MJ, total store debit 10.414779MJ, accepted 498112.436 J of 992395.939 J, rejected 494283.504 J; total certified debit 11933333.333 J matches independent paid+discharge-current burner estimate. |
+| cycle | 3 native cycles, 19.2MJ initial budget, actual accepted 2101900.477 J, store debit 18MJ >17.183333MJ initial, native debit 18002222.222 J, stored 1285233.811 J. |
+| reuse | 4th shortened acceleration cycle: 19.2MJ source, 20452222.222 J measured native debit = independent estimate (exceeds initial source by 1252222.222 J), actual recovered 2167437.939 J, estimate 2230861.288, rejected 63423.350, final store 61.275 J, cumulative discharge 19350709.997 J. Source disabled and zero, closed ledger exactly 19.2MJ at printed precision. Actual reuse, not merely hypothetical J. |
+| empty | 0 J recovery, 0 J source, no motion. |
+| coast | 4.5MJ initial finite source, natural exhaustion, >100 coast decreases without brake, recovered 0 J, distance 354.648 cells. |
+| foreign | Real mixed diesel locomotive with coal, zero recovery; not closed total diesel-energy assertion. |
+| inject | QA explicitly seeds 100kJ internal burner before observation; unverified nonzero origin, zero recovery; not a closed overall energy assertion. |
+| full | 60MJ full store, actual 33333.333 J accepted (only headroom from debit), 695452.447 J rejected, final 60MJ. |
+| collision | Actual tank collision damage event t1334 after callback. At t1334 observed 1.164220364->1.155222613 ordinary brake, credited 8819.681922 J; t1335 native speed 0; t1336 observes **0 J** credit for crash interval, last credited t1334. Pre-crash cumulative accepted 129702.485 J. |
+| couple | Two real locomotives, split while moving, recovery before split 81090.269 J, no post-split credit until stop; no store duplication. |
+| disabled | Storage enabled, regeneration disabled, 0 J recovery, arrives 696 cells. |
+| reload | Real loopback server saves at t1080 mid-brake, observed recovery 17303.403 J, stored 8633.314 J at checkpoint request. Uninterrupted run finishes t1278. |
+| reload-load | Independent process actual saved ZIP SHA256 `edea473f8b4f229bc37996fcc274c4c33dcd1718c30e0288a0bd7f267b062a74`; two subsequent normalized snapshots t1200/1278 byte-identical, final recovery 498112.436 J; no duplicate recovery. |
+
+## Shared-world stress
+| Trains | Energy budget | Recovered J | Final stored J | Actual certified debit J | Result |
+|---:|---:|---:|---:|---:|---|
+|12|1.5 GJ|6167832.828|257353967.019|70221261.261|PASS|
+|24|3 GJ|12335665.656|642561123.513|140442522.523|PASS|
+17 samples each, all arrivals and cargo/fluid preserved, generator outage, native ring split/alternative path/rejoin. All sampled closed ledgers match initial budget within 5000 J tolerance (printed exact in logs). Short connected route, not continuous100 performance.
+
+## Failures and limitations retained
+First candidate rejected every fueled interval because exact 2.1.24 `currently_burning.name` is LuaItemPrototype rather than string; corrected equality with prototype. QA event ordering: level callback observes preceding mod callback, not current grant. Collision event comes after t1334 ordinary brake callback; corrected test to observe t1336, not incorrectly reject legitimate t1334 pre-impact brake. Initial split fixture held invalidated LuaTrain, fixed reacquire. Shared ZIP read I/O error even with separate copies; Python reread also failed once; source archive SHA/CRC valid, final runner verifies a single immutable bytes snapshot then extracts per case; errors not counted. No code change to accepted baseline outside isolated branch. No arbitrary external script tampering guarantee, global damage guard may unnecessarily block unrelated trains, no universal collision/signal/reverse/driver proof, no 0.1.101 to 0.1.102 storage migration opt-in dedicated run, no Windows/MP or long100/UPS with regen, no GUI scale, stale historical EM089 setting description. Numeric C/eta/power remain trial. Not final priority implementation; EM092 must prove actual native 25kV output acceptance, measured rejected remainder to store, maintain live topology/20MW station and no fictitious source or duplicate J. No main merge, release or owner installation.
+
+Source archive SHA256 `9d3dd6fd841b4e8047dab0533b0b6e1cfa4aa18a2c1db113d25db3ab57074966`. Evidence bundle includes all successful logs, failed logs, reports, settings, exact changed sources via patch, checkpoint and runners.
