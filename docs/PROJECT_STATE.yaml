@@ -50,7 +50,19 @@ em094_integration_20261126:
   main_merge_owner_authorized: true
   merged_runtime_tree: 8d64e44d74c37f5a202a01ef09fcda3cda3d01af
   latest_premerge_ci: pass_45886890810
-  branch_cleanup: pending_separate_retention_review
+  branch_cleanup: complete_verified
+  archive_branch: archive/pre-main-0.1.103-20261126
+  archive_commit: 25f91ad775007f80aca048a8c69eff90a3d9686e
+  archived_original_branch_tips: 135
+  archived_main_ancestry_tips: 93
+  archived_unique_branch_tips: 42
+  archive_reachable_commits: 605
+  old_branch_refs_deleted: 135
+  old_prs_closed: 51
+  branches_after_cleanup: 2
+  open_prs_after_cleanup: 0
+  archive_inventory: docs/development/BRANCH_ARCHIVE_20261126.md
+  archive_must_not_merge: true
   official_release: false
   report: docs/development/EM094_INTEGRATION_AUDIT.md
   test_plan: docs/development/EM094_INTEGRATION_TEST_PLAN.md
@@ -2302,7 +2314,7 @@ project:
   active_feature_branch: main # source merge into main, no release
   feature_version: "0.1.103" # merged development baseline, not installed
   feature_status: 103_merged_main_native_111_pass_no_release
-  last_validated_test_branch: integration/em094d4-main-candidate
+  last_validated_test_branch: main # original test head preserved in archive
   release_target_branch: main
   release_pull_request: 30
   release_merge_commit: 55cb71f8f3be8c68cbd2c26fa16fd775c6ba296d

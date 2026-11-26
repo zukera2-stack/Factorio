@@ -323,5 +323,13 @@
   "latest_integration_reference_archive": "/Factorio/Local-QA/EM094D4-Anchor-Settlement/EM094D4_0.1.103_CODE_ONLY_QA.zip",
   "latest_integration_reference_sha256": "9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e",
   "main_merge_pr": 91,
-  "main_merge_commit": "4bdbacda206fca1d040a809ce276f5fce1dfab69"
+  "main_merge_commit": "4bdbacda206fca1d040a809ce276f5fce1dfab69",
+  "branch_cleanup": {
+    "status": "complete_verified",
+    "archive_branch": "archive/pre-main-0.1.103-20261126",
+    "archive_commit": "25f91ad775007f80aca048a8c69eff90a3d9686e",
+    "original_branch_tips": 135,
+    "closed_prs": 51,
+    "archive_inventory": "docs/development/BRANCH_ARCHIVE_20261126.md"
+  }
 }
