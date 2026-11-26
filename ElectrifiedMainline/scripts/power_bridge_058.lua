@@ -70,12 +70,9 @@ end
 local function sole_link(port,target)
  local a,b=connector(port),connector(target)
  if not (a and b) then return false end
- local n=0
- for _,link in pairs(a.real_connections) do
-   if not (link.target and link.target.valid and link.target==b and link.origin==defines.wire_origin.script) then return false end
-   n=n+1
- end
- return n==1
+ -- Native count + native origin-aware connectivity; both connectors belong
+ -- to live physical entities. No materialized WireConnection array needed.
+ return a.real_connection_count==1 and a.is_connected_to(b,defines.wire_origin.script)
 end
 local function connect(port,target)
  local a,b=connector(port),connector(target)

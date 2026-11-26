@@ -3,8 +3,9 @@ local M={}
 local function positive(v) return math.max(0,v or 0) end
 local function parent_key(e)
  local sub=e.electric_network
- if not(sub and sub.valid and sub.parent_network and sub.parent_network.valid) then return nil end
+ if not (sub and sub.valid) then return nil end
  local parent=sub.parent_network
+ if not (parent and parent.valid) then return nil end
  local id=sub.id
  for _,n in pairs(parent.sub_networks) do if n.valid and n.id<id then id=n.id end end
  return id,parent
