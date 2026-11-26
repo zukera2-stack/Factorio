@@ -1,3 +1,57 @@
+em088_train_energy_20261126:
+  date: "2026-11-26"
+  branch: "experiment/em088-train-energy"
+  base_commit: "9ef3f4c13fe5cad27119fdf3aa8be842bcfe56c7"
+  base_runtime: "0.1.98"
+  mod_version: "0.1.100"
+  status: experimental_native_pass
+  owner_approved_hybrid_architecture: true
+  architecture: docs/plans/EM088_HYBRID_ARCHITECTURE.md
+  physical_loco_owner_unit_number: true
+  native_live_membership: true
+  legacy_history_not_energy: true
+  battery_enabled: false
+  regeneration_enabled: false
+  previous_optimization: postponed_not_resolved
+  full_native_cases_pass: 82
+  explicit_cases_pass: 77
+  stand_assertions_pass: 5
+  old_core_cases_pass: 66
+  mixed_cases_pass: 11
+  stress_counts_pass: [12, 24]
+  new_bus_reload_migration_pass: 3
+  core_parallel_workers: 3
+  core_wall_seconds: 119.423
+  core_peak_cgroup_bytes: 2658832384
+  oom_events: 0
+  bus_paid_J: 4000000
+  bus_retired_history_J: 2000000
+  bus_checkpoint_sha256: 45df47ef681053d683ca4567fedb574fb7f2c42cd64e569aecc212df31498d96
+  migration_checkpoint_sha256: b737162cab01e9238e1e199286e6704470f02f172c703f7b2ec25a4af310334d
+  migration_legacy_J: 4000000
+  migration_new_J: 2000000
+  migration_paid_J: 6000000
+  closed_fixture_budget_J: 20000000
+  moving100_arrived: 100
+  moving100_paid_J: 601666666.66668
+  moving100_motor_paid_J: 135000000.00002
+  native_rail_comparisons: 8935
+  game_files: 158
+  unchanged_pngs: 99
+  full_sha256: 965ecfe334f53819b2771aca3a6861d7e67e722ca9a113ddfcd5a37ca0d612fa
+  patch_sha256: 417857851c55325c33e5aa6fa21103e9a41e8c6272fd2cc3186a0f5ff5cd9365
+  patch_staged_parity: true
+  evidence: "/Factorio/Local-QA/EM088_TRAIN_ENERGY_EVIDENCE.zip"
+  evidence_sha256: b361f8fc1c6022e60ca409978f9611190563170fe11753cc4d8153030ecf497a
+  report: docs/development/EM088_TRAIN_ENERGY_QA.md
+  performance_gate: not_met
+  full_connected_stress100: not_rerun
+  full_long100: not_rerun
+  next: em089_finite_onboard_accumulator
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em087p_sync_profile_20261126:
   date: "2026-11-26"
   branch: "test/em087p-sync-profile"

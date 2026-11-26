@@ -781,3 +781,6 @@ remote.add_interface('em072_native_qa_071',{
         }
     end
 })
+
+-- EM088 read-only accounting API; no arbitrary energy mutation.
+remote.add_interface("em088_train_energy",{snapshot=require("scripts.train_energy_088").snapshot})

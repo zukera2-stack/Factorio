@@ -4,7 +4,7 @@
 -- REAL locomotive heading (up to two headings) share the SAME paid 25kV sink.
 -- Native Factorio alone decides which of the opposite locomotives moves.
 local M={MAX_PER_TICK=2000000/60,BUFFER_CAP=2000000}
-local FUEL="em-c5-test-internal-joule-063"
+local energy088=require("scripts.train_energy_088")
 local motor067=require("scripts.helper_lifecycle_067")
 local function entity(id)
   if not id then return nil end
@@ -260,52 +260,11 @@ local function eligible(e,art,pantograph,stats,target,contacts,donors)
     stats.miss_supply=stats.miss_supply+1
     return nil
   end
-  return {e=e,burner=burner,source=source,want=want,grant=0,limit=limit,cap=cap,kind=target and "motor" or "loco"}
+  return {e=e,owner=contact_owner,burner=burner,source=source,want=want,grant=0,limit=limit,cap=cap,kind=target and "motor" or "loco"}
 end
 
 local function credit_paid(req,stats)
-  local amount=req.grant
-  if amount<=0 then return end
-  local output=req.native_sink
-  if not (output and output.valid and req.e.valid and req.source.output
-    and req.source.output.valid and req.source.line_port.valid
-    and output.electric_network_id==req.source.line_port.electric_network_id) then
-    error("[EM068 NATIVE FAIL] paid native sink or true locomotive invalid")
-  end
-  local burner=req.burner
-  local old=math.max(0,burner.remaining_burning_fuel or 0)
-  amount=math.max(0,math.min(amount,req.limit,req.cap-old,
-                            output.energy))
-  if amount<=0 then return end
-  if not burner.currently_burning then
-    -- The native API initialises a new fuel item at full fuel_value.
-    -- Set its J to zero in the SAME synchronous tick before any paid credit.
-    burner.currently_burning=prototypes.item[FUEL]
-    burner.remaining_burning_fuel=0
-    old=0
-  end
-  local before=output.energy
-  -- This is now an ACTUAL engine-charged 25kV SECONDARY INPUT consumer.
-  -- Factorio's native solver already deducted source EEI energy to fill it.
-  -- Debit ONLY this native sink before credit to locomotive burner.
-  -- DO NOT subtract source.output.energy again (no double charge).
-  output.energy=before-amount
-  local after=output.energy
-  if after< -0.0001 or math.abs((before-after)-amount)>0.05 then
-    error("[EM066 PAID FAIL] real source debit mismatched native grant")
-  end
-  burner.remaining_burning_fuel=old+amount
-  if math.abs(burner.remaining_burning_fuel-(old+amount))>0.05 then
-    error("[EM066 PAID FAIL] native burner credit mismatch")
-  end
-  stats.debited_J=stats.debited_J+amount
-  native_state().metered_native_J=native_state().metered_native_J+amount
-  stats.credited_J=stats.credited_J+amount
-  stats.charged_ticks=stats.charged_ticks+1
-  if req.kind=="motor" then
-    stats.motor_paid_J=(stats.motor_paid_J or 0)+amount
-    stats.motor_grants=(stats.motor_grants or 0)+1
-  end
+  energy088.transfer_grid_to_burner(req,stats,native_state())
 end
 
 local function fair_charge(owners,art,pantograph,stats)
@@ -479,6 +438,7 @@ function M.on_tick(tick,art,pantograph)
   local owners=all_real_locomotives()
   fair_charge(owners,art,pantograph,stats)
   if tick%60==0 then
+    energy088.audit(stats)
     retire_orphan_sinks(n,tick)
     local nSinks,total,nativeDemand=0,0,0
     for _,sink in pairs(n.sinks) do
