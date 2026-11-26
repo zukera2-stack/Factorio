@@ -1,3 +1,61 @@
+em090b_brake_calibration_20261126:
+  date: "2026-11-26"
+  branch: "test/em090b-brake-calibration"
+  base_commit: "c02e48e6f82ff7fc9887fe357b05c88c231cc8ad"
+  runtime_version: "0.1.101"
+  status: native_diagnostic_pass_production_credit_not_implemented
+  owner_approved_calibrated_classical_model: true
+  virtual_kinetic_pool: false
+  native_engine: "2.1.24 build87808 linux64 headless"
+  original_matrix_cases_pass: 8
+  final_base_cases_pass: 12
+  final_fullmod_cases_pass: 3
+  reused_holdout_traces: 10
+  equal_brake_swapped_trajectory: true
+  manual_nonterminal_brake_law: B_over_M
+  coast_intervals: 378
+  coast_max_error_tiles_per_tick: 9.726663918740996e-13
+  trial_C: 450
+  training_min_C: 976.7847748594874
+  holdout_min_C: 632.2793437265333
+  trial_eta: 0.65
+  trial_locomotive_regen_W: 2000000
+  final_balance_approved: false
+  certified_epoch_from_rest: true
+  positive_K_change_debit_guard: true
+  exact_general_native_debit_proven: false
+  native_cycle_count: 3
+  cycle_consumed_J: 12002222.222222257
+  cycle_hypothetical_J: 800466.399882575
+  natural_starvation_hypothetical_J: 0
+  passive_hypothetical_J: 0
+  collision_interval_hypothetical_J: 0
+  fullmod_empty_hypothetical_J: 0
+  fullmod_move_hypothetical_J: 992395.939366798
+  fullmod_outage_hypothetical_J: 1144618.356265991
+  fullmod_move_estimated_consumed_J: 11933333.3333333
+  fullmod_outage_estimated_consumed_J: 12352885.93269405
+  fullmod_B_total: 36
+  fullmod_B_motor: 26
+  final_base_workers: 3
+  final_base_wall_seconds: 14.057
+  final_base_peak_bytes: 2373943296
+  final_fullmod_workers: 2
+  final_fullmod_wall_seconds: 8.114
+  final_fullmod_peak_bytes: 1928863744
+  oom_events: 0
+  actual_regen_credit_J: 0
+  runtime_changed: false
+  full_regression_rerun: false
+  evidence: "/Factorio/Local-QA/EM090B_BRAKE_CALIBRATION_EVIDENCE.zip"
+  evidence_sha256: 9f6f938cd6dedb533be7c4bea61db88943a73f3d2321424d01b1630001f4db49
+  source_sha256: 03641169efe9bbccd024e0d45ae6773ade439515f4de5b67192c81804f8ccbd3
+  report: docs/development/EM090B_BRAKE_CALIBRATION_QA.md
+  next: em091_native_paid_debit_and_actual_onboard_regen
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em090_native_brake_20261126:
   date: "2026-11-26"
   branch: "test/em090-native-brake"
