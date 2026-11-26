@@ -204,10 +204,12 @@ function M.contact_at(surface,force,p)
         local t=math.max(0,math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/d2))
         local q={x=a.x+t*dx,y=a.y+t*dy}
         local ds=(p.x-q.x)^2+(p.y-q.y)^2
-        local i=math.min(row.contact_pieces,math.floor(t*row.contact_pieces)+1)
-        local obj=rendering.get_object_by_id(row.ids[i])
-        if ds<=best2 and obj and obj.valid and obj.visible~=false then
-          best2=ds;best={x=q.x,y=q.y,distance=math.sqrt(ds),key=key}
+        if ds<=best2 then
+          local i=math.min(row.contact_pieces,math.floor(t*row.contact_pieces)+1)
+          local obj=rendering.get_object_by_id(row.ids[i])
+          if obj and obj.valid and obj.visible~=false then
+            best2=ds;best={x=q.x,y=q.y,distance=math.sqrt(ds),key=key}
+          end
         end
       end
     end

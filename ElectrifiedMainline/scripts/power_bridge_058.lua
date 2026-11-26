@@ -355,20 +355,23 @@ function M.on_tick(tick,graph)
  end
  -- Only build this synchronous native-network set for an actual drain.
  -- No permission survives a tick; normal candidate isolation below remains.
- local idle_corridor
- local function idle_isolated(factory_key,line_key)
-   if not factory_key or factory_key==line_key then return false end
-   if not idle_corridor then
-     idle_corridor={}
+ local live_corridor
+ local function corridor_keys()
+   if not live_corridor then
+     live_corridor={}
      for _,aid in pairs(t.helpers) do
        local a=lookup(aid)
        if valid(a) then
          local raw=a.electric_network_id
-         if raw then idle_corridor[observe(a,raw) or raw]=true end
+         if raw then live_corridor[observe(a,raw) or raw]=true end
        end
      end
    end
-   return not idle_corridor[factory_key]
+   return live_corridor
+ end
+ local function idle_isolated(factory_key,line_key)
+   if not factory_key or factory_key==line_key then return false end
+   return not corridor_keys()[factory_key]
  end
  for _,edge in ipairs(auto_edges) do
    local r=s.stations[edge.id]
@@ -383,19 +386,11 @@ function M.on_tick(tick,graph)
  end
  s.last_auto={};s.sample_tick=tick
  -- Any factory terminal sharing a corridor network means actual isolation was lost.
- local corridor={}
- -- No transfer candidates means no interface can be credited below.
- -- The complete live isolation scan remains mandatory for every nonempty batch.
- -- observe() only updates phase-local tables here, after dispatch and logging.
- if #candidates>0 then
-   for _,aid in pairs(t.helpers) do
-     local a=lookup(aid)
-     if valid(a) then
-       local raw=a.electric_network_id
-       if raw then corridor[observe(a,raw) or raw]=true end
-     end
-   end
- end
+ -- Port repairs have finished; idle_or_drain only changes EEI buffers/flows
+ -- or retires empty EEIs. No pole or wire is edited between these checks.
+ -- Retain live isolation for every nonempty batch, using the same native
+ -- corridor set if a drain already required it in this synchronous phase.
+ local corridor=#candidates>0 and corridor_keys() or {}
  local safe,shorted={},{}
  for _,c in ipairs(candidates) do
    local r=s.stations[c.id]

@@ -1,3 +1,37 @@
+em087k_steady_phase_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087k-steady-phase
+  base_commit: "4096f3e3cc1295a4cc4ab95ec5f640c28191460b"
+  mod_version: "0.1.97"
+  status: partial_experiment_mixed_performance_not_accepted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 65
+  explicit_native_pass: 60
+  stand_assertions_pass: 5
+  charged_buffer_fault_variants_pass: 4
+  frozen_buffer_J: 333333.33333333
+  restored_delivery_J: 9833333.3333332
+  code_only_runs_per_variant: 2
+  code_only_50_mean_ms: [15.933, 16.8175]
+  code_only_100_mean_ms: [38.9575, 36.513]
+  code_only_long201_mean_ms: [3.307, 2.935]
+  code_only_moving100_mean_ms: [52.0695, 49.656]
+  moving100_benchmark_ticks: 200
+  moving100_buffer_stop_events_per_run: 6000
+  moving100_preexisting_auto_idle_oscillation: observed
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: b3439467df1dd6982dc2a18c355c8fb8ee8d87f346c000d7b03d01d7f57e31af
+  evidence: "/Factorio/Local-QA/EM087K_STEADY_PHASE_EVIDENCE.zip"
+  next: em087l_active_idle_demand_feedback
+  main_merged: false
+  official_release: false
+
 em087j_native_negative_20261126:
   date: "2026-11-26"
   branch: experiment/em087j-native-negative

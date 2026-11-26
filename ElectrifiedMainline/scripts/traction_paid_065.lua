@@ -19,8 +19,11 @@ local function ensure()
 end
 local function network_for_contact(e,art,pantograph)
   local h=pantograph.head_offset(pantograph.frame(e.orientation))
-  local contact=art.contact_at(e.surface.index,e.force.name,
-    {x=e.position.x+h.x,y=e.position.y+h.y})
+  local surface=e.surface.index
+  local force=e.force
+  local pos=e.position
+  local contact=art.contact_at(surface,force.name,
+    {x=pos.x+h.x,y=pos.y+h.y})
   if not contact or not contact.key then return nil,"no-contact" end
   local a,b=contact.key:match("^(%d+):(%d+)$")
   a=tonumber(a);b=tonumber(b)
@@ -29,13 +32,16 @@ local function network_for_contact(e,art,pantograph)
   if not (t and t.helpers and t.mast_connected and t.mast_connected[a]
     and t.mast_connected[b]) then return nil,"mast-not-native-connected" end
   local aa,ab=entity(t.helpers[a]),entity(t.helpers[b])
-  if not (aa and ab and aa.surface.index==e.surface.index
-    and ab.surface.index==e.surface.index and aa.force==e.force
-    and ab.force==e.force and aa.electric_network_id
-    and aa.electric_network_id==ab.electric_network_id) then
+  if not (aa and ab and aa.surface.index==surface
+    and ab.surface.index==surface and aa.force==force
+    and ab.force==force) then
     return nil,"native-25kv-network-unverified"
   end
-  return aa.electric_network_id,nil,aa
+  local net=aa.electric_network_id
+  if not net or net~=ab.electric_network_id then
+    return nil,"native-25kv-network-unverified"
+  end
+  return net,nil,aa
 end
 -- EM087D: index live eligible import bridges in one synchronous phase.
 -- No network/permission persists between ticks or across bridge settlement.

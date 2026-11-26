@@ -223,10 +223,26 @@
       "evidence": "/Factorio/Local-QA/EM087J_NATIVE_NEGATIVE_EVIDENCE.zip",
       "full_tested_archive": "/Factorio/Local-QA/EM087J_0.1.96_full_EXPERIMENT.zip",
       "full_tested_archive_sha256": "229415b1f3676b2f88b09408d67cf14b659a18031b114df5769d075cd23c268c"
+    },
+    {
+      "id": "EM097",
+      "stage": "EM087K",
+      "from": "0.1.96",
+      "to": "0.1.97",
+      "purpose": "Exact synchronous contact/render/native isolation read reductions; four charged-buffer fault variants; moving same-save benchmark",
+      "zip": "/Factorio/Patches/EM087K_steady_phase_EXPERIMENT_Direct_Patch_from_0.1.96.zip",
+      "manifest": "/Factorio/Patches/EM087K_steady_phase.manifest.json",
+      "zip_sha256": "b3439467df1dd6982dc2a18c355c8fb8ee8d87f346c000d7b03d01d7f57e31af",
+      "source_branch": "experiment/em087k-steady-phase",
+      "owner_status": "experiment_functional_pass_mixed_performance_not_accepted",
+      "manual_deletions": [],
+      "evidence": "/Factorio/Local-QA/EM087K_STEADY_PHASE_EVIDENCE.zip",
+      "full_tested_archive": "/Factorio/Local-QA/EM087K_0.1.97_full_EXPERIMENT.zip",
+      "full_tested_archive_sha256": "1f7f840ac4242b1e4cb2fba9b7c138b986b0498f981a5a8c1f723485ea1ec179"
     }
   ],
   "latest_local_candidate_version": "0.1.86",
   "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
-  "latest_experiment_version": "0.1.96",
-  "latest_experiment_branch": "experiment/em087j-native-negative"
+  "latest_experiment_version": "0.1.97",
+  "latest_experiment_branch": "experiment/em087k-steady-phase"
 }
