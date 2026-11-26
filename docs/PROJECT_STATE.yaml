@@ -1,10 +1,11 @@
 rolling_stock_3d_20261126:
   branch: feature/rolling-stock-3d-design
-  status: concept_pending_owner_approval
+  status: concept_approved_modeling_authorized
   base: 362c6f22e8174cd2e06141dcbeaba8dce5a2026e
   a3ds_ref: 3c0f4d057f8569bc410120baf3f009dce86b9eab
   a3ds_method: B_parametric_mechanical_assembly
-  owner_approved_sketches: 0
+  owner_approved_sketches: 3
+  approved_concept_sha256: 921c9df9cad2d3964c142702cebf8b047078f0bb54e0f918b1f6551841f592c2
   runtime_changed: false
   model_source_verified: true
   task: docs/development/ROLLING_STOCK_3D_DESIGN.md
