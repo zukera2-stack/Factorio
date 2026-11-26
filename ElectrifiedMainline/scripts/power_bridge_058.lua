@@ -446,6 +446,13 @@ function M.on_tick(tick,graph)
          local ok,old_in,old_out=pcall(function()return r.input.input_flow_limit,r.output.output_flow_limit end)
          old_in=(ok and type(old_in)=="number") and math.min(M.LIMIT,old_in) or M.LIMIT
          old_out=(ok and type(old_out)=="number") and math.min(M.LIMIT,old_out) or M.LIMIT
+         -- EM094D.2: a role-swapped EEI inherits its former input capacity.
+         -- A tiny previous input allocation must not cap a later output forever.
+         -- Grow only (never discard retained joules), bounded by the current
+         -- station transfer plan and the existing 20 MW ceiling.
+         if r.output.electric_buffer_size<cap then
+           r.output.electric_buffer_size=cap
+         end
          local ei,eo,amount=M.transfer(math.min(r.input.energy,cap),r.output.energy,r.output.electric_buffer_size)
          r.input.energy=r.input.energy-amount
          r.output.energy=eo

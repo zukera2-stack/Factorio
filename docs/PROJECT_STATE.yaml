@@ -1,3 +1,56 @@
+em094d2_bridge_output_capacity_20261126:
+  date: "2026-11-26"
+  branch: experiment/em094d2-bridge-output-capacity
+  base_commit: "54328ab506622adc6e9c0eb051868ee629225084"
+  candidate_version: "0.1.103"
+  status: targeted_native_pass_qa_only_full_regression_pending
+  native_engine: "2.1.24 build87808 linux64 headless"
+  base_sha256: 7821445f3d7aad6dfae3f1b9a5f4f019691d9559ba5760adbe22ac7b7e4ff3d6
+  candidate_sha256: a163ba442cae98fc05d692334a38e64f82d0aa366eb5dd4d187e88900891b8a2
+  changed_file: ElectrifiedMainline/scripts/power_bridge_058.lua
+  candidate_blob: 33d54471724fb629faedd479cc369118fbfb092a
+  game_files: 169
+  unchanged_png: 99
+  root_cause: role_swap_retains_shrunk_input_as_output_buffer_capacity
+  observed_plan_J_tick: 153333.333333333
+  observed_input_J: 153020.035818795
+  observed_output_capacity_J: 322.550637922
+  observed_transfer_J_tick: 322.550637922
+  repair: grow_output_buffer_to_current_bounded_cap_before_transfer
+  station_limit_W: 20000000
+  original_grid_on_alternate_J: 36929.802168
+  original_grid_off_alternate_J: 3305028.809550
+  alternate_gate_J: 100000
+  mixed12_grid_on_alternate_J: 13270815.260464
+  mixed12_grid_off_alternate_J: 13228830.425377
+  mixed12_final_total_J: 1500000000
+  mixed12_grid_recovered_J: 5291995.742079
+  mixed24_grid_on_alternate_J: 13320120.388245
+  mixed24_final_total_J: 2999999999.305
+  mixed24_grid_recovered_J: 10583991.484158
+  exchange100_pass: true
+  exchange100_recipients_moved: 50
+  exchange100_grid_J: 4034031.261013
+  exchange100_recipient_J: 2017015.630507
+  exchange100_final_total_J: 100000000.000023
+  exact_candidate_cases_pass: 11
+  exact_candidate_cases_fail: 0
+  oom_events: 0
+  evidence_sha256: 90a4bec73f894901ab6caf13688e4dc27d7f28f8a9c6ca43edc26d78a0049307
+  evidence: "/Factorio/Local-QA/EM094D2_BRIDGE_OUTPUT_EVIDENCE.zip"
+  candidate: "/Factorio/Local-QA/EM094D2-Bridge-Output-Capacity/EM094D2_0.1.103_CODE_ONLY_QA.zip"
+  report: docs/development/EM094D2_BRIDGE_OUTPUT_QA.md
+  prior92_regression: not_run
+  mixed100_grid_on: not_run
+  pending_lifecycle_exact: not_run
+  ups_benchmark: not_run
+  last_validated_experimental_version: "0.1.102"
+  last_owner_running: "0.1.84"
+  owner_accepted: false
+  main_merged: false
+  official_release: false
+  next: full_native_regression_and_mixed100
+
 em094d_automatic_terminals_20261126:
   branch: "experiment/em094d-automatic-terminals-blocked"
   base_commit: "06529e7fedde4176b966d9d17f2ded738260f33e"
