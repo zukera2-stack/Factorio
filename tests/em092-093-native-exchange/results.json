@@ -1,0 +1,142 @@
+{
+  "baseline100": {
+    "workers": 1,
+    "limit_bytes": 4294967296,
+    "initial_bytes": 904556544,
+    "peak_bytes": 2738069504,
+    "reserve_bytes": 805306368,
+    "worker_budget_bytes": 1677721600,
+    "cpu_quota": 4.0,
+    "wall_s": 193.161,
+    "guard": [],
+    "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "results": [
+      {
+        "case": "regen-stress100",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 192.897,
+        "resource": "586892 192.88"
+      }
+    ]
+  },
+  "line-first": {
+    "workers": 2,
+    "limit_bytes": 4294967296,
+    "initial_bytes": 1682743296,
+    "peak_bytes": 2731679744,
+    "reserve_bytes": 805306368,
+    "worker_budget_bytes": 734003200,
+    "cpu_quota": 4.0,
+    "wall_s": 9.579,
+    "guard": [],
+    "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "results": [
+      {
+        "case": "line-local",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 4.837,
+        "resource": "484084 4.82"
+      },
+      {
+        "case": "line-export",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 4.741,
+        "resource": "467084 4.71"
+      },
+      {
+        "case": "line-both",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 4.281,
+        "resource": "479608 4.27"
+      },
+      {
+        "case": "line-noimport",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 4.309,
+        "resource": "466164 4.30"
+      }
+    ]
+  },
+  "direct-first": {
+    "workers": 1,
+    "limit_bytes": 4294967296,
+    "initial_bytes": 1828241408,
+    "peak_bytes": 2331525120,
+    "reserve_bytes": 805306368,
+    "worker_budget_bytes": 734003200,
+    "cpu_quota": 4.0,
+    "wall_s": 4.899,
+    "guard": [],
+    "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "results": [
+      {
+        "case": "line-direct",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 4.69,
+        "resource": "477612 4.68"
+      }
+    ]
+  },
+  "exchange-first": {
+    "workers": 1,
+    "limit_bytes": 4294967296,
+    "initial_bytes": 1885351936,
+    "peak_bytes": 2386624512,
+    "reserve_bytes": 805306368,
+    "worker_budget_bytes": 734003200,
+    "cpu_quota": 4.0,
+    "wall_s": 5.172,
+    "guard": [],
+    "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "results": [
+      {
+        "case": "exchange",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 4.955,
+        "resource": "479388 4.92"
+      }
+    ]
+  },
+  "priority-first": {
+    "workers": 3,
+    "limit_bytes": 4294967296,
+    "initial_bytes": 1252057088,
+    "peak_bytes": 2753581056,
+    "reserve_bytes": 805306368,
+    "worker_budget_bytes": 734003200,
+    "cpu_quota": 4.0,
+    "wall_s": 6.12,
+    "guard": [],
+    "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "results": [
+      {
+        "case": "exchange",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 5.873,
+        "resource": "455628 5.85"
+      },
+      {
+        "case": "exchange-factory",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 5.6,
+        "resource": "480832 5.57"
+      },
+      {
+        "case": "exchange-fallback",
+        "rc": 0,
+        "pass": true,
+        "wall_s": 5.53,
+        "resource": "453316 5.49"
+      }
+    ]
+  }
+}

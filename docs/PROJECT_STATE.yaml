@@ -1,3 +1,63 @@
+em092_093_native_exchange_20261126:
+  date: "2026-11-26"
+  branch: "test/em092-093-native-exchange"
+  base_commit: "adedb5a8a5342ae831d7d95c387d14db89fdfd34"
+  runtime_version: "0.1.102"
+  status: partial_diagnostic_feasibility_pass_production_not_complete
+  native_engine: "2.1.24 build87808 linux64 headless"
+  full_runtime_changed: false
+  large_onboard_stress_count: 100
+  large_stress_arrived: 100
+  large_stress_samples: 17
+  large_stress_budget_J: 12500000000
+  large_stress_recovered_onboard_J: 51398606.900
+  large_stress_final_store_J: 3171860024.487
+  large_stress_paid_J: 784497210.573
+  large_stress_measured_debit_J: 585177177.177
+  large_stress_wall_seconds: 193.161
+  large_stress_peak_rss_kib: 586892
+  large_stress_native_grid_recovery: false
+  large_stress_continuous_motion: false
+  independent_base_line_cases_pass: 4
+  base_line_budget_J: 2000000
+  base_no_import_paid_J: 0
+  direct_probe_paid_J: 2000000
+  direct_probe_displacement_tiles: 157
+  exchange_native_grid_J: 80680.625220
+  exchange_recipient_paid_J: 40340.312610
+  exchange_recipient_displacement_tiles: 0.41796875
+  exchange_other_corridor_J: 0
+  exchange_budget_J: 2000000
+  exchange_closed_samples: 421
+  priority_factory_J: 77637.324735
+  priority_factory_fallback_J: 3043.300485
+  priority_no_receiver_grid_J: 0
+  priority_no_receiver_fallback_J: 41100.812610
+  priority_no_receiver_rejected_J: 39579.812610
+  successful_executions: 10
+  first_small_workers: 2
+  first_small_wall_seconds: 9.579
+  final_small_workers: 3
+  final_small_wall_seconds: 6.120
+  final_small_peak_bytes: 2753581056
+  oom_events: 0
+  direct_probe_sha256: 6953c04ccdbd327397f0c2f9a34320319f5c0df4a52671e52fd58c62f96fcd8b
+  exchange_probe_sha256: d969d2efe32fdc93ba8f5cdc25e7471dc059af9818ed2ddab3b276e4adc7d872
+  priority_probe_sha256: db05b2084d137d7f10d741f6a98b4f688eb71035c4b5ec0761788739103c300c
+  source_sha256: cb8380fecab93e6c5695d4141761558792967b38681a60bcc7efb8ef62b90120
+  evidence: "/Factorio/Local-QA/EM092_093_NATIVE_EXCHANGE_EVIDENCE.zip"
+  evidence_sha256: 30e913349921d2a6324230cbb61e550ad65a384cd71282bff85c48de53a8014f
+  report: docs/development/EM092_093_NATIVE_EXCHANGE_QA.md
+  previous_regression_rerun: false
+  production_queue: not_implemented
+  pending_topology_and_reload: not_proven
+  integrated100_grid_recovery: not_run
+  performance_gate: not_met
+  next: em092_093_production_safe_native_exchange
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em091_onboard_regen_20261126:
   date: "2026-11-26"
   branch: "experiment/em091-onboard-regen"
