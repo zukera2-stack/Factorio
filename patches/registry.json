@@ -161,10 +161,26 @@
       "evidence": "/Factorio/Local-QA/EM087F_LOCAL_PLAN_EVIDENCE.zip",
       "full_tested_archive": "/Factorio/Local-QA/EM087F_0.1.92_full_EXPERIMENT.zip",
       "full_tested_archive_sha256": "0ef5c4890704808d5efdf21a2c654eb8ae58fcbd34f8320cc7bab87dea37624b"
+    },
+    {
+      "id": "EM093",
+      "stage": "EM087G",
+      "from": "0.1.92",
+      "to": "0.1.93",
+      "purpose": "Path-outcome memo within affected potential components; native train pathfinder suitability test",
+      "zip": "/Factorio/Patches/EM087G_path_memo_EXPERIMENT_Direct_Patch_from_0.1.92.zip",
+      "manifest": "/Factorio/Patches/EM087G_path_memo.manifest.json",
+      "zip_sha256": "b1e5f966a83d5cd2b6f228444d25a38ba8903c233a2a381a00339fc4b6bd00ae",
+      "source_branch": "experiment/em087g-path-memo",
+      "owner_status": "experiment_functional_pass_performance_regression_not_adopted",
+      "manual_deletions": [],
+      "evidence": "/Factorio/Local-QA/EM087G_PATH_MEMO_EVIDENCE.zip",
+      "full_tested_archive": "/Factorio/Local-QA/EM087G_0.1.93_full_EXPERIMENT.zip",
+      "full_tested_archive_sha256": "9d8db918f7fa279aa8ae96d59b4ca6a5d30eef0480b5e0e8867f964472bc8531"
     }
   ],
   "latest_local_candidate_version": "0.1.86",
   "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
-  "latest_experiment_version": "0.1.92",
-  "latest_experiment_branch": "experiment/em087f-local-plan"
+  "latest_experiment_version": "0.1.93",
+  "latest_experiment_branch": "experiment/em087g-path-memo"
 }

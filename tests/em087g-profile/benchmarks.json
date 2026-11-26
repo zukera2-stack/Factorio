@@ -1,0 +1,209 @@
+{
+  "50x2": {
+    "base": {
+      "runs": [
+        [
+          "21.755",
+          "7.501",
+          "367.643"
+        ],
+        [
+          "21.720",
+          "7.327",
+          "345.320"
+        ]
+      ],
+      "mean_ms": 21.737499999999997,
+      "max_ms": 367.643,
+      "checksums": [
+        "556739828",
+        "556739828"
+      ]
+    },
+    "codeonly": {
+      "runs": [
+        [
+          "20.544",
+          "7.161",
+          "377.503"
+        ],
+        [
+          "20.315",
+          "7.208",
+          "378.865"
+        ]
+      ],
+      "mean_ms": 20.4295,
+      "max_ms": 378.865,
+      "checksums": [
+        "556739828",
+        "556739828"
+      ]
+    },
+    "logs": {
+      "[EM072 PAID LEDGER]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM068 ACTUAL NATIVE TRAIN LOAD]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM065 CONTACT]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM060]": {
+        "base_count": 300,
+        "candidate_count": 300,
+        "equal": true
+      },
+      "[EM069 BUFFER STOP]": {
+        "base_count": 0,
+        "candidate_count": 0,
+        "equal": true
+      }
+    }
+  },
+  "100x2": {
+    "base": {
+      "runs": [
+        [
+          "41.099",
+          "15.861",
+          "751.329"
+        ],
+        [
+          "43.292",
+          "15.671",
+          "763.212"
+        ]
+      ],
+      "mean_ms": 42.195499999999996,
+      "max_ms": 763.212,
+      "checksums": [
+        "3722375787",
+        "3722375787"
+      ]
+    },
+    "codeonly": {
+      "runs": [
+        [
+          "43.913",
+          "15.405",
+          "852.893"
+        ],
+        [
+          "43.730",
+          "16.168",
+          "1006.722"
+        ]
+      ],
+      "mean_ms": 43.8215,
+      "max_ms": 1006.722,
+      "checksums": [
+        "3722375787",
+        "3722375787"
+      ]
+    },
+    "logs": {
+      "[EM072 PAID LEDGER]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM068 ACTUAL NATIVE TRAIN LOAD]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM065 CONTACT]": {
+        "base_count": 16,
+        "candidate_count": 16,
+        "equal": true
+      },
+      "[EM060]": {
+        "base_count": 600,
+        "candidate_count": 600,
+        "equal": true
+      },
+      "[EM069 BUFFER STOP]": {
+        "base_count": 0,
+        "candidate_count": 0,
+        "equal": true
+      }
+    }
+  },
+  "long201": {
+    "base": {
+      "runs": [
+        [
+          "3.794",
+          "1.377",
+          "41.020"
+        ],
+        [
+          "3.650",
+          "1.332",
+          "89.319"
+        ]
+      ],
+      "mean_ms": 3.722,
+      "max_ms": 89.319,
+      "checksums": [
+        "2633033209",
+        "2633033209"
+      ]
+    },
+    "codeonly": {
+      "runs": [
+        [
+          "3.787",
+          "1.393",
+          "38.659"
+        ],
+        [
+          "3.278",
+          "1.293",
+          "99.232"
+        ]
+      ],
+      "mean_ms": 3.5324999999999998,
+      "max_ms": 99.232,
+      "checksums": [
+        "2633033209",
+        "2633033209"
+      ]
+    },
+    "logs": {
+      "[EM072 PAID LEDGER]": {
+        "base_count": 40,
+        "candidate_count": 40,
+        "equal": true
+      },
+      "[EM068 ACTUAL NATIVE TRAIN LOAD]": {
+        "base_count": 40,
+        "candidate_count": 40,
+        "equal": true
+      },
+      "[EM065 CONTACT]": {
+        "base_count": 40,
+        "candidate_count": 40,
+        "equal": true
+      },
+      "[EM060]": {
+        "base_count": 2400,
+        "candidate_count": 2400,
+        "equal": true
+      },
+      "[EM069 BUFFER STOP]": {
+        "base_count": 1198,
+        "candidate_count": 1198,
+        "equal": true
+      }
+    }
+  }
+}

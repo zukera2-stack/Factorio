@@ -113,6 +113,34 @@ end
 -- A bounded walk is <=64 tiles from its start attachment. Add 3 tiles
 -- mast offset and 6 tiles for coalesced 4x4 edit buckets, conservatively.
 local INVALIDATE_RADIUS=M.REACH*1.5+4+3+6
+-- Reuse only the outcome of the native bounded path query, never an
+-- electrical network ID or permission to deliver energy. Re-run the
+-- deterministic wire selector across every affected potential component.
+local function near_edit(n,changes)
+  for _,c in ipairs(changes) do
+    if n.surface_index==c.surface_index and n.force_name==c.force_name and
+      d2(n,c.position)<=INVALIDATE_RADIUS^2 then return true end
+  end
+  return false
+end
+local function intact(deps,watches)
+  for id,r in pairs(deps) do
+    local w=watches[id]
+    if not (r.valid and w and r.surface.index==w.surface_index and r.force.name==w.force_name) then return false end
+    local pos=r.position
+    if pos.x~=w.position.x or pos.y~=w.position.y then return false end
+  end
+  return true
+end
+local function path_record(path)
+  if not path then return false end
+  local deps={}
+  for _,r in ipairs(path.rails or {}) do deps[r.unit_number]=r end
+  local link=path.path
+  while link do deps[link.rail.unit_number]=link.rail;link=link.previous end
+  if not next(deps) then return nil end -- no certificate: don't memoize
+  return {deps=deps}
+end
 local function affected(g,old,changes,watches)
   if not same_nodes(g,old) then return true end
   for _,n in pairs(g.nodes) do
@@ -334,9 +362,11 @@ function M.sync(graph,changes)
   local context={starts={},neighbours={},capture_paths=true}
   for id,g in pairs(groups) do
     if not full and not affected(g,old[id],changes,s.rail_watch) then
-      g.edges=old[id].edges;g.deps=old[id].deps;reuse[g]=true;retained=retained+1
+      g.edges=old[id].edges;g.deps=old[id].deps;g.paths=old[id].paths;reuse[g]=true;retained=retained+1
     else
       rebuilt=rebuilt+1
+      g.paths={}
+      g.previous_paths=not full and same_nodes(g,old[id]) and old[id].paths or nil
       for nid,n in pairs(g.nodes) do
         local r=power.attached_rail(n)
         context.starts[nid]=r or false
@@ -347,12 +377,34 @@ function M.sync(graph,changes)
   for _,e in ipairs(candidates) do
     if not reuse[by_node[e.a]] then work[#work+1]=e end
   end
-  local fresh=select_edges(work,valid,function(a,b) return power.technical_path(a,b,context) end,function(path,e)
-    local deps=by_node[e.a].deps
-    for _,r in ipairs(path.rails or {}) do deps[r.unit_number]=r end
-    local link=path.path
-    while link do deps[link.rail.unit_number]=link.rail;link=link.previous end
+  local queried,hits,negative_hits=0,0,0
+  local fresh=select_edges(work,valid,function(a,b)
+    local g=by_node[a.id]
+    local k=key(a.id,b.id)
+    local prior=g.previous_paths and g.previous_paths[k]
+    if prior~=nil and not near_edit(a,changes) and not near_edit(b,changes) and
+      (prior==false or intact(prior.deps,s.rail_watch)) then
+      hits=hits+1;g.paths[k]=prior
+      if prior==false then negative_hits=negative_hits+1;return nil end
+      return {certificate=prior}
+    end
+    queried=queried+1
+    local path=power.technical_path(a,b,context)
+    g.paths[k]=path_record(path)
+    return path
+  end,function(path,e)
+    local g=by_node[e.a]
+    local rec=g.paths[key(e.a,e.b)]
+    if rec then
+      for id,r in pairs(rec.deps) do g.deps[id]=r end
+    else
+      for _,r in ipairs(path.rails or {}) do g.deps[r.unit_number]=r end
+      local link=path.path
+      while link do g.deps[link.rail.unit_number]=link.rail;link=link.previous end
+    end
   end)
+  for _,g in pairs(groups) do g.previous_paths=nil end
+  if not full then log(string.format('[EM087G PATH MEMO] tick=%d queried=%d hits=%d negative_hits=%d',game.tick,queried,hits,negative_hits)) end
   for k,e in pairs(fresh) do by_node[e.a].edges[k]=e end
   s.edges={}
   for _,g in pairs(groups) do

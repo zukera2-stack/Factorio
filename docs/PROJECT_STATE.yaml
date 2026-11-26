@@ -1,3 +1,35 @@
+em087g_path_memo_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087g-path-memo
+  base_commit: "51eceb442ed7d8fdd487795f9d46e861e427f431"
+  mod_version: "0.1.93"
+  status: partial_experiment_performance_regression_not_adopted
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 60
+  explicit_native_pass: 55
+  stand_assertions_pass: 5
+  profiled_runs_pass: 4
+  fresh_same_version_disk_reload: pass
+  native_pathfinder_electrical_equivalence: disproved_signal_and_vanilla_rail
+  first_cut_fresh_path_queries: 11
+  first_cut_reused_path_queries: 50
+  event_sync_mean_ms: [16.2111524, 18.0282884]
+  code_only_50_mean_ms: [21.7375, 20.4295]
+  code_only_100_mean_ms: [42.1955, 43.8215]
+  code_only_long201_mean_ms: [3.722, 3.5325]
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: b1e5f966a83d5cd2b6f228444d25a38ba8903c233a2a381a00339fc4b6bd00ae
+  evidence: "/Factorio/Local-QA/EM087G_PATH_MEMO_EVIDENCE.zip"
+  next: vanilla_first_native_audit_bridge_profile
+  next_comparison_base: "0.1.92"
+  main_merged: false
+  official_release: false
+
 em087f_local_plan_20261126:
   date: "2026-11-26"
   branch: experiment/em087f-local-plan
