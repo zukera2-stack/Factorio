@@ -188,9 +188,15 @@ local function native_straight_path(start,b,max_walk,context)
     end
     if not c then return nil end
     local from,to=c.positions[id],c.positions[b.rail_id]
-    if from==nil or to==nil then return nil end
+    if from==nil then return nil end
     if (c.left_external and from<=max_walk) or (c.right_external and c.last-from<=max_walk) then return nil end
+    -- Certified cardinal segment, no reachable external HSR continuation.
+    -- Every admissible bounded walk stays on this chain. An absent target
+    -- (e.g. a parallel disconnected line) cannot be reached. False is a
+    -- proven negative, nil means unknown and invokes the exact walker.
+    if to==nil then return false end
     local length=math.abs(from-to)
+    if length>max_walk then return false end
     -- Original bounded search allows 192 accepted pops. On a chain spaced
     -- exactly 2 tiles, at most 2*floor(max_walk/2)+1 nodes can be popped.
     if length<=max_walk and 2*math.floor(max_walk/2)+1<=192 then
@@ -270,6 +276,7 @@ local function rail_path_info(a,b,max_distance,context)
     -- distance, not Factorio's exact rail spline length.
     local max_walk=max_distance or (limits.STRAIGHT*1.5+4)
     local direct=native_straight_path(start,b,max_walk,context)
+    if direct==false then return nil end
     if direct then return direct end
     -- Resume the exact original bounded traversal for another target from
     -- the same start, ONLY within the synchronous technical plan. Each

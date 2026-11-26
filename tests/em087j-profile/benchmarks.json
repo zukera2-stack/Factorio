@@ -1,0 +1,134 @@
+{
+  "50x2": {
+    "base": {
+      "mean_ms": 14.984,
+      "max_ms": 379.496,
+      "checksum": "1007386487"
+    },
+    "codeonly": {
+      "mean_ms": 15.258,
+      "max_ms": 221.735,
+      "checksum": "1007386487"
+    },
+    "logs": {
+      "[EM072 PAID LEDGER]": {
+        "base": 8,
+        "new": 8,
+        "equal": true
+      },
+      "[EM068 ACTUAL NATIVE TRAIN LOAD]": {
+        "base": 8,
+        "new": 8,
+        "equal": true
+      },
+      "[EM065 CONTACT]": {
+        "base": 8,
+        "new": 8,
+        "equal": true
+      },
+      "[EM060]": {
+        "base": 150,
+        "new": 150,
+        "equal": true
+      },
+      "[EM069 BUFFER STOP]": {
+        "base": 0,
+        "new": 0,
+        "equal": true
+      },
+      "[EM077 MOTOR STATE]": {
+        "base": 1,
+        "new": 1,
+        "equal": true
+      }
+    }
+  },
+  "100x2": {
+    "base": {
+      "mean_ms": 36.87,
+      "max_ms": 724.19,
+      "checksum": "3546774067"
+    },
+    "codeonly": {
+      "mean_ms": 33.285,
+      "max_ms": 397.873,
+      "checksum": "3546774067"
+    },
+    "logs": {
+      "[EM072 PAID LEDGER]": {
+        "base": 8,
+        "new": 8,
+        "equal": true
+      },
+      "[EM068 ACTUAL NATIVE TRAIN LOAD]": {
+        "base": 8,
+        "new": 8,
+        "equal": true
+      },
+      "[EM065 CONTACT]": {
+        "base": 8,
+        "new": 8,
+        "equal": true
+      },
+      "[EM060]": {
+        "base": 300,
+        "new": 300,
+        "equal": true
+      },
+      "[EM069 BUFFER STOP]": {
+        "base": 0,
+        "new": 0,
+        "equal": true
+      },
+      "[EM077 MOTOR STATE]": {
+        "base": 1,
+        "new": 1,
+        "equal": true
+      }
+    }
+  },
+  "long201": {
+    "base": {
+      "mean_ms": 3.135,
+      "max_ms": 25.594,
+      "checksum": "616494488"
+    },
+    "codeonly": {
+      "mean_ms": 2.732,
+      "max_ms": 57.536,
+      "checksum": "616494488"
+    },
+    "logs": {
+      "[EM072 PAID LEDGER]": {
+        "base": 20,
+        "new": 20,
+        "equal": true
+      },
+      "[EM068 ACTUAL NATIVE TRAIN LOAD]": {
+        "base": 20,
+        "new": 20,
+        "equal": true
+      },
+      "[EM065 CONTACT]": {
+        "base": 20,
+        "new": 20,
+        "equal": true
+      },
+      "[EM060]": {
+        "base": 1200,
+        "new": 1200,
+        "equal": true
+      },
+      "[EM069 BUFFER STOP]": {
+        "base": 599,
+        "new": 599,
+        "equal": true
+      },
+      "[EM077 MOTOR STATE]": {
+        "base": 2,
+        "new": 2,
+        "equal": true
+      }
+    }
+  }
+}

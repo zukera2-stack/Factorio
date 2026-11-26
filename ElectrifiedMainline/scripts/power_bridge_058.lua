@@ -221,7 +221,7 @@ end
 -- 063: Native EEI outputs still hold real joules at auto-idle transitions.
 -- Do not destroy these buffers before the game has discharged them. The station
 -- itself is still an electric pole (no persistent internal accumulator).
-local function idle_or_drain(r,raw_flows,route_open)
+local function idle_or_drain(r,raw_flows,route_open,is_isolated,factory_key,line_key)
   if not route_open then reject(r,"auto-idle-no-connected-peer");return end
  -- Factory generators still running? An ordinary factory brownout takes priority.
  -- Never keep secondary bridge power attached in auto-idle while the source
@@ -238,6 +238,9 @@ local function idle_or_drain(r,raw_flows,route_open)
    and src.electric_network_id==src_port.electric_network_id
    and dst.electric_network_id==dst_port.electric_network_id
    and (src.energy>1 or dst.energy>1) then
+   -- A native peer alone is not isolation proof. Stored joules must remain
+   -- frozen if this factory shares any physical corridor parent network.
+   if not is_isolated(factory_key,line_key) then reject(r,"factory-corridor-short");return end
    -- Stop new imports; old J can leave ONLY when a peer is connected.
    src.input_flow_limit=0
    src.output_flow_limit=0
@@ -350,6 +353,23 @@ function M.on_tick(tick,graph)
        tostring(id),f.primary_output or 0,f.secondary_output or 0,f.solar_output or 0,f.primary_demand or 0,f.secondary_demand or 0,f.maximum_production or 0,f.maximum_consumption or 0,f.tertiary_output or 0,f.tertiary_demand or 0,f.accumulator_energy or 0,f.accumulator_capacity or 0,o.offer or 0,o.demand or 0,v.production or 0,v.demand or 0,v.stored or 0,v.capacity or 0,v.charge or 0,v.discharge or 0,v.interfaces or 0,v.accumulators or 0,n.gen,n.load,n.battery,n.charge))
    end
  end
+ -- Only build this synchronous native-network set for an actual drain.
+ -- No permission survives a tick; normal candidate isolation below remains.
+ local idle_corridor
+ local function idle_isolated(factory_key,line_key)
+   if not factory_key or factory_key==line_key then return false end
+   if not idle_corridor then
+     idle_corridor={}
+     for _,aid in pairs(t.helpers) do
+       local a=lookup(aid)
+       if valid(a) then
+         local raw=a.electric_network_id
+         if raw then idle_corridor[observe(a,raw) or raw]=true end
+       end
+     end
+   end
+   return not idle_corridor[factory_key]
+ end
  for _,edge in ipairs(auto_edges) do
    local r=s.stations[edge.id]
    local v=plan[edge.id] or 0
@@ -359,7 +379,7 @@ function M.on_tick(tick,graph)
      local sk,dk=edge.a,edge.b
      if v<0 then src,dst=dst,src;sk,dk=dk,sk end
      candidates[#candidates+1]={id=edge.id,source=sk,target=dk,raw_source=src.electric_network_id,raw_target=dst.electric_network_id,src=src,dst=dst,limit=math.min(M.LIMIT,math.abs(v)),direction=direction,auto=true}
-    else idle_or_drain(r,raw_flows,(connected_peers[edge.b] or 0)>1) end
+    else idle_or_drain(r,raw_flows,(connected_peers[edge.b] or 0)>1,idle_isolated,edge.a,edge.b) end
  end
  s.last_auto={};s.sample_tick=tick
  -- Any factory terminal sharing a corridor network means actual isolation was lost.

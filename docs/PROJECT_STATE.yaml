@@ -1,3 +1,40 @@
+em087j_native_negative_20261126:
+  date: "2026-11-26"
+  branch: experiment/em087j-native-negative
+  base_commit: "063d87a6cb491759f45fa9a63e27a00926e26339"
+  mod_version: "0.1.96"
+  status: partial_experiment_safety_fix_and_peak_improvement_gate_open
+  latest_maintenance_candidate: "0.1.86"
+  last_owner_running_archive: "0.1.84"
+  native_scenarios_pass: 62
+  explicit_native_pass: 57
+  stand_assertions_pass: 5
+  native_path_oracle_comparisons: 8935
+  preexisting_idle_short_reproduced_on_base: true
+  idle_short_final_freeze_recovery: pass
+  frozen_buffer_J: 333333.33333333
+  restored_delivery_J: 9833333.3333332
+  code_only_runs_per_variant: 1
+  code_only_50_mean_ms: [14.984, 15.258]
+  code_only_50_max_ms: [379.496, 221.735]
+  code_only_100_mean_ms: [36.870, 33.285]
+  code_only_100_max_ms: [724.190, 397.873]
+  code_only_long201_mean_ms: [3.135, 2.732]
+  code_only_long201_max_ms: [25.594, 57.536]
+  profiled_tick600_path_search_ms: [510.188515, 162.440123]
+  profiled_tick600_technical_ms: [714.428031, 275.273217]
+  paired_checksums_match: true
+  measured_energy_logs_match: true
+  periodic_audits_retained: true
+  full_version_performance_benchmark: not_run
+  performance_gate: not_met
+  native_gui_complete_invisibility: windows_pending
+  patch_sha256: c90114553c74b7835218630d882b434a5ab437963475fb8716eecbbbf4513098
+  evidence: "/Factorio/Local-QA/EM087J_NATIVE_NEGATIVE_EVIDENCE.zip"
+  next: steady_bridge_traction_visual_profile_and_fault_matrix
+  main_merged: false
+  official_release: false
+
 em087i_native_audit_20261126:
   date: "2026-11-26"
   branch: experiment/em087i-native-audit

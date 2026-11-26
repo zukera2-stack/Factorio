@@ -207,10 +207,26 @@
       "evidence": "/Factorio/Local-QA/EM087I_NATIVE_AUDIT_EVIDENCE.zip",
       "full_tested_archive": "/Factorio/Local-QA/EM087I_0.1.95_full_EXPERIMENT.zip",
       "full_tested_archive_sha256": "df0cd2857f11071e09ac1c4bf73d2682b062d57fa888bcfb832aaa8252a7ed4b"
+    },
+    {
+      "id": "EM096",
+      "stage": "EM087J",
+      "from": "0.1.95",
+      "to": "0.1.96",
+      "purpose": "Native certified unreachable straight-segment target; isolate charged idle bridge buffers on factory-corridor short",
+      "zip": "/Factorio/Patches/EM087J_native_negative_EXPERIMENT_Direct_Patch_from_0.1.95.zip",
+      "manifest": "/Factorio/Patches/EM087J_native_negative.manifest.json",
+      "zip_sha256": "c90114553c74b7835218630d882b434a5ab437963475fb8716eecbbbf4513098",
+      "source_branch": "experiment/em087j-native-negative",
+      "owner_status": "experiment_functional_pass_preexisting_idle_fault_fixed_performance_gate_open",
+      "manual_deletions": [],
+      "evidence": "/Factorio/Local-QA/EM087J_NATIVE_NEGATIVE_EVIDENCE.zip",
+      "full_tested_archive": "/Factorio/Local-QA/EM087J_0.1.96_full_EXPERIMENT.zip",
+      "full_tested_archive_sha256": "229415b1f3676b2f88b09408d67cf14b659a18031b114df5769d075cd23c268c"
     }
   ],
   "latest_local_candidate_version": "0.1.86",
   "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
-  "latest_experiment_version": "0.1.95",
-  "latest_experiment_branch": "experiment/em087i-native-audit"
+  "latest_experiment_version": "0.1.96",
+  "latest_experiment_branch": "experiment/em087j-native-negative"
 }

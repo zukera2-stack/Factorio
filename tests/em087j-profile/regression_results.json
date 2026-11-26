@@ -1,0 +1,1419 @@
+[
+  {
+    "case": "alerts-nopath1",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.63,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "nopath1",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   4.474 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=1 debited_J=2008333.3 credited_J=2008333.3 motor_paid_J=8333.3 motor_grants=1 charged_ticks=61 no_contact=0 no_supply=2",
+      "   4.474 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.475 Info RunTest.cpp:105: Test passed at tick 121",
+      "   4.475 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.575 Goodbye"
+    ]
+  },
+  {
+    "case": "alerts-nopath201",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 5.204,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "nopath201",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   5.029 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=2 debited_J=2900000.0 credited_J=2900000.0 motor_paid_J=900000.0 motor_grants=4 charged_ticks=64 no_contact=0 no_supply=3",
+      "   5.029 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   5.031 Info RunTest.cpp:105: Test passed at tick 121",
+      "   5.031 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   5.135 Goodbye"
+    ]
+  },
+  {
+    "case": "alerts-nopath800",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 7.2,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "nopath800",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   6.978 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=4 debited_J=5600000.0 credited_J=5600000.0 motor_paid_J=3600000.0 motor_grants=48 charged_ticks=108 no_contact=0 no_supply=5",
+      "   6.978 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   6.982 Info RunTest.cpp:105: Test passed at tick 121",
+      "   6.982 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   7.161 Goodbye"
+    ]
+  },
+  {
+    "case": "alerts-nopathdual201",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.274,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "nopathdual201",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   4.071 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=2 helpers=4 debited_J=5866666.7 credited_J=5866666.7 motor_paid_J=1866666.7 motor_grants=16 charged_ticks=136 no_contact=0 no_supply=6",
+      "   4.071 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.074 Info RunTest.cpp:105: Test passed at tick 121",
+      "   4.074 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.224 Goodbye"
+    ]
+  },
+  {
+    "case": "alerts-nopathzero201",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.849,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "nopathzero201",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.703 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=2 debited_J=0.0 credited_J=0.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=0 no_contact=363 no_supply=0",
+      "   3.703 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=no-contact",
+      "   3.704 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.704 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.808 Goodbye"
+    ]
+  },
+  {
+    "case": "attach-bidir",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 6.479,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-attachment-qa/native",
+      "--test-arg",
+      "bidir",
+      "--test-ticks",
+      "1750"
+    ],
+    "last": [
+      "   6.332 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:492: [EM060] station=257 auto/active/import/23/24/24/24 factory_port=23 feeder=243 measured=0.000MW input=0J output=1737778J planned=0.267MW",
+      "   6.333 Script @__ElectrifiedMainline__/scripts/control.lua:495: [ElectrifiedMainline][rail-debug] train=22 locomotive=259 rail=em-high-speed-straight-rail rail_unit=71 rail_position=(-65.00, 1.00)",
+      "   6.333 Info RunTest.cpp:105: Test passed at tick 1701",
+      "   6.333 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   6.447 Goodbye"
+    ]
+  },
+  {
+    "case": "attach-dual",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.2,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-attachment-qa/native",
+      "--test-arg",
+      "dual",
+      "--test-ticks",
+      "150"
+    ],
+    "last": [
+      "   3.056 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=2 helpers=2 debited_J=4066666.7 credited_J=4066666.7 motor_paid_J=66666.7 motor_grants=2 charged_ticks=122 no_contact=0 no_supply=4",
+      "   3.056 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.056 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.056 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.155 Goodbye"
+    ]
+  },
+  {
+    "case": "attach-grow-retry",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.242,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-attachment-qa/native",
+      "--test-arg",
+      "grow",
+      "--test-ticks",
+      "190"
+    ],
+    "last": [
+      "   4.076 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=180 locos=1 helpers=2 debited_J=2908333.3 credited_J=2908333.3 motor_paid_J=908333.3 motor_grants=4 charged_ticks=64 no_contact=0 no_supply=3",
+      "   4.076 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.077 Info RunTest.cpp:105: Test passed at tick 181",
+      "   4.077 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.196 Goodbye"
+    ]
+  },
+  {
+    "case": "attach-same",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.417,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-attachment-qa/native",
+      "--test-arg",
+      "same",
+      "--test-ticks",
+      "150"
+    ],
+    "last": [
+      "   3.286 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=2 helpers=1 debited_J=4033333.3 credited_J=4033333.3 motor_paid_J=33333.3 motor_grants=1 charged_ticks=121 no_contact=0 no_supply=3",
+      "   3.286 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.286 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.287 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.381 Goodbye"
+    ]
+  },
+  {
+    "case": "attach-shrink-retry",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.834,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-attachment-qa/native",
+      "--test-arg",
+      "shrink",
+      "--test-ticks",
+      "190"
+    ],
+    "last": [
+      "   3.672 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=180 locos=1 helpers=1 debited_J=2900000.0 credited_J=2900000.0 motor_paid_J=900000.0 motor_grants=4 charged_ticks=64 no_contact=0 no_supply=3",
+      "   3.672 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.673 Info RunTest.cpp:105: Test passed at tick 181",
+      "   3.673 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.772 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-block",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.856,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "block",
+      "--test-ticks",
+      "150"
+    ],
+    "last": [
+      "   4.688 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=2 debited_J=2900000.0 credited_J=2900000.0 motor_paid_J=900000.0 motor_grants=4 charged_ticks=64 no_contact=0 no_supply=3",
+      "   4.688 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.689 Info RunTest.cpp:105: Test passed at tick 121",
+      "   4.689 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.799 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-churn",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 7.163,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "churn",
+      "--test-ticks",
+      "400"
+    ],
+    "last": [
+      "   7.000 Script @__level__/control.lua:3: [AUDIT] churn FINAL_AFTER_3_REMOVALS sinks=0 disconnected=0 stored_J=0.000",
+      "   7.000 Script @__level__/control.lua:3: [AUDIT] churn PASS retired=3 discarded_J=100000",
+      "   7.000 Info RunTest.cpp:105: Test passed at tick 381",
+      "   7.000 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   7.095 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-churn100",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 17.303,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "churn100",
+      "--test-ticks",
+      "13000"
+    ],
+    "last": [
+      "  17.104 Script @__level__/control.lua:3: [AUDIT] churn100 CYCLE 100 sinks=0 loss_J=3333333.3333333",
+      "  17.104 Script @__level__/control.lua:3: [AUDIT] churn100 PASS 100 cycles",
+      "  17.106 Info RunTest.cpp:105: Test passed at tick 12000",
+      "  17.106 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "  17.220 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-fair",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.641,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "fair",
+      "--test-ticks",
+      "150"
+    ],
+    "last": [
+      "   4.465 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=2 helpers=0 debited_J=1966666.7 credited_J=1966666.7 motor_paid_J=0.0 motor_grants=0 charged_ticks=236 no_contact=0 no_supply=2",
+      "   4.465 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.466 Info RunTest.cpp:105: Test passed at tick 121",
+      "   4.466 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.558 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-gui",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.562,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "gui",
+      "--test-ticks",
+      "100"
+    ],
+    "last": [
+      "   4.381 Script @__level__/control.lua:3: [AUDIT] gui GUI_61 custom_status=true label=em-motor-status.from-locomotive",
+      "   4.381 Script @__level__/control.lua:3: [AUDIT] gui PASS GUI immediate",
+      "   4.381 Info RunTest.cpp:105: Test passed at tick 62",
+      "   4.381 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.497 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-move",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.763,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "move",
+      "--test-ticks",
+      "350"
+    ],
+    "last": [
+      "   4.646 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=300 locos=1 helpers=1 debited_J=7816666.7 credited_J=7816666.7 motor_paid_J=1950000.0 motor_grants=117 charged_ticks=293 no_contact=0 no_supply=2",
+      "   4.646 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.647 Info RunTest.cpp:105: Test passed at tick 301",
+      "   4.647 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.726 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-offgrid",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.452,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "offgrid",
+      "--test-ticks",
+      "150"
+    ],
+    "last": [
+      "   4.271 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=1 debited_J=0.0 credited_J=0.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=0 no_contact=242 no_supply=0",
+      "   4.271 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=no-contact",
+      "   4.271 Info RunTest.cpp:105: Test passed at tick 121",
+      "   4.271 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.379 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-ownerloss",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.394,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "ownerloss",
+      "--test-ticks",
+      "150"
+    ],
+    "last": [
+      "   3.235 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=0 helpers=0 debited_J=1250000.0 credited_J=1250000.0 motor_paid_J=16666.7 motor_grants=1 charged_ticks=38 no_contact=0 no_supply=2",
+      "   3.235 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.236 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.236 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.327 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-retain",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.443,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "retain",
+      "--test-ticks",
+      "200"
+    ],
+    "last": [
+      "   3.242 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=180 locos=0 helpers=0 debited_J=1900000.0 credited_J=1900000.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=57 no_contact=0 no_supply=1",
+      "   3.242 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.243 Info RunTest.cpp:105: Test passed at tick 181",
+      "   3.243 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.377 Goodbye"
+    ]
+  },
+  {
+    "case": "audit-visibility",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.345,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-audit-qa/native",
+      "--test-arg",
+      "visibility",
+      "--test-ticks",
+      "150"
+    ],
+    "last": [
+      "   3.200 Script @__level__/control.lua:3: [AUDIT] visibility PASS helper GUI refused",
+      "   3.201 Script @__level__/control.lua:3: [AUDIT] visibility PASS blueprint contains 3 visible vehicles, zero helpers",
+      "   3.204 Info RunTest.cpp:105: Test passed at tick 42",
+      "   3.204 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.320 Goodbye"
+    ]
+  },
+  {
+    "case": "bench-100x2",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 12.949,
+    "marker": "SNAP",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-audit-qa/bench100x2",
+      "--test-ticks",
+      "121"
+    ],
+    "last": [
+      "  12.615 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=100 helpers=100 debited_J=201666666.7 credited_J=201666666.7 motor_paid_J=1666666.7 motor_grants=100 charged_ticks=6100 no_contact=0 no_supply=200",
+      "  12.615 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "  12.619 Info RunTest.cpp:80: Ran 121 ticks without the test finishing",
+      "  12.619 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "  12.922 Goodbye"
+    ]
+  },
+  {
+    "case": "bench-10x2",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 5.041,
+    "marker": "SNAP",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-audit-qa/bench10x2",
+      "--test-ticks",
+      "121"
+    ],
+    "last": [
+      "   4.843 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=10 helpers=10 debited_J=20166666.7 credited_J=20166666.7 motor_paid_J=166666.7 motor_grants=10 charged_ticks=610 no_contact=0 no_supply=20",
+      "   4.843 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.845 Info RunTest.cpp:80: Ran 121 ticks without the test finishing",
+      "   4.845 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.998 Goodbye"
+    ]
+  },
+  {
+    "case": "bench-1x2",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.137,
+    "marker": "SNAP",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-audit-qa/bench1x2",
+      "--test-ticks",
+      "121"
+    ],
+    "last": [
+      "   3.974 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=1 debited_J=2016666.7 credited_J=2016666.7 motor_paid_J=16666.7 motor_grants=1 charged_ticks=61 no_contact=0 no_supply=2",
+      "   3.974 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.974 Info RunTest.cpp:80: Ran 121 ticks without the test finishing",
+      "   3.974 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.072 Goodbye"
+    ]
+  },
+  {
+    "case": "bench-1x800",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 6.554,
+    "marker": "SNAP",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-audit-qa/bench1x800",
+      "--test-ticks",
+      "121"
+    ],
+    "last": [
+      "   6.360 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=4 debited_J=5600000.0 credited_J=5600000.0 motor_paid_J=3600000.0 motor_grants=48 charged_ticks=108 no_contact=0 no_supply=5",
+      "   6.360 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   6.363 Info RunTest.cpp:80: Ran 121 ticks without the test finishing",
+      "   6.363 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   6.516 Goodbye"
+    ]
+  },
+  {
+    "case": "bench-50x2",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 8.42,
+    "marker": "SNAP",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-audit-qa/bench50x2",
+      "--test-ticks",
+      "121"
+    ],
+    "last": [
+      "   8.178 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=50 helpers=50 debited_J=100833333.3 credited_J=100833333.3 motor_paid_J=833333.3 motor_grants=50 charged_ticks=3050 no_contact=0 no_supply=100",
+      "   8.178 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   8.187 Info RunTest.cpp:80: Ran 121 ticks without the test finishing",
+      "   8.187 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   8.350 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-0",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.254,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "0",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.101 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=0 debited_J=2000000.0 credited_J=2000000.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=60 no_contact=0 no_supply=1",
+      "   3.101 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.101 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.101 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.207 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-1",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.357,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "1",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.198 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=1 debited_J=2008333.3 credited_J=2008333.3 motor_paid_J=8333.3 motor_grants=1 charged_ticks=61 no_contact=0 no_supply=2",
+      "   3.198 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.198 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.198 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.324 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-199",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.848,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "199",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.670 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=1 debited_J=2900000.0 credited_J=2900000.0 motor_paid_J=900000.0 motor_grants=3 charged_ticks=63 no_contact=0 no_supply=2",
+      "   3.670 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.671 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.671 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.794 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-200",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.7,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "200",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.546 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=1 debited_J=2900000.0 credited_J=2900000.0 motor_paid_J=900000.0 motor_grants=3 charged_ticks=63 no_contact=0 no_supply=2",
+      "   3.546 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.547 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.547 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.652 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-201",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.102,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "201",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.954 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=2 debited_J=2900000.0 credited_J=2900000.0 motor_paid_J=900000.0 motor_grants=4 charged_ticks=64 no_contact=0 no_supply=3",
+      "   3.954 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.955 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.955 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.042 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-400",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.555,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "400",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   4.368 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=2 debited_J=3800000.0 credited_J=3800000.0 motor_paid_J=1800000.0 motor_grants=12 charged_ticks=72 no_contact=0 no_supply=3",
+      "   4.368 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.370 Info RunTest.cpp:105: Test passed at tick 121",
+      "   4.370 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.502 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-401",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 5.072,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "401",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   4.912 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=3 debited_J=3800000.0 credited_J=3800000.0 motor_paid_J=1800000.0 motor_grants=13 charged_ticks=73 no_contact=0 no_supply=4",
+      "   4.912 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.915 Info RunTest.cpp:105: Test passed at tick 121",
+      "   4.915 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   5.039 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-600",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 5.576,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "600",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   5.345 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=3 debited_J=4700000.0 credited_J=4700000.0 motor_paid_J=2700000.0 motor_grants=27 charged_ticks=87 no_contact=0 no_supply=4",
+      "   5.345 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   5.364 Info RunTest.cpp:105: Test passed at tick 121",
+      "   5.364 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   5.513 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-800",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 6.964,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "800",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   6.754 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=4 debited_J=5600000.0 credited_J=5600000.0 motor_paid_J=3600000.0 motor_grants=48 charged_ticks=108 no_contact=0 no_supply=5",
+      "   6.754 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   6.759 Info RunTest.cpp:105: Test passed at tick 121",
+      "   6.759 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   6.926 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-dual201",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 5.006,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "dual201",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   4.861 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=2 helpers=4 debited_J=5866666.7 credited_J=5866666.7 motor_paid_J=1866666.7 motor_grants=16 charged_ticks=136 no_contact=0 no_supply=6",
+      "   4.861 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.863 Info RunTest.cpp:105: Test passed at tick 121",
+      "   4.863 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.974 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-mixed",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.71,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "mixed",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.546 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=1 debited_J=2016666.7 credited_J=2016666.7 motor_paid_J=16666.7 motor_grants=1 charged_ticks=61 no_contact=0 no_supply=2",
+      "   3.546 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.546 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.546 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.670 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-ownerlossdual",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.582,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "ownerlossdual",
+      "--test-ticks",
+      "190"
+    ],
+    "last": [
+      "   3.414 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=180 locos=1 helpers=1 debited_J=4066666.7 credited_J=4066666.7 motor_paid_J=66666.7 motor_grants=2 charged_ticks=122 no_contact=0 no_supply=4",
+      "   3.414 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.414 Info RunTest.cpp:105: Test passed at tick 181",
+      "   3.414 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.525 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-passive",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.537,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "passive",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.391 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=0 debited_J=2000000.0 credited_J=2000000.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=60 no_contact=0 no_supply=1",
+      "   3.391 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.392 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.392 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.500 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-power401",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 8.981,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "power401",
+      "--test-ticks",
+      "310"
+    ],
+    "last": [
+      "   8.788 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   8.790 Script @__ElectrifiedMainline__/scripts/control.lua:495: [ElectrifiedMainline][rail-debug] train=819 locomotive=1929 rail=em-high-speed-straight-rail rail_unit=111 rail_position=(-139.00, 1.00)",
+      "   8.796 Info RunTest.cpp:105: Test passed at tick 301",
+      "   8.796 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   8.925 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-prototypes-retry",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.151,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "prototypes",
+      "--test-ticks",
+      "5"
+    ],
+    "last": [
+      "   3.019 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=0 locos=0 helpers=0 debited_J=0.0 credited_J=0.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=0 no_contact=0 no_supply=0",
+      "   3.019 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.019 Info RunTest.cpp:105: Test passed at tick 1",
+      "   3.019 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.102 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-split",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.623,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "split",
+      "--test-ticks",
+      "190"
+    ],
+    "last": [
+      "   4.470 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=180 locos=1 helpers=1 debited_J=2066666.7 credited_J=2066666.7 motor_paid_J=66666.7 motor_grants=2 charged_ticks=62 no_contact=0 no_supply=3",
+      "   4.470 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.470 Info RunTest.cpp:105: Test passed at tick 181",
+      "   4.470 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.564 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-standalone",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.296,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "standalone",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.124 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=0 helpers=0 debited_J=0.0 credited_J=0.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=0 no_contact=0 no_supply=0",
+      "   3.124 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.124 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.124 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.239 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-vanilla",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.702,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "vanilla",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.534 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=0 helpers=0 debited_J=0.0 credited_J=0.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=0 no_contact=0 no_supply=0",
+      "   3.534 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   3.534 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.534 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.650 Goodbye"
+    ]
+  },
+  {
+    "case": "extended-zero201",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.741,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-extended-qa/native",
+      "--test-arg",
+      "zero201",
+      "--test-ticks",
+      "130"
+    ],
+    "last": [
+      "   3.569 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=120 locos=1 helpers=2 debited_J=0.0 credited_J=0.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=0 no_contact=363 no_supply=0",
+      "   3.569 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=no-contact",
+      "   3.570 Info RunTest.cpp:105: Test passed at tick 121",
+      "   3.570 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.672 Goodbye"
+    ]
+  },
+  {
+    "case": "migration085",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 2.637,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-save",
+      "/mnt/data/em087c/evidence/saves/long201.zip",
+      "--test-arg",
+      "load",
+      "--test-ticks",
+      "150"
+    ],
+    "last": [
+      "   2.496 Script @__level__/control.lua:3: [AUDIT] load PASS",
+      "   2.497 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:492: [EM060] station=1132 auto/active/import/505/404/404/404 factory_port=505 feeder=1046 measured=0.000MW input=333333J output=2000000J planned=20.000MW",
+      "   2.498 Info RunTest.cpp:105: Test passed at tick 91",
+      "   2.498 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   2.590 Goodbye"
+    ]
+  },
+  {
+    "case": "moving-1",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.911,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker2/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker2/mods",
+      "--test-scenario",
+      "em-extended-qa/moving",
+      "--test-arg",
+      "1",
+      "--test-ticks",
+      "510"
+    ],
+    "last": [
+      "   3.709 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:42: [EM069 BUFFER STOP] event_id=151 tick=500 owner=129 reason=reject:auto-idle-no-connected-peer input_J=2222.222 output_J=414444.444 input_network=11 output_network=12",
+      "   3.709 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:492: [EM060] station=129 auto/auto-idle-no-connected-peer/import/11/12/12/12 factory_port=11 feeder=123 measured=0.000MW input=2222J output=414444J planned=0.000MW",
+      "   3.710 Info RunTest.cpp:105: Test passed at tick 501",
+      "   3.710 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.834 Goodbye"
+    ]
+  },
+  {
+    "case": "moving-10",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 5.362,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/moving",
+      "--test-arg",
+      "10",
+      "--test-ticks",
+      "510"
+    ],
+    "last": [
+      "   5.185 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:492: [EM060] station=1146 auto/auto-idle-no-connected-peer/import/99/191/191/191 factory_port=99 feeder=1140 measured=0.000MW input=2222J output=414444J planned=0.000MW",
+      "   5.185 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:492: [EM060] station=1273 auto/auto-idle-no-connected-peer/import/110/192/192/192 factory_port=110 feeder=1267 measured=0.000MW input=2222J output=414444J planned=0.000MW",
+      "   5.187 Info RunTest.cpp:105: Test passed at tick 501",
+      "   5.187 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   5.294 Goodbye"
+    ]
+  },
+  {
+    "case": "moving-100",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 34.473,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/moving",
+      "--test-arg",
+      "100",
+      "--test-ticks",
+      "510"
+    ],
+    "last": [
+      "  34.203 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:492: [EM060] station=12582 auto/auto-idle-no-connected-peer/import/1089/1271/1271/1271 factory_port=1089 feeder=12576 measured=0.000MW input=2222J output=414444J planned=0.000MW",
+      "  34.203 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:492: [EM060] station=12709 auto/auto-idle-no-connected-peer/import/1100/1272/1272/1272 factory_port=1100 feeder=12703 measured=0.000MW input=2222J output=414444J planned=0.000MW",
+      "  34.214 Info RunTest.cpp:105: Test passed at tick 501",
+      "  34.214 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "  34.416 Goodbye"
+    ]
+  },
+  {
+    "case": "moving-50",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 15.67,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/moving",
+      "--test-arg",
+      "50",
+      "--test-ticks",
+      "510"
+    ],
+    "last": [
+      "  15.491 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:492: [EM060] station=6221 auto/auto-idle-no-connected-peer/import/539/671/671/671 factory_port=539 feeder=6215 measured=0.000MW input=2222J output=414444J planned=0.000MW",
+      "  15.491 Script @__ElectrifiedMainline__/scripts/power_bridge_058.lua:492: [EM060] station=6348 auto/auto-idle-no-connected-peer/import/550/672/672/672 factory_port=550 feeder=6342 measured=0.000MW input=2222J output=414444J planned=0.000MW",
+      "  15.496 Info RunTest.cpp:105: Test passed at tick 501",
+      "  15.496 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "  15.615 Goodbye"
+    ]
+  },
+  {
+    "case": "native-corridor",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.706,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-native-segment-qa/corridor",
+      "--test-ticks",
+      "1270"
+    ],
+    "last": [
+      "   3.569 Script @__level__/control.lua:16: [EM087C CORRIDOR] tick=1261 foreign wire rejected, lawful native network kept native=4/4",
+      "   3.569 Script @__level__/control.lua:37: [EM087C CORRIDOR PASS]",
+      "   3.569 Info RunTest.cpp:105: Test passed at tick 1262",
+      "   3.569 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.661 Goodbye"
+    ]
+  },
+  {
+    "case": "native-segments",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 3.455,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-native-segment-qa/segments",
+      "--test-ticks",
+      "30"
+    ],
+    "last": [
+      "   3.183 Script @__level__/control.lua:28: [EM087C QA] signal-removed pairs=1791 native_hits=810",
+      "   3.183 Script @__level__/control.lua:78: [EM087C QA PASS] comparisons=8935 fast_hits=3603 native copper split/rejoin and alternate loop passed",
+      "   3.186 Info RunTest.cpp:105: Test passed at tick 12",
+      "   3.186 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   3.314 Goodbye"
+    ]
+  },
+  {
+    "case": "network-multi48",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 7.191,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker1/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker1/mods",
+      "--test-scenario",
+      "em-extended-qa/network",
+      "--test-arg",
+      "multi48",
+      "--test-ticks",
+      "910"
+    ],
+    "last": [
+      "   7.027 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:486: [EM072 PAID LEDGER] tick=900 locos=0 helpers=0 debited_J=0.0 credited_J=0.0 motor_paid_J=0.0 motor_grants=0 charged_ticks=0 no_contact=0 no_supply=0",
+      "   7.027 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   7.028 Info RunTest.cpp:105: Test passed at tick 901",
+      "   7.028 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   7.120 Goodbye"
+    ]
+  },
+  {
+    "case": "network-topology",
+    "status": "PASS",
+    "rc": 0,
+    "seconds": 4.447,
+    "marker": "Test passed at tick",
+    "command": [
+      "/mnt/data/em087c/factorio/bin/x64/factorio",
+      "--config",
+      "/mnt/data/em087j/worker0/config.ini",
+      "--mod-directory",
+      "/mnt/data/em087j/worker0/mods",
+      "--test-scenario",
+      "em-extended-qa/network",
+      "--test-arg",
+      "topology",
+      "--test-ticks",
+      "1730"
+    ],
+    "last": [
+      "   4.307 Script @__ElectrifiedMainline__/scripts/traction_paid_065.lua:490: [EM065 CONTACT] last_reason=nil",
+      "   4.326 Script @__level__/control.lua:4: [NET] topology PASS source outage residual_J=666666.66666663",
+      "   4.326 Info RunTest.cpp:105: Test passed at tick 1721",
+      "   4.326 Info GlobalContext.cpp:763: Deleting active scenario.",
+      "   4.418 Goodbye"
+    ]
+  }
+]
