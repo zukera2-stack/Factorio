@@ -1,3 +1,48 @@
+em090_native_brake_20261126:
+  date: "2026-11-26"
+  branch: "test/em090-native-brake"
+  base_commit: "6bea9d6c7549cf269efd5c2df18707e34752ff44"
+  runtime_version: "0.1.101"
+  status: partial_observation_pass_strict_brake_work_gate_blocked
+  native_engine: "2.1.24 build87808 linux64 headless"
+  base_observation_cases_pass: 8
+  fullmod_storage_enabled_cases_pass: 2
+  total_observation_cases_pass: 10
+  station2000_braking_decel_intervals: 196
+  station2000_other_decel_intervals: 1
+  coast_decel_intervals: 779
+  coast_braking_flags: 0
+  brake_flag_precedes_actual_decel: true
+  collision_brake_flag_false_positive: true
+  collision_locomotive_health_unchanged: true
+  collision_tank_damage_event: true
+  station2000_peak_naive_K_J: 13446522.293347
+  station2000_peak_consumed_J: 5202222.222222
+  fullmod_move_peak_naive_K_J: 28807200
+  fullmod_move_peak_estimated_consumed_J: 10024338.866015
+  fullmod_move_peak_ratio: 2.873725677577
+  direct_SI_kinetic_accounting_valid: false
+  native_brake_work_proven: false
+  regen_credit_enabled: false
+  proposed_paid_kinetic_ledger_owner_approved: false
+  initial_base_workers: 3
+  initial_base_wall_seconds: 7.594
+  initial_base_peak_bytes: 2194120704
+  extra_base_wall_seconds: 4.098
+  fullmod_workers: 2
+  fullmod_wall_seconds: 5.465
+  oom_events: 0
+  runtime_changed: false
+  full_prior_regression_rerun: false
+  evidence: "/Factorio/Local-QA/EM090_NATIVE_BRAKE_EVIDENCE.zip"
+  evidence_sha256: 1ce06f34f814967835b49657adaaa8b157c29e2457e7636f36ddf5ad56ed1acc
+  source_sha256: a87c435f27013aabbf72213fa232c9821ccd35e69cf09c477aa16c4a54807520
+  report: docs/development/EM090_NATIVE_BRAKE_QA.md
+  next: owner_decision_conservative_game_defined_kinetic_ledger_then_EM091
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em089_onboard_storage_20261126:
   date: "2026-11-26"
   branch: "experiment/em089-onboard-storage"
