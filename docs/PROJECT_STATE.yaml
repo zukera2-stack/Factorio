@@ -1,3 +1,57 @@
+em094d_automatic_terminals_20261126:
+  branch: "experiment/em094d-automatic-terminals-blocked"
+  base_commit: "06529e7fedde4176b966d9d17f2ded738260f33e"
+  candidate_version: "0.1.103"
+  last_validated_experimental_version: "0.1.102"
+  status: partial_candidate_blocked_mixed_ring
+  grid_regen_default: false
+  candidate_sha256: 7821445f3d7aad6dfae3f1b9a5f4f019691d9559ba5760adbe22ac7b7e4ff3d6
+  candidate_files: 169
+  changed_game_files: 8
+  unchanged_png: 99
+  automatic_terminal_lifecycle: positive_pass
+  retired_empty_terminals: 3
+  final_terminal_count: 0
+  exchange100_pass: true
+  exchange100_recipients_moved: 50
+  exchange100_grid_J: 4034031.261013
+  exchange100_receiver_J: 2017015.630507
+  exchange100_budget_J: 100000000
+  exchange100_final_J: 100000000.000023
+  exchange100_samples: 421
+  mixed12_grid_on_pass: false
+  mixed12_arrived: 12
+  mixed12_fail_tick: 1300
+  mixed12_grid_recovered_J: 5291995.742079
+  mixed12_onboard_recovered_J: 875837.086
+  mixed12_budget_J: 1500000000
+  mixed12_last_total_J: 1499999999.578
+  alternate_path_min_J: 100000
+  alternate_grid_on_J: 36929.802168
+  alternate_grid_off_J: 3305028.809550
+  alternate_no_export_diagnostic_J: 3305028.809550
+  no_export_diagnostic_sha256: 323ce8ab0aa14efcf5a2c78f6b46fcb0ae6a237ef38bbd7482d89725501c14e1
+  exact_candidate_cases_pass: 9
+  exact_candidate_cases_fail: 1
+  old_disabled_controls_pass: 4
+  diagnostic_case_pass: 1
+  final_functional_wall_seconds: 88.446
+  old_controls_workers: 2
+  old_controls_wall_seconds: 9.609
+  oom_events: 0
+  source_sha256: 51a9a579e798a5184f045902522ca42267385cd3c2d90e1be6869be2c84d6df2
+  evidence_sha256: ca922469efb85c3da86465113893946a77d86950a64c0cf1f85e09fb3ba23a8c
+  evidence: "/Factorio/Local-QA/EM094D_AUTOMATIC_TERMINALS_EVIDENCE.zip"
+  report: docs/development/EM094D_AUTOMATIC_TERMINALS_QA.md
+  full_previous_regression: not_run
+  mixed100_grid_on: not_run
+  ups_benchmark: not_run
+  pending_lifecycle_exact_candidate: not_proven
+  next: em094d2_dispatch_feedback_isolation
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em094c_topology_pending_20261126:
   date: "2026-11-26"
   branch: "test/em094c-topology-pending"

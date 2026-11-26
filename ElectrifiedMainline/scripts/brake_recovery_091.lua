@@ -1,6 +1,7 @@
 -- EM091: conservative native debit certificate, no virtual kinetic reservoir.
 -- Only this module can offer a calculated brake grant to the onboard store.
 local M={}
+local term094=require("scripts.line_terminal_094")
 local estimate=require('scripts.brake_estimator_091')
 local EM='em-electric-locomotive'
 local FUEL='em-c5-test-internal-joule-063'
@@ -100,7 +101,8 @@ function M.begin(tick)
     phase.pre[t.id]=q
   end
 end
-function M.finish(tick,battery)
+function M.finish(tick,battery,contact)
+  if storage.em and storage.em.em094_terminal then term094.settle_actual(state(),battery,tick,enabled()) end
   if not phase or phase.tick~=tick then return end
   local s=state();local nextburn,nexttrain={},{}
   for _,t in ipairs(trains()) do
@@ -123,9 +125,12 @@ function M.finish(tick,battery)
       local grant,work,why=estimate.observe(es,q)
       if not valid then es.certified=false end
       if grant>0 then
-        local accepted=battery.recover(post.owners,grant,tick)
+        s.estimated_J=s.estimated_J+grant;s.intervals=s.intervals+1
+        local offered=term094.offer_actual(post,grant,contact)
+        local remainder=grant-offered
+        local accepted=battery.recover(post.owners,remainder,tick)
         if accepted>0 then s.last_credit_tick=tick;s.last_credit_J=accepted end
-        s.estimated_J=s.estimated_J+grant;s.recovered_J=s.recovered_J+accepted;s.rejected_J=s.rejected_J+grant-accepted;s.intervals=s.intervals+1
+        s.recovered_J=s.recovered_J+accepted;s.rejected_J=s.rejected_J+remainder-accepted
       end
       s.last_reason=why;es.last_reason=why;nexttrain[t.id]=es
     end
@@ -136,6 +141,7 @@ end
 function M.snapshot(unit)
   local s=storage.em and storage.em.brake_recovery_091 or {}
   local r={enabled=enabled(),consumed_J=s.consumed_J or 0,estimated_J=s.estimated_J or 0,recovered_J=s.recovered_J or 0,rejected_J=s.rejected_J or 0,intervals=s.intervals or 0,last_credit_tick=s.last_credit_tick,last_credit_J=s.last_credit_J}
+  r.qa_grid_J=s.qa_grid_J or 0;r.qa_fallback_J=s.qa_fallback_J or 0;r.qa_uncertain_J=s.qa_uncertain_J or 0;r.qa_missing_J=s.qa_missing_J or 0;r.qa_pending_J=storage.em and storage.em.em094_terminal and term094.pending_actual() or 0
   local e=unit and game.get_entity_by_unit_number(unit);local q=e and e.valid and e.train and s.trains and s.trains[e.train.id]
   if q then r.certified=q.certified==true;r.reason=q.last_reason;r.train_consumed_J=q.consumed end
   return r

@@ -5,3 +5,5 @@ data:extend{
   {type='int-setting',name='em089-storage-charge-kw',setting_type='startup',default_value=2000,minimum_value=1,maximum_value=100000,order='em089-c'},
   {type='int-setting',name='em089-storage-discharge-kw',setting_type='startup',default_value=4000,minimum_value=1,maximum_value=100000,order='em089-d'}
 }
+
+data:extend{{type="bool-setting",name="em094-experimental-grid-regeneration",setting_type="runtime-global",default_value=false,order="em094-a"}}

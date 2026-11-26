@@ -43,16 +43,18 @@ local function network_for_contact(e,art,pantograph)
   if not net or net~=ab.electric_network_id then
     return nil,"native-25kv-network-unverified"
   end
-  return net,nil,aa
+  return net,nil,aa,a
 end
 -- EM087D: index live eligible import bridges in one synchronous phase.
 -- No network/permission persists between ticks or across bridge settlement.
 local SINK="em-25kv-native-traction-consumer-068"
 local PER_STANDARD_BRIDGE_J_TICK=20000000/60
+M.contact=network_for_contact
+local term094=require("scripts.line_terminal_094")
 local function active_bridge_index()
   local index={}
   local bridge=storage.em and storage.em.bridge058
-  if not (bridge and bridge.stations) then return index end
+  if not (bridge and bridge.stations) then term094.append_donors(index);return index end
   for id,r in pairs(bridge.stations) do
     local output=r.output
     if r.direction=="import" and r.status=="active"
@@ -71,6 +73,7 @@ local function active_bridge_index()
       end
     end
   end
+  term094.append_donors(index)
   return index
 end
 local function phase_bridge(cache,net,force)
@@ -123,6 +126,12 @@ end
 local function sink_for_output(source)
   local id=source.output.unit_number
   local state=native_state()
+  if source.mode=='terminal-094' then
+    local sink=source.terminal_sink
+    if not(sink and sink.valid and sink.electric_network_id==source.line_port.electric_network_id)then return nil end
+    state.sinks[id]=sink
+    return sink
+  end
   local sink=state.sinks[id]
   if sink and not sink.valid then state.sinks[id]=nil;sink=nil end
   local port=source.line_port
@@ -497,6 +506,7 @@ function M.on_tick(tick,art,pantograph,charge_budget)
     if sink.valid then sink.input_flow_limit=0 end
   end
   local owners=all_real_locomotives()
+  term094.prepare(owners,function(e) return network_for_contact(e,art,pantograph) end,tick)
   fair_charge(owners,art,pantograph,stats,charge_budget)
   if tick%60==0 then
     energy088.audit(stats)

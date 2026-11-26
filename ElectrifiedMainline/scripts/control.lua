@@ -18,6 +18,7 @@ local diag045 = require("scripts.catenary_diag_045")
 local technical046 = require("scripts.technical_network_046")
 local bridge058 = require("scripts.power_bridge_058")
 local onboard089 = require("scripts.onboard_storage_089")
+local term094 = require("scripts.line_terminal_094")
 local regen091 = require("scripts.brake_recovery_091")
 local mast059 = require("scripts.mast_network_059")
 local pantograph049 = require("scripts.pantograph_visual_049")
@@ -576,7 +577,8 @@ local function on_tick(event)
     -- orphaned/mismatched booster J from this tick's native 25kV sink.
     helper067.on_tick(event.tick)
     paidTraction065.on_tick(event.tick,art030,pantograph049,charge_budget)
-    regen091.finish(event.tick,onboard089)
+    regen091.finish(event.tick,onboard089,function(e) return paidTraction065.contact(e,art030,pantograph049) end)
+    term094.retire(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
     local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
     if not update_speed and not update_rails then return end
@@ -797,3 +799,5 @@ remote.add_interface("em088_train_energy",{snapshot=require("scripts.train_energ
 remote.add_interface("em089_onboard_storage",{snapshot=onboard089.snapshot})
 
 remote.add_interface("em091_brake_recovery",{snapshot=regen091.snapshot})
+
+remote.add_interface("em094_line_terminal",{snapshot=term094.snapshot})
