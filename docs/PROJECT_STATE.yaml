@@ -1,6 +1,6 @@
 rolling_stock_3d_20261126:
   branch: feature/rolling-stock-3d-design
-  status: model_qa_pass_owner_3d_review_pending
+  status: v2_dimension_fit_pass_owner_review_pending
   base: 362c6f22e8174cd2e06141dcbeaba8dce5a2026e
   a3ds_ref: 3c0f4d057f8569bc410120baf3f009dce86b9eab
   a3ds_method: B_parametric_mechanical_assembly
@@ -11,6 +11,14 @@ rolling_stock_3d_20261126:
   model_new_solids_closed: 531
   v3_bogie_nodes_per_model: 186
   owner_3d_accepted: false
+  dimension_fit_pass: true
+  fitted_body_length_BU: 7.440000057
+  fitted_body_width_BU: 1.689599991
+  fitted_shell_top_BU: 2.256799936
+  fitted_equipment_max_BU: 2.532074928
+  fitted_bogie_pitch_BU: 4.68
+  fitted_model_archive: /Factorio/Models/Rolling-Stock-V2/V3_Rolling_Stock_3D_v2_DIMENSION_FIT.zip
+  fitted_model_archive_sha256: d88e008bca1072bd902f6b2eabf265b1d2bef552bf160909d874370b9c3a7b71
   sprites_rendered: false
   model_archive: /Factorio/Models/Rolling-Stock-V1/V3_Rolling_Stock_3D_v1.zip
   model_archive_sha256: 5f736b5ebcc2ccb5e243e27bf5fb8a56752e2422c761f61dd045525d0c65e2d4
