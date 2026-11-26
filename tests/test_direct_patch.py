@@ -130,7 +130,8 @@ class PatchTests(unittest.TestCase):
             known.add(e["to"])
         latest = reg["latest_integration_candidate_version"]
         self.assertIn(latest, known)
-        if reg.get("latest_integration_status") == "prepared_for_final_test_not_delivered":
+        if reg.get("latest_integration_status") in ("prepared_for_final_test_not_delivered",
+                                                   "merged_main_development_baseline_not_delivered"):
             self.assertEqual(entries[-1]["to"], latest)
             self.assertEqual(entries[-1]["delivery"], "full_qa_only_integration_not_delivered")
             self.assertEqual(entries[-1]["full_tested_archive"], reg["latest_integration_reference_archive"])

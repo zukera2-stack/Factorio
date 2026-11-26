@@ -2,7 +2,7 @@ em094_integration_20261126:
   branch: integration/em094d4-main-candidate
   runtime_base: "949a99f2f281fc226356d5f6e247a84dce12b4f8"
   candidate_version: "0.1.103"
-  status: final_native_and_ci_pass_pending_owner_merge_decision
+  status: merged_main_development_baseline
   candidate_sha256: 9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e
   game_files: 169
   exact_non_png: 70
@@ -43,8 +43,14 @@ em094_integration_20261126:
   final_report: docs/development/EM094_INTEGRATION_FINAL_QA.md
   windows_owner: pending
   owner_running_version: "0.1.84"
-  main_version: "0.1.62"
-  main_merged: false
+  main_version: "0.1.103"
+  main_merged: true
+  main_merge_pr: 91
+  main_merge_commit: 4bdbacda206fca1d040a809ce276f5fce1dfab69
+  main_merge_owner_authorized: true
+  merged_runtime_tree: 8d64e44d74c37f5a202a01ef09fcda3cda3d01af
+  latest_premerge_ci: pass_45886890810
+  branch_cleanup: pending_separate_retention_review
   official_release: false
   report: docs/development/EM094_INTEGRATION_AUDIT.md
   test_plan: docs/development/EM094_INTEGRATION_TEST_PLAN.md
@@ -2291,12 +2297,12 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: test/updater-approved
+  active_test_branch: main
   current_baseline_branch: main
   active_feature_branch: main # source merge into main, no release
-  feature_version: "0.1.62" # source main checkpoint only, not installed
-  feature_status: 062_merged_main_source_only_unfinished_mod_no_release
-  last_validated_test_branch: feature/release-056-accepted
+  feature_version: "0.1.103" # merged development baseline, not installed
+  feature_status: 103_merged_main_native_111_pass_no_release
+  last_validated_test_branch: integration/em094d4-main-candidate
   release_target_branch: main
   release_pull_request: 30
   release_merge_commit: 55cb71f8f3be8c68cbd2c26fa16fd775c6ba296d
@@ -2304,21 +2310,21 @@ project:
   previous_release_merge_commit: 7218360acb4fc5079e48cf4f38448fa086f1af96
   release_merge_approved_by_user: true
   previously_approved_baseline: merged_into_main_2026_11_19
-  release_status: no_release_main_dev_checkpoint_2026_11_21
+  release_status: no_release_main_dev_checkpoint_2026_11_26
   next_feature_branch_policy: branch_from_main
-  previous_main_baseline: "0.1.48"
+  previous_main_baseline: "0.1.62"
   previous_main_handoff_archive: https://github.com/zukera2-stack/Factorio/blob/1a94fb8a7e6a860130b071da7cd8d556a4aec96c/docs/AI_CONTEXT.md
   previous_main_state_archive: https://github.com/zukera2-stack/Factorio/blob/1a94fb8a7e6a860130b071da7cd8d556a4aec96c/docs/PROJECT_STATE.yaml
   exact_version_rail_api_notes: docs/FACTORIO_2_1_RAIL_API_NOTES.md
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.103" # integration candidate; final QA and merge pending
-  main_baseline_mod_version: "0.1.62" # source merged PR #46, not a public release
+  mod_version: "0.1.103" # merged development baseline; no release
+  main_baseline_mod_version: "0.1.103" # source merged PR #91, not a public release
   factorio_target: "2.1"
   user_tested_game: "2.1.24"
   user_installation_label: "2.1.24 build 87808"
-  last_state_update: "2026-11-21"
+  last_state_update: "2026-11-26"
   documentation_audit: 056_repository_cleanup
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md

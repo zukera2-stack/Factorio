@@ -2,7 +2,7 @@
   "schema": "factorio-direct-patch-registry/v1",
   "project": "ElectrifiedMainline",
   "updated_on": "2026-11-26",
-  "main_version_at_review": "0.1.62",
+  "main_version_at_review": "0.1.103",
   "last_owner_running_archive_version": "0.1.84",
   "latest_integration_candidate_version": "0.1.103",
   "latest_integration_branch": "integration/em094d4-main-candidate",
@@ -319,7 +319,9 @@
   "latest_local_candidate_branch": "experiment/em086-maintenance-hidden-helpers",
   "latest_experiment_version": "0.1.103",
   "latest_experiment_branch": "integration/em094d4-main-candidate",
-  "latest_integration_status": "prepared_for_final_test_not_delivered",
+  "latest_integration_status": "merged_main_development_baseline_not_delivered",
   "latest_integration_reference_archive": "/Factorio/Local-QA/EM094D4-Anchor-Settlement/EM094D4_0.1.103_CODE_ONLY_QA.zip",
-  "latest_integration_reference_sha256": "9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e"
+  "latest_integration_reference_sha256": "9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e",
+  "main_merge_pr": 91,
+  "main_merge_commit": "4bdbacda206fca1d040a809ce276f5fce1dfab69"
 }
