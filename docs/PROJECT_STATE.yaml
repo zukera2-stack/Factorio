@@ -1,3 +1,54 @@
+em087n_parallel_stress_20261126:
+  date: "2026-11-26"
+  branch: "test/em087n-parallel-stress"
+  base_commit: "464737717489a88c8c5782dc10613617a9921153"
+  runtime_version: "0.1.98"
+  status: native_test_only_pass_keep_runtime
+  native_engine: "2.1.24 build87808 linux64 headless"
+  cgroup_memory_limit_bytes: 4294967296
+  cpu_quota: 4
+  reserved_memory_mib: 768
+  small_worker_estimate_mib: 700
+  calibration_workers: 2
+  calibration_pass: 2
+  comparison_workers: [1, 3]
+  comparison_cases_pass: [11, 11]
+  comparison_wall_seconds: [44.302, 20.339]
+  comparison_cgroup_peak_bytes: [1633517568, 2393780224]
+  comparison_fixture_log_lines_equal: 124
+  disk_reload_equal_snapshots_each: 6
+  oom_events: 0
+  sampled_memory_guard_triggered: false
+  stress_train_counts: [12, 24, 100]
+  stress_pass: [true, true, true]
+  stress_budget_J: [1500000000, 3000000000, 12500000000]
+  stress_energy_samples_each: 17
+  stress100_corridors: 100
+  stress100_ring_links: 100
+  stress100_substations: 275
+  stress100_native_accumulators: 200
+  stress100_outposts_each_role: 25
+  stress100_trains_arrived: 100
+  stress100_paid_train_J: 785255349.94526
+  stress100_outage_load_gain_J: 131587622.895
+  stress100_wall_seconds: 107.227
+  stress100_max_rss_kib: 596860
+  stress100_cgroup_peak_bytes: 1688064000
+  stress100_ring_bypass: PASS
+  stress100_rejoin: PASS
+  runtime_changed: false
+  performance_gate: not_met
+  long_continuous_motion: not_tested
+  evidence: "/Factorio/Local-QA/EM087N_PARALLEL_EVIDENCE.zip"
+  evidence_sha256: 1484b771b96af12c2a5c8e890d95d76d3629cfa7ee4c0fe892cc36641aec124a
+  suite: "/Factorio/Local-QA/EM087N_PARALLEL_TEST_SUITE.zip"
+  suite_sha256: 90a5a3d4f52fecb8b698b2ac4ab9c3e9e4a76c7b01efc0e81698495c397be6a7
+  report: docs/development/EM087N_PARALLEL_QA.md
+  next: em087o_continuous_motion_profile
+  main_merged: false
+  owner_accepted: false
+  official_release: false
+
 em087m_mixed_outposts_20261126:
   date: "2026-11-26"
   branch: "test/em087m-mixed-outposts"
