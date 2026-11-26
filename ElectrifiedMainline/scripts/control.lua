@@ -401,6 +401,7 @@ local function cleanup_train_for_entity(event)
     diag_entity(diag_name, event, entity)
     if not (entity and entity.valid) then return end
 
+    term094.before_anchor_removed(entity)
     helper067.on_removed(entity)
     pantograph049.remove(entity)
     native_wire_probe026.on_mast_removed(entity)

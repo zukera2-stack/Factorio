@@ -84,7 +84,7 @@ function M.offer_actual(post,amount,contact)
   if net and a then for _,id in ipairs(ids)do local r=s.ports[id];local key,anchor,p,e=authorized(r)
    if key and anchor.surface==a.surface and anchor.force==o.force and p.electric_network_id==net then
     local pend=r.actual
-    if pend and (pend.tick~=game.tick or pend.key~=key) then return 0 end
+    if pend and (pend.cut or pend.tick~=game.tick or pend.key~=key) then return 0 end
     local prior=pend and pend.amount or 0
     if math.abs(e.energy-prior)>.001 then return 0 end
     local j=math.min(amount,20000000/60-prior)
@@ -97,6 +97,18 @@ function M.offer_actual(post,amount,contact)
   end end
  end
  return 0
+end
+-- Freeze a live pending output before ordinary anchor removal disconnects
+-- its technical helper. Otherwise the detached output can feed its own sink.
+-- Remember only the observed native debit, never manufacture a destination.
+function M.before_anchor_removed(mast)
+ local s=storage.em and storage.em.em094_terminal
+ local r=s and s.ports[mast.unit_number];local p=r and r.actual
+ if not p or p.cut then return end
+ local key,_,_,e=authorized(r);e=e or entity(r.output)
+ if not e then return end
+ e.output_flow_limit=0
+ p.cut={remaining=e.energy,certain=key~=nil}
 end
 function M.pending_actual()
  local s=state();local j=0;for _,r in pairs(s.ports)do if r.actual then j=j+r.actual.amount end end;return j
@@ -112,6 +124,9 @@ function M.settle_actual(ledger,battery,tick,allow_fallback)
    assert(remaining>=0 and remaining<=p.amount+.01,'EM094 invalid actual residual')
    local delivered=p.amount-remaining
    local certain=e and key~=nil
+   if p.cut then
+    certain=e and p.cut.certain and math.abs(remaining-p.cut.remaining)<=.001
+   end
    if certain then ledger.qa_grid_J=(ledger.qa_grid_J or 0)+delivered;ledger.recovered_J=ledger.recovered_J+delivered
    elseif e then
      -- Physically observed source debit, even if the topology certificate is invalid.

@@ -1,3 +1,55 @@
+em094d4_anchor_settlement_20261126:
+  date: "2026-11-26"
+  branch: experiment/em094d4-anchor-settlement
+  base_commit: 44d129087d976a7f599f5045e331a2a45eccb939
+  candidate_version: "0.1.103"
+  status: targeted_fault_gates_pass_qa_setting_only_full_regression_pending
+  candidate_sha256: 9c95be93b9a49e60e60402abfab4bd7c4dacb45840c114d7de22270de28ac17e
+  game_files: 169
+  unchanged_png: 99
+  changed_blobs:
+    scripts/control.lua: cac0eca57a427b1110e32aee7dfd1b14de5a01af
+    scripts/line_terminal_094.lua: 0794843d54786522bda5bb577e4e4ab4fd78c69f
+  exact_candidate_tests: 18
+  exact_candidate_pass: 18
+  expected_negative_tests: 1
+  native_robot_mine_ticks: [238, 251, 266]
+  native_robot_fallback_J: [2926.300485005, 2165.800485005, 1288.300485005]
+  native_robot_uncertain_J: 0
+  anchor_script_removal: pass
+  anchor_entity_death: pass
+  post_solver_certified_grid_J: 3043.300485005
+  post_solver_retired_sink_J: 3043.300485007
+  hidden_wire_negative: pass_uncertain_not_certified
+  hidden_wire_uncertain_J: 3043.300485005
+  hidden_wire_grid_J: 0
+  cut_reload: pass
+  cut_save_sha256: 6d422f6e0445eebaf48accf735515dfcb73b3c6e5defd9eb7aeb24813d966617
+  cut_reload_matching_rows: 12
+  setting_qa_tests: 4
+  setting_qa_pass: 4
+  setting_after_transfer: pass_qa_owned_assignment
+  setting_before_transfer: pass_first_eligible_mod_tick_252
+  setting_owner_gui: not_run
+  setting_qa_variant_sha256: e6842cd7f70999f7b1df629218932bf5da7e722d8005cfb928ad8736d4bcea3d
+  setting_early_trace_sha256: 774a4025c9c776867ae664c6fad60b245a10137b083364f87dfbdefb782f80bd
+  max_concurrent_processes: 2
+  peak_cgroup_bytes: 2589229056
+  oom_events: 0
+  evidence_sha256: bf93cfabb8f47a3085d7824e802c44fba289c42298ede9b79554c40083b3800c
+  evidence: "/Factorio/Local-QA/EM094D4_ANCHOR_SETTLEMENT_EVIDENCE.zip"
+  candidate: "/Factorio/Local-QA/EM094D4-Anchor-Settlement/EM094D4_0.1.103_CODE_ONLY_QA.zip"
+  report: docs/development/EM094D4_ANCHOR_SETTLEMENT_QA.md
+  prior92_on_changed_candidate: not_run
+  mixed100_on_changed_candidate: not_run
+  ups_benchmark: not_run
+  next: full_native_regression_and_mixed100_then_isolated_ups
+  last_validated_experimental_version: "0.1.102"
+  last_owner_running: "0.1.84"
+  owner_accepted: false
+  main_merged: false
+  official_release: false
+
 em094d3_full_regression_20261126:
   date: "2026-11-26"
   branch: test/em094d3-full-regression
