@@ -17,6 +17,6 @@ Build an electrified railway and power trains from your factory. The Mainline el
 - Research, crafting recipes and English/Russian localization.
 
 ## Compatibility and status
-Requires Factorio 2.1. Space Age is not required. Core recipes were checked in Base and Space Age on earlier versions. This is a first public beta candidate: full regression of the current build, multiplayer, large-factory UPS and final visual acceptance have not been established. Compatibility with other railway mods is not claimed. Back up your save before upgrading.
+Requires Factorio 2.1. Space Age is not required. Core recipes were checked in Base and Space Age on earlier versions. This is the published first public beta (0.2.0): full regression of the current build, multiplayer, large-factory UPS and final visual acceptance have not been established. Compatibility with other railway mods is not claimed. Back up your save before upgrading.
 
 Source and issue tracker: https://github.com/zukera2-stack/Factorio

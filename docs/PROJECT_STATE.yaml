@@ -1,3 +1,31 @@
+public_release_0_2_0_20261128:
+  status: published_public_beta
+  version: "0.2.0"
+  main_version: "0.2.0"
+  official_release: true
+  main_merged: true
+  owner_authorized: true
+  author: Zukera
+  license: All Rights Reserved
+  ai_assistance_disclosed: true
+  mod_portal: https://mods.factorio.com/mod/ElectrifiedMainline
+  release_utc: "2026-11-27T21:24:02.572000Z"
+  tag: v0.2.0
+  release_commit: fc67153871b6e7c4a7c98c06c6e57c57c8b8d4b1
+  portal_zip_sha1: d0aad7e64a2e754f8328cf8cebd56fe2b46de8f0
+  zip_sha256: 90d245817e7045621aec5439d385011836fc2c3f7d6c314878a3bc042e810c86
+  runtime_files: 503
+  png_files: 428
+  payload_tree_sha256: 5ee2d2908833962484c30752cf260b1cd590ed2639ef94093f9dbdb850096f3a
+  library_root: "/Factorio Electrified Mainline"
+  archive_branch: archive/pre-release-0.2.0-20261128
+  archive_commit: ffc0c1175d3de700c2420a8252fc0fe3fd4b2140
+  archived_head_count: 8
+  windows_acceptance: pending
+  multiplayer: not_confirmed
+  ups: not_confirmed
+  new_gameplay_tests: not_run
+
 em136_final_distribution_20261128:
   branch: integration/em136-0.2.0-public-beta-candidate
   version: "0.2.0"
