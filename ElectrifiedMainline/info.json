@@ -2,10 +2,10 @@
   "name": "ElectrifiedMainline",
   "version": "0.2.0",
   "title": "Electrified Mainline",
-  "author": "Bionic Assistant",
+  "author": "Zukera",
   "contact": "",
   "homepage": "https://github.com/zukera2-stack/Factorio",
-  "description": "High-speed rail, 25 kV overhead power, electric locomotives and motor wagons. Onboard batteries and regenerative braking are standard features. First public beta candidate for Factorio 2.1.",
+  "description": "High-speed rail, 25 kV overhead power, electric locomotives and motor wagons. Onboard batteries and regenerative braking are standard features. First public beta candidate for Factorio 2.1. Developed with AI assistance (ChatGPT).",
   "factorio_version": "2.1",
   "dependencies": [
     "base >= 2.1.0"

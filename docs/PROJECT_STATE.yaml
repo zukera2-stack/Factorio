@@ -1,3 +1,22 @@
+em136_final_distribution_20261128:
+  branch: integration/em136-0.2.0-public-beta-candidate
+  version: "0.2.0"
+  author: Zukera
+  license: All Rights Reserved
+  ai_assistance_disclosed: true
+  runtime_files: 503
+  png_files: 428
+  zip_sha256: 90d245817e7045621aec5439d385011836fc2c3f7d6c314878a3bc042e810c86
+  payload_tree_sha256: 5ee2d2908833962484c30752cf260b1cd590ed2639ef94093f9dbdb850096f3a
+  status: final_distribution_package_not_published
+  official_release: false
+  main_merged: false
+  gameplay_changed: false
+  ci: not_run_by_request
+  windows_acceptance: pending
+  multiplayer: not_confirmed
+  ups: not_confirmed
+
 em136_public_beta_candidate_20261128:
   branch: integration/em136-0.2.0-public-beta-candidate
   parent_candidate: "0.1.134"

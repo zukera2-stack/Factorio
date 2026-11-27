@@ -1,5 +1,9 @@
 # Electrified Mainline
 
+**Author:** Zukera · **License:** All Rights Reserved.
+
+Artificial intelligence (ChatGPT) was used during development to assist with programming, analysis, testing and documentation. Zukera is the author and project lead.
+
 **25 kV overhead power, high-speed rail and electric trains for Factorio 2.1.**
 
 Build an electrified railway and power trains from your factory. The Mainline electric locomotive provides 2 MW of traction; motor cargo, fluid and battery wagons each add 500 kW through the locomotive. A separate 25 kV overhead network is fed by bidirectional 20 MW traction substations. Parallel substations increase available power when the factory can supply it.

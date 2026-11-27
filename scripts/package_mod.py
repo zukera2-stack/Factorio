@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MOD_ROOT = ROOT / "ElectrifiedMainline"
 OUTPUT = ROOT / "build" / "package"
 REQUIRED = {"info.json", "control.lua", "data.lua", "data-updates.lua", "data-final-fixes.lua"}
-OPTIONAL_ROOT = {"settings.lua", "settings-updates.lua", "settings-final-fixes.lua", "thumbnail.png", "changelog.txt"}
+OPTIONAL_ROOT = {"settings.lua", "settings-updates.lua", "settings-final-fixes.lua", "thumbnail.png", "changelog.txt", "LICENSE"}
 DIRECTORY_SUFFIX = {
     "scripts": {".lua"},
     "prototypes": {".lua"},
