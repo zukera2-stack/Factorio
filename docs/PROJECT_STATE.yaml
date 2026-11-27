@@ -1,3 +1,29 @@
+em130_standard_energy_20261127:
+  status: owner_approved_standard_gameplay_local_patch_not_integrated
+  local_version: "0.1.130"
+  main_version: "0.1.103"
+  onboard_storage: standard_always_enabled
+  battery_wagon: standard_always_enabled
+  regenerative_braking: standard_always_enabled
+  native_25kv_return: standard_always_enabled
+  recovery_priority: [native_25kv_network, onboard_storage, loss]
+  legacy_enable_flags_removed: 4
+  stationary_charging_option_retained: true
+  stationary_charging_default: false
+  startup_capacity_power_settings_retained: 6
+  station_limit_W: 20000000
+  patch_sha256: 32d59c07d8237e04cf5fa1a396e76c153cb92ed6b49ee4e3e3ce1856b80737b1
+  selected_native_cases_pass: 12
+  migration_cases_pass: 2
+  windows_owner: pending
+  full_regression: not_run
+  stress100: not_run
+  ups: not_run
+  multiplayer: not_run
+  main_merged: false
+  official_release: false
+  decision: docs/decisions/EM130_STANDARD_ENERGY_2026-11-27.md
+
 em094_integration_20261126:
   branch: integration/em094d4-main-candidate
   runtime_base: "949a99f2f281fc226356d5f6e247a84dce12b4f8"
