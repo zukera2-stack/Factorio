@@ -1,3 +1,25 @@
+em136_public_beta_candidate_20261128:
+  branch: integration/em136-0.2.0-public-beta-candidate
+  parent_candidate: "0.1.134"
+  candidate_version: "0.2.0"
+  status: publication_materials_prepared_owner_approval_pending
+  main_version: "0.1.103"
+  runtime_files: 502
+  png_files: 428
+  previous_game_png_unchanged: 427
+  gameplay_changed: false
+  zip_sha256: 7a31bf8e7f852f67cacc28abadec5d9e386df41a15eb81e58d80587d84020d2a
+  payload_tree_sha256: 74be0859a4f03126d7b997b23369487a85abeb80f78c37555412c4b1f03d8452
+  author_approval: pending
+  license_approval: pending
+  windows_acceptance: pending
+  full_regression: not_run
+  ci: not_run_by_request
+  multiplayer: not_confirmed
+  ups: not_confirmed
+  official_release: false
+  main_merged: false
+
 em135_release_integration_20261127:
   branch: integration/em135-0.1.134-release-candidate
   candidate_version: "0.1.134"

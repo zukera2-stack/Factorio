@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+  Major Features:
+    - First public beta candidate: high-speed rail and a dedicated 25 kV overhead network.
+    - Bidirectional 20 MW traction substations and 2 MW electric locomotives.
+    - Motor cargo, fluid and battery wagons, each adding 500 kW traction.
+    - Finite onboard storage and regenerative braking are standard features.
+  Features:
+    - Rail replacement planner and configurable stationary charging.
+    - English and Russian localization, research and crafting recipes.
+  Graphics:
+    - Original rolling-stock sprites, pantograph, wagon fans, doors and night headlight.
+  Changes:
+    - Consolidated motor-wagon power status and removed development test commands.
+    - Reduced periodic diagnostic logging.
+  Info:
+    - Pre-publication candidate based on 0.1.134; no new gameplay changes.
+    - Multiplayer, large-factory UPS and final Windows visual acceptance are not confirmed.

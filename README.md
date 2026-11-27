@@ -1,3 +1,27 @@
+# Electrified Mainline
+
+**25 kV overhead power, high-speed rail and electric trains for Factorio 2.1.**
+
+Build an electrified railway and power trains from your factory. The Mainline electric locomotive provides 2 MW of traction; motor cargo, fluid and battery wagons each add 500 kW through the locomotive. A separate 25 kV overhead network is fed by bidirectional 20 MW traction substations. Parallel substations increase available power when the factory can supply it.
+
+## Features
+- Four high-speed rail geometries and a planner for replacing vanilla rails.
+- Overhead masts, traction substations and original rolling-stock sprites.
+- A 60 MJ locomotive battery and a 600 MJ battery wagon (default settings).
+- Regenerative braking returns energy to the overhead network first, then to train batteries. Unaccepted energy is lost.
+- Optional stationary charging (off by default).
+- Research, crafting recipes and English/Russian localization.
+
+## Compatibility and status
+Requires Factorio 2.1. Space Age is not required. Core recipes were checked in Base and Space Age on earlier versions. This is a first public beta candidate: full regression of the current build, multiplayer, large-factory UPS and final visual acceptance have not been established. Compatibility with other railway mods is not claimed. Back up your save before upgrading.
+
+Source and issue tracker: https://github.com/zukera2-stack/Factorio
+
+
+**Development history (older versions, not current status)**
+
+---
+
 **2026-11-26 — repository cleanup complete:** `main` is the sole active development branch (0.1.103); `archive/pre-main-0.1.103-20261126` is a retention-only branch at `25f91ad775007f80aca048a8c69eff90a3d9686e`, never merge it into main. All 135 original branch tips verified reachable after deleting their old names (93 also main ancestry, 42 archive-only); 605 reachable commits in archive. All 51 superseded PRs closed with original bodies preserved and archive notes; 0 open PRs, 2 branches verified. Historical branch references below may no longer resolve by name: use [archive inventory](https://github.com/zukera2-stack/Factorio/blob/25f91ad775007f80aca048a8c69eff90a3d9686e/docs/development/BRANCH_ARCHIVE_20261126.md) and exact commit SHA. Restore historical work only when needed; new tasks branch from live main. No runtime/artwork change, issue closure, release, tag or owner installation. The existing native 111/111 and CI 169/169 remain the validated baseline; Windows GUI, multiplayer and UPS remain unverified.
 
 **2026-11-26 — CURRENT AUTHORITATIVE CHECKPOINT:** Owner explicitly approved merge of PR [#91](https://github.com/zukera2-stack/Factorio/pull/91). `main` is the unified **0.1.103 development baseline**, merge commit `4bdbacda206fca1d040a809ce276f5fce1dfab69`. All 130 commits preserved; post-merge game tree `8d64e44d74c37f5a202a01ef09fcda3cda3d01af` identical to tested integration head `ed8639230112668b3c8dd9a12e565988bfde3656`. Native 111/111 (106 explicit completion + 5 stand assertions), CI 169/169 payload including 99 PNG; latest pre-merge CI 45886890810 passed. Start new development from live main. Full package requires frozen EM080/081/083 staging; do not install the unstaged tree. For future intentional runtime changes, update the exact integration payload manifest together with the source and verify the full staged archive; never bypass parity. Last confirmed owner-running archive remains 0.1.84; Windows GUI/actual owner save, multiplayer and UPS unverified. No release, tag, Mod Portal upload, installation or branch deletion authorized by this merge. Historical experimental branches and evidence remain preserved pending separate retention audit. Older status statements below are historical, not current instructions.

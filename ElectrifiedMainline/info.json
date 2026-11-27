@@ -1,11 +1,11 @@
 {
   "name": "ElectrifiedMainline",
-  "version": "0.1.134",
+  "version": "0.2.0",
   "title": "Electrified Mainline",
   "author": "Bionic Assistant",
   "contact": "",
-  "homepage": "",
-  "description": "High-speed rail, 25 kV overhead power, electric locomotives and motor wagons, including battery wagons. Onboard energy storage, battery cooling visuals, locomotive headlights and regenerative braking with energy return to the overhead network are standard features. Stationary charging is configurable. QA candidate; not a stable release.",
+  "homepage": "https://github.com/zukera2-stack/Factorio",
+  "description": "High-speed rail, 25 kV overhead power, electric locomotives and motor wagons. Onboard batteries and regenerative braking are standard features. First public beta candidate for Factorio 2.1.",
   "factorio_version": "2.1",
   "dependencies": [
     "base >= 2.1.0"

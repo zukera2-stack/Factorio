@@ -1,20 +1,21 @@
 {
   "schema": 1,
-  "version": "0.1.134",
-  "source_commit": "362c6f22e8174cd2e06141dcbeaba8dce5a2026e",
-  "reference_zip_sha256": "8cc481f21029fc415f9301e7d924ee3d469860112624fbb11649b7b53d60c8bc",
-  "payload_tree_sha256": "b2038ea54154c929086d39ffe3997bad1b88c01df916a4455c9b5f120bf51f42",
-  "provenance": "exact owner 0.1.133 tree plus EM134 delta, verified against canonical local full archive; source_commit is parent baseline",
-  "non_png_count": 73,
-  "png_count": 427,
+  "version": "0.2.0",
+  "source_commit": "4771cadcbdada52728233a6052809098dfe67d81",
+  "reference_zip_sha256": "7a31bf8e7f852f67cacc28abadec5d9e386df41a15eb81e58d80587d84020d2a",
+  "payload_tree_sha256": "74be0859a4f03126d7b997b23369487a85abeb80f78c37555412c4b1f03d8452",
+  "provenance": "EM136 metadata-only candidate derived from exact EM135 0.1.134; source_commit is parent baseline",
+  "non_png_count": 74,
+  "png_count": 428,
   "git_blob_sha1": {
+    "changelog.txt": "17fdf0e04f84c0092b3acd25d57c41974c699852",
     "control.lua": "ddc2f8f437350780809ee60753b7c16cd6a94351",
     "data-final-fixes.lua": "922cb00e95606893f42831fd5f0fb22d7fb2aa20",
     "data-updates.lua": "7487b9546cbe0fc3cafffc2486bdbbec5d95fadb",
     "data.lua": "d404299aca9a5f711b2a1bc5f2c889e7db1b362e",
-    "info.json": "f26c438e67161dcb72a143c92ad165dc1ca436a5",
-    "locale/en/en.cfg": "4bc01199fc38d503b3aded3e6a6ea4ba506eaa5c",
-    "locale/ru/ru.cfg": "63b6d8b34b8ee9076842aa41de5008123a0e7b62",
+    "info.json": "4a42d4ae489d1438862656a9e8285eff336fbdeb",
+    "locale/en/en.cfg": "6d205e4668d5d77e9a81f22af44882e340c7282d",
+    "locale/ru/ru.cfg": "4af44bd0a0df4af2bdc18b7812fddd00011a3e63",
     "migrations/0.1.125.lua": "44283a7c1a2a78ecc3c467bc7d9dbb186d0a288d",
     "migrations/0.1.57.json": "c888314fdfc801d0305e9a0f8a6309cbefe6b8d2",
     "migrations/0.1.85.json": "78d03df4b0ced521294a93a9f2dc3d4aa9211ac8",
@@ -509,6 +510,7 @@
     "graphics/icons/hsr-replacement-057.png": "14bc65c16f879e703e971b5d4b6e569e5368e151cdf3f2e5b1a1558750258859",
     "graphics/icons/traction-25kv-125.png": "73105e31ce2572a4d88245d850603360cdc1455ea66a4a833670b7c8f41fa407",
     "graphics/technology/battery-rolling-stock.png": "f520712aba2b0d1214e729d7e058543d0b23ebbb99d30b7217f10cf26eb095d3",
-    "graphics/technology/high-speed-locomotive.png": "eabef34eccb94096cef3b3df5b277311651beae550589c7097735d1c4a850076"
+    "graphics/technology/high-speed-locomotive.png": "eabef34eccb94096cef3b3df5b277311651beae550589c7097735d1c4a850076",
+    "thumbnail.png": "5977952ceb4f6274ab724e701cdb10283ffac018718cc294d17bf33022abdc59"
   }
 }
