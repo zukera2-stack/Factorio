@@ -1,3 +1,38 @@
+em126_em127_projection_20261127:
+  status: local_qa_profile_documented_not_integrated
+  standard: docs/ROLLING_STOCK_PROJECTION.md
+  wagon_candidate: "0.1.126"
+  locomotive_candidate: "0.1.127"
+  profile:
+    camera: orthographic_45deg
+    sx: 1.3135771055323484
+    sz: 1.0
+    sy_e: 1.0
+    sy_n: 1.1804078422416089
+    azimuth: "atan2(sin(theta)/sqrt(2),cos(theta))"
+    longitudinal: "sy_e + (sy_n-sy_e)*cos(a)^2"
+    fit_samples: 22
+    normalized_rmse_before: 0.25780572135198493
+    normalized_rmse_after: 0.09348760860846396
+  wagon_directions: 640
+  battery_fan_frames: 2048
+  locomotive_directions: 256
+  locomotive_shadow_cell_px: 640
+  source_glb_changed: false
+  native_bogies_changed: false
+  physics_changed: false
+  contact_anchor_changed: false
+  headless_targeted: pass
+  windows_owner_visual: pending
+  last_owner_log_version: "0.1.125"
+  em126_evidence_sha256: 2180e33b46a1a1c12434fa43672d09872c9abc984c9e987675509810161f5204
+  em127_evidence_sha256: 90d53b60e108f44bdad3ec7b7de093e447e51ddde652143409ae615403d66021
+  em127_target_tree: cec21fe9a5941e5c7b05666ac6d07ba72bb18f4f2b0174a1d37cb85cba1eb018
+  main_version: "0.1.103"
+  main_merged: false
+  official_release: false
+  patch_folder: ElectrifiedMainline
+
 em094_integration_20261126:
   branch: integration/em094d4-main-candidate
   runtime_base: "949a99f2f281fc226356d5f6e247a84dce12b4f8"
