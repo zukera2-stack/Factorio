@@ -23,3 +23,7 @@ Projection standard: [PR #92](https://github.com/zukera2-stack/Factorio/pull/92)
 Import procedure: obtain exact ZIP from Library, verify SHA256, extract into a clean checkout of this branch, verify every file against assets/source/rolling-stock/SHA256SUMS.json. Commit only this subtree, then push this branch and verify remote commit contents against the manifest. Do not mark complete until binary import is independently verified. Do not merge main, modify runtime, or release.
 
 Blocked: render environment cannot resolve GitHub; GitHub connector cannot directly accept the file snapshot as binary content. Owner PC has read access to GitHub, but archive not located in checked local download directories.
+
+## Partial owner-PC import (2026-11-27)
+
+Imported exact current models/v2/tank.glb and models/v3/Locomotive_v3_body.glb (both SHA256 verified against the table above). Historical archive/V3_Rolling_Stock_3D_v1.zip from Downloads, SHA256 5f736b5ebcc2ccb5e243e27bf5fb8a56752e2422c761f61dd045525d0c65e2d4, is retained separately; it is NOT the current V2 source archive. Complete EM127 source archive and its split parts were absent from the Windows Downloads folder during this import. Remaining four current GLBs and full source/QA assets pending. Do not mark backup complete.
