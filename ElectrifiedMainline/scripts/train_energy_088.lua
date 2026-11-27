@@ -4,6 +4,7 @@
 -- follows a transient train ID. Battery/regen disabled until separately proven.
 local M={}
 local regen091=require("scripts.brake_recovery_091")
+local reserve117=require("scripts.native_reserve_117")
 local EM="em-electric-locomotive"
 local FUEL="em-c5-test-internal-joule-063"
 local function ensure(stats)
@@ -79,7 +80,7 @@ end
 -- Grid-history counters are deliberately unchanged.
 function M.transfer_store_to_burner(req,donor,row,amount)
   local owner,e=req.owner,req.e
-  if not (donor and donor.valid and donor.name==EM and owner and owner.valid and owner.name==EM
+  if not (donor and donor.valid and (donor.name==EM or donor.name=="em-battery-wagon") and owner and owner.valid and owner.name==EM
     and e and e.valid and donor.train and donor.train.valid and owner.train and owner.train.valid and e.train and e.train.valid
     and donor.train.id==owner.train.id and owner.train.id==e.train.id
     and donor.force==e.force and owner.force==e.force and donor.surface==e.surface and owner.surface==e.surface) then return 0 end
@@ -139,7 +140,7 @@ function M.snapshot(unit)
   local result={legacy_paid_J=legacy,legacy_motor_J=legacy_motor,retired_loco_J=rl,
     retired_motor_J=rm,live_loco_J=l,live_motor_J=m,paid_J=legacy+rl+rm+l+m,
     motor_paid_J=legacy_motor+rm+m,original_paid_J=stats.debited_J or 0,
-    battery_enabled=settings and settings.global and settings.global["em089-experimental-onboard-storage"] and settings.global["em089-experimental-onboard-storage"].value==true or false,regen_enabled=regen091.enabled(),owners={}}
+    battery_enabled=true,regen_enabled=regen091.enabled(),owners={}}
   if not unit then return result end
   local e=game.get_entity_by_unit_number(unit)
   if not (e and e.valid and e.name==EM and e.train and e.train.valid) then return result end
@@ -150,7 +151,7 @@ function M.snapshot(unit)
       if o.valid and o.name==EM then
         local row=rows[o.unit_number]
         result.owners[#result.owners+1]={unit=o.unit_number,loco_J=row and row.loco_J or 0,
-          motor_J=row and row.motor_J or 0,burner_J=o.burner and o.burner.remaining_burning_fuel or 0}
+          motor_J=row and row.motor_J or 0,burner_J=o.burner and o.burner.remaining_burning_fuel or 0, native_reserve_J=reserve117.total(o),heat_J=o.burner and o.burner.heat or 0}
       end
     end
   end

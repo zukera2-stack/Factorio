@@ -352,11 +352,11 @@ jobs:
         run: python scripts/verify_em081_wheels_patch.py
 
       - name: Restore exact EM080 body and EM081 wheels for integrated runtime
-        if: needs.detect.outputs.version == '0.1.85' || hashFiles('docs/builds/integration-runtime.json') != ''
+        if: needs.detect.outputs.version == '0.1.85' || needs.detect.outputs.version == '0.1.103'
         run: python scripts/verify_em081_wheels_patch.py
 
       - name: Rebuild EM083 exact raised collector and verify owner graphics
-        if: needs.detect.outputs.version == '0.1.85' || hashFiles('docs/builds/integration-runtime.json') != ''
+        if: needs.detect.outputs.version == '0.1.85' || needs.detect.outputs.version == '0.1.103'
         run: |
           python -m pip install "numpy==2.3.5" "Pillow==12.3.0"
           python scripts/rebuild_em083_pantograph.py --repo .

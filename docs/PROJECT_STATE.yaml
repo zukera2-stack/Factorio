@@ -1,3 +1,26 @@
+em135_release_integration_20261127:
+  branch: integration/em135-0.1.134-release-candidate
+  candidate_version: "0.1.134"
+  main_version: "0.1.103"
+  status: exact_runtime_integration_candidate
+  owner_installed_version: "0.1.133"
+  owner_em133_status_accepted: true
+  runtime_files: 500
+  png_files: 427
+  payload_tree_sha256: b2038ea54154c929086d39ffe3997bad1b88c01df916a4455c9b5f120bf51f42
+  standard_onboard_storage: true
+  standard_regeneration: true
+  standard_grid_return: true
+  stationary_charging_configurable: true
+  fans_changed_in_em134: false
+  new_gameplay_tests: not_run
+  ci: not_run_by_request
+  windows_em134: pending
+  multiplayer: not_confirmed
+  ups: not_confirmed
+  main_merged: false
+  official_release: false
+
 em094_integration_20261126:
   branch: integration/em094d4-main-candidate
   runtime_base: "949a99f2f281fc226356d5f6e247a84dce12b4f8"

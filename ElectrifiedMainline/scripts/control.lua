@@ -25,11 +25,14 @@ local pantograph049 = require("scripts.pantograph_visual_049")
 local paidTraction065 = require("scripts.traction_paid_065")
 local helper067 = require("scripts.helper_lifecycle_067")
 local wagon_status084 = require("scripts.motor_wagon_status_084")
+local cooling108 = require("scripts.battery_cooling_108")
+local livery126 = require("scripts.train_livery_126")
+local reserve117 = require("scripts.native_reserve_117")
+local headlight132 = require("scripts.locomotive_headlight_132")
 -- Legacy wire managers are retained for cleanup only. 046 technical and visual graphs are independent.
 local function empty_native_graph() return {nodes={},edges={}} end
 
 local TRAIN_UPDATE_INTERVAL = 30
-local RAIL_DIAGNOSTIC_INTERVAL = 1 -- temporary: catch rail transitions during testing
 local RAIL_RADIUS = 3
 
 local RAIL_NAMES = {
@@ -84,6 +87,9 @@ script.on_init(function()
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
     pantograph049.clear()
+    headlight132.clear()
+    livery126.reconcile()
+    wagon_status084.reconcile(onboard089,cooling108,game.tick)
 end)
 script.on_configuration_changed(function()
     ensure_storage()
@@ -98,107 +104,10 @@ script.on_configuration_changed(function()
     art030.rebuild_all(power019.graph())
     ghost_visual023.rebuild_all()
     pantograph049.clear()
+    headlight132.clear()
+    livery126.reconcile()
+    wagon_status084.reconcile(onboard089,cooling108,game.tick)
 end)
-
--- Temporary diagnostics for blueprint rail replacement and undo/redo.
--- These handlers observe events only; they do not change replacement behavior.
-local function diag_value(value)
-    if value == nil then return "nil" end
-    return tostring(value)
-end
-
-local function diag_position(position)
-    if not position then return "nil" end
-    return string.format("(%.3f,%.3f)", position.x or position[1] or 0, position.y or position[2] or 0)
-end
-
-local function diag_entity(event_name, event, entity)
-    entity = entity or (event and (event.entity or event.ghost))
-    local player_index = event and event.player_index or nil
-    local entity_name = "<none>"
-    local entity_type = "<none>"
-    local ghost_name = "nil"
-    local position = "nil"
-    local direction = "nil"
-    local surface_index = "nil"
-    local force_name = "nil"
-    local quality_name = "nil"
-
-    if entity then
-        entity_name = diag_value(entity.name)
-        entity_type = diag_value(entity.type)
-        position = diag_position(entity.position)
-        direction = diag_value(entity.direction)
-        if entity.surface then surface_index = diag_value(entity.surface.index) end
-        if entity.force then force_name = diag_value(entity.force.name) end
-        if entity.quality then quality_name = diag_value(entity.quality.name) end
-        if entity.type == "entity-ghost" then
-            ghost_name = diag_value(entity.ghost_name)
-        end
-    end
-
-    log(string.format(
-        "[ElectrifiedMainline][em-rail-diag] event=%s tick=%s player=%s entity=%s type=%s ghost_name=%s surface=%s position=%s direction=%s force=%s quality=%s build_mode=%s",
-        event_name, tostring(game.tick), diag_value(player_index), entity_name,
-        entity_type, ghost_name, surface_index, position, direction, force_name,
-        quality_name, diag_value(event and event.build_mode)
-    ))
-end
-
-local function diag_undo_actions(event_name, event)
-    log(string.format(
-        "[ElectrifiedMainline][em-rail-diag] event=%s tick=%s player=%s action_count=%s",
-        event_name, tostring(game.tick), diag_value(event and event.player_index),
-        tostring(event and event.actions and #event.actions or 0)
-    ))
-
-    for index, action in pairs((event and event.actions) or {}) do
-        local target = action.target
-        local target_name = target and target.name or nil
-        local target_position = target and target.position or nil
-        local target_direction = target and target.direction or nil
-        local target_quality = target and target.quality or nil
-        local target_quality_name = type(target_quality) == "table"
-            and target_quality.name or target_quality
-        log(string.format(
-            "[ElectrifiedMainline][em-rail-diag] %s_action=%s type=%s target_name=%s target_position=%s target_direction=%s target_quality=%s surface_index=%s original_name=%s original_quality=%s",
-            event_name, tostring(index), diag_value(action.type),
-            diag_value(target_name), diag_position(target_position),
-            diag_value(target_direction), diag_value(target_quality_name),
-            diag_value(action.surface_index), diag_value(action.original_name),
-            diag_value(action.original_quality_name)
-        ))
-    end
-end
-
-local function on_diag_pre_build(event)
-    ensure_storage()
-    log(string.format(
-        "[ElectrifiedMainline][em-rail-diag] event=on_pre_build tick=%s player=%s position=%s direction=%s build_mode=%s flip_horizontal=%s flip_vertical=%s",
-        tostring(game.tick), diag_value(event.player_index),
-        diag_position(event.position), diag_value(event.direction),
-        diag_value(event.build_mode), diag_value(event.flip_horizontal),
-        diag_value(event.flip_vertical)
-    ))
-end
-
-local function on_diag_marked_for_deconstruction(event)
-    diag_entity("on_marked_for_deconstruction", event, event.entity)
-
-end
-
-local function on_diag_pre_ghost_deconstructed(event)
-    ghost_visual023.on_removed(event.ghost)
-    diag_entity("on_pre_ghost_deconstructed", event, event.ghost)
-end
-
-local function on_diag_undo(event)
-    diag_undo_actions("on_undo_applied", event)
-end
-
-local function on_diag_redo(event)
-    diag_undo_actions("on_redo_applied", event)
-end
 
 local function rail_key(surface_index, position)
     return string.format("%d:%.1f:%.1f",
@@ -242,7 +151,7 @@ local function queue_rail_replacement(entity, force, player, cancel_upgrade)
         storage.em.pending_rail_replacements[key] = nil
         log("[ElectrifiedMainline] Could not order rail deconstruction for " .. entity.name)
         if player and player.valid then
-            player.print("Electrified Mainline: could not schedule this rail for replacement.")
+            player.print({"message.em-rail-replacement-failed"})
         end
         return false
     end
@@ -349,7 +258,6 @@ end
 
 local function on_cancelled_deconstruction(event)
     ensure_storage()
-    diag_entity("on_cancelled_deconstruction", event, event.entity)
     local entity = event.entity
     if not (entity and entity.valid) then return end
     storage.em.pending_rail_replacements[replacement_key(entity)] = nil
@@ -370,13 +278,11 @@ end
 local function on_built(event)
     ensure_storage()
     local entity = event.entity
-    diag_entity(event.name == defines.events.on_robot_built_entity and "on_robot_built_entity"
-        or event.name == defines.events.script_raised_revive and "script_raised_revive"
-        or event.name == defines.events.script_raised_built and "script_raised_built"
-        or "on_built_entity", event, entity)
     if not (entity and entity.valid) then return end
 
     helper067.on_built(entity)
+    wagon_status084.refresh(entity,onboard089,cooling108,game.tick)
+    livery126.built(entity)
     power019.on_built(event)
     bridge058.on_built(entity)
     if entity.name=="em-35kv-catenary-pole" or entity.name=="em-35kv-catenary-pole-north" then
@@ -392,13 +298,10 @@ local function on_built(event)
 end
 
 local function cleanup_train_for_entity(event)
+    cooling108.remove(event.entity)
+    headlight132.on_removed(event.entity)
     ensure_storage()
     local entity = event.entity
-    local diag_name = event.name == defines.events.on_robot_mined_entity and "on_robot_mined_entity"
-        or event.name == defines.events.on_player_mined_entity and "on_player_mined_entity"
-        or event.name == defines.events.on_entity_died and "on_entity_died"
-        or "script_raised_destroy"
-    diag_entity(diag_name, event, entity)
     if not (entity and entity.valid) then return end
 
     term094.before_anchor_removed(entity)
@@ -465,7 +368,12 @@ local function find_rail_under_locomotive(locomotive, cache)
     local closest_rail = nil
     local best_distance_squared = math.huge
     local pos=locomotive.position
-    for _, rail in pairs(train.get_rails()) do
+    local rails=cache and cache.train_rails[train.id]
+    if not rails then
+        rails=train.get_rails()
+        if cache then cache.train_rails[train.id]=rails end
+    end
+    for _, rail in pairs(rails) do
         if rail.valid then
             local rp=rail.position
             local dx = rp.x - pos.x
@@ -481,38 +389,6 @@ local function find_rail_under_locomotive(locomotive, cache)
 
     if cache then cache[id]=closest_rail or false end
     return closest_rail
-end
-
-local function update_rail_diagnostics(train, state, rail_cache)
-    state.rail_diagnostics = state.rail_diagnostics or {}
-
-    for _, locomotive in pairs(get_custom_locomotives(train)) do
-        local locomotive_id = locomotive.unit_number or locomotive.name
-        local rail = find_rail_under_locomotive(locomotive,rail_cache)
-        local rail_name = rail and rail.name or "<no-rail>"
-        local rail_id = rail and rail.unit_number or "nil"
-
-        local previous = state.rail_diagnostics[locomotive_id]
-        if not previous or previous.rail_name ~= rail_name or previous.rail_id ~= rail_id then
-            local rail_position = rail
-                and string.format("(%.2f, %.2f)", rail.position.x, rail.position.y)
-                or "n/a"
-
-            log(string.format(
-                "[ElectrifiedMainline][rail-debug] train=%s locomotive=%s rail=%s rail_unit=%s rail_position=%s",
-                tostring(train.id),
-                tostring(locomotive_id),
-                tostring(rail_name),
-                tostring(rail_id),
-                rail_position
-            ))
-
-            state.rail_diagnostics[locomotive_id] = {
-                rail_name = rail_name,
-                rail_id = rail_id
-            }
-        end
-    end
 end
 
 local function initialize_train_state(train, previous_state)
@@ -547,7 +423,13 @@ local function on_train_created(event)
 
     initialize_train_state(train, previous_state)
     regen091.train_changed(event)
+    livery126.sync(train)
     helper067.on_train_created(event)
+    if train.valid then
+        for _,wagon in pairs(train.carriages) do
+            wagon_status084.refresh(wagon,onboard089,cooling108,game.tick)
+        end
+    end
 end
 
 local function on_tick(event)
@@ -577,12 +459,12 @@ local function on_tick(event)
     -- Reconcile actual native consists BEFORE charging: never grant an
     -- orphaned/mismatched booster J from this tick's native 25kV sink.
     helper067.on_tick(event.tick)
+    regen091.settle(event.tick,onboard089)
     paidTraction065.on_tick(event.tick,art030,pantograph049,charge_budget)
     regen091.finish(event.tick,onboard089,function(e) return paidTraction065.contact(e,art030,pantograph049) end)
+    cooling108.tick(event.tick,onboard089)
     term094.retire(event.tick)
     local update_speed = event.tick % TRAIN_UPDATE_INTERVAL == 0
-    local update_rails = event.tick % RAIL_DIAGNOSTIC_INTERVAL == 0
-    if not update_speed and not update_rails then return end
 
     local pending_replacements = storage.em.pending_rail_replacements
     if pending_replacements and next(pending_replacements) then
@@ -590,13 +472,13 @@ local function on_tick(event)
     end
 
     -- Filter at the engine level; do not scan players or every train in the game.
-    -- Rail diagnostics are temporary and run every tick to avoid skipping short
-    -- rail segments at high train speed.
+    -- The pantograph visual/contact phase keeps its original per-tick cadence.
     local trains = game.train_manager.get_trains({
         stock = "em-electric-locomotive"
     })
     -- Exact same rail result within this visual/diagnostic phase only.
-    local rail_cache={}
+    local rail_cache={train_rails={}}
+    headlight132.tick(trains,get_custom_locomotives,onboard089,reserve117)
     pantograph049.sync(trains, get_custom_locomotives,event.tick,art030.contact_at,function(e)
         local rail=find_rail_under_locomotive(e,rail_cache)
         return rail and (rail.name=="em-high-speed-straight-rail" or rail.name=="em-half-diagonal-high-speed-rail"
@@ -612,11 +494,6 @@ local function on_tick(event)
             end
 
             if state then
-                if update_rails then
-                    -- Diagnostic only: determine the rail under each custom locomotive.
-                    update_rail_diagnostics(train, state,rail_cache)
-                end
-
                 -- Used by the later battery/regen implementation. No energy is
                 -- added or consumed in this foundational pass.
                 if update_speed then
@@ -650,20 +527,19 @@ for _, event_id in pairs(cleanup_events) do
 end
 
 script.on_event(defines.events.on_marked_for_upgrade, on_marked_for_upgrade)
-script.on_event(defines.events.on_pre_build, on_diag_pre_build)
-script.on_event(defines.events.on_marked_for_deconstruction, on_diag_marked_for_deconstruction)
-script.on_event(defines.events.on_pre_ghost_deconstructed, on_diag_pre_ghost_deconstructed)
-script.on_event(defines.events.on_undo_applied, on_diag_undo)
-script.on_event(defines.events.on_redo_applied, on_diag_redo)
+script.on_event(defines.events.on_pre_ghost_deconstructed, function(event) ghost_visual023.on_removed(event.ghost) end)
 script.on_event(defines.events.on_player_selected_area, on_player_selected_area)
 script.on_event(defines.events.on_cancelled_deconstruction, on_cancelled_deconstruction)
 script.on_event(defines.events.on_train_created, on_train_created)
+script.on_event(defines.events.on_entity_color_changed, livery126.changed)
 script.on_event(defines.events.on_object_destroyed, technical046.on_object_destroyed)
 script.on_event(defines.events.on_tick, on_tick)
 script.on_event(defines.events.on_entity_damaged, regen091.damage)
-script.on_event(defines.events.on_runtime_mod_setting_changed, regen091.setting_changed)
 -- EM084: override only the opened motor-wagon GUI status, never native alerts.
-script.on_nth_tick(60, function(_) wagon_status084.refresh_opened_players() end)
+script.on_nth_tick(15, function(_) wagon_status084.refresh_players(onboard089,cooling108,game.tick) end)
+script.on_event(defines.events.on_selected_entity_changed,function(event)
+    wagon_status084.refresh_player(game.get_player(event.player_index),onboard089,cooling108,game.tick)
+end)
 
 -- Read-only diagnostic for the unpowered 0.1.9 visual catenary graph.
 commands.add_command("em-35kv-status", "Show visual graph; see /em-25kv-mode status for power.", function(event)
@@ -758,8 +634,7 @@ commands.add_command("em-25kv-priority", "Select an electric interface, accumula
     end
 end)
 
--- 0.1.63 TEST BRANCH ONLY: opt-in single scene with genuine main mod objects.
-local trial063 = require("scripts.em072_c5_fullmod_trial_063")
+-- EM134: release package does not register developer-only test commands.
 -- Factorio registers one handler per event per mod. Keep EM084 and the
 -- legacy read-only trace in a single dispatcher, never open helper GUIs.
 script.on_event(defines.events.on_gui_opened,function(event)
@@ -769,8 +644,7 @@ script.on_event(defines.events.on_gui_opened,function(event)
         if player and player.valid then player.opened=nil end
         return
     end
-    wagon_status084.on_gui_opened(event)
-    trial063.on_gui_opened(event)
+    wagon_status084.refresh(event.entity,onboard089,cooling108,game.tick)
 end)
 -- EM072 experimental read-only QA API. Exposes only numeric IDs and Joules;
 -- no helper spawning, no arbitrary credit, no gameplay execution hook.
@@ -802,3 +676,5 @@ remote.add_interface("em089_onboard_storage",{snapshot=onboard089.snapshot})
 remote.add_interface("em091_brake_recovery",{snapshot=regen091.snapshot})
 
 remote.add_interface("em094_line_terminal",{snapshot=term094.snapshot})
+
+remote.add_interface("em108_battery_cooling",{snapshot=function(unit) return cooling108.snapshot(unit,onboard089) end})

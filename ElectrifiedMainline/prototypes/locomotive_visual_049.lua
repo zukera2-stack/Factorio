@@ -1,4 +1,4 @@
--- EM080: locally rendered V3; native folded body, independent bogies and raised roof replacement.
+-- EM127: calibrated V3 body, folded/raised collector with original contact anchor; native bogies unchanged.
 -- Identical frame geometry/pivot for native body, color mask and script overlay.
 local root="__ElectrifiedMainline__/graphics/entity/locomotive-052/"
 local function layer(name)
@@ -12,6 +12,8 @@ local body,mask,shadow=layer("body"),layer("mask"),layer("shadow")
 -- 050: authored shaded grayscale mask, normal runtime pixel multiplication.
 mask.flags={"mask"};mask.apply_runtime_tint=true;mask.tint_as_overlay=false
 shadow.flags={"shadow"};shadow.draw_as_shadow=true
+-- Larger shadow cells, unchanged center and scale, to fit the calibrated silhouette.
+shadow.width=640;shadow.height=640
 local loco=assert(data.raw.locomotive["em-electric-locomotive"])
 loco.pictures={rotated={layers={body,mask,shadow}}}
 -- Single two-axle bogie at each native joint. No baked wheels in body.

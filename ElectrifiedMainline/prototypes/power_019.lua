@@ -63,6 +63,16 @@ substation.minable = {mining_time = 0.6, result = substation.name}
 substation.placeable_by = {item = substation.name, count = 1}
 substation.next_upgrade = nil
 flag_once(substation, "get-by-unit-number")
+-- EM128: industrial oxide-red traction substation; preserve wires, coverage and shadow.
+local traction_tint = {r=0.86,g=0.29,b=0.24,a=1}
+for _, layer in ipairs(substation.pictures.layers) do
+    if not layer.draw_as_shadow then layer.tint=traction_tint end
+end
+local traction_icons = {
+    {icon="__base__/graphics/icons/substation.png",icon_size=64,tint=traction_tint},
+    {icon="__ElectrifiedMainline__/graphics/icons/traction-25kv-125.png",icon_size=64},
+}
+substation.icon=nil; substation.icons=table.deepcopy(traction_icons)
 
 -- 0.1.33: an explicit NORTHERN placement variant keeps native electric-pole
 -- placement, blueprint and Undo mechanics. Its shaft is shortened only in art.
@@ -151,7 +161,7 @@ data:extend({
     },
     {
         type = "item", name = "em-35kv-traction-substation",
-        icon = "__base__/graphics/icons/substation.png",
+        icons = table.deepcopy(traction_icons),
         icon_size = 64, subgroup = "energy",
         order = "a[electric-pole]-z[35kv-substation]",
         stack_size = 50, place_result = "em-35kv-traction-substation",
@@ -168,6 +178,7 @@ data:extend({
     },
     {
         type = "recipe", name = "em-35kv-traction-substation", enabled = false,
+        icons = table.deepcopy(traction_icons),
         ingredients = {
             {type = "item", name = "substation", amount = 1},
             {type = "item", name = "em-heavy-copper-cable", amount = 20},
@@ -178,8 +189,8 @@ data:extend({
     },
 })
 
-local tech = data.raw.technology["em-electrified-railways"]
-assert(tech, "ElectrifiedMainline: missing electrified railways technology")
+local tech = data.raw.technology["em-high-speed-rails"]
+assert(tech, "ElectrifiedMainline: missing high-speed rails technology")
 tech.effects = tech.effects or {}
 table.insert(tech.effects, {type = "unlock-recipe", recipe = "em-35kv-catenary-pole"})
 table.insert(tech.effects, {type = "unlock-recipe", recipe = "em-35kv-catenary-pole-north"})

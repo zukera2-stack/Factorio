@@ -347,15 +347,6 @@ function M.on_tick(tick,graph)
  local plan,charge_budget=dispatch.plan(networks,auto_edges,M.LIMIT)
  local connected_peers={}
  for _,edge in ipairs(auto_edges) do connected_peers[edge.b]=(connected_peers[edge.b] or 0)+1 end
- if tick%600==0 or not s.last_flow_log then
-   s.last_flow_log=tick
-   local ids={};for id in pairs(networks) do ids[#ids+1]=id end;table.sort(ids)
-   for _,id in ipairs(ids) do
-     local f,n,v,o=raw_flows[id],networks[id],direct[id] or {},previous[id] or {}
-     log(string.format("[EM060 flow] net=%s raw_primary=%.0f raw_secondary=%.0f raw_solar=%.0f raw_primary_demand=%.0f raw_secondary_demand=%.0f max_prod=%.0f max_cons=%.0f raw_tertiary_out=%.0f raw_tertiary_in=%.0f raw_acc_J=%.0f raw_cap_J=%.0f own_offer=%.0f own_demand=%.0f direct_prod=%.0f direct_demand=%.0f direct_acc_J=%.0f direct_cap_J=%.0f direct_charge=%.0f direct_discharge=%.0f eei=%d accumulators=%d gen=%.0f load=%.0f battery=%.0f charge=%.0f J/tick",
-       tostring(id),f.primary_output or 0,f.secondary_output or 0,f.solar_output or 0,f.primary_demand or 0,f.secondary_demand or 0,f.maximum_production or 0,f.maximum_consumption or 0,f.tertiary_output or 0,f.tertiary_demand or 0,f.accumulator_energy or 0,f.accumulator_capacity or 0,o.offer or 0,o.demand or 0,v.production or 0,v.demand or 0,v.stored or 0,v.capacity or 0,v.charge or 0,v.discharge or 0,v.interfaces or 0,v.accumulators or 0,n.gen,n.load,n.battery,n.charge))
-   end
- end
  -- Only build this synchronous native-network set for an actual drain.
  -- No permission survives a tick; normal candidate isolation below remains.
  local live_corridor
@@ -487,16 +478,9 @@ function M.on_tick(tick,graph)
      end
    end
  end
- -- Settled diagnostic: log status transitions and periodic actual IDs, not only command-time waiting.
+ -- Preserve the player-facing planned power value, without per-tick log formatting.
  for id,r in pairs(s.stations) do
-   local p=lookup(id);local m=lookup(s.feeders[id]);local anchor=lookup(t.helpers[s.feeders[id]])
-   local line=valid(r.line_port) and r.line_port.electric_network_id
-   local signature=table.concat({r.mode or "-",r.status or "-",r.direction or "-",tostring(p and p.electric_network_id),tostring(line),tostring(m and m.electric_network_id),tostring(anchor and anchor.electric_network_id)}, "/")
    r.planned_mw=(plan[id] or 0)*60/1e6
-   if signature~=r.last_signature or tick%600==0 then
-     log(string.format("[EM060] station=%d %s factory_port=%s feeder=%s measured=%.3fMW input=%.0fJ output=%.0fJ planned=%.3fMW",id,signature,tostring(valid(r.factory_port) and r.factory_port.electric_network_id),tostring(s.feeders[id]),r.last_mw or 0,valid(r.input) and r.input.energy or 0,valid(r.output) and r.output.energy or 0,r.planned_mw))
-     r.last_signature=signature
-   end
  end
  -- Only this tick's generator-to-charge allocation; not a grant of Joules.
  local authorized={}

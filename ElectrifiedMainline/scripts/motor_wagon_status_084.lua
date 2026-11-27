@@ -1,9 +1,14 @@
--- EM084: GUI-only custom status of the two genuine motor wagons.
--- Cargo and fluid wagons have no burner/fuel inventory. Their inherited train
--- status may display native "No fuel", which refers to an electric consist.
--- Never modify native train/loco status, power allocation or alerts.
+-- EM133: one presentation path for selected/opened motor wagons.
+-- The native UI may report "No fuel" for electric rolling stock. Override the
+-- opened entity status with EM-specific text, but never change native traction,
+-- alerts, inventories or train state.
 local M={}
-local MOTOR={['em-motor-cargo-wagon']=true,['em-motor-fluid-wagon']=true}
+local MOTOR={['em-motor-cargo-wagon']=true,['em-motor-fluid-wagon']=true,['em-battery-wagon']=true}
+
+local function is_motor_wagon(entity)
+  return entity and entity.valid and entity.object_name=='LuaEntity' and entity.unit_number and MOTOR[entity.name]
+    and (entity.type=='cargo-wagon' or entity.type=='fluid-wagon')
+end
 
 local function has_em_locomotive(train)
   if not (train and train.valid) then return false end
@@ -17,10 +22,12 @@ local function has_em_locomotive(train)
   return false
 end
 
-function M.refresh(entity)
-  if not (entity and entity.valid and
-      (entity.type=="cargo-wagon" or entity.type=="fluid-wagon") and
-      MOTOR[entity.name]) then return false end
+function M.refresh(entity,onboard,cooling,tick)
+  if not is_motor_wagon(entity) then return false end
+  if entity.name=='em-battery-wagon' then
+    cooling.refresh(entity,onboard,tick)
+    return true
+  end
   local diode, text
   local train=entity.train
   if not has_em_locomotive(train) then
@@ -30,7 +37,6 @@ function M.refresh(entity)
     diode=defines.entity_status_diode.red
     text={'em-traction-status.no-traction-power'}
   else
-    -- Yellow means the car is part of a motor consist; NOT power confirmed.
     diode=defines.entity_status_diode.yellow
     text={'em-motor-status.from-locomotive'}
   end
@@ -38,17 +44,23 @@ function M.refresh(entity)
   return true
 end
 
-function M.on_gui_opened(event)
-  M.refresh(event.entity)
+-- Refresh both hover tooltip and opened entity; player.opened may be a GUI object.
+function M.refresh_player(player,onboard,cooling,tick)
+  if not (player and player.valid) then return end
+  M.refresh(player.selected,onboard,cooling,tick)
+  if player.opened~=player.selected then M.refresh(player.opened,onboard,cooling,tick) end
 end
-
-function M.refresh_opened_players()
-  -- Limited to currently opened motor-wagon GUIs. Do not scan whole surfaces.
+function M.refresh_players(onboard,cooling,tick)
   for _,player in pairs(game.connected_players) do
-    if player and player.valid then
-      M.refresh(player.opened)
+    M.refresh_player(player,onboard,cooling,tick)
+  end
+end
+function M.reconcile(onboard,cooling,tick)
+  -- Once on configuration change, including standalone/uncoupled wagons.
+  for _,surface in pairs(game.surfaces) do
+    for _,e in pairs(surface.find_entities_filtered{name={'em-motor-cargo-wagon','em-motor-fluid-wagon','em-battery-wagon'}}) do
+      M.refresh(e,onboard,cooling,tick)
     end
   end
 end
-
 return M

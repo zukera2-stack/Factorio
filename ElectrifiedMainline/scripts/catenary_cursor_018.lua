@@ -142,12 +142,12 @@ function M.on_place(event)
         event.cursor_position,CLICK_RADIUS)
     local candidate=candidates[1]
     if not candidate then
-        player.print("[EM 0.1.18] No ВСМ native rail location near cursor (Alt+LMB).")
+        player.print({"message.em-mast-no-slot"})
         return
     end
     local status=M.classify(player,candidate)
     if status~="READY" then
-        player.print("[EM 0.1.18] Mast position unavailable: "..status)
+        player.print({"message.em-mast-slot-unavailable",status})
         return
     end
     -- This is the REAL item and the official player build API.

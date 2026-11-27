@@ -1,4 +1,4 @@
--- EM094D opt-in terminal lifecycle. Native cross-surface port mechanism
+-- EM094D standard regeneration terminal lifecycle. Native cross-surface port mechanism
 -- follows existing 058; no persistent network-ID authorization or free J.
 local M={}
 local technical=require('scripts.technical_network_046')
@@ -8,10 +8,7 @@ local LAB='em094-terminal-lab'
 local function valid(e)return e and e.valid end
 local function entity(id)local e=id and game.get_entity_by_unit_number(id);return valid(e) and e or nil end
 local function conn(e)return valid(e) and e.get_wire_connector(defines.wire_connector_id.pole_copper,true) or nil end
-function M.enabled()
- local g=settings.global
- return g["em094-experimental-grid-regeneration"].value and g["em091-experimental-regeneration"].value and g["em089-experimental-onboard-storage"].value
-end
+function M.enabled() return true end
 local function state()
  storage.em=storage.em or {};storage.em.em094_terminal=storage.em.em094_terminal or {ports={},next_slot=0,offered=0,accepted=0,remainder=0,uncertain=0}
  return storage.em.em094_terminal

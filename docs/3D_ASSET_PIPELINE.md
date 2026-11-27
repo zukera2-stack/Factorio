@@ -2,6 +2,10 @@
 
 **Recorded:** 2026-11-24. **Project:** Factorio / Electrified Mainline. **Status:** auxiliary 3D inspection tools tested locally; **no approved replacement locomotive, no sprite changes or in-game integration**.
 
+## Calibrated Factorio rolling-stock projection (EM126–EM127, 2026-11-27)
+
+**Required for future rolling-stock sprite work:** read [ROLLING_STOCK_PROJECTION.md](ROLLING_STOCK_PROJECTION.md). It records the measured orthographic/dimetric compensation, fixed sprite origins, UV livery masks, native hatch/fan layers, valve offsets, and rigid pantograph/contact geometry. EM126/127 used actual GLB renders via VTK/EGL; Blender can reproduce that profile. These are local QA candidates, not an integrated or visually accepted main runtime. The historical status below describes the original 2026-11-24 tooling checkpoint.
+
 ## Why this exists
 
 The owner supplied the research report **«Современные инструменты image-to-3D и интеграция с Unity»** (verbatim archival copy: [`docs/research/3d-agent-source-report-20261124.md`](research/3d-agent-source-report-20261124.md)). Its core value for this Factorio project is the **sketch → mesh → validation → materials/UV → reproducible renders** workflow, not Unity Prefabs or Unity-side testing. The report proposes image-to-3D generators (Meshy, Tripo, Rodin, Hunyuan3D, TRELLIS.2), Blender `bpy` automation, MCP/Unity CLI, LOD and mesh checks. Those are **candidate capabilities**, not proof any service is installed, provisioned or suitable for final art.

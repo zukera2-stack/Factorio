@@ -1,6 +1,7 @@
 -- Read-only train observation, one cosmetic render per actual EM locomotive.
 -- No energy, entity creation, changes to trains or Undo operations.
 local M={}
+local battery=require("scripts.onboard_storage_089")
 local NAME="em-electric-locomotive"
 local COUNT=256
 local START,STOP=0.002,0.001
@@ -16,6 +17,22 @@ function M.state(speed,previous)
     local v=math.abs(speed or 0)
     if previous=="up" then return v>STOP and "up" or "down" end
     return v>=START and "up" or "down"
+end
+-- EM118: a departure request raises the collector before the first movement.
+-- No speed writes, no energy grant: the electrical layer still verifies contact.
+function M.departure_requested(train)
+    if not (train and train.valid) then return false end
+    if train.manual_mode then
+        local a=train.riding_state.acceleration
+        return a==defines.riding.acceleration.accelerating or a==defines.riding.acceleration.reversing
+    end
+    return train.state==defines.train_state.on_the_path and train.has_path
+end
+function M.train_state(train,previous,allow_stationary)
+    if not (train and train.valid) then return "down" end
+    if M.departure_requested(train) then return "up" end
+    if allow_stationary and train.speed==0 and battery.stationary_enabled() then return "up" end
+    return M.state(train.speed,previous)
 end
 local function render_object(row)
     if not row then return nil end
@@ -86,7 +103,7 @@ function M.sync(trains,get_locomotives,tick,contact_at,is_hsr)
                 if e.valid and e.name==NAME and e.unit_number and not seen[e.unit_number] then
                     local id=e.unit_number;seen[id]=true
                     local row=s[id]
-                    local state=M.state(train.speed,row and row.state)
+                    local state=M.train_state(train,row and row.state,true)
                     local frame=M.frame(e.orientation)
                     local r=render_object(row)
                     if not r then

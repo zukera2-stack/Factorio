@@ -5,7 +5,7 @@
 -- Dismantling dissipates already-paid helper burner J by owner's explicit policy.
 local M={}
 local EM='em-electric-locomotive'
-local MOTOR={['em-motor-cargo-wagon']=true,['em-motor-fluid-wagon']=true}
+local MOTOR={['em-motor-cargo-wagon']=true,['em-motor-fluid-wagon']=true,['em-battery-wagon']=true}
 -- Preserve all 256 historical prototypes for save compatibility. New blocks use <=200.
 local MAX_PROTOTYPE_MOTORS=256
 local BLOCK_MOTORS=200
@@ -99,9 +99,8 @@ local function authorised_owners(train)
   for _,e in ipairs(directional_owners(train)) do ids[e.unit_number]=true end
   return ids
 end
-local function fuel(e)
-  return e and e.valid and e.burner and math.max(0,e.burner.remaining_burning_fuel or 0) or 0
-end
+local reserve117=require("scripts.native_reserve_117")
+local function fuel(e) return reserve117.total(e) end
 local function retire(helper,reason)
   if not (helper and helper.valid and power(helper.name)) then return false end
   local s=state()
@@ -435,11 +434,6 @@ function M.on_tick(tick)
   if tick%PERIOD==0 or s.dirty then
     s.dirty=false
     scan_real_trains()
-  end
-  if tick%600==0 then
-    log(string.format('[EM077 MOTOR STATE] tick=%d created=%d retired=%d dismantle_J=%.3f external_J=%.3f unknown=%d fails=%d deferred=%d registered=%d',
-      tick,s.created,s.orphan_helpers_removed,s.removed_loss_J,s.external_loss_J,
-      s.external_unobserved,s.failed,s.deferred,#M.targets()))
   end
 end
 return M

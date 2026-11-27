@@ -19,7 +19,14 @@ local function ensure()
     {debited_J=0,credited_J=0,charged_ticks=0,miss_contact=0,miss_grid=0,miss_supply=0}
   return storage.em.traction_paid_065
 end
-local function network_for_contact(e,art,pantograph)
+local function network_for_contact(e,art,pantograph,for_charge)
+  -- EM112 opt-in storage mode: same hysteresis as the visible collector.
+  -- EM118: verified departure request also raises the collector at zero speed.
+  -- Legacy disabled mode is unchanged.
+  if battery089.enabled() then
+    local row=storage.em and storage.em.pantograph_049 and storage.em.pantograph_049[e.unit_number]
+    if not (e.train and e.train.valid and pantograph.train_state(e.train,row and row.state,for_charge)=='up') then return nil,'pantograph-down' end
+  end
   local h=pantograph.head_offset(pantograph.frame(e.orientation))
   local surface=e.surface.index
   local force=e.force
@@ -91,6 +98,7 @@ local function native_state()
     {sinks={},metered_native_J=0,discarded_J=0,created=0}
   local n=storage.em.traction_native_068
   n.sinks_meta=n.sinks_meta or {}
+  n.charge_sinks=n.charge_sinks or {};n.charge_sinks_meta=n.charge_sinks_meta or {}
   return n
 end
 -- EM086: retire buffers only when the original output AND the physical
@@ -98,15 +106,17 @@ end
 -- same surviving feeder must retain paid energy for the EM069 rejoin path.
 -- Never transfer a retired buffer to a different network. Measure the loss
 -- before destruction; stale invalid references have unknown loss, not zero.
-local function retire_orphan_sinks(n,tick)
+local function retire_orphan_sinks(n,tick,charging)
+  local sinks=charging and n.charge_sinks or n.sinks
+  local meta_map=charging and n.charge_sinks_meta or n.sinks_meta
   local ids={}
-  for id in pairs(n.sinks) do ids[#ids+1]=id end
+  for id in pairs(sinks) do ids[#ids+1]=id end
   table.sort(ids)
   for _,id in ipairs(ids) do
-    local sink=n.sinks[id]
-    local meta=n.sinks_meta[id]
+    local sink=sinks[id]
+    local meta=meta_map[id]
     if not (sink and sink.valid) then
-      n.sinks[id]=nil;n.sinks_meta[id]=nil
+      sinks[id]=nil;meta_map[id]=nil
       n.unobserved_removed=(n.unobserved_removed or 0)+1
       log(string.format('[EM086 SINK UNOBSERVED LOSS] tick=%d output=%d',tick,id))
     elseif not entity(id) and meta and meta.feeder and not entity(meta.feeder) then
@@ -116,24 +126,27 @@ local function retire_orphan_sinks(n,tick)
       if sink.destroy() then
         n.discarded_J=(n.discarded_J or 0)+j
         n.retired=(n.retired or 0)+1
-        n.sinks[id]=nil;n.sinks_meta[id]=nil
+        sinks[id]=nil;meta_map[id]=nil
         log(string.format('[EM086 SINK RETIRED] tick=%d output=%d feeder=%d sink=%d loss_J=%.3f cumulative_loss_J=%.3f',
           tick,id,meta.feeder,unit,j,n.discarded_J))
       end
     end
   end
 end
-local function sink_for_output(source)
+local function sink_for_output(source,charging)
   local id=source.output.unit_number
   local state=native_state()
+  local sinks=charging and state.charge_sinks or state.sinks
+  local meta_map=charging and state.charge_sinks_meta or state.sinks_meta
+  if charging and source.mode~='auto' then return nil end
   if source.mode=='terminal-094' then
     local sink=source.terminal_sink
     if not(sink and sink.valid and sink.electric_network_id==source.line_port.electric_network_id)then return nil end
-    state.sinks[id]=sink
+    sinks[id]=sink
     return sink
   end
-  local sink=state.sinks[id]
-  if sink and not sink.valid then state.sinks[id]=nil;sink=nil end
+  local sink=sinks[id]
+  if sink and not sink.valid then sinks[id]=nil;sink=nil end
   local port=source.line_port
   if not (port and port.valid and port.electric_network_id and source.output
     and source.output.valid and source.output.electric_network_id==
@@ -149,17 +162,17 @@ local function sink_for_output(source)
   local feeder=bridge and bridge.feeders and bridge.feeders[source.owner_id]
   -- Populate provenance for sinks created by the older 0.1.68 runtime, too.
   -- Otherwise an old save retains paid native sinks with no recovery metadata.
-  if sink and feeder and not state.sinks_meta[id]
+  if sink and feeder and not meta_map[id]
       and sink.electric_network_id==port.electric_network_id then
-    state.sinks_meta[id]={feeder=feeder,network=port.electric_network_id}
+    meta_map[id]={feeder=feeder,network=port.electric_network_id}
   end
   if not sink and feeder then
     local ids={}
-    for old_id in pairs(state.sinks) do ids[#ids+1]=old_id end
+    for old_id in pairs(sinks) do ids[#ids+1]=old_id end
     table.sort(ids)
     for _,old_id in ipairs(ids) do
-      local old=state.sinks[old_id]
-      local meta=state.sinks_meta[old_id]
+      local old=sinks[old_id]
+      local meta=meta_map[old_id]
       if old_id~=id and old and old.valid and meta
          and meta.feeder==feeder and meta.network==port.electric_network_id
          and not entity(old_id) and not old.electric_network_id
@@ -170,8 +183,8 @@ local function sink_for_output(source)
         local ok=old.teleport(port.position)
         if ok and old.electric_network_id==port.electric_network_id
            and math.abs(old.energy-before)<0.05 then
-          state.sinks[old_id]=nil;state.sinks_meta[old_id]=nil
-          state.sinks[id]=old;state.sinks_meta[id]=meta
+          sinks[old_id]=nil;meta_map[old_id]=nil
+          sinks[id]=old;meta_map[id]=meta
           sink=old
           log(string.format("[EM069 NATIVE PAID SINK REJOIN] former_output=%d new_output=%d sink=%d feeder=%d paid_J=%.3f native_net=%d",
               old_id,id,sink.unit_number,feeder,before,port.electric_network_id))
@@ -200,7 +213,7 @@ local function sink_for_output(source)
   if not (sink and sink.valid and sink.unit_number) then
     error("[EM068 NATIVE FAIL] real EEI sink creation refused")
   end
-  sink.electric_interface_mode=defines.electric_interface_mode.secondary_input
+  sink.electric_interface_mode=charging and defines.electric_interface_mode.tertiary_input or defines.electric_interface_mode.secondary_input
   sink.electric_buffer_size=2000000
   sink.input_flow_limit=0
   sink.output_flow_limit=0
@@ -210,8 +223,8 @@ local function sink_for_output(source)
   if sink.electric_network_id~=port.electric_network_id then
     error("[EM068 NATIVE FAIL] sink not on ACTUAL native 25kv network "..id)
   end
-  state.sinks[id]=sink
-  state.sinks_meta[id]={feeder=feeder,network=port.electric_network_id}
+  sinks[id]=sink
+  meta_map[id]={feeder=feeder,network=port.electric_network_id}
   state.created=state.created+1
   log(string.format("[EM068 NATIVE EEI CREATED] sink=%d port=%d native_line_net=%d source_output=%d buffer_cap_J=2000000",
     sink.unit_number,port.unit_number,sink.electric_network_id,id))
@@ -244,6 +257,9 @@ local function eligible(e,art,pantograph,stats,target,contacts,donors)
       e.train.id~=contact_owner.train.id or e.force~=contact_owner.force or
       e.surface~=contact_owner.surface then return nil end
   elseif e.name~="em-electric-locomotive" then return nil end
+  -- EM128: no new traction request from an idle train in storage mode.
+  -- Departure request and moving trains retain the existing finite paid path.
+  if battery089.enabled() and contact_owner.train.speed==0 and not pantograph.departure_requested(contact_owner.train) then return nil end
   local limit=target and target.watts/60 or M.MAX_PER_TICK
   local cap=target and limit or M.BUFFER_CAP
   local burner=e.burner
@@ -287,7 +303,7 @@ local function fair_charge(owners,art,pantograph,stats,charge_budget)
   for _,e in ipairs(owners) do
     local req=eligible(e,art,pantograph,stats,nil,contacts,donors)
     if req then
-      pending[#pending+1]=req;blocked[req.owner.train.id]=true
+      pending[#pending+1]=req
     end
     if req and req.source then
       local id=req.source.output.unit_number
@@ -305,7 +321,7 @@ local function fair_charge(owners,art,pantograph,stats,charge_budget)
   for _,target in ipairs(motor067.targets()) do
     local req=eligible(target.helper,art,pantograph,stats,target,contacts,donors)
     if req then
-      pending[#pending+1]=req;blocked[req.owner.train.id]=true
+      pending[#pending+1]=req
     end
     if req and req.source then
       local id=req.source.output.unit_number
@@ -362,28 +378,30 @@ local function fair_charge(owners,art,pantograph,stats,charge_budget)
   end
   if not battery089.enabled() then return end
   local discharged=battery089.discharge(owners,pending,game.tick)
-  -- First-stage conservative charging: only stationary, no pending traction
-  -- for the consist or donor group; dispatch classifies charge below loads.
-  local charging,cids={},{}
+  -- A separate real tertiary-input sink keeps charging below traction and
+  -- other loads. Charge only a consist with every traction request paid.
+  for _,req in ipairs(pending) do
+    if req.want-(req.grid_paid or 0)>0.05 then blocked[req.owner.train.id]=true end
+  end
+  local charging,cids,seen_train={},{},{}
   charge_budget=charge_budget or {}
   for _,e in ipairs(owners) do
     local want=battery089.want(e)
-    if want>1 and not blocked[e.train.id] and not discharged[e.train.id] then
-      local net,_,anchor=network_for_contact(e,art,pantograph)
+    if want>1 and not blocked[e.train.id] and not discharged[e.train.id] and not seen_train[e.train.id] then
+      local net,_,anchor=network_for_contact(e,art,pantograph,true)
       local key=net and anchor and dispatch089.network_key(anchor)
       local source=net and phase_donor(donors,net,e.force)
       if source and source.mode=='auto' and key and (charge_budget[key] or 0)>1 then
         local id=source.output.unit_number
-        if not groups[id] then
-          if not charging[id] then charging[id]={source=source,owners={},key=key};cids[#cids+1]=id end
-          charging[id].owners[#charging[id].owners+1]={e=e,want=want}
-        end
+        seen_train[e.train.id]=true
+        if not charging[id] then charging[id]={source=source,owners={},key=key};cids[#cids+1]=id end
+        charging[id].owners[#charging[id].owners+1]={e=e,want=want}
       end
     end
   end
   table.sort(cids)
   for _,id in ipairs(cids) do
-    local c=charging[id];local output=sink_for_output(c.source)
+    local c=charging[id];local output=sink_for_output(c.source,true)
     if output and (charge_budget[c.key] or 0)>1 then
       if output.electric_interface_mode~=defines.electric_interface_mode.tertiary_input then
         output.electric_interface_mode=defines.electric_interface_mode.tertiary_input
@@ -435,13 +453,13 @@ function M.requests(art,pantograph,dispatch)
   -- The native EM070 planner otherwise sees zero factory-grid/line demand:
   -- a Lua locomotive has no native electrical energy source. Advertise only
   -- finite, verified pending train demand on that REAL anchor network.
-  local requests,donors,charges={},{},{}
+  local requests,donors,charges,seen_train={},{},{},{}
   local sink_index=nil
   for _,e in ipairs(all_real_locomotives()) do
     local burner=e.burner
     if burner then
       local left=pending_want(math.max(0,burner.remaining_burning_fuel or 0),M.MAX_PER_TICK,M.BUFFER_CAP)+(helpers[e.unit_number] or 0)
-      if left>1 then
+      if left>1 and not (battery089.enabled() and e.train.speed==0 and not pantograph.departure_requested(e.train)) then
         local net,_,anchor=network_for_contact(e,art,pantograph)
         if net then
           local key=anchor and dispatch.network_key(anchor)
@@ -484,12 +502,12 @@ function M.requests(art,pantograph,dispatch)
           end
         end
       end
-      if left<=1 and battery089.enabled() then
+      if battery089.enabled() and not seen_train[e.train.id] then
         local want=battery089.want(e)
         if want>1 then
-          local net,_,anchor=network_for_contact(e,art,pantograph)
+          local net,_,anchor=network_for_contact(e,art,pantograph,true)
           local key=net and anchor and dispatch.network_key(anchor)
-          if key then charges[key]=(charges[key] or 0)+want end
+          if key then charges[key]=(charges[key] or 0)+want;seen_train[e.train.id]=true end
         end
       end
     end
@@ -505,6 +523,9 @@ function M.on_tick(tick,art,pantograph,charge_budget)
   for _,sink in pairs(n.sinks) do
     if sink.valid then sink.input_flow_limit=0 end
   end
+  for _,sink in pairs(n.charge_sinks) do
+    if sink.valid then sink.input_flow_limit=0;sink.output_flow_limit=0 end
+  end
   local owners=all_real_locomotives()
   term094.prepare(owners,function(e) return network_for_contact(e,art,pantograph) end,tick)
   fair_charge(owners,art,pantograph,stats,charge_budget)
@@ -512,26 +533,7 @@ function M.on_tick(tick,art,pantograph,charge_budget)
     energy088.audit(stats)
     battery089.audit()
     retire_orphan_sinks(n,tick)
-    local nSinks,total,nativeDemand=0,0,0
-    for _,sink in pairs(n.sinks) do
-      if sink.valid then
-        nSinks=nSinks+1
-        total=total+sink.energy
-        local parent=sink.electric_network and sink.electric_network.parent_network
-        local f=parent and parent.flow_last_tick
-        if f then nativeDemand=math.max(nativeDemand,(f.primary_demand or 0)+
-          (f.secondary_demand or 0)) end
-      end
-    end
-    log(string.format("[EM068 ACTUAL NATIVE TRAIN LOAD] tick=%d genuine_25kv_sinks=%d native_25kv_demand_J_tick=%.3f native_sink_stored_J=%.3f cumulative_paid_sink_to_real_burner_J=%.3f",
-      tick,nSinks,nativeDemand,total,n.metered_native_J))
-  end
-  if tick%60==0 then
-    log(string.format('[EM072 PAID LEDGER] tick=%d locos=%d helpers=%d debited_J=%.1f credited_J=%.1f motor_paid_J=%.1f motor_grants=%d charged_ticks=%d no_contact=%d no_supply=%d',
-      tick,#owners,#motor067.targets(),stats.debited_J,stats.credited_J,
-      stats.motor_paid_J or 0,stats.motor_grants or 0,stats.charged_ticks,
-      stats.miss_contact,stats.miss_supply))
-    log("[EM065 CONTACT] last_reason="..tostring(stats.last_contact_reason))
+    retire_orphan_sinks(n,tick,true)
   end
 end
 return M

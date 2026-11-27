@@ -87,9 +87,7 @@ data:extend({
         icon = "__base__/graphics/icons/battery.png",
         icon_size = 64,
         order = "c[regenerative-braking]",
-        effects = {
-            { type = "unlock-recipe", recipe = "em-regenerative-brake-unit" },
-        },
+        effects = {}, -- Research prerequisite for battery rolling stock.
         prerequisites = { "em-high-speed-locomotive", "automation-3" },
         -- TechnologyUnitDefinition.ingredients must contain science-pack items.
         -- Batteries are ordinary ingredients, not research packs, and cannot be
@@ -259,16 +257,6 @@ data:extend({
         categories = { "crafting" },
     },
 
-    {
-        type = "recipe",
-        name = "em-regenerative-brake-unit",
-        enabled = false,
-        ingredients = { { type = "item", name = "copper-plate", amount = 5 }, { type = "item", name = "advanced-circuit", amount = 2 } },
-        results = {{ type = "item", name = "em-regenerative-brake-unit", amount = 1 }},
-        energy_required = 3,
-        categories = { "crafting" },
-    },
-
     -- One recipe creates planner stock used by every ВСМ rail geometry.
     {
         type = "recipe",
@@ -366,11 +354,14 @@ data.raw.item["em-electric-locomotive"].place_result = "em-electric-locomotive"
 
 -- 057: use native cargo and fluid wagons only; JSON migration preserves legacy names.
 
--- This recipe already existed, but its result item prototype was missing.
+-- Legacy item retained to preserve inventory contents in existing saves. No recipe.
 data:extend({
     {
         type = "item",
         name = "em-regenerative-brake-unit",
+        auto_recycle = false,
+        hidden = true,
+        hidden_in_factoriopedia = true,
         icon = "__base__/graphics/icons/battery.png",
         icon_size = 64,
         subgroup = "intermediate-product",

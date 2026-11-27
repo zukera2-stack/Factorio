@@ -35,3 +35,14 @@ require("prototypes.traction_native_consumer_068")
 
 -- EM074 prototype-only indicators; no runtime energy manipulation.
 require("prototypes.traction_status_074")
+
+-- V2 rolling stock: isolated static-art candidate.
+require("prototypes.wagon_visual_v2_104")
+
+require("prototypes.wagon_doors_v2_105")
+
+require("prototypes.battery_wagon_107")
+
+require("prototypes.production_123")
+
+require("prototypes.technology_icons_128")

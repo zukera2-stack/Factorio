@@ -8,7 +8,7 @@ description: Inspect Blender/GLB 3D assets, produce reproducible 3D-derived tech
 ## Read before running
 
 1. Read root `AGENTS.md`, `docs/CURRENT_WORK.md`, `docs/AI_CONTEXT.md`, `docs/PROJECT_STATE.yaml` on your **actual working branch**; verify GitHub refs.
-2. Read `docs/BLENDER_SKILL_ACCESS.md` and `docs/3D_ASSET_PIPELINE.md`.
+2. Read `docs/BLENDER_SKILL_ACCESS.md`, `docs/3D_ASSET_PIPELINE.md` and **`docs/ROLLING_STOCK_PROJECTION.md`** before any rolling-stock sprite work. Reuse the measured EM126/127 profile; preserve rail joints, sprite pivots, native pump valve positions and pantograph contact anchor. VTK/EGL is a verified alternative for actual GLB rendering with the same profile. Never use image generation for sprite renders.
 3. Read the owner's original portable skill `.agents/skills/blender-unity/SKILL.md` **without altering it**. Unity-specific instructions are not applied to Factorio.
 4. For report provenance read `docs/research/3d-agent-source-report-20261124.md` (raw owner research) and `docs/research/3d-agent-tooling-assessment-20261124.md` (verified interpretation).
 
