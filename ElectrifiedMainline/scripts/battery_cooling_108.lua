@@ -5,7 +5,7 @@ local offsets=require('scripts.battery_fan_offsets_108')
 local NAME='em-battery-wagon'
 local HOLD=12
 local SLOW_SPEED=0.08
-local BINDING_REVISION=2 -- EM137: same calibrated direction for body, fan atlas and crop.
+local BINDING_REVISION=3 -- EM140: follow the actual rolling-stock draw transform.
 local ACTIVE_SPEED={charging=0.25,discharging=0.35,recovering=0.30,idle=SLOW_SPEED}
 local function valid(e) return e and e.valid and e.name==NAME and e.unit_number end
 local function rows(create)
@@ -18,7 +18,7 @@ local function remove_render(r)
   if r.render_id then
     local obj=rendering.get_object_by_id(r.render_id)
     if obj and obj.valid then obj.destroy() end
-    r.render_id=nil;r.direction=nil;r.binding_revision=nil
+    r.render_id=nil;r.direction=nil;r.binding_revision=nil;r.target_x=nil;r.target_y=nil
   end
 end
 local function ensure_row(e)
@@ -44,8 +44,19 @@ local function seed_charged_rows(onboard,tick)
     if not r.mode then r.mode='idle' end
   end
 end
--- Exact frame indices only. No rotating a screen-space overlay or rounding
--- to a nearby available direction.
+-- The native body uses the joints/head-dependent rolling-stock draw transform,
+-- not LuaEntity.position/orientation. The cropped fan frames use exactly the
+-- same calibrated 256 indices as the body (apply_projection=false).
+-- ScriptRenderTarget offsets are relative to the physical entity position.
+-- Keep the entity target for continuous movement and automatic lifecycle.
+local function draw_binding(e)
+  local d=e.draw_data
+  local k=math.floor((d.orientation%1)*256+0.5)%256
+  local off=offsets[k]
+  if not off then return k,nil,nil end
+  local p=e.position
+  return k,off[1]+d.position.x-p.x,off[2]+d.position.y-p.y-d.height
+end
 function M.tick(tick,onboard)
   local enabled=onboard and onboard.enabled() and onboard.wagons_enabled()
   if not enabled then
@@ -67,26 +78,29 @@ function M.tick(tick,onboard)
       if not has_charge then
         remove_render(r);a[id]=nil
       else
-        local k=math.floor((e.orientation%1)*256+0.5)%256
-        local off=offsets[k]
+        local k,x,y=draw_binding(e)
         local speed=desired_speed(mode)
         local obj=r.render_id and rendering.get_object_by_id(r.render_id)
         if r.binding_revision~=BINDING_REVISION then
           remove_render(r);obj=nil
         end
-        if not off then
+        if not x then
           remove_render(r)
         elseif not obj or not obj.valid then
           remove_render(r)
-          obj=rendering.draw_animation{animation=string.format('em-battery-fan-107-%03d',k),target={entity=e,offset=off},surface=e.surface,render_layer='higher-object-above',animation_speed=speed,animation_offset=0,orientation=0,use_target_orientation=false}
-          r.render_id=obj.id;r.direction=k;r.speed=speed;r.binding_revision=BINDING_REVISION
+          obj=rendering.draw_animation{animation=string.format('em-battery-fan-107-%03d',k),target={entity=e,offset={x,y}},surface=e.surface,render_layer='higher-object-above',animation_speed=speed,animation_offset=0,orientation=0,use_target_orientation=false}
+          r.render_id=obj.id;r.direction=k;r.speed=speed;r.binding_revision=BINDING_REVISION;r.target_x=x;r.target_y=y
         else
           if r.direction~=k then
             local phase_offset=obj.animation_offset
             obj.animation=string.format('em-battery-fan-107-%03d',k)
-            obj.target={entity=e,offset=off}
             obj.animation_offset=phase_offset
             r.direction=k
+          end
+          -- Draw displacement can change even while the atlas index stays fixed.
+          if r.target_x~=x or r.target_y~=y then
+            obj.target={entity=e,offset={x,y}}
+            r.target_x=x;r.target_y=y
           end
           if math.abs((r.speed or 0)-speed)>1e-6 then
             obj.animation_speed=speed

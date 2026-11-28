@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.6
+  Bugfixes:
+    - Align battery-wagon cooling fans to the actual rolling-stock draw position and orientation, including train-dependent visual displacement.
+    - Refresh the fan anchor even when the sprite direction does not change.
+  Info:
+    - Approved electric audio from 0.2.5 is unchanged.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.5
   Changes:
     - Added a separate quiet electric motor loop and restored native locomotive activity-based sound mixing.

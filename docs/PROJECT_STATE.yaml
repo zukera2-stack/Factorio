@@ -1,3 +1,24 @@
+em140_fan_binding_20261128:
+  branch: feature/em138-electric-sound-0.2.4
+  version: "0.2.6"
+  parent_candidate: "0.2.5"
+  status: native_targeted_pass_visual_formula_verified
+  owner_audio_accepted: true
+  runtime_files: 508
+  png_unchanged: 428
+  ogg_unchanged: 4
+  all_atlas_frames: 2048
+  native_moving_draw_indices: 256
+  native_high_speed_indices: 234
+  native_high_speed_max_offset_lag_tiles: 0.066865
+  windows_formula_comparison: PASS
+  windows_final_animated_runtime: pending
+  elevated_rails: not_tested
+  zip_sha256: e387e625ffbf4502cc97ab55a4a8678b9a3a09e4da9d0fd234b9a9a606eee13c
+  payload_tree_sha256: 23253fe62afb56955f95d7be113bc3962f128edb2547299476bd13891d607e1c
+  main_merged: false
+  official_release: false
+
 em139_sound_mixing_20261128:
   branch: feature/em138-electric-sound-0.2.4
   version: "0.2.5"
