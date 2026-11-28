@@ -2536,14 +2536,14 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: main
+  active_test_branch: integration/em143-0.2.7-recovery
   current_baseline_branch: main
-  active_feature_branch: main # source merge into main, no release
-  feature_version: "0.1.103" # merged development baseline, not installed
-  feature_status: 103_merged_main_native_111_pass_no_release
-  last_validated_test_branch: main # original test head preserved in archive
+  active_feature_branch: integration/em143-0.2.7-recovery
+  feature_version: "0.2.7"
+  feature_status: owner_graphics_accepted_release_prepared
+  last_validated_test_branch: integration/em143-0.2.7-recovery
   release_target_branch: main
-  release_pull_request: 30
+  release_pull_request: 98
   release_merge_commit: 55cb71f8f3be8c68cbd2c26fa16fd775c6ba296d
   previous_release_pull_request: 27
   previous_release_merge_commit: 7218360acb4fc5079e48cf4f38448fa086f1af96
@@ -2558,12 +2558,12 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.103" # merged development baseline; no release
-  main_baseline_mod_version: "0.1.103" # source merged PR #91, not a public release
+  mod_version: "0.2.7" # exact accepted runtime on release branch
+  main_baseline_mod_version: "0.2.0" # published main; integration pending
   factorio_target: "2.1"
-  user_tested_game: "2.1.24"
-  user_installation_label: "2.1.24 build 87808"
-  last_state_update: "2026-11-26"
+  user_tested_game: "2.1.25"
+  user_installation_label: "2.1.25 build 88022"
+  last_state_update: "2026-11-28"
   documentation_audit: 056_repository_cleanup
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md

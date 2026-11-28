@@ -30,10 +30,11 @@ local p=assert(io.open("ElectrifiedMainline/prototypes/native_wire_auto_028.lua"
 assert(p:find('require("scripts.catenary_limits_029").WIRE_REACH',1,true))
 local script=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
 local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
-local source_minor=tonumber(info:match('"version"%s*:%s*"0%.1%.(%d+)"'))
-assert(source_minor,"Expected 0.1.x mod version in source regression fixture")
+local minor,patch=info:match('"version"%s*:%s*"0%.([12])%.(%d+)"')
+assert(minor and patch,"Expected 0.1.x or 0.2.x mod version in source regression fixture")
+minor,patch=tonumber(minor),tonumber(patch)
 -- Version 0.1.56+ uses current rail-axis geometry; avoid a stale whitelist.
-if source_minor<47 then
+if minor==1 and patch<47 then
 for _,marker in ipairs({
  'local SPAN,CURVE_SPAN,RADIUS = limits.STRAIGHT,limits.CURVE,3',
  'position=e.position,radius=CURVE_SPAN,name=POLES',
@@ -45,7 +46,7 @@ for _,marker in ipairs({
 }) do assert(script:find(marker,1,true),marker) end
 else
  assert(script:find("limits.WIRE_REACH*1.5+4",1,true))
-  if source_minor>=56 then
+  if minor>=2 or patch>=56 then
   assert(script:find("axis056.plan(s.nodes)",1,true))
  else
   assert(script:find("visual047.plan(s.nodes)",1,true))

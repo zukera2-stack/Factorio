@@ -66,12 +66,12 @@ assert(proto:find('catenary.placeable_position_visualization = nil',1,true))
 -- The native ghost construction contract stays the same across art sets,
 -- but current 0.1.42 uses reviewed 039 shaft, arm and icon assets.
 local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
-local version=assert(info:match('"version"%s*:%s*"(0%.1%.%d+)"'),
-    "expected game source mod version 0.1.x for ghost prototype test")
+local version=assert(info:match('"version"%s*:%s*"(0%.[12]%.%d+)"'),
+    "expected game source mod version 0.1.x or 0.2.x for ghost prototype test")
 local major,minor,patch=version:match("^(%d+)%.(%d+)%.(%d+)$")
-assert(major=="0" and minor=="1" and tonumber(patch),
+assert(major=="0" and (minor=="1" or minor=="2") and tonumber(patch),
     "unsupported source-version format for ghost fixture")
-if tonumber(patch)>=42 then
+if minor=="2" or tonumber(patch)>=42 then
     assert(proto:find('pole-south-039.png',1,true))
     assert(proto:find('pole-north-039.png',1,true))
     assert(proto:find('pole-arm-south-039.png',1,true))
