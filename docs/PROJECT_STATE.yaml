@@ -1,3 +1,61 @@
+em140_fan_binding_20261128:
+  branch: feature/em138-electric-sound-0.2.4
+  version: "0.2.6"
+  parent_candidate: "0.2.5"
+  status: native_targeted_pass_visual_formula_verified
+  owner_audio_accepted: true
+  runtime_files: 508
+  png_unchanged: 428
+  ogg_unchanged: 4
+  all_atlas_frames: 2048
+  native_moving_draw_indices: 256
+  native_high_speed_indices: 234
+  native_high_speed_max_offset_lag_tiles: 0.066865
+  windows_formula_comparison: PASS
+  windows_final_animated_runtime: pending
+  elevated_rails: not_tested
+  zip_sha256: e387e625ffbf4502cc97ab55a4a8678b9a3a09e4da9d0fd234b9a9a606eee13c
+  payload_tree_sha256: 23253fe62afb56955f95d7be113bc3962f128edb2547299476bd13891d607e1c
+  main_merged: false
+  official_release: false
+
+em139_sound_mixing_20261128:
+  branch: feature/em138-electric-sound-0.2.4
+  version: "0.2.5"
+  parent_candidate: "0.2.4"
+  status: native_prototype_pass_listening_pending
+  runtime_files: 508
+  png_unchanged: 428
+  nominal_level_error_db_max: 0.01
+  native_headless_space_age: PASS
+  client_audio_acceptance: pending
+  library_full_zip: quota_blocked
+  library_patch_and_qa: saved
+  zip_sha256: e46cf4445dfdacdf4867b14d745652e4884e58d8a1e95c181fe59547d9292429
+  payload_tree_sha256: 8bbdd6b97942d420b578e5e7b4728329c90603def3bdd1b3a4a35c81a455791b
+  main_merged: false
+  official_release: false
+
+em138_audio_20261128:
+  branch: feature/em138-electric-sound-0.2.4
+  version: "0.2.4"
+  status: native_prototype_pass_listening_pending
+  parent_candidate: "0.2.2"
+  runtime_files: 507
+  png_unchanged: 428
+  sample_rate: 44100
+  channels: 2
+  loop_samples: 196083
+  start_samples: 17038
+  stop_samples: 26782
+  silent_boosters: 256
+  native_headless_space_age: PASS
+  client_audio_acceptance: pending
+  zip_sha256: bf31507b3c4807ae93402f2b8f583c16a9648826c4980e9b37fd5531baf8915d
+  payload_tree_sha256: 60f07546aca40c6bf28d9bbc72e57fa1597721cff38831329a821a06b3a405c8
+  main_merged: false
+  official_release: false
+
 em137_fan_hotfix_20261128:
   branch: hotfix/em137-battery-fan-0.2.2
   version: "0.2.2"

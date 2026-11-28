@@ -24,6 +24,7 @@ DIRECTORY_SUFFIX = {
     "migrations": {".lua", ".json"},
     "graphics": {".png"},
     "locale": {".cfg"},
+    "sound": {".ogg"},
 }
 
 
