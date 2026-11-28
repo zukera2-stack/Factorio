@@ -1,3 +1,20 @@
+em139_sound_mixing_20261128:
+  branch: feature/em138-electric-sound-0.2.4
+  version: "0.2.5"
+  parent_candidate: "0.2.4"
+  status: native_prototype_pass_listening_pending
+  runtime_files: 508
+  png_unchanged: 428
+  nominal_level_error_db_max: 0.01
+  native_headless_space_age: PASS
+  client_audio_acceptance: pending
+  library_full_zip: quota_blocked
+  library_patch_and_qa: saved
+  zip_sha256: e46cf4445dfdacdf4867b14d745652e4884e58d8a1e95c181fe59547d9292429
+  payload_tree_sha256: 8bbdd6b97942d420b578e5e7b4728329c90603def3bdd1b3a4a35c81a455791b
+  main_merged: false
+  official_release: false
+
 em138_audio_20261128:
   branch: feature/em138-electric-sound-0.2.4
   version: "0.2.4"

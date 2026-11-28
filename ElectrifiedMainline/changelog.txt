@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.5
+  Changes:
+    - Added a separate quiet electric motor loop and restored native locomotive activity-based sound mixing.
+    - Calibrated nominal sound levels against vanilla locomotive recordings.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.4
   Sounds:
     - Matched electric motor loop and start/stop durations to the native locomotive sounds.
