@@ -1,3 +1,18 @@
+em144_release_preparation_20261128:
+  version: "0.2.7"
+  owner_visual_accepted: true
+  native_graphics: pass
+  directions: 256
+  phase_checks: 9399
+  speed_changes: 536
+  package_sha256: 6676ad1919d61f5ede99d3bead2fdd23dc8d240186a38c8d18f66991a839719a
+  package_sha1: 2770a010d2a69b2d63f956cb50ba91c677f80e21
+  payload_tree_sha256: d601301c6bc71bc15f83dd1826e806e3f3a5493654e4f9b1347b8eee4d05e2bd
+  full_energy_regression: waived_by_owner
+  main_merged: false
+  portal_publication: pending
+  release_checklist: docs/release/0.2.7/RELEASE_CHECKLIST.md
+
 em143_source_sync_20261128:
   status: exact_runtime_restored_package_verified
   branch: integration/em143-0.2.7-recovery
