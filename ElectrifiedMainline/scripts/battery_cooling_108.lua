@@ -4,9 +4,10 @@ local M={}
 local offsets=require('scripts.battery_fan_offsets_108')
 local NAME='em-battery-wagon'
 local HOLD=12
-local SLOW_SPEED=0.08
-local BINDING_REVISION=3 -- EM140: follow the actual rolling-stock draw transform.
-local ACTIVE_SPEED={charging=0.25,discharging=0.35,recovering=0.30,idle=SLOW_SPEED}
+local FRAME_COUNT=16
+local SLOW_SPEED=0.16
+local BINDING_REVISION=4 -- EM142: 16 phases; preserve EM140 draw transform.
+local ACTIVE_SPEED={charging=0.50,discharging=0.70,recovering=0.60,idle=SLOW_SPEED}
 local function valid(e) return e and e.valid and e.name==NAME and e.unit_number end
 local function rows(create)
   local em=storage.em
@@ -88,13 +89,18 @@ function M.tick(tick,onboard)
           remove_render(r)
         elseif not obj or not obj.valid then
           remove_render(r)
-          obj=rendering.draw_animation{animation=string.format('em-battery-fan-107-%03d',k),target={entity=e,offset={x,y}},surface=e.surface,render_layer='higher-object-above',animation_speed=speed,animation_offset=0,orientation=0,use_target_orientation=false}
+          obj=rendering.draw_animation{animation=string.format('em-battery-fan-107-%03d',k),target={entity=e,offset={x,y}},surface=e.surface,render_layer='higher-object-above',animation_speed=speed,animation_offset=(-tick*speed)%FRAME_COUNT,orientation=0,use_target_orientation=false}
           r.render_id=obj.id;r.direction=k;r.speed=speed;r.binding_revision=BINDING_REVISION;r.target_x=x;r.target_y=y
         else
-          if r.direction~=k then
-            local phase_offset=obj.animation_offset
+          -- Keep the angular phase continuous across direction and speed changes.
+          local direction_changed=r.direction~=k
+          local speed_changed=math.abs((r.speed or 0)-speed)>1e-6
+          local phase
+          if direction_changed or speed_changed then
+            phase=(tick*obj.animation_speed+obj.animation_offset)%FRAME_COUNT
+          end
+          if direction_changed then
             obj.animation=string.format('em-battery-fan-107-%03d',k)
-            obj.animation_offset=phase_offset
             r.direction=k
           end
           -- Draw displacement can change even while the atlas index stays fixed.
@@ -102,10 +108,11 @@ function M.tick(tick,onboard)
             obj.target={entity=e,offset={x,y}}
             r.target_x=x;r.target_y=y
           end
-          if math.abs((r.speed or 0)-speed)>1e-6 then
+          if speed_changed then
             obj.animation_speed=speed
             r.speed=speed
           end
+          if phase then obj.animation_offset=(phase-tick*obj.animation_speed)%FRAME_COUNT end
         end
       end
     end

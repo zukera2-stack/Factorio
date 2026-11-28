@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.7
+  Changes:
+    - Battery wagon cooling uses 16 rendered phases per direction instead of 8, preserving the previous rotation rate.
+    - Keep rotation phase continuous across animation direction and speed changes; preserve corrected rolling-stock draw binding.
+  Info:
+    - Approved audio and energy simulation unchanged.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.6
   Bugfixes:
     - Align battery-wagon cooling fans to the actual rolling-stock draw position and orientation, including train-dependent visual displacement.
