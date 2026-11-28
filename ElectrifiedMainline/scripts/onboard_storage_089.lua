@@ -240,7 +240,7 @@ function M.charged_wagons()
   if not s then return {} end
   local out={}
   for id,r in pairs(s.owners) do
-    if r.J and r.J>1 then
+    if r.J and r.J>1e-6 then
       local e=game.get_entity_by_unit_number(id)
       if wagon(e) then out[#out+1]=e end
     end

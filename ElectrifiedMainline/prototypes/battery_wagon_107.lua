@@ -6,7 +6,7 @@ local function layer(kind)
   local files={}
   for i=0,7 do files[#files+1]=root..string.format("%s-%02d.png",kind,i) end
   return {filenames=files,lines_per_file=4,width=512,height=512,direction_count=256,
-    line_length=8,scale=0.5,shift={0,-1},apply_projection=false,back_equals_front=false,
+    line_length=8,scale=0.5,shift={0,-1},apply_projection=false,back_equals_front=false,allow_low_quality_rotation=false,
     dice=4,priority="high",usage="train"}
 end
 local body,mask,shadow=layer("body"),layer("mask"),layer("shadow")
