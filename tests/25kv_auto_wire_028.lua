@@ -100,16 +100,17 @@ M.on_parent_removed(poleA)
 assert(M.ensure_storage().helpers[poleA.unit_number]==nil)
 local src=assert(io.open("ElectrifiedMainline/scripts/power_019.lua")):read("*a")
 local info=assert(io.open("ElectrifiedMainline/info.json")):read("*a")
-local source_minor=tonumber(info:match('"version"%s*:%s*"0%.1%.(%d+)"'))
-assert(source_minor,"Expected 0.1.x mod version in source regression fixture")
+local minor,patch=info:match('"version"%s*:%s*"0%.([12])%.(%d+)"')
+assert(minor and patch,"Expected 0.1.x or 0.2.x mod version in source regression fixture")
+minor,patch=tonumber(minor),tonumber(patch)
 -- Version 0.1.56+ uses current rail-axis geometry; avoid a stale whitelist.
-if source_minor<47 then
+if minor==1 and patch<47 then
 assert(src:find("corridor(e.surface,e.force,x,y)",1,true))
 assert(src:find("path_info(x,y)",1,true))
 assert(src:find("radius=SPAN+RADIUS+4",1,true),
   "Broken middle track must re-check mast ends beyond 5 tiles")
 else
-  if source_minor>=56 then
+  if minor>=2 or patch>=56 then
   assert(src:find("axis056.plan(s.nodes)",1,true))
  else
   assert(src:find("visual047.plan(s.nodes)",1,true))

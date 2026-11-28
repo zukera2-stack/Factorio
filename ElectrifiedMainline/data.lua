@@ -46,3 +46,5 @@ require("prototypes.battery_wagon_107")
 require("prototypes.production_123")
 
 require("prototypes.technology_icons_128")
+
+require("prototypes.electric_sound_138")

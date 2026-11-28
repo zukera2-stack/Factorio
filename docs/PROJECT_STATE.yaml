@@ -1,3 +1,147 @@
+em144_release_preparation_20261128:
+  github_release: published
+  github_release_tag: v0.2.7
+  github_release_commit: 4a6de5ef20529def2411a7102b1ac25557063c6a
+  github_release_asset_id: 803615372
+  github_release_published_utc: "2026-11-28T07:08:32Z"
+  ci_build: pass_46119715262
+  ci_assets: pass_46119715204
+  ci_docs: pass_46119715197
+  portal_latest_verified: "0.2.0"
+  version: "0.2.7"
+  owner_visual_accepted: true
+  native_graphics: pass
+  directions: 256
+  phase_checks: 9399
+  speed_changes: 536
+  package_sha256: 6676ad1919d61f5ede99d3bead2fdd23dc8d240186a38c8d18f66991a839719a
+  package_sha1: 2770a010d2a69b2d63f956cb50ba91c677f80e21
+  payload_tree_sha256: d601301c6bc71bc15f83dd1826e806e3f3a5493654e4f9b1347b8eee4d05e2bd
+  full_energy_regression: waived_by_owner
+  main_merged: false
+  portal_publication: pending
+  release_checklist: docs/release/0.2.7/RELEASE_CHECKLIST.md
+
+em143_source_sync_20261128:
+  status: exact_runtime_restored_package_verified
+  branch: integration/em143-0.2.7-recovery
+  version: "0.2.7"
+  prior_branch_runtime_version: "0.2.6"
+  runtime_commit: 54fc9f62081114d8a5ae323874959b8e600cb9a5
+  payload_tree_sha256: d601301c6bc71bc15f83dd1826e806e3f3a5493654e4f9b1347b8eee4d05e2bd
+  package_sha256: 6676ad1919d61f5ede99d3bead2fdd23dc8d240186a38c8d18f66991a839719a
+  runtime_files: 508
+  changed_files: 261
+  changed_png: 256
+  package_verified: true
+  native_gameplay_tests: not_run
+  ci: not_run
+  actual_save_upgrade: pending
+  full_regression: pending
+  multiplayer: pending
+  ups: pending
+  main_merged: false
+  release: false
+
+em143_recovery_20261128:
+  status: verified_owner_payload_source_transfer_incomplete
+  branch: integration/em143-0.2.7-recovery
+  owner_version: "0.2.7"
+  branch_runtime_version: "0.2.4"
+  runtime_files: 508
+  png_files: 428
+  ogg_files: 4
+  payload_tree_sha256: d601301c6bc71bc15f83dd1826e806e3f3a5493654e4f9b1347b8eee4d05e2bd
+  recovery_zip_sha256: e1384253a857583666cd84e62d259186fdfdc106c52e739dcee7f9a8c29ca3ec
+  manifest: docs/development/EM143_OWNER_0.2.7_MANIFEST.json
+  report: docs/development/EM143_RECOVERY.md
+  owner_pc_git: blocked_dns
+  new_gameplay_tests: not_run
+  actual_save_upgrade: pending
+  full_regression: pending
+  multiplayer: pending
+  ups: pending
+  main_merged: false
+  release: false
+
+em140_fan_binding_20261128:
+  branch: feature/em138-electric-sound-0.2.4
+  version: "0.2.6"
+  parent_candidate: "0.2.5"
+  status: native_targeted_pass_visual_formula_verified
+  owner_audio_accepted: true
+  runtime_files: 508
+  png_unchanged: 428
+  ogg_unchanged: 4
+  all_atlas_frames: 2048
+  native_moving_draw_indices: 256
+  native_high_speed_indices: 234
+  native_high_speed_max_offset_lag_tiles: 0.066865
+  windows_formula_comparison: PASS
+  windows_final_animated_runtime: pending
+  elevated_rails: not_tested
+  zip_sha256: e387e625ffbf4502cc97ab55a4a8678b9a3a09e4da9d0fd234b9a9a606eee13c
+  payload_tree_sha256: 23253fe62afb56955f95d7be113bc3962f128edb2547299476bd13891d607e1c
+  main_merged: false
+  official_release: false
+
+em139_sound_mixing_20261128:
+  branch: feature/em138-electric-sound-0.2.4
+  version: "0.2.5"
+  parent_candidate: "0.2.4"
+  status: native_prototype_pass_listening_pending
+  runtime_files: 508
+  png_unchanged: 428
+  nominal_level_error_db_max: 0.01
+  native_headless_space_age: PASS
+  client_audio_acceptance: pending
+  library_full_zip: quota_blocked
+  library_patch_and_qa: saved
+  zip_sha256: e46cf4445dfdacdf4867b14d745652e4884e58d8a1e95c181fe59547d9292429
+  payload_tree_sha256: 8bbdd6b97942d420b578e5e7b4728329c90603def3bdd1b3a4a35c81a455791b
+  main_merged: false
+  official_release: false
+
+em138_audio_20261128:
+  branch: feature/em138-electric-sound-0.2.4
+  version: "0.2.4"
+  status: native_prototype_pass_listening_pending
+  parent_candidate: "0.2.2"
+  runtime_files: 507
+  png_unchanged: 428
+  sample_rate: 44100
+  channels: 2
+  loop_samples: 196083
+  start_samples: 17038
+  stop_samples: 26782
+  silent_boosters: 256
+  native_headless_space_age: PASS
+  client_audio_acceptance: pending
+  zip_sha256: bf31507b3c4807ae93402f2b8f583c16a9648826c4980e9b37fd5531baf8915d
+  payload_tree_sha256: 60f07546aca40c6bf28d9bbc72e57fa1597721cff38831329a821a06b3a405c8
+  main_merged: false
+  official_release: false
+
+em137_fan_hotfix_20261128:
+  branch: hotfix/em137-battery-fan-0.2.2
+  version: "0.2.2"
+  main_version: "0.2.0"
+  status: native_targeted_pass_visual_pending
+  png_unchanged: 428
+  runtime_files: 503
+  exact_atlas_directions: 256
+  exact_atlas_frames: 2048
+  native_moving_orientation_indices: 256
+  native_high_speed_indices: 237
+  native_high_speed_max_index_lag: 3
+  native_charge_idle_discharge_empty: PASS
+  windows_visual_acceptance: pending
+  migration_from_0_2_1: not_run
+  zip_sha256: 4ff915899ae6bc9df779c2818d6140a2ee057f8cc7674cc8afbc6ec50cb881fa
+  payload_tree_sha256: 5bb3ba05b4c66b1bfdc3042c74c82feca5f2056a321266ed85713c08751a343f
+  main_merged: false
+  official_release: false
+
 public_release_0_2_0_20261128:
   status: published_public_beta
   version: "0.2.0"
@@ -2401,14 +2545,14 @@ project:
   name: Electrified Mainline
   repository: https://github.com/zukera2-stack/Factorio
   default_branch: main
-  active_test_branch: main
+  active_test_branch: integration/em143-0.2.7-recovery
   current_baseline_branch: main
-  active_feature_branch: main # source merge into main, no release
-  feature_version: "0.1.103" # merged development baseline, not installed
-  feature_status: 103_merged_main_native_111_pass_no_release
-  last_validated_test_branch: main # original test head preserved in archive
+  active_feature_branch: integration/em143-0.2.7-recovery
+  feature_version: "0.2.7"
+  feature_status: owner_graphics_accepted_release_prepared
+  last_validated_test_branch: integration/em143-0.2.7-recovery
   release_target_branch: main
-  release_pull_request: 30
+  release_pull_request: 98
   release_merge_commit: 55cb71f8f3be8c68cbd2c26fa16fd775c6ba296d
   previous_release_pull_request: 27
   previous_release_merge_commit: 7218360acb4fc5079e48cf4f38448fa086f1af96
@@ -2423,12 +2567,12 @@ project:
   project_management: repository_docs_and_git_history_sufficient_for_current_single_developer_scale
   github_projects_board_required: false
   mod_directory: ElectrifiedMainline
-  mod_version: "0.1.103" # merged development baseline; no release
-  main_baseline_mod_version: "0.1.103" # source merged PR #91, not a public release
+  mod_version: "0.2.7" # exact accepted runtime on release branch
+  main_baseline_mod_version: "0.2.0" # published main; integration pending
   factorio_target: "2.1"
-  user_tested_game: "2.1.24"
-  user_installation_label: "2.1.24 build 87808"
-  last_state_update: "2026-11-26"
+  user_tested_game: "2.1.25"
+  user_installation_label: "2.1.25 build 88022"
+  last_state_update: "2026-11-28"
   documentation_audit: 056_repository_cleanup
   handoff_document: docs/AI_CONTEXT.md
   contributor_instructions: AGENTS.md

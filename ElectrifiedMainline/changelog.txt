@@ -1,4 +1,41 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.7
+  Changes:
+    - Battery wagon cooling uses 16 rendered phases per direction instead of 8, preserving the previous rotation rate.
+    - Keep rotation phase continuous across animation direction and speed changes; preserve corrected rolling-stock draw binding.
+  Info:
+    - Approved audio and energy simulation unchanged.
+---------------------------------------------------------------------------------------------------
+Version: 0.2.6
+  Bugfixes:
+    - Align battery-wagon cooling fans to the actual rolling-stock draw position and orientation, including train-dependent visual displacement.
+    - Refresh the fan anchor even when the sprite direction does not change.
+  Info:
+    - Approved electric audio from 0.2.5 is unchanged.
+---------------------------------------------------------------------------------------------------
+Version: 0.2.5
+  Changes:
+    - Added a separate quiet electric motor loop and restored native locomotive activity-based sound mixing.
+    - Calibrated nominal sound levels against vanilla locomotive recordings.
+---------------------------------------------------------------------------------------------------
+Version: 0.2.4
+  Sounds:
+    - Matched electric motor loop and start/stop durations to the native locomotive sounds.
+    - Stereo electric traction with a softer inverter tone and narrower pitch modulation.
+    - Preserved native wheel sounds and silent technical boosters.
+---------------------------------------------------------------------------------------------------
+Version: 0.2.3
+  Sounds:
+    - Replaced diesel engine sounds with original synthesized electric traction audio.
+    - Silenced hidden technical boosters; preserved native wheel and brake sounds.
+---------------------------------------------------------------------------------------------------
+Version: 0.2.2
+  Bugfixes:
+    - Corrected battery wagon cooling animation frame binding and removed the erroneous quarter-turn offset from the unpublished 0.2.1 candidate.
+    - Refreshes saved fan render objects when updating and stops animation when the battery is empty.
+  Info:
+    - Battery capacity, traction, regenerative braking and existing artwork are unchanged.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.0
   Major Features:
     - First public beta candidate: high-speed rail and a dedicated 25 kV overhead network.
