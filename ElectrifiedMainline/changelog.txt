@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.4
+  Sounds:
+    - Matched electric motor loop and start/stop durations to the native locomotive sounds.
+    - Stereo electric traction with a softer inverter tone and narrower pitch modulation.
+    - Preserved native wheel sounds and silent technical boosters.
+---------------------------------------------------------------------------------------------------
+Version: 0.2.3
+  Sounds:
+    - Replaced diesel engine sounds with original synthesized electric traction audio.
+    - Silenced hidden technical boosters; preserved native wheel and brake sounds.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.2
   Bugfixes:
     - Corrected battery wagon cooling animation frame binding and removed the erroneous quarter-turn offset from the unpublished 0.2.1 candidate.

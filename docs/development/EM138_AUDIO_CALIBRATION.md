@@ -1,0 +1,12 @@
+# EM138 audio calibration — 0.2.4 (2026-11-28)
+
+Owner approved variant 02, no added noise, and matching native audio timing and stereo format. Baseline 0.2.3 candidate, derived from EM137 0.2.2 (PR #96). 0.2.4 replaces three synthesized OGG files, adjusts pitch range to 0.80–1.45 and start gain to 0.35. No changes to traction, stored energy, artwork or fan logic. All 428 PNG unchanged. Native wheel layer and mechanical triggers retained; 256 boosters silent. No external sound recordings used.
+
+## Reference: owner installation Factorio 2.1.25
+Read-only Ogg header/granule and offline decoded PCM measurements: 44100 Hz stereo. Driving: 196083 samples, 4.446326530612245 s, 79936 bytes, RMS -18.61194 dBFS; start: 17038 samples, 0.38634920634920633 s, 11732 bytes; stop: 26782 samples, 0.6073015873015873 s, 15078 bytes. Native idle loop is 8 s, not replicated as a separate layer. Our main loop uses two deterministic stereo channels, integer cycles per period, approximately 98 Hz motor fundamental and 760 Hz inverter tone, no stochastic noise. RMS -20.4591 dBFS; decoded seam step 0.01762 vs adjacent-step P99 0.01534 (within 1.5x check); this is a numerical continuity check, not an audible seam test. Start/stop endpoints <0.00006 FS. Exact sample counts and 44.1 kHz stereo match all three reference files. File byte sizes intentionally differ because content and compression differ. Perceived loudness not established; high frequency component and native dynamic activity mapping require owner listening. Preview is concatenated shipped assets, not an in-game recording.
+
+## Test evidence
+Full ZIP loaded directly in Factorio 2.1.24 Linux headless, Space Age active, new map creation succeeded. Isolated QA data-stage assertions PASS: native wheel layer, mechanical stop and tie triggers, electric working/start/stop files, dynamic pitch and volume flags, all 256 helpers silent, vanilla locomotive unaffected. First setup attempt used old QA dependency 0.2.3; corrected test-only dependency to 0.2.4, reran successfully. Audio disabled by headless; no in-game sound playback or actual-save migration tested. No new full gameplay regression. No main merge, publication or installation.
+
+## Release package
+507 files, 428 PNG. ZIP SHA256 `bf31507b3c4807ae93402f2b8f583c16a9648826c4980e9b37fd5531baf8915d`. Direct Patch 0.2.3 -> 0.2.4 SHA256 `69690b4ab86b88c9385cde41d0bb20bd356b9788495dea6ec3eca3304cea49df`. Payload tree `60f07546aca40c6bf28d9bbc72e57fa1597721cff38831329a821a06b3a405c8`. Patch application byte-for-byte identical to full ZIP.
