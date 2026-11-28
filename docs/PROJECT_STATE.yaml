@@ -1,3 +1,24 @@
+em143_source_sync_20261128:
+  status: exact_runtime_restored_package_verified
+  branch: integration/em143-0.2.7-recovery
+  version: "0.2.7"
+  prior_branch_runtime_version: "0.2.6"
+  runtime_commit: 54fc9f62081114d8a5ae323874959b8e600cb9a5
+  payload_tree_sha256: d601301c6bc71bc15f83dd1826e806e3f3a5493654e4f9b1347b8eee4d05e2bd
+  package_sha256: 6676ad1919d61f5ede99d3bead2fdd23dc8d240186a38c8d18f66991a839719a
+  runtime_files: 508
+  changed_files: 261
+  changed_png: 256
+  package_verified: true
+  native_gameplay_tests: not_run
+  ci: not_run
+  actual_save_upgrade: pending
+  full_regression: pending
+  multiplayer: pending
+  ups: pending
+  main_merged: false
+  release: false
+
 em143_recovery_20261128:
   status: verified_owner_payload_source_transfer_incomplete
   branch: integration/em143-0.2.7-recovery
