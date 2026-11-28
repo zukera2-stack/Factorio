@@ -1,4 +1,13 @@
 em144_release_preparation_20261128:
+  github_release: published
+  github_release_tag: v0.2.7
+  github_release_commit: 4a6de5ef20529def2411a7102b1ac25557063c6a
+  github_release_asset_id: 803615372
+  github_release_published_utc: "2026-11-28T07:08:32Z"
+  ci_build: pass_46119715262
+  ci_assets: pass_46119715204
+  ci_docs: pass_46119715197
+  portal_latest_verified: "0.2.0"
   version: "0.2.7"
   owner_visual_accepted: true
   native_graphics: pass
