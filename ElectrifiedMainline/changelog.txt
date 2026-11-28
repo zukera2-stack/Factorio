@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.2
+  Bugfixes:
+    - Corrected battery wagon cooling animation frame binding and removed the erroneous quarter-turn offset from the unpublished 0.2.1 candidate.
+    - Refreshes saved fan render objects when updating and stops animation when the battery is empty.
+  Info:
+    - Battery capacity, traction, regenerative braking and existing artwork are unchanged.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.0
   Major Features:
     - First public beta candidate: high-speed rail and a dedicated 25 kV overhead network.

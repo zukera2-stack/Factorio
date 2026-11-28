@@ -1,3 +1,23 @@
+em137_fan_hotfix_20261128:
+  branch: hotfix/em137-battery-fan-0.2.2
+  version: "0.2.2"
+  main_version: "0.2.0"
+  status: native_targeted_pass_visual_pending
+  png_unchanged: 428
+  runtime_files: 503
+  exact_atlas_directions: 256
+  exact_atlas_frames: 2048
+  native_moving_orientation_indices: 256
+  native_high_speed_indices: 237
+  native_high_speed_max_index_lag: 3
+  native_charge_idle_discharge_empty: PASS
+  windows_visual_acceptance: pending
+  migration_from_0_2_1: not_run
+  zip_sha256: 4ff915899ae6bc9df779c2818d6140a2ee057f8cc7674cc8afbc6ec50cb881fa
+  payload_tree_sha256: 5bb3ba05b4c66b1bfdc3042c74c82feca5f2056a321266ed85713c08751a343f
+  main_merged: false
+  official_release: false
+
 public_release_0_2_0_20261128:
   status: published_public_beta
   version: "0.2.0"
